@@ -1,0 +1,39 @@
+kegg.names labels type x y width height kegg.names mol.col
+98 C01151 D-Ribose 1,5-bisphosphate compound 692 603 8 8 NA #FFFFFF
+99 C00668 alpha-D-Glucose 6-phosphate compound 201 383 8 8 NA #FFFFFF
+100 C00118 (2R)-2-Hydroxy-3-(phosphonooxy)-propanal compound 818 320 8 8 NA #FFFFFF
+101 C00022 Pyroracemic acid compound 778 228 8 8 NA #FFFFFF
+102 C00257 D-Gluconic acid compound 529 155 8 8 NA #FFFFFF
+103 C00198 D-Glucono-1,5-lactone compound 331 155 8 8 NA #FFFFFF
+104 C00031 D-Glucose compound 201 203 8 8 NA #FFFFFF
+105 C00221 beta-D-Glucose compound 201 155 8 8 NA #FFFFFF
+106 C00345 6-Phospho-D-gluconate compound 529 320 8 8 NA #FFFFFF
+107 C00204 2-Dehydro-3-deoxy-D-gluconate compound 666 155 8 8 NA #FFFFFF
+108 C03752 D-Glucosaminic acid compound 576 383 8 8 NA #FFFFFF
+109 C04442 2-Dehydro-3-deoxy-6-phospho-D-gluconate compound 666 320 8 8 NA #FFFFFF
+110 C00117 D-Ribose 5-phosphate compound 529 520 8 8 NA #FFFFFF
+111 C00119 5-Phospho-alpha-D-ribose 1-diphosphate compound 529 603 8 8 NA #FFFFFF
+112 C00620 D-Ribose 1-phosphate compound 692 551 8 8 NA #FFFFFF
+113 C00121 D-Ribose compound 692 520 8 8 NA #FFFFFF
+114 C00279 D-Erythrose 4-phosphate compound 363 477 8 8 NA #FFFFFF
+115 C01218 6-Phospho-2-dehydro-D-gluconate compound 450 276 8 8 NA #FFFFFF
+116 C05382 D-Sedoheptulose 7-phosphate compound 363 584 8 8 NA #FFFFFF
+117 C01801 Deoxyribose compound 465 663 8 8 NA #FFFFFF
+118 C00673 2-Deoxy-D-ribose 5-phosphate compound 331 694 8 8 NA #FFFFFF
+119 C00118 (2R)-2-Hydroxy-3-(phosphonooxy)-propanal compound 201 602 8 8 NA #FFFFFF
+120 C05378 beta-D-Fructose 1,6-bisphosphate compound 201 523 8 8 NA #FFFFFF
+121 C01172 beta-D-Glucose 6-phosphate compound 201 320 8 8 NA #FFFFFF
+122 C01236 D-Glucono-1,5-lactone 6-phosphate compound 365 320 8 8 NA #FFFFFF
+123 C06473 2-Keto-D-gluconic acid compound 450 215 8 8 NA #FFFFFF
+124 C05345 beta-D-Fructose 6-phosphate compound 201 446 8 8 NA #FFFFFF
+125 C00672 2-Deoxy-D-ribose 1-phosphate compound 465 694 8 8 NA #FFFFFF
+126 C00577 D-Glyceraldehyde compound 818 155 8 8 NA #FFFFFF
+127 C00258 Glyceric acid compound 916 155 8 8 NA #FFFFFF
+128 C00631 2-Phospho-D-glycerate compound 1002 155 8 8 NA #FFFFFF
+129 C00231 D-Xylulose 5-phosphate compound 422 446 8 8 NA #FFFFFF
+130 C00231 D-Xylulose 5-phosphate compound 331 638 8 8 NA #FFFFFF
+131 C00199 D-Ribulose 5-phosphate compound 529 446 8 8 NA #FFFFFF
+132 C06019 C06019 compound 365 383 8 8 NA #FFFFFF
+138 C20589 C20589 compound 666 383 8 8 NA #FFFFFF
+142 C03752 D-Glucosaminic acid compound 666 77 8 8 NA #FFFFFF
+145 C00197 3-Phospho-D-glycerate compound 916 320 8 8 NA #FFFFFF

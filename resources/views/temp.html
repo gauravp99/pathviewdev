@@ -1,0 +1,10 @@
+<?php
+                            foreach ($analyses as $month) {
+
+                                echo "<li>Number of users: $month->count</li>";
+echo "
+<li>Unique IP address: $month->ipadd_count</li>";
+echo "
+<li>Month : $month->date</li>";
+}
+?>
