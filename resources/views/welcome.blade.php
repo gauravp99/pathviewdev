@@ -386,24 +386,18 @@
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Graphs</td>
+                                            <td>Graphs: </td><td>46</td>
                                             <td>
                                                 <div style="width:80%;background-color:#D4DBE0; width=100%;">
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's</td>
-                                        </tr>
-                                        <tr>
-                                            <td></td>
-                                            <td>46</td>
-                                            <td></td>
-                                            <td>5</td>
+                                            <td>IP's: </td>  <td>46</td>
                                         </tr>
 
                                     </table>
                                     <article>
-                                        <canvas id="myChart" width="450" height="250">
+                                        <canvas id="myChart" width="450" height="200">
                                         </canvas>
                                     </article>
                                 </section>
@@ -423,24 +417,19 @@
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Downloads</td>
+                                            <td>Downloads:</td><td>&#8776;30000</td>
                                             <td>
                                                 <div style="width:80%;background-color:#D4DBE0; width=100%;">
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's</td>
-                                        <tr>
-                                            <td></td>
-                                            <td>&#8776;160000</td>
-                                            <td></td>
-                                            <td>&#8776;11123</td>
-                                        </tr>
+                                            <td>IP's:</td>   <td>&#8776;15000</td>
+
                                         </tr>
 
                                     </table>
                                     <article>
-                                        <canvas id="myChart1" width="450" height="250">
+                                        <canvas id="myChart1" width="450" height="200">
                                         </canvas>
                                     </article>
                                 </section>

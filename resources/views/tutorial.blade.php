@@ -117,7 +117,7 @@
 
     <div class="row">
         <div class="col-lg-4">
-            <a href="#input"></a><img class="img-circle content" src="/images/file_upload.png" alt="Input & output"
+            <a href="#Input"><img class="img-circle content" src="/images/file_upload.png" alt="Input & output"
                                       height="140" width="140"></a>
             <h2>Input & Output</h2>
 

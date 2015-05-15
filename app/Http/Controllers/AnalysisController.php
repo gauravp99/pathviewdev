@@ -11,7 +11,6 @@ class AnalysisController extends Controller
 {
 
 
-
     public function new_analysis()
     {
         return view('analysis.NewAnalysis');
@@ -28,19 +27,86 @@ class AnalysisController extends Controller
 
     public function analysis($anal_type)
     {
-
-
+$errors =array();
         $argument = "";
 
-        $argument .= "geneid:" . $_POST["geneid"] . ",";
+$geneid = $_POST["geneid"];
+        //check for geneid entered is currect or notlike \"'+$_POST["geneid"]+'%\" LIMIT 1'
+        $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
+
+        if(sizeof($val)>0)
+        {
+            $argument .= "geneid:" . $val[0]->geneid  . ",";
+        }
+        else
+        {
+            array_push($errors,"Entered Gene ID doesn't exist");
+
+        }
         $cpdid = str_replace(" ", "-", $_POST["cpdid"]);
-        $argument .= "cpdid:" . $cpdid . ",";
+        $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
+        if(sizeof($val)>0)
+        {
+            $argument .= "cpdid:" . $val[0]->cmpdid  . ",";
+        }
+        else
+        {
+            array_push($errors,"Entered compound ID doesn't exist");
+
+        }
+
         $species1 = explode("-", $_POST["species"]);
-        $argument .= "species:" . substr($species1[0], 0, 3) . ",";
+        $spe = substr($species1[0], 0, 3);
+        $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe%' LIMIT 1" ));
+
+        if(sizeof($val)>0)
+        {
+            $argument .= "species:" . $val[0]->species_id . ",";
+        }
+        else
+        {
+            array_push($errors,"Entered Species ID doesn't exist");
+
+        }
+
         $suffix = str_replace(" ", "-", $_POST["suffix"]);
         $argument .= "suffix:" . $suffix . ",";
+
+
         $path = explode("-", $_POST["pathway"]);
-        $argument .= "pathway:" . substr($path[0], 0, 5) . ",";
+        $path_id =substr($path[0], 0, 5);
+        if (preg_match('/[a-z]+[0-9]+/', substr($path[0], 0, 5)))
+        {
+
+            $path_id =substr($path[0], 3, 8);
+            $spe = substr($path[0], 0, 3);
+            $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe%' LIMIT 1" ));
+
+            if(sizeof($val)>0)
+            {
+                $argument .= "species:" . $val[0]->species_id . ",";
+            }
+            else
+            {
+                array_push($errors,"Entered Species ID doesn't exist");
+
+            }
+        }
+        else
+        {
+            $path_id =substr($path[0], 0, 5);
+        }
+        $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id%' LIMIT 1" ));
+        if(sizeof($val)>0)
+        {
+            $argument .= "pathway:" . $val[0]->pathway_id . ",";
+        }
+        else
+        {
+            array_push($errors,"Entered pathway ID doesn't exist");
+
+        }
+        #$argument .= "pathway:" . substr($path[0], 0, 5) . ",";
         if (isset($_POST["kegg"]))
             $argument .= "kegg:T,";
         else
@@ -81,23 +147,87 @@ class AnalysisController extends Controller
             $argument .= "cdisc:F,";
         $argument .= "kpos:" . $_POST["kpos"] . ",";
         $argument .= "pos:" . $_POST["pos"] . ",";
-        $argument .= "offset:" . $_POST["offset"] . ",";
+        if (preg_match('/[a-z]+/', $_POST["offset"]))
+        {
+            array_push($errors,"offset should be Numeric");
+
+        }
+        else {
+            $argument .= "offset:" . $_POST["offset"] . ",";
+        }
         $argument .= "align:" . $_POST["align"] . ",";
 
-        if (Input::hasFile('gfile')) {
-            $argument .= "glmt:" . $_POST["glmt"] . ",";
-            $argument .= "gbins:" . $_POST["gbins"] . ",";
-            $argument .= "glow:" . $_POST["glow"] . ",";
-            $argument .= "gmid:" . $_POST["gmid"] . ",";
-            $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+       # if (Input::hasFile('gfile')) {
+        if(isset($_POST["gcheck"])){
+            if($anal_type=="newAnalysis") {
+                if (Input::hasFile('gfile')) {
+                if (preg_match('/[a-z]+/', $_POST["glmt"])) {
+                    array_push($errors, "glimit should be Numeric");
+
+                }
+                if (preg_match('/[a-z]+/', $_POST["gbins"])) {
+                    array_push($errors, "gbins should be Numeric");
+
+                }
+                $argument .= "glmt:" . $_POST["glmt"] . ",";
+                $argument .= "gbins:" . $_POST["gbins"] . ",";
+                $argument .= "glow:" . $_POST["glow"] . ",";
+                $argument .= "gmid:" . $_POST["gmid"] . ",";
+                $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+            }}
+            else
+            {
+                if (preg_match('/[a-z]+/', $_POST["glmt"])) {
+                    array_push($errors, "climit should be Numeric");
+
+                }
+                if (preg_match('/[a-z]+/', $_POST["gbins"])) {
+                    array_push($errors, "cbins should be Numeric");
+
+                }
+                $argument .= "glmt:" . $_POST["glmt"] . ",";
+                $argument .= "gbins:" . $_POST["gbins"] . ",";
+                $argument .= "glow:" . $_POST["glow"] . ",";
+                $argument .= "gmid:" . $_POST["gmid"] . ",";
+                $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+            }
         }
 
-        if (Input::hasFile('cfile')) {
-            $argument .= "clmt:" . $_POST["clmt"] . ",";
-            $argument .= "cbins:" . $_POST["cbins"] . ",";
-            $argument .= "clow:" . $_POST["clow"] . ",";
-            $argument .= "cmid:" . $_POST["cmid"] . ",";
-            $argument .= "chigh:" . $_POST["chigh"] . ",";
+        #if (Input::hasFile('cfile')) {
+        if(isset($_POST["cpdcheck"])){
+            if($anal_type=="newAnalysis") {
+                if (Input::hasFile('cfile')) {
+                    if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+                        array_push($errors, "glimit should be Numeric");
+
+                    }
+                    if (preg_match('/[a-z]+/', $_POST["cbins"])) {
+                        array_push($errors, "gbins should be Numeric");
+
+                    }
+                    $argument .= "clmt:" . $_POST["clmt"] . ",";
+                    $argument .= "cbins:" . $_POST["cbins"] . ",";
+                    $argument .= "clow:" . $_POST["clow"] . ",";
+                    $argument .= "cmid:" . $_POST["cmid"] . ",";
+                    $argument .= "chigh:" . $_POST["chigh"] . ",";
+                }
+            }
+            else
+            {
+                if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+                    array_push($errors, "glimit should be Numeric");
+
+                }
+                if (preg_match('/[a-z]+/', $_POST["cbins"])) {
+                    array_push($errors, "gbins should be Numeric");
+
+                }
+                $argument .= "clmt:" . $_POST["clmt"] . ",";
+                $argument .= "cbins:" . $_POST["cbins"] . ",";
+                $argument .= "clow:" . $_POST["clow"] . ",";
+                $argument .= "cmid:" . $_POST["cmid"] . ",";
+                $argument .= "chigh:" . $_POST["chigh"] . ",";
+            }
         }
 
             $argument .= "nsum:". $_POST["nodesun"].",";
@@ -248,6 +378,9 @@ class AnalysisController extends Controller
                             mkdir("all/$email");
                     }
                     $time = time();
+
+                    if(sizeof($errors)>0)
+                        return $errors;#view('analysis.NewAnalysis')->with("error"->$errors);
                     mkdir("all/$email/$time", 0755, true);
 
                     session_start();

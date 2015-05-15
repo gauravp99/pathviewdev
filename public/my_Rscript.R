@@ -3,6 +3,8 @@ args <- commandArgs(TRUE)
 # v = strsplit(args[1],split=",",fixed=TRUE)
 # arg_count <- length(v[[1]])
 #initialise:
+zz <- file("all.Rout", open = "wt")
+sink(zz)
 geneextension <- NULL
 cpdextension <- NULL
 cpd.d <- NULL
@@ -220,17 +222,25 @@ print (format)
 
 if(geneextension == "txt"){
 
-	gene.d=read.delim(filename, sep="\t",header = TRUE, row.names = 1)
+    print("inside if loop")
+	#gene.d=read.delim(filename, sep="\t",header = TRUE, row.names = 1)
+	a=read.delim(filename, sep="\t")
+    b=as.matrix(a[,-1])
+    rownames(b)=make.unique(as.character(a[,1]))
+    gene.d = b
 	if(ncol(gene.d)<1)
 	gene.d=rownames(gene.d)
 	else
 	gene.d=as.matrix(gene.d)
-    print("inside if loop")
+
 
 }
 if(geneextension == "csv"){
 
-	gene.d=read.delim(filename, sep=",",header = TRUE, row.names = 1)
+	a=read.delim(filename, sep=",")
+        b=as.matrix(a[,-1])
+        rownames(b)=make.unique(as.character(a[,1]))
+        gene.d = b
 	if(ncol(gene.d)<1)
 	gene.d=rownames(gene.d)
 	else
@@ -240,7 +250,7 @@ if(geneextension == "csv"){
 	# gene.d = read.delim(filename, sep=",",header = TRUE,row.names = 1)
 	# else
 	# gene.d = read.delim(filename, sep=",",header = TRUE)
- #    gene.d =as.matrix(gene.d)
+    # gene.d =as.matrix(gene.d)
 }
 if(geneextension == "rda"){
 gene.d <- load(filename)
@@ -249,7 +259,12 @@ gene.d <- load(filename)
 
 if(!is.na(cpdextension)){
 if(cpdextension == "txt"){
+    print("hello")
 	cpd.d=read.delim(cfilename, sep="\t",header = TRUE, row.names = 1)
+	#a1=read.delim(cfilename, sep="\t")
+        #b1=as.matrix(a[,-1])
+       # rownames(b1)=make.unique(as.character(a1[,1]))
+       # gene.d = b1
 	if(ncol(cpd.d)<1)
 	cpd.d=rownames(cpd.d)
 	else
@@ -265,6 +280,10 @@ if(cpdextension == "txt"){
 }
 if(cpdextension == "csv"){
 	cpd.d=read.delim(cfilename, sep=",",header = TRUE, row.names = 1)
+	#a1=read.delim(cfilename, sep=",")
+     #       b1=as.matrix(a[,-1])
+      #      rownames(b1)=make.unique(as.character(a1[,1]))
+       #     gene.d = b1
 	if(ncol(cpd.d)<1)
 	cpd.d=rownames(cpd.d)
 	else
@@ -313,14 +332,14 @@ write.table(pv.out$plot.data.cpd,file=paste(paste(paste("cpddata.",species,sep="
 	    try(pv.out <- pathview(gene.data = gene.d,gene.idtype = geneid,cpd.data = cpd.d,cpd.idtype=cpdid,pathway.id = pathway1,species = species,out.suffix = suffix,kegg.native = kegg,sign.pos =pos,same.layer = layer,keys.align = align,split.group = split,expand.node = expand,multi.state=multistate,match.data = matchd ,node.sum=nodesum,key.pos = kpos,limit = list(gene = glmt, cpd = clmt), bins = list(gene = gbins, cpd= cbins),na.col=ncolor,low = list(gene = glow, cpd = clow),mid = list(gene = gmid, cpd = cmid), high = list(gene = ghigh, cpd =chigh),discrete = list(gene = gdisc, cpd = cdisc)), silent=T)
         if(class(pv.out) != "try-error")
         {
-        # pv.out <- pathview(gene.data = gene.d,gene.idtype = geneid,cpd.data = cpd.d,cpd.idtype=cpdid,pathway.id = pathway1,species = species,out.suffix = suffix,kegg.native = kegg,sign.pos =pos,same.layer = layer,keys.align = align,split.group = split,expand.node = expand,multi.state=multistate,match.data = matchd ,node.sum=nodesum,key.pos = kpos,limit = list(gene = glmt, cpd = clmt), bins = list(gene = gbins, cpd= cbins),low = list(gene = glow, cpd = clow),mid = list(gene = gmid, cpd = cmid), high = list(gene = ghigh, cpd =chigh),discrete = list(gene = gdisc, cpd = cdisc))
+         # pv.out <- pathview(gene.data = gene.d,gene.idtype = geneid,cpd.data = cpd.d,cpd.idtype=cpdid,pathway.id = pathway1,species = species,out.suffix = suffix,kegg.native = kegg,sign.pos =pos,same.layer = layer,keys.align = align,split.group = split,expand.node = expand,multi.state=multistate,match.data = matchd ,node.sum=nodesum,key.pos = kpos,limit = list(gene = glmt, cpd = clmt), bins = list(gene = gbins, cpd= cbins),low = list(gene = glow, cpd = clow),mid = list(gene = gmid, cpd = cmid), high = list(gene = ghigh, cpd =chigh),discrete = list(gene = gdisc, cpd = cdisc))
          try(err <- write.table(pv.out$plot.data.gene,file=paste(paste(paste("genedata.",species,sep=""),pathway1,sep=""),".txt",sep=""),quote = FALSE),silent=T)
          try(err <- write.table(pv.out$plot.data.cpd,file=paste(paste(paste("cpddata.",species,sep=""),pathway1,sep=""),".txt",sep=""),quote = FALSE),silent=T)
          }
          else
          print(paste("error using pawthway id",pathway1,sep=":"))
 
-         print(err)
+        print(err)
          if(class(err) == "try-error")
          {
          print(paste("error using pawthway id",pathway1,sep=":"))
