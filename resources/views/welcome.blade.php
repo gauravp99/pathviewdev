@@ -200,7 +200,7 @@
 
                                                 canvasBordersWidth: 3,
                                                 canvasBordersColor: "#205081",
-                                                scaleStartValue: 10,
+                                                scaleStartValue: 0,
                                                 legend: true,
                                                 inGraphDataShow: true,
                                                 annotateDisplay: true,

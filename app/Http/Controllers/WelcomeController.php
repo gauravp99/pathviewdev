@@ -24,6 +24,7 @@ class WelcomeController extends Controller
         });*/
         /* $user = User::find(1);
          echo '<pre>'.print_r($user).'</pre>';*/
+
         $usage = array();
         $ip = array();
         $months = array();

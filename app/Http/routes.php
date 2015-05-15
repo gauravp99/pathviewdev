@@ -14,6 +14,9 @@
 Route::get('/', array(
     'as' => 'home',
     'uses' => 'WelcomeController@index'));
+/*Route::get('/',array('as'=>'home','uses' => function(){
+    return view('guest-home');
+}));*/
 
 
 Route::get('/user/{username}', array(
@@ -41,6 +44,11 @@ Route::get('anal_hist', array(
     'as' => 'anal_hist',
     'users' => function () {
         return view('profile.anal_hist');
+    }));
+Route::get('guest-home', array(
+    'as' => 'guest-home ',
+    'users' => function () {
+        return view('guest-home');
     }));
 Route::post('postAnalysis', 'AnalysisController@postAnalysis');
 Route::post('post_exampleAnalysis1', 'AnalysisController@post_exampleAnalysis1');

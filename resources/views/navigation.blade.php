@@ -10,7 +10,9 @@
     <ul class="nav nav-sidebar">
         <li <?php if (basename($_SERVER['PHP_SELF']) == "index.php") {
             echo "class=\"active\"";
-        }?>><a href="{{ URL::route('home') }}"><b>Overview </b><span class="sr-only">(current)</span></a></li>
+        }?>>
+            @if (Auth::guest()) <a href="/guest-home">
+                @else <a href="{{ URL::route('home') }}"> @endif <b>Overview </b><span class="sr-only">(current)</span></a></li>
         <li <?php if (basename($_SERVER['PHP_SELF']) == "analysis") {
             echo "class=\"active\"";
         }?>><a href="/analysis"><b>New Analysis</b></a></li>
