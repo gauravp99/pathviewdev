@@ -17,7 +17,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-8">
                     <h2 class="marketing-hero-heading">
-                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html">Pathview</a>
+                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a>
                         maps, integrates and renders a wide variety of biological data
                         on relevant pathway graphs.</h2>
 
@@ -292,7 +292,7 @@
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-lg register" style="border-radius: 1px;"
-                                data-toggle="modal" data-target="#myModal">
+                                data-toggle="modal" data-target="#myModal" >
                             Click here to Register
                         </button>
 

@@ -120,9 +120,10 @@
 @yield('content')
 
 <!-- Scripts -->
-<link href="http://mjolnic.com/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-<link href="http://mjolnic.com/bootstrap-colorpicker/src/css/docs.css" rel="stylesheet">
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('/js/sliding.form.js') }}"></script>
 <script type="text/javascript">
     var i = 1;

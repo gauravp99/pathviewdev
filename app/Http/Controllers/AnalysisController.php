@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Requests\CraeteAnalysisRequest;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Redirect;
 use Input;
 use Request;
 
@@ -33,13 +34,13 @@ $errors =array();
 $geneid = $_POST["geneid"];
         //check for geneid entered is currect or notlike \"'+$_POST["geneid"]+'%\" LIMIT 1'
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
-
         if(sizeof($val)>0)
         {
             $argument .= "geneid:" . $val[0]->geneid  . ",";
         }
         else
         {
+
             array_push($errors,"Entered Gene ID doesn't exist");
 
         }
@@ -234,7 +235,10 @@ $geneid = $_POST["geneid"];
         $argument .= "ncolor:". $_POST["nacolor"].",";
 
 
-
+if(sizeof($errors))
+{
+    return Redirect::back()->with('err',$errors)->withInput();
+}
         function file_ext($filename)
         {
             if (!preg_match('/\./', $filename)) return '';
@@ -379,8 +383,9 @@ $geneid = $_POST["geneid"];
                     }
                     $time = time();
 
-                    if(sizeof($errors)>0)
+                    if(sizeof($errors)>0) {
                         return $errors;#view('analysis.NewAnalysis')->with("error"->$errors);
+                    }
                     mkdir("all/$email/$time", 0755, true);
 
                     session_start();
@@ -516,7 +521,8 @@ $geneid = $_POST["geneid"];
         }
 
         #echo $argument;
-        exec("Rscript my_Rscript.R $argument >> R.log");
+        exec("Rscript my_Rscript.R $argument  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+
         $date = new \DateTime;
 
 
