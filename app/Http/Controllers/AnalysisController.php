@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Requests\CraeteAnalysisRequest;
 use Auth;
 use DB;
+use Illuminate\Support\Facades\Redirect;
 use Input;
 use Request;
 
@@ -27,20 +28,25 @@ class AnalysisController extends Controller
 
     public function analysis($anal_type)
     {
+
+
+
 $errors =array();
+        $err_atr = array();
         $argument = "";
 
 $geneid = $_POST["geneid"];
         //check for geneid entered is currect or notlike \"'+$_POST["geneid"]+'%\" LIMIT 1'
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
-
         if(sizeof($val)>0)
         {
             $argument .= "geneid:" . $val[0]->geneid  . ",";
         }
         else
         {
+
             array_push($errors,"Entered Gene ID doesn't exist");
+            array_push($err_atr,"geneid");
 
         }
         $cpdid = str_replace(" ", "-", $_POST["cpdid"]);
@@ -52,7 +58,7 @@ $geneid = $_POST["geneid"];
         else
         {
             array_push($errors,"Entered compound ID doesn't exist");
-
+            array_push($err_atr,"cpdid");
         }
 
         $species1 = explode("-", $_POST["species"]);
@@ -66,7 +72,7 @@ $geneid = $_POST["geneid"];
         else
         {
             array_push($errors,"Entered Species ID doesn't exist");
-
+            array_push($err_atr,"species");
         }
 
         $suffix = str_replace(" ", "-", $_POST["suffix"]);
@@ -89,7 +95,7 @@ $geneid = $_POST["geneid"];
             else
             {
                 array_push($errors,"Entered Species ID doesn't exist");
-
+                array_push($err_atr,"species");
             }
         }
         else
@@ -104,7 +110,7 @@ $geneid = $_POST["geneid"];
         else
         {
             array_push($errors,"Entered pathway ID doesn't exist");
-
+            array_push($err_atr,"pathway");
         }
         #$argument .= "pathway:" . substr($path[0], 0, 5) . ",";
         if (isset($_POST["kegg"]))
@@ -150,7 +156,7 @@ $geneid = $_POST["geneid"];
         if (preg_match('/[a-z]+/', $_POST["offset"]))
         {
             array_push($errors,"offset should be Numeric");
-
+            array_push($err_atr,"offset");
         }
         else {
             $argument .= "offset:" . $_POST["offset"] . ",";
@@ -163,11 +169,11 @@ $geneid = $_POST["geneid"];
                 if (Input::hasFile('gfile')) {
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                     array_push($errors, "glimit should be Numeric");
-
+                    array_push($err_atr,"glmt");
                 }
                 if (preg_match('/[a-z]+/', $_POST["gbins"])) {
                     array_push($errors, "gbins should be Numeric");
-
+                    array_push($err_atr,"gbins");
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
@@ -178,12 +184,12 @@ $geneid = $_POST["geneid"];
             else
             {
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
-                    array_push($errors, "climit should be Numeric");
-
+                    array_push($errors, "glimit should be Numeric");
+                    array_push($err_atr,"glmt");
                 }
                 if (preg_match('/[a-z]+/', $_POST["gbins"])) {
-                    array_push($errors, "cbins should be Numeric");
-
+                    array_push($errors, "gbins should be Numeric");
+                    array_push($err_atr,"gbins");
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
@@ -198,12 +204,12 @@ $geneid = $_POST["geneid"];
             if($anal_type=="newAnalysis") {
                 if (Input::hasFile('cfile')) {
                     if (preg_match('/[a-z]+/', $_POST["clmt"])) {
-                        array_push($errors, "glimit should be Numeric");
-
+                        array_push($errors, "climit should be Numeric");
+                        array_push($err_atr,"clmt");
                     }
                     if (preg_match('/[a-z]+/', $_POST["cbins"])) {
-                        array_push($errors, "gbins should be Numeric");
-
+                        array_push($errors, "cbins should be Numeric");
+                        array_push($err_atr,"cbins");
                     }
                     $argument .= "clmt:" . $_POST["clmt"] . ",";
                     $argument .= "cbins:" . $_POST["cbins"] . ",";
@@ -215,12 +221,12 @@ $geneid = $_POST["geneid"];
             else
             {
                 if (preg_match('/[a-z]+/', $_POST["clmt"])) {
-                    array_push($errors, "glimit should be Numeric");
-
+                    array_push($errors, "climit should be Numeric");
+                    array_push($err_atr,"clmt");
                 }
                 if (preg_match('/[a-z]+/', $_POST["cbins"])) {
-                    array_push($errors, "gbins should be Numeric");
-
+                    array_push($errors, "cbins should be Numeric");
+                    array_push($err_atr,"cbins");
                 }
                 $argument .= "clmt:" . $_POST["clmt"] . ",";
                 $argument .= "cbins:" . $_POST["cbins"] . ",";
@@ -232,9 +238,6 @@ $geneid = $_POST["geneid"];
 
             $argument .= "nsum:". $_POST["nodesun"].",";
         $argument .= "ncolor:". $_POST["nacolor"].",";
-
-
-
         function file_ext($filename)
         {
             if (!preg_match('/\./', $filename)) return '';
@@ -245,6 +248,56 @@ $geneid = $_POST["geneid"];
         {
             return preg_replace('/\.[^.]*$/', '', $filename);
         }
+        if (Input::hasFile('gfile')) {
+        $filename = Input::file('gfile')->getClientOriginalName();
+
+        $gene_extension = file_ext($filename);
+        if($gene_extension != "txt" && $gene_extension != "csv" && $gene_extension != "rda"){
+            array_push($errors, "Gene data file extension is not supported( use .txt,.csv,.rda)");
+            array_push($err_atr,"gfile");
+        }}
+
+        if (Input::hasFile('cfile')) {
+            $filename1 = Input::file('cfile')->getClientOriginalName();
+            $cpd_extension = file_ext($filename1);
+
+            if ($cpd_extension != "txt" && $cpd_extension != "csv" && $cpd_extension != "rda") {
+                array_push($errors, "compound data file extension is not supported( use .txt,.csv,.rda)");
+                array_push($err_atr,"cfile");
+            }
+        }
+if(sizeof($errors)>0)
+{
+
+    foreach ($_POST as $key => $value) {
+        $_SESSION[$key] = $value;
+    }
+    $Session = $_SESSION;
+
+    if(strcmp($anal_type,'exampleAnalysis1')==0)
+    {
+
+    return Redirect::to('example1')
+        ->with('err',$errors)
+        ->with('err_atr',$err_atr)
+        ->with('Sess',$Session);;}
+    else if(strcmp($anal_type,'exampleAnalysis2')==0)
+    {
+        return Redirect::to('example1')
+            ->with('err',$errors)
+            ->with('err_atr',$err_atr)
+            ->with('Sess',$Session);
+    }
+    else if(strcmp($anal_type,'exampleAnalysis3')==0)
+    {
+        return Redirect::to('example3')
+            ->with('err',$errors)
+            ->with('err_atr',$err_atr)
+            ->with('Sess',$Session);;
+    }
+
+}
+
 
         function create_zip($files = array(), $destination = '', $overwrite = false)
         {
@@ -311,7 +364,7 @@ $geneid = $_POST["geneid"];
                     $time = time();
                     mkdir("all/$email/$time", 0755, true);
 
-                    session_start();
+
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = public_path() . "/all/" . $email . "/" . $time;
@@ -379,11 +432,12 @@ $geneid = $_POST["geneid"];
                     }
                     $time = time();
 
-                    if(sizeof($errors)>0)
+                    if(sizeof($errors)>0) {
                         return $errors;#view('analysis.NewAnalysis')->with("error"->$errors);
+                    }
                     mkdir("all/$email/$time", 0755, true);
 
-                    session_start();
+
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = public_path() . "/all/" . $email . "/" . $time;
@@ -423,6 +477,7 @@ $geneid = $_POST["geneid"];
                     }
 
                 }
+
                 $argument .= ",pathidx:" . ($pathidx);
             } else {
                 return view('analysis.NewAnalysis');
@@ -449,7 +504,7 @@ $geneid = $_POST["geneid"];
                     $time = time();
                     mkdir("all/$email/$time", 0755, true);
 
-                    session_start();
+
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = public_path() . "/all/" . $email . "/" . $time;
@@ -516,7 +571,8 @@ $geneid = $_POST["geneid"];
         }
 
         #echo $argument;
-        exec("Rscript my_Rscript.R $argument >> R.log");
+        exec("Rscript my_Rscript.R $argument  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+
         $date = new \DateTime;
 
 

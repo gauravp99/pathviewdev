@@ -11,7 +11,7 @@
 
 
             <p class="alert alert-danger">Alert!! You are on Guest Login and Your analysis  are not saved.</p>
-            <p class="alert alert-success">If you want your analysis saved please create a account it's Free</p>
+            <p class="alert alert-success">If you want your analysis saved, please create a account. it's Free</p>
 
             <!-- Button trigger modal -->
                 <div class="col-sm-4 col-md-offset-2">

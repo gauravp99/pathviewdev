@@ -21,6 +21,7 @@
         position: relative;
         right: 0;
         bottom: 0;
+        margin-top: 20px;
         left: 0;
         padding: 1rem;
         text-align: center;

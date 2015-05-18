@@ -970,8 +970,8 @@
     <div class="col-sm-12">
 
         <section id="example3">
-            <div class="arg_content">
-                <h1 class="arg_content">Example 3: ID Mapping</h1></div>
+
+                <h1 class="arg_content">Example 3: ID Mapping</h1>
             <p>
                 Here's an example showing the ID mapping capability of pathview. Data files are pre loaded and All the
                 parameters have been preset including Gene ID type and Compound ID type.

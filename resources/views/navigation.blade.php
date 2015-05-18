@@ -25,10 +25,18 @@
         <li <?php if (basename($_SERVER['PHP_SELF']) == "example3") {
             echo "class=\"active\"";
         }?>><a href="/example3"><b>Example 3</b></a></li>
-        <li <?php if (basename($_SERVER['PHP_SELF']) == "tutorial") {
-            echo "class=\"active\"";
-        }?>><a onclick="window.open('/tutorial', 'newwindow', 'width=1020, height=750'); return false;">
+        <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
+        <script>
+            function openWindow()
+            {
+                window.open('/tutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");
+
+                var w = window.innerWidth;
+                var h = window.innerHeight;
+
+            }
+        </script>
     </ul>
 </div>
 

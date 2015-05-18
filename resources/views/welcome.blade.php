@@ -2,6 +2,7 @@
 
 @section('content')
     <script>
+
         window.onresize = resizefunc;
         function resizefunc() {
             var canvas1 = document.getElementsByTagName('canvas')[0];
@@ -17,7 +18,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-8">
                     <h2 class="marketing-hero-heading">
-                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html">Pathview</a>
+                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a>
                         maps, integrates and renders a wide variety of biological data
                         on relevant pathway graphs.</h2>
 
@@ -200,7 +201,11 @@
 
                                                 canvasBordersWidth: 3,
                                                 canvasBordersColor: "#205081",
-                                                scaleStartValue: 0,
+                                                scaleOverride: true,
+                                                scaleSteps: 6,
+                                                scaleStepWidth:200 ,
+                                                scaleStartValue: 250,
+                                                scaleLabel: "<%=value%>",
                                                 legend: true,
                                                 inGraphDataShow: true,
                                                 annotateDisplay: true,
@@ -292,7 +297,7 @@
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-lg register" style="border-radius: 1px;"
-                                data-toggle="modal" data-target="#myModal">
+                                data-toggle="modal" data-target="#myModal" >
                             Click here to Register
                         </button>
 

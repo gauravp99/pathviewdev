@@ -63,7 +63,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary" style="font-size: 20px">
+                                    <button type="submit" class="btn col-md-6 btn-primary" style="font-size: 20px">
                                         Register
                                     </button>
                                 </div>
