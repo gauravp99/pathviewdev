@@ -1,0 +1,22 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: ybhavnasi
+ * Date: 4/6/15
+ * Time: 12:17 PM
+ */
+?>
+<div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="<?php echo e(URL::route('home')); ?>">Overview <span class="sr-only">(current)</span></a></li>
+            <li><a href="/analysis">New Analysis</a></li>
+            <li><a href="/example1">Example Analysis 1</a></li>
+            <li><a href="/example2">Example Analysis 2</a></li>
+            <li><a href="/example3">Example Analysis 3</a></li>
+            <li><a href="<?php echo e(URL::route('home')); ?>">Instructions</a></li>
+       </ul>
+        </div>
+
+
+
+

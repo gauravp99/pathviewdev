@@ -1,0 +1,109 @@
+<?php $__env->startSection('content'); ?>
+
+    <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="row1 placeholders">
+        <?php
+            echo "<h1> Analysis Results </h1>";
+        //echo $destFile;
+        //$directory = $destFile;//$_SESSION['workingdir'];
+        $contents = scandir($directory);
+
+        if ($contents) {
+            foreach ($contents as $key => $value) {
+                if ($value == "." || $value == "..") {
+                    unset($key);
+
+                }
+            }
+        }
+        echo "<ul>";
+        $val = "";
+        $id = $_SESSION['id'];
+        $id = substr($id, 0, 8);
+            $flag = false;
+            $flag1 = false;
+        $files_to_zip=array();
+
+        foreach ($contents as $k => $v) {
+            if(strcmp($v,"errorFile.Rout")==0)
+                {
+            $v= $directory."/".$v;
+                   if(filesize($v)>0)
+                       {
+
+                           $lines = file($v);
+                           foreach($lines as $temp)
+                               {
+
+                                   $temp = strtolower($temp);
+                                   $array_string = explode(" ",$temp);
+                                           foreach($array_string as $a_string)
+                                               {
+
+                                             if (strcmp($a_string,'error')==0) {
+                                                   if(!$flag)
+                                                       {
+                                                          
+                                                           echo "<ul class='alert alert-danger'>";
+                                                           $flag1= true;
+                                                       }
+                                                   echo "<li>".$temp."</li>";
+                                                   $flag=true;
+                                                   break;
+                                                   }
+
+                                               }
+
+
+                                }
+            if($flag1)
+            {
+                echo "</ul>";
+                echo "<button onclick='goBack()'>Go Back</button>";
+            }
+
+
+                    ?>
+
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script><?php
+                       }
+                }
+            if (strpos($v, 'log') !== false || strpos($v, "" . $id . ".txt"))
+                {
+                echo "<li><a target=\"_blank\" href=\"$directory1/" . $v . "  \">$v</a></li>";
+                array_push($files_to_zip,$directory1."/".$v);
+                    }
+        }
+        echo "</ul>";
+
+            foreach ($contents as $k => $v) {
+                //echo $k;
+                if (strpos($v, $_SESSION['suffix'])) {
+                    $val = $v;
+
+                    $id = substr($val, 0, 8);
+                    if (strpos($val, 'png')) {
+                        echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"viewer?id=$id&image=$directory1/$val\" > " . $val . "</a>";
+                        array_push($files_to_zip,$directory1."/".$val);
+                    } else
+                        {
+                        echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
+                    array_push($files_to_zip,$directory1."/".$val);
+                            }
+
+                }
+            }
+                #print_r($files_to_zip);
+
+
+
+
+
+        ?>
+    </div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

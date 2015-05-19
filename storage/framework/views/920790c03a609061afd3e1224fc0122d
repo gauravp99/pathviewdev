@@ -1,0 +1,79 @@
+<?php $__env->startSection('content'); ?>
+
+<div class="row1 placeholders">
+    <h1 class="page-header">Result </h1>
+    <?php
+
+    session_start();
+    function extract_unit($oneByThreeing, $start, $end) {
+        $pivotFlag = stripos($oneByThreeing, $start);
+        $oneByThree = substr($oneByThreeing, $pivotFlag);
+        $twoByThree = substr($oneByThree, strlen($start));
+        $second_pos = stripos($twoByThree, $end);
+        $threeByThree = substr($twoByThree, 0, $second_pos);
+        $unit = trim($threeByThree);
+        return $unit;
+    }
+    function cURL($url, $header=NULL, $cookie=NULL, $p=NULL)
+    {
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HEADER, $header);
+        curl_setopt($ch, CURLOPT_NOBODY, $header);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_HTTPPROXYTUNNEL, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_COOKIE, $cookie);
+        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+        if ($p) {
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POST, 1);
+
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $p);
+        }
+        $result = curl_exec($ch);
+
+
+        if ($result) {
+            return $result;
+        } else {
+            return curl_error($ch);
+        }
+        curl_close($ch);
+    }
+
+    $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $_GET['id']);
+    //echo $a;
+    $c = extract_unit($a, "<map name=\"mapdata\">", "</map>");
+    $d=str_replace("href=\"", "href=\"http://www.genome.jp", $c);
+
+    //$directory = $_SESSION['workingdir'];
+
+    echo "<html>";
+    echo "<head>";
+    echo "<title>KEGG View</title>";
+    echo "<head>";
+
+    echo "<img src=".$_GET['image'] . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
+    echo "<map name=\"mapdata\">";
+    echo $d;
+    echo "</map>";
+    echo "</html>";
+
+
+
+
+
+
+    ?>
+</div>
+<br/>
+<br/>
+<?php $__env->stopSection(); ?>
+
+
+
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

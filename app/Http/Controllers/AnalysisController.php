@@ -239,6 +239,15 @@ $geneid = $_POST["geneid"];
 
             $argument .= "nsum:". $_POST["nodesun"].",";
         $argument .= "ncolor:". $_POST["nacolor"].",";
+<<<<<<< HEAD
+=======
+
+
+if(sizeof($errors))
+{
+    return Redirect::back()->with('err',$errors)->withInput();
+}
+>>>>>>> 7e3675f750aa126ee89caaf60db71fbcdc580c65
         function file_ext($filename)
         {
             if (!preg_match('/\./', $filename)) return '';
@@ -465,6 +474,12 @@ if(sizeof($errors)>0)
                             mkdir("all/$email");
                     }
 
+<<<<<<< HEAD
+=======
+                    if(sizeof($errors)>0) {
+                        return $errors;#view('analysis.NewAnalysis')->with("error"->$errors);
+                    }
+>>>>>>> 7e3675f750aa126ee89caaf60db71fbcdc580c65
                     mkdir("all/$email/$time", 0755, true);
 
 
@@ -624,6 +639,10 @@ if(sizeof($errors)>0)
             return $ipaddress;
         }
 
+<<<<<<< HEAD
+=======
+        #echo $argument;
+>>>>>>> 7e3675f750aa126ee89caaf60db71fbcdc580c65
         exec("Rscript my_Rscript.R $argument  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         $date = new \DateTime;

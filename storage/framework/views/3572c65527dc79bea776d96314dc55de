@@ -1,0 +1,131 @@
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <h2>New Pathview Analysis</h2>
+
+<div class="col-md-8 ">
+    <div class="panel panel-default">
+        <div class="panel-heading">Pathview Generation</div>
+        <div class="panel-body">
+            <?php if(count($errors) > 0): ?>
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        <?php foreach($errors->all() as $error): ?>
+                            <li><?php echo e($error); ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            <?php endif; ?>
+   <form class="form-horizontal" role="form" method="POST" ACTION="<?=$_SERVER['PHP_SELF']?>"  >
+    <fieldset>
+
+
+        <div ng-controller="AccordionDemoCtrl">
+            <dl class="accordion">
+                <dt class="accordion__title active">Input and Output</dt>
+                <dd style="display: block;" class="accordion__content"><div class="overflow-scrolling">
+
+        <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+        <!-- File Button -->
+        <div class="control-group">
+            <label class="control-label" for="GeneData">Gene Data</label>
+            <div class="controls">
+                <p><input name="genecheck" id="genecheck" value="check" onclick="changed()" type="checkbox"> <input id="GeneData" name="GeneData" class="input-file" type="file"></p>
+            </div>
+        </div>
+
+        <!-- File Button -->
+        <div class="control-group">
+            <label class="control-label" for="CpdData">Compound Data</label>
+            <div class="controls">
+                <input id="CpdData" name="CpdData" class="input-file" type="file">
+            </div>
+        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                        <div id="input_container">
+                            Gene ID Type <input class="ex8" list="idtypes" name="geneid" id="geneid" value="ENTREZ" autocomplete="on"><a href="javascript:openNewWindow('reg/doc.html#gidtype');"> ? </a>
+                            <datalist id="idtypes">
+                                <?php
+                                $gene = DB::table('gene')->get();
+                                foreach ($gene as $gene1)
+                                {
+                                    echo "<option>$gene1->geneid</option>";
+                                }
+                                ?></datalist></div>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <div class="controls">
+                        <div id="input_container">Compound ID Type <input class="ex8" list="cpidtypes" name="cpdid" value="KEGG" autocomplete="on"><a href="javascript:openNewWindow('reg/doc.html#cidtype');"> ? </a>
+                            <datalist id="cpidtypes">
+                                <?php
+                                $compound = DB::table('compound')->get();
+                                foreach ($compound as $compound1)
+                                {
+                                    echo "<option>$compound1->cmpdid</option>";
+                                }
+                                ?>
+
+                                </datalist></div>
+                            </div>
+                        </div>
+
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="Species">Species</label>
+            <div class="controls">
+                <input class="ex8" list="Specieslist" name="species" id="species" value="hsa"  required="" autocomplete="on">
+                <datalist  id="species">
+                    <?php
+                    $species = DB::table('Species')->get();
+                    foreach ($species as $species1)
+                    {
+                        echo "<option>$species1->species_id"-"$species1->species_desc</option>";
+                    }
+                    ?>
+                </datalist>
+                <p class="help-block">Species eg: hsa,gene</p>
+            </div>
+        </div>
+
+        <!-- select pathway id input-->
+
+        <div class="control-group">
+            <label class="control-label" for="Pathway">Pathway</label>
+            <div class="controls">
+                <input class="ex8" list="pathwaylist" name="pathway" id="pathway" value="00010"  required="" autocomplete="on">
+                <datalist id="pathway">
+                <?php
+                $pathway = DB::table('Pathway')->get();
+                foreach ($pathway as $pathway1)
+                {
+                    echo "<option>$pathway1->pathway_id"-"$pathway1->pathway_desc</option>";
+                }
+                ?>
+                </datalist>
+            </div>
+        </div>
+
+        <!-- Text input-->
+        <div class="control-group">
+            <label class="control-label" for="Suffix">Suffix</label>
+            <div class="controls">
+                <input id="Suffix" name="Suffix" type="text" placeholder="pathway" class="input-xlarge" required="">
+                <p class="help-block">output suffix </p>
+            </div>
+        </div>
+ <input type="submit" value="submit">
+    </fieldset>
+   </form>
+    </div>
+    </div>
+</div>
+
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

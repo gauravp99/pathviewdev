@@ -1,0 +1,26 @@
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <section class="8u">
+
+        <!-- Banner -->
+        <div id="banner">
+
+        </div>
+        <h2>Pathway Web</h2>
+        Pathview is a tool set for pathway based data integration and
+        visualization. It maps, integrates and renders a wide variety of
+        biological data on relevant pathway graphs.
+        Pathview Web Interface provides easy access, and generates high quality,
+        hyperlinked pathway graphs with user data.
+        <h2>Citations</h2>
+
+        <p>Luo W, Brouwer C. Pathview: an R/Biocondutor package for pathway-based data integration and visualization. Bioinformatics, 2013, 29(14):1830-1831, doi: <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830" target="_blank"><u> 10.1093/bioinformatics/btt285</u></a>
+        </p>
+        <p> Project Contact: <a href="mailto:luo_weijun@yahoo.com">&lt;luo_weijun@yahoo.com&gt;</a> &nbsp; &nbsp; &nbsp; Report Issues :  <a href="mailto:pathview@outlook.com">&lt;byeshvant@hotmail.com&gt;</a>
+        </p>
+        </div>
+
+    </section>
+
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

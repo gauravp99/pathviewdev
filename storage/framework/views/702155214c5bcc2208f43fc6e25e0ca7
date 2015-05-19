@@ -1,0 +1,58 @@
+<?php $__env->startSection('content'); ?>
+      <div class="container">
+	    <div class="row">
+		 <div class="col-md-10 col-md-offset-1">
+            <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+			<div class="panel panel-default">
+                <div class="panel-heading"><?php echo e(Auth::user()->name); ?> Login</div>
+				<div class="panel-body">
+                    Welcome <?php echo e(Auth:: user()->name); ?>
+
+					You are logged in!
+
+                    <br/>
+                    <h3>Recent Activity:</h3>
+                    <?php if(Auth::user()): ?>
+                    <?php
+                    $analyses = DB::table('analyses')->where('id',Auth::user()->id)->get();
+                    if(empty($analyses))
+                    {
+                        echo "No recenet Activity's";
+                    }
+                    function get_string_between($string, $start, $end){
+                        $string = " ".$string;
+                        $ini = strpos($string,$start);
+                        if ($ini == 0) return "";
+                        $ini += strlen($start);
+                        $len = strpos($string,$end,$ini) - $ini;
+                        return substr($string,$ini,$len);
+                    }
+
+                    foreach ($analyses as $analyses1)
+                    {
+                        $now = time(); // or your date as well
+                        $your_date = strtotime(str_split($analyses1->created_at,10)[0]);
+                        $date_diff = $now - $your_date;
+                        echo "<h4> $analyses1->analysis_type </h4>";
+                        echo "<br/>";
+                        echo "<p> Click to see results  at folder$analyses1->analysis_id</p>";
+                        echo "<br/>";
+                        echo Auth::user()->name."  ".floor($date_diff/(60*60*24))."day ago";
+                        $directory = get_string_between($analyses1->arguments,"targedir:",",");
+                        $dir = get_string_between($analyses1->arguments,public_path(),",");
+                        $id = get_string_between($analyses1->arguments,"species:",",").get_string_between($analyses1->arguments,"pathway:",",");
+                        $suffix = get_string_between($analyses1->arguments,"suffix:",",");
+                        echo "<a href=/anal_hist?directory=$directory&dir=$dir&id=$id&suffix=$suffix>click here</a>";
+                        //echo "$analyses1->arguments";
+                    }
+                    ?>
+                        <?php endif; ?>
+
+			</div>
+		</div>
+	</div>
+  </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

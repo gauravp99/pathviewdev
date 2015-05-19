@@ -1,0 +1,714 @@
+<?php
+session_start();?>
+
+
+<?php $__env->startSection('content'); ?>
+
+    <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php /*Start to check if the user is logged in or not if user is logged in then user profile is loaded */ ?>
+    <?php if(is_null(Auth::user())): ?>
+        <h2> welcome Guest </h2>
+    <?php else: ?>
+        <p> welcome: <b><?php if(Auth::user()->name==""): ?> <?php echo Auth::user()->email; ?> <?php else: ?> <?php echo Auth::user()->name; ?>, <?php endif; ?> </b></p>
+    <?php endif; ?>
+    <?php /*end to check if the user is logged in or not if user is logged in then user profile is loaded */ ?>
+
+    <?php /*Main Heading/Title of the page */ ?>
+
+    <p><b>Example Three Analysis: ID Mapping</b></p>
+
+    <?php /*Error Displaying div for the web page */ ?>
+    <div class="col-sm-4 col-md-offset-2">
+
+        <?php /*Printing errors detected from laravel validation of the page */ ?>
+        <?php if($errors->any()): ?>
+            <ul class="alert alert-danger">
+                <?php foreach($errors->all() as $error): ?>
+                    <li><?php echo e($error); ?></li>
+                <?php endforeach; ?>
+            </ul>
+        <?php endif; ?>
+
+        <?php /*Printing errors handled manually of the page */ ?>
+        <?php if(Session::get('err')!=NULL): ?>
+
+            <ul class="alert alert-danger">
+                <?php
+                for ($x = 0; $x < sizeof(Session::get('err')); $x++) {
+                    echo "<li>" . Session::get('err')[$x] . "</li>";
+                }
+                ?>
+            </ul>
+
+        <?php endif; ?>
+
+    </div>
+
+    <?php
+    $gfile = "gene.ensprot.txt";
+    $cpdfile ="cpd.cas.csv";
+    $geneid ="ENSEMBLPROT";
+    $cpdid ="CAS Registry Number";
+    $species ="hsa-Homo sapiens";
+    $pathway ="00640-Propanoate metabolism";
+    $pathidx =0;
+    $suffix ="IDMapping";
+    $kegg =true;
+    $layer =true;
+    $split =false;
+    $expand =false;
+    $multistate =true;
+    $matchd =true;
+    $gdisc =false;
+    $cdisc =false;
+    $kpos ="top right";
+    $pos ="bottom left";
+    $offset ="1.0";
+    $align ="y";
+    $glmt =3;
+    $gbins =6;
+    $glow ="green";
+    $gmid ="grey";
+    $ghigh ="red";
+    $clmt =3;
+    $cbins =6;
+    $clow ="blue";
+    $cmid ="grey";
+    $chigh ="yellow";
+    $nsum ="sum";
+    $ncolor ="transparent";
+    ?>
+
+    <?php /*Div for Form for generating the analysis Form is devided into pages
+    1. Input and Output
+    2. Graphics
+    3. Coloration */ ?>
+
+    <div id="content">
+        <div id="wrapper">
+            <div id="navigation" style="display:none;">
+                <ul>
+                    <li class="selected">
+                        <a href="#">Input & Output:</a>
+                    </li>
+                    <li>
+                        <a href="#">Graphics:</a>
+                    </li>
+                    <li>
+                        <a href="#">Colouration:</a>
+                    </li>
+                    <li>
+                        <a href="#">Confirm:</a>
+                    </li>
+                </ul>
+            </div>
+
+
+
+            <?php /*Input and Output slider */ ?>
+            <div id="steps">
+
+                <?php /*Form Method: POST Action:post_exampleAnalusis2 with internally leads to AnalysisController Controller*/ ?>
+
+                <?php echo form::open(array('url' => 'post_exampleAnalysis3','method'=>'POST','files'=>true,'id' => 'anal_form')); ?>
+
+
+                <fieldset class="step">
+
+                    <p <?php if(isset(Session::get('err_atr')['gfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>>
+                        <a href="tutorial#gene_data" title="Upload gene data accepts CSV, Rdata, txt file"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                            <span class="glyphicon glyphicon-info-sign"> </span> </a>
+
+                        <?php echo form::label('gcheck','Gene Data:'); ?>
+
+
+                        <input name="gcheck" id="gcheck" value="T" type="checkbox"
+                        <?php if (isset(Session::get('Sess')['gcheck'])) {
+                            echo "checked";
+                        } else { if (Session::get('Sess') == NULL) {
+                            echo "checked";
+                        }
+                        }?>>
+
+                        <?php echo form::label('gfile',$gfile); ?>
+
+                    </p>
+
+                    <br/>
+                    <br/>
+                    <p <?php if(isset(Session::get('err_atr')['cfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>>
+                        <a href="tutorial#cpd_data" title="Upload Compound data accepts CSV, Rdata, txt file"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('cpdcheck','Compound Data:'); ?>
+
+
+                        <input name="cpdcheck" value="T" type="checkbox"
+                        <?php if (isset(Session::get('Sess')['cpdcheck'])) {
+                            echo "checked";
+                        } else { if (Session::get('Sess') == NULL) {
+                            echo "checked";
+                        }
+                        }?>>
+                        <?php echo form::label('cpdfile',$cpdfile); ?></p>
+
+
+                    <p
+                            <?php /*code to highlight if input has error*/ ?>
+                    <?php if(isset(Session::get('err_atr')['geneid'])): ?> style="background-color:#DA6666;" <?php endif; ?>>
+                        <a href="tutorial#gene_id" title="ID type used for the Gene Data"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+
+                        <?php echo form::label('geneid','Gene Id:'); ?>
+
+
+                        <input class="ex8" list="geneidlist" name="geneid" id="geneid"
+                               value="<?php echo isset(Session::get('Sess')['geneid']) ? Session::get('Sess')['geneid'] : $geneid ?>"
+                               required=""
+                               autocomplete="on">
+                    </p>
+
+                    <datalist id="geneidlist">
+                        <?php
+                        $gene = DB::table('gene')->get();
+                        foreach ($gene as $gene1) {
+                            echo "<option>$gene1->geneid</option>";
+                        }
+                        ?>
+                    </datalist>
+
+                    <p
+                            <?php /*code to highlight if input has error*/ ?>
+                    <?php if (isset(Session::get('err_atr')['cpdid'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#cpd_id" title="ID type used for the Compound Data" target="_blank"
+                           class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        <?php echo form::label('cpdid','Compound ID:'); ?>
+
+                        <?php /*<?php echo form::text('cpdid','KEGG'); ?>*/ ?>
+                        <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"
+                               value="<?php echo isset(Session::get('Sess')['cpdid']) ? Session::get('Sess')['cpdid'] : $cpdid ?>"
+                               required=""
+                               autocomplete="on">
+                        <datalist id="cpdidlist">
+                            <?php
+                            $compound = DB::table('compound')->get();
+                            foreach ($compound as $compound1) {
+                                echo "<option>$compound1->cmpdid</option>";
+                            }
+                            ?>
+
+                        </datalist>
+                    </p>
+
+
+                    <p <?php if (isset(Session::get('err_atr')['species'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#species"
+                           title="KEGG code, scientific name or the common name of the target species"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        <?php echo form::label('species','Species:'); ?>
+
+                        <?php /* <?php echo form::text('species','hsa-Homo sapiens'); ?></p>*/ ?>
+                        <input class="ex8" list="specieslist" name="species" id="species"
+                               value="<?php echo isset(Session::get('Sess')['species']) ? Session::get('Sess')['species'] : $species ?>"
+                               required="" autocomplete="on">
+                        <datalist id="specieslist">
+                            <?php
+                            $species = DB::table('Species')->get();
+                            foreach ($species as $species1) {
+                                echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
+                            }
+                            ?>
+
+                        </datalist>
+                    <p <?php if (isset(Session::get('err_atr')['pathway'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?> id="pat_div">
+                        <a href="tutorial#pwy_id"
+                           title="The KEGG pathway ID, usually 5 digit, may also include the 3 letter KEGG species code"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('pathway','Pathway:'); ?>
+
+                        <?php /*<?php echo form::text('pathway','00010-Glycolysis / Gluconeogenesis'); ?>*/ ?>
+
+                        <input class="ex8" list="pathwaylist" name="pathway" id="pathway"
+                               value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>"
+                               required="" autocomplete="on">
+                        <input class="ex88" id="addbtn" value="Add" onclick="addText()" type="button">
+                        <input class="ex88" id="rmvbtn" value="Remove" onclick="removeText()" type="button">
+                        <br/>
+                    </p>
+
+                    <datalist id="pathwaylist">
+                        <?php
+                        $pathway = DB::table('Pathway')->get();
+                        foreach ($pathway as $pathway1) {
+                            echo "<option>" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
+                        }
+                        ?>
+
+                    </datalist>
+                    <?php
+
+                    $pathidx = -1;
+                    while (isset($_POST["pathway$pathidx"])) {
+                        $pathidx++;
+                    }
+
+                    for ($pathnidx = 1; $pathnidx < $pathidx; $pathnidx++) {
+                        echo "<input class=\"ex8\" list=\"pathwaylist\" name=\"pathway" . $pathnidx . " id=\"pathway" . $pathnidx . " value=" . Session::get('Sess')["pathway$pathnidx"] . " >";
+
+                    }
+
+
+                    ?>
+                    <script type="text/javascript">
+                        var i = 1;
+                        function addText() {
+
+                            var el = document.createElement("input");
+                            el.setAttribute("name", "pathway" + i);
+                            el.setAttribute("id", "pathway" + i);
+                            el.setAttribute("list", "pathwaylist");
+                            el.setAttribute("value", "00010-Glycolysis / Gluconeogenesis");
+                            el.setAttribute("required", "required");
+
+                            var foo = document.getElementById("pat_div");
+
+                            foo.appendChild(document.createElement("br"));
+                            foo.appendChild(el);
+                            foo.appendChild(document.createElement("br"));
+                            i++;
+
+
+                        }
+
+                        function removeText() {
+
+                            if (i > 1) {
+                                console.log(i);
+                                var pat = document.getElementById("pat_div");
+                                for (j = 0; j < 3; j++)
+                                    pat.removeChild(pat.lastChild);
+                                i--;
+                            }
+                        }
+                        function fileCheck() {
+
+                            //alert("hello"+document.getElementById('gcheck'));
+                            if (document.getElementById('gcheck').checked) {
+
+                            } else {
+                                alert("You didn't check it for gene data");
+                                return false;
+                            }
+
+
+                        }
+
+
+
+                    </script>
+
+                    <p <?php if (isset(Session::get('err_atr')['suffix'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?> <?php if($errors->has('suffix')): ?> style="background-color:#DA6666;" <?php endif; ?>><a href="tutorial#suffix"
+                                                                                                  title="The suffix to be added after the pathway name as part of the output graph file"
+                                                                                                  target="_blank"
+                                                                                                  class="scrollToTop"
+                                                                                                  style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span></a><?php echo form::label('suffix','suffix:'); ?>
+
+
+                        <input type="text" class="ex8" name="suffix" id="suffix"
+                               value="<?php echo isset(Session::get('Sess')['suffix']) ? Session::get('Sess')['suffix'] : $suffix ?>">
+                    </p>
+                    <input type="submit" class="styled-button-2" value="Submit" onclick="return fileCheck()"/>
+                    <input type="Reset" class="styled-button-2" value="Reset"/>
+                </fieldset>
+                <fieldset class="step">
+
+                    <p>
+                        <a href="tutorial#kegg"
+                           title="to render pathway graph as native KEGG graph"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        <?php echo form::label('kegg','Kegg Native:'); ?>
+
+
+                        <input name="kegg" value="T"
+                        <?php if (isset(Session::get('Sess')['kegg'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                                echo "checked";
+                            }
+                        }?>
+                               type="checkbox">
+
+                        <?php echo form::label('layer','Same Layer:'); ?>
+
+
+                        <input name="layer" value="T"
+                        <?php if (isset(Session::get('Sess')['layer'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                                echo "checked";
+                            }
+                        }?>
+                               type="checkbox">
+                    </p>
+
+                    <p>
+                        <a href="tutorial#desc"
+                           title="This argument tells whether gene data or compound data should be treated as discrete"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+
+                        <?php echo form::label('gdesc',' Descrete Gene:'); ?>
+
+
+                        <input name="gdesc" value="T"
+                        <?php if (isset(Session::get('Sess')['gdesc'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                            }
+                        }?>
+                               type="checkbox">
+
+                        <?php echo form::label('cdesc','Descrete Compound:'); ?>
+
+                        <input name="cdesc" value="T"
+                        <?php if (isset(Session::get('Sess')['cdesc'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                            }
+                        }?>
+                               type="checkbox">
+                    </p>
+
+                    <p><a href="tutorial#split"
+                          title="This argument tells whether gene data or compound data should be treated as discrete"
+                          target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"> </span>
+                        </a>
+                        <?php echo form::label('split','Split Group:'); ?>
+
+                        <input name="split" value="T"
+                        <?php if (isset(Session::get('Sess')['split'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                            }
+                        }?>
+                               type="checkbox">
+
+                        <?php echo form::label('expand','Expand Node:'); ?>
+
+                        <input name="expand" value="T"
+                        <?php if (isset(Session::get('Sess')['expand'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                            }
+                        }?>
+                               type="checkbox"></p>
+
+                    <p>
+                        <a href="tutorial#multi"
+                           title="Whether multiple states (samples or columns) gene data or compound data should be integrated / Whether the samples of gene data and Compound data are paired"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a><?php echo form::label('multistate','Multi State:'); ?>
+
+
+                        <input name="multistate" value="T"
+                        <?php if (isset(Session::get('Sess')['multistate'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                                echo "checked";
+                            }
+                        }?>
+                               type="checkbox">
+
+                        <?php echo form::label('matchd','Match Data:'); ?>
+
+
+                        <input name="multistate" value="T"
+                        <?php if (isset(Session::get('Sess')['multistate'])) {
+                            echo "checked";
+                        } else {
+                            if (Session::get('Sess') == NULL) {
+                                echo "checked";
+                            }
+                        }?>
+                               type="checkbox">
+                    </p>
+
+                    <p <?php if (isset(Session::get('err_atr')['offset'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#offset"
+                           title="Specifies how much compound labels should be put above the default position or node center"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('offset','Compound Label Offset:'); ?>
+
+                        <input type="text" class="ex8" name="offset" id="offset"
+                               value="<?php echo isset(Session::get('Sess')['offset']) ? Session::get('Sess')['offset'] : $offset ?>">
+                    </p>
+
+
+                    <p>
+                        <a href="tutorial#kalign"
+                           title="Controls how the color keys are aligned when both Gene Data and Compound Data "
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('align','Key Alignment:'); ?>
+
+                        <?php echo form::select('align', array('x' => 'x', 'y' => 'y'), isset(Session::get('Sess')['align']) ?
+                        Session::get('Sess')['align'] : $align); ?>
+
+                    </p>
+
+                    <p>
+                        <a href="tutorial#spos"
+                           title="Controls the position of pathview signature and color keys"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('pos','Signature
+                        Position:',array('class' => 'awesome')); ?>
+
+                        <?php echo form::select('pos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
+                        right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['pos']) ?
+                        Session::get('Sess')['pos'] : $pos); ?>
+
+                        <?php echo form::label('kpos','Key Position:'); ?>
+
+                        <?php echo form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
+                        right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['kpos']) ?
+                        Session::get('Sess')['kpos'] : $kpos); ?>
+
+                    </p>
+
+                    <input type="submit" class="styled-button-2" value="Submit" onclick="return fileCheck()"/>
+                    <input type="Reset" class="styled-button-2" value="Reset"/>
+
+                </fieldset>
+
+                <fieldset class="step">
+                    <style>
+                        .coloration {
+                            width: 150px;
+                        }
+
+                        .ex8 {
+
+                        }
+                    </style>
+
+                    <p <?php if (isset(Session::get('err_atr')['nodesun'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#nsum"
+                           title="The method name to calculate node summary given that multiple genes or compounds are mapped to it."
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('nodesum','Node Sum:',array('class' => 'awesome')); ?>
+
+
+                        <?php echo form::select('nodesun', array('sum' => 'sum', 'mean' => 'mean','median' => 'median', 'max'
+                        => 'max','max.abs' => 'max.abs' ,'random' => 'random'),isset(Session::get('Sess')['nodesun']) ?
+                        Session::get('Sess')['nodesun'] : $nsum); ?>
+
+                    </p>
+
+                    <p <?php if (isset(Session::get('err_atr')['nacolor'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?> class="coloration">
+                        <a href="tutorial#ncolor" title="Color used for NA’s or missing values in Gene Data and Compound Data.."
+                           target="_blank" class="scrollToTop" style="float:left;">
+                            <span class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        <?php echo form::label('nacolor','NA Color:'); ?>
+
+                        <?php echo form::text('nacolor',isset(Session::get('Sess')['nacolor']) ? Session::get('Sess')['nacolor'] : $ncolor); ?>
+
+                    </p>
+
+                    <p <?php if (isset(Session::get('err_atr')['clmt'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?><?php if (isset(Session::get('err_atr')['glmt'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#limit"
+                           title="This argument specifies the limit values for Gene Data and Compound Data when converting them to pseudo colors"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('limit','Gene Limit:'); ?>
+
+                        <?php echo form::text('glmt',isset(Session::get('Sess')['glmt']) ? Session::get('Sess')['glmt'] :$glmt,array('class' => 'coloration')); ?>
+
+
+                        <?php echo form::label('limit','Compound Limit:'); ?>
+
+                        <?php echo form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt'] : $clmt,array('class' => 'coloration')); ?>
+
+                    </p>
+
+
+                    <p <?php if (isset(Session::get('err_atr')['gbins'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?><?php if (isset(Session::get('err_atr')['cbins'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#bins"
+                           title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span>
+                        </a>
+                        <?php echo form::label('Bins','Gene Bins:'); ?>
+
+                        <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ? Session::get('Sess')['gbins'] : $gbins,array('class' => 'coloration')); ?>
+
+
+                        <?php echo form::label('Bins','Compound Bins:'); ?>
+
+                        <?php echo form::text('cbins',isset(Session::get('Sess')['cbins']) ? Session::get('Sess')['cbins'] : $cbins,array('class' => 'coloration')); ?>
+
+                    </p>
+
+
+                    <p <?php if (isset(Session::get('err_atr')['glow'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?><?php if (isset(Session::get('err_atr')['clow'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#color"
+                           title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('glow','Gene Low:'); ?>
+
+                        <?php echo form::text('glow',isset(Session::get('Sess')['glow']) ? Session::get('Sess')['glow'] :$glow,array('class' => 'coloration')); ?>
+
+                        <?php echo form::label('clow','Compound Low:'); ?>
+
+                        <?php echo form::text('clow',isset(Session::get('Sess')['clow']) ? Session::get('Sess')['clow'] :
+                        $clow,array('class' => 'coloration')); ?>
+
+                    </p>
+
+                    <p <?php if (isset(Session::get('err_atr')['gmid'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?><?php if (isset(Session::get('err_atr')['cmid'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#color"
+                           title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('gmid','Gene Mid:'); ?>
+
+                        <?php echo form::text('gmid',isset(Session::get('Sess')['gmid']) ? Session::get('Sess')['gmid'] :
+                        $gmid,array('class' => 'coloration')); ?>
+
+
+                        <?php echo form::label('cmid','Compound Mid:'); ?>
+
+                        <?php echo form::text('cmid',isset(Session::get('Sess')['cmid']) ? Session::get('Sess')['cmid'] :
+                        $cmid,array('class' => 'coloration')); ?>
+
+                    </p>
+
+                    <p <?php if (isset(Session::get('err_atr')['ghigh'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?><?php if (isset(Session::get('err_atr')['chigh'])) {
+                        echo "style='background-color:#DA6666;'";
+                    } ?>>
+                        <a href="tutorial#color"
+                           title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
+                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <span class="glyphicon glyphicon-info-sign"></span></a>
+                        <?php echo form::label('ghigh','Gene High:'); ?>
+
+                        <?php echo form::text('ghigh',isset(Session::get('Sess')['ghigh']) ? Session::get('Sess')['ghigh'] :$ghigh,array('class' => 'coloration')); ?>
+
+
+                        <?php echo form::label('chigh','Compound High:'); ?>
+
+                        <?php echo form::text('chigh',isset(Session::get('Sess')['chigh']) ? Session::get('Sess')['chigh'] :$chigh,array('class' => 'coloration')); ?></p>
+
+                    <input type="submit" class="styled-button-2" value="Submit" onclick="return fileCheck()"/>
+                    <input type="Reset" class="styled-button-2" value="Reset"/>
+                </fieldset>
+
+                <fieldset class="step">
+
+                    <p class="success">
+                        <b>Ready to go?</b>
+                    </p>
+
+                    <input type="submit" class="styled-button-2" value="Submit" data-target="#myModal"
+                           onclick="return fileCheck()"/>
+                    <input type="Reset" class="styled-button-2" value="Reset"/>
+                </fieldset>
+
+
+                <?php echo form::close(); ?>
+
+
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div id='PleaseWait' style='display: none;'>
+                                <img src='/images/loading.gif'/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php /* <style>
+                     #load {
+                         position: absolute;
+                         background: white url('http://sampsonresume.com/labs/pIkfp.gif') no-repeat center center;
+                         top: 0;
+                         left: 0;
+                         width: 100%;
+                         height: 100%;
+                     }
+                 </style>
+                 <img src="/images/loading.gif" id="gif" style="display: block; margin: 0 auto; width: 100px; visibility: hidden;">
+                 <script type="text/javascript">
+                     $('#anal_form').submit(function() {
+                         var html = '<div id="load"></div>';
+                         $('section').append(html);
+                         setTimeout(function() {
+                             $('#load').remove();
+                         }, 2000);
+                     });
+                 </script>*/ ?>
+            </div>
+
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

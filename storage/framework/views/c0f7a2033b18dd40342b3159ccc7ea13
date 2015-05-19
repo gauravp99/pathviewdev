@@ -1,0 +1,265 @@
+<?php $__env->startSection('content'); ?>
+<div class="content">
+    <div class="col-sm-12">
+
+        <h2 class="marketing-hero-heading">
+            Pathview Tool set for pathway based data integration and visualization
+        </h2>
+    <div class="marketing col-sm-8">
+        <div class="marketing-hero-inner">
+            <hgroup>
+                <div class="col-sm-12">
+                <img src="images/fullimage1.png" height="500" width="750">
+                </div>
+                <div class="col-sm-12">
+                <h3 class="marketing-hero-subheading">Application to upload your gene data and generate pathview</h3>
+                <p class="marketing-hero-cta">
+                    <a class="marketing-hero-cta-link cta-link" href="/guest">
+                        Get started here
+                    </a>
+                </p>
+                <p class="marketing-hero-subtext">
+                    A UNC Chralotte Bioinformatics Project
+                </p>
+                    </div>
+
+
+            </hgroup>
+        </div>
+
+            <div class="homepage-content-inner col-sm-12">
+                <div class="homepage-content-image-container">
+                    <div class="col-sm-12 ">
+                        <h2 class="homepage-heading">About</h2>
+                        <p class="content" >
+                            Pathview is a tool set for pathway based data integration and
+                            visualization. It maps, integrates and renders a wide variety of
+                            biological data on relevant pathway graphs.
+                            Pathview Web Interface provides easy access, and generates high quality,
+                            hyperlinked pathway graphs with user data.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+        <div class="homepage-content-inner col-sm-12">
+            <div class="homepage-content-image-container">
+                <div class="col-sm-8 ">
+                    <h2 class="homepage-heading">Citations</h2>
+                    <div>
+                        <p class="content" >Luo W, Brouwer C. Pathview: an R/Biocondutor package for pathway-based data integration and visualization. Bioinformatics, 2013, 29(14):1830-1831, doi:
+                            <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830" target="_blank">
+                                <u>10.1093/bioinformatics/btt285</u></a>
+                        </p>
+                    </div>
+
+
+
+                </div>
+                <div class="homepage-content-inner col-sm-4 ">
+                    <div class="col-sm-12 col-md-offset-2">
+                        <a class="homepage-heading" href="mailto:luo_weijun@yahoo.com"><img src="images/plane.png" width="30%"></a>
+                        <h4 >Project Contact: <a href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></h4>
+
+                        <h4 > Report Issues : <a href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a> </h4>
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+    </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">Login</div>
+                <div class="panel-body">
+                    <?php if(count($errors) > 0): ?>
+                        <div class="alert alert-danger">
+                            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                            <ul>
+                                <?php foreach($errors->all() as $error): ?>
+                                    <li><?php echo e($error); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                        </div>
+                    <?php endif; ?>
+
+                        <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/auth/login')); ?>">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">E-Mail</label>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Password</label>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control" name="password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="remember"> Remember Me
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">Login</button>
+
+                                    <a class="btn btn-link" href="<?php echo e(url('/password/email')); ?>">Forgot Your Password?</a>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                </div>
+
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary btn-lg register" data-toggle="modal" data-target="#myModal">
+                    Click here to Register
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title " id="myModalLabel">Register</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/auth/register')); ?>">
+                                    <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Name</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="name" value="<?php echo e(old('name')); ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">E-Mail Address</label>
+                                        <div class="col-md-6">
+                                            <input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Organisation</label>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="organisation" value="<?php echo e(old('organisation')); ?>">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Password</label>
+                                        <div class="col-md-6">
+                                            <input type="password" class="form-control" name="password">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label">Confirm Password</label>
+                                        <div class="col-md-6">
+                                            <input type="password" class="form-control" name="password_confirmation">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-6 col-md-offset-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                Register
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                <h2 class="homepage-heading"> Pathway web usage</h2>
+                <section>
+                    <article>
+                        <canvas id="myChart" width="400" height="400">
+                        </canvas>
+                    </article>
+                </section>
+                    <style>
+
+                        td, th {
+                            border: 3px solid #8C8484;
+                            padding:5px;
+                            text-align: center;
+
+                        }
+                        table{
+                            border: 3px solid #8C8484;
+                            padding:5px;
+                            text-align: center;
+                            margin-top: 10px;
+                        }
+
+                        th {
+                            background-color: #205081;
+                            color: white;
+                        }
+                    </style>
+
+                    <table  border="1">
+                        <tbody>
+                        <tr>
+                            <th ><b>Today's Date</b></th><th>
+                                <b> Number of users </b>
+                            </th><th><b>Number of Pathviews Generated</b></th>
+                            <th>Distinct IP's</th></tr>
+                        <td><?php echo date("Y/m/d");?></td>
+                        <td><?php echo e($users = DB::table('users')->count()); ?></td>
+                        <td><?php echo e($analyses = DB::table('analyses')->count()); ?></td>
+                        <td><?php echo e(sizeof($ipcount = DB::table('analyses')
+                ->select(DB::raw('count(ipadd) as ipadd'))
+                ->get())); ?>
+
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+            </div>
+
+    </div>
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

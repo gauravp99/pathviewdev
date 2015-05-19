@@ -1,0 +1,19 @@
+<style>
+    .footer_title{
+        text-align: center;
+
+    }
+    .footer_content{
+        text-align: right;
+    }
+</style>
+            <div class="col-sm-12 footer">
+
+                <h5 class="footer_title"> © 2005 - Pathview Web Project
+                </h5>
+                <h5 class="footer_content">
+                    <a href="http://bioservices.uncc.edu/">Bioinformatics Services Division</a> - <a href="http://bioinformatics.uncc.edu/">Department of Bioinformatics and Genomics</a> - <a href="http://www.uncc.eu/">UNC Charlotte</a>
+                    </h5>
+
+
+           </div>
