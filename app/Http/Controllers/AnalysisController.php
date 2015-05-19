@@ -46,19 +46,20 @@ $geneid = $_POST["geneid"];
         {
 
             array_push($errors,"Entered Gene ID doesn't exist");
-            array_push($err_atr,"geneid");
+            $err_atr["geneid"]=1;
 
         }
-        $cpdid = str_replace(" ", "-", $_POST["cpdid"]);
+        $cpdid = $_POST["cpdid"];
+
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if(sizeof($val)>0)
         {
-            $argument .= "cpdid:" . $val[0]->cmpdid  . ",";
+            $argument .= "cpdid:" . str_replace(" ", "-",$val[0]->cmpdid) . ",";
         }
         else
         {
             array_push($errors,"Entered compound ID doesn't exist");
-            array_push($err_atr,"cpdid");
+            $err_atr["cpdid"]=1;
         }
 
         $species1 = explode("-", $_POST["species"]);
@@ -72,7 +73,7 @@ $geneid = $_POST["geneid"];
         else
         {
             array_push($errors,"Entered Species ID doesn't exist");
-            array_push($err_atr,"species");
+            $err_atr["species"]=1;
         }
 
         $suffix = str_replace(" ", "-", $_POST["suffix"]);
@@ -95,7 +96,7 @@ $geneid = $_POST["geneid"];
             else
             {
                 array_push($errors,"Entered Species ID doesn't exist");
-                array_push($err_atr,"species");
+                $err_atr["species"]=1;
             }
         }
         else
@@ -110,7 +111,7 @@ $geneid = $_POST["geneid"];
         else
         {
             array_push($errors,"Entered pathway ID doesn't exist");
-            array_push($err_atr,"pathway");
+            $err_atr["pathway"]=1;
         }
         #$argument .= "pathway:" . substr($path[0], 0, 5) . ",";
         if (isset($_POST["kegg"]))
@@ -156,7 +157,7 @@ $geneid = $_POST["geneid"];
         if (preg_match('/[a-z]+/', $_POST["offset"]))
         {
             array_push($errors,"offset should be Numeric");
-            array_push($err_atr,"offset");
+            $err_atr["offset"]=1;
         }
         else {
             $argument .= "offset:" . $_POST["offset"] . ",";
@@ -169,11 +170,11 @@ $geneid = $_POST["geneid"];
                 if (Input::hasFile('gfile')) {
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                     array_push($errors, "glimit should be Numeric");
-                    array_push($err_atr,"glmt");
+                    $err_atr["glmt"]=1;
                 }
                 if (preg_match('/[a-z]+/', $_POST["gbins"])) {
                     array_push($errors, "gbins should be Numeric");
-                    array_push($err_atr,"gbins");
+                    $err_atr["gbins"]=1;
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
@@ -185,11 +186,11 @@ $geneid = $_POST["geneid"];
             {
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                     array_push($errors, "glimit should be Numeric");
-                    array_push($err_atr,"glmt");
+                    $err_atr["glmt"]=1;
                 }
                 if (preg_match('/[a-z]+/', $_POST["gbins"])) {
                     array_push($errors, "gbins should be Numeric");
-                    array_push($err_atr,"gbins");
+                    $err_atr["gbins"]=1;
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
@@ -205,11 +206,11 @@ $geneid = $_POST["geneid"];
                 if (Input::hasFile('cfile')) {
                     if (preg_match('/[a-z]+/', $_POST["clmt"])) {
                         array_push($errors, "climit should be Numeric");
-                        array_push($err_atr,"clmt");
+                       $err_atr["clmt"]=1;
                     }
                     if (preg_match('/[a-z]+/', $_POST["cbins"])) {
                         array_push($errors, "cbins should be Numeric");
-                        array_push($err_atr,"cbins");
+                        $err_atr["cbins"]=1;
                     }
                     $argument .= "clmt:" . $_POST["clmt"] . ",";
                     $argument .= "cbins:" . $_POST["cbins"] . ",";
@@ -222,11 +223,11 @@ $geneid = $_POST["geneid"];
             {
                 if (preg_match('/[a-z]+/', $_POST["clmt"])) {
                     array_push($errors, "climit should be Numeric");
-                    array_push($err_atr,"clmt");
+                    $err_atr["clmt"]=1;
                 }
                 if (preg_match('/[a-z]+/', $_POST["cbins"])) {
                     array_push($errors, "cbins should be Numeric");
-                    array_push($err_atr,"cbins");
+                    $err_atr["cbins"]=1;
                 }
                 $argument .= "clmt:" . $_POST["clmt"] . ",";
                 $argument .= "cbins:" . $_POST["cbins"] . ",";
@@ -254,7 +255,7 @@ $geneid = $_POST["geneid"];
         $gene_extension = file_ext($filename);
         if($gene_extension != "txt" && $gene_extension != "csv" && $gene_extension != "rda"){
             array_push($errors, "Gene data file extension is not supported( use .txt,.csv,.rda)");
-            array_push($err_atr,"gfile");
+            $err_atr["gfile"]=1;
         }}
 
         if (Input::hasFile('cfile')) {
@@ -263,7 +264,7 @@ $geneid = $_POST["geneid"];
 
             if ($cpd_extension != "txt" && $cpd_extension != "csv" && $cpd_extension != "rda") {
                 array_push($errors, "compound data file extension is not supported( use .txt,.csv,.rda)");
-                array_push($err_atr,"cfile");
+                $err_atr["cfile"]=1;
             }
         }
 if(sizeof($errors)>0)

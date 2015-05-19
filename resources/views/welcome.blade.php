@@ -13,6 +13,7 @@
             //canvas1.width = document.getElementById("graph").offsetWidth;
         }
     </script>
+
     <div class="content">
         <div class="rows">
             <div class="col-sm-12">
