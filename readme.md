@@ -1,1 +1,1 @@
-## Pathway PHP web applications
+## Pathway PHP web application
