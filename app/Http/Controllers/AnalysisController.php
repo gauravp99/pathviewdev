@@ -34,7 +34,10 @@ class AnalysisController extends Controller
 $errors =array();
         $err_atr = array();
         $argument = "";
-
+        $time = time();
+        $email="";
+        $path_id="";
+        $pathway_array1=array();
 $geneid = $_POST["geneid"];
         //check for geneid entered is currect or notlike \"'+$_POST["geneid"]+'%\" LIMIT 1'
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
@@ -62,10 +65,9 @@ $geneid = $_POST["geneid"];
             $err_atr["cpdid"]=1;
         }
 
+        $spe = substr($_POST["species"], 0, 3);
+        $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe' LIMIT 1" ));
         $species1 = explode("-", $_POST["species"]);
-        $spe = substr($species1[0], 0, 3);
-        $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe%' LIMIT 1" ));
-
         if(sizeof($val)>0)
         {
             $argument .= "species:" . $val[0]->species_id . ",";
@@ -77,6 +79,7 @@ $geneid = $_POST["geneid"];
         }
 
         $suffix = str_replace(" ", "-", $_POST["suffix"]);
+        $suffix = str_replace(",", "-", $_POST["suffix"]);
         $argument .= "suffix:" . $suffix . ",";
 
 
@@ -87,7 +90,7 @@ $geneid = $_POST["geneid"];
 
             $path_id =substr($path[0], 3, 8);
             $spe = substr($path[0], 0, 3);
-            $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe%' LIMIT 1" ));
+            $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe' LIMIT 1" ));
 
             if(sizeof($val)>0)
             {
@@ -103,7 +106,7 @@ $geneid = $_POST["geneid"];
         {
             $path_id =substr($path[0], 0, 5);
         }
-        $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id%' LIMIT 1" ));
+        $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id' LIMIT 1" ));
         if(sizeof($val)>0)
         {
             $argument .= "pathway:" . $val[0]->pathway_id . ",";
@@ -165,7 +168,7 @@ $geneid = $_POST["geneid"];
         $argument .= "align:" . $_POST["align"] . ",";
 
        # if (Input::hasFile('gfile')) {
-        if(isset($_POST["gcheck"])){
+
             if($anal_type=="newAnalysis") {
                 if (Input::hasFile('gfile')) {
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
@@ -182,8 +185,7 @@ $geneid = $_POST["geneid"];
                 $argument .= "gmid:" . $_POST["gmid"] . ",";
                 $argument .= "ghigh:" . $_POST["ghigh"] . ",";
             }}
-            else
-            {
+            else if(isset($_POST["gcheck"])){
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                     array_push($errors, "glimit should be Numeric");
                     $err_atr["glmt"]=1;
@@ -198,10 +200,9 @@ $geneid = $_POST["geneid"];
                 $argument .= "gmid:" . $_POST["gmid"] . ",";
                 $argument .= "ghigh:" . $_POST["ghigh"] . ",";
             }
-        }
 
         #if (Input::hasFile('cfile')) {
-        if(isset($_POST["cpdcheck"])){
+
             if($anal_type=="newAnalysis") {
                 if (Input::hasFile('cfile')) {
                     if (preg_match('/[a-z]+/', $_POST["clmt"])) {
@@ -219,9 +220,8 @@ $geneid = $_POST["geneid"];
                     $argument .= "chigh:" . $_POST["chigh"] . ",";
                 }
             }
-            else
-            {
-                if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+            else  if(isset($_POST["cpdcheck"])){
+            if (preg_match('/[a-z]+/', $_POST["clmt"])) {
                     array_push($errors, "climit should be Numeric");
                     $err_atr["clmt"]=1;
                 }
@@ -234,7 +234,7 @@ $geneid = $_POST["geneid"];
                 $argument .= "clow:" . $_POST["clow"] . ",";
                 $argument .= "cmid:" . $_POST["cmid"] . ",";
                 $argument .= "chigh:" . $_POST["chigh"] . ",";
-            }
+
         }
 
             $argument .= "nsum:". $_POST["nodesun"].",";
@@ -284,7 +284,7 @@ if(sizeof($errors)>0)
         ->with('Sess',$Session);;}
     else if(strcmp($anal_type,'exampleAnalysis2')==0)
     {
-        return Redirect::to('example1')
+        return Redirect::to('example2')
             ->with('err',$errors)
             ->with('err_atr',$err_atr)
             ->with('Sess',$Session);
@@ -292,6 +292,13 @@ if(sizeof($errors)>0)
     else if(strcmp($anal_type,'exampleAnalysis3')==0)
     {
         return Redirect::to('example3')
+            ->with('err',$errors)
+            ->with('err_atr',$err_atr)
+            ->with('Sess',$Session);;
+    }
+    else if(strcmp($anal_type,'newAnalysis')==0)
+    {
+        return Redirect::to('analysis')
             ->with('err',$errors)
             ->with('err_atr',$err_atr)
             ->with('Sess',$Session);;
@@ -346,7 +353,7 @@ if(sizeof($errors)>0)
         if ($anal_type == "newAnalysis") {
 
             if (Input::hasFile('gfile')) {
-
+                $pathidx = 1;
                 $file = Input::file('gfile');
                 $filename = Input::file('gfile')->getClientOriginalName();
                 $destFile = public_path();
@@ -397,18 +404,44 @@ if(sizeof($errors)>0)
                         }
                     }
 
-                    $pathidx = 1;
+
+                    $pathway_array=array();
                     $path = "pathway" . $pathidx;
                     while (isset($_POST[$path])) {
                         $path1 = explode("-", $_POST["pathway$pathidx"]);
-                        $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);
+
+                        if(strcmp(substr($path1[0], 0, 5),$path_id)!=0)
+                        {
+
+                            array_push($pathway_array,substr($path1[0], 0, 5));
+                        }
+                       /* $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);*/
+                        $pathway_array1 = array_unique($pathway_array);
 
                         $pathidx++;
                         $path = "pathway" . $pathidx;
                     }
+                    $pathcounter=1;
+                    foreach($pathway_array1 as $val)
+                        {
+                            $path_id12 = substr($path1[0], 0, 5);
+                            $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id12' LIMIT 1" ));
+                            if(sizeof($val)>0)
+                            {
+                                $argument .= "pathway$pathcounter:" . $val[0]->pathway_id . ",";
+                                $pathcounter++;
+                            }
+                            else
+                            {
+                                array_push($errors,"Entered pathway ID doesn't exist");
+                                $err_atr["pathway"]=1;
+                            }
+
+
+                        }
 
                 }
-                $argument .= ",pathidx:" . ($pathidx);
+                $argument .= ",pathidx:" . ($pathcounter);
             } else {
                 return view('analysis.NewAnalysis');
             }
@@ -431,11 +464,7 @@ if(sizeof($errors)>0)
                         if (!file_exists("all/$email"))
                             mkdir("all/$email");
                     }
-                    $time = time();
 
-                    if(sizeof($errors)>0) {
-                        return $errors;#view('analysis.NewAnalysis')->with("error"->$errors);
-                    }
                     mkdir("all/$email/$time", 0755, true);
 
 
@@ -467,19 +496,31 @@ if(sizeof($errors)>0)
                         }
                     }
 
-                    $pathidx = 1;
+                    $pathway_array=array();
+                    $pathidx=1;
                     $path = "pathway" . $pathidx;
                     while (isset($_POST[$path])) {
                         $path1 = explode("-", $_POST["pathway$pathidx"]);
-                        $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);
+
+                        if(strcmp(substr($path1[0], 0, 5),$path_id)!=0)
+                        {
+                            array_push($pathway_array,substr($path1[0], 0, 5));
+                        }
+                        /* $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);*/
+                        $pathway_array1 = array_unique($pathway_array);
 
                         $pathidx++;
                         $path = "pathway" . $pathidx;
                     }
-
+                    $pathcounter=1;
+                    foreach($pathway_array1 as $val)
+                    {
+                        $argument .= ",pathway$pathcounter:" . $val;
+                        $pathcounter++;
+                    }
                 }
 
-                $argument .= ",pathidx:" . ($pathidx);
+                $argument .= ",pathidx:" . ($pathcounter);
             } else {
                 return view('analysis.NewAnalysis');
             }
@@ -533,18 +574,30 @@ if(sizeof($errors)>0)
                         }
                     }
 
-                    $pathidx = 1;
+                    $pathway_array=array();
+                    $pathidx=1;
                     $path = "pathway" . $pathidx;
                     while (isset($_POST[$path])) {
                         $path1 = explode("-", $_POST["pathway$pathidx"]);
-                        $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);
+
+                        if(strcmp(substr($path1[0], 0, 5),$path_id)!=0)
+                        {
+                            array_push($pathway_array,substr($path1[0], 0, 5));
+                        }
+                        /* $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);*/
+                        $pathway_array1 = array_unique($pathway_array);
 
                         $pathidx++;
                         $path = "pathway" . $pathidx;
                     }
-
+                    $pathcounter=1;
+                    foreach($pathway_array1 as $val)
+                    {
+                        $argument .= ",pathway$pathcounter:" . $val;
+                        $pathcounter++;
+                    }
                 }
-                $argument .= ",pathidx:" . ($pathidx);
+                $argument .= ",pathidx:" . ($pathcounter);
             } else {
                 return view('analysis.NewAnalysis');
             }
@@ -571,7 +624,6 @@ if(sizeof($errors)>0)
             return $ipaddress;
         }
 
-        #echo $argument;
         exec("Rscript my_Rscript.R $argument  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         $date = new \DateTime;
