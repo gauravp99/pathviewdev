@@ -7,7 +7,7 @@
         //echo $destFile;
         //$directory = $destFile;//$_SESSION['workingdir'];
         global $dirct;
-        $direct= $directory;
+        $direct = $directory;
         $contents = scandir($directory);
 
         if ($contents) {
@@ -100,145 +100,143 @@
                 }
             }
 
-                chdir($directory);
-            $rootPath = realpath($directory);
+        chdir($directory);
+        $rootPath = realpath($directory);
 
-            // Initialize archive object
-            $zip = new ZipArchive();
-            $zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        // Initialize archive object
+        $zip = new ZipArchive();
+        $zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
 
-            // Create recursive directory iterator
-            /** @var SplFileInfo[] $files */
-            $files = new RecursiveIteratorIterator(
-                    new RecursiveDirectoryIterator($rootPath),
-                    RecursiveIteratorIterator::LEAVES_ONLY
-            );
+        // Create recursive directory iterator
+        /** @var SplFileInfo[] $files */
+        $files = new RecursiveIteratorIterator(
+                new RecursiveDirectoryIterator($rootPath),
+                RecursiveIteratorIterator::LEAVES_ONLY
+        );
 
-            foreach ($files as $name => $file)
-            {
-                // Skip directories (they would be added automatically)
-                if (!$file->isDir())
-                {
-                    // Get real and relative path for current file
-                    $filePath = $file->getRealPath();
-                    $relativePath = substr($filePath, strlen($rootPath) + 1);
+        foreach ($files as $name => $file) {
+            // Skip directories (they would be added automatically)
+            if (!$file->isDir()) {
+                // Get real and relative path for current file
+                $filePath = $file->getRealPath();
+                $relativePath = substr($filePath, strlen($rootPath) + 1);
 
-                    // Add current file to archive
-                    $zip->addFile($filePath, $relativePath);
-                }
+                // Add current file to archive
+                $zip->addFile($filePath, $relativePath);
             }
+        }
 
-            // Zip archive will be created only after closing object
-                #print_r($zip);
-            $zip->close();
-            echo "<h2 class='alert alert-info'>Click here to download zipped output files generated <a  href=\"". $directory1. "file.zip\">Zipped Output file</a><h2>";
+        // Zip archive will be created only after closing object
+        #print_r($zip);
+        $zip->close();
+        echo "<h2 class='alert alert-info'>Click here to download zipped output files generated <span class='label label-info'><a  href=\"" . $directory1 . "file.zip\">Zipped Output file</a></span><h2>";
 
-            $data['path'] = $direct;
+        $data['path'] = $direct;
 
-            if(Auth::user())
-            {
+        if(Auth::user())
+        {
 
-                $data['content'] = "?directory=".$directory."&dir=".$directory1."&id=".$_SESSION['id']."&suffix=".$_SESSION['suffix'];
-                $data['name'] = Auth::user()->name;
-                $data['time'] = date('l jS \of F Y h:i:s A');
-                $data['anal_type'] = $_SESSION['anal_type'];
-                Mail::queue('emails.test', $data, function($message) use ($data) {
+            $data['content'] = "?directory=" . $directory . "&dir=" . $directory1 . "&id=" . $_SESSION['id'] . "&suffix=" . $_SESSION['suffix'];
+            $data['name'] = Auth::user()->name;
+            $data['time'] = date('l jS \of F Y h:i:s A');
+            $data['anal_type'] = $_SESSION['anal_type'];
+            Mail::queue('emails.test', $data, function ($message) use ($data) {
                 try {
-                    $user =Auth::user();
+                    $user = Auth::user();
                     #$file =$data['path'] . 'file' . '.zip';
                     #$message->attach($file, array('as' => 'Pathway-files', 'mime' => 'application/zip'));
 
-                    $message->to($user->email,$user->name)->subject('Pathway success');
+                    $message->to($user->email, $user->name)->subject('Pathway success');
 
                     echo "<br/><h2 class='alert alert-success'>Mail sent to your email id . $user->email. check your mail to access all output files generated<h2>";
                 } catch (Exception $e) {
-                  echo "Sorry Not able to send the files in mail";
+                    echo "Sorry Not able to send the files in mail";
                 }
             });
-           } else{
-                echo "<br/><h2 class='alert alert-info'>Register to save the pathways generated and lot more.It is free.<h2>";?>
-            <div class="col-sm-4 col-md-offset-2">
-                <button type="button" class="  btn btn-primary btn-lg register" style="border-radius: 1px;"
-                        data-toggle="modal" data-target="#myModal">
-                    Click here to Register
-                </button>
-            </div>
+        } else{
+        echo "<br/><h2 class='alert alert-info'>Register to save the pathways generated and lot more.It is free.<h2>";?>
+        <div class="col-sm-4 col-md-offset-2">
+            <button type="button" class="  btn btn-primary btn-lg register" style="border-radius: 1px;"
+                    data-toggle="modal" data-target="#myModal">
+                Click here to Register
+            </button>
+        </div>
 
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title " id="myModalLabel">Register</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" role="form" method="POST"
-                                  action="<?php echo e(url('/auth/register')); ?>">
-                                <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title " id="myModalLabel">Register</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form" method="POST"
+                              action="<?php echo e(url('/auth/register')); ?>">
+                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
 
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Name</label>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Name</label>
 
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="name"
-                                               value="<?php echo e(old('name')); ?>">
-                                    </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="name"
+                                           value="<?php echo e(old('name')); ?>">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">E-Mail Address</label>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">E-Mail</label>
 
-                                    <div class="col-md-6">
-                                        <input type="email" class="form-control" name="email"
-                                               value="<?php echo e(old('email')); ?>">
-                                    </div>
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email"
+                                           value="<?php echo e(old('email')); ?>">
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Organisation</label>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Organisation</label>
 
-                                    <div class="col-md-6">
-                                        <input type="text" class="form-control" name="organisation"
-                                               value="<?php echo e(old('organisation')); ?>">
-                                    </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" name="organisation"
+                                           value="<?php echo e(old('organisation')); ?>">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Password</label>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Password</label>
 
-                                    <div class="col-md-6">
-                                        <input type="password" class="form-control" name="password">
-                                    </div>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control" name="password">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Confirm Password</label>
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">Confirm Password</label>
 
-                                    <div class="col-md-6">
-                                        <input type="password" class="form-control"
-                                               name="password_confirmation">
-                                    </div>
+                                <div class="col-md-6">
+                                    <input type="password" class="form-control"
+                                           name="password_confirmation">
                                 </div>
+                            </div>
 
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            Register
-                                        </button>
-                                    </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Register
+                                    </button>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                            </button>
-                        </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <?php
+        <?php
         }
         ?>
     </div>

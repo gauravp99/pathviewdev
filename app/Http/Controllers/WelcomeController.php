@@ -94,6 +94,8 @@ class WelcomeController extends Controller
             $array[$id] = new stdClass();
             $array[$id]->id = $id;
             $array[$id]->Month = $mon;
+            $array[$id]->ip = $bioc_ip[$id];
+            $array[$id]->download = $bioc_downloads[$id];
             $id = $id + 1;
         }
 
@@ -103,18 +105,30 @@ class WelcomeController extends Controller
             return $aDate->getTimestamp() - $bDate->getTimestamp();
         });
         $sorted_bioc_months = array();
+        $sorted_bioc_ip = array();
+        $sorted_bioc_download = array();
         foreach ($array as $mon) {
             array_push($sorted_bioc_months, $mon->Month);
+            array_push($sorted_bioc_ip, $mon->ip);
+            array_push($sorted_bioc_download, $mon->download);
 
+
+        }
+#to get lst 12 months statistics only
+        $sorted_bioc_month_12 = array();
+
+        $total_months = sizeof($sorted_bioc_months) - 1;
+        for ($i = $total_months; $i > $total_months - 12; $i = $i - 1) {
+            array_push($sorted_bioc_month_12, $sorted_bioc_months[$i]);
         }
 
 
         return view('welcome')->with('usage', $usage)
             ->with('ip', $ip)
             ->with('months', $months)
-            ->with('bioc_downloads', $bioc_downloads)
-            ->with('bioc_ip', $bioc_ip)
-            ->with('bioc_months', $sorted_bioc_months)
+            ->with('bioc_downloads', $sorted_bioc_download)
+            ->with('bioc_ip', $sorted_bioc_ip)
+            ->with('bioc_months', array_reverse($sorted_bioc_month_12))
             ->with('bioc_dnld_cnt', $count_bioc_downlds->downloads)
             ->with('bioc_ip_cnt', $count_bioc_ips->ip)
             ->with('web_dnld_cnt', $count_web_downlds->downloads)

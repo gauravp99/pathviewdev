@@ -110,7 +110,7 @@
                         canvasBordersColor: "#205081",
                         scaleOverride: true,
                         scaleSteps: 6,
-                        scaleStepWidth:200 ,
+                        scaleStepWidth: 200,
                         scaleStartValue: 250,
                         scaleLabel: "<%=value%>",
                         legend: true,
@@ -137,6 +137,7 @@
                     <div class="panel-body">
                         <div class="panel-body">
                             <p style="text-align:left;">Pathview web</p>
+
                             <div id="graph" class="col-md-12">
                                 <section>
 
@@ -148,13 +149,15 @@
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Graphs: </td><td><?php echo $web_dnld_cnt ?></td>
+                                            <td>Graphs:</td>
+                                            <td><?php echo $web_dnld_cnt ?></td>
                                             <td>
                                                 <div style="width:80%;background-color:#D4DBE0;">
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's: </td>  <td><?php echo $web_ip_cnt ?></td>
+                                            <td>IP's:</td>
+                                            <td><?php echo $web_ip_cnt ?></td>
                                         </tr>
                                     </table>
                                     <article>
@@ -164,8 +167,8 @@
                                 </section>
                             </div>
                             <p style="text-align:left;"> Bioc Package</p>
-                            <div id="graph1" class="col-md-12">
 
+                            <div id="graph1" class="col-md-12">
 
 
                                 <section>
@@ -178,13 +181,15 @@
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Downloads:</td><td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
+                                            <td>Downloads:</td>
+                                            <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
                                             <td>
                                                 <div style="width:80%;background-color:#D4DBE0;">
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's:</td>   <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
+                                            <td>IP's:</td>
+                                            <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
 
                                         </tr>
 
@@ -194,9 +199,9 @@
                                         </canvas>
                                     </article>
                                 </section>
-</div>
+                            </div>
 
-                    </div>
+                        </div>
 
 
                 </div>
@@ -207,38 +212,38 @@
         </div>
 
 
-                <script>
-                    var canvas = document.getElementsByTagName('canvas')[0];
-                    canvas.width = document.getElementById("graph").offsetWidth;
-                    var canvas1 = document.getElementsByTagName('canvas')[1];
-                    canvas1.width = document.getElementById("graph1").offsetWidth;
+            <script>
+                var canvas = document.getElementsByTagName('canvas')[0];
+                canvas.width = document.getElementById("graph").offsetWidth;
+                var canvas1 = document.getElementsByTagName('canvas')[1];
+                canvas1.width = document.getElementById("graph1").offsetWidth;
 
 
-                </script>
+            </script>
 
-                <style>
+            <style>
 
 
-                    td, th {
-                        padding: 5px;
-                        text-align: center;
+                td, th {
+                    padding: 5px;
+                    text-align: center;
 
-                    }
+                }
 
-                    table {
-                        border: 3px solid #8C8484;
-                        padding: 5px;
-                        text-align: center;
-                        margin-top: 10px;
-                    }
+                table {
+                    border: 3px solid #8C8484;
+                    padding: 5px;
+                    text-align: center;
+                    margin-top: 10px;
+                }
 
-                    th {
-                        background-color: #205081;
-                        color: white;
-                    }
-                </style>
+                th {
+                    background-color: #205081;
+                    color: white;
+                }
+            </style>
 
-</div>
+        </div>
     </div>
 
 
