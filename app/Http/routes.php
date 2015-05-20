@@ -169,7 +169,7 @@ Route::get('about', function () {
         ->with('usage', $usage)
         ->with('ip', $ip)
         ->with('months', $months)
-        ->with('bioc_downloads', array_reverse($sorted_bioc_download))
+        ->with('bioc_downloads', array_reverse($sorted_bioc_download_12))
         ->with('bioc_ip', array_reverse($sorted_bioc_ip_12))
         ->with('bioc_months', array_reverse($sorted_bioc_month_12))
         ->with('bioc_dnld_cnt', $count_bioc_downlds->downloads)
