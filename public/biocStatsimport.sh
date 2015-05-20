@@ -11,6 +11,7 @@ month=`date +'%B'`
 
 year=`date +'%Y'`
 
+echo "delete from biocstatistics where month = '$month' and year = '$year';"|mysql -uroot -ptcs@YASH pathway
 echo "insert into biocstatistics values('$month','$year',$ipadd,$downloads);" |mysql -uroot -ptcs@YASH pathway
 
 rm pathview.html
