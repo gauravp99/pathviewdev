@@ -66,14 +66,14 @@ Route::get('about', function () {
     $usage = array();
     $ip = array();
     $months = array();
-    array_push($usage, 1);
-    array_push($usage, 1);
-    array_push($usage, 1);
-    array_push($usage, 1);
-    array_push($ip, 1);
-    array_push($ip, 1);
-    array_push($ip, 1);
-    array_push($ip, 1);
+    /*  array_push($usage, 1);
+      array_push($usage, 1);
+      array_push($usage, 1);
+      array_push($usage, 1);
+      array_push($ip, 1);
+      array_push($ip, 1);
+      array_push($ip, 1);
+      array_push($ip, 1);*/
 
     $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
     foreach ($val as $month) {
@@ -81,8 +81,8 @@ Route::get('about', function () {
         array_push($ip, $month->ipadd_count);
         array_push($months, $month->date);
     }
-    if (sizeof($months) <= 6)
-        $months = array("Dec-14", "Jan-15", "Feb-15", "Mar-15", "April-15", "May-15");
+    /*  if (sizeof($months) <= 6)
+          $months = array("Dec-14", "Jan-15", "Feb-15", "Mar-15", "April-15", "May-15");*/
 
     //bio conducter statistics for package
 
