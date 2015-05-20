@@ -30,8 +30,9 @@ class AnalysisController extends Controller
     {
 
 
-
-$errors =array();
+        $errors = array();
+        $genecolor = array();
+        $cmpdcolor = array();
         $err_atr = array();
         $argument = "";
         $time = time();
@@ -78,8 +79,9 @@ $geneid = $_POST["geneid"];
             $err_atr["species"]=1;
         }
 
-        $suffix = str_replace(" ", "-", $_POST["suffix"]);
-        $suffix = str_replace(",", "-", $_POST["suffix"]);
+        /*        $suffix = str_replace(" ", "-", $_POST["suffix"]);
+                $suffix = str_replace(",", "-", $_POST["suffix"]);*/
+        $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST["suffix"]);
         $argument .= "suffix:" . $suffix . ",";
 
 
@@ -181,9 +183,14 @@ $geneid = $_POST["geneid"];
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
-                $argument .= "glow:" . $_POST["glow"] . ",";
-                $argument .= "gmid:" . $_POST["gmid"] . ",";
-                $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+                    $argument .= "glow:" . '#' . $_POST["glow"] . ",";
+                    $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
+                    $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
+                    $genecolor["glow"] = $_POST["glow"];
+                    $genecolor["gmid"] = $_POST["gmid"];
+                    $genecolor["ghigh"] = $_POST["ghigh"];
+
+
             }}
             else if(isset($_POST["gcheck"])){
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
@@ -196,9 +203,13 @@ $geneid = $_POST["geneid"];
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
-                $argument .= "glow:" . $_POST["glow"] . ",";
-                $argument .= "gmid:" . $_POST["gmid"] . ",";
-                $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+                $argument .= "glow:" . '#' . $_POST["glow"] . ",";
+                $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
+                $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
+                $genecolor["glow"] = $_POST["glow"];
+                $genecolor["gmid"] = $_POST["gmid"];
+                $genecolor["ghigh"] = $_POST["ghigh"];
+
             }
 
         #if (Input::hasFile('cfile')) {
@@ -215,9 +226,12 @@ $geneid = $_POST["geneid"];
                     }
                     $argument .= "clmt:" . $_POST["clmt"] . ",";
                     $argument .= "cbins:" . $_POST["cbins"] . ",";
-                    $argument .= "clow:" . $_POST["clow"] . ",";
-                    $argument .= "cmid:" . $_POST["cmid"] . ",";
-                    $argument .= "chigh:" . $_POST["chigh"] . ",";
+                    $argument .= "clow:" . '#' . $_POST["clow"] . ",";
+                    $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
+                    $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+                    $genecolor["clow"] = $_POST["clow"];
+                    $genecolor["cmid"] = $_POST["cmid"];
+                    $genecolor["chigh"] = $_POST["chigh"];
                 }
             }
             else  if(isset($_POST["cpdcheck"])){
@@ -231,9 +245,12 @@ $geneid = $_POST["geneid"];
                 }
                 $argument .= "clmt:" . $_POST["clmt"] . ",";
                 $argument .= "cbins:" . $_POST["cbins"] . ",";
-                $argument .= "clow:" . $_POST["clow"] . ",";
-                $argument .= "cmid:" . $_POST["cmid"] . ",";
-                $argument .= "chigh:" . $_POST["chigh"] . ",";
+                $argument .= "clow:" . '#' . $_POST["clow"] . ",";
+                $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
+                $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+                $genecolor["clow"] = $_POST["clow"];
+                $genecolor["cmid"] = $_POST["cmid"];
+                $genecolor["chigh"] = $_POST["chigh"];
 
         }
 
@@ -268,6 +285,7 @@ $geneid = $_POST["geneid"];
                 $err_atr["cfile"]=1;
             }
         }
+
 if(sizeof($errors)>0)
 {
 
@@ -282,27 +300,28 @@ if(sizeof($errors)>0)
     return Redirect::to('example1')
         ->with('err',$errors)
         ->with('err_atr',$err_atr)
-        ->with('Sess',$Session);;}
+        ->with('Sess', $Session)->with('genecolor', $genecolor);
+    }
     else if(strcmp($anal_type,'exampleAnalysis2')==0)
     {
         return Redirect::to('example2')
             ->with('err',$errors)
             ->with('err_atr',$err_atr)
-            ->with('Sess',$Session);
+            ->with('Sess', $Session)->with('genecolor', $genecolor);
     }
     else if(strcmp($anal_type,'exampleAnalysis3')==0)
     {
         return Redirect::to('example3')
             ->with('err',$errors)
             ->with('err_atr',$err_atr)
-            ->with('Sess',$Session);;
+            ->with('Sess', $Session)->with('genecolor', $genecolor);
     }
     else if(strcmp($anal_type,'newAnalysis')==0)
     {
         return Redirect::to('analysis')
             ->with('err',$errors)
             ->with('err_atr',$err_atr)
-            ->with('Sess',$Session);;
+            ->with('Sess', $Session)->with('genecolor', $genecolor);
     }
 
 }
@@ -377,7 +396,7 @@ if(sizeof($errors)>0)
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = public_path() . "/all/" . $email . "/" . $time;
-
+                    $_SESSION['anal_type'] = $anal_type;
 
                     if (isset($_POST["multistate"]))
                         $_SESSION['multistate'] = "T";
@@ -473,6 +492,7 @@ if(sizeof($errors)>0)
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = public_path() . "/all/" . $email . "/" . $time;
+                    $_SESSION['anal_type'] = $anal_type;
 
 
                     if (isset($_POST["multistate"]))
@@ -552,7 +572,7 @@ if(sizeof($errors)>0)
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = public_path() . "/all/" . $email . "/" . $time;
-
+                    $_SESSION['anal_type'] = $anal_type;
 
                     if (isset($_POST["multistate"]))
                         $_SESSION['multistate'] = "T";

@@ -28,98 +28,10 @@
                     </div>
                 </div>
             </div>
-            <div class="marketing col-sm-8">
-
-                <h2 class="homepage-heading"> Usage Statistics</h2>
-
-                <div class="marketing col-sm-6">
-                    <section>
-                        <article>
-                            <canvas id="myChart" width="400" height="300">
-                            </canvas>
-                        </article>
-                        <table style="margin:5px;margin-left: 40%;font-size: 12px;border:none;">
-                            <tr>
-                                <p style="text-align:left;position:absolute;">Pathview web</p>
-                                <td>
-                                    <div style="width:80%;background-color:#C1DBF0; width=100%;">
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    </div>
-                                </td>
-                                <td>No. of Graphs</td>
-                                <td>
-                                    <div style="width:80%;background-color:#D4DBE0; width=100%;">
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    </div>
-                                </td>
-                                <td>No. of unique IP's</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>46</td>
-                                <td></td>
-                                <td>5</td>
-                            </tr>
-
-                        </table>
-                    </section>
-                </div>
-                <div class="marketing col-sm-6">
-                    <section>
-                        <article>
-                            <canvas id="myChart1" width="400" height="300">
-                            </canvas>
-                        </article>
-                        <table style="margin:5px;margin-left: 40%;font-size: 12px;">
-                            <tr>
-                                <p style="text-align:left;position:absolute;"> Bioc Package</p>
-                                <td>
-                                    <div style="width:80%;background-color:#C1DBF0; width=100%;">
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    </div>
-                                </td>
-                                <td>No. of Downloads</td>
-                                <td>
-                                    <div style="width:80%;background-color:#D4DBE0; width=100%;">
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                    </div>
-                                </td>
-                                <td>No. of unique IP's</td>
-                            <tr>
-                                <td></td>
-                                <td>&#8776;160000</td>
-                                <td></td>
-                                <td>&#8776;11123</td>
-                            </tr>
-                            </tr>
-
-                        </table>
-                    </section>
-                </div>
-            </div>
-            <style>
 
 
-                td, th {
-                    border: 3px solid #8C8484;
-                    padding: 5px;
-                    text-align: center;
-
-                }
-
-                table {
-                    border: 3px solid #8C8484;
-                    padding: 5px;
-                    text-align: center;
-                    margin-top: 10px;
-                }
-
-                th {
-                    background-color: #205081;
-                    color: white;
-                }
-            </style>
             <script type="text/javascript">
+
                 window.onLoad = function () {
                     init();
 
@@ -196,9 +108,11 @@
 
                         canvasBordersWidth: 3,
                         canvasBordersColor: "#205081",
-
-                        logarithmic: true,
-                        scaleStartValue: 10,
+                        scaleOverride: true,
+                        scaleSteps: 6,
+                        scaleStepWidth:200 ,
+                        scaleStartValue: 250,
+                        scaleLabel: "<%=value%>",
                         legend: true,
                         inGraphDataShow: true,
                         annotateDisplay: true,
@@ -219,64 +133,68 @@
             <div class="col-md-4">
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">Login</div>
+                    <div class="panel-heading">Usage Statistics</div>
                     <div class="panel-body">
-                        <?php if(count($errors) > 0): ?>
-                            <div class="alert alert-danger">
-                                <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                                <ul>
-                                    <?php foreach($errors->all() as $error): ?>
-                                        <li><?php echo e($error); ?></li>
-                                    <?php endforeach; ?>
-                                </ul>
+                        <div class="panel-body">
+                            <p style="text-align:left;">Pathview web</p>
+                            <div id="graph" class="col-md-12">
+                                <section>
+
+                                    <table style="margin:5px;font-size: 12px;">
+                                        <tr>
+
+                                            <td>
+                                                <div style="width:80%;background-color:#C1DBF0;">
+                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                </div>
+                                            </td>
+                                            <td>Graphs: </td><td><?php echo $web_dnld_cnt ?></td>
+                                            <td>
+                                                <div style="width:80%;background-color:#D4DBE0;">
+                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                </div>
+                                            </td>
+                                            <td>IP's: </td>  <td><?php echo $web_ip_cnt ?></td>
+                                        </tr>
+                                    </table>
+                                    <article>
+                                        <canvas id="myChart" width="450" height="200">
+                                        </canvas>
+                                    </article>
+                                </section>
                             </div>
-                        <?php endif; ?>
+                            <p style="text-align:left;"> Bioc Package</p>
+                            <div id="graph1" class="col-md-12">
 
-                        <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/auth/login')); ?>">
-                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">E-Mail</label>
 
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="<?php echo e(old('email')); ?>">
-                                </div>
-                            </div>
+                                <section>
 
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Password</label>
+                                    <table style="margin:5px;font-size: 12px;">
+                                        <tr>
 
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password">
-                                </div>
-                            </div>
+                                            <td>
+                                                <div style="width:80%;background-color:#C1DBF0;">
+                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                </div>
+                                            </td>
+                                            <td>Downloads:</td><td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
+                                            <td>
+                                                <div style="width:80%;background-color:#D4DBE0;">
+                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                </div>
+                                            </td>
+                                            <td>IP's:</td>   <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
 
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="remember"> Remember Me
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
+                                        </tr>
 
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary" style="font-size: 16px;width: 100%;">
-                                        Login
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <a class="btn btn-link" href="<?php echo e(url('/password/email')); ?>">Forgot Your
-                                        Password?</a>
-                                </div>
-                            </div>
-
-                        </form>
-
+                                    </table>
+                                    <article>
+                                        <canvas id="myChart1" width="450" height="200">
+                                        </canvas>
+                                    </article>
+                                </section>
+</div>
 
                     </div>
 
@@ -289,8 +207,39 @@
         </div>
 
 
+                <script>
+                    var canvas = document.getElementsByTagName('canvas')[0];
+                    canvas.width = document.getElementById("graph").offsetWidth;
+                    var canvas1 = document.getElementsByTagName('canvas')[1];
+                    canvas1.width = document.getElementById("graph1").offsetWidth;
 
 
+                </script>
+
+                <style>
+
+
+                    td, th {
+                        padding: 5px;
+                        text-align: center;
+
+                    }
+
+                    table {
+                        border: 3px solid #8C8484;
+                        padding: 5px;
+                        text-align: center;
+                        margin-top: 10px;
+                    }
+
+                    th {
+                        background-color: #205081;
+                        color: white;
+                    }
+                </style>
+
+</div>
+    </div>
 
 
 <?php $__env->stopSection(); ?>

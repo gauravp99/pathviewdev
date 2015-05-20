@@ -3,7 +3,8 @@
     <?php
 
     session_start();
-    function extract_unit($oneByThreeing, $start, $end) {
+    function extract_unit($oneByThreeing, $start, $end)
+    {
         $pivotFlag = stripos($oneByThreeing, $start);
         $oneByThree = substr($oneByThreeing, $pivotFlag);
         $twoByThree = substr($oneByThree, strlen($start));
@@ -12,7 +13,7 @@
         $unit = trim($threeByThree);
         return $unit;
     }
-    function cURL($url, $header=NULL, $cookie=NULL, $p=NULL)
+    function cURL($url, $header = NULL, $cookie = NULL, $p = NULL)
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_HEADER, $header);
@@ -45,7 +46,7 @@
     $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $_GET['id']);
     //echo $a;
     $c = extract_unit($a, "<map name=\"mapdata\">", "</map>");
-    $d=str_replace("href=\"", "href=\"http://www.genome.jp", $c);
+    $d = str_replace("href=\"", "href=\"http://www.genome.jp", $c);
 
     //$directory = $_SESSION['workingdir'];
 
@@ -54,7 +55,7 @@
     echo "<title>KEGG View</title>";
     echo "<head>";
 
-    echo "<img src=".$_GET['image'] . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
+    echo "<img src=" . $_GET['image'] . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
     echo "<map name=\"mapdata\">";
     echo $d;
     echo "</map>";
@@ -66,8 +67,8 @@
 
 
     ?>
-<br/>
-<br/>
+    <br/>
+    <br/>
 <?php $__env->stopSection(); ?>
 
 

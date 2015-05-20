@@ -302,6 +302,7 @@
                             Click here to Register
                         </button>
 
+
                         <!-- Modal -->
                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                              aria-hidden="true">
@@ -327,7 +328,7 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label class="col-md-4 control-label">E-Mail Address</label>
+                                                <label class="col-md-4 control-label">E-Mail</label>
 
                                                 <div class="col-md-6">
                                                     <input type="email" class="form-control" name="email"
@@ -392,13 +393,15 @@
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Graphs: </td><td>46</td>
+                                            <td>Graphs:</td>
+                                            <td><?php echo $web_dnld_cnt ?></td>
                                             <td>
                                                 <div style="width:80%;background-color:#D4DBE0; width=100%;">
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's: </td>  <td>46</td>
+                                            <td>IP's:</td>
+                                            <td><?php echo $web_ip_cnt ?></td>
                                         </tr>
 
                                     </table>
@@ -423,13 +426,15 @@
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Downloads:</td><td>&#8776;30000</td>
+                                            <td>Downloads:</td>
+                                            <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
                                             <td>
                                                 <div style="width:80%;background-color:#D4DBE0; width=100%;">
                                                     &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's:</td>   <td>&#8776;15000</td>
+                                            <td>IP's:</td>
+                                            <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
 
                                         </tr>
 

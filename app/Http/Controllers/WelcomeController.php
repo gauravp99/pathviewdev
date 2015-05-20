@@ -1,6 +1,8 @@
 <?php namespace App\Http\Controllers;
 
+use DateTime;
 use Illuminate\Support\Facades\DB;
+use stdClass;
 
 class WelcomeController extends Controller
 {
@@ -59,16 +61,73 @@ class WelcomeController extends Controller
             array_push($bioc_months, $month->date);
         }
 
+        $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocstatistics'));
+        $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocstatistics'));
+        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses'));
+        $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses'));
+
+        foreach ($count_bioc_downlds as $bioc_dwnld) {
+            $count_bioc_downlds = $bioc_dwnld;
+            break;
+        }
+
+        foreach ($count_bioc_ips as $bioc_dwnld) {
+            $count_bioc_ips = $bioc_dwnld;
+            break;
+        }
+
+        foreach ($count_web_downlds as $bioc_dwnld) {
+            $count_web_downlds = $bioc_dwnld;
+            break;
+        }
+
+        foreach ($count_web_ips as $bioc_dwnld) {
+            $count_web_ips = $bioc_dwnld;
+            break;
+        }
+
+
+        $array = array();
+        $array[0] = new stdClass();
+        $id = 0;
+        foreach ($bioc_months as $mon) {
+            $array[$id] = new stdClass();
+            $array[$id]->id = $id;
+            $array[$id]->Month = $mon;
+            $id = $id + 1;
+        }
+
+        usort($array, function ($a, $b) {
+            $aDate = DateTime::createFromFormat("M-Y", $a->Month);
+            $bDate = DateTime::createFromFormat("M-Y", $b->Month);
+            return $aDate->getTimestamp() - $bDate->getTimestamp();
+        });
+        $sorted_bioc_months = array();
+        foreach ($array as $mon) {
+            array_push($sorted_bioc_months, $mon->Month);
+
+        }
+
 
         return view('welcome')->with('usage', $usage)
             ->with('ip', $ip)
             ->with('months', $months)
             ->with('bioc_downloads', $bioc_downloads)
             ->with('bioc_ip', $bioc_ip)
-            ->with('bioc_months', $bioc_months);
+            ->with('bioc_months', $sorted_bioc_months)
+            ->with('bioc_dnld_cnt', $count_bioc_downlds->downloads)
+            ->with('bioc_ip_cnt', $count_bioc_ips->ip)
+            ->with('web_dnld_cnt', $count_web_downlds->downloads)
+            ->with('web_ip_cnt', $count_web_ips->ip);
 
     }
 
+    public function cmpares($a, $b)
+    {
+        $aDate = DateTime::createFromFormat("M-Y", $a->Month);
+        $bDate = DateTime::createFromFormat("M-Y", $b->Month);
+        return $aDate->getTimestamp() - $bDate->getTimestamp();
+    }
 
     public function instructions()
     {

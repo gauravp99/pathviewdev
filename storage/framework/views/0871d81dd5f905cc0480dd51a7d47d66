@@ -1,7 +1,9 @@
 <?php $__env->startSection('content'); ?>
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    <h1><div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div></h1>
+    <h1>
+        <div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div>
+    </h1>
     <p><b>User ID: <?php echo e($user->id); ?></b></p>
     <p><b>User Email: <?php echo e($user->email); ?></b></p>
     <p><b>Member since: <?php echo e($user->created_at); ?></b></p>
@@ -15,14 +17,14 @@
             <?php echo form::text('name',$user->email); ?>
 
         <?php else: ?>
-        <?php echo form::text('name',$user->name); ?>
+            <?php echo form::text('name',$user->name); ?>
 
         <?php endif; ?>
         <?php echo form::label('email','Email:'); ?>
 
         <?php echo form::text('email',$user->email); ?>
 
-        <input type="submit" class="styled-button-2" value="Submit" />
+        <input type="submit" class="styled-button-2" value="Submit"/>
         <?php echo form::close(); ?>
 
     </p>

@@ -23,6 +23,7 @@
     <script src="{{asset('/js/ChartNew.js')}}"></script>
     <script src="{{asset('/js/bootstrap-colorpicker.js')}}"></script>
     <script src="http://mjolnic.com/bootstrap-colorpicker/src/js/docs.js"></script>
+    <script type="text/javascript" src="http://jscolor.com/example/jscolor/jscolor.js"></script>
 </head>
 <body onLoad="init()">
 <nav class="navbar navbar-default">

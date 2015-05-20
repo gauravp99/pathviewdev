@@ -30,6 +30,7 @@ pathway <- "00110"
 suffix <- "pathview"
 nsum <- "sum"
 ncolor <- "transparent"
+offset <- 1.0
 multistate <- NULL
 
 # @arguments are split on comma as they are passed to Rscript with comma separated
@@ -130,6 +131,9 @@ if(!is.na(vs1["pos"][[1]])){
 if(is.na(vs1["pos"][[1]])){
 	pos <- "bottomleft"
 }
+if(!is.na(vs1["offset"][[1]])){
+	offset <- as.numeric(vs1["offset"][[1]]);
+}
 
 if(!is.na(vs1["align"][[1]])){
 	align <- vs1["align"][[1]]
@@ -182,11 +186,6 @@ if(is.na(vs1["cbins"][[1]])){
 if(!is.na(vs1["glow"][[1]])){
 	glow <- vs1["glow"][[1]]
 }
-
-if(!is.na(vs1["glow"][[1]])){
-    glow <- "green"
-}
-
 if(!is.na(vs1["gmid"][[1]])){
 	gmid <- vs1["gmid"][[1]]
 }
@@ -371,7 +370,7 @@ library(pathview)
 
 
 
-pv.out <- pathview(gene.data = gene.d,gene.idtype = geneid,cpd.data = cpd.d,cpd.idtype=cpdid,pathway.id = pathway,species = species,out.suffix = suffix,kegg.native = kegg,sign.pos =pos,same.layer = layer,keys.align = align,split.group = split,expand.node = expand,multi.state=multistate,match.data = matchd ,node.sum=nsum,key.pos = kpos,limit = list(gene = glmt, cpd = clmt), bins = list(gene = gbins, cpd= cbins),low = list(gene = glow, cpd = clow),mid = list(gene = gmid, cpd = cmid), high = list(gene = ghigh, cpd =chigh),discrete = list(gene = gdisc, cpd = cdisc))
+pv.out <- pathview(gene.data = gene.d,gene.idtype = geneid,cpd.data = cpd.d,cpd.idtype=cpdid,pathway.id = pathway,species = species,out.suffix = suffix,kegg.native = kegg,sign.pos =pos,same.layer = layer,keys.align = align,split.group = split,expand.node = expand,multi.state=multistate,match.data = matchd ,node.sum=nsum,key.pos = kpos,cpd.lab.offset= offset,limit = list(gene = glmt, cpd = clmt), bins = list(gene = gbins, cpd= cbins),low = list(gene = glow, cpd = clow),mid = list(gene = gmid, cpd = cmid), high = list(gene = ghigh, cpd =chigh),discrete = list(gene = gdisc, cpd = cdisc))
 
 save.image("workenv.Rdata")
 
