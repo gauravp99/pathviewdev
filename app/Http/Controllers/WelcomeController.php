@@ -116,18 +116,21 @@ class WelcomeController extends Controller
         }
 #to get lst 12 months statistics only
         $sorted_bioc_month_12 = array();
-
+        $sorted_bioc_ip_12 = array();
+        $sorted_bioc_download_12 = array();
         $total_months = sizeof($sorted_bioc_months) - 1;
         for ($i = $total_months; $i > $total_months - 12; $i = $i - 1) {
             array_push($sorted_bioc_month_12, $sorted_bioc_months[$i]);
+            array_push($sorted_bioc_ip_12, $sorted_bioc_ip[$i]);
+            array_push($sorted_bioc_download_12, $sorted_bioc_download[$i]);
         }
 
 
         return view('welcome')->with('usage', $usage)
             ->with('ip', $ip)
             ->with('months', $months)
-            ->with('bioc_downloads', $sorted_bioc_download)
-            ->with('bioc_ip', $sorted_bioc_ip)
+            ->with('bioc_downloads', array_reverse($sorted_bioc_download_12))
+            ->with('bioc_ip', array_reverse($sorted_bioc_ip_12))
             ->with('bioc_months', array_reverse($sorted_bioc_month_12))
             ->with('bioc_dnld_cnt', $count_bioc_downlds->downloads)
             ->with('bioc_ip_cnt', $count_bioc_ips->ip)
