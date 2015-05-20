@@ -57,8 +57,8 @@
     $matchd =true;
     $gdisc =false;
     $cdisc =false;
-    $kpos ="topright";
-    $pos ="bottomleft";
+    $kpos = "topright";
+    $pos = "bottomleft";
     $offset ="1.0";
     $align ="y";
     $glmt =3;
@@ -93,9 +93,9 @@
                     <li>
                         <a href="#">Coloration</a>
                     </li>
-                   <?php /* <li>
-                        <a href="#">Confirm</a>
-                    </li>*/ ?>
+                    <?php /* <li>
+                         <a href="#">Confirm</a>
+                     </li>*/ ?>
                 </ul>
             </div>
 
@@ -507,11 +507,10 @@
 
 
                 </fieldset>
-
                 <fieldset class="step">
                     <style>
                         .coloration {
-                            width: 150px;
+                            width: 120px;
                         }
 
                         .ex8 {
@@ -602,13 +601,14 @@
                             <span class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('glow','Gene Low:'); ?>
 
-                        <?php echo form::text('glow',isset(Session::get('Sess')['glow']) ? Session::get('Sess')['glow'] :$glow,array('class' => 'coloration')); ?>
-
+                        <?php /*<?php echo form::text('glow',isset(Session::get('Sess')['glow']) ? Session::get('Sess')['glow'] :$glow,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
+                        <input class="color coloration {hash:true}" id="glow" name="glow"
+                               value=<?php echo e(isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : '#00FF00'); ?>>
                         <?php echo form::label('clow','Compound Low:'); ?>
 
-                        <?php echo form::text('clow',isset(Session::get('Sess')['clow']) ? Session::get('Sess')['clow'] :
-                        $clow,array('class' => 'coloration')); ?>
-
+                        <input class="color coloration {hash:true}" id="clow" name="clow" value="#0000FF">
+                        <?php /*<?php echo form::text('clow',isset(Session::get('Sess')['clow']) ? Session::get('Sess')['clow'] :
+                             $clow,array('class' => 'coloration')); ?><input style="width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                     </p>
 
                     <p <?php if (isset(Session::get('err_atr')['gmid'])) {
@@ -622,15 +622,15 @@
                             <span class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('gmid','Gene Mid:'); ?>
 
-                        <?php echo form::text('gmid',isset(Session::get('Sess')['gmid']) ? Session::get('Sess')['gmid'] :
-                        $gmid,array('class' => 'coloration')); ?>
-
+                        <input class="color coloration {hash:true}" id="gmid" name="gmid" value="#d3d3d3">
+                        <?php /*<?php echo form::text('gmid',isset(Session::get('Sess')['gmid']) ? Session::get('Sess')['gmid'] :
+                        $gmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
 
                         <?php echo form::label('cmid','Compound Mid:'); ?>
 
-                        <?php echo form::text('cmid',isset(Session::get('Sess')['cmid']) ? Session::get('Sess')['cmid'] :
-                        $cmid,array('class' => 'coloration')); ?>
-
+                        <input class="color coloration {hash:true}" id="cmid" name="cmid" value="#d3d3d3">
+                        <?php /* <?php echo form::text('cmid',isset(Session::get('Sess')['cmid']) ? Session::get('Sess')['cmid'] :
+                         $cmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                     </p>
 
                     <p <?php if (isset(Session::get('err_atr')['ghigh'])) {
@@ -644,15 +644,18 @@
                             <span class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('ghigh','Gene High:'); ?>
 
-                        <?php echo form::text('ghigh',isset(Session::get('Sess')['ghigh']) ? Session::get('Sess')['ghigh'] :$ghigh,array('class' => 'coloration')); ?>
-
+                        <input class="color coloration {hash:true}" id="ghigh" name="ghigh" value="#ff0000">
+                        <?php /*<?php echo form::text('ghigh',isset(Session::get('Sess')['ghigh']) ? Session::get('Sess')['ghigh'] :$ghigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
 
                         <?php echo form::label('chigh','Compound High:'); ?>
 
-                        <?php echo form::text('chigh',isset(Session::get('Sess')['chigh']) ? Session::get('Sess')['chigh'] :$chigh,array('class' => 'coloration')); ?></p>
+                        <input class="color coloration {hash:true}" id="chigh" name="chigh" value="#ffff00">
+                        <?php /*<?php echo form::text('chigh',isset(Session::get('Sess')['chigh']) ? Session::get('Sess')['chigh'] :$chigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
+                    </p>
 
 
                 </fieldset>
+
 
                 <fieldset class="step">
 
@@ -666,9 +669,12 @@
                 </fieldset>
 
             </div>
-            <div class="steps" >
-                <input type="submit" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:0%;margin-top: 10px;" data-toggle="modal" data-target="#myModal" value="Submit" onclick="return fileCheck()"/>
-                <input type="Reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;"  value="Reset"/>
+            <div class="steps">
+                <input type="submit" class="btn btn-primary"
+                       style="font-size: 20px;width: 30%;margin-left:0%;margin-top: 10px;" data-toggle="modal"
+                       data-target="#myModal" value="Submit" onclick="return fileCheck()"/>
+                <input type="Reset" class="btn btn-primary"
+                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;" value="Reset"/>
             </div>
             <?php echo form::close(); ?>
 
@@ -676,9 +682,10 @@
 
 
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true" >
+             aria-hidden="true">
 
-            <img class="first-slide" style=" opacity:0.3; background: navy;margin-top: 10%;width: 20%;"src="images/loading.gif" >
+            <img class="first-slide" style=" opacity:0.3; background: navy;margin-top: 10%;width: 20%;"
+                 src="images/loading.gif">
 
         </div>
 
