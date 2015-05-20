@@ -89,16 +89,16 @@ $ncolor ="transparent";
             <div id="navigation" style="display:none;">
                 <ul>
                     <li class="selected">
-                        <a href="#">Input & Output:</a>
+                        <a href="#">Input & Output</a>
                     </li>
                     <li>
-                        <a href="#">Graphics:</a>
+                        <a href="#">Graphics</a>
                     </li>
                     <li>
-                        <a href="#">Colouration:</a>
+                        <a href="#">Colouration</a>
                     </li>
                     <li>
-                        <a href="#">Confirm:</a>
+                        <a href="#">Confirm</a>
                     </li>
                 </ul>
             </div>

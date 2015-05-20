@@ -2057,3 +2057,6 @@ Stack trace:
 #36 /home/ybhavnasi/Desktop/Pathway_@/public/index.php(53): Illuminate\Foundation\Http\Kernel->handle(Object(Illuminate\Http\Request))
 #37 /home/ybhavnasi/Desktop/Pathway_@/server.php(20): require_once('/home/ybhavnasi...')
 #38 {main}  
+[2015-05-19 21:21:16] local.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected '<<' (T_SL)' in /home/ybhavnasi/Desktop/Pathway/app/Http/Controllers/AnalysisController.php:242
+Stack trace:
+#0 {main}  
