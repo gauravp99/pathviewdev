@@ -24,10 +24,10 @@ class CreateObjectTemplate
 
     public function __construct(TemplateRenderer $templates, $methodName, $arguments, $className)
     {
-        $this->templates  = $templates;
+        $this->templates = $templates;
         $this->methodName = $methodName;
-        $this->arguments  = $arguments;
-        $this->className  = $className;
+        $this->arguments = $arguments;
+        $this->className = $className;
     }
 
     public function getContent()
@@ -44,29 +44,28 @@ class CreateObjectTemplate
     }
 
     /**
-     * @return string
-     */
-    private function getTemplate()
-    {
-        return file_get_contents(__DIR__.'/templates/named_constructor_create_object.template');
-    }
-
-    /**
      * @return array
      */
     private function getValues()
     {
         $argString = count($this->arguments)
-            ? '$argument'.implode(', $argument',  range(1, count($this->arguments)))
-            : ''
-        ;
+            ? '$argument' . implode(', $argument', range(1, count($this->arguments)))
+            : '';
 
         return array(
-            '%methodName%'           => $this->methodName,
-            '%arguments%'            => $argString,
-            '%returnVar%'            => '$'.lcfirst($this->className),
-            '%className%'            => $this->className,
+            '%methodName%' => $this->methodName,
+            '%arguments%' => $argString,
+            '%returnVar%' => '$' . lcfirst($this->className),
+            '%className%' => $this->className,
             '%constructorArguments%' => ''
         );
+    }
+
+    /**
+     * @return string
+     */
+    private function getTemplate()
+    {
+        return file_get_contents(__DIR__ . '/templates/named_constructor_create_object.template');
     }
 }

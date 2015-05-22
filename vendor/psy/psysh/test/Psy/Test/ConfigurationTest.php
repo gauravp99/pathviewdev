@@ -52,8 +52,8 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         putenv("HOME=$home");
 
         $config = new Configuration();
-        $this->assertEquals(realpath($configFile),   realpath($config->getConfigFile()));
-        $this->assertEquals(realpath($historyFile),  realpath($config->getHistoryFile()));
+        $this->assertEquals(realpath($configFile), realpath($config->getConfigFile()));
+        $this->assertEquals(realpath($historyFile), realpath($config->getHistoryFile()));
         $this->assertEquals(realpath($manualDbFile), realpath($config->getManualDbFile()));
 
         putenv("HOME=$oldHome");
@@ -87,17 +87,17 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadConfig()
     {
-        $config  = new Configuration();
+        $config = new Configuration();
         $cleaner = new CodeCleaner();
-        $pager   = new PassthruPager(new ConsoleOutput());
-        $loop    = new Loop($config);
+        $pager = new PassthruPager(new ConsoleOutput());
+        $loop = new Loop($config);
 
         $config->loadConfig(array(
-            'useReadline'       => false,
-            'usePcntl'          => false,
-            'codeCleaner'       => $cleaner,
-            'pager'             => $pager,
-            'loop'              => $loop,
+            'useReadline' => false,
+            'usePcntl' => false,
+            'codeCleaner' => $cleaner,
+            'pager' => $pager,
+            'loop' => $loop,
             'requireSemicolons' => true,
         ));
 
@@ -129,6 +129,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($config->usePcntl());
     }
 
+    private function joinPath()
+    {
+        return implode(DIRECTORY_SEPARATOR, func_get_args());
+    }
+
     /**
      * @expectedException PHPUnit_Framework_Error_Deprecated
      */
@@ -155,16 +160,11 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $config = new Configuration(array('baseDir' => 'fake'));
     }
 
-    private function joinPath()
-    {
-        return implode(DIRECTORY_SEPARATOR, func_get_args());
-    }
-
     public function testConfigIncludes()
     {
         $config = new Configuration(array(
             'defaultIncludes' => array('/file.php'),
-            'configFile'      => __DIR__ . '/../../fixtures/empty.php',
+            'configFile' => __DIR__ . '/../../fixtures/empty.php',
         ));
 
         $includes = $config->getDefaultIncludes();

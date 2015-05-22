@@ -47,9 +47,9 @@ class PHPParserPresenter extends ObjectPresenter
     /**
      * Get an array of object properties.
      *
-     * @param object           $value
+     * @param object $value
      * @param \ReflectionClass $class
-     * @param int              $propertyFilter One of \ReflectionProperty constants
+     * @param int $propertyFilter One of \ReflectionProperty constants
      *
      * @return array
      */
@@ -57,7 +57,7 @@ class PHPParserPresenter extends ObjectPresenter
     {
         $props = array();
 
-        $props['type']       = $value->getType();
+        $props['type'] = $value->getType();
         $props['attributes'] = $value->getAttributes();
 
         foreach ($value->getSubNodeNames() as $name) {

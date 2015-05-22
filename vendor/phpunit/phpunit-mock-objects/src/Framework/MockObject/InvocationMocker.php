@@ -58,7 +58,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  mixed        $id
+     * @param  mixed $id
      * @return boolean|null
      */
     public function lookupId($id)
@@ -71,7 +71,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  mixed                                      $id
+     * @param  mixed $id
      * @param  PHPUnit_Framework_MockObject_Builder_Match $builder
      * @throws PHPUnit_Framework_Exception
      */
@@ -79,7 +79,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     {
         if (isset($this->builderMap[$id])) {
             throw new PHPUnit_Framework_Exception(
-              'Match builder with id <' . $id . '> is already registered.'
+                'Match builder with id <' . $id . '> is already registered.'
             );
         }
 
@@ -87,13 +87,13 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation       $matcher
+     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation $matcher
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
     public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
     {
         return new PHPUnit_Framework_MockObject_Builder_InvocationMocker(
-          $this, $matcher
+            $this, $matcher
         );
     }
 
@@ -103,7 +103,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
      */
     public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
-        $exception      = NULL;
+        $exception = NULL;
         $hasReturnValue = FALSE;
 
         if (strtolower($invocation->methodName) == '__tostring') {
@@ -118,7 +118,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
                     $value = $match->invoked($invocation);
 
                     if (!$hasReturnValue) {
-                        $returnValue    = $value;
+                        $returnValue = $value;
                         $hasReturnValue = TRUE;
                     }
                 }

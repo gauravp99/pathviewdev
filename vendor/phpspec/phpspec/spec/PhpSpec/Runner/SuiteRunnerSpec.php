@@ -2,15 +2,13 @@
 
 namespace spec\PhpSpec\Runner;
 
-use PhpSpec\ObjectBehavior;
-use Prophecy\Argument;
-
 use PhpSpec\Event\ExampleEvent;
 use PhpSpec\Exception\Example\StopOnFailureException;
-use PhpSpec\Loader\Suite;
 use PhpSpec\Loader\Node\SpecificationNode;
+use PhpSpec\Loader\Suite;
+use PhpSpec\ObjectBehavior;
 use PhpSpec\Runner\SpecificationRunner;
-
+use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 class SuiteRunnerSpec extends ObjectBehavior
@@ -19,7 +17,7 @@ class SuiteRunnerSpec extends ObjectBehavior
                  SpecificationNode $spec1, SpecificationNode $spec2)
     {
         $this->beConstructedWith($dispatcher, $specRunner);
-        $suite->getSpecifications()->willReturn( array($spec1, $spec2));
+        $suite->getSpecifications()->willReturn(array($spec1, $spec2));
     }
 
     function it_runs_all_specs_in_the_suite_through_the_specrunner($suite, $specRunner, $spec1, $spec2)
@@ -91,7 +89,7 @@ class SuiteRunnerSpec extends ObjectBehavior
             Argument::that(
                 function ($event) {
                     return ($event->getTime() > 0)
-                        && ($event->getResult() == ExampleEvent::FAILED);
+                    && ($event->getResult() == ExampleEvent::FAILED);
                 }
             )
         )->shouldHaveBeenCalled();

@@ -14,9 +14,9 @@
 namespace PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Exception\Fracture\FactoryDoesNotReturnObjectException;
+use PhpSpec\Exception\Wrapper\SubjectException;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Wrapper\Unwrapper;
-use PhpSpec\Exception\Wrapper\SubjectException;
 
 class WrappedObject
 {
@@ -46,7 +46,7 @@ class WrappedObject
     private $isInstantiated = false;
 
     /**
-     * @param object|null        $instance
+     * @param object|null $instance
      * @param PresenterInterface $presenter
      */
     public function __construct($instance, PresenterInterface $presenter)
@@ -57,28 +57,6 @@ class WrappedObject
             $this->classname = get_class($this->instance);
             $this->isInstantiated = true;
         }
-    }
-
-    /**
-     * @param string $classname
-     * @param array  $arguments
-     *
-     * @throws \PhpSpec\Exception\Wrapper\SubjectException
-     */
-    public function beAnInstanceOf($classname, array $arguments = array())
-    {
-        if (!is_string($classname)) {
-            throw new SubjectException(sprintf(
-                'Behavior subject classname should be a string, %s given.',
-                $this->presenter->presentValue($classname)
-            ));
-        }
-
-        $this->classname      = $classname;
-        $unwrapper            = new Unwrapper();
-        $this->arguments      = $unwrapper->unwrapAll($arguments);
-        $this->isInstantiated = false;
-        $this->factoryMethod  = null;
     }
 
     /**
@@ -103,8 +81,38 @@ class WrappedObject
     }
 
     /**
+     * @return bool
+     */
+    public function isInstantiated()
+    {
+        return $this->isInstantiated;
+    }
+
+    /**
+     * @param string $classname
+     * @param array $arguments
+     *
+     * @throws \PhpSpec\Exception\Wrapper\SubjectException
+     */
+    public function beAnInstanceOf($classname, array $arguments = array())
+    {
+        if (!is_string($classname)) {
+            throw new SubjectException(sprintf(
+                'Behavior subject classname should be a string, %s given.',
+                $this->presenter->presentValue($classname)
+            ));
+        }
+
+        $this->classname = $classname;
+        $unwrapper = new Unwrapper();
+        $this->arguments = $unwrapper->unwrapAll($arguments);
+        $this->isInstantiated = false;
+        $this->factoryMethod = null;
+    }
+
+    /**
      * @param callable|string|null $factoryMethod
-     * @param array                $arguments
+     * @param array $arguments
      */
     public function beConstructedThrough($factoryMethod, array $arguments = array())
     {
@@ -121,8 +129,8 @@ class WrappedObject
         }
 
         $this->factoryMethod = $factoryMethod;
-        $unwrapper           = new Unwrapper();
-        $this->arguments     = $unwrapper->unwrapAll($arguments);
+        $unwrapper = new Unwrapper();
+        $this->arguments = $unwrapper->unwrapAll($arguments);
     }
 
     /**
@@ -131,14 +139,6 @@ class WrappedObject
     public function getFactoryMethod()
     {
         return $this->factoryMethod;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInstantiated()
-    {
-        return $this->isInstantiated;
     }
 
     /**

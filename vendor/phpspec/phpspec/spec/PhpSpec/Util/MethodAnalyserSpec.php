@@ -39,10 +39,13 @@ class MethodAnalyserSpec extends ObjectBehavior
 
 class ExampleObject
 {
-    public function emptyMethod() {}
+    public function emptyMethod()
+    {
+    }
 
     public function emptyMethod2()
-    {}
+    {
+    }
 
     public function commentedMethod()
     {
@@ -64,15 +67,23 @@ class ExampleObject
         // another comment
     }
 
-    public function nonEmptyMethod2() { return 'foo';
+    public function nonEmptyMethod2()
+    {
+        return 'foo';
     }
 
-    public function nonEmptyOneLineMethod() { return 'foo'; }
+    public function nonEmptyOneLineMethod()
+    {
+        return 'foo';
+    }
 
     public function nonEmptyOneLineMethod2()
-    { return 'foo'; }
+    {
+        return 'foo';
+    }
 
-    public function nonEmptyOneLineMethod3() {
+    public function nonEmptyOneLineMethod3()
+    {
         return 'foo';
     }
 }

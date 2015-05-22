@@ -25,7 +25,7 @@ class ClosurePresenterTest extends \PHPUnit_Framework_TestCase
     {
         $this->presenter = new ClosurePresenter();
 
-        $this->manager   = new PresenterManager();
+        $this->manager = new PresenterManager();
         $this->manager->addPresenter(new ScalarPresenter());
         $this->manager->addPresenter(new ObjectPresenter());
         $this->manager->addPresenter($this->presenter);
@@ -50,7 +50,7 @@ class ClosurePresenterTest extends \PHPUnit_Framework_TestCase
     public function presentData()
     {
         $null = null;
-        $eol  = version_compare(PHP_VERSION, '5.4.3', '>=') ? '<const>PHP_EOL</const>' : '<string>"\n"</string>';
+        $eol = version_compare(PHP_VERSION, '5.4.3', '>=') ? '<const>PHP_EOL</const>' : '<string>"\n"</string>';
 
         return array(
             array(

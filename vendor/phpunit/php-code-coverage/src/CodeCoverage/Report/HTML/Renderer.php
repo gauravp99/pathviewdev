@@ -56,9 +56,9 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
     /**
      * Constructor.
      *
-     * @param string  $templatePath
-     * @param string  $generator
-     * @param string  $date
+     * @param string $templatePath
+     * @param string $generator
+     * @param string $date
      * @param integer $lowUpperBound
      * @param integer $highLowerBound
      */
@@ -66,24 +66,24 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
     {
         $version = new SebastianBergmann\Version('2.0.15', dirname(dirname(dirname(dirname(__DIR__)))));
 
-        $this->templatePath   = $templatePath;
-        $this->generator      = $generator;
-        $this->date           = $date;
-        $this->lowUpperBound  = $lowUpperBound;
+        $this->templatePath = $templatePath;
+        $this->generator = $generator;
+        $this->date = $date;
+        $this->lowUpperBound = $lowUpperBound;
         $this->highLowerBound = $highLowerBound;
-        $this->version        = $version->getVersion();
+        $this->version = $version->getVersion();
     }
 
     /**
      * @param  Text_Template $template
-     * @param  array         $data
+     * @param  array $data
      * @return string
      */
     protected function renderItemTemplate(Text_Template $template, array $data)
     {
         $numSeperator = '&nbsp;/&nbsp;';
-        $classesBar    = '&nbsp;';
-        $classesLevel  = 'None';
+        $classesBar = '&nbsp;';
+        $classesLevel = 'None';
         $classesNumber = '&nbsp;';
 
         if (isset($data['numClasses']) && $data['numClasses'] > 0) {
@@ -97,8 +97,8 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
             );
         }
 
-        $methodsBar    = '&nbsp;';
-        $methodsLevel  = 'None';
+        $methodsBar = '&nbsp;';
+        $methodsLevel = 'None';
         $methodsNumber = '&nbsp;';
 
         if ($data['numMethods'] > 0) {
@@ -112,8 +112,8 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
             );
         }
 
-        $linesBar    = '&nbsp;';
-        $linesLevel  = 'None';
+        $linesBar = '&nbsp;';
+        $linesLevel = 'None';
         $linesNumber = '&nbsp;';
 
         if ($data['numExecutableLines'] > 0) {
@@ -151,7 +151,37 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
     }
 
     /**
-     * @param Text_Template                $template
+     * @param  integer $percent
+     * @return string
+     */
+    protected function getColorLevel($percent)
+    {
+        if ($percent < $this->lowUpperBound) {
+            return 'danger';
+        } elseif ($percent >= $this->lowUpperBound &&
+            $percent < $this->highLowerBound
+        ) {
+            return 'warning';
+        } else {
+            return 'success';
+        }
+    }
+
+    protected function getCoverageBar($percent)
+    {
+        $level = $this->getColorLevel($percent);
+
+        $template = new Text_Template(
+            $this->templatePath . 'coverage_bar.html', '{{', '}}'
+        );
+
+        $template->setVar(array('level' => $level, 'percent' => sprintf("%.2F", $percent)));
+
+        return $template->render();
+    }
+
+    /**
+     * @param Text_Template $template
      * @param PHP_CodeCoverage_Report_Node $node
      */
     protected function setCommonTemplateVariables(Text_Template $template, PHP_CodeCoverage_Report_Node $node)
@@ -160,28 +190,42 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
 
         $template->setVar(
             array(
-                'id'               => $node->getId(),
-                'full_path'        => $node->getPath(),
-                'path_to_root'     => $this->getPathToRoot($node),
-                'breadcrumbs'      => $this->getBreadcrumbs($node),
-                'date'             => $this->date,
-                'version'          => $this->version,
-                'runtime_name'     => $runtime->getName(),
-                'runtime_version'  => $runtime->getVersion(),
-                'runtime_link'     => $runtime->getVendorUrl(),
-                'generator'        => $this->generator,
-                'low_upper_bound'  => $this->lowUpperBound,
+                'id' => $node->getId(),
+                'full_path' => $node->getPath(),
+                'path_to_root' => $this->getPathToRoot($node),
+                'breadcrumbs' => $this->getBreadcrumbs($node),
+                'date' => $this->date,
+                'version' => $this->version,
+                'runtime_name' => $runtime->getName(),
+                'runtime_version' => $runtime->getVersion(),
+                'runtime_link' => $runtime->getVendorUrl(),
+                'generator' => $this->generator,
+                'low_upper_bound' => $this->lowUpperBound,
                 'high_lower_bound' => $this->highLowerBound
             )
         );
     }
 
+    protected function getPathToRoot(PHP_CodeCoverage_Report_Node $node)
+    {
+        $id = $node->getId();
+        $depth = substr_count($id, '/');
+
+        if ($id != 'index' &&
+            $node instanceof PHP_CodeCoverage_Report_Node_Directory
+        ) {
+            $depth++;
+        }
+
+        return str_repeat('../', $depth);
+    }
+
     protected function getBreadcrumbs(PHP_CodeCoverage_Report_Node $node)
     {
         $breadcrumbs = '';
-        $path        = $node->getPathAsArray();
-        $pathToRoot  = array();
-        $max         = count($path);
+        $path = $node->getPathAsArray();
+        $pathToRoot = array();
+        $max = count($path);
 
         if ($node instanceof PHP_CodeCoverage_Report_Node_File) {
             $max--;
@@ -204,6 +248,15 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
         return $breadcrumbs;
     }
 
+    protected function getInactiveBreadcrumb(PHP_CodeCoverage_Report_Node $node, $pathToRoot)
+    {
+        return sprintf(
+            '        <li><a href="%sindex.html">%s</a></li>' . "\n",
+            $pathToRoot,
+            $node->getName()
+        );
+    }
+
     protected function getActiveBreadcrumb(PHP_CodeCoverage_Report_Node $node)
     {
         $buffer = sprintf(
@@ -218,54 +271,17 @@ abstract class PHP_CodeCoverage_Report_HTML_Renderer
         return $buffer;
     }
 
-    protected function getInactiveBreadcrumb(PHP_CodeCoverage_Report_Node $node, $pathToRoot)
+    protected function getActiveBreadcrumb(PHP_CodeCoverage_Report_Node $node)
     {
-        return sprintf(
-            '        <li><a href="%sindex.html">%s</a></li>' . "\n",
-            $pathToRoot,
+        $buffer = sprintf(
+            '        <li class="active">%s</li>' . "\n",
             $node->getName()
         );
-    }
 
-    protected function getPathToRoot(PHP_CodeCoverage_Report_Node $node)
-    {
-        $id    = $node->getId();
-        $depth = substr_count($id, '/');
-
-        if ($id != 'index' &&
-            $node instanceof PHP_CodeCoverage_Report_Node_Directory) {
-            $depth++;
+        if ($node instanceof PHP_CodeCoverage_Report_Node_Directory) {
+            $buffer .= '        <li>(<a href="dashboard.html">Dashboard</a>)</li>' . "\n";
         }
 
-        return str_repeat('../', $depth);
-    }
-
-    protected function getCoverageBar($percent)
-    {
-        $level = $this->getColorLevel($percent);
-
-        $template = new Text_Template(
-            $this->templatePath . 'coverage_bar.html', '{{', '}}'
-        );
-
-        $template->setVar(array('level' => $level, 'percent' => sprintf("%.2F", $percent)));
-
-        return $template->render();
-    }
-
-    /**
-     * @param  integer $percent
-     * @return string
-     */
-    protected function getColorLevel($percent)
-    {
-        if ($percent < $this->lowUpperBound) {
-            return 'danger';
-        } elseif ($percent >= $this->lowUpperBound &&
-            $percent <  $this->highLowerBound) {
-            return 'warning';
-        } else {
-            return 'success';
-        }
+        return $buffer;
     }
 }

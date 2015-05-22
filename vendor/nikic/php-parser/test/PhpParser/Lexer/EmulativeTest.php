@@ -9,14 +9,11 @@ require_once __DIR__ . '/../LexerTest.php';
 
 class EmulativeTest extends LexerTest
 {
-    protected function getLexer(array $options = array()) {
-        return new Emulative($options);
-    }
-
     /**
      * @dataProvider provideTestReplaceKeywords
      */
-    public function testReplaceKeywords($keyword, $expectedToken) {
+    public function testReplaceKeywords($keyword, $expectedToken)
+    {
         $lexer = $this->getLexer();
         $lexer->startLexing('<?php ' . $keyword);
 
@@ -24,10 +21,16 @@ class EmulativeTest extends LexerTest
         $this->assertSame(0, $lexer->getNextToken());
     }
 
+    protected function getLexer(array $options = array())
+    {
+        return new Emulative($options);
+    }
+
     /**
      * @dataProvider provideTestReplaceKeywords
      */
-    public function testNoReplaceKeywordsAfterObjectOperator($keyword) {
+    public function testNoReplaceKeywordsAfterObjectOperator($keyword)
+    {
         $lexer = $this->getLexer();
         $lexer->startLexing('<?php ->' . $keyword);
 
@@ -36,22 +39,23 @@ class EmulativeTest extends LexerTest
         $this->assertSame(0, $lexer->getNextToken());
     }
 
-    public function provideTestReplaceKeywords() {
+    public function provideTestReplaceKeywords()
+    {
         return array(
             // PHP 5.5
-            array('finally',       Parser::T_FINALLY),
-            array('yield',         Parser::T_YIELD),
+            array('finally', Parser::T_FINALLY),
+            array('yield', Parser::T_YIELD),
 
             // PHP 5.4
-            array('callable',      Parser::T_CALLABLE),
-            array('insteadof',     Parser::T_INSTEADOF),
-            array('trait',         Parser::T_TRAIT),
-            array('__TRAIT__',     Parser::T_TRAIT_C),
+            array('callable', Parser::T_CALLABLE),
+            array('insteadof', Parser::T_INSTEADOF),
+            array('trait', Parser::T_TRAIT),
+            array('__TRAIT__', Parser::T_TRAIT_C),
 
             // PHP 5.3
-            array('__DIR__',       Parser::T_DIR),
-            array('goto',          Parser::T_GOTO),
-            array('namespace',     Parser::T_NAMESPACE),
+            array('__DIR__', Parser::T_DIR),
+            array('goto', Parser::T_GOTO),
+            array('namespace', Parser::T_NAMESPACE),
             array('__NAMESPACE__', Parser::T_NS_C),
         );
     }
@@ -59,7 +63,8 @@ class EmulativeTest extends LexerTest
     /**
      * @dataProvider provideTestLexNewFeatures
      */
-    public function testLexNewFeatures($code, array $expectedTokens) {
+    public function testLexNewFeatures($code, array $expectedTokens)
+    {
         $lexer = $this->getLexer();
         $lexer->startLexing('<?php ' . $code);
 
@@ -74,7 +79,8 @@ class EmulativeTest extends LexerTest
     /**
      * @dataProvider provideTestLexNewFeatures
      */
-    public function testLeaveStuffAloneInStrings($code) {
+    public function testLeaveStuffAloneInStrings($code)
+    {
         $stringifiedToken = '"' . addcslashes($code, '"\\') . '"';
 
         $lexer = $this->getLexer();
@@ -85,7 +91,8 @@ class EmulativeTest extends LexerTest
         $this->assertSame(0, $lexer->getNextToken());
     }
 
-    public function provideTestLexNewFeatures() {
+    public function provideTestLexNewFeatures()
+    {
         return array(
             array('...', array(
                 array(Parser::T_ELLIPSIS, '...'),

@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Console\Output;
 
-use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 use Symfony\Component\Console\Formatter\OutputFormatter;
+use Symfony\Component\Console\Formatter\OutputFormatterInterface;
 
 /**
  * Base class for output classes.
@@ -37,8 +37,8 @@ abstract class Output implements OutputInterface
     /**
      * Constructor.
      *
-     * @param int                           $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
-     * @param bool                          $decorated Whether to decorate messages
+     * @param int $verbosity The verbosity level (one of the VERBOSITY constants in OutputInterface)
+     * @param bool $decorated Whether to decorate messages
      * @param OutputFormatterInterface|null $formatter Output formatter instance (null to use default OutputFormatter)
      *
      * @api
@@ -53,17 +53,17 @@ abstract class Output implements OutputInterface
     /**
      * {@inheritdoc}
      */
-    public function setFormatter(OutputFormatterInterface $formatter)
+    public function getFormatter()
     {
-        $this->formatter = $formatter;
+        return $this->formatter;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getFormatter()
+    public function setFormatter(OutputFormatterInterface $formatter)
     {
-        return $this->formatter;
+        $this->formatter = $formatter;
     }
 
     /**
@@ -85,17 +85,17 @@ abstract class Output implements OutputInterface
     /**
      * {@inheritdoc}
      */
-    public function setVerbosity($level)
+    public function getVerbosity()
     {
-        $this->verbosity = (int) $level;
+        return $this->verbosity;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getVerbosity()
+    public function setVerbosity($level)
     {
-        return $this->verbosity;
+        $this->verbosity = (int)$level;
     }
 
     public function isQuiet()
@@ -135,7 +135,7 @@ abstract class Output implements OutputInterface
             return;
         }
 
-        $messages = (array) $messages;
+        $messages = (array)$messages;
 
         foreach ($messages as $message) {
             switch ($type) {
@@ -159,7 +159,7 @@ abstract class Output implements OutputInterface
      * Writes a message to the output.
      *
      * @param string $message A message to write to the output
-     * @param bool   $newline Whether to add a newline or not
+     * @param bool $newline Whether to add a newline or not
      */
     abstract protected function doWrite($message, $newline);
 }

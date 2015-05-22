@@ -92,11 +92,43 @@ class Restorer
         foreach (array_keys($GLOBALS) as $key) {
             if ($key != 'GLOBALS' &&
                 !in_array($key, $superGlobalArrays) &&
-                !$snapshot->blacklist()->isGlobalVariableBlacklisted($key)) {
+                !$snapshot->blacklist()->isGlobalVariableBlacklisted($key)
+            ) {
                 if (isset($globalVariables[$key])) {
                     $GLOBALS[$key] = $globalVariables[$key];
                 } else {
                     unset($GLOBALS[$key]);
+                }
+            }
+        }
+    }
+
+    /**
+     * Restores a super-global variable array from this snapshot.
+     *
+     * @param Snapshot $snapshot
+     * @param $superGlobalArray
+     */
+    private function restoreSuperGlobalArray(Snapshot $snapshot, $superGlobalArray)
+    {
+        $superGlobalVariables = $snapshot->superGlobalVariables();
+
+        if (isset($GLOBALS[$superGlobalArray]) &&
+            is_array($GLOBALS[$superGlobalArray]) &&
+            isset($superGlobalVariables[$superGlobalArray])
+        ) {
+            $keys = array_keys(
+                array_merge(
+                    $GLOBALS[$superGlobalArray],
+                    $superGlobalVariables[$superGlobalArray]
+                )
+            );
+
+            foreach ($keys as $key) {
+                if (isset($superGlobalVariables[$superGlobalArray][$key])) {
+                    $GLOBALS[$superGlobalArray][$key] = $superGlobalVariables[$superGlobalArray][$key];
+                } else {
+                    unset($GLOBALS[$superGlobalArray][$key]);
                 }
             }
         }
@@ -114,36 +146,6 @@ class Restorer
                 $reflector = new ReflectionProperty($className, $name);
                 $reflector->setAccessible(true);
                 $reflector->setValue($value);
-            }
-        }
-    }
-
-    /**
-     * Restores a super-global variable array from this snapshot.
-     *
-     * @param Snapshot $snapshot
-     * @param $superGlobalArray
-     */
-    private function restoreSuperGlobalArray(Snapshot $snapshot, $superGlobalArray)
-    {
-        $superGlobalVariables = $snapshot->superGlobalVariables();
-
-        if (isset($GLOBALS[$superGlobalArray]) &&
-            is_array($GLOBALS[$superGlobalArray]) &&
-            isset($superGlobalVariables[$superGlobalArray])) {
-            $keys = array_keys(
-                array_merge(
-                    $GLOBALS[$superGlobalArray],
-                    $superGlobalVariables[$superGlobalArray]
-                )
-            );
-
-            foreach ($keys as $key) {
-                if (isset($superGlobalVariables[$superGlobalArray][$key])) {
-                    $GLOBALS[$superGlobalArray][$key] = $superGlobalVariables[$superGlobalArray][$key];
-                } else {
-                    unset($GLOBALS[$superGlobalArray][$key]);
-                }
             }
         }
     }

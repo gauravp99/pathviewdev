@@ -14,8 +14,8 @@
 namespace PhpSpec\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -29,14 +29,14 @@ class RunCommand extends Command
         $this
             ->setName('run')
             ->setDefinition(array(
-                    new InputArgument('spec', InputArgument::OPTIONAL, 'Specs to run'),
-                    new InputOption('format', 'f', InputOption::VALUE_REQUIRED, 'Formatter'),
-                    new InputOption('stop-on-failure', null , InputOption::VALUE_NONE, 'Stop on failure'),
-                    new InputOption('no-code-generation', null , InputOption::VALUE_NONE, 'Do not prompt for missing method/class generation'),
-                    new InputOption('no-rerun', null , InputOption::VALUE_NONE, 'Do not rerun the suite after code generation'),
-                    new InputOption('fake', null , InputOption::VALUE_NONE, 'Automatically fake return values when possible'),
-                    new InputOption('bootstrap', 'b', InputOption::VALUE_REQUIRED, 'Bootstrap php file that is run before the specs')
-                ))
+                new InputArgument('spec', InputArgument::OPTIONAL, 'Specs to run'),
+                new InputOption('format', 'f', InputOption::VALUE_REQUIRED, 'Formatter'),
+                new InputOption('stop-on-failure', null, InputOption::VALUE_NONE, 'Stop on failure'),
+                new InputOption('no-code-generation', null, InputOption::VALUE_NONE, 'Do not prompt for missing method/class generation'),
+                new InputOption('no-rerun', null, InputOption::VALUE_NONE, 'Do not rerun the suite after code generation'),
+                new InputOption('fake', null, InputOption::VALUE_NONE, 'Automatically fake return values when possible'),
+                new InputOption('bootstrap', 'b', InputOption::VALUE_REQUIRED, 'Bootstrap php file that is run before the specs')
+            ))
             ->setDescription('Runs specifications')
             ->setHelp(<<<EOF
 The <info>%command.name%</info> command runs specifications:
@@ -81,12 +81,11 @@ The available formatters are:
    dot
 
 EOF
-            )
-        ;
+            );
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
      *
      * @return mixed
@@ -106,7 +105,7 @@ EOF
             list($_, $locator, $linenum) = $matches;
         }
 
-        $suite       = $container->get('loader.resource_loader')->load($locator, $linenum);
+        $suite = $container->get('loader.resource_loader')->load($locator, $linenum);
         $suiteRunner = $container->get('runner.suite');
 
         return $container->get('console.result_converter')->convert(

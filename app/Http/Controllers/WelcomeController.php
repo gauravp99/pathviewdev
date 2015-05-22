@@ -1,5 +1,9 @@
 <?php namespace App\Http\Controllers;
 
+/**
+ * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
+ * @Contact: byeshvant@hotmail.com
+ */
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use stdClass;
@@ -14,42 +18,35 @@ class WelcomeController extends Controller
     }
 
     /**
-     * Show the application welcome screen to the user.
-     *
+     * This function is called whenever a {{url(/)}} is requested this function is called from routes.php file
      * @return Response
      */
     public function index()
     {
-        /*
-        Mail::send('emails.test',array('name'=>'yeshvant'),function($message){
-            $message ->to('byeshvant@hotmail.com','bhavnasiyeshvant')->subject('test email');
-        });*/
-        /* $user = User::find(1);
-         echo '<pre>'.print_r($user).'</pre>';*/
 
+        /**
+         * To get the statistics of usage from bioc and web usage from the
+         * database and send it to the javascript library
+         */
         $usage = array();
         $ip = array();
         $months = array();
-        /*       array_push($usage, 1);
-               array_push($usage, 1);
-               array_push($usage, 1);
-               array_push($usage, 1);
-               array_push($ip, 1);
-               array_push($ip, 1);
-               array_push($ip, 1);
-               array_push($ip, 1);*/
 
+        /**
+         * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
+         * @Analyses(Number of analyses generated)
+         */
         $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
         foreach ($val as $month) {
             array_push($usage, $month->count);
             array_push($ip, $month->ipadd_count);
             array_push($months, $month->date);
         }
-        /* if (sizeof($months) <= 6)
-             $months = array("Dec-14", "Jan-15", "Feb-15", "Mar-15", "April-15", "May-15");*/
 
-        //bio conducter statistics for package
-
+        /**
+         * Pathway Package downloads. Script file biocstatistics.sh is used to get the details
+         * of current month from bio website. This script is a cron job running each week on saturday 5:00 AM EST
+         */
         $bioc_val = DB::select(DB::raw('select concat(concat(month,\'-\'),year%100) as date,numberof_uniqueip as ipadd,numberof_downloads as downloads from biocstatistics'));
         $bioc_downloads = array();
         $bioc_ip = array();
@@ -61,11 +58,18 @@ class WelcomeController extends Controller
             array_push($bioc_months, $month->date);
         }
 
+        /**
+         * Pathway Package downloads and web usage counts you can see that we are adding 15000 and 7500 to the sql query's since
+         * we didnt had any statistics count of the initial 1 year we manually added approximation value
+         */
         $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocstatistics'));
         $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocstatistics'));
         $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses'));
         $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses'));
 
+        /**
+         * To make sure that the data is not empty from the database
+         */
         foreach ($count_bioc_downlds as $bioc_dwnld) {
             $count_bioc_downlds = $bioc_dwnld;
             break;
@@ -87,6 +91,9 @@ class WelcomeController extends Controller
         }
 
 
+        /**
+         * Start Sorting the date according the dates order
+         */
         $array = array();
         $array[0] = new stdClass();
         $id = 0;
@@ -114,7 +121,7 @@ class WelcomeController extends Controller
 
 
         }
-#to get lst 12 months statistics only
+        #to get lst 12 months statistics only
         $sorted_bioc_month_12 = array();
         $sorted_bioc_ip_12 = array();
         $sorted_bioc_download_12 = array();
@@ -124,7 +131,9 @@ class WelcomeController extends Controller
             array_push($sorted_bioc_ip_12, $sorted_bioc_ip[$i]);
             array_push($sorted_bioc_download_12, $sorted_bioc_download[$i]);
         }
-
+        /**
+         * End Sorting the date according the dates order
+         */
 
         return view('welcome')->with('usage', $usage)
             ->with('ip', $ip)
@@ -139,17 +148,13 @@ class WelcomeController extends Controller
 
     }
 
-    public function cmpares($a, $b)
-    {
-        $aDate = DateTime::createFromFormat("M-Y", $a->Month);
-        $bDate = DateTime::createFromFormat("M-Y", $b->Month);
-        return $aDate->getTimestamp() - $bDate->getTimestamp();
-    }
 
+    /**
+     * @return \Illuminate\View\View
+     * used for tutorial page
+     */
     public function instructions()
     {
-
-
         return view('Instructions');
 
     }

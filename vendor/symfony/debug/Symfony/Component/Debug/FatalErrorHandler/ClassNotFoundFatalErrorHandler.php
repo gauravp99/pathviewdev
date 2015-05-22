@@ -11,12 +11,12 @@
 
 namespace Symfony\Component\Debug\FatalErrorHandler;
 
-use Symfony\Component\Debug\Exception\ClassNotFoundException;
-use Symfony\Component\Debug\Exception\FatalErrorException;
-use Symfony\Component\Debug\DebugClassLoader;
 use Composer\Autoload\ClassLoader as ComposerClassLoader;
 use Symfony\Component\ClassLoader\ClassLoader as SymfonyClassLoader;
 use Symfony\Component\ClassLoader\UniversalClassLoader as SymfonyUniversalClassLoader;
+use Symfony\Component\Debug\DebugClassLoader;
+use Symfony\Component\Debug\Exception\ClassNotFoundException;
+use Symfony\Component\Debug\Exception\FatalErrorException;
 
 /**
  * ErrorHandler for classes that do not exist.
@@ -42,7 +42,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
         }
 
         foreach (array('class', 'interface', 'trait') as $typeName) {
-            $prefix = ucfirst($typeName).' \'';
+            $prefix = ucfirst($typeName) . ' \'';
             $prefixLen = strlen($prefix);
             if (0 !== strpos($error['message'], $prefix)) {
                 continue;
@@ -61,14 +61,14 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
             }
 
             if ($candidates = $this->getClassCandidates($className)) {
-                $tail = array_pop($candidates).'"?';
+                $tail = array_pop($candidates) . '"?';
                 if ($candidates) {
-                    $tail = ' for e.g. "'.implode('", "', $candidates).'" or "'.$tail;
+                    $tail = ' for e.g. "' . implode('", "', $candidates) . '" or "' . $tail;
                 } else {
-                    $tail = ' for "'.$tail;
+                    $tail = ' for "' . $tail;
                 }
             }
-            $message .= "\nDid you forget a \"use\" statement".$tail;
+            $message .= "\nDid you forget a \"use\" statement" . $tail;
 
             return new ClassNotFoundException($message, $exception);
         }
@@ -137,7 +137,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
         }
 
         $classes = array();
-        $filename = $class.'.php';
+        $filename = $class . '.php';
         foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
             if ($filename == $file->getFileName() && $class = $this->convertFileToClass($path, $file->getPathName(), $prefix)) {
                 $classes[] = $class;
@@ -158,9 +158,9 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
     {
         $candidates = array(
             // namespaced class
-            $namespacedClass = str_replace(array($path.DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
+            $namespacedClass = str_replace(array($path . DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
             // namespaced class (with target dir)
-            $namespacedClassTargetDir = $prefix.str_replace(array($path.DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
+            $namespacedClassTargetDir = $prefix . str_replace(array($path . DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
             // PEAR class
             str_replace('\\', '_', $namespacedClass),
             // PEAR class (with target dir)

@@ -39,8 +39,22 @@ class DescriptorHelper extends Helper
             ->register('txt', new TextDescriptor())
             ->register('xml', new XmlDescriptor())
             ->register('json', new JsonDescriptor())
-            ->register('md', new MarkdownDescriptor())
-        ;
+            ->register('md', new MarkdownDescriptor());
+    }
+
+    /**
+     * Registers a descriptor.
+     *
+     * @param string $format
+     * @param DescriptorInterface $descriptor
+     *
+     * @return DescriptorHelper
+     */
+    public function register($format, DescriptorInterface $descriptor)
+    {
+        $this->descriptors[$format] = $descriptor;
+
+        return $this;
     }
 
     /**
@@ -51,8 +65,8 @@ class DescriptorHelper extends Helper
      * * raw_text: boolean, sets output type as raw
      *
      * @param OutputInterface $output
-     * @param object          $object
-     * @param array           $options
+     * @param object $object
+     * @param array $options
      *
      * @throws \InvalidArgumentException when the given format is not supported
      */
@@ -69,21 +83,6 @@ class DescriptorHelper extends Helper
 
         $descriptor = $this->descriptors[$options['format']];
         $descriptor->describe($output, $object, $options);
-    }
-
-    /**
-     * Registers a descriptor.
-     *
-     * @param string              $format
-     * @param DescriptorInterface $descriptor
-     *
-     * @return DescriptorHelper
-     */
-    public function register($format, DescriptorInterface $descriptor)
-    {
-        $this->descriptors[$format] = $descriptor;
-
-        return $this;
     }
 
     /**

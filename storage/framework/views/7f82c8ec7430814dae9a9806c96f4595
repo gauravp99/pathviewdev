@@ -3,9 +3,7 @@
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="row1 placeholders">
         <?php
-            echo "<h1> Analysis Results </h1>";
-        //echo $destFile;
-        //$directory = $destFile;//$_SESSION['workingdir'];
+        echo "<h1> Analysis Results </h1>";
         global $dirct;
         $direct = $directory;
         $contents = scandir($directory);
@@ -22,83 +20,82 @@
         $val = "";
         $id = $_SESSION['id'];
         $id = substr($id, 0, 8);
-            $flag = false;
-            $flag1 = false;
-        $files_to_zip=array();
+        $flag = false;
+        $flag1 = false;
+        $files_to_zip = array();
 
         foreach ($contents as $k => $v) {
-            if(strcmp($v,"errorFile.Rout")==0)
-                {
-            $v= $directory."/".$v;
-                   if(filesize($v)>0)
-                       {
+        if(strcmp($v, "errorFile.Rout") == 0)
+        {
+        $v = $directory . "/" . $v;
+        if(filesize($v) > 0)
+        {
 
-                           $lines = file($v);
-                           foreach($lines as $temp)
-                               {
+        $lines = file($v);
+        foreach ($lines as $temp) {
 
-                                   $temp = strtolower($temp);
-                                   $array_string = explode(" ",$temp);
-                                           foreach($array_string as $a_string)
-                                               {
+            $temp = strtolower($temp);
+            $array_string = explode(" ", $temp);
+            foreach ($array_string as $a_string) {
 
-                                             if (strcmp($a_string,'error')==0) {
-                                                   if(!$flag)
-                                                       {
-                                                           echo "<h4 class='alert alert-info'> Sorry make sure your input gene and compound uploaded data is in the requested format. You can look at the instruction page for details and sample files</h4><ul class='alert alert-danger'>";
-                                                           $flag1= true;
-                                                       }
-                                                   echo "<li>".$temp."</li>";
-                                                   $flag=true;
-                                                   break;
-                                                   }
+                if (strcmp($a_string, 'error') == 0) {
+                    if (!$flag) {
+                        echo "<h4 class='alert alert-info'> Sorry make sure your input gene and compound uploaded data is in the requested format. You can look at the instruction page for details and sample files</h4><ul class='alert alert-danger'>";
+                        $flag1 = true;
+                    }
+                    echo "<li>" . $temp . "</li>";
+                    $flag = true;
+                    break;
+                }
 
-                                               }
-
-
-                                }
-            if($flag1)
-            {
-                echo "</ul>";
-                echo "<button onclick='goBack()'>Go Back</button>";
             }
 
 
-                    ?>
+        }
+        if ($flag1) {
+            echo "</ul>";
+            echo "<button onclick='goBack()'>Go Back</button>";
+        }
 
-            <script>
-                function goBack() {
-                    window.history.back();
-                }
-            </script><?php
-                       }
-                }
-            if (strpos($v, 'log') !== false || strpos($v, "" . $id . ".txt"))
-                {
-                echo "<li><a target=\"_blank\" href=\"$directory1/" . $v . "  \">$v</a></li>";
-                array_push($files_to_zip,$directory1."/".$v);
-                    }
+
+        ?>
+
+        <script>
+            function goBack() {
+                window.history.back();
+            }
+        </script><?php
+        }
+        }
+        if (strpos($v, 'log') !== false || strpos($v, "" . $id . ".txt")) {
+            echo "<li><a target=\"_blank\" href=\"$directory1/" . $v . "  \">$v</a></li>";
+            array_push($files_to_zip, $directory1 . "/" . $v);
+        }
         }
         echo "</ul>";
 
 
-            foreach ($contents as $k => $v) {
-                //echo $k;
-                if (strpos($v, $_SESSION['suffix'])) {
-                    $val = $v;
+        foreach ($contents as $k => $v) {
+        //echo $k;
+        if (strpos($v, $_SESSION['suffix'])) {
+        $val = $v;
+        $analyses_id = $_SESSION['analyses_id'];
+        $id = substr($val, 0, 8);
+        if (strpos($val, 'png')) {
+        echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"viewer?analyses=$analyses_id&id=$id&image=$directory1/$val\" > " . $val . "</a>";?>
 
-                    $id = substr($val, 0, 8);
-                    if (strpos($val, 'png')) {
-                        echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"viewer?id=$id&image=$directory1/$val\" > " . $val . "</a>";
-                        array_push($files_to_zip,$directory1."/".$val);
-                    } else
-                        {
-                        echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
-                    array_push($files_to_zip,$directory1."/".$val);
-                            }
+        <?php
 
+        array_push($files_to_zip, $directory1 . "/" . $val);
+
+        } else {
+            echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
+            array_push($files_to_zip, $directory1 . "/" . $val);
                 }
+
             }
+        }
+
 
         chdir($directory);
         $rootPath = realpath($directory);
@@ -117,12 +114,15 @@
         foreach ($files as $name => $file) {
             // Skip directories (they would be added automatically)
             if (!$file->isDir()) {
+                #echo $file;
+                if (strpos($file, 'log') !== false || strpos($file, "" . $id . ".txt") || (strpos($file, $_SESSION['suffix']))) {
                 // Get real and relative path for current file
                 $filePath = $file->getRealPath();
                 $relativePath = substr($filePath, strlen($rootPath) + 1);
 
                 // Add current file to archive
                 $zip->addFile($filePath, $relativePath);
+                }
             }
         }
 
@@ -140,6 +140,7 @@
             $data['name'] = Auth::user()->name;
             $data['time'] = date('l jS \of F Y h:i:s A');
             $data['anal_type'] = $_SESSION['anal_type'];
+            $data['argument'] = $_SESSION['argument'];
             Mail::queue('emails.test', $data, function ($message) use ($data) {
                 try {
                     $user = Auth::user();
@@ -154,14 +155,30 @@
                 }
             });
         } else{
-        echo "<br/><h2 class='alert alert-info'>Register to save the pathways generated and lot more.It is free.<h2>";?>
-        <div class="col-sm-4 col-md-offset-2">
-            <button type="button" class="  btn btn-primary btn-lg register" style="border-radius: 1px;"
-                    data-toggle="modal" data-target="#myModal">
-                Click here to Register
-            </button>
-        </div>
+        echo "<br/><h2 class='alert alert-info'>Register to save the pathways generated and lot more.It is Free.<h2>";
 
+        ?>
+        <div class="col-sm-4">
+            <a href="/auth/register">
+                <button type="button" class="  btn btn-primary btn-lg register" style="border-radius: 1px;"
+                        >
+                    Click here to Register
+                </button>
+            </a>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <?php if(count($errors) > 0): ?>
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    <?php foreach($errors->all() as $error): ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -172,8 +189,9 @@
                         <h4 class="modal-title " id="myModalLabel">Register</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" role="form" method="POST"
-                              action="<?php echo e(url('/auth/register')); ?>">
+
+
+                        <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/auth/register')); ?>">
                             <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
 
                             <div class="form-group">
@@ -234,11 +252,409 @@
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
+        <br/>
 
-        <?php
+
+
+
+    <?php
         }
         ?>
+        <h1> Analysis Input arguments </h1>
+        <br/>
+
+        <div class="bs-example" data-example-id="condensed-table">
+            <table border=1 style="width:70%" class="table table-condensed">
+                <thead>
+                <tr>
+                    <th>Argument Name</th>
+                    <th>Value</th>
+
+                    <tbody>
+
+
+                    <?php
+                    $arguments = array();
+
+                    $arguments = explode(",", $_SESSION['argument']);
+                    $arguments = array_unique($arguments);
+                    foreach($arguments as $arg)
+                    {
+
+
+                    if(strpos($arg, ":"))
+                    {
+
+                    $arg1 = explode(':', $arg);
+                    if(sizeof($arg1) > 1 && strcmp($arg1[0], "targedir") != 0 )
+                    {
+                    switch($arg1[0])
+                    {
+                    case "geneid":
+                    $arg1[0] = "Gene ID";
+                    ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+
+                case "cmpdid":
+                $arg1[0] = "Compound ID";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+
+                case "species":
+                $arg1[0] = "Species ID";
+                $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from Species where species_id like '$arg1[1]' LIMIT 1"));
+
+                if (sizeof($val) > 0) {
+                    $arg1[1] = $val[0]->spe;
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "suffix":
+                $arg1[0] = "Output Suffix";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "pathway":
+                $arg1[0] = "Pathway ID";
+                $val = DB::select(DB::raw("select concat(concat(pathway_id,\"-\"),pathway_desc) as path from Pathway where pathway_id like '$arg1[1]' LIMIT 1"));
+                if (sizeof($val) > 0) {
+                    $arg1[1] = $val[0]->path;
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "kegg":
+                $arg1[0] = "Kegg Native";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "layer":
+                $arg1[0] = "Same Layer";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "gdisc":
+                $arg1[0] = "Descrete Gene";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "cdisc":
+                $arg1[0] = "Descrete Compound";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "split":
+                $arg1[0] = "Split Node";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "expand":
+                $arg1[0] = "Expand Node";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "multistate":
+                $arg1[0] = "Multi State";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "matchd":
+                $arg1[0] = "Match Data";
+                if ($arg1[1] == 'T') {
+                    $arg1[1] = "True";
+                } else {
+                    $arg1[1] = "False";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "offset":
+                $arg1[0] = "Compound Label Offset";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "kpos":
+                $arg1[0] = "Key Position";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "pos":
+                $arg1[0] = "Signature Position";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "align":
+                $arg1[0] = "Key Alignment";
+                if ($arg1[1] == 'x') {
+                    $arg1[1] = "X - Axis";
+                } else {
+                    $arg1[1] = "y - Axis";
+                }
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "glmt":
+                $arg1[0] = "Gene Limit Range";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "clmt":
+                $arg1[0] = "Compound Limit Range";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "gbins":
+                $arg1[0] = "Number of Gene Bins";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "cbins":
+                $arg1[0] = "Number of Compound Bins";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "clow":
+                $arg1[0] = "Compound Lower Limit Color";
+
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td style='background-color:<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "cmid":
+                $arg1[0] = "Compound Medium Limit Color";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td style='background-color:<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "chigh":
+                $arg1[0] = "Compound High Limit Color";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td style='background-color:<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "glow":
+                $arg1[0] = "Gene Lower Limit Color";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td style='background-color:<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "gmid":
+                $arg1[0] = "Gene Medium Limit Color";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td style='background-color:<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "ghigh":
+                $arg1[0] = "Gene high Limit Color";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td style='background-color:<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "nsum":
+                $arg1[0] = "Node Sum Function";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "ncolor":
+                $arg1[0] = "NA Color";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case 'filename':
+                $arg1[0] = "Gene Data File";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td>Click here to view/Download the file: <a target="_blank"
+                                                                 href='<?php echo e($_SESSION["workingdir"]); ?>/<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></a>
+                    </td>
+                </tr>
+                <?php
+                break;
+                case 'cfilename':
+
+                $arg1[0] = "Compound Data File";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td>Click here to view/Download the file: <a target="_blank"
+                                                                 href='<?php echo e($_SESSION["workingdir"]); ?>/<?php echo e($arg1[1]); ?>'><?php echo e($arg1[1]); ?></a>
+                    </td>
+                </tr>
+                <?php
+                break;
+                default:
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+
+                }
+
+
+                }
+                } }
+
+
+                ?>
+
+                </tbody>
+            </table>
+        </div>
+
     </div>
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

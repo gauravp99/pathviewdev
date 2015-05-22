@@ -9,8 +9,8 @@
  * file that was distributed with this source code.
  */
 
-use Carbon\CarbonInterval;
 use Carbon\Carbon;
+use Carbon\CarbonInterval;
 
 class CarbonIntervalConstructTest extends TestFixture
 {

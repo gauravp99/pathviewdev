@@ -17,11 +17,11 @@ namespace Symfony\Component\VarDumper\Exception;
 class ThrowingCasterException extends \Exception
 {
     /**
-     * @param callable   $caster The failing caster
-     * @param \Exception $prev   The exception thrown from the caster
+     * @param callable $caster The failing caster
+     * @param \Exception $prev The exception thrown from the caster
      */
     public function __construct($caster, \Exception $prev)
     {
-        parent::__construct('Unexpected exception thrown from a caster: '.get_class($prev), 0, $prev);
+        parent::__construct('Unexpected exception thrown from a caster: ' . get_class($prev), 0, $prev);
     }
 }

@@ -30,7 +30,7 @@ class VariableEnumerator extends Enumerator
      * the current scope variables, so we need to pass it a Context instance.
      *
      * @param PresenterManager $presenterManager
-     * @param Context          $context
+     * @param Context $context
      */
     public function __construct(PresenterManager $presenterManager, Context $context)
     {
@@ -53,7 +53,7 @@ class VariableEnumerator extends Enumerator
             return;
         }
 
-        $showAll   = $input->getOption('all');
+        $showAll = $input->getOption('all');
         $variables = $this->prepareVariables($this->getVariables($showAll));
 
         if (empty($variables)) {
@@ -63,6 +63,31 @@ class VariableEnumerator extends Enumerator
         return array(
             'Variables' => $variables,
         );
+    }
+
+    /**
+     * Prepare formatted variable array.
+     *
+     * @param array $variables
+     *
+     * @return array
+     */
+    protected function prepareVariables(array $variables)
+    {
+        // My kingdom for a generator.
+        $ret = array();
+        foreach ($variables as $name => $val) {
+            if ($this->showItem($name)) {
+                $fname = '$' . $name;
+                $ret[$fname] = array(
+                    'name' => $fname,
+                    'style' => in_array($name, self::$specialVars) ? self::IS_PRIVATE : self::IS_PUBLIC,
+                    'value' => $this->presentRef($val), // TODO: add types to variable signatures
+                );
+            }
+        }
+
+        return $ret;
     }
 
     /**
@@ -97,31 +122,6 @@ class VariableEnumerator extends Enumerator
             }
 
             $ret[$name] = $val;
-        }
-
-        return $ret;
-    }
-
-    /**
-     * Prepare formatted variable array.
-     *
-     * @param array $variables
-     *
-     * @return array
-     */
-    protected function prepareVariables(array $variables)
-    {
-        // My kingdom for a generator.
-        $ret = array();
-        foreach ($variables as $name => $val) {
-            if ($this->showItem($name)) {
-                $fname = '$' . $name;
-                $ret[$fname] = array(
-                    'name'  => $fname,
-                    'style' => in_array($name, self::$specialVars) ? self::IS_PRIVATE : self::IS_PUBLIC,
-                    'value' => $this->presentRef($val), // TODO: add types to variable signatures
-                );
-            }
         }
 
         return $ret;

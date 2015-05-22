@@ -2,180 +2,180 @@
 
 use Illuminate\Database\ConnectionResolverInterface as Resolver;
 
-class DatabaseMigrationRepository implements MigrationRepositoryInterface {
+class DatabaseMigrationRepository implements MigrationRepositoryInterface
+{
 
-	/**
-	 * The database connection resolver instance.
-	 *
-	 * @var \Illuminate\Database\ConnectionResolverInterface
-	 */
-	protected $resolver;
+    /**
+     * The database connection resolver instance.
+     *
+     * @var \Illuminate\Database\ConnectionResolverInterface
+     */
+    protected $resolver;
 
-	/**
-	 * The name of the migration table.
-	 *
-	 * @var string
-	 */
-	protected $table;
+    /**
+     * The name of the migration table.
+     *
+     * @var string
+     */
+    protected $table;
 
-	/**
-	 * The name of the database connection to use.
-	 *
-	 * @var string
-	 */
-	protected $connection;
+    /**
+     * The name of the database connection to use.
+     *
+     * @var string
+     */
+    protected $connection;
 
-	/**
-	 * Create a new database migration repository instance.
-	 *
-	 * @param  \Illuminate\Database\ConnectionResolverInterface  $resolver
-	 * @param  string  $table
-	 * @return void
-	 */
-	public function __construct(Resolver $resolver, $table)
-	{
-		$this->table = $table;
-		$this->resolver = $resolver;
-	}
+    /**
+     * Create a new database migration repository instance.
+     *
+     * @param  \Illuminate\Database\ConnectionResolverInterface $resolver
+     * @param  string $table
+     * @return void
+     */
+    public function __construct(Resolver $resolver, $table)
+    {
+        $this->table = $table;
+        $this->resolver = $resolver;
+    }
 
-	/**
-	 * Get the ran migrations.
-	 *
-	 * @return array
-	 */
-	public function getRan()
-	{
-		return $this->table()->lists('migration');
-	}
+    /**
+     * Get the ran migrations.
+     *
+     * @return array
+     */
+    public function getRan()
+    {
+        return $this->table()->lists('migration');
+    }
 
-	/**
-	 * Get the last migration batch.
-	 *
-	 * @return array
-	 */
-	public function getLast()
-	{
-		$query = $this->table()->where('batch', $this->getLastBatchNumber());
+    /**
+     * Get a query builder for the migration table.
+     *
+     * @return \Illuminate\Database\Query\Builder
+     */
+    protected function table()
+    {
+        return $this->getConnection()->table($this->table);
+    }
 
-		return $query->orderBy('migration', 'desc')->get();
-	}
+    /**
+     * Resolve the database connection instance.
+     *
+     * @return \Illuminate\Database\Connection
+     */
+    public function getConnection()
+    {
+        return $this->resolver->connection($this->connection);
+    }
 
-	/**
-	 * Log that a migration was run.
-	 *
-	 * @param  string  $file
-	 * @param  int     $batch
-	 * @return void
-	 */
-	public function log($file, $batch)
-	{
-		$record = array('migration' => $file, 'batch' => $batch);
+    /**
+     * Get the last migration batch.
+     *
+     * @return array
+     */
+    public function getLast()
+    {
+        $query = $this->table()->where('batch', $this->getLastBatchNumber());
 
-		$this->table()->insert($record);
-	}
+        return $query->orderBy('migration', 'desc')->get();
+    }
 
-	/**
-	 * Remove a migration from the log.
-	 *
-	 * @param  object  $migration
-	 * @return void
-	 */
-	public function delete($migration)
-	{
-		$this->table()->where('migration', $migration->migration)->delete();
-	}
+    /**
+     * Get the last migration batch number.
+     *
+     * @return int
+     */
+    public function getLastBatchNumber()
+    {
+        return $this->table()->max('batch');
+    }
 
-	/**
-	 * Get the next migration batch number.
-	 *
-	 * @return int
-	 */
-	public function getNextBatchNumber()
-	{
-		return $this->getLastBatchNumber() + 1;
-	}
+    /**
+     * Log that a migration was run.
+     *
+     * @param  string $file
+     * @param  int $batch
+     * @return void
+     */
+    public function log($file, $batch)
+    {
+        $record = array('migration' => $file, 'batch' => $batch);
 
-	/**
-	 * Get the last migration batch number.
-	 *
-	 * @return int
-	 */
-	public function getLastBatchNumber()
-	{
-		return $this->table()->max('batch');
-	}
+        $this->table()->insert($record);
+    }
 
-	/**
-	 * Create the migration repository data store.
-	 *
-	 * @return void
-	 */
-	public function createRepository()
-	{
-		$schema = $this->getConnection()->getSchemaBuilder();
+    /**
+     * Remove a migration from the log.
+     *
+     * @param  object $migration
+     * @return void
+     */
+    public function delete($migration)
+    {
+        $this->table()->where('migration', $migration->migration)->delete();
+    }
 
-		$schema->create($this->table, function($table)
-		{
-			// The migrations table is responsible for keeping track of which of the
-			// migrations have actually run for the application. We'll create the
-			// table to hold the migration file's path as well as the batch ID.
-			$table->string('migration');
+    /**
+     * Get the next migration batch number.
+     *
+     * @return int
+     */
+    public function getNextBatchNumber()
+    {
+        return $this->getLastBatchNumber() + 1;
+    }
 
-			$table->integer('batch');
-		});
-	}
+    /**
+     * Create the migration repository data store.
+     *
+     * @return void
+     */
+    public function createRepository()
+    {
+        $schema = $this->getConnection()->getSchemaBuilder();
 
-	/**
-	 * Determine if the migration repository exists.
-	 *
-	 * @return bool
-	 */
-	public function repositoryExists()
-	{
-		$schema = $this->getConnection()->getSchemaBuilder();
+        $schema->create($this->table, function ($table) {
+            // The migrations table is responsible for keeping track of which of the
+            // migrations have actually run for the application. We'll create the
+            // table to hold the migration file's path as well as the batch ID.
+            $table->string('migration');
 
-		return $schema->hasTable($this->table);
-	}
+            $table->integer('batch');
+        });
+    }
 
-	/**
-	 * Get a query builder for the migration table.
-	 *
-	 * @return \Illuminate\Database\Query\Builder
-	 */
-	protected function table()
-	{
-		return $this->getConnection()->table($this->table);
-	}
+    /**
+     * Determine if the migration repository exists.
+     *
+     * @return bool
+     */
+    public function repositoryExists()
+    {
+        $schema = $this->getConnection()->getSchemaBuilder();
 
-	/**
-	 * Get the connection resolver instance.
-	 *
-	 * @return \Illuminate\Database\ConnectionResolverInterface
-	 */
-	public function getConnectionResolver()
-	{
-		return $this->resolver;
-	}
+        return $schema->hasTable($this->table);
+    }
 
-	/**
-	 * Resolve the database connection instance.
-	 *
-	 * @return \Illuminate\Database\Connection
-	 */
-	public function getConnection()
-	{
-		return $this->resolver->connection($this->connection);
-	}
+    /**
+     * Get the connection resolver instance.
+     *
+     * @return \Illuminate\Database\ConnectionResolverInterface
+     */
+    public function getConnectionResolver()
+    {
+        return $this->resolver;
+    }
 
-	/**
-	 * Set the information source to gather data.
-	 *
-	 * @param  string  $name
-	 * @return void
-	 */
-	public function setSource($name)
-	{
-		$this->connection = $name;
-	}
+    /**
+     * Set the information source to gather data.
+     *
+     * @param  string $name
+     * @return void
+     */
+    public function setSource($name)
+    {
+        $this->connection = $name;
+    }
 
 }

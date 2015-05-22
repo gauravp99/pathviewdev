@@ -5,7 +5,7 @@ Feature: Developer skips examples
 
   Scenario: Skip a spec with and run it using the dot formatter
     Given the spec file "spec/Runner/SpecExample/MarkdownSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Runner\SpecExample;
@@ -24,7 +24,7 @@ Feature: Developer skips examples
 
       """
     And the class file "src/Runner/SpecExample/Markdown.php" contains:
-      """
+    """
       <?php
 
       namespace Runner\SpecExample;

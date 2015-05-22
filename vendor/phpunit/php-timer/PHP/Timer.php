@@ -58,23 +58,21 @@
 class PHP_Timer
 {
     /**
+     * @var float
+     */
+    public static $requestTime;
+    /**
      * @var array
      */
     private static $times = array(
-      'hour'   => 3600000,
-      'minute' => 60000,
-      'second' => 1000
+        'hour' => 3600000,
+        'minute' => 60000,
+        'second' => 1000
     );
-
     /**
      * @var array
      */
     private static $startTimes = array();
-
-    /**
-     * @var float
-     */
-    public static $requestTime;
 
     /**
      * Starts the timer.
@@ -92,6 +90,30 @@ class PHP_Timer
     public static function stop()
     {
         return microtime(TRUE) - array_pop(self::$startTimes);
+    }
+
+    /**
+     * Returns the resources (time, memory) of the request as a string.
+     *
+     * @return string
+     */
+    public static function resourceUsage()
+    {
+        return sprintf(
+            'Time: %s, Memory: %4.2fMb',
+            self::timeSinceStartOfRequest(),
+            memory_get_peak_usage(TRUE) / 1048576
+        );
+    }
+
+    /**
+     * Formats the elapsed time since the start of the request as a string.
+     *
+     * @return string
+     */
+    public static function timeSinceStartOfRequest()
+    {
+        return self::secondsToTimeString(microtime(TRUE) - self::$requestTime);
     }
 
     /**
@@ -113,36 +135,10 @@ class PHP_Timer
 
         return $ms . ' ms';
     }
-
-    /**
-     * Formats the elapsed time since the start of the request as a string.
-     *
-     * @return string
-     */
-    public static function timeSinceStartOfRequest()
-    {
-        return self::secondsToTimeString(microtime(TRUE) - self::$requestTime);
-    }
-
-    /**
-     * Returns the resources (time, memory) of the request as a string.
-     *
-     * @return string
-     */
-    public static function resourceUsage()
-    {
-        return sprintf(
-          'Time: %s, Memory: %4.2fMb',
-          self::timeSinceStartOfRequest(),
-          memory_get_peak_usage(TRUE) / 1048576
-        );
-    }
 }
 
 if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
     PHP_Timer::$requestTime = $_SERVER['REQUEST_TIME_FLOAT'];
-}
-
-else {
+} else {
     PHP_Timer::$requestTime = microtime(TRUE);
 }

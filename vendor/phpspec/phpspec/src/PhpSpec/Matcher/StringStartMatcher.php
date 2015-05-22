@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class StringStartMatcher extends BasicMatcher
 {
@@ -33,17 +33,16 @@ class StringStartMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return bool
      */
     public function supports($name, $subject, array $arguments)
     {
         return 'startWith' === $name
-            && is_string($subject)
-            && 1 == count($arguments)
-        ;
+        && is_string($subject)
+        && 1 == count($arguments);
     }
 
     /**
@@ -59,8 +58,8 @@ class StringStartMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */
@@ -75,8 +74,8 @@ class StringStartMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */

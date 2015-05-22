@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Security\Core\Tests\Authentication\RememberMe;
 
-use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentToken;
 use Symfony\Component\Security\Core\Authentication\RememberMe\InMemoryTokenProvider;
+use Symfony\Component\Security\Core\Authentication\RememberMe\PersistentToken;
 
 class InMemoryTokenProviderTest extends \PHPUnit_Framework_TestCase
 {

@@ -59,6 +59,40 @@ HELP
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $info = $this->fileInfo();
+        $num = $input->getOption('num');
+        $colors = new ConsoleColor();
+        $colors->addTheme('line_number', array('blue'));
+        $highlighter = new Highlighter($colors);
+        $contents = file_get_contents($info['file']);
+        $output->page($highlighter->getCodeSnippet($contents, $info['line'], $num, $num), ShellOutput::OUTPUT_RAW);
+    }
+
+    /**
+     * Determine the file and line based on the specific backtrace.
+     *
+     * @return array
+     */
+    protected function fileInfo()
+    {
+        $backtrace = $this->trace();
+        if (preg_match('/eval\(/', $backtrace['file'])) {
+            preg_match_all('/([^\(]+)\((\d+)/', $backtrace['file'], $matches);
+            $file = $matches[1][0];
+            $line = (int)$matches[2][0];
+        } else {
+            $file = $backtrace['file'];
+            $line = $backtrace['line'];
+        }
+
+        return compact('file', 'line');
+    }
+
+    /**
      * Obtains the correct trace in the full backtrace.
      *
      * @return array
@@ -77,39 +111,5 @@ HELP
         }
 
         return end($this->backtrace);
-    }
-
-    /**
-     * Determine the file and line based on the specific backtrace.
-     *
-     * @return array
-     */
-    protected function fileInfo()
-    {
-        $backtrace = $this->trace();
-        if (preg_match('/eval\(/', $backtrace['file'])) {
-            preg_match_all('/([^\(]+)\((\d+)/', $backtrace['file'], $matches);
-            $file = $matches[1][0];
-            $line = (int) $matches[2][0];
-        } else {
-            $file = $backtrace['file'];
-            $line = $backtrace['line'];
-        }
-
-        return compact('file', 'line');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $info = $this->fileInfo();
-        $num = $input->getOption('num');
-        $colors = new ConsoleColor();
-        $colors->addTheme('line_number', array('blue'));
-        $highlighter = new Highlighter($colors);
-        $contents = file_get_contents($info['file']);
-        $output->page($highlighter->getCodeSnippet($contents, $info['line'], $num, $num), ShellOutput::OUTPUT_RAW);
     }
 }

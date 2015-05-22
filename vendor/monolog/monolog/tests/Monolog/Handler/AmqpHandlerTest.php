@@ -11,11 +11,11 @@
 
 namespace Monolog\Handler;
 
-use Monolog\TestCase;
 use Monolog\Logger;
-use PhpAmqpLib\Message\AMQPMessage;
+use Monolog\TestCase;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 /**
  * @covers Monolog\Handler\RotatingFileHandler
@@ -37,14 +37,12 @@ class AmqpHandlerTest extends TestCase
         $exchange = $this->getMock('AMQPExchange', array('publish', 'setName'), array(), '', false);
         $exchange->expects($this->once())
             ->method('setName')
-            ->with('log')
-        ;
+            ->with('log');
         $exchange->expects($this->any())
             ->method('publish')
             ->will($this->returnCallback(function ($message, $routing_key, $flags = 0, $attributes = array()) use (&$messages) {
                 $messages[] = array($message, $routing_key, $flags, $attributes);
-            }))
-        ;
+            }));
 
         $handler = new AmqpHandler($exchange, 'log');
 
@@ -92,8 +90,7 @@ class AmqpHandlerTest extends TestCase
             ->method('basic_publish')
             ->will($this->returnCallback(function (AMQPMessage $msg, $exchange = "", $routing_key = "", $mandatory = false, $immediate = false, $ticket = null) use (&$messages) {
                 $messages[] = array($msg, $exchange, $routing_key, $mandatory, $immediate, $ticket);
-            }))
-        ;
+            }));
 
         $handler = new AmqpHandler($exchange, 'log');
 

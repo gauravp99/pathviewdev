@@ -21,7 +21,7 @@ class CliDumperTest extends \PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        require __DIR__.'/Fixtures/dumb-var.php';
+        require __DIR__ . '/Fixtures/dumb-var.php';
 
         $dumper = new CliDumper('php://output');
         $dumper->setColors(false);
@@ -41,8 +41,8 @@ class CliDumperTest extends \PHPUnit_Framework_TestCase
         $closureLabel = PHP_VERSION_ID >= 50400 ? 'public method' : 'function';
         $out = preg_replace('/[ \t]+$/m', '', $out);
         $intMax = PHP_INT_MAX;
-        $res1 = (int) $var['res'];
-        $res2 = (int) $var[8];
+        $res1 = (int)$var['res'];
+        $res2 = (int)$var[8];
 
         $this->assertStringMatchesFormat(
             <<<EOTXT
@@ -122,7 +122,7 @@ EOTXT
         ));
         $line = __LINE__ - 3;
         $file = __FILE__;
-        $ref = (int) $out;
+        $ref = (int)$out;
 
         $data = $cloner->cloneVar($out);
         $dumper->dump($data, $out);
@@ -162,7 +162,7 @@ EOTXT
 
     public function testRefsInProperties()
     {
-        $var = (object) array('foo' => 'foo');
+        $var = (object)array('foo' => 'foo');
         $var->bar =& $var->foo;
 
         $dumper = new CliDumper();
@@ -232,6 +232,24 @@ EOTXT
         );
     }
 
+    private function getSpecialVars()
+    {
+        foreach (array_keys($GLOBALS) as $var) {
+            if ('GLOBALS' !== $var) {
+                unset($GLOBALS[$var]);
+            }
+        }
+
+        $var = function &() {
+            $var = array();
+            $var[] =& $var;
+
+            return $var;
+        };
+
+        return array($var(), $GLOBALS, &$GLOBALS);
+    }
+
     /**
      * @runInSeparateProcess
      * @preserveGlobalState disabled
@@ -244,7 +262,7 @@ EOTXT
 
         $dumper = new CliDumper(function ($line, $depth) use (&$out) {
             if ($depth >= 0) {
-                $out .= str_repeat('  ', $depth).$line."\n";
+                $out .= str_repeat('  ', $depth) . $line . "\n";
             }
         });
         $dumper->setColors(false);
@@ -295,7 +313,7 @@ EOTXT
         $out = '';
         $dumper->dump($data, function ($line, $depth) use (&$out) {
             if ($depth >= 0) {
-                $out .= str_repeat('  ', $depth).$line."\n";
+                $out .= str_repeat('  ', $depth) . $line . "\n";
             }
         });
 
@@ -315,23 +333,5 @@ EOTXT
             ,
             $out
         );
-    }
-
-    private function getSpecialVars()
-    {
-        foreach (array_keys($GLOBALS) as $var) {
-            if ('GLOBALS' !== $var) {
-                unset($GLOBALS[$var]);
-            }
-        }
-
-        $var = function &() {
-            $var = array();
-            $var[] =& $var;
-
-            return $var;
-        };
-
-        return array($var(), $GLOBALS, &$GLOBALS);
     }
 }

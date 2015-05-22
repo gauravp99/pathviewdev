@@ -12,20 +12,20 @@
 namespace Symfony\Component\HttpKernel\EventListener;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
-use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RequestContextAwareInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Event\FinishRequestEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Matcher\RequestMatcherInterface;
+use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RequestContextAwareInterface;
 
 /**
  * Initializes the context from the request and sets request attributes based on a matching route.
@@ -50,10 +50,10 @@ class RouterListener implements EventSubscriberInterface
      *
      * RequestStack will become required in 3.0.
      *
-     * @param UrlMatcherInterface|RequestMatcherInterface $matcher      The Url or Request matcher
-     * @param RequestContext|null                         $context      The RequestContext (can be null when $matcher implements RequestContextAwareInterface)
-     * @param LoggerInterface|null                        $logger       The logger
-     * @param RequestStack|null                           $requestStack A RequestStack instance
+     * @param UrlMatcherInterface|RequestMatcherInterface $matcher The Url or Request matcher
+     * @param RequestContext|null $context The RequestContext (can be null when $matcher implements RequestContextAwareInterface)
+     * @param LoggerInterface|null $logger The logger
+     * @param RequestStack|null $requestStack A RequestStack instance
      *
      * @throws \InvalidArgumentException
      */
@@ -73,6 +73,23 @@ class RouterListener implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::REQUEST => array(array('onKernelRequest', 32)),
+            KernelEvents::FINISH_REQUEST => array(array('onKernelFinishRequest', 0)),
+        );
+    }
+
+    public function onKernelFinishRequest(FinishRequestEvent $event)
+    {
+        if (null === $this->requestStack) {
+            return; // removed when requestStack is required
+        }
+
+        $this->setRequest($this->requestStack->getParentRequest());
+    }
+
     /**
      * Sets the current Request.
      *
@@ -90,15 +107,6 @@ class RouterListener implements EventSubscriberInterface
             $this->context->fromRequest($request);
         }
         $this->request = $request;
-    }
-
-    public function onKernelFinishRequest(FinishRequestEvent $event)
-    {
-        if (null === $this->requestStack) {
-            return; // removed when requestStack is required
-        }
-
-        $this->setRequest($this->requestStack->getParentRequest());
     }
 
     public function onKernelRequest(GetResponseEvent $event)
@@ -157,13 +165,5 @@ class RouterListener implements EventSubscriberInterface
         }
 
         return implode(', ', $pieces);
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return array(
-            KernelEvents::REQUEST => array(array('onKernelRequest', 32)),
-            KernelEvents::FINISH_REQUEST => array(array('onKernelFinishRequest', 0)),
-        );
     }
 }

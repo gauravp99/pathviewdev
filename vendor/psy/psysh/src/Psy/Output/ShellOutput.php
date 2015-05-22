@@ -27,10 +27,10 @@ class ShellOutput extends ConsoleOutput
     /**
      * Construct a ShellOutput instance.
      *
-     * @param mixed                    $verbosity (default: self::VERBOSITY_NORMAL)
-     * @param boolean                  $decorated (default: null)
+     * @param mixed $verbosity (default: self::VERBOSITY_NORMAL)
+     * @param boolean $decorated (default: null)
      * @param OutputFormatterInterface $formatter (default: null)
-     * @param null|string|OutputPager  $pager     (default: null)
+     * @param null|string|OutputPager $pager (default: null)
      */
     public function __construct($verbosity = self::VERBOSITY_NORMAL, $decorated = null, OutputFormatterInterface $formatter = null, $pager = null)
     {
@@ -50,6 +50,39 @@ class ShellOutput extends ConsoleOutput
     }
 
     /**
+     * Initialize output formatter styles.
+     */
+    private function initFormatters()
+    {
+        $formatter = $this->getFormatter();
+
+        $formatter->setStyle('warning', new OutputFormatterStyle('black', 'yellow'));
+        $formatter->setStyle('aside', new OutputFormatterStyle('blue'));
+        $formatter->setStyle('strong', new OutputFormatterStyle(null, null, array('bold')));
+        $formatter->setStyle('return', new OutputFormatterStyle('cyan'));
+        $formatter->setStyle('urgent', new OutputFormatterStyle('red'));
+        $formatter->setStyle('hidden', new OutputFormatterStyle('black'));
+
+        // Visibility
+        $formatter->setStyle('public', new OutputFormatterStyle(null, null, array('bold')));
+        $formatter->setStyle('protected', new OutputFormatterStyle('yellow'));
+        $formatter->setStyle('private', new OutputFormatterStyle('red'));
+        $formatter->setStyle('global', new OutputFormatterStyle('cyan', null, array('bold')));
+        $formatter->setStyle('const', new OutputFormatterStyle('cyan'));
+        $formatter->setStyle('class', new OutputFormatterStyle('blue', null, array('underscore')));
+        $formatter->setStyle('function', new OutputFormatterStyle(null));
+
+        // Types
+        $formatter->setStyle('number', new OutputFormatterStyle('magenta'));
+        $formatter->setStyle('string', new OutputFormatterStyle('green'));
+        $formatter->setStyle('bool', new OutputFormatterStyle('cyan'));
+        $formatter->setStyle('keyword', new OutputFormatterStyle('yellow'));
+        $formatter->setStyle('comment', new OutputFormatterStyle('blue'));
+        $formatter->setStyle('object', new OutputFormatterStyle('blue'));
+        $formatter->setStyle('resource', new OutputFormatterStyle('yellow'));
+    }
+
+    /**
      * Page multiple lines of output.
      *
      * The output pager is started
@@ -60,12 +93,12 @@ class ShellOutput extends ConsoleOutput
      * Upon completion, the output pager is flushed.
      *
      * @param string|array|Closure $messages A string, array of strings or a callback.
-     * @param int                  $type     (default: 0)
+     * @param int $type (default: 0)
      */
     public function page($messages, $type = 0)
     {
         if (is_string($messages)) {
-            $messages = (array) $messages;
+            $messages = (array)$messages;
         }
 
         if (!is_array($messages) && !is_callable($messages)) {
@@ -92,15 +125,6 @@ class ShellOutput extends ConsoleOutput
     }
 
     /**
-     * Stop paging output and flush the output pager.
-     */
-    public function stopPaging()
-    {
-        $this->paging--;
-        $this->closePager();
-    }
-
-    /**
      * Writes a message to the output.
      *
      * Optionally, pass `$type | self::NUMBER_LINES` as the $type parameter to
@@ -109,8 +133,8 @@ class ShellOutput extends ConsoleOutput
      * @throws \InvalidArgumentException When unknown output type is given
      *
      * @param string|array $messages The message as an array of lines or a single string
-     * @param Boolean      $newline  Whether to add a newline or not
-     * @param integer      $type     The type of output
+     * @param Boolean $newline Whether to add a newline or not
+     * @param integer $type The type of output
      */
     public function write($messages, $newline = false, $type = 0)
     {
@@ -118,10 +142,10 @@ class ShellOutput extends ConsoleOutput
             return;
         }
 
-        $messages = (array) $messages;
+        $messages = (array)$messages;
 
         if ($type & self::NUMBER_LINES) {
-            $pad = strlen((string) count($messages));
+            $pad = strlen((string)count($messages));
             $template = $this->isDecorated() ? "<aside>%{$pad}s</aside>: %s" : "%{$pad}s: %s";
 
             if ($type & self::OUTPUT_RAW) {
@@ -140,20 +164,12 @@ class ShellOutput extends ConsoleOutput
     }
 
     /**
-     * Writes a message to the output.
-     *
-     * Handles paged output, or writes directly to the output stream.
-     *
-     * @param string  $message A message to write to the output
-     * @param Boolean $newline Whether to add a newline or not
+     * Stop paging output and flush the output pager.
      */
-    public function doWrite($message, $newline)
+    public function stopPaging()
     {
-        if ($this->paging > 0) {
-            $this->pager->doWrite($message, $newline);
-        } else {
-            parent::doWrite($message, $newline);
-        }
+        $this->paging--;
+        $this->closePager();
     }
 
     /**
@@ -167,35 +183,19 @@ class ShellOutput extends ConsoleOutput
     }
 
     /**
-     * Initialize output formatter styles.
+     * Writes a message to the output.
+     *
+     * Handles paged output, or writes directly to the output stream.
+     *
+     * @param string $message A message to write to the output
+     * @param Boolean $newline Whether to add a newline or not
      */
-    private function initFormatters()
+    public function doWrite($message, $newline)
     {
-        $formatter = $this->getFormatter();
-
-        $formatter->setStyle('warning', new OutputFormatterStyle('black', 'yellow'));
-        $formatter->setStyle('aside',   new OutputFormatterStyle('blue'));
-        $formatter->setStyle('strong',  new OutputFormatterStyle(null, null, array('bold')));
-        $formatter->setStyle('return',  new OutputFormatterStyle('cyan'));
-        $formatter->setStyle('urgent',  new OutputFormatterStyle('red'));
-        $formatter->setStyle('hidden',  new OutputFormatterStyle('black'));
-
-        // Visibility
-        $formatter->setStyle('public',    new OutputFormatterStyle(null, null, array('bold')));
-        $formatter->setStyle('protected', new OutputFormatterStyle('yellow'));
-        $formatter->setStyle('private',   new OutputFormatterStyle('red'));
-        $formatter->setStyle('global',    new OutputFormatterStyle('cyan', null, array('bold')));
-        $formatter->setStyle('const',     new OutputFormatterStyle('cyan'));
-        $formatter->setStyle('class',     new OutputFormatterStyle('blue', null, array('underscore')));
-        $formatter->setStyle('function',  new OutputFormatterStyle(null));
-
-        // Types
-        $formatter->setStyle('number',   new OutputFormatterStyle('magenta'));
-        $formatter->setStyle('string',   new OutputFormatterStyle('green'));
-        $formatter->setStyle('bool',     new OutputFormatterStyle('cyan'));
-        $formatter->setStyle('keyword',  new OutputFormatterStyle('yellow'));
-        $formatter->setStyle('comment',  new OutputFormatterStyle('blue'));
-        $formatter->setStyle('object',   new OutputFormatterStyle('blue'));
-        $formatter->setStyle('resource', new OutputFormatterStyle('yellow'));
+        if ($this->paging > 0) {
+            $this->pager->doWrite($message, $newline);
+        } else {
+            parent::doWrite($message, $newline);
+        }
     }
 }

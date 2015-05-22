@@ -33,7 +33,7 @@ class ClassNode
     /**
      * Create a new class node.
      *
-     * @param mixed                          $value
+     * @param mixed $value
      * @param \ClassPreloader\ClassNode|null $prev
      *
      * @return void

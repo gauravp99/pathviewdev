@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Security\Core\Authorization;
 
-use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 /**
  * AccessDecisionManager is the base class for all access decision managers
@@ -34,10 +34,10 @@ class AccessDecisionManager implements AccessDecisionManagerInterface
     /**
      * Constructor.
      *
-     * @param VoterInterface[] $voters                             An array of VoterInterface instances
-     * @param string           $strategy                           The vote strategy
-     * @param bool             $allowIfAllAbstainDecisions         Whether to grant access if all voters abstained or not
-     * @param bool             $allowIfEqualGrantedDeniedDecisions Whether to grant access if result are equals
+     * @param VoterInterface[] $voters An array of VoterInterface instances
+     * @param string $strategy The vote strategy
+     * @param bool $allowIfAllAbstainDecisions Whether to grant access if all voters abstained or not
+     * @param bool $allowIfEqualGrantedDeniedDecisions Whether to grant access if result are equals
      *
      * @throws \InvalidArgumentException
      */
@@ -47,15 +47,15 @@ class AccessDecisionManager implements AccessDecisionManagerInterface
             throw new \InvalidArgumentException('You must at least add one voter.');
         }
 
-        $strategyMethod = 'decide'.ucfirst($strategy);
+        $strategyMethod = 'decide' . ucfirst($strategy);
         if (!is_callable(array($this, $strategyMethod))) {
             throw new \InvalidArgumentException(sprintf('The strategy "%s" is not supported.', $strategy));
         }
 
         $this->voters = $voters;
         $this->strategy = $strategyMethod;
-        $this->allowIfAllAbstainDecisions = (bool) $allowIfAllAbstainDecisions;
-        $this->allowIfEqualGrantedDeniedDecisions = (bool) $allowIfEqualGrantedDeniedDecisions;
+        $this->allowIfAllAbstainDecisions = (bool)$allowIfAllAbstainDecisions;
+        $this->allowIfEqualGrantedDeniedDecisions = (bool)$allowIfEqualGrantedDeniedDecisions;
     }
 
     /**

@@ -61,9 +61,9 @@ METHOD
 CODE;
         $values = array(
             '%methodName%' => 'setName',
-            '%arguments%'  => '$argument1',
-            '%returnVar%'  => '$app',
-            '%className%'  => 'App',
+            '%arguments%' => '$argument1',
+            '%returnVar%' => '$app',
+            '%className%' => 'App',
             '%constructorArguments%' => ''
         );
 

@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpKernel\Tests\HttpCache;
 
-use Symfony\Component\HttpKernel\HttpCache\Esi;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpCache\Esi;
 
 class EsiTest extends \PHPUnit_Framework_TestCase
 {
@@ -77,7 +77,7 @@ class EsiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('<esi:include src="/" onerror="continue" alt="/alt" />', $esi->renderIncludeTag('/', '/alt', true));
         $this->assertEquals('<esi:include src="/" alt="/alt" />', $esi->renderIncludeTag('/', '/alt', false));
         $this->assertEquals('<esi:include src="/" onerror="continue" />', $esi->renderIncludeTag('/'));
-        $this->assertEquals('<esi:comment text="some comment" />'."\n".'<esi:include src="/" onerror="continue" alt="/alt" />', $esi->renderIncludeTag('/', '/alt', true, 'some comment'));
+        $this->assertEquals('<esi:comment text="some comment" />' . "\n" . '<esi:include src="/" onerror="continue" alt="/alt" />', $esi->renderIncludeTag('/', '/alt', true, 'some comment'));
     }
 
     public function testProcessDoesNothingIfContentTypeIsNotHtml()
@@ -100,23 +100,23 @@ class EsiTest extends \PHPUnit_Framework_TestCase
         $response = new Response('foo <esi:comment text="some comment" /><esi:include src="..." alt="alt" onerror="continue" />');
         $esi->process($request, $response);
 
-        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'alt\', true) ?>'."\n", $response->getContent());
+        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'alt\', true) ?>' . "\n", $response->getContent());
         $this->assertEquals('ESI', $response->headers->get('x-body-eval'));
 
         $response = new Response('foo <esi:comment text="some comment" /><esi:include src="foo\'" alt="bar\'" onerror="continue" />');
         $esi->process($request, $response);
 
-        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'foo\\\'\', \'bar\\\'\', true) ?>'."\n", $response->getContent());
+        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'foo\\\'\', \'bar\\\'\', true) ?>' . "\n", $response->getContent());
 
         $response = new Response('foo <esi:include src="..." />');
         $esi->process($request, $response);
 
-        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'\', false) ?>'."\n", $response->getContent());
+        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'\', false) ?>' . "\n", $response->getContent());
 
         $response = new Response('foo <esi:include src="..."></esi:include>');
         $esi->process($request, $response);
 
-        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'\', false) ?>'."\n", $response->getContent());
+        $this->assertEquals('foo <?php echo $this->surrogate->handle($this, \'...\', \'\', false) ?>' . "\n", $response->getContent());
     }
 
     public function testProcessEscapesPhpTags()
@@ -170,6 +170,25 @@ class EsiTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $esi->handle($cache, '/', '/alt', true));
     }
 
+    protected function getCache($request, $response)
+    {
+        $cache = $this->getMock('Symfony\Component\HttpKernel\HttpCache\HttpCache', array('getRequest', 'handle'), array(), '', false);
+        $cache->expects($this->any())
+            ->method('getRequest')
+            ->will($this->returnValue($request));
+        if (is_array($response)) {
+            $cache->expects($this->any())
+                ->method('handle')
+                ->will(call_user_func_array(array($this, 'onConsecutiveCalls'), $response));
+        } else {
+            $cache->expects($this->any())
+                ->method('handle')
+                ->will($this->returnValue($response));
+        }
+
+        return $cache;
+    }
+
     /**
      * @expectedException \RuntimeException
      */
@@ -199,27 +218,5 @@ class EsiTest extends \PHPUnit_Framework_TestCase
         $response2 = new Response('bar');
         $cache = $this->getCache(Request::create('/'), array($response1, $response2));
         $this->assertEquals('bar', $esi->handle($cache, '/', '/alt', false));
-    }
-
-    protected function getCache($request, $response)
-    {
-        $cache = $this->getMock('Symfony\Component\HttpKernel\HttpCache\HttpCache', array('getRequest', 'handle'), array(), '', false);
-        $cache->expects($this->any())
-              ->method('getRequest')
-              ->will($this->returnValue($request))
-        ;
-        if (is_array($response)) {
-            $cache->expects($this->any())
-                  ->method('handle')
-                  ->will(call_user_func_array(array($this, 'onConsecutiveCalls'), $response))
-            ;
-        } else {
-            $cache->expects($this->any())
-                  ->method('handle')
-                  ->will($this->returnValue($response))
-            ;
-        }
-
-        return $cache;
     }
 }

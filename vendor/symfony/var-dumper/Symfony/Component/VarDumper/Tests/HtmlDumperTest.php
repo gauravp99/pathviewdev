@@ -21,7 +21,7 @@ class HtmlDumperTest extends \PHPUnit_Framework_TestCase
 {
     public function testGet()
     {
-        require __DIR__.'/Fixtures/dumb-var.php';
+        require __DIR__ . '/Fixtures/dumb-var.php';
 
         $dumper = new HtmlDumper('php://output');
         $dumper->setDumpHeader('<foo></foo>');
@@ -45,8 +45,8 @@ class HtmlDumperTest extends \PHPUnit_Framework_TestCase
         $intMax = PHP_INT_MAX;
         preg_match('/sf-dump-\d+/', $out, $dumpId);
         $dumpId = $dumpId[0];
-        $res1 = (int) $var['res'];
-        $res2 = (int) $var[8];
+        $res1 = (int)$var['res'];
+        $res2 = (int)$var[8];
 
         $this->assertStringMatchesFormat(
             <<<EOTXT

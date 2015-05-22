@@ -25,7 +25,7 @@ class ArrayPresenterTest extends \PHPUnit_Framework_TestCase
     {
         $this->presenter = new ArrayPresenter();
 
-        $this->manager   = new PresenterManager();
+        $this->manager = new PresenterManager();
         $this->manager->addPresenter(new ScalarPresenter());
         $this->manager->addPresenter(new ObjectPresenter());
         $this->manager->addPresenter($this->presenter);
@@ -39,12 +39,17 @@ class ArrayPresenterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expect, self::strip($this->presenter->present($array)));
     }
 
+    private static function strip($text)
+    {
+        return preg_replace('/\\s/', '', $text);
+    }
+
     public function presentData()
     {
         return array(
-            array(array(),                   '[]'),
-            array(array(1),                  '[<number>1</number>]'),
-            array(array(2, "string"),        '[<number>2</number>,<string>"string"</string>]'),
+            array(array(), '[]'),
+            array(array(1), '[<number>1</number>]'),
+            array(array(2, "string"), '[<number>2</number>,<string>"string"</string>]'),
             array(array('a' => 1, 'b' => 2), '[<string>"a"</string>=><number>1</number>,<string>"b"</string>=><number>2</number>]'),
         );
     }
@@ -60,9 +65,9 @@ class ArrayPresenterTest extends \PHPUnit_Framework_TestCase
     public function presentRefData()
     {
         return array(
-            array(array(),        '[]'),
-            array(array(1),       'Array(<number>1</number>)'),
-            array(array(1, 2),    'Array(<number>2</number>)'),
+            array(array(), '[]'),
+            array(array(1), 'Array(<number>1</number>)'),
+            array(array(1, 2), 'Array(<number>2</number>)'),
             array(array(1, 2, 3), 'Array(<number>3</number>)'),
         );
     }
@@ -72,15 +77,15 @@ class ArrayPresenterTest extends \PHPUnit_Framework_TestCase
      */
     public function testPresentArrayObjects($arrayObj, $expect, $expectRef)
     {
-        $this->assertEquals($expect,    $this->presenter->present($arrayObj));
+        $this->assertEquals($expect, $this->presenter->present($arrayObj));
         $this->assertEquals($expectRef, $this->presenter->presentRef($arrayObj));
     }
 
     public function presentArrayObjectsData()
     {
-        $obj1    = new \ArrayObject(array(1, "string"));
-        $hash1   = spl_object_hash($obj1);
-        $ref1    = '<object>\\<<class>ArrayObject</class> <strong>#' . $hash1 . '</strong>></object>';
+        $obj1 = new \ArrayObject(array(1, "string"));
+        $hash1 = spl_object_hash($obj1);
+        $ref1 = '<object>\\<<class>ArrayObject</class> <strong>#' . $hash1 . '</strong>></object>';
         $expect1 = <<<EOS
 $ref1 [
     <number>1</number>,
@@ -88,9 +93,9 @@ $ref1 [
 ]
 EOS;
 
-        $obj2    = new FakeArrayObject(array('a' => 'AAA', 'b' => 'BBB'));
-        $hash2   = spl_object_hash($obj2);
-        $ref2    = '<object>\\<<class>Psy\\Test\\Presenter\\FakeArrayObject</class> <strong>#' . $hash2 . '</strong>></object>';
+        $obj2 = new FakeArrayObject(array('a' => 'AAA', 'b' => 'BBB'));
+        $hash2 = spl_object_hash($obj2);
+        $ref2 = '<object>\\<<class>Psy\\Test\\Presenter\\FakeArrayObject</class> <strong>#' . $hash2 . '</strong>></object>';
         $expect2 = <<<EOS
 $ref2 [
     <string>"a"</string> => <string>"AAA"</string>,
@@ -106,9 +111,9 @@ EOS;
 
     public function testPresentsRecursively()
     {
-        $obj      = new \StdClass();
-        $array    = array(1, $obj, "a");
-        $hash     = spl_object_hash($obj);
+        $obj = new \StdClass();
+        $array = array(1, $obj, "a");
+        $hash = spl_object_hash($obj);
         $expected = <<<EOS
 [
     <number>1</number>,
@@ -118,10 +123,5 @@ EOS;
 EOS;
 
         $this->assertEquals($expected, $this->presenter->present($array));
-    }
-
-    private static function strip($text)
-    {
-        return preg_replace('/\\s/', '', $text);
     }
 }

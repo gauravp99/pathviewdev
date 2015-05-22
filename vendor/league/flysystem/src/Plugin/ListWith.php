@@ -17,9 +17,9 @@ class ListWith extends AbstractPlugin
     /**
      * List contents with metadata.
      *
-     * @param array  $keys
+     * @param array $keys
      * @param string $directory
-     * @param bool   $recursive
+     * @param bool $recursive
      *
      * @return array listing with metadata
      */
@@ -47,10 +47,10 @@ class ListWith extends AbstractPlugin
      */
     protected function getMetadataByName(array $object, $key)
     {
-        $method = 'get'.ucfirst($key);
+        $method = 'get' . ucfirst($key);
 
-        if (! method_exists($this->filesystem, $method)) {
-            throw new \InvalidArgumentException('Could not get meta-data for key: '.$key);
+        if (!method_exists($this->filesystem, $method)) {
+            throw new \InvalidArgumentException('Could not get meta-data for key: ' . $key);
         }
 
         $object[$key] = $this->filesystem->{$method}($object['path']);

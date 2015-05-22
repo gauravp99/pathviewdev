@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Security\Core\Tests\Encoder;
 
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\EncoderFactory;
 use Symfony\Component\Security\Core\Encoder\EncoderAwareInterface;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\User\User;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -139,15 +139,19 @@ class SomeUser implements UserInterface
     public function getRoles()
     {
     }
+
     public function getPassword()
     {
     }
+
     public function getSalt()
     {
     }
+
     public function getUsername()
     {
     }
+
     public function eraseCredentials()
     {
     }

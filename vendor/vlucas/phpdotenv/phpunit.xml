@@ -9,10 +9,10 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="./tests/bootstrap.php"
->
-  <testsuites>
-    <testsuite name="Dotenv Test Suite">
-      <directory suffix=".php">tests/Dotenv</directory>
-    </testsuite>
-  </testsuites>
+        >
+    <testsuites>
+        <testsuite name="Dotenv Test Suite">
+            <directory suffix=".php">tests/Dotenv</directory>
+        </testsuite>
+    </testsuites>
 </phpunit>

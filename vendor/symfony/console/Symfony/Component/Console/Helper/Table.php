@@ -21,45 +21,39 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class Table
 {
+    private static $styles;
     /**
      * Table headers.
      *
      * @var array
      */
     private $headers = array();
-
     /**
      * Table rows.
      *
      * @var array
      */
     private $rows = array();
-
     /**
      * Column widths cache.
      *
      * @var array
      */
     private $columnWidths = array();
-
     /**
      * Number of columns cache.
      *
      * @var array
      */
     private $numberOfColumns;
-
     /**
      * @var OutputInterface
      */
     private $output;
-
     /**
      * @var TableStyle
      */
     private $style;
-
-    private static $styles;
 
     public function __construct(OutputInterface $output)
     {
@@ -72,10 +66,32 @@ class Table
         $this->setStyle('default');
     }
 
+    private static function initStyles()
+    {
+        $borderless = new TableStyle();
+        $borderless
+            ->setHorizontalBorderChar('=')
+            ->setVerticalBorderChar(' ')
+            ->setCrossingChar(' ');
+
+        $compact = new TableStyle();
+        $compact
+            ->setHorizontalBorderChar('')
+            ->setVerticalBorderChar(' ')
+            ->setCrossingChar('')
+            ->setCellRowContentFormat('%s');
+
+        return array(
+            'default' => new TableStyle(),
+            'borderless' => $borderless,
+            'compact' => $compact,
+        );
+    }
+
     /**
      * Sets a style definition.
      *
-     * @param string     $name  The style name
+     * @param string $name The style name
      * @param TableStyle $style A TableStyle instance
      */
     public static function setStyleDefinition($name, TableStyle $style)
@@ -108,6 +124,16 @@ class Table
     }
 
     /**
+     * Gets the current table style.
+     *
+     * @return TableStyle
+     */
+    public function getStyle()
+    {
+        return $this->style;
+    }
+
+    /**
      * Sets table style.
      *
      * @param TableStyle|string $name The style name or a TableStyle instance
@@ -125,16 +151,6 @@ class Table
         }
 
         return $this;
-    }
-
-    /**
-     * Gets the current table style.
-     *
-     * @return TableStyle
-     */
-    public function getStyle()
-    {
-        return $this->style;
     }
 
     public function setHeaders(array $headers)
@@ -258,64 +274,10 @@ class Table
 
         $markup = $this->style->getCrossingChar();
         for ($column = 0; $column < $count; $column++) {
-            $markup .= str_repeat($this->style->getHorizontalBorderChar(), $this->getColumnWidth($column)).$this->style->getCrossingChar();
+            $markup .= str_repeat($this->style->getHorizontalBorderChar(), $this->getColumnWidth($column)) . $this->style->getCrossingChar();
         }
 
         $this->output->writeln(sprintf($this->style->getBorderFormat(), $markup));
-    }
-
-    /**
-     * Renders vertical column separator.
-     */
-    private function renderColumnSeparator()
-    {
-        $this->output->write(sprintf($this->style->getBorderFormat(), $this->style->getVerticalBorderChar()));
-    }
-
-    /**
-     * Renders table row.
-     *
-     * Example: | 9971-5-0210-0 | A Tale of Two Cities  | Charles Dickens  |
-     *
-     * @param array  $row
-     * @param string $cellFormat
-     */
-    private function renderRow(array $row, $cellFormat)
-    {
-        if (empty($row)) {
-            return;
-        }
-
-        $this->renderColumnSeparator();
-        for ($column = 0, $count = $this->getNumberOfColumns(); $column < $count; $column++) {
-            $this->renderCell($row, $column, $cellFormat);
-            $this->renderColumnSeparator();
-        }
-        $this->output->writeln('');
-    }
-
-    /**
-     * Renders table cell with padding.
-     *
-     * @param array  $row
-     * @param int    $column
-     * @param string $cellFormat
-     */
-    private function renderCell(array $row, $column, $cellFormat)
-    {
-        $cell = isset($row[$column]) ? $row[$column] : '';
-        $width = $this->getColumnWidth($column);
-
-        // str_pad won't work properly with multi-byte strings, we need to fix the padding
-        if (function_exists('mb_strwidth') && false !== $encoding = mb_detect_encoding($cell)) {
-            $width += strlen($cell) - mb_strwidth($cell, $encoding);
-        }
-
-        $width += Helper::strlen($cell) - Helper::strlenWithoutDecoration($this->output->getFormatter(), $cell);
-
-        $content = sprintf($this->style->getCellRowContentFormat(), $cell);
-
-        $this->output->write(sprintf($cellFormat, str_pad($content, $width, $this->style->getPaddingChar(), $this->style->getPadType())));
     }
 
     /**
@@ -366,7 +328,7 @@ class Table
      * Gets cell width.
      *
      * @param array $row
-     * @param int   $column
+     * @param int $column
      *
      * @return int
      */
@@ -376,35 +338,65 @@ class Table
     }
 
     /**
+     * Renders table row.
+     *
+     * Example: | 9971-5-0210-0 | A Tale of Two Cities  | Charles Dickens  |
+     *
+     * @param array $row
+     * @param string $cellFormat
+     */
+    private function renderRow(array $row, $cellFormat)
+    {
+        if (empty($row)) {
+            return;
+        }
+
+        $this->renderColumnSeparator();
+        for ($column = 0, $count = $this->getNumberOfColumns(); $column < $count; $column++) {
+            $this->renderCell($row, $column, $cellFormat);
+            $this->renderColumnSeparator();
+        }
+        $this->output->writeln('');
+    }
+
+    /**
+     * Renders vertical column separator.
+     */
+    private function renderColumnSeparator()
+    {
+        $this->output->write(sprintf($this->style->getBorderFormat(), $this->style->getVerticalBorderChar()));
+    }
+
+    /**
+     * Renders table cell with padding.
+     *
+     * @param array $row
+     * @param int $column
+     * @param string $cellFormat
+     */
+    private function renderCell(array $row, $column, $cellFormat)
+    {
+        $cell = isset($row[$column]) ? $row[$column] : '';
+        $width = $this->getColumnWidth($column);
+
+        // str_pad won't work properly with multi-byte strings, we need to fix the padding
+        if (function_exists('mb_strwidth') && false !== $encoding = mb_detect_encoding($cell)) {
+            $width += strlen($cell) - mb_strwidth($cell, $encoding);
+        }
+
+        $width += Helper::strlen($cell) - Helper::strlenWithoutDecoration($this->output->getFormatter(), $cell);
+
+        $content = sprintf($this->style->getCellRowContentFormat(), $cell);
+
+        $this->output->write(sprintf($cellFormat, str_pad($content, $width, $this->style->getPaddingChar(), $this->style->getPadType())));
+    }
+
+    /**
      * Called after rendering to cleanup cache data.
      */
     private function cleanup()
     {
         $this->columnWidths = array();
         $this->numberOfColumns = null;
-    }
-
-    private static function initStyles()
-    {
-        $borderless = new TableStyle();
-        $borderless
-            ->setHorizontalBorderChar('=')
-            ->setVerticalBorderChar(' ')
-            ->setCrossingChar(' ')
-        ;
-
-        $compact = new TableStyle();
-        $compact
-            ->setHorizontalBorderChar('')
-            ->setVerticalBorderChar(' ')
-            ->setCrossingChar('')
-            ->setCellRowContentFormat('%s')
-        ;
-
-        return array(
-            'default' => new TableStyle(),
-            'borderless' => $borderless,
-            'compact' => $compact,
-        );
     }
 }

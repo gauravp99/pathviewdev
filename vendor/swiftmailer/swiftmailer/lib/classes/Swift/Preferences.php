@@ -85,7 +85,7 @@ class Swift_Preferences
     /**
      * Set the QuotedPrintable dot escaper preference.
      *
-     * @param bool    $dotEscape
+     * @param bool $dotEscape
      *
      * @return Swift_Preferences
      */

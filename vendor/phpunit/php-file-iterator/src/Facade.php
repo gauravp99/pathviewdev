@@ -27,8 +27,8 @@ class File_Iterator_Facade
      * @param  array|string $paths
      * @param  array|string $suffixes
      * @param  array|string $prefixes
-     * @param  array        $exclude
-     * @param  boolean      $commonPath
+     * @param  array $exclude
+     * @param  boolean $commonPath
      * @return array
      */
     public function getFilesAsArray($paths, $suffixes = '', $prefixes = '', array $exclude = array(), $commonPath = FALSE)
@@ -37,9 +37,9 @@ class File_Iterator_Facade
             $paths = array($paths);
         }
 
-        $factory  = new File_Iterator_Factory;
+        $factory = new File_Iterator_Factory;
         $iterator = $factory->getFileIterator(
-          $paths, $suffixes, $prefixes, $exclude
+            $paths, $suffixes, $prefixes, $exclude
         );
 
         $files = array();
@@ -63,8 +63,8 @@ class File_Iterator_Facade
 
         if ($commonPath) {
             return array(
-              'commonPath' => $this->getCommonPath($files),
-              'files'      => $files
+                'commonPath' => $this->getCommonPath($files),
+                'files' => $files
             );
         } else {
             return $files;
@@ -100,13 +100,13 @@ class File_Iterator_Facade
         }
 
         $common = '';
-        $done   = FALSE;
-        $j      = 0;
+        $done = FALSE;
+        $j = 0;
         $count--;
 
         while (!$done) {
             for ($i = 0; $i < $count; $i++) {
-                if ($_files[$i][$j] != $_files[$i+1][$j]) {
+                if ($_files[$i][$j] != $_files[$i + 1][$j]) {
                     $done = TRUE;
                     break;
                 }

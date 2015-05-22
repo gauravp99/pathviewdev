@@ -2,8 +2,8 @@
 
 namespace PhpParser\Node\Stmt;
 
-use PhpParser\Node;
 use PhpParser\Error;
+use PhpParser\Node;
 
 class ClassMethod extends Node\Stmt
 {
@@ -23,19 +23,20 @@ class ClassMethod extends Node\Stmt
     /**
      * Constructs a class method node.
      *
-     * @param string      $name       Name
-     * @param array       $subNodes   Array of the following optional subnodes:
+     * @param string $name Name
+     * @param array $subNodes Array of the following optional subnodes:
      *                                'type'       => MODIFIER_PUBLIC: Type
      *                                'byRef'      => false          : Whether to return by reference
      *                                'params'     => array()        : Parameters
      *                                'returnType' => null           : Return type
      *                                'stmts'      => array()        : Statements
-     * @param array       $attributes Additional attributes
+     * @param array $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = array(), array $attributes = array()) {
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->type = isset($subNodes['type']) ? $subNodes['type'] : 0;
-        $this->byRef = isset($subNodes['byRef'])  ? $subNodes['byRef']  : false;
+        $this->byRef = isset($subNodes['byRef']) ? $subNodes['byRef'] : false;
         $this->name = $name;
         $this->params = isset($subNodes['params']) ? $subNodes['params'] : array();
         $this->returnType = isset($subNodes['returnType']) ? $subNodes['returnType'] : null;
@@ -53,31 +54,38 @@ class ClassMethod extends Node\Stmt
         }
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('type', 'byRef', 'name', 'params', 'returnType', 'stmts');
     }
 
-    public function isPublic() {
+    public function isPublic()
+    {
         return ($this->type & Class_::MODIFIER_PUBLIC) !== 0 || $this->type === 0;
     }
 
-    public function isProtected() {
-        return (bool) ($this->type & Class_::MODIFIER_PROTECTED);
+    public function isProtected()
+    {
+        return (bool)($this->type & Class_::MODIFIER_PROTECTED);
     }
 
-    public function isPrivate() {
-        return (bool) ($this->type & Class_::MODIFIER_PRIVATE);
+    public function isPrivate()
+    {
+        return (bool)($this->type & Class_::MODIFIER_PRIVATE);
     }
 
-    public function isAbstract() {
-        return (bool) ($this->type & Class_::MODIFIER_ABSTRACT);
+    public function isAbstract()
+    {
+        return (bool)($this->type & Class_::MODIFIER_ABSTRACT);
     }
 
-    public function isFinal() {
-        return (bool) ($this->type & Class_::MODIFIER_FINAL);
+    public function isFinal()
+    {
+        return (bool)($this->type & Class_::MODIFIER_FINAL);
     }
 
-    public function isStatic() {
-        return (bool) ($this->type & Class_::MODIFIER_STATIC);
+    public function isStatic()
+    {
+        return (bool)($this->type & Class_::MODIFIER_STATIC);
     }
 }

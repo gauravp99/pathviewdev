@@ -1,5 +1,10 @@
 <?php namespace App\Http\Controllers;
 
+/**
+ * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
+ * @Contact: byeshvant@hotmail.com
+ * Controller for list use profile previous analysis
+ */
 use App\Http\Requests;
 use App\User;
 

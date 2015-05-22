@@ -62,7 +62,7 @@ class AuthenticationException extends \RuntimeException implements \Serializable
             $this->message,
             $this->file,
             $this->line
-        ) = unserialize($str);
+            ) = unserialize($str);
     }
 
     /**

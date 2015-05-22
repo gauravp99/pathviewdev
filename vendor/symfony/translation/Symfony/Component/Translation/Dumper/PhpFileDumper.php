@@ -25,7 +25,7 @@ class PhpFileDumper extends FileDumper
      */
     protected function format(MessageCatalogue $messages, $domain)
     {
-        $output = "<?php\n\nreturn ".var_export($messages->all($domain), true).";\n";
+        $output = "<?php\n\nreturn " . var_export($messages->all($domain), true) . ";\n";
 
         return $output;
     }

@@ -39,31 +39,15 @@ class PHPUnit_Framework_Constraint_StringContains extends PHPUnit_Framework_Cons
     protected $ignoreCase;
 
     /**
-     * @param string  $string
+     * @param string $string
      * @param boolean $ignoreCase
      */
     public function __construct($string, $ignoreCase = false)
     {
         parent::__construct();
 
-        $this->string     = $string;
+        $this->string = $string;
         $this->ignoreCase = $ignoreCase;
-    }
-
-    /**
-     * Evaluates the constraint for parameter $other. Returns true if the
-     * constraint is met, false otherwise.
-     *
-     * @param  mixed $other Value or object to evaluate.
-     * @return bool
-     */
-    protected function matches($other)
-    {
-        if ($this->ignoreCase) {
-            return stripos($other, $this->string) !== false;
-        } else {
-            return strpos($other, $this->string) !== false;
-        }
     }
 
     /**
@@ -83,5 +67,21 @@ class PHPUnit_Framework_Constraint_StringContains extends PHPUnit_Framework_Cons
             'contains "%s"',
             $string
         );
+    }
+
+    /**
+     * Evaluates the constraint for parameter $other. Returns true if the
+     * constraint is met, false otherwise.
+     *
+     * @param  mixed $other Value or object to evaluate.
+     * @return bool
+     */
+    protected function matches($other)
+    {
+        if ($this->ignoreCase) {
+            return stripos($other, $this->string) !== false;
+        } else {
+            return strpos($other, $this->string) !== false;
+        }
     }
 }

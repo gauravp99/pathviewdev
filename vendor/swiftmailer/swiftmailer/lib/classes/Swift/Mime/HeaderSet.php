@@ -18,7 +18,7 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
     /**
      * Add a new Mailbox Header with a list of $addresses.
      *
-     * @param string       $name
+     * @param string $name
      * @param array|string $addresses
      */
     public function addMailboxHeader($name, $addresses = null);
@@ -26,8 +26,8 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
     /**
      * Add a new Date header using $timestamp (UNIX time).
      *
-     * @param string  $name
-     * @param int     $timestamp
+     * @param string $name
+     * @param int $timestamp
      */
     public function addDateHeader($name, $timestamp = null);
 
@@ -44,14 +44,14 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
      *
      * @param string $name
      * @param string $value
-     * @param array  $params
+     * @param array $params
      */
     public function addParameterizedHeader($name, $value = null, $params = array());
 
     /**
      * Add a new ID header for Message-ID or Content-ID.
      *
-     * @param string       $name
+     * @param string $name
      * @param string|array $ids
      */
     public function addIdHeader($name, $ids = null);
@@ -69,8 +69,8 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
      *
      * If multiple headers match, the actual one may be specified by $index.
      *
-     * @param string  $name
-     * @param int     $index
+     * @param string $name
+     * @param int $index
      *
      * @return bool
      */
@@ -86,7 +86,7 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
      * offset.
      *
      * @param Swift_Mime_Header $header
-     * @param int               $index
+     * @param int $index
      */
     public function set(Swift_Mime_Header $header, $index = 0);
 
@@ -95,8 +95,8 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
      * If multiple headers match, the actual one may be specified by $index.
      * Returns NULL if none present.
      *
-     * @param string  $name
-     * @param int     $index
+     * @param string $name
+     * @param int $index
      *
      * @return Swift_Mime_Header
      */
@@ -118,13 +118,13 @@ interface Swift_Mime_HeaderSet extends Swift_Mime_CharsetObserver
      */
     public function listAll();
 
-   /**
+    /**
      * Remove the header with the given $name if it's set.
      *
      * If multiple headers match, the actual one may be specified by $index.
      *
-     * @param string  $name
-     * @param int     $index
+     * @param string $name
+     * @param int $index
      */
     public function remove($name, $index = 0);
 

@@ -19,12 +19,12 @@ abstract class BasicMatcher implements MatcherInterface
 {
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return mixed
      *
-     *   @throws FailureException
+     * @throws FailureException
      */
     final public function positiveMatch($name, $subject, array $arguments)
     {
@@ -36,9 +36,26 @@ abstract class BasicMatcher implements MatcherInterface
     }
 
     /**
+     * @param mixed $subject
+     * @param array $arguments
+     *
+     * @return boolean
+     */
+    abstract protected function matches($subject, array $arguments);
+
+    /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
+     *
+     * @return FailureException
+     */
+    abstract protected function getFailureException($name, $subject, array $arguments);
+
+    /**
+     * @param string $name
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return mixed
      *
@@ -54,36 +71,19 @@ abstract class BasicMatcher implements MatcherInterface
     }
 
     /**
+     * @param string $name
+     * @param mixed $subject
+     * @param array $arguments
+     *
+     * @return FailureException
+     */
+    abstract protected function getNegativeFailureException($name, $subject, array $arguments);
+
+    /**
      * @return int
      */
     public function getPriority()
     {
         return 100;
     }
-
-    /**
-     * @param mixed $subject
-     * @param array $arguments
-     *
-     * @return boolean
-     */
-    abstract protected function matches($subject, array $arguments);
-
-    /**
-     * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
-     *
-     * @return FailureException
-     */
-    abstract protected function getFailureException($name, $subject, array $arguments);
-
-    /**
-     * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
-     *
-     * @return FailureException
-     */
-    abstract protected function getNegativeFailureException($name, $subject, array $arguments);
 }

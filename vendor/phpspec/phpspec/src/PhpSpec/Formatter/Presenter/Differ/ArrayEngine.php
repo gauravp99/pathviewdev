@@ -23,20 +23,20 @@ class ArrayEngine extends StringEngine
     public function compare($expected, $actual)
     {
         $expectedString = $this->convertArrayToString($expected);
-        $actualString   = $this->convertArrayToString($actual);
+        $actualString = $this->convertArrayToString($actual);
 
         return parent::compare($expectedString, $actualString);
     }
 
     private function convertArrayToString(array $a, $pad = 2)
     {
-        $str = str_pad('', $pad, ' ').'[';
+        $str = str_pad('', $pad, ' ') . '[';
         foreach ($a as $key => $val) {
             switch ($type = strtolower(gettype($val))) {
                 case 'array':
                     $line = sprintf('%s => %s,',
                         $key,
-                        ltrim($this->convertArrayToString($val, $pad+2))
+                        ltrim($this->convertArrayToString($val, $pad + 2))
                     );
                     break;
                 case 'null':
@@ -69,9 +69,9 @@ class ArrayEngine extends StringEngine
                 default:
                     $line = sprintf('%s => %s:%s,', $key, $type, $val);
             }
-            $str .= PHP_EOL.str_pad('', $pad+2, ' ').$line;
+            $str .= PHP_EOL . str_pad('', $pad + 2, ' ') . $line;
         }
-        $str .= PHP_EOL.str_pad('', $pad, ' ').']';
+        $str .= PHP_EOL . str_pad('', $pad, ' ') . ']';
 
         return $str;
     }

@@ -23,8 +23,8 @@ class ClassGenerator extends PromptingGenerator
 {
     /**
      * @param ResourceInterface $resource
-     * @param string            $generation
-     * @param array             $data
+     * @param string $generation
+     * @param array $data
      *
      * @return bool
      */
@@ -43,19 +43,19 @@ class ClassGenerator extends PromptingGenerator
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      *
      * @return string
      */
     protected function renderTemplate(ResourceInterface $resource, $filepath)
     {
         $values = array(
-            '%filepath%'        => $filepath,
-            '%name%'            => $resource->getName(),
-            '%namespace%'       => $resource->getSrcNamespace(),
+            '%filepath%' => $filepath,
+            '%name%' => $resource->getName(),
+            '%namespace%' => $resource->getSrcNamespace(),
             '%namespace_block%' => '' !== $resource->getSrcNamespace()
-                                ?  sprintf("\n\nnamespace %s;", $resource->getSrcNamespace())
-                                : '',
+                ? sprintf("\n\nnamespace %s;", $resource->getSrcNamespace())
+                : '',
         );
 
         if (!$content = $this->getTemplateRenderer()->render('class', $values)) {
@@ -72,7 +72,7 @@ class ClassGenerator extends PromptingGenerator
      */
     protected function getTemplate()
     {
-        return file_get_contents(__DIR__.'/templates/class.template');
+        return file_get_contents(__DIR__ . '/templates/class.template');
     }
 
     /**
@@ -87,7 +87,7 @@ class ClassGenerator extends PromptingGenerator
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $filepath
+     * @param string $filepath
      *
      * @return string
      */

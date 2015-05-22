@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Runner;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use PhpSpec\Event;
 use PhpSpec\Loader\Node\SpecificationNode;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class SpecificationRunner
 {
@@ -30,11 +30,11 @@ class SpecificationRunner
 
     /**
      * @param EventDispatcherInterface $dispatcher
-     * @param ExampleRunner            $exampleRunner
+     * @param ExampleRunner $exampleRunner
      */
     public function __construct(EventDispatcherInterface $dispatcher, ExampleRunner $exampleRunner)
     {
-        $this->dispatcher    = $dispatcher;
+        $this->dispatcher = $dispatcher;
         $this->exampleRunner = $exampleRunner;
     }
 

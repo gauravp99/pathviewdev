@@ -14,9 +14,9 @@
 namespace PhpSpec\Runner\Maintainer;
 
 use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\SpecificationInterface;
-use PhpSpec\Runner\MatcherManager;
 use PhpSpec\Runner\CollaboratorManager;
+use PhpSpec\Runner\MatcherManager;
+use PhpSpec\SpecificationInterface;
 use PhpSpec\Wrapper\Collaborator;
 use PhpSpec\Wrapper\Unwrapper;
 use Prophecy\Prophet;
@@ -55,10 +55,10 @@ class CollaboratorsMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function prepare(ExampleNode $example, SpecificationInterface $context,
                             MatcherManager $matchers, CollaboratorManager $collaborators)
@@ -75,27 +75,7 @@ class CollaboratorsMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
-     * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
-     */
-    public function teardown(ExampleNode $example, SpecificationInterface $context,
-                             MatcherManager $matchers, CollaboratorManager $collaborators)
-    {
-        $this->prophet->checkPredictions();
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriority()
-    {
-        return 50;
-    }
-
-    /**
-     * @param CollaboratorManager         $collaborators
+     * @param CollaboratorManager $collaborators
      * @param \ReflectionFunctionAbstract $function
      */
     private function generateCollaborators(CollaboratorManager $collaborators, \ReflectionFunctionAbstract $function)
@@ -120,7 +100,7 @@ class CollaboratorsMaintainer implements MaintainerInterface
 
     /**
      * @param CollaboratorManager $collaborators
-     * @param string              $name
+     * @param string $name
      *
      * @return Collaborator
      */
@@ -132,5 +112,25 @@ class CollaboratorsMaintainer implements MaintainerInterface
         }
 
         return $collaborators->get($name);
+    }
+
+    /**
+     * @param ExampleNode $example
+     * @param SpecificationInterface $context
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
+     */
+    public function teardown(ExampleNode $example, SpecificationInterface $context,
+                             MatcherManager $matchers, CollaboratorManager $collaborators)
+    {
+        $this->prophet->checkPredictions();
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return 50;
     }
 }

@@ -70,21 +70,6 @@ class Swift_DependencyContainer
     }
 
     /**
-     * Test if an item is registered in this container with the given name.
-     *
-     * @see register()
-     *
-     * @param string $itemName
-     *
-     * @return bool
-     */
-    public function has($itemName)
-    {
-        return array_key_exists($itemName, $this->_store)
-            && isset($this->_store[$itemName]['lookupType']);
-    }
-
-    /**
      * Lookup the item with the given $itemName.
      *
      * @see register()
@@ -99,8 +84,8 @@ class Swift_DependencyContainer
     {
         if (!$this->has($itemName)) {
             throw new Swift_DependencyException(
-                'Cannot lookup dependency "'.$itemName.'" since it is not registered.'
-                );
+                'Cannot lookup dependency "' . $itemName . '" since it is not registered.'
+            );
         }
 
         switch ($this->_store[$itemName]['lookupType']) {
@@ -112,6 +97,46 @@ class Swift_DependencyContainer
                 return $this->_createNewInstance($itemName);
             case self::TYPE_SHARED:
                 return $this->_createSharedInstance($itemName);
+        }
+    }
+
+    /**
+     * Test if an item is registered in this container with the given name.
+     *
+     * @see register()
+     *
+     * @param string $itemName
+     *
+     * @return bool
+     */
+    public function has($itemName)
+    {
+        return array_key_exists($itemName, $this->_store)
+        && isset($this->_store[$itemName]['lookupType']);
+    }
+
+    /** Resolve an alias to another item */
+    private function _createAlias($itemName)
+    {
+        return $this->lookup($this->_store[$itemName]['ref']);
+    }
+
+    /** Get the literal value with $itemName */
+    private function _getValue($itemName)
+    {
+        return $this->_store[$itemName]['value'];
+    }
+
+    /** Create a fresh instance of $itemName */
+    private function _createNewInstance($itemName)
+    {
+        $reflector = new ReflectionClass($this->_store[$itemName]['className']);
+        if ($reflector->getConstructor()) {
+            return $reflector->newInstanceArgs(
+                $this->createDependenciesFor($itemName)
+            );
+        } else {
+            return $reflector->newInstance();
         }
     }
 
@@ -130,211 +155,6 @@ class Swift_DependencyContainer
         }
 
         return $args;
-    }
-
-    /**
-     * Register a new dependency with $itemName.
-     *
-     * This method returns the current DependencyContainer instance because it
-     * requires the use of the fluid interface to set the specific details for the
-     * dependency.
-     * @see asNewInstanceOf(), asSharedInstanceOf(), asValue()
-     *
-     * @param string $itemName
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function register($itemName)
-    {
-        $this->_store[$itemName] = array();
-        $this->_endPoint = & $this->_store[$itemName];
-
-        return $this;
-    }
-
-    /**
-     * Specify the previously registered item as a literal value.
-     *
-     * {@link register()} must be called before this will work.
-     *
-     * @param mixed $value
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function asValue($value)
-    {
-        $endPoint = & $this->_getEndPoint();
-        $endPoint['lookupType'] = self::TYPE_VALUE;
-        $endPoint['value'] = $value;
-
-        return $this;
-    }
-
-    /**
-     * Specify the previously registered item as an alias of another item.
-     *
-     * @param string $lookup
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function asAliasOf($lookup)
-    {
-        $endPoint = & $this->_getEndPoint();
-        $endPoint['lookupType'] = self::TYPE_ALIAS;
-        $endPoint['ref'] = $lookup;
-
-        return $this;
-    }
-
-    /**
-     * Specify the previously registered item as a new instance of $className.
-     *
-     * {@link register()} must be called before this will work.
-     * Any arguments can be set with {@link withDependencies()},
-     * {@link addConstructorValue()} or {@link addConstructorLookup()}.
-     *
-     * @see withDependencies(), addConstructorValue(), addConstructorLookup()
-     *
-     * @param string $className
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function asNewInstanceOf($className)
-    {
-        $endPoint = & $this->_getEndPoint();
-        $endPoint['lookupType'] = self::TYPE_INSTANCE;
-        $endPoint['className'] = $className;
-
-        return $this;
-    }
-
-    /**
-     * Specify the previously registered item as a shared instance of $className.
-     *
-     * {@link register()} must be called before this will work.
-     *
-     * @param string $className
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function asSharedInstanceOf($className)
-    {
-        $endPoint = & $this->_getEndPoint();
-        $endPoint['lookupType'] = self::TYPE_SHARED;
-        $endPoint['className'] = $className;
-
-        return $this;
-    }
-
-    /**
-     * Specify a list of injected dependencies for the previously registered item.
-     *
-     * This method takes an array of lookup names.
-     *
-     * @see addConstructorValue(), addConstructorLookup()
-     *
-     * @param array $lookups
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function withDependencies(array $lookups)
-    {
-        $endPoint = & $this->_getEndPoint();
-        $endPoint['args'] = array();
-        foreach ($lookups as $lookup) {
-            $this->addConstructorLookup($lookup);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Specify a literal (non looked up) value for the constructor of the
-     * previously registered item.
-     *
-     * @see withDependencies(), addConstructorLookup()
-     *
-     * @param mixed $value
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function addConstructorValue($value)
-    {
-        $endPoint = & $this->_getEndPoint();
-        if (!isset($endPoint['args'])) {
-            $endPoint['args'] = array();
-        }
-        $endPoint['args'][] = array('type' => 'value', 'item' => $value);
-
-        return $this;
-    }
-
-    /**
-     * Specify a dependency lookup for the constructor of the previously
-     * registered item.
-     *
-     * @see withDependencies(), addConstructorValue()
-     *
-     * @param string $lookup
-     *
-     * @return Swift_DependencyContainer
-     */
-    public function addConstructorLookup($lookup)
-    {
-        $endPoint = & $this->_getEndPoint();
-        if (!isset($this->_endPoint['args'])) {
-            $endPoint['args'] = array();
-        }
-        $endPoint['args'][] = array('type' => 'lookup', 'item' => $lookup);
-
-        return $this;
-    }
-
-    /** Get the literal value with $itemName */
-    private function _getValue($itemName)
-    {
-        return $this->_store[$itemName]['value'];
-    }
-
-    /** Resolve an alias to another item */
-    private function _createAlias($itemName)
-    {
-        return $this->lookup($this->_store[$itemName]['ref']);
-    }
-
-    /** Create a fresh instance of $itemName */
-    private function _createNewInstance($itemName)
-    {
-        $reflector = new ReflectionClass($this->_store[$itemName]['className']);
-        if ($reflector->getConstructor()) {
-            return $reflector->newInstanceArgs(
-                $this->createDependenciesFor($itemName)
-                );
-        } else {
-            return $reflector->newInstance();
-        }
-    }
-
-    /** Create and register a shared instance of $itemName */
-    private function _createSharedInstance($itemName)
-    {
-        if (!isset($this->_store[$itemName]['instance'])) {
-            $this->_store[$itemName]['instance'] = $this->_createNewInstance($itemName);
-        }
-
-        return $this->_store[$itemName]['instance'];
-    }
-
-    /** Get the current endpoint in the store */
-    private function &_getEndPoint()
-    {
-        if (!isset($this->_endPoint)) {
-            throw new BadMethodCallException(
-                'Component must first be registered by calling register()'
-                );
-        }
-
-        return $this->_endPoint;
     }
 
     /** Get an argument list with dependencies resolved */
@@ -368,5 +188,185 @@ class Swift_DependencyContainer
         } else {
             return $this->lookup($item);
         }
+    }
+
+    /** Create and register a shared instance of $itemName */
+    private function _createSharedInstance($itemName)
+    {
+        if (!isset($this->_store[$itemName]['instance'])) {
+            $this->_store[$itemName]['instance'] = $this->_createNewInstance($itemName);
+        }
+
+        return $this->_store[$itemName]['instance'];
+    }
+
+    /**
+     * Register a new dependency with $itemName.
+     *
+     * This method returns the current DependencyContainer instance because it
+     * requires the use of the fluid interface to set the specific details for the
+     * dependency.
+     * @see asNewInstanceOf(), asSharedInstanceOf(), asValue()
+     *
+     * @param string $itemName
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function register($itemName)
+    {
+        $this->_store[$itemName] = array();
+        $this->_endPoint = &$this->_store[$itemName];
+
+        return $this;
+    }
+
+    /**
+     * Specify the previously registered item as a literal value.
+     *
+     * {@link register()} must be called before this will work.
+     *
+     * @param mixed $value
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function asValue($value)
+    {
+        $endPoint = &$this->_getEndPoint();
+        $endPoint['lookupType'] = self::TYPE_VALUE;
+        $endPoint['value'] = $value;
+
+        return $this;
+    }
+
+    /** Get the current endpoint in the store */
+    private function &_getEndPoint()
+    {
+        if (!isset($this->_endPoint)) {
+            throw new BadMethodCallException(
+                'Component must first be registered by calling register()'
+            );
+        }
+
+        return $this->_endPoint;
+    }
+
+    /**
+     * Specify the previously registered item as an alias of another item.
+     *
+     * @param string $lookup
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function asAliasOf($lookup)
+    {
+        $endPoint = &$this->_getEndPoint();
+        $endPoint['lookupType'] = self::TYPE_ALIAS;
+        $endPoint['ref'] = $lookup;
+
+        return $this;
+    }
+
+    /**
+     * Specify the previously registered item as a new instance of $className.
+     *
+     * {@link register()} must be called before this will work.
+     * Any arguments can be set with {@link withDependencies()},
+     * {@link addConstructorValue()} or {@link addConstructorLookup()}.
+     *
+     * @see withDependencies(), addConstructorValue(), addConstructorLookup()
+     *
+     * @param string $className
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function asNewInstanceOf($className)
+    {
+        $endPoint = &$this->_getEndPoint();
+        $endPoint['lookupType'] = self::TYPE_INSTANCE;
+        $endPoint['className'] = $className;
+
+        return $this;
+    }
+
+    /**
+     * Specify the previously registered item as a shared instance of $className.
+     *
+     * {@link register()} must be called before this will work.
+     *
+     * @param string $className
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function asSharedInstanceOf($className)
+    {
+        $endPoint = &$this->_getEndPoint();
+        $endPoint['lookupType'] = self::TYPE_SHARED;
+        $endPoint['className'] = $className;
+
+        return $this;
+    }
+
+    /**
+     * Specify a list of injected dependencies for the previously registered item.
+     *
+     * This method takes an array of lookup names.
+     *
+     * @see addConstructorValue(), addConstructorLookup()
+     *
+     * @param array $lookups
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function withDependencies(array $lookups)
+    {
+        $endPoint = &$this->_getEndPoint();
+        $endPoint['args'] = array();
+        foreach ($lookups as $lookup) {
+            $this->addConstructorLookup($lookup);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Specify a dependency lookup for the constructor of the previously
+     * registered item.
+     *
+     * @see withDependencies(), addConstructorValue()
+     *
+     * @param string $lookup
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function addConstructorLookup($lookup)
+    {
+        $endPoint = &$this->_getEndPoint();
+        if (!isset($this->_endPoint['args'])) {
+            $endPoint['args'] = array();
+        }
+        $endPoint['args'][] = array('type' => 'lookup', 'item' => $lookup);
+
+        return $this;
+    }
+
+    /**
+     * Specify a literal (non looked up) value for the constructor of the
+     * previously registered item.
+     *
+     * @see withDependencies(), addConstructorLookup()
+     *
+     * @param mixed $value
+     *
+     * @return Swift_DependencyContainer
+     */
+    public function addConstructorValue($value)
+    {
+        $endPoint = &$this->_getEndPoint();
+        if (!isset($endPoint['args'])) {
+            $endPoint['args'] = array();
+        }
+        $endPoint['args'][] = array('type' => 'value', 'item' => $value);
+
+        return $this;
     }
 }

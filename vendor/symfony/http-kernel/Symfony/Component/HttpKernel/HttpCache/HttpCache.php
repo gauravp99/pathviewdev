@@ -15,10 +15,10 @@
 
 namespace Symfony\Component\HttpKernel\HttpCache;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\TerminableInterface;
 
 /**
  * Cache provides HTTP caching.
@@ -72,10 +72,10 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      *                            This setting is overridden by the stale-if-error HTTP Cache-Control extension
      *                            (see RFC 5861).
      *
-     * @param HttpKernelInterface $kernel    An HttpKernelInterface instance
-     * @param StoreInterface      $store     A Store instance
-     * @param SurrogateInterface  $surrogate A SurrogateInterface instance
-     * @param array               $options   An array of options
+     * @param HttpKernelInterface $kernel An HttpKernelInterface instance
+     * @param StoreInterface $store A Store instance
+     * @param SurrogateInterface $surrogate A SurrogateInterface instance
+     * @param array $options An array of options
      */
     public function __construct(HttpKernelInterface $kernel, StoreInterface $store, SurrogateInterface $surrogate = null, array $options = array())
     {
@@ -118,21 +118,6 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Returns a log message for the events of the last request processing.
-     *
-     * @return string A log message
-     */
-    public function getLog()
-    {
-        $log = array();
-        foreach ($this->traces as $request => $traces) {
-            $log[] = sprintf('%s: %s', $request, implode(', ', $traces));
-        }
-
-        return implode('; ', $log);
-    }
-
-    /**
      * Gets the Request instance associated with the master request.
      *
      * @return Request A Request instance
@@ -140,16 +125,6 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     public function getRequest()
     {
         return $this->request;
-    }
-
-    /**
-     * Gets the Kernel instance.
-     *
-     * @return HttpKernelInterface An HttpKernelInterface instance
-     */
-    public function getKernel()
-    {
-        return $this->kernel;
     }
 
     /**
@@ -199,9 +174,9 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
 
         $path = $request->getPathInfo();
         if ($qs = $request->getQueryString()) {
-            $path .= '?'.$qs;
+            $path .= '?' . $qs;
         }
-        $this->traces[$request->getMethod().' '.$path] = array();
+        $this->traces[$request->getMethod() . ' ' . $path] = array();
 
         if (!$request->isMethodSafe()) {
             $response = $this->invalidate($request, $catch);
@@ -235,37 +210,10 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * {@inheritdoc}
-     *
-     * @api
-     */
-    public function terminate(Request $request, Response $response)
-    {
-        if ($this->getKernel() instanceof TerminableInterface) {
-            $this->getKernel()->terminate($request, $response);
-        }
-    }
-
-    /**
-     * Forwards the Request to the backend without storing the Response in the cache.
-     *
-     * @param Request $request A Request instance
-     * @param bool    $catch   Whether to process exceptions
-     *
-     * @return Response A Response instance
-     */
-    protected function pass(Request $request, $catch = false)
-    {
-        $this->record($request, 'pass');
-
-        return $this->forward($request, $catch);
-    }
-
-    /**
      * Invalidates non-safe methods (like POST, PUT, and DELETE).
      *
      * @param Request $request A Request instance
-     * @param bool    $catch   Whether to process exceptions
+     * @param bool $catch Whether to process exceptions
      *
      * @return Response A Response instance
      *
@@ -305,6 +253,129 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
+     * Forwards the Request to the backend without storing the Response in the cache.
+     *
+     * @param Request $request A Request instance
+     * @param bool $catch Whether to process exceptions
+     *
+     * @return Response A Response instance
+     */
+    protected function pass(Request $request, $catch = false)
+    {
+        $this->record($request, 'pass');
+
+        return $this->forward($request, $catch);
+    }
+
+    /**
+     * Records that an event took place.
+     *
+     * @param Request $request A Request instance
+     * @param string $event The event name
+     */
+    private function record(Request $request, $event)
+    {
+        $path = $request->getPathInfo();
+        if ($qs = $request->getQueryString()) {
+            $path .= '?' . $qs;
+        }
+        $this->traces[$request->getMethod() . ' ' . $path][] = $event;
+    }
+
+    /**
+     * Forwards the Request to the backend and returns the Response.
+     *
+     * @param Request $request A Request instance
+     * @param bool $catch Whether to catch exceptions or not
+     * @param Response $entry A Response instance (the stale entry if present, null otherwise)
+     *
+     * @return Response A Response instance
+     */
+    protected function forward(Request $request, $catch = false, Response $entry = null)
+    {
+        if ($this->surrogate) {
+            $this->surrogate->addSurrogateCapability($request);
+        }
+
+        // modify the X-Forwarded-For header if needed
+        $forwardedFor = $request->headers->get('X-Forwarded-For');
+        if ($forwardedFor) {
+            $request->headers->set('X-Forwarded-For', $forwardedFor . ', ' . $request->server->get('REMOTE_ADDR'));
+        } else {
+            $request->headers->set('X-Forwarded-For', $request->server->get('REMOTE_ADDR'));
+        }
+
+        // fix the client IP address by setting it to 127.0.0.1 as HttpCache
+        // is always called from the same process as the backend.
+        $request->server->set('REMOTE_ADDR', '127.0.0.1');
+
+        // make sure HttpCache is a trusted proxy
+        if (!in_array('127.0.0.1', $trustedProxies = Request::getTrustedProxies())) {
+            $trustedProxies[] = '127.0.0.1';
+            Request::setTrustedProxies($trustedProxies);
+        }
+
+        // always a "master" request (as the real master request can be in cache)
+        $response = $this->kernel->handle($request, HttpKernelInterface::MASTER_REQUEST, $catch);
+        // FIXME: we probably need to also catch exceptions if raw === true
+
+        // we don't implement the stale-if-error on Requests, which is nonetheless part of the RFC
+        if (null !== $entry && in_array($response->getStatusCode(), array(500, 502, 503, 504))) {
+            if (null === $age = $entry->headers->getCacheControlDirective('stale-if-error')) {
+                $age = $this->options['stale_if_error'];
+            }
+
+            if (abs($entry->getTtl()) < $age) {
+                $this->record($request, 'stale-if-error');
+
+                return $entry;
+            }
+        }
+
+        $this->processResponseBody($request, $response);
+
+        if ($this->isPrivateRequest($request) && !$response->headers->hasCacheControlDirective('public')) {
+            $response->setPrivate(true);
+        } elseif ($this->options['default_ttl'] > 0 && null === $response->getTtl() && !$response->headers->getCacheControlDirective('must-revalidate')) {
+            $response->setTtl($this->options['default_ttl']);
+        }
+
+        return $response;
+    }
+
+    protected function processResponseBody(Request $request, Response $response)
+    {
+        if (null !== $this->surrogate && $this->surrogate->needsParsing($response)) {
+            $this->surrogate->process($request, $response);
+        }
+    }
+
+    /**
+     * Checks if the Request includes authorization or other sensitive information
+     * that should cause the Response to be considered private by default.
+     *
+     * @param Request $request A Request instance
+     *
+     * @return bool true if the Request is private, false otherwise
+     */
+    private function isPrivateRequest(Request $request)
+    {
+        foreach ($this->options['private_headers'] as $key) {
+            $key = strtolower(str_replace('HTTP_', '', $key));
+
+            if ('cookie' === $key) {
+                if (count($request->cookies->all())) {
+                    return true;
+                }
+            } elseif ($request->headers->has($key)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Lookups a Response from the cache for the given Request.
      *
      * When a matching cache entry is found and is fresh, it uses it as the
@@ -314,7 +385,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
      * it triggers "miss" processing.
      *
      * @param Request $request A Request instance
-     * @param bool    $catch   whether to process exceptions
+     * @param bool $catch whether to process exceptions
      *
      * @return Response A Response instance
      *
@@ -361,14 +432,151 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
+     * Forwards the Request to the backend and determines whether the response should be stored.
+     *
+     * This methods is triggered when the cache missed or a reload is required.
+     *
+     * @param Request $request A Request instance
+     * @param bool $catch whether to process exceptions
+     *
+     * @return Response A Response instance
+     */
+    protected function fetch(Request $request, $catch = false)
+    {
+        $subRequest = clone $request;
+
+        // send no head requests because we want content
+        $subRequest->setMethod('GET');
+
+        // avoid that the backend sends no content
+        $subRequest->headers->remove('if_modified_since');
+        $subRequest->headers->remove('if_none_match');
+
+        $response = $this->forward($subRequest, $catch);
+
+        if ($response->isCacheable()) {
+            $this->store($request, $response);
+        }
+
+        return $response;
+    }
+
+    /**
+     * Writes the Response to the cache.
+     *
+     * @param Request $request A Request instance
+     * @param Response $response A Response instance
+     *
+     * @throws \Exception
+     */
+    protected function store(Request $request, Response $response)
+    {
+        try {
+            $this->store->write($request, $response);
+
+            $this->record($request, 'store');
+
+            $response->headers->set('Age', $response->getAge());
+        } catch (\Exception $e) {
+            $this->record($request, 'store-failed');
+
+            if ($this->options['debug']) {
+                throw $e;
+            }
+        }
+
+        // now that the response is cached, release the lock
+        $this->store->unlock($request);
+    }
+
+    /**
+     * Checks whether the cache entry is "fresh enough" to satisfy the Request.
+     *
+     * @param Request $request A Request instance
+     * @param Response $entry A Response instance
+     *
+     * @return bool true if the cache entry if fresh enough, false otherwise
+     */
+    protected function isFreshEnough(Request $request, Response $entry)
+    {
+        if (!$entry->isFresh()) {
+            return $this->lock($request, $entry);
+        }
+
+        if ($this->options['allow_revalidate'] && null !== $maxAge = $request->headers->getCacheControlDirective('max-age')) {
+            return $maxAge > 0 && $maxAge >= $entry->getAge();
+        }
+
+        return true;
+    }
+
+    /**
+     * Locks a Request during the call to the backend.
+     *
+     * @param Request $request A Request instance
+     * @param Response $entry A Response instance
+     *
+     * @return bool true if the cache entry can be returned even if it is staled, false otherwise
+     */
+    protected function lock(Request $request, Response $entry)
+    {
+        // try to acquire a lock to call the backend
+        $lock = $this->store->lock($request);
+
+        // there is already another process calling the backend
+        if (true !== $lock) {
+            // check if we can serve the stale entry
+            if (null === $age = $entry->headers->getCacheControlDirective('stale-while-revalidate')) {
+                $age = $this->options['stale_while_revalidate'];
+            }
+
+            if (abs($entry->getTtl()) < $age) {
+                $this->record($request, 'stale-while-revalidate');
+
+                // server the stale response while there is a revalidation
+                return true;
+            }
+
+            // wait for the lock to be released
+            $wait = 0;
+            while ($this->store->isLocked($request) && $wait < 5000000) {
+                usleep(50000);
+                $wait += 50000;
+            }
+
+            if ($wait < 2000000) {
+                // replace the current entry with the fresh one
+                $new = $this->lookup($request);
+                $entry->headers = $new->headers;
+                $entry->setContent($new->getContent());
+                $entry->setStatusCode($new->getStatusCode());
+                $entry->setProtocolVersion($new->getProtocolVersion());
+                foreach ($new->headers->getCookies() as $cookie) {
+                    $entry->headers->setCookie($cookie);
+                }
+            } else {
+                // backend is slow as hell, send a 503 response (to avoid the dog pile effect)
+                $entry->setStatusCode(503);
+                $entry->setContent('503 Service Unavailable');
+                $entry->headers->set('Retry-After', 10);
+            }
+
+            return true;
+        }
+
+        // we have the lock, call the backend
+        return false;
+    }
+
+    /**
      * Validates that a cache entry is fresh.
      *
      * The original request is used as a template for a conditional
      * GET request with the backend.
      *
-     * @param Request  $request A Request instance
-     * @param Response $entry   A Response instance to validate
-     * @param bool     $catch   Whether to process exceptions
+     * @param Request $request A Request instance
+     * @param Response $entry A Response instance to validate
+     * @param bool $catch Whether to process exceptions
      *
      * @return Response A Response instance
      */
@@ -424,207 +632,9 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
     }
 
     /**
-     * Forwards the Request to the backend and determines whether the response should be stored.
-     *
-     * This methods is triggered when the cache missed or a reload is required.
-     *
-     * @param Request $request A Request instance
-     * @param bool    $catch   whether to process exceptions
-     *
-     * @return Response A Response instance
-     */
-    protected function fetch(Request $request, $catch = false)
-    {
-        $subRequest = clone $request;
-
-        // send no head requests because we want content
-        $subRequest->setMethod('GET');
-
-        // avoid that the backend sends no content
-        $subRequest->headers->remove('if_modified_since');
-        $subRequest->headers->remove('if_none_match');
-
-        $response = $this->forward($subRequest, $catch);
-
-        if ($response->isCacheable()) {
-            $this->store($request, $response);
-        }
-
-        return $response;
-    }
-
-    /**
-     * Forwards the Request to the backend and returns the Response.
-     *
-     * @param Request  $request A Request instance
-     * @param bool     $catch   Whether to catch exceptions or not
-     * @param Response $entry   A Response instance (the stale entry if present, null otherwise)
-     *
-     * @return Response A Response instance
-     */
-    protected function forward(Request $request, $catch = false, Response $entry = null)
-    {
-        if ($this->surrogate) {
-            $this->surrogate->addSurrogateCapability($request);
-        }
-
-        // modify the X-Forwarded-For header if needed
-        $forwardedFor = $request->headers->get('X-Forwarded-For');
-        if ($forwardedFor) {
-            $request->headers->set('X-Forwarded-For', $forwardedFor.', '.$request->server->get('REMOTE_ADDR'));
-        } else {
-            $request->headers->set('X-Forwarded-For', $request->server->get('REMOTE_ADDR'));
-        }
-
-        // fix the client IP address by setting it to 127.0.0.1 as HttpCache
-        // is always called from the same process as the backend.
-        $request->server->set('REMOTE_ADDR', '127.0.0.1');
-
-        // make sure HttpCache is a trusted proxy
-        if (!in_array('127.0.0.1', $trustedProxies = Request::getTrustedProxies())) {
-            $trustedProxies[] = '127.0.0.1';
-            Request::setTrustedProxies($trustedProxies);
-        }
-
-        // always a "master" request (as the real master request can be in cache)
-        $response = $this->kernel->handle($request, HttpKernelInterface::MASTER_REQUEST, $catch);
-        // FIXME: we probably need to also catch exceptions if raw === true
-
-        // we don't implement the stale-if-error on Requests, which is nonetheless part of the RFC
-        if (null !== $entry && in_array($response->getStatusCode(), array(500, 502, 503, 504))) {
-            if (null === $age = $entry->headers->getCacheControlDirective('stale-if-error')) {
-                $age = $this->options['stale_if_error'];
-            }
-
-            if (abs($entry->getTtl()) < $age) {
-                $this->record($request, 'stale-if-error');
-
-                return $entry;
-            }
-        }
-
-        $this->processResponseBody($request, $response);
-
-        if ($this->isPrivateRequest($request) && !$response->headers->hasCacheControlDirective('public')) {
-            $response->setPrivate(true);
-        } elseif ($this->options['default_ttl'] > 0 && null === $response->getTtl() && !$response->headers->getCacheControlDirective('must-revalidate')) {
-            $response->setTtl($this->options['default_ttl']);
-        }
-
-        return $response;
-    }
-
-    /**
-     * Checks whether the cache entry is "fresh enough" to satisfy the Request.
-     *
-     * @param Request  $request A Request instance
-     * @param Response $entry   A Response instance
-     *
-     * @return bool true if the cache entry if fresh enough, false otherwise
-     */
-    protected function isFreshEnough(Request $request, Response $entry)
-    {
-        if (!$entry->isFresh()) {
-            return $this->lock($request, $entry);
-        }
-
-        if ($this->options['allow_revalidate'] && null !== $maxAge = $request->headers->getCacheControlDirective('max-age')) {
-            return $maxAge > 0 && $maxAge >= $entry->getAge();
-        }
-
-        return true;
-    }
-
-    /**
-     * Locks a Request during the call to the backend.
-     *
-     * @param Request  $request A Request instance
-     * @param Response $entry   A Response instance
-     *
-     * @return bool true if the cache entry can be returned even if it is staled, false otherwise
-     */
-    protected function lock(Request $request, Response $entry)
-    {
-        // try to acquire a lock to call the backend
-        $lock = $this->store->lock($request);
-
-        // there is already another process calling the backend
-        if (true !== $lock) {
-            // check if we can serve the stale entry
-            if (null === $age = $entry->headers->getCacheControlDirective('stale-while-revalidate')) {
-                $age = $this->options['stale_while_revalidate'];
-            }
-
-            if (abs($entry->getTtl()) < $age) {
-                $this->record($request, 'stale-while-revalidate');
-
-                // server the stale response while there is a revalidation
-                return true;
-            }
-
-            // wait for the lock to be released
-            $wait = 0;
-            while ($this->store->isLocked($request) && $wait < 5000000) {
-                usleep(50000);
-                $wait += 50000;
-            }
-
-            if ($wait < 2000000) {
-                // replace the current entry with the fresh one
-                $new = $this->lookup($request);
-                $entry->headers = $new->headers;
-                $entry->setContent($new->getContent());
-                $entry->setStatusCode($new->getStatusCode());
-                $entry->setProtocolVersion($new->getProtocolVersion());
-                foreach ($new->headers->getCookies() as $cookie) {
-                    $entry->headers->setCookie($cookie);
-                }
-            } else {
-                // backend is slow as hell, send a 503 response (to avoid the dog pile effect)
-                $entry->setStatusCode(503);
-                $entry->setContent('503 Service Unavailable');
-                $entry->headers->set('Retry-After', 10);
-            }
-
-            return true;
-        }
-
-        // we have the lock, call the backend
-        return false;
-    }
-
-    /**
-     * Writes the Response to the cache.
-     *
-     * @param Request  $request  A Request instance
-     * @param Response $response A Response instance
-     *
-     * @throws \Exception
-     */
-    protected function store(Request $request, Response $response)
-    {
-        try {
-            $this->store->write($request, $response);
-
-            $this->record($request, 'store');
-
-            $response->headers->set('Age', $response->getAge());
-        } catch (\Exception $e) {
-            $this->record($request, 'store-failed');
-
-            if ($this->options['debug']) {
-                throw $e;
-            }
-        }
-
-        // now that the response is cached, release the lock
-        $this->store->unlock($request);
-    }
-
-    /**
      * Restores the Response body.
      *
-     * @param Request  $request  A Request instance
+     * @param Request $request A Request instance
      * @param Response $response A Response instance
      */
     private function restoreResponseBody(Request $request, Response $response)
@@ -643,7 +653,7 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
             if ($response->headers->has('X-Body-File')) {
                 include $response->headers->get('X-Body-File');
             } else {
-                eval('; ?>'.$response->getContent().'<?php ;');
+                eval('; ?>' . $response->getContent() . '<?php ;');
             }
 
             $response->setContent(ob_get_clean());
@@ -660,50 +670,40 @@ class HttpCache implements HttpKernelInterface, TerminableInterface
         $response->headers->remove('X-Body-File');
     }
 
-    protected function processResponseBody(Request $request, Response $response)
+    /**
+     * Returns a log message for the events of the last request processing.
+     *
+     * @return string A log message
+     */
+    public function getLog()
     {
-        if (null !== $this->surrogate && $this->surrogate->needsParsing($response)) {
-            $this->surrogate->process($request, $response);
+        $log = array();
+        foreach ($this->traces as $request => $traces) {
+            $log[] = sprintf('%s: %s', $request, implode(', ', $traces));
+        }
+
+        return implode('; ', $log);
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function terminate(Request $request, Response $response)
+    {
+        if ($this->getKernel() instanceof TerminableInterface) {
+            $this->getKernel()->terminate($request, $response);
         }
     }
 
     /**
-     * Checks if the Request includes authorization or other sensitive information
-     * that should cause the Response to be considered private by default.
+     * Gets the Kernel instance.
      *
-     * @param Request $request A Request instance
-     *
-     * @return bool true if the Request is private, false otherwise
+     * @return HttpKernelInterface An HttpKernelInterface instance
      */
-    private function isPrivateRequest(Request $request)
+    public function getKernel()
     {
-        foreach ($this->options['private_headers'] as $key) {
-            $key = strtolower(str_replace('HTTP_', '', $key));
-
-            if ('cookie' === $key) {
-                if (count($request->cookies->all())) {
-                    return true;
-                }
-            } elseif ($request->headers->has($key)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Records that an event took place.
-     *
-     * @param Request $request A Request instance
-     * @param string  $event   The event name
-     */
-    private function record(Request $request, $event)
-    {
-        $path = $request->getPathInfo();
-        if ($qs = $request->getQueryString()) {
-            $path .= '?'.$qs;
-        }
-        $this->traces[$request->getMethod().' '.$path][] = $event;
+        return $this->kernel;
     }
 }

@@ -39,15 +39,15 @@ class MatcherNotFoundException extends Exception
     /**
      * @param string $message
      * @param string $keyword
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      */
     public function __construct($message, $keyword, $subject, array $arguments)
     {
         parent::__construct($message);
 
-        $this->keyword   = $keyword;
-        $this->subject   = $subject;
+        $this->keyword = $keyword;
+        $this->subject = $subject;
         $this->arguments = $arguments;
     }
 

@@ -14,9 +14,9 @@
 namespace PhpSpec\Runner\Maintainer;
 
 use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\SpecificationInterface;
-use PhpSpec\Runner\MatcherManager;
 use PhpSpec\Runner\CollaboratorManager;
+use PhpSpec\Runner\MatcherManager;
+use PhpSpec\SpecificationInterface;
 
 class LetAndLetgoMaintainer implements MaintainerInterface
 {
@@ -28,15 +28,14 @@ class LetAndLetgoMaintainer implements MaintainerInterface
     public function supports(ExampleNode $example)
     {
         return $example->getSpecification()->getClassReflection()->hasMethod('let')
-            || $example->getSpecification()->getClassReflection()->hasMethod('letgo')
-        ;
+        || $example->getSpecification()->getClassReflection()->hasMethod('letgo');
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function prepare(ExampleNode $example, SpecificationInterface $context,
                             MatcherManager $matchers, CollaboratorManager $collaborators)
@@ -50,10 +49,10 @@ class LetAndLetgoMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function teardown(ExampleNode $example, SpecificationInterface $context,
                              MatcherManager $matchers, CollaboratorManager $collaborators)

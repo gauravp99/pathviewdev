@@ -6,7 +6,7 @@ Feature: Developer chooses no code generation
   @issue352
   Scenario: code-generation defaults to off
     Given the spec file "spec/NoCodeGeneration/SpecExample1/NewClassSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\NoCodeGeneration\SpecExample1;
@@ -29,11 +29,11 @@ Feature: Developer chooses no code generation
   @issue352
   Scenario: code-generation is specified in the config
     Given the config file contains:
-      """
+    """
       code_generation: false
       """
     And the spec file "spec/NoCodeGeneration/SpecExample2/NewClassSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\NoCodeGeneration\SpecExample2;
@@ -56,11 +56,11 @@ Feature: Developer chooses no code generation
   @issue352
   Scenario: code-generation on the command line takes priority
     Given the config file contains:
-      """
+    """
       code_generation: true
       """
     And the spec file "spec/NoCodeGeneration/SpecExample3/NewClassSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\NoCodeGeneration\SpecExample3;

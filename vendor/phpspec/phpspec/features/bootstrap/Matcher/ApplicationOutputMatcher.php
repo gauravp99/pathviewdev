@@ -35,7 +35,7 @@ class ApplicationOutputMatcher implements MatcherInterface
         $expected = $arguments[0];
         if (strpos($subject->getDisplay(), $expected) === false) {
             throw new FailureException(sprintf(
-                "Application output did not contain expected '%s'. Actual output:\n'%s'" ,
+                "Application output did not contain expected '%s'. Actual output:\n'%s'",
                 $expected,
                 $subject->getDisplay()
             ));

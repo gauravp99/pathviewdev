@@ -28,32 +28,10 @@ trait PluggableTrait
     }
 
     /**
-     * Register a plugin.
-     *
-     * @param string $method
-     *
-     * @throws LogicException
-     *
-     * @return PluginInterface $plugin
-     */
-    protected function findPlugin($method)
-    {
-        if (! isset($this->plugins[$method])) {
-            throw new PluginNotFoundException('Plugin not found for method: '.$method);
-        }
-
-        if (! method_exists($this->plugins[$method], 'handle')) {
-            throw new LogicException(get_class($this->plugins[$method]).' does not have a handle method.');
-        }
-
-        return $this->plugins[$method];
-    }
-
-    /**
      * Invoke a plugin by method name.
      *
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return mixed
      */
@@ -64,5 +42,27 @@ trait PluggableTrait
         $callback = [$plugin, 'handle'];
 
         return call_user_func_array($callback, $arguments);
+    }
+
+    /**
+     * Register a plugin.
+     *
+     * @param string $method
+     *
+     * @throws LogicException
+     *
+     * @return PluginInterface $plugin
+     */
+    protected function findPlugin($method)
+    {
+        if (!isset($this->plugins[$method])) {
+            throw new PluginNotFoundException('Plugin not found for method: ' . $method);
+        }
+
+        if (!method_exists($this->plugins[$method], 'handle')) {
+            throw new LogicException(get_class($this->plugins[$method]) . ' does not have a handle method.');
+        }
+
+        return $this->plugins[$method];
     }
 }

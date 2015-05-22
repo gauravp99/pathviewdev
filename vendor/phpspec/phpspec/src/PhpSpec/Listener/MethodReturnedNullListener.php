@@ -53,8 +53,8 @@ class MethodReturnedNullListener implements EventSubscriberInterface
     private $methodAnalyser;
 
     /**
-     * @param IO               $io
-     * @param ResourceManager  $resources
+     * @param IO $io
+     * @param ResourceManager $resources
      * @param GeneratorManager $generator
      */
     public function __construct(IO $io, ResourceManager $resources, GeneratorManager $generator, MethodAnalyser $methodAnalyser)
@@ -72,7 +72,7 @@ class MethodReturnedNullListener implements EventSubscriberInterface
     {
         return array(
             'afterExample' => array('afterExample', 10),
-            'afterSuite'   => array('afterSuite', -20),
+            'afterSuite' => array('afterSuite', -20),
             'afterMethodCall' => array('afterMethodCall')
         );
     }
@@ -96,8 +96,8 @@ class MethodReturnedNullListener implements EventSubscriberInterface
 
         if (
             is_object($exception->getExpected())
-         || is_array($exception->getExpected())
-         || is_resource($exception->getExpected())
+            || is_array($exception->getExpected())
+            || is_resource($exception->getExpected())
         ) {
             return;
         }
@@ -113,7 +113,7 @@ class MethodReturnedNullListener implements EventSubscriberInterface
             return;
         }
 
-        $key = $class.'::'.$method;
+        $key = $class . '::' . $method;
 
         if (!array_key_exists($key, $this->nullMethods)) {
             $this->nullMethods[$key] = array(
@@ -139,7 +139,7 @@ class MethodReturnedNullListener implements EventSubscriberInterface
         foreach ($this->nullMethods as $methodString => $failedCall) {
             $failedCall['expected'] = array_unique($failedCall['expected']);
 
-            if (count($failedCall['expected'])>1) {
+            if (count($failedCall['expected']) > 1) {
                 continue;
             }
 

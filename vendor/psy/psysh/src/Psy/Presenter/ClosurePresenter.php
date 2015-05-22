@@ -16,7 +16,7 @@ namespace Psy\Presenter;
  */
 class ClosurePresenter implements Presenter, PresenterManagerAware
 {
-    const FMT     = '<keyword>function</keyword> (%s)%s { <comment>...</comment> }';
+    const FMT = '<keyword>function</keyword> (%s)%s { <comment>...</comment> }';
     const USE_FMT = ' use (%s)';
 
     protected $manager;
@@ -44,6 +44,20 @@ class ClosurePresenter implements Presenter, PresenterManagerAware
     }
 
     /**
+     * Present the Closure.
+     *
+     * @param \Closure $value
+     * @param int $depth (default:null)
+     * @param int $options One of Presenter constants
+     *
+     * @return string
+     */
+    public function present($value, $depth = null, $options = 0)
+    {
+        return $this->presentRef($value);
+    }
+
+    /**
      * Present a reference to the value.
      *
      * @param mixed $value
@@ -60,20 +74,6 @@ class ClosurePresenter implements Presenter, PresenterManagerAware
     }
 
     /**
-     * Present the Closure.
-     *
-     * @param \Closure $value
-     * @param int      $depth   (default:null)
-     * @param int      $options One of Presenter constants
-     *
-     * @return string
-     */
-    public function present($value, $depth = null, $options = 0)
-    {
-        return $this->presentRef($value);
-    }
-
-    /**
      * Format a list of Closure parameters.
      *
      * @param \Closure $value
@@ -86,6 +86,29 @@ class ClosurePresenter implements Presenter, PresenterManagerAware
         $params = array_map(array($this, 'formatParam'), $r->getParameters());
 
         return implode(', ', $params);
+    }
+
+    /**
+     * Format static (used) variable names.
+     *
+     * @param \Closure $value
+     *
+     * @return string
+     */
+    protected function formatStaticVariables(\Closure $value)
+    {
+        $r = new \ReflectionFunction($value);
+        $used = $r->getStaticVariables();
+        if (empty($used)) {
+            return '';
+        }
+
+        $names = array_map(array($this, 'formatParamName'), array_keys($used));
+
+        return sprintf(
+            self::USE_FMT,
+            implode(', ', $names)
+        );
     }
 
     /**
@@ -113,29 +136,6 @@ class ClosurePresenter implements Presenter, PresenterManagerAware
         }
 
         return $ret;
-    }
-
-    /**
-     * Format static (used) variable names.
-     *
-     * @param \Closure $value
-     *
-     * @return string
-     */
-    protected function formatStaticVariables(\Closure $value)
-    {
-        $r = new \ReflectionFunction($value);
-        $used = $r->getStaticVariables();
-        if (empty($used)) {
-            return '';
-        }
-
-        $names = array_map(array($this, 'formatParamName'), array_keys($used));
-
-        return sprintf(
-            self::USE_FMT,
-            implode(', ', $names)
-        );
     }
 
     /**

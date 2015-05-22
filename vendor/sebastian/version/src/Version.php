@@ -31,7 +31,7 @@ class Version
     public function __construct($release, $path)
     {
         $this->release = $release;
-        $this->path    = $path;
+        $this->path = $path;
     }
 
     /**

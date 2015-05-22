@@ -34,9 +34,9 @@ class Swift_Validate
                 ->lookup('mime.grammar');
         }
 
-        return (bool) preg_match(
-                '/^'.self::$grammar->getDefinition('addr-spec').'$/D',
-                $email
-            );
+        return (bool)preg_match(
+            '/^' . self::$grammar->getDefinition('addr-spec') . '$/D',
+            $email
+        );
     }
 }

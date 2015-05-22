@@ -13,14 +13,13 @@
 
 namespace PhpSpec\Runner\Maintainer;
 
-use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\Matcher\MatcherInterface;
-use PhpSpec\SpecificationInterface;
-use PhpSpec\Runner\MatcherManager;
-use PhpSpec\Runner\CollaboratorManager;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Wrapper\Unwrapper;
+use PhpSpec\Loader\Node\ExampleNode;
 use PhpSpec\Matcher;
+use PhpSpec\Matcher\MatcherInterface;
+use PhpSpec\Runner\CollaboratorManager;
+use PhpSpec\Runner\MatcherManager;
+use PhpSpec\SpecificationInterface;
 
 class MatchersMaintainer implements MaintainerInterface
 {
@@ -61,10 +60,10 @@ class MatchersMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function prepare(ExampleNode $example, SpecificationInterface $context,
                             MatcherManager $matchers, CollaboratorManager $collaborators)
@@ -88,10 +87,10 @@ class MatchersMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function teardown(ExampleNode $example, SpecificationInterface $context,
                              MatcherManager $matchers, CollaboratorManager $collaborators)

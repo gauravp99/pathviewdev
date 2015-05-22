@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\Profiler;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface;
 use Symfony\Component\HttpKernel\DataCollector\LateDataCollectorInterface;
-use Psr\Log\LoggerInterface;
 
 /**
  * Profiler.
@@ -48,7 +48,7 @@ class Profiler
      * Constructor.
      *
      * @param ProfilerStorageInterface $storage A ProfilerStorageInterface instance
-     * @param LoggerInterface          $logger  A LoggerInterface instance
+     * @param LoggerInterface $logger A LoggerInterface instance
      */
     public function __construct(ProfilerStorageInterface $storage, LoggerInterface $logger = null)
     {
@@ -101,29 +101,6 @@ class Profiler
     }
 
     /**
-     * Saves a Profile.
-     *
-     * @param Profile $profile A Profile instance
-     *
-     * @return bool
-     */
-    public function saveProfile(Profile $profile)
-    {
-        // late collect
-        foreach ($profile->getCollectors() as $collector) {
-            if ($collector instanceof LateDataCollectorInterface) {
-                $collector->lateCollect();
-            }
-        }
-
-        if (!($ret = $this->storage->write($profile)) && null !== $this->logger) {
-            $this->logger->warning('Unable to store the profiler information.');
-        }
-
-        return $ret;
-    }
-
-    /**
      * Purges all data from the storage.
      */
     public function purge()
@@ -164,14 +141,37 @@ class Profiler
     }
 
     /**
+     * Saves a Profile.
+     *
+     * @param Profile $profile A Profile instance
+     *
+     * @return bool
+     */
+    public function saveProfile(Profile $profile)
+    {
+        // late collect
+        foreach ($profile->getCollectors() as $collector) {
+            if ($collector instanceof LateDataCollectorInterface) {
+                $collector->lateCollect();
+            }
+        }
+
+        if (!($ret = $this->storage->write($profile)) && null !== $this->logger) {
+            $this->logger->warning('Unable to store the profiler information.');
+        }
+
+        return $ret;
+    }
+
+    /**
      * Finds profiler tokens for the given criteria.
      *
-     * @param string $ip     The IP
-     * @param string $url    The URL
-     * @param string $limit  The maximum number of tokens to return
+     * @param string $ip The IP
+     * @param string $url The URL
+     * @param string $limit The maximum number of tokens to return
      * @param string $method The request method
-     * @param string $start  The start date to search from
-     * @param string $end    The end date to search to
+     * @param string $start The start date to search from
+     * @param string $end The end date to search to
      *
      * @return array An array of tokens
      *
@@ -182,11 +182,26 @@ class Profiler
         return $this->storage->find($ip, $url, $limit, $method, $this->getTimestamp($start), $this->getTimestamp($end));
     }
 
+    private function getTimestamp($value)
+    {
+        if (null === $value || '' == $value) {
+            return;
+        }
+
+        try {
+            $value = new \DateTime(is_numeric($value) ? '@' . $value : $value);
+        } catch (\Exception $e) {
+            return;
+        }
+
+        return $value->getTimestamp();
+    }
+
     /**
      * Collects data for the given Response.
      *
-     * @param Request    $request   A Request instance
-     * @param Response   $response  A Response instance
+     * @param Request $request A Request instance
+     * @param Response $response A Response instance
      * @param \Exception $exception An exception instance if the request threw one
      *
      * @return Profile|null A Profile instance or null if the profiler is disabled
@@ -276,20 +291,5 @@ class Profiler
         }
 
         return $this->collectors[$name];
-    }
-
-    private function getTimestamp($value)
-    {
-        if (null === $value || '' == $value) {
-            return;
-        }
-
-        try {
-            $value = new \DateTime(is_numeric($value) ? '@'.$value : $value);
-        } catch (\Exception $e) {
-            return;
-        }
-
-        return $value->getTimestamp();
     }
 }

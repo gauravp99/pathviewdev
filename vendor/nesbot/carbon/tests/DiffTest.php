@@ -160,8 +160,7 @@ class DiffTest extends TestFixture
         $dt1 = Carbon::createFromDate(2000, 1, 31)->endOfDay();
         $dt2 = Carbon::createFromDate(2000, 1, 1)->startOfDay();
 
-        $this->assertSame(31, $dt1->diffInHoursFiltered(function (Carbon $date)
-        {
+        $this->assertSame(31, $dt1->diffInHoursFiltered(function (Carbon $date) {
             return $date->hour === 9;
         }, $dt2));
     }
@@ -171,8 +170,7 @@ class DiffTest extends TestFixture
         $dt1 = Carbon::createFromDate(2000, 1, 31)->endOfDay();
         $dt2 = Carbon::createFromDate(2000, 1, 1)->startOfDay();
 
-        $this->assertSame(-31, $dt1->diffInHoursFiltered(function (Carbon $date)
-        {
+        $this->assertSame(-31, $dt1->diffInHoursFiltered(function (Carbon $date) {
             return $date->hour === 9;
         }, $dt2, false));
     }
@@ -182,8 +180,7 @@ class DiffTest extends TestFixture
         $dt1 = Carbon::createFromDate(2000, 1, 5)->endOfDay();
         $dt2 = Carbon::createFromDate(2000, 1, 1)->startOfDay();
 
-        $this->assertSame(40, $dt1->diffInHoursFiltered(function (Carbon $date)
-        {
+        $this->assertSame(40, $dt1->diffInHoursFiltered(function (Carbon $date) {
             return ($date->hour > 8 && $date->hour < 17);
         }, $dt2));
     }

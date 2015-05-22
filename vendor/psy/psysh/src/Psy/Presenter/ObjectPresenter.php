@@ -31,23 +31,11 @@ class ObjectPresenter extends RecursivePresenter
     }
 
     /**
-     * Present a reference to the object.
-     *
-     * @param object $value
-     *
-     * @return string
-     */
-    public function presentRef($value)
-    {
-        return sprintf(self::FMT, get_class($value), spl_object_hash($value));
-    }
-
-    /**
      * Present the object.
      *
      * @param object $value
-     * @param int    $depth   (default: null)
-     * @param int    $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
@@ -68,35 +56,23 @@ class ObjectPresenter extends RecursivePresenter
     }
 
     /**
-     * Format object properties.
+     * Present a reference to the object.
      *
-     * @param array $props
+     * @param object $value
      *
      * @return string
      */
-    protected function formatProperties($props)
+    public function presentRef($value)
     {
-        if (empty($props)) {
-            return '{}';
-        }
-
-        $formatted = array();
-        foreach ($props as $name => $value) {
-            $formatted[] = sprintf('%s: %s', $name, $this->indentValue($this->presentSubValue($value)));
-        }
-
-        $template = sprintf('{%s%s%%s%s}', PHP_EOL, self::INDENT, PHP_EOL);
-        $glue     = sprintf(',%s%s', PHP_EOL, self::INDENT);
-
-        return sprintf($template, implode($glue, $formatted));
+        return sprintf(self::FMT, get_class($value), spl_object_hash($value));
     }
 
     /**
      * Get an array of object properties.
      *
-     * @param object           $value
+     * @param object $value
      * @param \ReflectionClass $class
-     * @param int              $propertyFilter One of \ReflectionProperty constants
+     * @param int $propertyFilter One of \ReflectionProperty constants
      *
      * @return array
      */
@@ -139,5 +115,29 @@ class ObjectPresenter extends RecursivePresenter
         }
 
         return $key;
+    }
+
+    /**
+     * Format object properties.
+     *
+     * @param array $props
+     *
+     * @return string
+     */
+    protected function formatProperties($props)
+    {
+        if (empty($props)) {
+            return '{}';
+        }
+
+        $formatted = array();
+        foreach ($props as $name => $value) {
+            $formatted[] = sprintf('%s: %s', $name, $this->indentValue($this->presentSubValue($value)));
+        }
+
+        $template = sprintf('{%s%s%%s%s}', PHP_EOL, self::INDENT, PHP_EOL);
+        $glue = sprintf(',%s%s', PHP_EOL, self::INDENT);
+
+        return sprintf($template, implode($glue, $formatted));
     }
 }

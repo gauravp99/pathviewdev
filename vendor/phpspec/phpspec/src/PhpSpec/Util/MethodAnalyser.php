@@ -44,6 +44,26 @@ class MethodAnalyser
     }
 
     /**
+     * @param  \ReflectionMethod $method
+     * @return bool
+     */
+    private function isNotImplementedInPhp(\ReflectionMethod $method)
+    {
+        $filename = $method->getDeclaringClass()->getFileName();
+
+        if (false === $filename) {
+            return true;
+        }
+
+        // HHVM <=3.2.0 does not return FALSE correctly
+        if (preg_match('#^/([:/]systemlib.|/$)#', $filename)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @param \ReflectionMethod $reflectionMethod
      *
      * @return string
@@ -54,7 +74,7 @@ class MethodAnalyser
 
         $length = $reflectionMethod->getEndLine() - $reflectionMethod->getStartLine();
         $lines = file($reflectionClass->getFileName());
-        $code = join(PHP_EOL, array_slice($lines, $reflectionMethod->getStartLine()-1, $length+1));
+        $code = join(PHP_EOL, array_slice($lines, $reflectionMethod->getStartLine() - 1, $length + 1));
 
         return preg_replace('/.*function[^{]+{/s', '', $code);
     }
@@ -65,7 +85,7 @@ class MethodAnalyser
      */
     private function stripComments($code)
     {
-        $tokens = token_get_all('<?php '.$code);
+        $tokens = token_get_all('<?php ' . $code);
 
         $comments = array_map(
             function ($token) {
@@ -89,26 +109,6 @@ class MethodAnalyser
      */
     private function codeIsOnlyBlocksAndWhitespace($codeWithoutComments)
     {
-        return (bool) preg_match('/^[\s{}]*$/s', $codeWithoutComments);
-    }
-
-    /**
-     * @param  \ReflectionMethod $method
-     * @return bool
-     */
-    private function isNotImplementedInPhp(\ReflectionMethod $method)
-    {
-        $filename = $method->getDeclaringClass()->getFileName();
-
-        if (false === $filename) {
-            return true;
-        }
-
-        // HHVM <=3.2.0 does not return FALSE correctly
-        if (preg_match('#^/([:/]systemlib.|/$)#', $filename)) {
-            return true;
-        }
-
-        return false;
+        return (bool)preg_match('/^[\s{}]*$/s', $codeWithoutComments);
     }
 }

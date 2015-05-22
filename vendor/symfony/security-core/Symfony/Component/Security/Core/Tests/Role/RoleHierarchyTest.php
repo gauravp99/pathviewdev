@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Security\Core\Tests\Role;
 
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
 use Symfony\Component\Security\Core\Role\Role;
+use Symfony\Component\Security\Core\Role\RoleHierarchy;
 
 class RoleHierarchyTest extends \PHPUnit_Framework_TestCase
 {

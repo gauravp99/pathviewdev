@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\HttpFoundation\Tests\Session;
 
-use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 use Symfony\Component\HttpFoundation\Session\Attribute\AttributeBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
 
 /**
@@ -34,18 +34,6 @@ class SessionTest extends \PHPUnit_Framework_TestCase
      * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
      */
     protected $session;
-
-    protected function setUp()
-    {
-        $this->storage = new MockArraySessionStorage();
-        $this->session = new Session($this->storage, new AttributeBag(), new FlashBag());
-    }
-
-    protected function tearDown()
-    {
-        $this->storage = null;
-        $this->session = null;
-    }
 
     public function testStart()
     {
@@ -100,7 +88,7 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     {
         $this->session->set($key, $value);
         $this->assertTrue($this->session->has($key));
-        $this->assertFalse($this->session->has($key.'non_value'));
+        $this->assertFalse($this->session->has($key . 'non_value'));
     }
 
     public function testReplace()
@@ -223,5 +211,17 @@ class SessionTest extends \PHPUnit_Framework_TestCase
     public function testGetMeta()
     {
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\Session\Storage\MetadataBag', $this->session->getMetadataBag());
+    }
+
+    protected function setUp()
+    {
+        $this->storage = new MockArraySessionStorage();
+        $this->session = new Session($this->storage, new AttributeBag(), new FlashBag());
+    }
+
+    protected function tearDown()
+    {
+        $this->storage = null;
+        $this->session = null;
     }
 }

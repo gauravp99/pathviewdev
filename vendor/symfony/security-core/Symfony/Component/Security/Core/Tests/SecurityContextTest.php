@@ -11,8 +11,6 @@
 
 namespace Symfony\Component\Security\Core\Tests;
 
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
-use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\SecurityContext;
 
 class SecurityContextTest extends \PHPUnit_Framework_TestCase
@@ -20,13 +18,6 @@ class SecurityContextTest extends \PHPUnit_Framework_TestCase
     private $tokenStorage;
     private $authorizationChecker;
     private $securityContext;
-
-    protected function setUp()
-    {
-        $this->tokenStorage = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
-        $this->authorizationChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
-        $this->securityContext = new SecurityContext($this->tokenStorage, $this->authorizationChecker);
-    }
 
     public function testGetTokenDelegation()
     {
@@ -115,5 +106,12 @@ class SecurityContextTest extends \PHPUnit_Framework_TestCase
             array(null, false),
             array(true, null),
         );
+    }
+
+    protected function setUp()
+    {
+        $this->tokenStorage = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface');
+        $this->authorizationChecker = $this->getMock('Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface');
+        $this->securityContext = new SecurityContext($this->tokenStorage, $this->authorizationChecker);
     }
 }

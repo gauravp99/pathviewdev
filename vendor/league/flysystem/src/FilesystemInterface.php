@@ -35,7 +35,7 @@ interface FilesystemInterface
      * List contents of a directory.
      *
      * @param string $directory
-     * @param bool   $recursive
+     * @param bool $recursive
      *
      * @return array
      */
@@ -91,7 +91,7 @@ interface FilesystemInterface
      *
      * @param string $path
      * @param string $contents
-     * @param array  $config   Config array
+     * @param array $config Config array
      *
      * @return bool success boolean
      */
@@ -100,9 +100,9 @@ interface FilesystemInterface
     /**
      * Write a new file using a stream.
      *
-     * @param string   $path
+     * @param string $path
      * @param resource $resource
-     * @param array    $config   config array
+     * @param array $config config array
      *
      * @return bool success boolean
      */
@@ -113,7 +113,7 @@ interface FilesystemInterface
      *
      * @param string $path
      * @param string $contents
-     * @param array  $config   config array
+     * @param array $config config array
      *
      * @return bool success boolean
      */
@@ -122,9 +122,9 @@ interface FilesystemInterface
     /**
      * Update a file using a stream.
      *
-     * @param string   $path
+     * @param string $path
      * @param resource $resource
-     * @param array    $config   config array
+     * @param array $config config array
      *
      * @return bool success boolean
      */
@@ -172,7 +172,7 @@ interface FilesystemInterface
      * Create a directory.
      *
      * @param string $dirname directory name
-     * @param array  $config
+     * @param array $config
      *
      * @return bool
      */
@@ -191,9 +191,9 @@ interface FilesystemInterface
     /**
      * Create a file or update if exists.
      *
-     * @param string $path     path to file
+     * @param string $path path to file
      * @param string $contents file contents
-     * @param array  $config
+     * @param array $config
      *
      * @throws FileExistsException
      *
@@ -204,9 +204,9 @@ interface FilesystemInterface
     /**
      * Create a file or update if exists using a stream.
      *
-     * @param string   $path
+     * @param string $path
      * @param resource $resource
-     * @param array    $config
+     * @param array $config
      *
      * @return bool success boolean
      */
@@ -226,7 +226,7 @@ interface FilesystemInterface
     /**
      * Get a file/directory handler.
      *
-     * @param string  $path
+     * @param string $path
      * @param Handler $handler
      *
      * @return Handler file or directory handler

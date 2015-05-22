@@ -43,8 +43,8 @@ interface Presenter
      * Optionally pass a $depth argument to limit the depth of recursive values.
      *
      * @param mixed $value
-     * @param int   $depth   (default: null)
-     * @param int   $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */

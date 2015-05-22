@@ -35,7 +35,7 @@ class Template implements TemplateInterface
 
     /**
      * @param string $text
-     * @param array  $templateVars
+     * @param array $templateVars
      */
     public function render($text, array $templateVars = array())
     {
@@ -55,7 +55,7 @@ class Template implements TemplateInterface
     private function extractKeys(array $templateVars)
     {
         return array_map(function ($e) {
-            return '{'.$e.'}';
+            return '{' . $e . '}';
         }, array_keys($templateVars));
     }
 }

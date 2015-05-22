@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Translation\Tests;
 
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Translation\MessageSelector;
 use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\MessageSelector;
+use Symfony\Component\Translation\Translator;
 
 class TranslatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -185,11 +185,11 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransWithoutFallbackLocaleFile($format, $loader)
     {
-        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\'.$loader;
+        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\' . $loader;
         $translator = new Translator('en');
         $translator->addLoader($format, new $loaderClass());
-        $translator->addResource($format, __DIR__.'/fixtures/non-existing', 'en');
-        $translator->addResource($format, __DIR__.'/fixtures/resources.'.$format, 'en');
+        $translator->addResource($format, __DIR__ . '/fixtures/non-existing', 'en');
+        $translator->addResource($format, __DIR__ . '/fixtures/resources.' . $format, 'en');
 
         // force catalogue loading
         $translator->trans('foo');
@@ -200,11 +200,11 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testTransWithFallbackLocaleFile($format, $loader)
     {
-        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\'.$loader;
+        $loaderClass = 'Symfony\\Component\\Translation\\Loader\\' . $loader;
         $translator = new Translator('en_GB');
         $translator->addLoader($format, new $loaderClass());
-        $translator->addResource($format, __DIR__.'/fixtures/non-existing', 'en_GB');
-        $translator->addResource($format, __DIR__.'/fixtures/resources.'.$format, 'en', 'resources');
+        $translator->addResource($format, __DIR__ . '/fixtures/non-existing', 'en_GB');
+        $translator->addResource($format, __DIR__ . '/fixtures/resources.' . $format, 'en', 'resources');
 
         $this->assertEquals('bar', $translator->trans('foo', array(), 'resources'));
     }
@@ -257,7 +257,7 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     {
         $translator = new Translator('en');
         $translator->addLoader('array', new ArrayLoader());
-        $translator->addResource('array', array((string) $id => $translation), $locale, $domain);
+        $translator->addResource('array', array((string)$id => $translation), $locale, $domain);
 
         $this->assertEquals($expected, $translator->trans($id, $parameters, $domain, $locale));
     }
@@ -307,7 +307,7 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     {
         $translator = new Translator('en');
         $translator->addLoader('array', new ArrayLoader());
-        $translator->addResource('array', array((string) $id => $translation), $locale, $domain);
+        $translator->addResource('array', array((string)$id => $translation), $locale, $domain);
 
         $this->assertEquals($expected, $translator->transChoice($id, $number, $parameters, $domain, $locale));
     }

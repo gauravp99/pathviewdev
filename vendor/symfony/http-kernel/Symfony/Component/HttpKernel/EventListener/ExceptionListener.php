@@ -13,13 +13,13 @@ namespace Symfony\Component\HttpKernel\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
 /**
  * ExceptionListener.
@@ -35,6 +35,13 @@ class ExceptionListener implements EventSubscriberInterface
     {
         $this->controller = $controller;
         $this->logger = $logger;
+    }
+
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::EXCEPTION => array('onKernelException', -128),
+        );
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event)
@@ -71,19 +78,12 @@ class ExceptionListener implements EventSubscriberInterface
         $handling = false;
     }
 
-    public static function getSubscribedEvents()
-    {
-        return array(
-            KernelEvents::EXCEPTION => array('onKernelException', -128),
-        );
-    }
-
     /**
      * Logs an exception.
      *
      * @param \Exception $exception The \Exception instance
-     * @param string     $message   The error message to log
-     * @param bool       $original  False when the handling of the exception thrown another exception
+     * @param string $message The error message to log
+     * @param bool $original False when the handling of the exception thrown another exception
      */
     protected function logException(\Exception $exception, $message, $original = true)
     {
@@ -104,7 +104,7 @@ class ExceptionListener implements EventSubscriberInterface
      * Clones the request for the exception.
      *
      * @param \Exception $exception The thrown exception.
-     * @param Request    $request   The original request.
+     * @param Request $request The original request.
      *
      * @return Request $request The cloned request.
      */

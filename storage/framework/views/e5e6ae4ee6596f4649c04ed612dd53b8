@@ -42,37 +42,37 @@
 
     <?php
     $gfile = "";
-    $cpdfile ="";
-    $geneid ="ENTREZ";
-    $cpdid ="KEGG";
-    $species ="hsa-Homo sapiens";
-    $pathway ="00010-Glycolysis / Gluconeogenesis";
-    $pathidx =0;
-    $suffix ="multistate.kegg";
-    $kegg =true;
-    $layer =true;
-    $split =false;
-    $expand =false;
-    $multistate =true;
-    $matchd =true;
-    $gdisc =false;
-    $cdisc =false;
-    $kpos ="top right";
-    $pos ="bottom left";
-    $offset ="1.0";
-    $align ="y";
-    $glmt =1;
-    $gbins =10;
-    $glow ="green";
-    $gmid ="grey";
-    $ghigh ="red";
-    $clmt =1;
-    $cbins =10;
-    $clow ="blue";
-    $cmid ="grey";
-    $chigh ="yellow";
-    $nsum ="sum";
-    $ncolor ="transparent";
+    $cpdfile = "";
+    $geneid = "ENTREZ";
+    $cpdid = "KEGG";
+    $species = "hsa-Homo sapiens";
+    $pathway = "00010-Glycolysis / Gluconeogenesis";
+    $pathidx = 0;
+    $suffix = "multistate.kegg";
+    $kegg = true;
+    $layer = true;
+    $split = false;
+    $expand = false;
+    $multistate = true;
+    $matchd = true;
+    $gdisc = false;
+    $cdisc = false;
+    $kpos = "top right";
+    $pos = "bottom left";
+    $offset = "1.0";
+    $align = "y";
+    $glmt = 1;
+    $gbins = 10;
+    $glow = "green";
+    $gmid = "grey";
+    $ghigh = "red";
+    $clmt = 1;
+    $cbins = 10;
+    $clow = "blue";
+    $cmid = "grey";
+    $chigh = "yellow";
+    $nsum = "sum";
+    $ncolor = "transparent";
     ?>
 
     <?php /*Div for Form for generating the analysis Form is devided into pages
@@ -111,8 +111,10 @@
 
                 <fieldset class="step">
 
-                    <p <?php if(isset(Session::get('err_atr')['gfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>> <a href="tutorial#gene_data" title="Upload gene data accepts CSV, Rdata, txt file"
-                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span class="glyphicon glyphicon-info-sign"></span></a>
+                    <p <?php if(isset(Session::get('err_atr')['gfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>><a
+                                href="tutorial#gene_data" title="Upload gene data accepts CSV, Rdata, txt file"
+                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('gfile','Gene Data:'); ?>
 
                         <?php echo form::file('gfile'); ?>
@@ -123,8 +125,11 @@
                     <br/>
                     <br/>
 
-                    <p <?php if(isset(Session::get('err_atr')['cfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>> <a href="tutorial#cpd_data" title="Upload Compound data accepts CSV, Rdata, txt file"
-                           target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span class="glyphicon glyphicon-info-sign"></span></a><?php echo form::label('cpdfile','Compound Data:'); ?>
+                    <p <?php if(isset(Session::get('err_atr')['cfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>><a
+                                href="tutorial#cpd_data" title="Upload Compound data accepts CSV, Rdata, txt file"
+                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                                    class="glyphicon glyphicon-info-sign"></span></a><?php echo form::label('cpdfile','Compound
+                        Data:'); ?>
 
 
                         <?php echo form::file('cpdfile'); ?>
@@ -291,12 +296,13 @@
                                 return false;
                             }
                             else {
+                                document.getElementById('submit-button').setAttribute("data-toggle", "modal");
+                                document.getElementById('submit-button').setAttribute("data-target", "#myModal");
 
                             }
 
 
                         }
-
 
 
                     </script>
@@ -520,13 +526,15 @@
                     <p <?php if (isset(Session::get('err_atr')['nacolor'])) {
                         echo "style='background-color:#DA6666;'";
                     } ?> class="coloration">
-                        <a href="tutorial#ncolor" title="Color used for NA’s or missing values in Gene Data and Compound Data.."
+                        <a href="tutorial#ncolor"
+                           title="Color used for NA’s or missing values in Gene Data and Compound Data.."
                            target="_blank" class="scrollToTop" style="float:left;">
                             <span class="glyphicon glyphicon-info-sign"></span>
                         </a>
                         <?php echo form::label('nacolor','NA Color:'); ?>
 
-                        <?php echo form::text('nacolor',isset(Session::get('Sess')['nacolor']) ? Session::get('Sess')['nacolor'] : $ncolor); ?>
+                        <?php echo form::text('nacolor',isset(Session::get('Sess')['nacolor']) ? Session::get('Sess')['nacolor']
+                        : $ncolor); ?>
 
                     </p>
 
@@ -541,12 +549,14 @@
                             <span class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('limit','Gene Limit:'); ?>
 
-                        <?php echo form::text('glmt',isset(Session::get('Sess')['glmt']) ? Session::get('Sess')['glmt'] :$glmt,array('class' => 'coloration')); ?>
+                        <?php echo form::text('glmt',isset(Session::get('Sess')['glmt']) ? Session::get('Sess')['glmt']
+                        :$glmt,array('class' => 'coloration')); ?>
 
 
                         <?php echo form::label('limit','Compound Limit:'); ?>
 
-                        <?php echo form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt'] : $clmt,array('class' => 'coloration')); ?>
+                        <?php echo form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt'] :
+                        $clmt,array('class' => 'coloration')); ?>
 
                     </p>
 
@@ -563,12 +573,14 @@
                         </a>
                         <?php echo form::label('Bins','Gene Bins:'); ?>
 
-                        <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ? Session::get('Sess')['gbins'] : $gbins,array('class' => 'coloration')); ?>
+                        <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ? Session::get('Sess')['gbins'] :
+                        $gbins,array('class' => 'coloration')); ?>
 
 
                         <?php echo form::label('Bins','Compound Bins:'); ?>
 
-                        <?php echo form::text('cbins',isset(Session::get('Sess')['cbins']) ? Session::get('Sess')['cbins'] : $cbins,array('class' => 'coloration')); ?>
+                        <?php echo form::text('cbins',isset(Session::get('Sess')['cbins']) ? Session::get('Sess')['cbins'] :
+                        $cbins,array('class' => 'coloration')); ?>
 
                     </p>
 
@@ -659,8 +671,8 @@
             </div>
             <div class="steps">
                 <input type="submit" id="submit-button" class="btn btn-primary"
-                       style="font-size: 20px;width: 30%;margin-left:0%;margin-top: 10px;" data-toggle="modal"
-                       data-target="#myModal" value="Submit" onclick="return fileCheck()"/>
+                       style="font-size: 20px;width: 30%;margin-left:0%;margin-top: 10px;" value="Submit"
+                       onclick="return fileCheck()"/>
                 <input type="Reset" class="btn btn-primary"
                        style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;" value="Reset"/>
             </div>

@@ -42,14 +42,14 @@ class SuiteEvent extends Event implements EventInterface
     private $worthRerunning = false;
 
     /**
-     * @param Suite   $suite
-     * @param float   $time
+     * @param Suite $suite
+     * @param float $time
      * @param integer $result
      */
     public function __construct(Suite $suite, $time = null, $result = null)
     {
-        $this->suite  = $suite;
-        $this->time   = $time;
+        $this->suite = $suite;
+        $this->time = $time;
         $this->result = $result;
     }
 

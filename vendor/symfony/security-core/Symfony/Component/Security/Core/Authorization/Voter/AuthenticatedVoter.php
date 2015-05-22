@@ -44,14 +44,6 @@ class AuthenticatedVoter implements VoterInterface
     /**
      * {@inheritdoc}
      */
-    public function supportsAttribute($attribute)
-    {
-        return null !== $attribute && (self::IS_AUTHENTICATED_FULLY === $attribute || self::IS_AUTHENTICATED_REMEMBERED === $attribute || self::IS_AUTHENTICATED_ANONYMOUSLY === $attribute);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function supportsClass($class)
     {
         return true;
@@ -71,24 +63,35 @@ class AuthenticatedVoter implements VoterInterface
             $result = VoterInterface::ACCESS_DENIED;
 
             if (self::IS_AUTHENTICATED_FULLY === $attribute
-                && $this->authenticationTrustResolver->isFullFledged($token)) {
+                && $this->authenticationTrustResolver->isFullFledged($token)
+            ) {
                 return VoterInterface::ACCESS_GRANTED;
             }
 
             if (self::IS_AUTHENTICATED_REMEMBERED === $attribute
                 && ($this->authenticationTrustResolver->isRememberMe($token)
-                    || $this->authenticationTrustResolver->isFullFledged($token))) {
+                    || $this->authenticationTrustResolver->isFullFledged($token))
+            ) {
                 return VoterInterface::ACCESS_GRANTED;
             }
 
             if (self::IS_AUTHENTICATED_ANONYMOUSLY === $attribute
                 && ($this->authenticationTrustResolver->isAnonymous($token)
                     || $this->authenticationTrustResolver->isRememberMe($token)
-                    || $this->authenticationTrustResolver->isFullFledged($token))) {
+                    || $this->authenticationTrustResolver->isFullFledged($token))
+            ) {
                 return VoterInterface::ACCESS_GRANTED;
             }
         }
 
         return $result;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function supportsAttribute($attribute)
+    {
+        return null !== $attribute && (self::IS_AUTHENTICATED_FULLY === $attribute || self::IS_AUTHENTICATED_REMEMBERED === $attribute || self::IS_AUTHENTICATED_ANONYMOUSLY === $attribute);
     }
 }

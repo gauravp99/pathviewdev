@@ -42,21 +42,6 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
      */
     protected $encoderFactory;
 
-    protected function createValidator()
-    {
-        return new UserPasswordValidator($this->securityContext, $this->encoderFactory);
-    }
-
-    protected function setUp()
-    {
-        $user = $this->createUser();
-        $this->securityContext = $this->createSecurityContext($user);
-        $this->encoder = $this->createPasswordEncoder();
-        $this->encoderFactory = $this->createEncoderFactory($this->encoder);
-
-        parent::setUp();
-    }
-
     public function testPasswordIsValid()
     {
         $constraint = new UserPassword(array(
@@ -104,6 +89,45 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $this->validator->validate('secret', new UserPassword());
     }
 
+    protected function createSecurityContext($user = null)
+    {
+        $token = $this->createAuthenticationToken($user);
+
+        $mock = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
+        $mock
+            ->expects($this->any())
+            ->method('getToken')
+            ->will($this->returnValue($token));
+
+        return $mock;
+    }
+
+    protected function createAuthenticationToken($user = null)
+    {
+        $mock = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $mock
+            ->expects($this->any())
+            ->method('getUser')
+            ->will($this->returnValue($user));
+
+        return $mock;
+    }
+
+    protected function createValidator()
+    {
+        return new UserPasswordValidator($this->securityContext, $this->encoderFactory);
+    }
+
+    protected function setUp()
+    {
+        $user = $this->createUser();
+        $this->securityContext = $this->createSecurityContext($user);
+        $this->encoder = $this->createPasswordEncoder();
+        $this->encoderFactory = $this->createEncoderFactory($this->encoder);
+
+        parent::setUp();
+    }
+
     protected function createUser()
     {
         $mock = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
@@ -111,14 +135,12 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $mock
             ->expects($this->any())
             ->method('getPassword')
-            ->will($this->returnValue(static::PASSWORD))
-        ;
+            ->will($this->returnValue(static::PASSWORD));
 
         $mock
             ->expects($this->any())
             ->method('getSalt')
-            ->will($this->returnValue(static::SALT))
-        ;
+            ->will($this->returnValue(static::SALT));
 
         return $mock;
     }
@@ -135,34 +157,7 @@ abstract class UserPasswordValidatorTest extends AbstractConstraintValidatorTest
         $mock
             ->expects($this->any())
             ->method('getEncoder')
-            ->will($this->returnValue($encoder))
-        ;
-
-        return $mock;
-    }
-
-    protected function createSecurityContext($user = null)
-    {
-        $token = $this->createAuthenticationToken($user);
-
-        $mock = $this->getMock('Symfony\Component\Security\Core\SecurityContextInterface');
-        $mock
-            ->expects($this->any())
-            ->method('getToken')
-            ->will($this->returnValue($token))
-        ;
-
-        return $mock;
-    }
-
-    protected function createAuthenticationToken($user = null)
-    {
-        $mock = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $mock
-            ->expects($this->any())
-            ->method('getUser')
-            ->will($this->returnValue($user))
-        ;
+            ->will($this->returnValue($encoder));
 
         return $mock;
     }

@@ -4,7 +4,8 @@ namespace PhpParser\Node\Stmt;
 
 class ClassTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIsAbstract() {
+    public function testIsAbstract()
+    {
         $class = new Class_('Foo', array('type' => Class_::MODIFIER_ABSTRACT));
         $this->assertTrue($class->isAbstract());
 
@@ -12,7 +13,8 @@ class ClassTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($class->isAbstract());
     }
 
-    public function testIsFinal() {
+    public function testIsFinal()
+    {
         $class = new Class_('Foo', array('type' => Class_::MODIFIER_FINAL));
         $this->assertTrue($class->isFinal());
 
@@ -20,7 +22,8 @@ class ClassTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($class->isFinal());
     }
 
-    public function testGetMethods() {
+    public function testGetMethods()
+    {
         $methods = array(
             new ClassMethod('foo'),
             new ClassMethod('bar'),

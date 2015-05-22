@@ -74,22 +74,6 @@ class InputDefinition
     }
 
     /**
-     * Sets the InputArgument objects.
-     *
-     * @param InputArgument[] $arguments An array of InputArgument objects
-     *
-     * @api
-     */
-    public function setArguments($arguments = array())
-    {
-        $this->arguments = array();
-        $this->requiredCount = 0;
-        $this->hasOptional = false;
-        $this->hasAnArrayArgument = false;
-        $this->addArguments($arguments);
-    }
-
-    /**
      * Adds an array of InputArgument objects.
      *
      * @param InputArgument[] $arguments An array of InputArgument objects
@@ -180,18 +164,6 @@ class InputDefinition
     }
 
     /**
-     * Gets the array of InputArgument objects.
-     *
-     * @return InputArgument[] An array of InputArgument objects
-     *
-     * @api
-     */
-    public function getArguments()
-    {
-        return $this->arguments;
-    }
-
-    /**
      * Returns the number of InputArguments.
      *
      * @return int The number of InputArguments
@@ -224,20 +196,6 @@ class InputDefinition
         }
 
         return $values;
-    }
-
-    /**
-     * Sets the InputOption objects.
-     *
-     * @param InputOption[] $options An array of InputOption objects
-     *
-     * @api
-     */
-    public function setOptions($options = array())
-    {
-        $this->options = array();
-        $this->shortcuts = array();
-        $this->addOptions($options);
     }
 
     /**
@@ -286,6 +244,30 @@ class InputDefinition
     }
 
     /**
+     * Returns true if an InputOption object exists by shortcut.
+     *
+     * @param string $name The InputOption shortcut
+     *
+     * @return bool true if the InputOption object exists, false otherwise
+     */
+    public function hasShortcut($name)
+    {
+        return isset($this->shortcuts[$name]);
+    }
+
+    /**
+     * Gets an InputOption by shortcut.
+     *
+     * @param string $shortcut the Shortcut name
+     *
+     * @return InputOption An InputOption object
+     */
+    public function getOptionForShortcut($shortcut)
+    {
+        return $this->getOption($this->shortcutToName($shortcut));
+    }
+
+    /**
      * Returns an InputOption by name.
      *
      * @param string $name The InputOption name
@@ -320,57 +302,6 @@ class InputDefinition
     }
 
     /**
-     * Gets the array of InputOption objects.
-     *
-     * @return InputOption[] An array of InputOption objects
-     *
-     * @api
-     */
-    public function getOptions()
-    {
-        return $this->options;
-    }
-
-    /**
-     * Returns true if an InputOption object exists by shortcut.
-     *
-     * @param string $name The InputOption shortcut
-     *
-     * @return bool true if the InputOption object exists, false otherwise
-     */
-    public function hasShortcut($name)
-    {
-        return isset($this->shortcuts[$name]);
-    }
-
-    /**
-     * Gets an InputOption by shortcut.
-     *
-     * @param string $shortcut the Shortcut name
-     *
-     * @return InputOption An InputOption object
-     */
-    public function getOptionForShortcut($shortcut)
-    {
-        return $this->getOption($this->shortcutToName($shortcut));
-    }
-
-    /**
-     * Gets an array of default values.
-     *
-     * @return array An array of all default values
-     */
-    public function getOptionDefaults()
-    {
-        $values = array();
-        foreach ($this->options as $option) {
-            $values[$option->getName()] = $option->getDefault();
-        }
-
-        return $values;
-    }
-
-    /**
      * Returns the InputOption name given a shortcut.
      *
      * @param string $shortcut The shortcut
@@ -389,6 +320,21 @@ class InputDefinition
     }
 
     /**
+     * Gets an array of default values.
+     *
+     * @return array An array of all default values
+     */
+    public function getOptionDefaults()
+    {
+        $values = array();
+        foreach ($this->options as $option) {
+            $values[$option->getName()] = $option->getDefault();
+        }
+
+        return $values;
+    }
+
+    /**
      * Gets the synopsis.
      *
      * @return string The synopsis
@@ -398,11 +344,11 @@ class InputDefinition
         $elements = array();
         foreach ($this->getOptions() as $option) {
             $shortcut = $option->getShortcut() ? sprintf('-%s|', $option->getShortcut()) : '';
-            $elements[] = sprintf('['.($option->isValueRequired() ? '%s--%s="..."' : ($option->isValueOptional() ? '%s--%s[="..."]' : '%s--%s')).']', $shortcut, $option->getName());
+            $elements[] = sprintf('[' . ($option->isValueRequired() ? '%s--%s="..."' : ($option->isValueOptional() ? '%s--%s[="..."]' : '%s--%s')) . ']', $shortcut, $option->getName());
         }
 
         foreach ($this->getArguments() as $argument) {
-            $elements[] = sprintf($argument->isRequired() ? '%s' : '[%s]', $argument->getName().($argument->isArray() ? '1' : ''));
+            $elements[] = sprintf($argument->isRequired() ? '%s' : '[%s]', $argument->getName() . ($argument->isArray() ? '1' : ''));
 
             if ($argument->isArray()) {
                 $elements[] = sprintf('... [%sN]', $argument->getName());
@@ -410,6 +356,60 @@ class InputDefinition
         }
 
         return implode(' ', $elements);
+    }
+
+    /**
+     * Gets the array of InputOption objects.
+     *
+     * @return InputOption[] An array of InputOption objects
+     *
+     * @api
+     */
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    /**
+     * Sets the InputOption objects.
+     *
+     * @param InputOption[] $options An array of InputOption objects
+     *
+     * @api
+     */
+    public function setOptions($options = array())
+    {
+        $this->options = array();
+        $this->shortcuts = array();
+        $this->addOptions($options);
+    }
+
+    /**
+     * Gets the array of InputArgument objects.
+     *
+     * @return InputArgument[] An array of InputArgument objects
+     *
+     * @api
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * Sets the InputArgument objects.
+     *
+     * @param InputArgument[] $arguments An array of InputArgument objects
+     *
+     * @api
+     */
+    public function setArguments($arguments = array())
+    {
+        $this->arguments = array();
+        $this->requiredCount = 0;
+        $this->hasOptional = false;
+        $this->hasAnArrayArgument = false;
+        $this->addArguments($arguments);
     }
 
     /**

@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Translation\Loader;
 
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use Symfony\Component\Config\Resource\FileResource;
 
 /**
  * @copyright Copyright (c) 2010, Union of RAD http://union-of-rad.org (http://lithify.me/)
@@ -134,7 +134,7 @@ class PoFileLoader extends ArrayLoader
                 $item['ids']['plural'] = substr($line, 14, -1);
             } elseif (substr($line, 0, 7) === 'msgstr[') {
                 $size = strpos($line, ']');
-                $item['translated'][(int) substr($line, 7, 1)] = substr($line, $size + 3, -1);
+                $item['translated'][(int)substr($line, 7, 1)] = substr($line, $size + 3, -1);
             }
         }
         // save last item

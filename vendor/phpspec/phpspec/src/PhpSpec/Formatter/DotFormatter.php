@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Formatter;
 
-use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Event\SuiteEvent;
 
 class DotFormatter extends ConsoleFormatter
 {
@@ -62,7 +62,7 @@ class DotFormatter extends ConsoleFormatter
         }
 
         if ($eventsCount % 50 === 0) {
-            $length = strlen((string) $this->examplesCount);
+            $length = strlen((string)$this->examplesCount);
             $format = sprintf(' %%%dd / %%%dd', $length, $length);
             $io->write(sprintf($format, $eventsCount, $this->examplesCount));
 
@@ -83,11 +83,11 @@ class DotFormatter extends ConsoleFormatter
         $io->writeln("\n");
 
         foreach (array(
-            'failed' => $stats->getFailedEvents(),
-            'broken' => $stats->getBrokenEvents(),
-            'pending' => $stats->getPendingEvents(),
-            'skipped' => $stats->getSkippedEvents(),
-        ) as $status => $events) {
+                     'failed' => $stats->getFailedEvents(),
+                     'broken' => $stats->getBrokenEvents(),
+                     'pending' => $stats->getPendingEvents(),
+                     'skipped' => $stats->getSkippedEvents(),
+                 ) as $status => $events) {
             if (!count($events)) {
                 continue;
             }

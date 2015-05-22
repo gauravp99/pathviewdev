@@ -1,250 +1,245 @@
 <?php namespace Illuminate\Foundation\Console;
 
 use Exception;
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Console\Application as Artisan;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Contracts\Console\Kernel as KernelContract;
+use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Contracts\Foundation\Application;
 
-class Kernel implements KernelContract {
+class Kernel implements KernelContract
+{
 
-	/**
-	 * The application implementation.
-	 *
-	 * @var \Illuminate\Contracts\Foundation\Application
-	 */
-	protected $app;
+    /**
+     * The application implementation.
+     *
+     * @var \Illuminate\Contracts\Foundation\Application
+     */
+    protected $app;
 
-	/**
-	 * The event dispatcher implementation.
-	 *
-	 * @var \Illuminate\Contracts\Events\Dispatcher
-	 */
-	protected $events;
+    /**
+     * The event dispatcher implementation.
+     *
+     * @var \Illuminate\Contracts\Events\Dispatcher
+     */
+    protected $events;
 
-	/**
-	 * The Artisan application instance.
-	 *
-	 * @var \Illuminate\Console\Application
-	 */
-	protected $artisan;
+    /**
+     * The Artisan application instance.
+     *
+     * @var \Illuminate\Console\Application
+     */
+    protected $artisan;
 
-	/**
-	 * The bootstrap classes for the application.
-	 *
-	 * @var array
-	 */
-	protected $bootstrappers = [
-		'Illuminate\Foundation\Bootstrap\DetectEnvironment',
-		'Illuminate\Foundation\Bootstrap\LoadConfiguration',
-		'Illuminate\Foundation\Bootstrap\ConfigureLogging',
-		'Illuminate\Foundation\Bootstrap\HandleExceptions',
-		'Illuminate\Foundation\Bootstrap\RegisterFacades',
-		'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
-		'Illuminate\Foundation\Bootstrap\RegisterProviders',
-		'Illuminate\Foundation\Bootstrap\BootProviders',
-	];
+    /**
+     * The bootstrap classes for the application.
+     *
+     * @var array
+     */
+    protected $bootstrappers = [
+        'Illuminate\Foundation\Bootstrap\DetectEnvironment',
+        'Illuminate\Foundation\Bootstrap\LoadConfiguration',
+        'Illuminate\Foundation\Bootstrap\ConfigureLogging',
+        'Illuminate\Foundation\Bootstrap\HandleExceptions',
+        'Illuminate\Foundation\Bootstrap\RegisterFacades',
+        'Illuminate\Foundation\Bootstrap\SetRequestForConsole',
+        'Illuminate\Foundation\Bootstrap\RegisterProviders',
+        'Illuminate\Foundation\Bootstrap\BootProviders',
+    ];
 
-	/**
-	 * Create a new console kernel instance.
-	 *
-	 * @param  \Illuminate\Contracts\Foundation\Application  $app
-	 * @param  \Illuminate\Contracts\Events\Dispatcher  $events
-	 * @return void
-	 */
-	public function __construct(Application $app, Dispatcher $events)
-	{
-		$this->app = $app;
-		$this->events = $events;
+    /**
+     * Create a new console kernel instance.
+     *
+     * @param  \Illuminate\Contracts\Foundation\Application $app
+     * @param  \Illuminate\Contracts\Events\Dispatcher $events
+     * @return void
+     */
+    public function __construct(Application $app, Dispatcher $events)
+    {
+        $this->app = $app;
+        $this->events = $events;
 
-		$this->app->booted(function()
-		{
-			$this->defineConsoleSchedule();
-		});
-	}
+        $this->app->booted(function () {
+            $this->defineConsoleSchedule();
+        });
+    }
 
-	/**
-	 * Define the application's command schedule.
-	 *
-	 * @return void
-	 */
-	protected function defineConsoleSchedule()
-	{
-		$this->app->instance(
-			'Illuminate\Console\Scheduling\Schedule', $schedule = new Schedule
-		);
+    /**
+     * Define the application's command schedule.
+     *
+     * @return void
+     */
+    protected function defineConsoleSchedule()
+    {
+        $this->app->instance(
+            'Illuminate\Console\Scheduling\Schedule', $schedule = new Schedule
+        );
 
-		$this->schedule($schedule);
-	}
+        $this->schedule($schedule);
+    }
 
-	/**
-	 * Run the console application.
-	 *
-	 * @param  \Symfony\Component\Console\Input\InputInterface  $input
-	 * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-	 * @return int
-	 */
-	public function handle($input, $output = null)
-	{
-		try
-		{
-			$this->bootstrap();
+    /**
+     * Define the application's command schedule.
+     *
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
+     * @return void
+     */
+    protected function schedule(Schedule $schedule)
+    {
+        //
+    }
 
-			return $this->getArtisan()->run($input, $output);
-		}
-		catch (Exception $e)
-		{
-			$this->reportException($e);
+    /**
+     * Run the console application.
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface $input
+     * @param  \Symfony\Component\Console\Output\OutputInterface $output
+     * @return int
+     */
+    public function handle($input, $output = null)
+    {
+        try {
+            $this->bootstrap();
 
-			$this->renderException($output, $e);
+            return $this->getArtisan()->run($input, $output);
+        } catch (Exception $e) {
+            $this->reportException($e);
 
-			return 1;
-		}
-	}
+            $this->renderException($output, $e);
 
-	/**
-	 * Terminate the application.
-	 *
-	 * @param  \Symfony\Component\Console\Input\InputInterface  $input
-	 * @param  int  $status
-	 * @return void
-	 */
-	public function terminate($input, $status)
-	{
-		$this->app->terminate();
-	}
+            return 1;
+        }
+    }
 
-	/**
-	 * Define the application's command schedule.
-	 *
-	 * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-	 * @return void
-	 */
-	protected function schedule(Schedule $schedule)
-	{
-		//
-	}
+    /**
+     * Bootstrap the application for HTTP requests.
+     *
+     * @return void
+     */
+    public function bootstrap()
+    {
+        if (!$this->app->hasBeenBootstrapped()) {
+            $this->app->bootstrapWith($this->bootstrappers());
+        }
 
-	/**
-	 * Run an Artisan console command by name.
-	 *
-	 * @param  string  $command
-	 * @param  array  $parameters
-	 * @return int
-	 */
-	public function call($command, array $parameters = array())
-	{
-		$this->bootstrap();
+        $this->app->loadDeferredProviders();
+    }
 
-		// If we are calling a arbitary command from within the application, we will load
-		// all of the available deferred providers which will make all of the commands
-		// available to an application. Otherwise the command will not be available.
-		$this->app->loadDeferredProviders();
+    /**
+     * Get the bootstrap classes for the application.
+     *
+     * @return array
+     */
+    protected function bootstrappers()
+    {
+        return $this->bootstrappers;
+    }
 
-		return $this->getArtisan()->call($command, $parameters);
-	}
+    /**
+     * Get the Artisan application instance.
+     *
+     * @return \Illuminate\Console\Application
+     */
+    protected function getArtisan()
+    {
+        if (is_null($this->artisan)) {
+            return $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
+                ->resolveCommands($this->commands);
+        }
 
-	/**
-	 * Queue the given console command.
-	 *
-	 * @param  string  $command
-	 * @param  array   $parameters
-	 * @return void
-	 */
-	public function queue($command, array $parameters = array())
-	{
-		$this->app['Illuminate\Contracts\Queue\Queue']->push(
-			'Illuminate\Foundation\Console\QueuedJob', func_get_args()
-		);
-	}
+        return $this->artisan;
+    }
 
-	/**
-	 * Get all of the commands registered with the console.
-	 *
-	 * @return array
-	 */
-	public function all()
-	{
-		$this->bootstrap();
+    /**
+     * Report the exception to the exception handler.
+     *
+     * @param  \Exception $e
+     * @return void
+     */
+    protected function reportException(Exception $e)
+    {
+        $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->report($e);
+    }
 
-		return $this->getArtisan()->all();
-	}
+    /**
+     * Report the exception to the exception handler.
+     *
+     * @param  \Symfony\Component\Console\Output\OutputInterface $output
+     * @param  \Exception $e
+     * @return void
+     */
+    protected function renderException($output, Exception $e)
+    {
+        $this->app['Illuminate\Contracts\Debug\ExceptionHandler']->renderForConsole($output, $e);
+    }
 
-	/**
-	 * Get the output for the last run command.
-	 *
-	 * @return string
-	 */
-	public function output()
-	{
-		$this->bootstrap();
+    /**
+     * Terminate the application.
+     *
+     * @param  \Symfony\Component\Console\Input\InputInterface $input
+     * @param  int $status
+     * @return void
+     */
+    public function terminate($input, $status)
+    {
+        $this->app->terminate();
+    }
 
-		return $this->getArtisan()->output();
-	}
+    /**
+     * Run an Artisan console command by name.
+     *
+     * @param  string $command
+     * @param  array $parameters
+     * @return int
+     */
+    public function call($command, array $parameters = array())
+    {
+        $this->bootstrap();
 
-	/**
-	 * Bootstrap the application for HTTP requests.
-	 *
-	 * @return void
-	 */
-	public function bootstrap()
-	{
-		if ( ! $this->app->hasBeenBootstrapped())
-		{
-			$this->app->bootstrapWith($this->bootstrappers());
-		}
+        // If we are calling a arbitary command from within the application, we will load
+        // all of the available deferred providers which will make all of the commands
+        // available to an application. Otherwise the command will not be available.
+        $this->app->loadDeferredProviders();
 
-		$this->app->loadDeferredProviders();
-	}
+        return $this->getArtisan()->call($command, $parameters);
+    }
 
-	/**
-	 * Get the Artisan application instance.
-	 *
-	 * @return \Illuminate\Console\Application
-	 */
-	protected function getArtisan()
-	{
-		if (is_null($this->artisan))
-		{
-			return $this->artisan = (new Artisan($this->app, $this->events, $this->app->version()))
-								->resolveCommands($this->commands);
-		}
+    /**
+     * Queue the given console command.
+     *
+     * @param  string $command
+     * @param  array $parameters
+     * @return void
+     */
+    public function queue($command, array $parameters = array())
+    {
+        $this->app['Illuminate\Contracts\Queue\Queue']->push(
+            'Illuminate\Foundation\Console\QueuedJob', func_get_args()
+        );
+    }
 
-		return $this->artisan;
-	}
+    /**
+     * Get all of the commands registered with the console.
+     *
+     * @return array
+     */
+    public function all()
+    {
+        $this->bootstrap();
 
-	/**
-	 * Get the bootstrap classes for the application.
-	 *
-	 * @return array
-	 */
-	protected function bootstrappers()
-	{
-		return $this->bootstrappers;
-	}
+        return $this->getArtisan()->all();
+    }
 
-	/**
-	 * Report the exception to the exception handler.
-	 *
-	 * @param  \Exception  $e
-	 * @return void
-	 */
-	protected function reportException(Exception $e)
-	{
-		$this->app['Illuminate\Contracts\Debug\ExceptionHandler']->report($e);
-	}
+    /**
+     * Get the output for the last run command.
+     *
+     * @return string
+     */
+    public function output()
+    {
+        $this->bootstrap();
 
-	/**
-	 * Report the exception to the exception handler.
-	 *
-	 * @param  \Symfony\Component\Console\Output\OutputInterface  $output
-	 * @param  \Exception  $e
-	 * @return void
-	 */
-	protected function renderException($output, Exception $e)
-	{
-		$this->app['Illuminate\Contracts\Debug\ExceptionHandler']->renderForConsole($output, $e);
-	}
+        return $this->getArtisan()->output();
+    }
 
 }

@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Formatter;
 
-use PhpSpec\Event\SuiteEvent;
-use PhpSpec\Event\SpecificationEvent;
 use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Event\SpecificationEvent;
+use PhpSpec\Event\SuiteEvent;
 
 class PrettyFormatter extends ConsoleFormatter
 {
@@ -24,48 +24,16 @@ class PrettyFormatter extends ConsoleFormatter
         $this->getIO()->writeln(sprintf("\n      %s\n", $event->getSpecification()->getTitle()), 0);
     }
 
-    public function afterExample(ExampleEvent $event)
-    {
-        $io = $this->getIO();
-        $line  = $event->getExample()->getFunctionReflection()->getStartLine();
-        $depth = 2;
-        $title = preg_replace('/^it /', '', $event->getExample()->getTitle());
-
-        $io->write(sprintf('<lineno>%4d</lineno> ', $line));
-
-        switch ($event->getResult()) {
-            case ExampleEvent::PASSED:
-                $io->write(sprintf('<passed>✔ %s</passed>', $title), $depth - 1);
-                break;
-            case ExampleEvent::PENDING:
-                $io->write(sprintf('<pending>- %s</pending>', $title), $depth - 1);
-                break;
-            case ExampleEvent::SKIPPED:
-                $io->write(sprintf('<skipped>? %s</skipped>', $title), $depth - 1);
-                break;
-            case ExampleEvent::FAILED:
-                $io->write(sprintf('<failed>✘ %s</failed>', $title), $depth - 1);
-                break;
-            case ExampleEvent::BROKEN:
-                $io->write(sprintf('<broken>! %s</broken>', $title), $depth - 1);
-                break;
-        }
-
-        $this->printSlowTime($event);
-        $io->writeln();
-        $this->printException($event);
-    }
-
     public function afterSuite(SuiteEvent $event)
     {
         $io = $this->getIO();
         $io->writeln();
 
         foreach (array(
-            'failed' => $this->getStatisticsCollector()->getFailedEvents(),
-            'broken' => $this->getStatisticsCollector()->getBrokenEvents(),
-            'skipped' => $this->getStatisticsCollector()->getSkippedEvents(),
-        ) as $status => $events) {
+                     'failed' => $this->getStatisticsCollector()->getFailedEvents(),
+                     'broken' => $this->getStatisticsCollector()->getBrokenEvents(),
+                     'skipped' => $this->getStatisticsCollector()->getSkippedEvents(),
+                 ) as $status => $events) {
             if (!count($events)) {
                 continue;
             }
@@ -95,6 +63,38 @@ class PrettyFormatter extends ConsoleFormatter
         }
 
         $io->writeln(sprintf("\n%sms", round($event->getTime() * 1000)));
+    }
+
+    public function afterExample(ExampleEvent $event)
+    {
+        $io = $this->getIO();
+        $line = $event->getExample()->getFunctionReflection()->getStartLine();
+        $depth = 2;
+        $title = preg_replace('/^it /', '', $event->getExample()->getTitle());
+
+        $io->write(sprintf('<lineno>%4d</lineno> ', $line));
+
+        switch ($event->getResult()) {
+            case ExampleEvent::PASSED:
+                $io->write(sprintf('<passed>✔ %s</passed>', $title), $depth - 1);
+                break;
+            case ExampleEvent::PENDING:
+                $io->write(sprintf('<pending>- %s</pending>', $title), $depth - 1);
+                break;
+            case ExampleEvent::SKIPPED:
+                $io->write(sprintf('<skipped>? %s</skipped>', $title), $depth - 1);
+                break;
+            case ExampleEvent::FAILED:
+                $io->write(sprintf('<failed>✘ %s</failed>', $title), $depth - 1);
+                break;
+            case ExampleEvent::BROKEN:
+                $io->write(sprintf('<broken>! %s</broken>', $title), $depth - 1);
+                break;
+        }
+
+        $this->printSlowTime($event);
+        $io->writeln();
+        $this->printException($event);
     }
 
     protected function printSlowTime(ExampleEvent $event)

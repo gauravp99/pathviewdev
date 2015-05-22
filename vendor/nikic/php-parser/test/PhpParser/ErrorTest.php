@@ -4,7 +4,8 @@ namespace PhpParser;
 
 class ErrorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testConstruct() {
+    public function testConstruct()
+    {
         $error = new Error('Some error', 10);
 
         $this->assertSame('Some error', $error->getRawMessage());
@@ -17,7 +18,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
     /**
      * @depends testConstruct
      */
-    public function testSetMessageAndLine(Error $error) {
+    public function testSetMessageAndLine(Error $error)
+    {
         $error->setRawMessage('Some other error');
         $error->setRawLine(15);
 
@@ -26,7 +28,8 @@ class ErrorTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('Some other error on line 15', $error->getMessage());
     }
 
-    public function testUnknownLine() {
+    public function testUnknownLine()
+    {
         $error = new Error('Some error');
 
         $this->assertSame(-1, $error->getRawLine());

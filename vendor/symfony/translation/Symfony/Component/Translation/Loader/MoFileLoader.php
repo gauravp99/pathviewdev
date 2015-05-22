@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Translation\Loader;
 
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use Symfony\Component\Config\Resource\FileResource;
 
 /**
  * @copyright Copyright (c) 2010, Union of RAD http://union-of-rad.org (http://lithify.me/)
@@ -174,7 +174,7 @@ class MoFileLoader extends ArrayLoader
      * Reads an unsigned long from stream respecting endianess.
      *
      * @param resource $stream
-     * @param bool     $isBigEndian
+     * @param bool $isBigEndian
      *
      * @return int
      */
@@ -183,6 +183,6 @@ class MoFileLoader extends ArrayLoader
         $result = unpack($isBigEndian ? 'N1' : 'V1', fread($stream, 4));
         $result = current($result);
 
-        return (int) substr($result, -8);
+        return (int)substr($result, -8);
     }
 }

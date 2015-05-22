@@ -69,7 +69,7 @@ class MethodNode
 
     public function setStatic($static = true)
     {
-        $this->static = (bool) $static;
+        $this->static = (bool)$static;
     }
 
     public function returnsReference()
@@ -80,11 +80,6 @@ class MethodNode
     public function setReturnsReference()
     {
         $this->returnsReference = true;
-    }
-
-    public function getName()
-    {
-        return $this->name;
     }
 
     public function addArgument(ArgumentNode $argument)
@@ -100,6 +95,15 @@ class MethodNode
         return $this->arguments;
     }
 
+    public function getCode()
+    {
+        if ($this->returnsReference) {
+            return "throw new \Prophecy\Exception\Doubler\ReturnByReferenceException('Returning by reference not supported', get_class(\$this), '{$this->name}');";
+        }
+
+        return (string)$this->code;
+    }
+
     /**
      * @param string $code
      */
@@ -108,22 +112,19 @@ class MethodNode
         $this->code = $code;
     }
 
-    public function getCode()
-    {
-        if ($this->returnsReference)
-        {
-            return "throw new \Prophecy\Exception\Doubler\ReturnByReferenceException('Returning by reference not supported', get_class(\$this), '{$this->name}');";
-        }
-
-        return (string) $this->code;
-    }
-
     public function useParentCode()
     {
         $this->code = sprintf(
             'return parent::%s(%s);', $this->getName(), implode(', ',
-                array_map(function (ArgumentNode $arg) { return '$'.$arg->getName(); }, $this->arguments)
+                array_map(function (ArgumentNode $arg) {
+                    return '$' . $arg->getName();
+                }, $this->arguments)
             )
         );
+    }
+
+    public function getName()
+    {
+        return $this->name;
     }
 }

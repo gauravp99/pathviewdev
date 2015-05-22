@@ -3,16 +3,13 @@
 namespace spec\PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Exception\ExceptionFactory;
+use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\ObjectBehavior;
+use PhpSpec\Wrapper\Subject;
 use PhpSpec\Wrapper\Subject\WrappedObject;
 use PhpSpec\Wrapper\Wrapper;
-use PhpSpec\Wrapper\Subject;
-
-use PhpSpec\Loader\Node\ExampleNode;
-
-use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
-
-use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as Dispatcher;
 
 class CallerSpec extends ObjectBehavior
 {
@@ -109,11 +106,11 @@ class CallerSpec extends ObjectBehavior
 
         $exceptions->methodNotFound('spec\PhpSpec\Wrapper\Subject\ExampleClass', '__construct', array($argument))
             ->willReturn(new \PhpSpec\Exception\Fracture\MethodNotFoundException(
-                    'Method "__construct" not found.',
-                    $obj,
-                    '"ExampleClass::__construct"',
-                    array()
-                ))
+                'Method "__construct" not found.',
+                $obj,
+                '"ExampleClass::__construct"',
+                array()
+            ))
             ->shouldBeCalled();
 
         $this->shouldThrow('\PhpSpec\Exception\Fracture\MethodNotFoundException')

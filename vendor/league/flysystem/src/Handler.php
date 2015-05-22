@@ -18,7 +18,7 @@ abstract class Handler
      * Constructor.
      *
      * @param FilesystemInterface $filesystem
-     * @param string              $path
+     * @param string $path
      */
     public function __construct(FilesystemInterface $filesystem = null, $path = null)
     {
@@ -37,16 +37,6 @@ abstract class Handler
     }
 
     /**
-     * Check whether the entree is a file.
-     *
-     * @return bool
-     */
-    public function isFile()
-    {
-        return $this->getType() === 'file';
-    }
-
-    /**
      * Retrieve the entree type (file|dir).
      *
      * @return string file or dir
@@ -56,6 +46,16 @@ abstract class Handler
         $metadata = $this->filesystem->getMetadata($this->path);
 
         return $metadata['type'];
+    }
+
+    /**
+     * Check whether the entree is a file.
+     *
+     * @return bool
+     */
+    public function isFile()
+    {
+        return $this->getType() === 'file';
     }
 
     /**
@@ -73,6 +73,16 @@ abstract class Handler
     }
 
     /**
+     * Retrieve the entree path.
+     *
+     * @return string path
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
      * Set the entree path.
      *
      * @param string $path
@@ -84,15 +94,5 @@ abstract class Handler
         $this->path = $path;
 
         return $this;
-    }
-
-    /**
-     * Retrieve the entree path.
-     *
-     * @return string path
-     */
-    public function getPath()
-    {
-        return $this->path;
     }
 }

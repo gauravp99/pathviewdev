@@ -1,5 +1,11 @@
 <?php namespace App\Http\Controllers;
 
+/**
+ * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
+ * @Contact: byeshvant@hotmail.com
+ * Controller for user profile like listing the use analysis history and editing user and profile viewing etc. in future there is lot of scope of adding other
+ * functionlity to this page
+ */
 use App;
 use App\Http\Requests;
 use App\User;
@@ -9,8 +15,11 @@ use DB;
 class ProfileController extends Controller
 {
 
-    //
-
+    /**
+     * @param $username
+     * @return $this
+     * method to list user Profile page
+     */
     public function user($username)
     {
 
@@ -23,6 +32,11 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @param $username
+     * @return $this
+     * method to list the edit user
+     */
     public function edit($username)
     {
 
@@ -35,6 +49,10 @@ class ProfileController extends Controller
 
     }
 
+    /**
+     * @return $this
+     * ?Method to edit the profile of the user
+     */
     public function edit_post()
     {
         $name = $_POST["name"];

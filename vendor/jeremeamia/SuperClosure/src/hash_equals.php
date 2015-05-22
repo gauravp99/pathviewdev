@@ -8,7 +8,7 @@ if (!function_exists('hash_equals')) {
      * same as PHP's function. The original code was written by Rouven Weßling.
      *
      * @param string $knownString Calculated hash.
-     * @param string $userString  User-provided hash.
+     * @param string $userString User-provided hash.
      *
      * @return bool
      * @copyright Copyright (c) 2013-2014 Rouven Weßling <http://rouvenwessling.de>

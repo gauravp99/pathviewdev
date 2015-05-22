@@ -1,9 +1,16 @@
 <?php
+
 /**
  * @see https://bugs.php.net/bug.php?id=51800
  */
 class Issue1340Test extends PHPUnit_Framework_TestCase
 {
+    public static function onShutdown()
+    {
+        echo "\nshutdown: stdout:", self::get4KB(), "\n";
+        error_log("\nshutdown: stderr:" . self::get4KB());
+    }
+
     private static function get4KB()
     {
         return str_repeat('1', 4096 + 1);
@@ -60,11 +67,5 @@ class Issue1340Test extends PHPUnit_Framework_TestCase
         register_shutdown_function(__CLASS__ . '::onShutdown');
         $undefined = 'undefined_function';
         $undefined();
-    }
-
-    public static function onShutdown()
-    {
-        echo "\nshutdown: stdout:", self::get4KB(), "\n";
-        error_log("\nshutdown: stderr:" . self::get4KB());
     }
 }

@@ -11,26 +11,13 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Fragment;
 
-use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Fragment\FragmentHandler;
 
 class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
 {
     private $requestStack;
-
-    protected function setUp()
-    {
-        $this->requestStack = $this->getMockBuilder('Symfony\\Component\\HttpFoundation\\RequestStack')
-            ->disableOriginalConstructor()
-            ->getMock()
-        ;
-        $this->requestStack
-            ->expects($this->any())
-            ->method('getCurrentRequest')
-            ->will($this->returnValue(Request::create('/')))
-        ;
-    }
 
     /**
      * @expectedException \InvalidArgumentException
@@ -51,6 +38,28 @@ class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
         $handler->render('/', 'bar');
     }
 
+    protected function getHandler($returnValue, $arguments = array())
+    {
+        $renderer = $this->getMock('Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface');
+        $renderer
+            ->expects($this->any())
+            ->method('getName')
+            ->will($this->returnValue('foo'));
+        $e = $renderer
+            ->expects($this->any())
+            ->method('render')
+            ->will($returnValue);
+
+        if ($arguments) {
+            call_user_func_array(array($e, 'with'), $arguments);
+        }
+
+        $handler = new FragmentHandler(array(), null, $this->requestStack);
+        $handler->addRenderer($renderer);
+
+        return $handler;
+    }
+
     /**
      * @expectedException \RuntimeException
      * @expectedExceptionMessage Error when rendering "http://localhost/" (Status code is 404).
@@ -69,27 +78,14 @@ class FragmentHandlerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('foo', $handler->render('/', 'foo', array('foo' => 'foo')));
     }
 
-    protected function getHandler($returnValue, $arguments = array())
+    protected function setUp()
     {
-        $renderer = $this->getMock('Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface');
-        $renderer
+        $this->requestStack = $this->getMockBuilder('Symfony\\Component\\HttpFoundation\\RequestStack')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $this->requestStack
             ->expects($this->any())
-            ->method('getName')
-            ->will($this->returnValue('foo'))
-        ;
-        $e = $renderer
-            ->expects($this->any())
-            ->method('render')
-            ->will($returnValue)
-        ;
-
-        if ($arguments) {
-            call_user_func_array(array($e, 'with'), $arguments);
-        }
-
-        $handler = new FragmentHandler(array(), null, $this->requestStack);
-        $handler->addRenderer($renderer);
-
-        return $handler;
+            ->method('getCurrentRequest')
+            ->will($this->returnValue(Request::create('/')));
     }
 }

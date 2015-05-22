@@ -22,17 +22,17 @@ use Symfony\Component\Console\Input\InputInterface;
 abstract class Enumerator
 {
     // Output styles
-    const IS_PUBLIC    = 'public';
+    const IS_PUBLIC = 'public';
     const IS_PROTECTED = 'protected';
-    const IS_PRIVATE   = 'private';
-    const IS_GLOBAL    = 'global';
-    const IS_CONSTANT  = 'const';
-    const IS_CLASS     = 'class';
-    const IS_FUNCTION  = 'function';
+    const IS_PRIVATE = 'private';
+    const IS_GLOBAL = 'global';
+    const IS_CONSTANT = 'const';
+    const IS_CLASS = 'class';
+    const IS_FUNCTION = 'function';
 
     private $presenterManager;
 
-    private $filter       = false;
+    private $filter = false;
     private $invertFilter = false;
     private $pattern;
 
@@ -50,8 +50,8 @@ abstract class Enumerator
      * Return a list of categorized things with the given input options and target.
      *
      * @param InputInterface $input
-     * @param Reflector      $reflector
-     * @param mixed          $target
+     * @param Reflector $reflector
+     * @param mixed $target
      *
      * @return array
      */
@@ -60,39 +60,6 @@ abstract class Enumerator
         $this->setFilter($input);
 
         return $this->listItems($input, $reflector, $target);
-    }
-
-    /**
-     * Enumerate specific items with the given input options and target.
-     *
-     * Implementing classes should return an array of arrays:
-     *
-     *     [
-     *         'Constants' => [
-     *             'FOO' => [
-     *                 'name'  => 'FOO',
-     *                 'style' => 'public',
-     *                 'value' => '123',
-     *             ],
-     *         ],
-     *     ]
-     *
-     * @param InputInterface $input
-     * @param Reflector      $reflector
-     * @param mixed          $target
-     *
-     * @return array
-     */
-    abstract protected function listItems(InputInterface $input, \Reflector $reflector = null, $target = null);
-
-    protected function presentRef($value)
-    {
-        return $this->presenterManager->presentRef($value);
-    }
-
-    protected function showItem($name)
-    {
-        return $this->filter === false || (preg_match($this->pattern, $name) xor $this->invertFilter);
     }
 
     private function setFilter(InputInterface $input)
@@ -108,8 +75,8 @@ abstract class Enumerator
 
             $this->validateRegex($pattern);
 
-            $this->filter       = true;
-            $this->pattern      = $pattern;
+            $this->filter = true;
+            $this->pattern = $pattern;
             $this->invertFilter = $input->getOption('invert');
         } else {
             $this->filter = false;
@@ -132,6 +99,39 @@ abstract class Enumerator
             throw new RuntimeException(str_replace('preg_match(): ', 'Invalid regular expression: ', $e->getRawMessage()));
         }
         restore_error_handler();
+    }
+
+    /**
+     * Enumerate specific items with the given input options and target.
+     *
+     * Implementing classes should return an array of arrays:
+     *
+     *     [
+     *         'Constants' => [
+     *             'FOO' => [
+     *                 'name'  => 'FOO',
+     *                 'style' => 'public',
+     *                 'value' => '123',
+     *             ],
+     *         ],
+     *     ]
+     *
+     * @param InputInterface $input
+     * @param Reflector $reflector
+     * @param mixed $target
+     *
+     * @return array
+     */
+    abstract protected function listItems(InputInterface $input, \Reflector $reflector = null, $target = null);
+
+    protected function presentRef($value)
+    {
+        return $this->presenterManager->presentRef($value);
+    }
+
+    protected function showItem($name)
+    {
+        return $this->filter === false || (preg_match($this->pattern, $name) xor $this->invertFilter);
     }
 
     protected function presentSignature($target)

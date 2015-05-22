@@ -27,7 +27,7 @@ class ObjectPresenterTest extends \PHPUnit_Framework_TestCase
     {
         $this->presenter = new ObjectPresenter();
 
-        $this->manager   = new PresenterManager();
+        $this->manager = new PresenterManager();
         $this->manager->addPresenter(new ScalarPresenter());
         $this->manager->addPresenter(new ArrayPresenter());
         $this->manager->addPresenter($this->presenter);
@@ -51,7 +51,7 @@ class ObjectPresenterTest extends \PHPUnit_Framework_TestCase
         $obj->child = new \StdClass();
         $obj->child->name = 'std, jr';
 
-        $hash      = spl_object_hash($obj);
+        $hash = spl_object_hash($obj);
         $childHash = spl_object_hash($obj->child);
 
         $expected = <<<EOS
@@ -75,7 +75,7 @@ EOS;
         $obj->child = new \StdClass();
         $obj->child->name = 'std, jr';
 
-        $hash      = spl_object_hash($obj);
+        $hash = spl_object_hash($obj);
         $childHash = spl_object_hash($obj->child);
 
         $expected = <<<EOS

@@ -32,7 +32,7 @@ class StringUtils
      * Regardless of the used implementation, it will leak length information.
      *
      * @param string $knownString The string of known length to compare against
-     * @param string $userInput   The string that the user can control
+     * @param string $userInput The string that the user can control
      *
      * @return bool true if the two strings are the same, false otherwise
      */
@@ -40,11 +40,11 @@ class StringUtils
     {
         // Avoid making unnecessary duplications of secret data
         if (!is_string($knownString)) {
-            $knownString = (string) $knownString;
+            $knownString = (string)$knownString;
         }
 
         if (!is_string($userInput)) {
-            $userInput = (string) $userInput;
+            $userInput = (string)$userInput;
         }
 
         if (function_exists('hash_equals')) {

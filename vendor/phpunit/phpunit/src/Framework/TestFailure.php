@@ -22,25 +22,23 @@
 class PHPUnit_Framework_TestFailure
 {
     /**
+     * @var PHPUnit_Framework_Test|null
+     */
+    protected $failedTest;
+    /**
+     * @var    Exception
+     */
+    protected $thrownException;
+    /**
      * @var string
      */
     private $testName;
 
     /**
-     * @var PHPUnit_Framework_Test|null
-     */
-    protected $failedTest;
-
-    /**
-     * @var    Exception
-     */
-    protected $thrownException;
-
-    /**
      * Constructs a TestFailure with the given test and exception.
      *
      * @param PHPUnit_Framework_Test $failedTest
-     * @param Exception              $thrownException
+     * @param Exception $thrownException
      */
     public function __construct(PHPUnit_Framework_Test $failedTest, Exception $thrownException)
     {
@@ -137,16 +135,6 @@ class PHPUnit_Framework_TestFailure
     }
 
     /**
-     * Gets the thrown exception.
-     *
-     * @return Exception
-     */
-    public function thrownException()
-    {
-        return $this->thrownException;
-    }
-
-    /**
      * Returns the exception's message.
      *
      * @return string
@@ -154,6 +142,16 @@ class PHPUnit_Framework_TestFailure
     public function exceptionMessage()
     {
         return $this->thrownException()->getMessage();
+    }
+
+    /**
+     * Gets the thrown exception.
+     *
+     * @return Exception
+     */
+    public function thrownException()
+    {
+        return $this->thrownException;
     }
 
     /**

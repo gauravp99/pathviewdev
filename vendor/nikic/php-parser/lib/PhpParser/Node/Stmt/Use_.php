@@ -6,7 +6,7 @@ use PhpParser\Node\Stmt;
 
 class Use_ extends Stmt
 {
-    const TYPE_NORMAL   = 1;
+    const TYPE_NORMAL = 1;
     const TYPE_FUNCTION = 2;
     const TYPE_CONSTANT = 3;
 
@@ -18,17 +18,19 @@ class Use_ extends Stmt
     /**
      * Constructs an alias (use) list node.
      *
-     * @param UseUse[] $uses       Aliases
-     * @param int      $type       Type of alias
-     * @param array    $attributes Additional attributes
+     * @param UseUse[] $uses Aliases
+     * @param int $type Type of alias
+     * @param array $attributes Additional attributes
      */
-    public function __construct(array $uses, $type = self::TYPE_NORMAL, array $attributes = array()) {
+    public function __construct(array $uses, $type = self::TYPE_NORMAL, array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->type = $type;
         $this->uses = $uses;
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('type', 'uses');
     }
 }

@@ -36,21 +36,21 @@ class NamedConstructorGenerator implements GeneratorInterface
     private $filesystem;
 
     /**
-     * @param IO               $io
+     * @param IO $io
      * @param TemplateRenderer $templates
-     * @param Filesystem       $filesystem
+     * @param Filesystem $filesystem
      */
     public function __construct(IO $io, TemplateRenderer $templates, Filesystem $filesystem = null)
     {
-        $this->io         = $io;
-        $this->templates  = $templates;
+        $this->io = $io;
+        $this->templates = $templates;
         $this->filesystem = $filesystem ?: new Filesystem();
     }
 
     /**
      * @param ResourceInterface $resource
-     * @param string            $generation
-     * @param array             $data
+     * @param string $generation
+     * @param array $data
      *
      * @return bool
      */
@@ -61,18 +61,18 @@ class NamedConstructorGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param array             $data
+     * @param array $data
      */
     public function generate(ResourceInterface $resource, array $data = array())
     {
-        $filepath   = $resource->getSrcFilename();
+        $filepath = $resource->getSrcFilename();
         $methodName = $data['name'];
-        $arguments  = $data['arguments'];
+        $arguments = $data['arguments'];
 
         $content = $this->getContent($resource, $methodName, $arguments);
 
         $code = $this->filesystem->getFileContents($filepath);
-        $code = preg_replace('/}[ \n]*$/', rtrim($content)."\n}\n", trim($code));
+        $code = preg_replace('/}[ \n]*$/', rtrim($content) . "\n}\n", trim($code));
         $this->filesystem->putFileContents($filepath, $code);
 
         $this->io->writeln(sprintf(
@@ -82,17 +82,9 @@ class NamedConstructorGenerator implements GeneratorInterface
     }
 
     /**
-     * @return int
-     */
-    public function getPriority()
-    {
-        return 0;
-    }
-
-    /**
      * @param  ResourceInterface $resource
-     * @param  string            $methodName
-     * @param  array             $arguments
+     * @param  string $methodName
+     * @param  array $arguments
      * @return string
      */
     private function getContent(ResourceInterface $resource, $methodName, $arguments)
@@ -113,5 +105,13 @@ class NamedConstructorGenerator implements GeneratorInterface
         }
 
         return $template->getContent();
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return 0;
     }
 }

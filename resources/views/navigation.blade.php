@@ -12,7 +12,8 @@
             echo "class=\"active\"";
         }?>>
             @if (Auth::guest()) <a href="/guest-home">
-                @else <a href="{{ URL::route('home') }}"> @endif <b>Overview </b><span class="sr-only">(current)</span></a></li>
+                @else <a href="{{ URL::route('home') }}"> @endif <b>Overview </b><span class="sr-only">(current)</span></a>
+        </li>
         <li <?php if (basename($_SERVER['PHP_SELF']) == "analysis") {
             echo "class=\"active\"";
         }?>><a href="/analysis"><b>New Analysis</b></a></li>
@@ -28,8 +29,7 @@
         <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
         <script>
-            function openWindow()
-            {
+            function openWindow() {
                 window.open('/tutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");
 
                 var w = window.innerWidth;

@@ -24,7 +24,7 @@ class UnwrapDecorator extends Decorator implements ExpectationInterface
 
     /**
      * @param ExpectationInterface $expectation
-     * @param Unwrapper            $unwrapper
+     * @param Unwrapper $unwrapper
      */
     public function __construct(ExpectationInterface $expectation, Unwrapper $unwrapper)
     {
@@ -34,8 +34,8 @@ class UnwrapDecorator extends Decorator implements ExpectationInterface
 
     /**
      * @param string $alias
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return mixed
      */

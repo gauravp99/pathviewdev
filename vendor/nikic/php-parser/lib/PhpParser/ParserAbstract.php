@@ -40,7 +40,7 @@ abstract class ParserAbstract
 
     /** @var array Map of states to a displacement into the $action table. The corresponding action for this
      *             state/symbol pair is $action[$actionBase[$state] + $symbol]. If $actionBase[$state] is 0, the
-                   action is defaulted, i.e. $actionDefault[$state] should be used instead. */
+     * action is defaulted, i.e. $actionDefault[$state] should be used instead. */
     protected $actionBase;
     /** @var array Table of actions. Indexed according to $actionBase comment. */
     protected $action;
@@ -86,7 +86,8 @@ abstract class ParserAbstract
      *
      * @param Lexer $lexer A lexer
      */
-    public function __construct(Lexer $lexer) {
+    public function __construct(Lexer $lexer)
+    {
         $this->lexer = $lexer;
     }
 
@@ -97,7 +98,8 @@ abstract class ParserAbstract
      *
      * @return Node[] Array of statements
      */
-    public function parse($code) {
+    public function parse($code)
+    {
         $this->lexer->startLexing($code);
 
         // We start off with no lookahead-token
@@ -107,7 +109,7 @@ abstract class ParserAbstract
         // From the first token only the startAttributes are taken and from the last only
         // the endAttributes. Both are merged using the array union operator (+).
         $startAttributes = array('startLine' => 1);
-        $endAttributes   = array();
+        $endAttributes = array();
 
         // In order to figure out the attributes for the starting token, we have to keep
         // them in a stack
@@ -123,7 +125,7 @@ abstract class ParserAbstract
         // Current position in the stack(s)
         $this->stackPos = 0;
 
-        for (;;) {
+        for (; ;) {
             //$this->traceNewState($state, $symbol);
 
             if ($this->actionBase[$state] == 0) {
@@ -155,10 +157,11 @@ abstract class ParserAbstract
 
                 $idx = $this->actionBase[$state] + $symbol;
                 if ((($idx >= 0 && $idx < $this->actionTableSize && $this->actionCheck[$idx] == $symbol)
-                     || ($state < $this->YY2TBLSTATE
-                         && ($idx = $this->actionBase[$state + $this->YYNLSTATES] + $symbol) >= 0
-                         && $idx < $this->actionTableSize && $this->actionCheck[$idx] == $symbol))
-                    && ($action = $this->action[$idx]) != $this->defaultAction) {
+                        || ($state < $this->YY2TBLSTATE
+                            && ($idx = $this->actionBase[$state + $this->YYNLSTATES] + $symbol) >= 0
+                            && $idx < $this->actionTableSize && $this->actionCheck[$idx] == $symbol))
+                    && ($action = $this->action[$idx]) != $this->defaultAction
+                ) {
                     /*
                      * >= YYNLSTATES: shift and reduce
                      * > 0: shift
@@ -171,7 +174,7 @@ abstract class ParserAbstract
                         //$this->traceShift($symbol);
 
                         ++$this->stackPos;
-                        $stateStack[$this->stackPos]     = $state = $action;
+                        $stateStack[$this->stackPos] = $state = $action;
                         $this->semStack[$this->stackPos] = $tokenValue;
                         $attributeStack[$this->stackPos] = $startAttributes;
                         $endAttributes = $nextEndAttributes;
@@ -190,7 +193,7 @@ abstract class ParserAbstract
                 }
             }
 
-            for (;;) {
+            for (; ;) {
                 if ($rule === 0) {
                     /* accept */
                     //$this->traceAccept();
@@ -223,7 +226,7 @@ abstract class ParserAbstract
                     }
 
                     ++$this->stackPos;
-                    $stateStack[$this->stackPos]     = $state;
+                    $stateStack[$this->stackPos] = $state;
                     $this->semStack[$this->stackPos] = $this->semValue;
                     $attributeStack[$this->stackPos] = $startAttributes;
 
@@ -248,7 +251,8 @@ abstract class ParserAbstract
         }
     }
 
-    protected function getExpectedTokens($state) {
+    protected function getExpectedTokens($state)
+    {
         $expected = array();
 
         $base = $this->actionBase[$state];
@@ -277,24 +281,29 @@ abstract class ParserAbstract
      * Tracing functions used for debugging the parser.
      */
 
-    protected function traceNewState($state, $symbol) {
+    protected function traceNewState($state, $symbol)
+    {
         echo '% State ' . $state
             . ', Lookahead ' . ($symbol == self::SYMBOL_NONE ? '--none--' : $this->symbolToName[$symbol]) . "\n";
     }
 
-    protected function traceRead($symbol) {
+    protected function traceRead($symbol)
+    {
         echo '% Reading ' . $this->symbolToName[$symbol] . "\n";
     }
 
-    protected function traceShift($symbol) {
+    protected function traceShift($symbol)
+    {
         echo '% Shift ' . $this->symbolToName[$symbol] . "\n";
     }
 
-    protected function traceAccept() {
+    protected function traceAccept()
+    {
         echo "% Accepted.\n";
     }
 
-    protected function traceReduce($n) {
+    protected function traceReduce($n)
+    {
         echo '% Reduce by (' . $n . ') ' . $this->productions[$n] . "\n";
     }
 
@@ -308,7 +317,8 @@ abstract class ParserAbstract
      * @param Node[] $stmts
      * @return Node[]
      */
-    protected function handleNamespaces(array $stmts) {
+    protected function handleNamespaces(array $stmts)
+    {
         $style = $this->getNamespacingStyle($stmts);
         if (null === $style) {
             // not namespaced, nothing to do
@@ -344,7 +354,8 @@ abstract class ParserAbstract
         }
     }
 
-    private function getNamespacingStyle(array $stmts) {
+    private function getNamespacingStyle(array $stmts)
+    {
         $style = null;
         $hasNotAllowedStmts = false;
         foreach ($stmts as $stmt) {

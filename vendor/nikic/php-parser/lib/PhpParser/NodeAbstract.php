@@ -4,8 +4,8 @@ namespace PhpParser;
 
 abstract class NodeAbstract implements Node
 {
-    private $subNodeNames;
     protected $attributes;
+    private $subNodeNames;
 
     /**
      * Creates a Node.
@@ -16,10 +16,11 @@ abstract class NodeAbstract implements Node
      * to the array keys will be set and getSubNodeNames() will return the keys of that
      * array.
      *
-     * @param null|array $subNodes   Null or an array of sub nodes (deprecated)
-     * @param array      $attributes Array of attributes
+     * @param null|array $subNodes Null or an array of sub nodes (deprecated)
+     * @param array $attributes Array of attributes
      */
-    public function __construct($subNodes = array(), array $attributes = array()) {
+    public function __construct($subNodes = array(), array $attributes = array())
+    {
         $this->attributes = $attributes;
 
         if (null !== $subNodes) {
@@ -35,7 +36,8 @@ abstract class NodeAbstract implements Node
      *
      * @return string Type of the node
      */
-    public function getType() {
+    public function getType()
+    {
         return strtr(substr(rtrim(get_class($this), '_'), 15), '\\', '_');
     }
 
@@ -44,7 +46,8 @@ abstract class NodeAbstract implements Node
      *
      * @return array Names of sub nodes
      */
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return $this->subNodeNames;
     }
 
@@ -53,8 +56,21 @@ abstract class NodeAbstract implements Node
      *
      * @return int Line
      */
-    public function getLine() {
+    public function getLine()
+    {
         return $this->getAttribute('startLine', -1);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function &getAttribute($key, $default = null)
+    {
+        if (!array_key_exists($key, $this->attributes)) {
+            return $default;
+        } else {
+            return $this->attributes[$key];
+        }
     }
 
     /**
@@ -62,8 +78,17 @@ abstract class NodeAbstract implements Node
      *
      * @param int $line Line
      */
-    public function setLine($line) {
-        $this->setAttribute('startLine', (int) $line);
+    public function setLine($line)
+    {
+        $this->setAttribute('startLine', (int)$line);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAttribute($key, $value)
+    {
+        $this->attributes[$key] = $value;
     }
 
     /**
@@ -73,7 +98,8 @@ abstract class NodeAbstract implements Node
      *
      * @return null|Comment\Doc Doc comment object or null
      */
-    public function getDocComment() {
+    public function getDocComment()
+    {
         $comments = $this->getAttribute('comments');
         if (!$comments) {
             return null;
@@ -90,32 +116,16 @@ abstract class NodeAbstract implements Node
     /**
      * {@inheritDoc}
      */
-    public function setAttribute($key, $value) {
-        $this->attributes[$key] = $value;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function hasAttribute($key) {
+    public function hasAttribute($key)
+    {
         return array_key_exists($key, $this->attributes);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function &getAttribute($key, $default = null) {
-        if (!array_key_exists($key, $this->attributes)) {
-            return $default;
-        } else {
-            return $this->attributes[$key];
-        }
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getAttributes() {
+    public function getAttributes()
+    {
         return $this->attributes;
     }
 }

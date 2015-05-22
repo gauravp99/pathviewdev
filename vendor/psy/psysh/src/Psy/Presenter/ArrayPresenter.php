@@ -46,21 +46,44 @@ class ArrayPresenter extends RecursivePresenter
     }
 
     /**
-     * Present a reference to the array.
+     * Present the array.
      *
-     * @param array $value
+     * @param object $value
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
-    public function presentRef($value)
+    protected function presentValue($value, $depth = null, $options = 0)
     {
+        $prefix = '';
         if ($this->isArrayObject($value)) {
-            return $this->presentArrayObjectRef($value);
-        } elseif (empty($value)) {
-            return '[]';
-        } else {
-            return sprintf('Array(<number>%d</number>)', count($value));
+            $prefix = $this->presentArrayObjectRef($value) . ' ';
+            $value = $this->getArrayObjectValue($value);
         }
+
+        if (empty($value) || $depth === 0) {
+            return $prefix . $this->presentRef($value);
+        }
+
+        $formatted = array();
+        foreach ($value as $key => $val) {
+            $formatted[$key] = $this->presentSubValue($val);
+        }
+
+        if ($this->shouldShowKeys($value)) {
+            $pad = max(array_map('strlen', array_map(array('Psy\Util\Json', 'encode'), array_keys($value))));
+            foreach ($formatted as $key => $val) {
+                $formatted[$key] = $this->formatKeyAndValue($key, $val, $pad);
+            }
+        } else {
+            $formatted = array_map(array($this, 'indentValue'), $formatted);
+        }
+
+        $template = sprintf('%s[%s%s%%s%s]', $prefix, PHP_EOL, self::INDENT, PHP_EOL);
+        $glue = sprintf(',%s%s', PHP_EOL, self::INDENT);
+
+        return sprintf($template, implode($glue, $formatted));
     }
 
     /**
@@ -89,44 +112,21 @@ class ArrayPresenter extends RecursivePresenter
     }
 
     /**
-     * Present the array.
+     * Present a reference to the array.
      *
-     * @param object $value
-     * @param int    $depth   (default: null)
-     * @param int    $options One of Presenter constants
+     * @param array $value
      *
      * @return string
      */
-    protected function presentValue($value, $depth = null, $options = 0)
+    public function presentRef($value)
     {
-        $prefix = '';
         if ($this->isArrayObject($value)) {
-            $prefix = $this->presentArrayObjectRef($value) . ' ';
-            $value  = $this->getArrayObjectValue($value);
-        }
-
-        if (empty($value) || $depth === 0) {
-            return $prefix . $this->presentRef($value);
-        }
-
-        $formatted = array();
-        foreach ($value as $key => $val) {
-            $formatted[$key] = $this->presentSubValue($val);
-        }
-
-        if ($this->shouldShowKeys($value)) {
-            $pad = max(array_map('strlen', array_map(array('Psy\Util\Json', 'encode'), array_keys($value))));
-            foreach ($formatted as $key => $val) {
-                $formatted[$key] = $this->formatKeyAndValue($key, $val, $pad);
-            }
+            return $this->presentArrayObjectRef($value);
+        } elseif (empty($value)) {
+            return '[]';
         } else {
-            $formatted = array_map(array($this, 'indentValue'), $formatted);
+            return sprintf('Array(<number>%d</number>)', count($value));
         }
-
-        $template = sprintf('%s[%s%s%%s%s]', $prefix, PHP_EOL, self::INDENT, PHP_EOL);
-        $glue     = sprintf(',%s%s', PHP_EOL, self::INDENT);
-
-        return sprintf($template, implode($glue, $formatted));
     }
 
     /**
@@ -154,16 +154,16 @@ class ArrayPresenter extends RecursivePresenter
     /**
      * Format a key => value pair.
      *
-     * @param mixed   $key
-     * @param string  $value
-     * @param integer $pad   Maximum key width, to align the hashrockets.
+     * @param mixed $key
+     * @param string $value
+     * @param integer $pad Maximum key width, to align the hashrockets.
      *
      * @return string
      */
     protected function formatKeyAndValue($key, $value, $pad = 0)
     {
         $type = is_string($value) ? 'string' : 'number';
-        $tpl  = "<$type>%-${pad}s</$type> => %s";
+        $tpl = "<$type>%-${pad}s</$type> => %s";
 
         return sprintf(
             $tpl,

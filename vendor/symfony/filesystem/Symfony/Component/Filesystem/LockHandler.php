@@ -32,7 +32,7 @@ class LockHandler
     private $handle;
 
     /**
-     * @param  string      $name     The lock name
+     * @param  string $name The lock name
      * @param  string|null $lockPath The directory to store the lock. Default values will use temporary directory
      * @throws IOException If the lock directory could not be created or is not writable
      */
@@ -55,7 +55,7 @@ class LockHandler
     /**
      * Lock the resource
      *
-     * @param  bool        $blocking wait until the lock is released
+     * @param  bool $blocking wait until the lock is released
      * @return bool        Returns true if the lock was acquired, false otherwise
      * @throws IOException If the lock file could not be created or opened
      */

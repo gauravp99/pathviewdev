@@ -11,7 +11,17 @@ require_once __DIR__ . '/CodeTestAbstract.php';
 
 class PrettyPrinterTest extends CodeTestAbstract
 {
-    protected function doTestPrettyPrintMethod($method, $name, $code, $dump) {
+    /**
+     * @dataProvider provideTestPrettyPrint
+     * @covers       PhpParser\PrettyPrinter\Standard<extended>
+     */
+    public function testPrettyPrint($name, $code, $dump)
+    {
+        $this->doTestPrettyPrintMethod('prettyPrint', $name, $code, $dump);
+    }
+
+    protected function doTestPrettyPrintMethod($method, $name, $code, $dump)
+    {
         $parser = new Parser(new Lexer\Emulative);
         $prettyPrinter = new Standard;
 
@@ -24,30 +34,26 @@ class PrettyPrinterTest extends CodeTestAbstract
     }
 
     /**
-     * @dataProvider provideTestPrettyPrint
-     * @covers PhpParser\PrettyPrinter\Standard<extended>
-     */
-    public function testPrettyPrint($name, $code, $dump) {
-        $this->doTestPrettyPrintMethod('prettyPrint', $name, $code, $dump);
-    }
-
-    /**
      * @dataProvider provideTestPrettyPrintFile
-     * @covers PhpParser\PrettyPrinter\Standard<extended>
+     * @covers       PhpParser\PrettyPrinter\Standard<extended>
      */
-    public function testPrettyPrintFile($name, $code, $dump) {
+    public function testPrettyPrintFile($name, $code, $dump)
+    {
         $this->doTestPrettyPrintMethod('prettyPrintFile', $name, $code, $dump);
     }
 
-    public function provideTestPrettyPrint() {
+    public function provideTestPrettyPrint()
+    {
         return $this->getTests(__DIR__ . '/../code/prettyPrinter', 'test');
     }
 
-    public function provideTestPrettyPrintFile() {
+    public function provideTestPrettyPrintFile()
+    {
         return $this->getTests(__DIR__ . '/../code/prettyPrinter', 'file-test');
     }
 
-    public function testPrettyPrintExpr() {
+    public function testPrettyPrintExpr()
+    {
         $prettyPrinter = new Standard;
         $expr = new Expr\BinaryOp\Mul(
             new Expr\BinaryOp\Plus(new Expr\Variable('a'), new Expr\Variable('b')),

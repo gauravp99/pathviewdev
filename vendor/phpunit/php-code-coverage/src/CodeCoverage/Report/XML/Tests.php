@@ -43,8 +43,8 @@ class PHP_CodeCoverage_Report_XML_Tests
             )
         );
         $node->setAttribute('name', $test);
-        $node->setAttribute('result', (int) $result);
-        $node->setAttribute('status', $this->codeMap[(int) $result]);
+        $node->setAttribute('result', (int)$result);
+        $node->setAttribute('status', $this->codeMap[(int)$result]);
 
     }
 }

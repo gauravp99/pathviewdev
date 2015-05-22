@@ -30,9 +30,9 @@ class ConstructorDecorator extends Decorator implements ExpectationInterface
     }
 
     /**
-     * @param string        $alias
-     * @param mixed         $subject
-     * @param array         $arguments
+     * @param string $alias
+     * @param mixed $subject
+     * @param array $arguments
      * @param WrappedObject $wrappedObject
      *
      * @return boolean

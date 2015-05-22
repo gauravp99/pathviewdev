@@ -10,8 +10,8 @@
  * file that was distributed with this source code.
  */
 
-if (!is_file(dirname(__DIR__).'/vendor/autoload.php')) {
-    throw new RuntimeException('Missing PsySH dev dependencies in ' . dirname(__DIR__).'/vendor/' . ', install with `composer.phar install --dev`.');
+if (!is_file(dirname(__DIR__) . '/vendor/autoload.php')) {
+    throw new RuntimeException('Missing PsySH dev dependencies in ' . dirname(__DIR__) . '/vendor/' . ', install with `composer.phar install --dev`.');
 }
 
 require dirname(__DIR__) . '/vendor/autoload.php';

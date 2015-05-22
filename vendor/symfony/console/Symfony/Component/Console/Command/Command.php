@@ -11,16 +11,16 @@
 
 namespace Symfony\Component\Console\Command;
 
+use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Descriptor\TextDescriptor;
 use Symfony\Component\Console\Descriptor\XmlDescriptor;
-use Symfony\Component\Console\Input\InputDefinition;
-use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputDefinition;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\BufferedOutput;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Helper\HelperSet;
 
 /**
  * Base class for all commands.
@@ -70,6 +70,13 @@ class Command
     }
 
     /**
+     * Configures the current command.
+     */
+    protected function configure()
+    {
+    }
+
+    /**
      * Ignores validation errors.
      *
      * This is mainly useful for the help command.
@@ -77,6 +84,38 @@ class Command
     public function ignoreValidationErrors()
     {
         $this->ignoreValidationErrors = true;
+    }
+
+    /**
+     * Gets the helper set.
+     *
+     * @return HelperSet A HelperSet instance
+     */
+    public function getHelperSet()
+    {
+        return $this->helperSet;
+    }
+
+    /**
+     * Sets the helper set.
+     *
+     * @param HelperSet $helperSet A HelperSet instance
+     */
+    public function setHelperSet(HelperSet $helperSet)
+    {
+        $this->helperSet = $helperSet;
+    }
+
+    /**
+     * Gets the application instance for this command.
+     *
+     * @return Application An Application instance
+     *
+     * @api
+     */
+    public function getApplication()
+    {
+        return $this->application;
     }
 
     /**
@@ -97,38 +136,6 @@ class Command
     }
 
     /**
-     * Sets the helper set.
-     *
-     * @param HelperSet $helperSet A HelperSet instance
-     */
-    public function setHelperSet(HelperSet $helperSet)
-    {
-        $this->helperSet = $helperSet;
-    }
-
-    /**
-     * Gets the helper set.
-     *
-     * @return HelperSet A HelperSet instance
-     */
-    public function getHelperSet()
-    {
-        return $this->helperSet;
-    }
-
-    /**
-     * Gets the application instance for this command.
-     *
-     * @return Application An Application instance
-     *
-     * @api
-     */
-    public function getApplication()
-    {
-        return $this->application;
-    }
-
-    /**
      * Checks whether the command is enabled or not in the current environment.
      *
      * Override this to check for x or y and return false if the command can not
@@ -142,69 +149,13 @@ class Command
     }
 
     /**
-     * Configures the current command.
-     */
-    protected function configure()
-    {
-    }
-
-    /**
-     * Executes the current command.
-     *
-     * This method is not abstract because you can use this class
-     * as a concrete class. In this case, instead of defining the
-     * execute() method, you set the code to execute by passing
-     * a Closure to the setCode() method.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return null|int null or 0 if everything went fine, or an error code
-     *
-     * @throws \LogicException When this abstract method is not implemented
-     *
-     * @see setCode()
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        throw new \LogicException('You must override the execute() method in the concrete command class.');
-    }
-
-    /**
-     * Interacts with the user.
-     *
-     * This method is executed before the InputDefinition is validated.
-     * This means that this is the only place where the command can
-     * interactively ask for values of missing required arguments.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     */
-    protected function interact(InputInterface $input, OutputInterface $output)
-    {
-    }
-
-    /**
-     * Initializes the command just after the input has been validated.
-     *
-     * This is mainly useful when a lot of commands extends one main command
-     * where some things need to be initialized based on the input arguments and options.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     */
-    protected function initialize(InputInterface $input, OutputInterface $output)
-    {
-    }
-
-    /**
      * Runs the command.
      *
      * The code to execute is either defined directly with the
      * setCode() method or by overriding the execute() method
      * in a sub-class.
      *
-     * @param InputInterface  $input  An InputInterface instance
+     * @param InputInterface $input An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
      * @return int The command exit code
@@ -257,34 +208,21 @@ class Command
             $statusCode = $this->execute($input, $output);
         }
 
-        return is_numeric($statusCode) ? (int) $statusCode : 0;
+        return is_numeric($statusCode) ? (int)$statusCode : 0;
     }
 
     /**
-     * Sets the code to execute when running this command.
+     * Returns the synopsis for the command.
      *
-     * If this method is used, it overrides the code defined
-     * in the execute() method.
-     *
-     * @param callable $code A callable(InputInterface $input, OutputInterface $output)
-     *
-     * @return Command The current instance
-     *
-     * @throws \InvalidArgumentException
-     *
-     * @see execute()
-     *
-     * @api
+     * @return string The synopsis
      */
-    public function setCode($code)
+    public function getSynopsis()
     {
-        if (!is_callable($code)) {
-            throw new \InvalidArgumentException('Invalid callable provided to Command::setCode.');
+        if (null === $this->synopsis) {
+            $this->synopsis = trim(sprintf('%s %s', $this->name, $this->definition->getSynopsis()));
         }
 
-        $this->code = $code;
-
-        return $this;
+        return $this->synopsis;
     }
 
     /**
@@ -315,6 +253,109 @@ class Command
     }
 
     /**
+     * Initializes the command just after the input has been validated.
+     *
+     * This is mainly useful when a lot of commands extends one main command
+     * where some things need to be initialized based on the input arguments and options.
+     *
+     * @param InputInterface $input An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     */
+    protected function initialize(InputInterface $input, OutputInterface $output)
+    {
+    }
+
+    /**
+     * Interacts with the user.
+     *
+     * This method is executed before the InputDefinition is validated.
+     * This means that this is the only place where the command can
+     * interactively ask for values of missing required arguments.
+     *
+     * @param InputInterface $input An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     */
+    protected function interact(InputInterface $input, OutputInterface $output)
+    {
+    }
+
+    /**
+     * Executes the current command.
+     *
+     * This method is not abstract because you can use this class
+     * as a concrete class. In this case, instead of defining the
+     * execute() method, you set the code to execute by passing
+     * a Closure to the setCode() method.
+     *
+     * @param InputInterface $input An InputInterface instance
+     * @param OutputInterface $output An OutputInterface instance
+     *
+     * @return null|int null or 0 if everything went fine, or an error code
+     *
+     * @throws \LogicException When this abstract method is not implemented
+     *
+     * @see setCode()
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        throw new \LogicException('You must override the execute() method in the concrete command class.');
+    }
+
+    /**
+     * Sets the code to execute when running this command.
+     *
+     * If this method is used, it overrides the code defined
+     * in the execute() method.
+     *
+     * @param callable $code A callable(InputInterface $input, OutputInterface $output)
+     *
+     * @return Command The current instance
+     *
+     * @throws \InvalidArgumentException
+     *
+     * @see execute()
+     *
+     * @api
+     */
+    public function setCode($code)
+    {
+        if (!is_callable($code)) {
+            throw new \InvalidArgumentException('Invalid callable provided to Command::setCode.');
+        }
+
+        $this->code = $code;
+
+        return $this;
+    }
+
+    /**
+     * Gets the InputDefinition to be used to create XML and Text representations of this Command.
+     *
+     * Can be overridden to provide the original command representation when it would otherwise
+     * be changed by merging with the application InputDefinition.
+     *
+     * This method is not part of public API and should not be used directly.
+     *
+     * @return InputDefinition An InputDefinition instance
+     */
+    public function getNativeDefinition()
+    {
+        return $this->getDefinition();
+    }
+
+    /**
+     * Gets the InputDefinition attached to this Command.
+     *
+     * @return InputDefinition An InputDefinition instance
+     *
+     * @api
+     */
+    public function getDefinition()
+    {
+        return $this->definition;
+    }
+
+    /**
      * Sets an array of argument and option instances.
      *
      * @param array|InputDefinition $definition An array of argument and option instances or a definition instance
@@ -337,39 +378,12 @@ class Command
     }
 
     /**
-     * Gets the InputDefinition attached to this Command.
-     *
-     * @return InputDefinition An InputDefinition instance
-     *
-     * @api
-     */
-    public function getDefinition()
-    {
-        return $this->definition;
-    }
-
-    /**
-     * Gets the InputDefinition to be used to create XML and Text representations of this Command.
-     *
-     * Can be overridden to provide the original command representation when it would otherwise
-     * be changed by merging with the application InputDefinition.
-     *
-     * This method is not part of public API and should not be used directly.
-     *
-     * @return InputDefinition An InputDefinition instance
-     */
-    public function getNativeDefinition()
-    {
-        return $this->getDefinition();
-    }
-
-    /**
      * Adds an argument.
      *
-     * @param string $name        The argument name
-     * @param int    $mode        The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
+     * @param string $name The argument name
+     * @param int $mode The argument mode: InputArgument::REQUIRED or InputArgument::OPTIONAL
      * @param string $description A description text
-     * @param mixed  $default     The default value (for InputArgument::OPTIONAL mode only)
+     * @param mixed $default The default value (for InputArgument::OPTIONAL mode only)
      *
      * @return Command The current instance
      *
@@ -385,11 +399,11 @@ class Command
     /**
      * Adds an option.
      *
-     * @param string $name        The option name
-     * @param string $shortcut    The shortcut (can be null)
-     * @param int    $mode        The option mode: One of the InputOption::VALUE_* constants
+     * @param string $name The option name
+     * @param string $shortcut The shortcut (can be null)
+     * @param int $mode The option mode: One of the InputOption::VALUE_* constants
      * @param string $description A description text
-     * @param mixed  $default     The default value (must be null for InputOption::VALUE_REQUIRED or InputOption::VALUE_NONE)
+     * @param mixed $default The default value (must be null for InputOption::VALUE_REQUIRED or InputOption::VALUE_NONE)
      *
      * @return Command The current instance
      *
@@ -398,31 +412,6 @@ class Command
     public function addOption($name, $shortcut = null, $mode = null, $description = '', $default = null)
     {
         $this->definition->addOption(new InputOption($name, $shortcut, $mode, $description, $default));
-
-        return $this;
-    }
-
-    /**
-     * Sets the name of the command.
-     *
-     * This method can set both the namespace and the name if
-     * you separate them by a colon (:)
-     *
-     *     $command->setName('foo:bar');
-     *
-     * @param string $name The command name
-     *
-     * @return Command The current instance
-     *
-     * @throws \InvalidArgumentException When the name is invalid
-     *
-     * @api
-     */
-    public function setName($name)
-    {
-        $this->validateName($name);
-
-        $this->name = $name;
 
         return $this;
     }
@@ -459,6 +448,43 @@ class Command
     }
 
     /**
+     * Sets the name of the command.
+     *
+     * This method can set both the namespace and the name if
+     * you separate them by a colon (:)
+     *
+     *     $command->setName('foo:bar');
+     *
+     * @param string $name The command name
+     *
+     * @return Command The current instance
+     *
+     * @throws \InvalidArgumentException When the name is invalid
+     *
+     * @api
+     */
+    public function setName($name)
+    {
+        $this->validateName($name);
+
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Returns the description for the command.
+     *
+     * @return string The description for the command
+     *
+     * @api
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Sets the description for the command.
      *
      * @param string $description The description for the command
@@ -475,15 +501,37 @@ class Command
     }
 
     /**
-     * Returns the description for the command.
+     * Returns the processed help for the command replacing the %command.name% and
+     * %command.full_name% patterns with the real values dynamically.
      *
-     * @return string The description for the command
+     * @return string The processed help for the command
+     */
+    public function getProcessedHelp()
+    {
+        $name = $this->name;
+
+        $placeholders = array(
+            '%command.name%',
+            '%command.full_name%',
+        );
+        $replacements = array(
+            $name,
+            $_SERVER['PHP_SELF'] . ' ' . $name,
+        );
+
+        return str_replace($placeholders, $replacements, $this->getHelp());
+    }
+
+    /**
+     * Returns the help for the command.
+     *
+     * @return string The help for the command
      *
      * @api
      */
-    public function getDescription()
+    public function getHelp()
     {
-        return $this->description;
+        return $this->help;
     }
 
     /**
@@ -503,37 +551,15 @@ class Command
     }
 
     /**
-     * Returns the help for the command.
+     * Returns the aliases for the command.
      *
-     * @return string The help for the command
+     * @return array An array of aliases for the command
      *
      * @api
      */
-    public function getHelp()
+    public function getAliases()
     {
-        return $this->help;
-    }
-
-    /**
-     * Returns the processed help for the command replacing the %command.name% and
-     * %command.full_name% patterns with the real values dynamically.
-     *
-     * @return string The processed help for the command
-     */
-    public function getProcessedHelp()
-    {
-        $name = $this->name;
-
-        $placeholders = array(
-            '%command.name%',
-            '%command.full_name%',
-        );
-        $replacements = array(
-            $name,
-            $_SERVER['PHP_SELF'].' '.$name,
-        );
-
-        return str_replace($placeholders, $replacements, $this->getHelp());
+        return $this->aliases;
     }
 
     /**
@@ -563,29 +589,19 @@ class Command
     }
 
     /**
-     * Returns the aliases for the command.
+     * Validates a command name.
      *
-     * @return array An array of aliases for the command
+     * It must be non-empty and parts can optionally be separated by ":".
      *
-     * @api
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException When the name is invalid
      */
-    public function getAliases()
+    private function validateName($name)
     {
-        return $this->aliases;
-    }
-
-    /**
-     * Returns the synopsis for the command.
-     *
-     * @return string The synopsis
-     */
-    public function getSynopsis()
-    {
-        if (null === $this->synopsis) {
-            $this->synopsis = trim(sprintf('%s %s', $this->name, $this->definition->getSynopsis()));
+        if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
+            throw new \InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
         }
-
-        return $this->synopsis;
     }
 
     /**
@@ -641,21 +657,5 @@ class Command
         $descriptor->describe($output, $this);
 
         return $output->fetch();
-    }
-
-    /**
-     * Validates a command name.
-     *
-     * It must be non-empty and parts can optionally be separated by ":".
-     *
-     * @param string $name
-     *
-     * @throws \InvalidArgumentException When the name is invalid
-     */
-    private function validateName($name)
-    {
-        if (!preg_match('/^[^\:]++(\:[^\:]++)*$/', $name)) {
-            throw new \InvalidArgumentException(sprintf('Command name "%s" is invalid.', $name));
-        }
     }
 }

@@ -26,7 +26,7 @@ class PHPUnit_Runner_Filter_Factory
 
     /**
      * @param ReflectionClass $filter
-     * @param mixed           $args
+     * @param mixed $args
      */
     public function addFilter(ReflectionClass $filter, $args)
     {

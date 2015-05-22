@@ -76,8 +76,7 @@ class Filesystem
             ->name('*Spec.php')
             ->followLinks()
             ->sortByName()
-            ->in($path)
-        ;
+            ->in($path);
 
         return iterator_to_array($finder);
     }
@@ -95,8 +94,7 @@ class Filesystem
             ->name('*.php')
             ->followLinks()
             ->sortByName()
-            ->in($path)
-        ;
+            ->in($path);
 
         return iterator_to_array($finder);
     }

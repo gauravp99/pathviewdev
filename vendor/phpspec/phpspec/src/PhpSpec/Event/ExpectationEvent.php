@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Event;
 
-use Symfony\Component\EventDispatcher\Event;
 use PhpSpec\Loader\Node\ExampleNode;
 use PhpSpec\Matcher\MatcherInterface;
+use Symfony\Component\EventDispatcher\Event;
 
 /**
  * Class ExpectationEvent holds information about the expectation event
@@ -25,17 +25,17 @@ class ExpectationEvent extends Event implements EventInterface
     /**
      * Expectation passed
      */
-    const PASSED  = 0;
+    const PASSED = 0;
 
     /**
      * Expectation failed
      */
-    const FAILED  = 1;
+    const FAILED = 1;
 
     /**
      * Expectation broken
      */
-    const BROKEN  = 2;
+    const BROKEN = 2;
 
     /**
      * @var \PhpSpec\Loader\Node\ExampleNode
@@ -73,13 +73,13 @@ class ExpectationEvent extends Event implements EventInterface
     private $exception;
 
     /**
-     * @param ExampleNode      $example
+     * @param ExampleNode $example
      * @param MatcherInterface $matcher
-     * @param mixed            $subject
-     * @param string           $method
-     * @param array            $arguments
-     * @param integer          $result
-     * @param \Exception       $exception
+     * @param mixed $subject
+     * @param string $method
+     * @param array $arguments
+     * @param integer $result
+     * @param \Exception $exception
      */
     public function __construct(ExampleNode $example, MatcherInterface $matcher, $subject,
                                 $method, $arguments, $result = null, $exception = null)

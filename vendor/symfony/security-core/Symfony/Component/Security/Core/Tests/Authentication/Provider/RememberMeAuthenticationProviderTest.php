@@ -25,6 +25,34 @@ class RememberMeAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($provider->supports($this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')));
     }
 
+    protected function getProvider($userChecker = null, $key = 'test')
+    {
+        if (null === $userChecker) {
+            $userChecker = $this->getMock('Symfony\Component\Security\Core\User\UserCheckerInterface');
+        }
+
+        return new RememberMeAuthenticationProvider($userChecker, $key, 'foo');
+    }
+
+    protected function getSupportedToken($user = null, $key = 'test')
+    {
+        if (null === $user) {
+            $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+            $user
+                ->expects($this->any())
+                ->method('getRoles')
+                ->will($this->returnValue(array()));
+        }
+
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken', array('getProviderKey'), array($user, 'foo', $key));
+        $token
+            ->expects($this->once())
+            ->method('getProviderKey')
+            ->will($this->returnValue('foo'));
+
+        return $token;
+    }
+
     public function testAuthenticateWhenTokenIsNotSupported()
     {
         $provider = $this->getProvider();
@@ -63,8 +91,8 @@ class RememberMeAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
     {
         $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
         $user->expects($this->exactly(2))
-             ->method('getRoles')
-             ->will($this->returnValue(array('ROLE_FOO')));
+            ->method('getRoles')
+            ->will($this->returnValue(array('ROLE_FOO')));
 
         $provider = $this->getProvider();
 
@@ -75,33 +103,5 @@ class RememberMeAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($user, $authToken->getUser());
         $this->assertEquals(array(new Role('ROLE_FOO')), $authToken->getRoles());
         $this->assertEquals('', $authToken->getCredentials());
-    }
-
-    protected function getSupportedToken($user = null, $key = 'test')
-    {
-        if (null === $user) {
-            $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
-            $user
-                ->expects($this->any())
-                ->method('getRoles')
-                ->will($this->returnValue(array()));
-        }
-
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken', array('getProviderKey'), array($user, 'foo', $key));
-        $token
-            ->expects($this->once())
-            ->method('getProviderKey')
-            ->will($this->returnValue('foo'));
-
-        return $token;
-    }
-
-    protected function getProvider($userChecker = null, $key = 'test')
-    {
-        if (null === $userChecker) {
-            $userChecker = $this->getMock('Symfony\Component\Security\Core\User\UserCheckerInterface');
-        }
-
-        return new RememberMeAuthenticationProvider($userChecker, $key, 'foo');
     }
 }

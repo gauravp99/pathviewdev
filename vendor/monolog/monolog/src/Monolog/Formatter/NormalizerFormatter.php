@@ -38,14 +38,6 @@ class NormalizerFormatter implements FormatterInterface
     /**
      * {@inheritdoc}
      */
-    public function format(array $record)
-    {
-        return $this->normalize($record);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function formatBatch(array $records)
     {
         foreach ($records as $key => $record) {
@@ -53,6 +45,14 @@ class NormalizerFormatter implements FormatterInterface
         }
 
         return $records;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function format(array $record)
+    {
+        return $this->normalize($record);
     }
 
     protected function normalize($data)
@@ -101,7 +101,7 @@ class NormalizerFormatter implements FormatterInterface
             return '[resource]';
         }
 
-        return '[unknown('.gettype($data).')]';
+        return '[unknown(' . gettype($data) . ')]';
     }
 
     protected function normalizeException(Exception $e)
@@ -110,13 +110,13 @@ class NormalizerFormatter implements FormatterInterface
             'class' => get_class($e),
             'message' => $e->getMessage(),
             'code' => $e->getCode(),
-            'file' => $e->getFile().':'.$e->getLine(),
+            'file' => $e->getFile() . ':' . $e->getLine(),
         );
 
         $trace = $e->getTrace();
         foreach ($trace as $frame) {
             if (isset($frame['file'])) {
-                $data['trace'][] = $frame['file'].':'.$frame['line'];
+                $data['trace'][] = $frame['file'] . ':' . $frame['line'];
             } else {
                 // We should again normalize the frames, because it might contain invalid items
                 $data['trace'][] = $this->toJson($this->normalize($frame), true);

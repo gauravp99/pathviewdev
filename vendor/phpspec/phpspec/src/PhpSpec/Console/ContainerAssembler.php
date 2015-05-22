@@ -13,21 +13,21 @@
 
 namespace PhpSpec\Console;
 
-use SebastianBergmann\Exporter\Exporter;
-use PhpSpec\Process\ReRunner;
-use PhpSpec\Util\MethodAnalyser;
-use Symfony\Component\EventDispatcher\EventDispatcher;
-use PhpSpec\ServiceContainer;
 use PhpSpec\CodeGenerator;
+use PhpSpec\Config\OptionsConfig;
 use PhpSpec\Formatter as SpecFormatter;
 use PhpSpec\Listener;
 use PhpSpec\Loader;
 use PhpSpec\Locator;
 use PhpSpec\Matcher;
+use PhpSpec\Process\ReRunner;
 use PhpSpec\Runner;
+use PhpSpec\ServiceContainer;
+use PhpSpec\Util\MethodAnalyser;
 use PhpSpec\Wrapper;
-use PhpSpec\Config\OptionsConfig;
 use RuntimeException;
+use SebastianBergmann\Exporter\Exporter;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Process\PhpExecutableFinder;
 
 class ContainerAssembler
@@ -67,41 +67,6 @@ class ContainerAssembler
                     $c->getParam('bootstrap', false)
                 )
             );
-        });
-    }
-
-    private function setupResultConverter(ServiceContainer $container)
-    {
-        $container->setShared('console.result_converter', function () {
-            return new ResultConverter();
-        });
-    }
-
-    private function setupCommands(ServiceContainer $container)
-    {
-        $container->setShared('console.commands.run', function () {
-            return new Command\RunCommand();
-        });
-
-        $container->setShared('console.commands.describe', function () {
-            return new Command\DescribeCommand();
-        });
-    }
-
-    /**
-     * @param ServiceContainer $container
-     */
-    private function setupConsoleEventDispatcher(ServiceContainer $container)
-    {
-        $container->setShared('console_event_dispatcher', function (ServiceContainer $c) {
-            $dispatcher = new EventDispatcher();
-
-            array_map(
-                array($dispatcher, 'addSubscriber'),
-                $c->getByPrefix('console_event_dispatcher.listeners')
-            );
-
-            return $dispatcher;
         });
     }
 
@@ -176,6 +141,23 @@ class ContainerAssembler
     /**
      * @param ServiceContainer $container
      */
+    private function setupConsoleEventDispatcher(ServiceContainer $container)
+    {
+        $container->setShared('console_event_dispatcher', function (ServiceContainer $c) {
+            $dispatcher = new EventDispatcher();
+
+            array_map(
+                array($dispatcher, 'addSubscriber'),
+                $c->getByPrefix('console_event_dispatcher.listeners')
+            );
+
+            return $dispatcher;
+        });
+    }
+
+    /**
+     * @param ServiceContainer $container
+     */
     private function setupGenerators(ServiceContainer $container)
     {
         $container->setShared('code_generator', function (ServiceContainer $c) {
@@ -229,14 +211,14 @@ class ContainerAssembler
         });
 
         if (!empty($_SERVER['HOMEDRIVE']) && !empty($_SERVER['HOMEPATH'])) {
-            $home = $_SERVER['HOMEDRIVE'].$_SERVER['HOMEPATH'];
+            $home = $_SERVER['HOMEDRIVE'] . $_SERVER['HOMEPATH'];
         } else {
             $home = $_SERVER['HOME'];
         }
 
         $container->setParam('code_generator.templates.paths', array(
-            rtrim(getcwd(), DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'.phpspec',
-            rtrim($home, DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR.'.phpspec',
+            rtrim(getcwd(), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.phpspec',
+            rtrim($home, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR . '.phpspec',
         ));
     }
 
@@ -294,12 +276,12 @@ class ContainerAssembler
             $suites = $c->getParam('suites', array('main' => ''));
 
             foreach ($suites as $name => $suite) {
-                $suite      = is_array($suite) ? $suite : array('namespace' => $suite);
-                $srcNS      = isset($suite['namespace']) ? $suite['namespace'] : '';
+                $suite = is_array($suite) ? $suite : array('namespace' => $suite);
+                $srcNS = isset($suite['namespace']) ? $suite['namespace'] : '';
                 $specPrefix = isset($suite['spec_prefix']) ? $suite['spec_prefix'] : 'spec';
-                $srcPath    = isset($suite['src_path']) ? $suite['src_path'] : 'src';
-                $specPath   = isset($suite['spec_path']) ? $suite['spec_path'] : '.';
-                $psr4prefix   = isset($suite['psr4_prefix']) ? $suite['psr4_prefix'] : null;
+                $srcPath = isset($suite['src_path']) ? $suite['src_path'] : 'src';
+                $specPath = isset($suite['spec_path']) ? $suite['spec_path'] : '.';
+                $psr4prefix = isset($suite['psr4_prefix']) ? $suite['psr4_prefix'] : null;
 
                 if (!is_dir($srcPath)) {
                     mkdir($srcPath, 0777, true);
@@ -366,7 +348,7 @@ class ContainerAssembler
             ));
 
             try {
-                $formatter = $c->get('formatter.formatters.'.$formatterName);
+                $formatter = $c->get('formatter.formatters.' . $formatterName);
             } catch (\InvalidArgumentException $e) {
                 throw new \RuntimeException(sprintf('Formatter not recognised: "%s"', $formatterName));
             }
@@ -440,6 +422,56 @@ class ContainerAssembler
         });
     }
 
+    private function setupCommands(ServiceContainer $container)
+    {
+        $container->setShared('console.commands.run', function () {
+            return new Command\RunCommand();
+        });
+
+        $container->setShared('console.commands.describe', function () {
+            return new Command\DescribeCommand();
+        });
+    }
+
+    private function setupResultConverter(ServiceContainer $container)
+    {
+        $container->setShared('console.result_converter', function () {
+            return new ResultConverter();
+        });
+    }
+
+    /**
+     * @param ServiceContainer $container
+     */
+    private function setupRerunner(ServiceContainer $container)
+    {
+        $container->setShared('process.rerunner', function (ServiceContainer $c) {
+            return new ReRunner\OptionalReRunner(
+                $c->get('process.rerunner.platformspecific'),
+                $c->get('console.io')
+            );
+        });
+
+        if ($container->isDefined('process.rerunner.platformspecific')) {
+            return;
+        }
+
+        $container->setShared('process.rerunner.platformspecific', function (ServiceContainer $c) {
+            return new ReRunner\CompositeReRunner(
+                $c->getByPrefix('process.rerunner.platformspecific')
+            );
+        });
+        $container->setShared('process.rerunner.platformspecific.pcntl', function (ServiceContainer $c) {
+            return new ReRunner\PcntlReRunner($c->get('process.phpexecutablefinder'));
+        });
+        $container->setShared('process.rerunner.platformspecific.passthru', function (ServiceContainer $c) {
+            return new ReRunner\PassthruReRunner($c->get('process.phpexecutablefinder'));
+        });
+        $container->setShared('process.phpexecutablefinder', function () {
+            return new PhpExecutableFinder();
+        });
+    }
+
     /**
      * @param ServiceContainer $container
      */
@@ -480,38 +512,6 @@ class ContainerAssembler
         });
         $container->set('matchers.string_regex', function (ServiceContainer $c) {
             return new Matcher\StringRegexMatcher($c->get('formatter.presenter'));
-        });
-    }
-
-    /**
-     * @param ServiceContainer $container
-     */
-    private function setupRerunner(ServiceContainer $container)
-    {
-        $container->setShared('process.rerunner', function (ServiceContainer $c) {
-            return new ReRunner\OptionalReRunner(
-                $c->get('process.rerunner.platformspecific'),
-                $c->get('console.io')
-            );
-        });
-
-        if ($container->isDefined('process.rerunner.platformspecific')) {
-            return;
-        }
-
-        $container->setShared('process.rerunner.platformspecific', function (ServiceContainer $c) {
-            return new ReRunner\CompositeReRunner(
-                $c->getByPrefix('process.rerunner.platformspecific')
-            );
-        });
-        $container->setShared('process.rerunner.platformspecific.pcntl', function (ServiceContainer $c) {
-            return new ReRunner\PcntlReRunner($c->get('process.phpexecutablefinder'));
-        });
-        $container->setShared('process.rerunner.platformspecific.passthru', function (ServiceContainer $c) {
-            return new ReRunner\PassthruReRunner($c->get('process.phpexecutablefinder'));
-        });
-        $container->setShared('process.phpexecutablefinder', function () {
-            return new PhpExecutableFinder();
         });
     }
 }

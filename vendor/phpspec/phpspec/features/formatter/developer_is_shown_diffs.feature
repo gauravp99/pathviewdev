@@ -5,7 +5,7 @@ Feature: Developer is shown diffs
 
   Scenario: String diffing
     Given the spec file "spec/Diffs/DiffExample1/ClassWithStringsSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample1;
@@ -23,7 +23,7 @@ Feature: Developer is shown diffs
 
       """
     And the class file "src/Diffs/DiffExample1/ClassWithStrings.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample1;
@@ -39,7 +39,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
        @@ -1,1 +1,1 @@
             -foo
             +bar
@@ -47,7 +47,7 @@ Feature: Developer is shown diffs
 
   Scenario: Array diffing
     Given the spec file "spec/Diffs/DiffExample2/ClassWithArraysSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample2;
@@ -68,7 +68,7 @@ Feature: Developer is shown diffs
 
       """
     And the class file "src/Diffs/DiffExample2/ClassWithArrays.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample2;
@@ -87,7 +87,7 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             @@ -1,4 +1,4 @@
                [
             -    int => 1,
@@ -99,7 +99,7 @@ Feature: Developer is shown diffs
 
   Scenario: Object diffing
     Given the spec file "spec/Diffs/DiffExample3/ClassWithObjectsSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Diffs\DiffExample3;
@@ -121,7 +121,7 @@ Feature: Developer is shown diffs
 
       """
     And the class file "src/Diffs/DiffExample3/ClassWithObjects.php" contains:
-      """
+    """
       <?php
 
       namespace Diffs\DiffExample3;
@@ -141,12 +141,12 @@ Feature: Developer is shown diffs
       """
     When I run phpspec with the "verbose" option
     Then I should see:
-      """
+    """
             -    'i' => 1
             -    's' => 'foo'
       """
     And I should see:
-      """
+    """
             +    'i' => 2
             +    's' => 'bar'
       """

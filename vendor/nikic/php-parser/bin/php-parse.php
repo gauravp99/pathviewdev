@@ -68,7 +68,8 @@ foreach ($files as $file) {
     }
 }
 
-function showHelp($error) {
+function showHelp($error)
+{
     die($error . "\n\n" .
         <<<OUTPUT
 Usage:
@@ -98,7 +99,8 @@ OUTPUT
     );
 }
 
-function parseArgs($args) {
+function parseArgs($args)
+{
     $operations = array();
     $files = array();
 

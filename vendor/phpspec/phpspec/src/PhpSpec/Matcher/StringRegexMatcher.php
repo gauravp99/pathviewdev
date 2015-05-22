@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class StringRegexMatcher extends BasicMatcher
 {
@@ -33,17 +33,16 @@ class StringRegexMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return bool
      */
     public function supports($name, $subject, array $arguments)
     {
         return 'match' === $name
-            && is_string($subject)
-            && 1 == count($arguments)
-        ;
+        && is_string($subject)
+        && 1 == count($arguments);
     }
 
     /**
@@ -54,13 +53,13 @@ class StringRegexMatcher extends BasicMatcher
      */
     protected function matches($subject, array $arguments)
     {
-        return (Boolean) preg_match($arguments[0], $subject);
+        return (Boolean)preg_match($arguments[0], $subject);
     }
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */
@@ -75,8 +74,8 @@ class StringRegexMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */

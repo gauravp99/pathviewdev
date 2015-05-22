@@ -1,170 +1,169 @@
 <?php namespace Illuminate\Database\Eloquent;
 
-trait SoftDeletes {
+trait SoftDeletes
+{
 
-	/**
-	 * Indicates if the model is currently force deleting.
-	 *
-	 * @var bool
-	 */
-	protected $forceDeleting = false;
+    /**
+     * Indicates if the model is currently force deleting.
+     *
+     * @var bool
+     */
+    protected $forceDeleting = false;
 
-	/**
-	 * Boot the soft deleting trait for a model.
-	 *
-	 * @return void
-	 */
-	public static function bootSoftDeletes()
-	{
-		static::addGlobalScope(new SoftDeletingScope);
-	}
+    /**
+     * Boot the soft deleting trait for a model.
+     *
+     * @return void
+     */
+    public static function bootSoftDeletes()
+    {
+        static::addGlobalScope(new SoftDeletingScope);
+    }
 
-	/**
-	 * Force a hard delete on a soft deleted model.
-	 *
-	 * @return void
-	 */
-	public function forceDelete()
-	{
-		$this->forceDeleting = true;
+    /**
+     * Get a new query builder that only includes soft deletes.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public static function onlyTrashed()
+    {
+        $instance = new static;
 
-		$this->delete();
+        $column = $instance->getQualifiedDeletedAtColumn();
 
-		$this->forceDeleting = false;
-	}
+        return $instance->newQueryWithoutScope(new SoftDeletingScope)->whereNotNull($column);
+    }
 
-	/**
-	 * Perform the actual delete query on this model instance.
-	 *
-	 * @return void
-	 */
-	protected function performDeleteOnModel()
-	{
-		if ($this->forceDeleting)
-		{
-			return $this->withTrashed()->where($this->getKeyName(), $this->getKey())->forceDelete();
-		}
+    /**
+     * Get the fully qualified "deleted at" column.
+     *
+     * @return string
+     */
+    public function getQualifiedDeletedAtColumn()
+    {
+        return $this->getTable() . '.' . $this->getDeletedAtColumn();
+    }
 
-		return $this->runSoftDelete();
-	}
+    /**
+     * Get the name of the "deleted at" column.
+     *
+     * @return string
+     */
+    public function getDeletedAtColumn()
+    {
+        return defined('static::DELETED_AT') ? static::DELETED_AT : 'deleted_at';
+    }
 
-	/**
-	 * Perform the actual delete query on this model instance.
-	 *
-	 * @return void
-	 */
-	protected function runSoftDelete()
-	{
-		$query = $this->newQuery()->where($this->getKeyName(), $this->getKey());
+    /**
+     * Register a restoring model event with the dispatcher.
+     *
+     * @param  \Closure|string $callback
+     * @return void
+     */
+    public static function restoring($callback)
+    {
+        static::registerModelEvent('restoring', $callback);
+    }
 
-		$this->{$this->getDeletedAtColumn()} = $time = $this->freshTimestamp();
+    /**
+     * Register a restored model event with the dispatcher.
+     *
+     * @param  \Closure|string $callback
+     * @return void
+     */
+    public static function restored($callback)
+    {
+        static::registerModelEvent('restored', $callback);
+    }
 
-		$query->update(array($this->getDeletedAtColumn() => $this->fromDateTime($time)));
-	}
+    /**
+     * Force a hard delete on a soft deleted model.
+     *
+     * @return void
+     */
+    public function forceDelete()
+    {
+        $this->forceDeleting = true;
 
-	/**
-	 * Restore a soft-deleted model instance.
-	 *
-	 * @return bool|null
-	 */
-	public function restore()
-	{
-		// If the restoring event does not return false, we will proceed with this
-		// restore operation. Otherwise, we bail out so the developer will stop
-		// the restore totally. We will clear the deleted timestamp and save.
-		if ($this->fireModelEvent('restoring') === false)
-		{
-			return false;
-		}
+        $this->delete();
 
-		$this->{$this->getDeletedAtColumn()} = null;
+        $this->forceDeleting = false;
+    }
 
-		// Once we have saved the model, we will fire the "restored" event so this
-		// developer will do anything they need to after a restore operation is
-		// totally finished. Then we will return the result of the save call.
-		$this->exists = true;
+    /**
+     * Restore a soft-deleted model instance.
+     *
+     * @return bool|null
+     */
+    public function restore()
+    {
+        // If the restoring event does not return false, we will proceed with this
+        // restore operation. Otherwise, we bail out so the developer will stop
+        // the restore totally. We will clear the deleted timestamp and save.
+        if ($this->fireModelEvent('restoring') === false) {
+            return false;
+        }
 
-		$result = $this->save();
+        $this->{$this->getDeletedAtColumn()} = null;
 
-		$this->fireModelEvent('restored', false);
+        // Once we have saved the model, we will fire the "restored" event so this
+        // developer will do anything they need to after a restore operation is
+        // totally finished. Then we will return the result of the save call.
+        $this->exists = true;
 
-		return $result;
-	}
+        $result = $this->save();
 
-	/**
-	 * Determine if the model instance has been soft-deleted.
-	 *
-	 * @return bool
-	 */
-	public function trashed()
-	{
-		return ! is_null($this->{$this->getDeletedAtColumn()});
-	}
+        $this->fireModelEvent('restored', false);
 
-	/**
-	 * Get a new query builder that includes soft deletes.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Builder|static
-	 */
-	public static function withTrashed()
-	{
-		return (new static)->newQueryWithoutScope(new SoftDeletingScope);
-	}
+        return $result;
+    }
 
-	/**
-	 * Get a new query builder that only includes soft deletes.
-	 *
-	 * @return \Illuminate\Database\Eloquent\Builder|static
-	 */
-	public static function onlyTrashed()
-	{
-		$instance = new static;
+    /**
+     * Determine if the model instance has been soft-deleted.
+     *
+     * @return bool
+     */
+    public function trashed()
+    {
+        return !is_null($this->{$this->getDeletedAtColumn()});
+    }
 
-		$column = $instance->getQualifiedDeletedAtColumn();
+    /**
+     * Perform the actual delete query on this model instance.
+     *
+     * @return void
+     */
+    protected function performDeleteOnModel()
+    {
+        if ($this->forceDeleting) {
+            return $this->withTrashed()->where($this->getKeyName(), $this->getKey())->forceDelete();
+        }
 
-		return $instance->newQueryWithoutScope(new SoftDeletingScope)->whereNotNull($column);
-	}
+        return $this->runSoftDelete();
+    }
 
-	/**
-	 * Register a restoring model event with the dispatcher.
-	 *
-	 * @param  \Closure|string  $callback
-	 * @return void
-	 */
-	public static function restoring($callback)
-	{
-		static::registerModelEvent('restoring', $callback);
-	}
+    /**
+     * Get a new query builder that includes soft deletes.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public static function withTrashed()
+    {
+        return (new static)->newQueryWithoutScope(new SoftDeletingScope);
+    }
 
-	/**
-	 * Register a restored model event with the dispatcher.
-	 *
-	 * @param  \Closure|string  $callback
-	 * @return void
-	 */
-	public static function restored($callback)
-	{
-		static::registerModelEvent('restored', $callback);
-	}
+    /**
+     * Perform the actual delete query on this model instance.
+     *
+     * @return void
+     */
+    protected function runSoftDelete()
+    {
+        $query = $this->newQuery()->where($this->getKeyName(), $this->getKey());
 
-	/**
-	 * Get the name of the "deleted at" column.
-	 *
-	 * @return string
-	 */
-	public function getDeletedAtColumn()
-	{
-		return defined('static::DELETED_AT') ? static::DELETED_AT : 'deleted_at';
-	}
+        $this->{$this->getDeletedAtColumn()} = $time = $this->freshTimestamp();
 
-	/**
-	 * Get the fully qualified "deleted at" column.
-	 *
-	 * @return string
-	 */
-	public function getQualifiedDeletedAtColumn()
-	{
-		return $this->getTable().'.'.$this->getDeletedAtColumn();
-	}
+        $query->update(array($this->getDeletedAtColumn() => $this->fromDateTime($time)));
+    }
 
 }

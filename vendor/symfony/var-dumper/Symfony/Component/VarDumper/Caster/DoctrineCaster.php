@@ -12,8 +12,8 @@
 namespace Symfony\Component\VarDumper\Caster;
 
 use Doctrine\Common\Proxy\Proxy as CommonProxy;
-use Doctrine\ORM\Proxy\Proxy as OrmProxy;
 use Doctrine\ORM\PersistentCollection;
+use Doctrine\ORM\Proxy\Proxy as OrmProxy;
 use Symfony\Component\VarDumper\Cloner\Stub;
 
 /**
@@ -38,8 +38,8 @@ class DoctrineCaster
     {
         $prefix = "\0Doctrine\\ORM\\Proxy\\Proxy\0";
         unset(
-            $a[$prefix.'_entityPersister'],
-            $a[$prefix.'_identifier']
+            $a[$prefix . '_entityPersister'],
+            $a[$prefix . '_identifier']
         );
         $stub->cut += 2;
 
@@ -50,9 +50,9 @@ class DoctrineCaster
     {
         $prefix = "\0Doctrine\\ORM\\PersistentCollection\0";
 
-        $a[$prefix.'snapshot'] = new CutStub($a[$prefix.'snapshot']);
-        $a[$prefix.'association'] = new CutStub($a[$prefix.'association']);
-        $a[$prefix.'typeClass'] = new CutStub($a[$prefix.'typeClass']);
+        $a[$prefix . 'snapshot'] = new CutStub($a[$prefix . 'snapshot']);
+        $a[$prefix . 'association'] = new CutStub($a[$prefix . 'association']);
+        $a[$prefix . 'typeClass'] = new CutStub($a[$prefix . 'typeClass']);
 
         return $a;
     }

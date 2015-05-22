@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\EventDispatcher\Debug;
 
+use Psr\Log\LoggerInterface;
+use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\Stopwatch\Stopwatch;
-use Psr\Log\LoggerInterface;
 
 /**
  * Collects some data about event listeners.
@@ -36,8 +36,8 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
      * Constructor.
      *
      * @param EventDispatcherInterface $dispatcher An EventDispatcherInterface instance
-     * @param Stopwatch                $stopwatch  A Stopwatch instance
-     * @param LoggerInterface          $logger     A LoggerInterface instance
+     * @param Stopwatch $stopwatch A Stopwatch instance
+     * @param LoggerInterface $logger A LoggerInterface instance
      */
     public function __construct(EventDispatcherInterface $dispatcher, Stopwatch $stopwatch, LoggerInterface $logger = null)
     {
@@ -82,14 +82,6 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
     /**
      * {@inheritdoc}
      */
-    public function getListeners($eventName = null)
-    {
-        return $this->dispatcher->getListeners($eventName);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function hasListeners($eventName = null)
     {
         return $this->dispatcher->hasListeners($eventName);
@@ -121,95 +113,6 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
         return $event;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getCalledListeners()
-    {
-        $called = array();
-        foreach ($this->called as $eventName => $listeners) {
-            foreach ($listeners as $listener) {
-                $info = $this->getListenerInfo($listener->getWrappedListener(), $eventName);
-                $called[$eventName.'.'.$info['pretty']] = $info;
-            }
-        }
-
-        return $called;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNotCalledListeners()
-    {
-        try {
-            $allListeners = $this->getListeners();
-        } catch (\Exception $e) {
-            if (null !== $this->logger) {
-                $this->logger->info(sprintf('An exception was thrown while getting the uncalled listeners (%s)', $e->getMessage()), array('exception' => $e));
-            }
-
-            // unable to retrieve the uncalled listeners
-            return array();
-        }
-
-        $notCalled = array();
-        foreach ($allListeners as $eventName => $listeners) {
-            foreach ($listeners as $listener) {
-                $called = false;
-                if (isset($this->called[$eventName])) {
-                    foreach ($this->called[$eventName] as $l) {
-                        if ($l->getWrappedListener() === $listener) {
-                            $called = true;
-
-                            break;
-                        }
-                    }
-                }
-
-                if (!$called) {
-                    $info = $this->getListenerInfo($listener, $eventName);
-                    $notCalled[$eventName.'.'.$info['pretty']] = $info;
-                }
-            }
-        }
-
-        return $notCalled;
-    }
-
-    /**
-     * Proxies all method calls to the original event dispatcher.
-     *
-     * @param string $method    The method name
-     * @param array  $arguments The method arguments
-     *
-     * @return mixed
-     */
-    public function __call($method, $arguments)
-    {
-        return call_user_func_array(array($this->dispatcher, $method), $arguments);
-    }
-
-    /**
-     * Called before dispatching the event.
-     *
-     * @param string $eventName The event name
-     * @param Event  $event     The event
-     */
-    protected function preDispatch($eventName, Event $event)
-    {
-    }
-
-    /**
-     * Called after dispatching the event.
-     *
-     * @param string $eventName The event name
-     * @param Event  $event     The event
-     */
-    protected function postDispatch($eventName, Event $event)
-    {
-    }
-
     private function preProcess($eventName)
     {
         foreach ($this->dispatcher->getListeners($eventName) as $listener) {
@@ -220,48 +123,10 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
         }
     }
 
-    private function postProcess($eventName)
-    {
-        $skipped = false;
-        foreach ($this->dispatcher->getListeners($eventName) as $listener) {
-            if (!$listener instanceof WrappedListener) { // #12845: a new listener was added during dispatch.
-                continue;
-            }
-            // Unwrap listener
-            $this->dispatcher->removeListener($eventName, $listener);
-            $this->dispatcher->addListener($eventName, $listener->getWrappedListener());
-
-            $info = $this->getListenerInfo($listener->getWrappedListener(), $eventName);
-            if ($listener->wasCalled()) {
-                if (null !== $this->logger) {
-                    $this->logger->debug(sprintf('Notified event "%s" to listener "%s".', $eventName, $info['pretty']));
-                }
-
-                if (!isset($this->called[$eventName])) {
-                    $this->called[$eventName] = new \SplObjectStorage();
-                }
-
-                $this->called[$eventName]->attach($listener);
-            }
-
-            if (null !== $this->logger && $skipped) {
-                $this->logger->debug(sprintf('Listener "%s" was not called for event "%s".', $info['pretty'], $eventName));
-            }
-
-            if ($listener->stoppedPropagation()) {
-                if (null !== $this->logger) {
-                    $this->logger->debug(sprintf('Listener "%s" stopped propagation of the event "%s".', $info['pretty'], $eventName));
-                }
-
-                $skipped = true;
-            }
-        }
-    }
-
     /**
      * Returns information about the listener
      *
-     * @param object $listener  The listener
+     * @param object $listener The listener
      * @param string $eventName The event name
      *
      * @return array Information about the listener
@@ -311,10 +176,145 @@ class TraceableEventDispatcher implements TraceableEventDispatcherInterface
                 'method' => $listener[1],
                 'file' => $file,
                 'line' => $line,
-                'pretty' => $class.'::'.$listener[1],
+                'pretty' => $class . '::' . $listener[1],
             );
         }
 
         return $info;
+    }
+
+    /**
+     * Called before dispatching the event.
+     *
+     * @param string $eventName The event name
+     * @param Event $event The event
+     */
+    protected function preDispatch($eventName, Event $event)
+    {
+    }
+
+    /**
+     * Called after dispatching the event.
+     *
+     * @param string $eventName The event name
+     * @param Event $event The event
+     */
+    protected function postDispatch($eventName, Event $event)
+    {
+    }
+
+    private function postProcess($eventName)
+    {
+        $skipped = false;
+        foreach ($this->dispatcher->getListeners($eventName) as $listener) {
+            if (!$listener instanceof WrappedListener) { // #12845: a new listener was added during dispatch.
+                continue;
+            }
+            // Unwrap listener
+            $this->dispatcher->removeListener($eventName, $listener);
+            $this->dispatcher->addListener($eventName, $listener->getWrappedListener());
+
+            $info = $this->getListenerInfo($listener->getWrappedListener(), $eventName);
+            if ($listener->wasCalled()) {
+                if (null !== $this->logger) {
+                    $this->logger->debug(sprintf('Notified event "%s" to listener "%s".', $eventName, $info['pretty']));
+                }
+
+                if (!isset($this->called[$eventName])) {
+                    $this->called[$eventName] = new \SplObjectStorage();
+                }
+
+                $this->called[$eventName]->attach($listener);
+            }
+
+            if (null !== $this->logger && $skipped) {
+                $this->logger->debug(sprintf('Listener "%s" was not called for event "%s".', $info['pretty'], $eventName));
+            }
+
+            if ($listener->stoppedPropagation()) {
+                if (null !== $this->logger) {
+                    $this->logger->debug(sprintf('Listener "%s" stopped propagation of the event "%s".', $info['pretty'], $eventName));
+                }
+
+                $skipped = true;
+            }
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCalledListeners()
+    {
+        $called = array();
+        foreach ($this->called as $eventName => $listeners) {
+            foreach ($listeners as $listener) {
+                $info = $this->getListenerInfo($listener->getWrappedListener(), $eventName);
+                $called[$eventName . '.' . $info['pretty']] = $info;
+            }
+        }
+
+        return $called;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNotCalledListeners()
+    {
+        try {
+            $allListeners = $this->getListeners();
+        } catch (\Exception $e) {
+            if (null !== $this->logger) {
+                $this->logger->info(sprintf('An exception was thrown while getting the uncalled listeners (%s)', $e->getMessage()), array('exception' => $e));
+            }
+
+            // unable to retrieve the uncalled listeners
+            return array();
+        }
+
+        $notCalled = array();
+        foreach ($allListeners as $eventName => $listeners) {
+            foreach ($listeners as $listener) {
+                $called = false;
+                if (isset($this->called[$eventName])) {
+                    foreach ($this->called[$eventName] as $l) {
+                        if ($l->getWrappedListener() === $listener) {
+                            $called = true;
+
+                            break;
+                        }
+                    }
+                }
+
+                if (!$called) {
+                    $info = $this->getListenerInfo($listener, $eventName);
+                    $notCalled[$eventName . '.' . $info['pretty']] = $info;
+                }
+            }
+        }
+
+        return $notCalled;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getListeners($eventName = null)
+    {
+        return $this->dispatcher->getListeners($eventName);
+    }
+
+    /**
+     * Proxies all method calls to the original event dispatcher.
+     *
+     * @param string $method The method name
+     * @param array $arguments The method arguments
+     *
+     * @return mixed
+     */
+    public function __call($method, $arguments)
+    {
+        return call_user_func_array(array($this->dispatcher, $method), $arguments);
     }
 }

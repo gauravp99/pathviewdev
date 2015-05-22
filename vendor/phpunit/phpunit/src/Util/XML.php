@@ -46,17 +46,17 @@ class PHPUnit_Util_XML
     /**
      * Loads an XML (or HTML) file into a DOMDocument object.
      *
-     * @param  string      $filename
-     * @param  boolean     $isHtml
-     * @param  boolean     $xinclude
-     * @param  boolean     $strict
+     * @param  string $filename
+     * @param  boolean $isHtml
+     * @param  boolean $xinclude
+     * @param  boolean $strict
      * @return DOMDocument
      * @since  Method available since Release 3.3.0
      */
     public static function loadFile($filename, $isHtml = false, $xinclude = false, $strict = false)
     {
         $reporting = error_reporting(0);
-        $contents  = file_get_contents($filename);
+        $contents = file_get_contents($filename);
         error_reporting($reporting);
 
         if ($contents === false) {
@@ -86,10 +86,10 @@ class PHPUnit_Util_XML
      * DOMDocument, use loadFile() instead.
      *
      * @param  string|DOMDocument $actual
-     * @param  boolean            $isHtml
-     * @param  string             $filename
-     * @param  boolean            $xinclude
-     * @param  boolean            $strict
+     * @param  boolean $isHtml
+     * @param  string $filename
+     * @param  boolean $xinclude
+     * @param  boolean $strict
      * @return DOMDocument
      * @since  Method available since Release 3.3.0
      * @author Mike Naberezny <mike@maintainable.com>
@@ -108,10 +108,10 @@ class PHPUnit_Util_XML
             chdir(dirname($filename));
         }
 
-        $document  = new DOMDocument;
+        $document = new DOMDocument;
 
-        $internal  = libxml_use_internal_errors(true);
-        $message   = '';
+        $internal = libxml_use_internal_errors(true);
+        $message = '';
         $reporting = error_reporting(0);
 
         if ('' !== $filename) {
@@ -216,19 +216,19 @@ class PHPUnit_Util_XML
                     $value = self::xmlToVariable($element->childNodes->item(1));
 
                     if ($element->hasAttribute('key')) {
-                        $variable[(string) $element->getAttribute('key')] = $value;
+                        $variable[(string)$element->getAttribute('key')] = $value;
                     } else {
                         $variable[] = $value;
                     }
                 }
-                }
-            break;
+            }
+                break;
 
             case 'object': {
                 $className = $element->getAttribute('class');
 
                 if ($element->hasChildNodes()) {
-                    $arguments       = $element->childNodes->item(1)->childNodes;
+                    $arguments = $element->childNodes->item(1)->childNodes;
                     $constructorArgs = array();
 
                     foreach ($arguments as $argument) {
@@ -237,18 +237,18 @@ class PHPUnit_Util_XML
                         }
                     }
 
-                    $class    = new ReflectionClass($className);
+                    $class = new ReflectionClass($className);
                     $variable = $class->newInstanceArgs($constructorArgs);
                 } else {
                     $variable = new $className;
                 }
-                }
-            break;
+            }
+                break;
 
             case 'boolean': {
                 $variable = $element->nodeValue == 'true' ? true : false;
-                }
-            break;
+            }
+                break;
 
             case 'integer':
             case 'double':
@@ -256,7 +256,7 @@ class PHPUnit_Util_XML
                 $variable = $element->nodeValue;
 
                 settype($variable, $element->tagName);
-                }
+        }
             break;
         }
 
@@ -264,49 +264,34 @@ class PHPUnit_Util_XML
     }
 
     /**
-     * Validate list of keys in the associative array.
+     * Parse an $actual document and return an array of DOMNodes
+     * matching the CSS $selector.  If an error occurs, it will
+     * return false.
      *
-     * @param  array                       $hash
-     * @param  array                       $validKeys
-     * @return array
-     * @throws PHPUnit_Framework_Exception
+     * To only return nodes containing a certain content, give
+     * the $content to match as a string.  Otherwise, setting
+     * $content to true will return all nodes matching $selector.
+     *
+     * The $actual document may be a DOMDocument or a string
+     * containing XML or HTML, identified by $isHtml.
+     *
+     * @param  array $selector
+     * @param  string $content
+     * @param  mixed $actual
+     * @param  boolean $isHtml
+     * @return boolean|array
      * @since  Method available since Release 3.3.0
      * @author Mike Naberezny <mike@maintainable.com>
      * @author Derek DeVries <derek@maintainable.com>
+     * @author Tobias Schlitt <toby@php.net>
      */
-    public static function assertValidKeys(array $hash, array $validKeys)
+    public static function cssSelect($selector, $content, $actual, $isHtml = true)
     {
-        $valids = array();
+        $matcher = self::convertSelectToTag($selector, $content);
+        $dom = self::load($actual, $isHtml);
+        $tags = self::findNodes($dom, $matcher, $isHtml);
 
-        // Normalize validation keys so that we can use both indexed and
-        // associative arrays.
-        foreach ($validKeys as $key => $val) {
-            is_int($key) ? $valids[$val] = null : $valids[$key] = $val;
-        }
-
-        $validKeys = array_keys($valids);
-
-        // Check for invalid keys.
-        foreach ($hash as $key => $value) {
-            if (!in_array($key, $validKeys)) {
-                $unknown[] = $key;
-            }
-        }
-
-        if (!empty($unknown)) {
-            throw new PHPUnit_Framework_Exception(
-                'Unknown key(s): ' . implode(', ', $unknown)
-            );
-        }
-
-        // Add default values for any valid keys that are empty.
-        foreach ($valids as $key => $value) {
-            if (!isset($hash[$key])) {
-                $hash[$key] = $value;
-            }
-        }
-
-        return $hash;
+        return $tags;
     }
 
     /**
@@ -314,7 +299,7 @@ class PHPUnit_Util_XML
      * use with findNodes().
      *
      * @param  string $selector
-     * @param  mixed  $content
+     * @param  mixed $content
      * @return array
      * @since  Method available since Release 3.3.0
      * @author Mike Naberezny <mike@maintainable.com>
@@ -371,7 +356,7 @@ class PHPUnit_Util_XML
 
             if (!empty($matches[1])) {
                 $classes = array();
-                $attrs   = array();
+                $attrs = array();
 
                 foreach ($matches[1] as $match) {
                     // id matched
@@ -382,18 +367,19 @@ class PHPUnit_Util_XML
                         $classes[] = substr($match, 1);
                     } // attribute matched
                     elseif (substr($match, 0, 1) == '[' &&
-                             substr($match, -1, 1) == ']') {
+                        substr($match, -1, 1) == ']'
+                    ) {
                         $attribute = substr($match, 1, strlen($match) - 2);
                         $attribute = str_replace('"', '', $attribute);
 
                         // match single word
                         if (strstr($attribute, '~=')) {
                             list($key, $value) = explode('~=', $attribute);
-                            $value             = "regexp:/.*\b$value\b.*/";
+                            $value = "regexp:/.*\b$value\b.*/";
                         } // match substring
                         elseif (strstr($attribute, '*=')) {
                             list($key, $value) = explode('*=', $attribute);
-                            $value             = "regexp:/.*$value.*/";
+                            $value = "regexp:/.*$value.*/";
                         } // exact match
                         else {
                             list($key, $value) = explode('=', $attribute);
@@ -434,42 +420,11 @@ class PHPUnit_Util_XML
     }
 
     /**
-     * Parse an $actual document and return an array of DOMNodes
-     * matching the CSS $selector.  If an error occurs, it will
-     * return false.
-     *
-     * To only return nodes containing a certain content, give
-     * the $content to match as a string.  Otherwise, setting
-     * $content to true will return all nodes matching $selector.
-     *
-     * The $actual document may be a DOMDocument or a string
-     * containing XML or HTML, identified by $isHtml.
-     *
-     * @param  array         $selector
-     * @param  string        $content
-     * @param  mixed         $actual
-     * @param  boolean       $isHtml
-     * @return boolean|array
-     * @since  Method available since Release 3.3.0
-     * @author Mike Naberezny <mike@maintainable.com>
-     * @author Derek DeVries <derek@maintainable.com>
-     * @author Tobias Schlitt <toby@php.net>
-     */
-    public static function cssSelect($selector, $content, $actual, $isHtml = true)
-    {
-        $matcher = self::convertSelectToTag($selector, $content);
-        $dom     = self::load($actual, $isHtml);
-        $tags    = self::findNodes($dom, $matcher, $isHtml);
-
-        return $tags;
-    }
-
-    /**
      * Parse out the options from the tag using DOM object tree.
      *
      * @param  DOMDocument $dom
-     * @param  array       $options
-     * @param  boolean     $isHtml
+     * @param  array $options
+     * @param  boolean $isHtml
      * @return array
      * @since  Method available since Release 3.3.0
      * @author Mike Naberezny <mike@maintainable.com>
@@ -479,12 +434,12 @@ class PHPUnit_Util_XML
     public static function findNodes(DOMDocument $dom, array $options, $isHtml = true)
     {
         $valid = array(
-          'id', 'class', 'tag', 'content', 'attributes', 'parent',
-          'child', 'ancestor', 'descendant', 'children', 'adjacent-sibling'
+            'id', 'class', 'tag', 'content', 'attributes', 'parent',
+            'child', 'ancestor', 'descendant', 'children', 'adjacent-sibling'
         );
 
         $filtered = array();
-        $options  = self::assertValidKeys($options, $valid);
+        $options = self::assertValidKeys($options, $valid);
 
         // find the element by id
         if ($options['id']) {
@@ -515,23 +470,23 @@ class PHPUnit_Util_XML
         } // no tag selected, get them all
         else {
             $tags = array(
-              'a', 'abbr', 'acronym', 'address', 'area', 'b', 'base', 'bdo',
-              'big', 'blockquote', 'body', 'br', 'button', 'caption', 'cite',
-              'code', 'col', 'colgroup', 'dd', 'del', 'div', 'dfn', 'dl',
-              'dt', 'em', 'fieldset', 'form', 'frame', 'frameset', 'h1', 'h2',
-              'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'html', 'i', 'iframe',
-              'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'link',
-              'map', 'meta', 'noframes', 'noscript', 'object', 'ol', 'optgroup',
-              'option', 'p', 'param', 'pre', 'q', 'samp', 'script', 'select',
-              'small', 'span', 'strong', 'style', 'sub', 'sup', 'table',
-              'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'title',
-              'tr', 'tt', 'ul', 'var',
-              // HTML5
-              'article', 'aside', 'audio', 'bdi', 'canvas', 'command',
-              'datalist', 'details', 'dialog', 'embed', 'figure', 'figcaption',
-              'footer', 'header', 'hgroup', 'keygen', 'mark', 'meter', 'nav',
-              'output', 'progress', 'ruby', 'rt', 'rp', 'track', 'section',
-              'source', 'summary', 'time', 'video', 'wbr'
+                'a', 'abbr', 'acronym', 'address', 'area', 'b', 'base', 'bdo',
+                'big', 'blockquote', 'body', 'br', 'button', 'caption', 'cite',
+                'code', 'col', 'colgroup', 'dd', 'del', 'div', 'dfn', 'dl',
+                'dt', 'em', 'fieldset', 'form', 'frame', 'frameset', 'h1', 'h2',
+                'h3', 'h4', 'h5', 'h6', 'head', 'hr', 'html', 'i', 'iframe',
+                'img', 'input', 'ins', 'kbd', 'label', 'legend', 'li', 'link',
+                'map', 'meta', 'noframes', 'noscript', 'object', 'ol', 'optgroup',
+                'option', 'p', 'param', 'pre', 'q', 'samp', 'script', 'select',
+                'small', 'span', 'strong', 'style', 'sub', 'sup', 'table',
+                'tbody', 'td', 'textarea', 'tfoot', 'th', 'thead', 'title',
+                'tr', 'tt', 'ul', 'var',
+                // HTML5
+                'article', 'aside', 'audio', 'bdi', 'canvas', 'command',
+                'datalist', 'details', 'dialog', 'embed', 'figure', 'figcaption',
+                'footer', 'header', 'hgroup', 'keygen', 'mark', 'meter', 'nav',
+                'output', 'progress', 'ruby', 'rt', 'rp', 'track', 'section',
+                'source', 'summary', 'time', 'video', 'wbr'
             );
 
             foreach ($tags as $tag) {
@@ -596,7 +551,7 @@ class PHPUnit_Util_XML
                 }
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -629,7 +584,7 @@ class PHPUnit_Util_XML
                 }
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -640,7 +595,7 @@ class PHPUnit_Util_XML
         // filter by parent node
         if ($options['parent']) {
             $parentNodes = self::findNodes($dom, $options['parent'], $isHtml);
-            $parentNode  = isset($parentNodes[0]) ? $parentNodes[0] : null;
+            $parentNode = isset($parentNodes[0]) ? $parentNodes[0] : null;
 
             foreach ($nodes as $node) {
                 if ($parentNode !== $node->parentNode) {
@@ -650,7 +605,7 @@ class PHPUnit_Util_XML
                 $filtered[] = $node;
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -673,7 +628,7 @@ class PHPUnit_Util_XML
                 }
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -705,7 +660,7 @@ class PHPUnit_Util_XML
                 }
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -716,7 +671,7 @@ class PHPUnit_Util_XML
         // filter by ancestor
         if ($options['ancestor']) {
             $ancestorNodes = self::findNodes($dom, $options['ancestor'], $isHtml);
-            $ancestorNode  = isset($ancestorNodes[0]) ? $ancestorNodes[0] : null;
+            $ancestorNode = isset($ancestorNodes[0]) ? $ancestorNodes[0] : null;
 
             foreach ($nodes as $node) {
                 $parent = $node->parentNode;
@@ -730,7 +685,7 @@ class PHPUnit_Util_XML
                 }
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -753,7 +708,7 @@ class PHPUnit_Util_XML
                 }
             }
 
-            $nodes    = $filtered;
+            $nodes = $filtered;
             $filtered = array();
 
             if (empty($nodes)) {
@@ -763,7 +718,7 @@ class PHPUnit_Util_XML
 
         // filter by children
         if ($options['children']) {
-            $validChild   = array('count', 'greater_than', 'less_than', 'only');
+            $validChild = array('count', 'greater_than', 'less_than', 'only');
             $childOptions = self::assertValidKeys(
                 $options['children'], $validChild
             );
@@ -773,7 +728,8 @@ class PHPUnit_Util_XML
 
                 foreach ($childNodes as $childNode) {
                     if ($childNode->nodeType !== XML_CDATA_SECTION_NODE &&
-                        $childNode->nodeType !== XML_TEXT_NODE) {
+                        $childNode->nodeType !== XML_TEXT_NODE
+                    ) {
                         $children[] = $childNode;
                     }
                 }
@@ -786,10 +742,12 @@ class PHPUnit_Util_XML
                             break;
                         }
                     } // range count of children
-                    elseif ($childOptions['less_than']    !== null &&
-                            $childOptions['greater_than'] !== null) {
+                    elseif ($childOptions['less_than'] !== null &&
+                        $childOptions['greater_than'] !== null
+                    ) {
                         if (count($children) >= $childOptions['less_than'] ||
-                            count($children) <= $childOptions['greater_than']) {
+                            count($children) <= $childOptions['greater_than']
+                        ) {
                             break;
                         }
                     } // less than a given count
@@ -842,37 +800,56 @@ class PHPUnit_Util_XML
     }
 
     /**
-     * Recursively get flat array of all descendants of this node.
+     * Validate list of keys in the associative array.
      *
-     * @param  DOMNode $node
+     * @param  array $hash
+     * @param  array $validKeys
      * @return array
+     * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.3.0
      * @author Mike Naberezny <mike@maintainable.com>
      * @author Derek DeVries <derek@maintainable.com>
      */
-    protected static function getDescendants(DOMNode $node)
+    public static function assertValidKeys(array $hash, array $validKeys)
     {
-        $allChildren = array();
-        $childNodes  = $node->childNodes ? $node->childNodes : array();
+        $valids = array();
 
-        foreach ($childNodes as $child) {
-            if ($child->nodeType === XML_CDATA_SECTION_NODE ||
-                $child->nodeType === XML_TEXT_NODE) {
-                continue;
-            }
-
-            $children    = self::getDescendants($child);
-            $allChildren = array_merge($allChildren, $children, array($child));
+        // Normalize validation keys so that we can use both indexed and
+        // associative arrays.
+        foreach ($validKeys as $key => $val) {
+            is_int($key) ? $valids[$val] = null : $valids[$key] = $val;
         }
 
-        return isset($allChildren) ? $allChildren : array();
+        $validKeys = array_keys($valids);
+
+        // Check for invalid keys.
+        foreach ($hash as $key => $value) {
+            if (!in_array($key, $validKeys)) {
+                $unknown[] = $key;
+            }
+        }
+
+        if (!empty($unknown)) {
+            throw new PHPUnit_Framework_Exception(
+                'Unknown key(s): ' . implode(', ', $unknown)
+            );
+        }
+
+        // Add default values for any valid keys that are empty.
+        foreach ($valids as $key => $value) {
+            if (!isset($hash[$key])) {
+                $hash[$key] = $value;
+            }
+        }
+
+        return $hash;
     }
 
     /**
      * Gets elements by case insensitive tagname.
      *
      * @param  DOMDocument $dom
-     * @param  string      $tag
+     * @param  string $tag
      * @return DOMNodeList
      * @since  Method available since Release 3.4.0
      */
@@ -906,7 +883,8 @@ class PHPUnit_Util_XML
 
         foreach ($node->childNodes as $childNode) {
             if ($childNode->nodeType === XML_TEXT_NODE ||
-                $childNode->nodeType === XML_CDATA_SECTION_NODE) {
+                $childNode->nodeType === XML_CDATA_SECTION_NODE
+            ) {
                 $result .= trim($childNode->data) . ' ';
             } else {
                 $result .= self::getNodeText($childNode);
@@ -914,5 +892,33 @@ class PHPUnit_Util_XML
         }
 
         return str_replace('  ', ' ', $result);
+    }
+
+    /**
+     * Recursively get flat array of all descendants of this node.
+     *
+     * @param  DOMNode $node
+     * @return array
+     * @since  Method available since Release 3.3.0
+     * @author Mike Naberezny <mike@maintainable.com>
+     * @author Derek DeVries <derek@maintainable.com>
+     */
+    protected static function getDescendants(DOMNode $node)
+    {
+        $allChildren = array();
+        $childNodes = $node->childNodes ? $node->childNodes : array();
+
+        foreach ($childNodes as $child) {
+            if ($child->nodeType === XML_CDATA_SECTION_NODE ||
+                $child->nodeType === XML_TEXT_NODE
+            ) {
+                continue;
+            }
+
+            $children = self::getDescendants($child);
+            $allChildren = array_merge($allChildren, $children, array($child));
+        }
+
+        return isset($allChildren) ? $allChildren : array();
     }
 }

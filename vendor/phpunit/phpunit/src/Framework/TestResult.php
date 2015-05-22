@@ -192,102 +192,6 @@ class PHPUnit_Framework_TestResult implements Countable
     }
 
     /**
-     * Adds an error to the list of errors.
-     *
-     * @param PHPUnit_Framework_Test $test
-     * @param Exception              $e
-     * @param float                  $time
-     */
-    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
-    {
-        if ($e instanceof PHPUnit_Framework_RiskyTest) {
-            $this->risky[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod  = 'addRiskyTest';
-
-            if ($this->stopOnRisky) {
-                $this->stop();
-            }
-        } elseif ($e instanceof PHPUnit_Framework_IncompleteTest) {
-            $this->notImplemented[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod           = 'addIncompleteTest';
-
-            if ($this->stopOnIncomplete) {
-                $this->stop();
-            }
-        } elseif ($e instanceof PHPUnit_Framework_SkippedTest) {
-            $this->skipped[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod    = 'addSkippedTest';
-
-            if ($this->stopOnSkipped) {
-                $this->stop();
-            }
-        } else {
-            $this->errors[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod   = 'addError';
-
-            if ($this->stopOnError || $this->stopOnFailure) {
-                $this->stop();
-            }
-        }
-
-        foreach ($this->listeners as $listener) {
-            $listener->$notifyMethod($test, $e, $time);
-        }
-
-        $this->lastTestFailed = true;
-        $this->time          += $time;
-    }
-
-    /**
-     * Adds a failure to the list of failures.
-     * The passed in exception caused the failure.
-     *
-     * @param PHPUnit_Framework_Test                 $test
-     * @param PHPUnit_Framework_AssertionFailedError $e
-     * @param float                                  $time
-     */
-    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
-    {
-        if ($e instanceof PHPUnit_Framework_RiskyTest ||
-            $e instanceof PHPUnit_Framework_OutputError) {
-            $this->risky[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod  = 'addRiskyTest';
-
-            if ($this->stopOnRisky) {
-                $this->stop();
-            }
-        } elseif ($e instanceof PHPUnit_Framework_IncompleteTest) {
-            $this->notImplemented[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod           = 'addIncompleteTest';
-
-            if ($this->stopOnIncomplete) {
-                $this->stop();
-            }
-        } elseif ($e instanceof PHPUnit_Framework_SkippedTest) {
-            $this->skipped[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod    = 'addSkippedTest';
-
-            if ($this->stopOnSkipped) {
-                $this->stop();
-            }
-        } else {
-            $this->failures[] = new PHPUnit_Framework_TestFailure($test, $e);
-            $notifyMethod     = 'addFailure';
-
-            if ($this->stopOnFailure) {
-                $this->stop();
-            }
-        }
-
-        foreach ($this->listeners as $listener) {
-            $listener->$notifyMethod($test, $e, $time);
-        }
-
-        $this->lastTestFailed = true;
-        $this->time          += $time;
-    }
-
-    /**
      * Informs the result that a testsuite will be started.
      *
      * @param PHPUnit_Framework_TestSuite $suite
@@ -314,49 +218,6 @@ class PHPUnit_Framework_TestResult implements Countable
     {
         foreach ($this->listeners as $listener) {
             $listener->endTestSuite($suite);
-        }
-    }
-
-    /**
-     * Informs the result that a test will be started.
-     *
-     * @param PHPUnit_Framework_Test $test
-     */
-    public function startTest(PHPUnit_Framework_Test $test)
-    {
-        $this->lastTestFailed = false;
-        $this->runTests      += count($test);
-
-        foreach ($this->listeners as $listener) {
-            $listener->startTest($test);
-        }
-    }
-
-    /**
-     * Informs the result that a test was completed.
-     *
-     * @param PHPUnit_Framework_Test $test
-     * @param float                  $time
-     */
-    public function endTest(PHPUnit_Framework_Test $test, $time)
-    {
-        foreach ($this->listeners as $listener) {
-            $listener->endTest($test, $time);
-        }
-
-        if (!$this->lastTestFailed && $test instanceof PHPUnit_Framework_TestCase) {
-            $class  = get_class($test);
-            $key    =  $class . '::' . $test->getName();
-
-            $this->passed[$key] = array(
-              'result' => $test->getResult(),
-              'size'   => PHPUnit_Util_Test::getSize(
-                  $class,
-                  $test->getName(false)
-              )
-            );
-
-            $this->time += $time;
         }
     }
 
@@ -538,11 +399,11 @@ class PHPUnit_Framework_TestResult implements Countable
     {
         PHPUnit_Framework_Assert::resetCount();
 
-        $error      = false;
-        $failure    = false;
+        $error = false;
+        $failure = false;
         $incomplete = false;
-        $risky      = false;
-        $skipped    = false;
+        $risky = false;
+        $skipped = false;
 
         $this->startTest($test);
 
@@ -562,8 +423,8 @@ class PHPUnit_Framework_TestResult implements Countable
         }
 
         $collectCodeCoverage = $this->codeCoverage !== null &&
-                               !$test instanceof PHPUnit_Extensions_SeleniumTestCase &&
-                               !$test instanceof PHPUnit_Framework_Warning;
+            !$test instanceof PHPUnit_Extensions_SeleniumTestCase &&
+            !$test instanceof PHPUnit_Framework_Warning;
 
         if ($collectCodeCoverage) {
             // We need to blacklist test source files when no whitelist is used.
@@ -585,22 +446,23 @@ class PHPUnit_Framework_TestResult implements Countable
         try {
             if (!$test instanceof PHPUnit_Framework_Warning &&
                 $this->beStrictAboutTestSize &&
-                extension_loaded('pcntl') && class_exists('PHP_Invoker')) {
+                extension_loaded('pcntl') && class_exists('PHP_Invoker')
+            ) {
                 switch ($test->getSize()) {
                     case PHPUnit_Util_Test::SMALL: {
                         $_timeout = $this->timeoutForSmallTests;
-                        }
-                    break;
+                    }
+                        break;
 
                     case PHPUnit_Util_Test::MEDIUM: {
                         $_timeout = $this->timeoutForMediumTests;
-                        }
-                    break;
+                    }
+                        break;
 
                     case PHPUnit_Util_Test::LARGE: {
                         $_timeout = $this->timeoutForLargeTests;
-                        }
-                    break;
+                    }
+                        break;
                 }
 
                 $invoker = new PHP_Invoker;
@@ -629,14 +491,15 @@ class PHPUnit_Framework_TestResult implements Countable
         $test->addToAssertionCount(PHPUnit_Framework_Assert::getCount());
 
         if ($this->beStrictAboutTestsThatDoNotTestAnything &&
-            $test->getNumAssertions() == 0) {
+            $test->getNumAssertions() == 0
+        ) {
             $risky = true;
         }
 
         if ($collectCodeCoverage) {
-            $append           = !$risky && !$incomplete && !$skipped;
+            $append = !$risky && !$incomplete && !$skipped;
             $linesToBeCovered = array();
-            $linesToBeUsed    = array();
+            $linesToBeUsed = array();
 
             if ($append && $test instanceof PHPUnit_Framework_TestCase) {
                 $linesToBeCovered = PHPUnit_Util_Test::getLinesToBeCovered(
@@ -691,7 +554,8 @@ class PHPUnit_Framework_TestResult implements Countable
         } elseif ($failure === true) {
             $this->addFailure($test, $e, $time);
         } elseif ($this->beStrictAboutTestsThatDoNotTestAnything &&
-                 $test->getNumAssertions() == 0) {
+            $test->getNumAssertions() == 0
+        ) {
             $this->addFailure(
                 $test,
                 new PHPUnit_Framework_RiskyTestError(
@@ -728,6 +592,197 @@ class PHPUnit_Framework_TestResult implements Countable
     }
 
     /**
+     * Informs the result that a test will be started.
+     *
+     * @param PHPUnit_Framework_Test $test
+     */
+    public function startTest(PHPUnit_Framework_Test $test)
+    {
+        $this->lastTestFailed = false;
+        $this->runTests += count($test);
+
+        foreach ($this->listeners as $listener) {
+            $listener->startTest($test);
+        }
+    }
+
+    /**
+     * Returns the class hierarchy for a given class.
+     *
+     * @param  string $className
+     * @param  boolean $asReflectionObjects
+     * @return array
+     */
+    protected function getHierarchy($className, $asReflectionObjects = false)
+    {
+        if ($asReflectionObjects) {
+            $classes = array(new ReflectionClass($className));
+        } else {
+            $classes = array($className);
+        }
+
+        $done = false;
+
+        while (!$done) {
+            if ($asReflectionObjects) {
+                $class = new ReflectionClass(
+                    $classes[count($classes) - 1]->getName()
+                );
+            } else {
+                $class = new ReflectionClass($classes[count($classes) - 1]);
+            }
+
+            $parent = $class->getParentClass();
+
+            if ($parent !== false) {
+                if ($asReflectionObjects) {
+                    $classes[] = $parent;
+                } else {
+                    $classes[] = $parent->getName();
+                }
+            } else {
+                $done = true;
+            }
+        }
+
+        return $classes;
+    }
+
+    /**
+     * Adds a failure to the list of failures.
+     * The passed in exception caused the failure.
+     *
+     * @param PHPUnit_Framework_Test $test
+     * @param PHPUnit_Framework_AssertionFailedError $e
+     * @param float $time
+     */
+    public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
+    {
+        if ($e instanceof PHPUnit_Framework_RiskyTest ||
+            $e instanceof PHPUnit_Framework_OutputError
+        ) {
+            $this->risky[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addRiskyTest';
+
+            if ($this->stopOnRisky) {
+                $this->stop();
+            }
+        } elseif ($e instanceof PHPUnit_Framework_IncompleteTest) {
+            $this->notImplemented[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addIncompleteTest';
+
+            if ($this->stopOnIncomplete) {
+                $this->stop();
+            }
+        } elseif ($e instanceof PHPUnit_Framework_SkippedTest) {
+            $this->skipped[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addSkippedTest';
+
+            if ($this->stopOnSkipped) {
+                $this->stop();
+            }
+        } else {
+            $this->failures[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addFailure';
+
+            if ($this->stopOnFailure) {
+                $this->stop();
+            }
+        }
+
+        foreach ($this->listeners as $listener) {
+            $listener->$notifyMethod($test, $e, $time);
+        }
+
+        $this->lastTestFailed = true;
+        $this->time += $time;
+    }
+
+    /**
+     * Marks that the test run should stop.
+     *
+     */
+    public function stop()
+    {
+        $this->stop = true;
+    }
+
+    /**
+     * Adds an error to the list of errors.
+     *
+     * @param PHPUnit_Framework_Test $test
+     * @param Exception $e
+     * @param float $time
+     */
+    public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
+    {
+        if ($e instanceof PHPUnit_Framework_RiskyTest) {
+            $this->risky[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addRiskyTest';
+
+            if ($this->stopOnRisky) {
+                $this->stop();
+            }
+        } elseif ($e instanceof PHPUnit_Framework_IncompleteTest) {
+            $this->notImplemented[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addIncompleteTest';
+
+            if ($this->stopOnIncomplete) {
+                $this->stop();
+            }
+        } elseif ($e instanceof PHPUnit_Framework_SkippedTest) {
+            $this->skipped[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addSkippedTest';
+
+            if ($this->stopOnSkipped) {
+                $this->stop();
+            }
+        } else {
+            $this->errors[] = new PHPUnit_Framework_TestFailure($test, $e);
+            $notifyMethod = 'addError';
+
+            if ($this->stopOnError || $this->stopOnFailure) {
+                $this->stop();
+            }
+        }
+
+        foreach ($this->listeners as $listener) {
+            $listener->$notifyMethod($test, $e, $time);
+        }
+
+        $this->lastTestFailed = true;
+        $this->time += $time;
+    }
+
+    /**
+     * Informs the result that a test was completed.
+     *
+     * @param PHPUnit_Framework_Test $test
+     * @param float $time
+     */
+    public function endTest(PHPUnit_Framework_Test $test, $time)
+    {
+        foreach ($this->listeners as $listener) {
+            $listener->endTest($test, $time);
+        }
+
+        if (!$this->lastTestFailed && $test instanceof PHPUnit_Framework_TestCase) {
+            $class = get_class($test);
+            $key = $class . '::' . $test->getName();
+
+            $this->passed[$key] = array(
+                'result' => $test->getResult(),
+                'size' => PHPUnit_Util_Test::getSize(
+                    $class,
+                    $test->getName(false)
+                )
+            );
+
+            $this->time += $time;
+        }
+    }
+
+    /**
      * Gets the number of run tests.
      *
      * @return integer
@@ -745,15 +800,6 @@ class PHPUnit_Framework_TestResult implements Countable
     public function shouldStop()
     {
         return $this->stop;
-    }
-
-    /**
-     * Marks that the test run should stop.
-     *
-     */
-    public function stop()
-    {
-        $this->stop = true;
     }
 
     /**
@@ -781,7 +827,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Enables or disables the error-to-exception conversion.
      *
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.2.14
      */
@@ -808,7 +854,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Enables or disables the stopping when an error occurs.
      *
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.5.0
      */
@@ -824,7 +870,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Enables or disables the stopping when a failure occurs.
      *
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.1.0
      */
@@ -838,7 +884,7 @@ class PHPUnit_Framework_TestResult implements Countable
     }
 
     /**
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 4.0.0
      */
@@ -861,7 +907,7 @@ class PHPUnit_Framework_TestResult implements Countable
     }
 
     /**
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 4.0.0
      */
@@ -884,7 +930,7 @@ class PHPUnit_Framework_TestResult implements Countable
     }
 
     /**
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 4.0.0
      */
@@ -907,7 +953,7 @@ class PHPUnit_Framework_TestResult implements Countable
     }
 
     /**
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 4.2.0
      */
@@ -932,7 +978,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Enables or disables the stopping for risky tests.
      *
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 4.0.0
      */
@@ -948,7 +994,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Enables or disables the stopping for incomplete tests.
      *
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.5.0
      */
@@ -964,7 +1010,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Enables or disables the stopping for skipped tests.
      *
-     * @param  boolean                     $flag
+     * @param  boolean $flag
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.1.0
      */
@@ -1000,7 +1046,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Sets the timeout for small tests.
      *
-     * @param  integer                     $timeout
+     * @param  integer $timeout
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.6.0
      */
@@ -1016,7 +1062,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Sets the timeout for medium tests.
      *
-     * @param  integer                     $timeout
+     * @param  integer $timeout
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.6.0
      */
@@ -1032,7 +1078,7 @@ class PHPUnit_Framework_TestResult implements Countable
     /**
      * Sets the timeout for large tests.
      *
-     * @param  integer                     $timeout
+     * @param  integer $timeout
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.6.0
      */
@@ -1043,47 +1089,5 @@ class PHPUnit_Framework_TestResult implements Countable
         }
 
         $this->timeoutForLargeTests = $timeout;
-    }
-
-    /**
-     * Returns the class hierarchy for a given class.
-     *
-     * @param  string  $className
-     * @param  boolean $asReflectionObjects
-     * @return array
-     */
-    protected function getHierarchy($className, $asReflectionObjects = false)
-    {
-        if ($asReflectionObjects) {
-            $classes = array(new ReflectionClass($className));
-        } else {
-            $classes = array($className);
-        }
-
-        $done = false;
-
-        while (!$done) {
-            if ($asReflectionObjects) {
-                $class = new ReflectionClass(
-                    $classes[count($classes)-1]->getName()
-                );
-            } else {
-                $class = new ReflectionClass($classes[count($classes)-1]);
-            }
-
-            $parent = $class->getParentClass();
-
-            if ($parent !== false) {
-                if ($asReflectionObjects) {
-                    $classes[] = $parent;
-                } else {
-                    $classes[] = $parent->getName();
-                }
-            } else {
-                $done = true;
-            }
-        }
-
-        return $classes;
     }
 }

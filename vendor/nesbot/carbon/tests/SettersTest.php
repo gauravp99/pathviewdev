@@ -174,6 +174,7 @@ class SettersTest extends TestFixture
         } catch (InvalidArgumentException $expected) {
         }
     }
+
     public function testTzWithInvalidTimezone()
     {
         $d = Carbon::now();
@@ -190,6 +191,7 @@ class SettersTest extends TestFixture
         } catch (InvalidArgumentException $expected) {
         }
     }
+
     public function testSetTimezoneUsingString()
     {
         $d = Carbon::now();

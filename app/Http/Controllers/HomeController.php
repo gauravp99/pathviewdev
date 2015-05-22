@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers;
-
+/**
+ * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
+ * @Contact: byeshvant@hotmail.com
+ */
 class HomeController extends Controller
 {
 
@@ -14,11 +17,7 @@ class HomeController extends Controller
     |
     */
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+
     public function __construct()
     {
         $this->middleware('auth');

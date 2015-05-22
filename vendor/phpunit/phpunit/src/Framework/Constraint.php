@@ -41,9 +41,9 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param  mixed                                        $other        Value or object to evaluate.
-     * @param  string                                       $description  Additional information about the test
-     * @param  bool                                         $returnResult Whether to return a result or throw an exception
+     * @param  mixed $other Value or object to evaluate.
+     * @param  string $description Additional information about the test
+     * @param  bool $returnResult Whether to return a result or throw an exception
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
@@ -79,17 +79,6 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
     }
 
     /**
-     * Counts the number of constraint elements.
-     *
-     * @return integer
-     * @since  Method available since Release 3.4.0
-     */
-    public function count()
-    {
-        return 1;
-    }
-
-    /**
      * Throws an exception for the given compared value and test description
      *
      * @param  mixed $other Evaluated value or object.
@@ -121,20 +110,6 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
     }
 
     /**
-     * Return additional failure description where needed
-     *
-     * The function can be overridden to provide additional failure
-     * information like a diff
-     *
-     * @param  mixed  $other Evaluated value or object.
-     * @return string
-     */
-    protected function additionalFailureDescription($other)
-    {
-        return '';
-    }
-
-    /**
      * Returns the description of the failure
      *
      * The beginning of failure messages is "Failed asserting that" in most
@@ -143,11 +118,36 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      * To provide additional failure information additionalFailureDescription
      * can be used.
      *
-     * @param  mixed  $other Evaluated value or object.
+     * @param  mixed $other Evaluated value or object.
      * @return string
      */
     protected function failureDescription($other)
     {
         return $this->exporter->export($other) . ' ' . $this->toString();
+    }
+
+    /**
+     * Return additional failure description where needed
+     *
+     * The function can be overridden to provide additional failure
+     * information like a diff
+     *
+     * @param  mixed $other Evaluated value or object.
+     * @return string
+     */
+    protected function additionalFailureDescription($other)
+    {
+        return '';
+    }
+
+    /**
+     * Counts the number of constraint elements.
+     *
+     * @return integer
+     * @since  Method available since Release 3.4.0
+     */
+    public function count()
+    {
+        return 1;
     }
 }

@@ -37,7 +37,7 @@ class ValidJUnitXmlMatcher implements MatcherInterface
         $dom->loadXML($subject->getDisplay());
         if (!$dom->schemaValidate(__DIR__ . '/../../..' . JUNIT_XSD_PATH)) {
             throw new FailureException(sprintf(
-               "Output was not valid JUnit XML"
+                "Output was not valid JUnit XML"
             ));
         }
     }

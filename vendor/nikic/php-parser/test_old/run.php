@@ -7,10 +7,11 @@ if ('cli' !== php_sapi_name()) {
     die('This script is designed for running on the command line.');
 }
 
-function showHelp($error) {
+function showHelp($error)
+{
     die($error . "\n\n" .
-<<<OUTPUT
-This script has to be called with the following signature:
+        <<<OUTPUT
+        This script has to be called with the following signature:
 
     php run.php [--no-progress] testType pathToTestFiles
 
@@ -51,16 +52,22 @@ if (count($options) > 0) {
 }
 
 $TEST_TYPE = $arguments[0];
-$DIR       = $arguments[1];
+$DIR = $arguments[1];
 
 if ('Symfony' === $TEST_TYPE) {
-    function filter_func($path) {
+    function filter_func($path)
+    {
         return preg_match('~\.php(?:\.cache)?$~', $path) && false === strpos($path, 'skeleton');
-    };
+    }
+
+    ;
 } elseif ('PHP' === $TEST_TYPE) {
-    function filter_func($path) {
+    function filter_func($path)
+    {
         return preg_match('~\.phpt$~', $path);
-    };
+    }
+
+    ;
 } else {
     showHelp('Test type must be either "Symfony" or "PHP"!');
 }
@@ -68,9 +75,9 @@ if ('Symfony' === $TEST_TYPE) {
 require_once dirname(__FILE__) . '/../lib/PhpParser/Autoloader.php';
 PhpParser\Autoloader::register();
 
-$parser        = new PhpParser\Parser(new PhpParser\Lexer\Emulative);
+$parser = new PhpParser\Parser(new PhpParser\Lexer\Emulative);
 $prettyPrinter = new PhpParser\PrettyPrinter\Standard;
-$nodeDumper    = new PhpParser\NodeDumper;
+$nodeDumper = new PhpParser\NodeDumper;
 
 $parseFail = $ppFail = $compareFail = $count = 0;
 
@@ -166,24 +173,24 @@ if (0 === $parseFail && 0 === $ppFail && 0 === $compareFail) {
 } else {
     echo "\n\n", '==========', "\n\n", 'There were: ', "\n";
     if (0 !== $parseFail) {
-        echo '    ', $parseFail,   ' parse failures.',        "\n";
+        echo '    ', $parseFail, ' parse failures.', "\n";
     }
     if (0 !== $ppFail) {
-        echo '    ', $ppFail,      ' pretty print failures.', "\n";
+        echo '    ', $ppFail, ' pretty print failures.', "\n";
     }
     if (0 !== $compareFail) {
-        echo '    ', $compareFail, ' compare failures.',      "\n";
+        echo '    ', $compareFail, ' compare failures.', "\n";
     }
 }
 
 echo "\n",
-     'Tested files:         ', $count,        "\n",
-     "\n",
-     'Reading files took:   ', $readTime,    "\n",
-     'Parsing took:         ', $parseTime,   "\n",
-     'Pretty printing took: ', $ppTime,      "\n",
-     'Reparsing took:       ', $reparseTime, "\n",
-     'Comparing took:       ', $compareTime, "\n",
-     "\n",
-     'Total time:           ', microtime(true) - $totalStartTime, "\n",
-     'Maximum memory usage: ', memory_get_peak_usage(true), "\n";
+'Tested files:         ', $count, "\n",
+"\n",
+'Reading files took:   ', $readTime, "\n",
+'Parsing took:         ', $parseTime, "\n",
+'Pretty printing took: ', $ppTime, "\n",
+'Reparsing took:       ', $reparseTime, "\n",
+'Comparing took:       ', $compareTime, "\n",
+"\n",
+'Total time:           ', microtime(true) - $totalStartTime, "\n",
+'Maximum memory usage: ', memory_get_peak_usage(true), "\n";

@@ -28,6 +28,17 @@ class RememberMeTokenTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($token->isAuthenticated());
     }
 
+    protected function getUser($roles = array('ROLE_FOO'))
+    {
+        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
+        $user
+            ->expects($this->once())
+            ->method('getRoles')
+            ->will($this->returnValue($roles));
+
+        return $user;
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      */
@@ -50,17 +61,5 @@ class RememberMeTokenTest extends \PHPUnit_Framework_TestCase
             '',
             ''
         );
-    }
-
-    protected function getUser($roles = array('ROLE_FOO'))
-    {
-        $user = $this->getMock('Symfony\Component\Security\Core\User\UserInterface');
-        $user
-            ->expects($this->once())
-            ->method('getRoles')
-            ->will($this->returnValue($roles))
-        ;
-
-        return $user;
     }
 }

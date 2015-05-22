@@ -43,7 +43,7 @@ class PHPUnit_Util_String
     /**
      * Checks a string for UTF-8 encoding.
      *
-     * @param  string  $string
+     * @param  string $string
      * @return boolean
      */
     protected static function isUtf8($string)

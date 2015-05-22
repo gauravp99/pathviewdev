@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
-use Symfony\Component\Translation\MessageCatalogue;
 use Symfony\Component\Translation\Dumper\QtFileDumper;
+use Symfony\Component\Translation\MessageCatalogue;
 
 class QtFileDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -25,8 +25,8 @@ class QtFileDumperTest extends \PHPUnit_Framework_TestCase
         $dumper = new QtFileDumper();
         $dumper->dump($catalogue, array('path' => $tempDir));
 
-        $this->assertEquals(file_get_contents(__DIR__.'/../fixtures/resources.ts'), file_get_contents($tempDir.'/resources.en.ts'));
+        $this->assertEquals(file_get_contents(__DIR__ . '/../fixtures/resources.ts'), file_get_contents($tempDir . '/resources.en.ts'));
 
-        unlink($tempDir.'/resources.en.ts');
+        unlink($tempDir . '/resources.en.ts');
     }
 }

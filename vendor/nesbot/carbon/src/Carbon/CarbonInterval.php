@@ -13,9 +13,9 @@ namespace Carbon;
 
 use DateInterval;
 use InvalidArgumentException;
+use Symfony\Component\Translation\Loader\ArrayLoader;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\TranslatorInterface;
-use Symfony\Component\Translation\Loader\ArrayLoader;
 
 /**
  * A simple API extension for DateInterval.
@@ -48,7 +48,7 @@ use Symfony\Component\Translation\Loader\ArrayLoader;
  * @method static CarbonInterval minute($minutes = 1) Alias for minutes()
  * @method static CarbonInterval seconds($seconds = 1) Create instance specifying a number of seconds.
  * @method static CarbonInterval second($seconds = 1) Alias for seconds()
- * 
+ *
  * @method CarbonInterval years() years($years = 1) Set the years portion of the current interval.
  * @method CarbonInterval year() year($years = 1) Alias for years().
  * @method CarbonInterval months() months($months = 1) Set the months portion of the current interval.
@@ -78,33 +78,17 @@ class CarbonInterval extends DateInterval
     const PERIOD_HOURS = 'H';
     const PERIOD_MINUTES = 'M';
     const PERIOD_SECONDS = 'S';
-
+    /**
+     * Before PHP 5.4.20/5.5.4 instead of FALSE days will be set to -99999 when the interval instance
+     * was created by DateTime:diff().
+     */
+    const PHP_DAYS_FALSE = -99999;
     /**
      * A translator to ... er ... translate stuff
      *
      * @var TranslatorInterface
      */
     protected static $translator;
-
-    /**
-     * Before PHP 5.4.20/5.5.4 instead of FALSE days will be set to -99999 when the interval instance
-     * was created by DateTime:diff().
-     */
-    const PHP_DAYS_FALSE = -99999;
-
-    /**
-     * Determine if the interval was created via DateTime:diff() or not.
-     *
-     * @return boolean
-     */
-    private static function wasCreatedFromDiff(DateInterval $interval)
-    {
-        return ($interval->days !== false && $interval->days !== static::PHP_DAYS_FALSE);
-    }
-
-    ///////////////////////////////////////////////////////////////////
-    //////////////////////////// CONSTRUCTORS /////////////////////////
-    ///////////////////////////////////////////////////////////////////
 
     /**
      * Create a new CarbonInterval instance.
@@ -121,24 +105,28 @@ class CarbonInterval extends DateInterval
     {
         $spec = static::PERIOD_PREFIX;
 
-        $spec .= $years > 0 ? $years.static::PERIOD_YEARS : '';
-        $spec .= $months > 0 ? $months.static::PERIOD_MONTHS : '';
+        $spec .= $years > 0 ? $years . static::PERIOD_YEARS : '';
+        $spec .= $months > 0 ? $months . static::PERIOD_MONTHS : '';
 
         $specDays = 0;
         $specDays += $weeks > 0 ? $weeks * Carbon::DAYS_PER_WEEK : 0;
         $specDays += $days > 0 ? $days : 0;
 
-        $spec .= ($specDays > 0) ? $specDays.static::PERIOD_DAYS : '';
+        $spec .= ($specDays > 0) ? $specDays . static::PERIOD_DAYS : '';
 
         if ($hours > 0 || $minutes > 0 || $seconds > 0) {
             $spec .= static::PERIOD_TIME_PREFIX;
-            $spec .= $hours > 0 ? $hours.static::PERIOD_HOURS : '';
-            $spec .= $minutes > 0 ? $minutes.static::PERIOD_MINUTES : '';
-            $spec .= $seconds > 0 ? $seconds.static::PERIOD_SECONDS : '';
+            $spec .= $hours > 0 ? $hours . static::PERIOD_HOURS : '';
+            $spec .= $minutes > 0 ? $minutes . static::PERIOD_MINUTES : '';
+            $spec .= $seconds > 0 ? $seconds . static::PERIOD_SECONDS : '';
         }
 
         parent::__construct($spec);
     }
+
+    ///////////////////////////////////////////////////////////////////
+    //////////////////////////// CONSTRUCTORS /////////////////////////
+    ///////////////////////////////////////////////////////////////////
 
     /**
      * Create a new CarbonInterval instance from specific values.
@@ -166,7 +154,7 @@ class CarbonInterval extends DateInterval
      *
      * Note: This is done using the magic method to allow static and instance methods to
      *       have the same names.
-     *  
+     *
      * @return static
      */
     public static function __callStatic($name, $args)
@@ -228,25 +216,19 @@ class CarbonInterval extends DateInterval
         return $instance;
     }
 
+    /**
+     * Determine if the interval was created via DateTime:diff() or not.
+     *
+     * @return boolean
+     */
+    private static function wasCreatedFromDiff(DateInterval $interval)
+    {
+        return ($interval->days !== false && $interval->days !== static::PHP_DAYS_FALSE);
+    }
+
     ///////////////////////////////////////////////////////////////////
     /////////////////////// LOCALIZATION //////////////////////////////
     ///////////////////////////////////////////////////////////////////
-
-    /**
-     * Intialize the translator instance if necessary.
-     *
-     * @return TranslatorInterface
-     */
-    protected static function translator()
-    {
-        if (static::$translator == null) {
-            static::$translator = new Translator('en');
-            static::$translator->addLoader('array', new ArrayLoader());
-            static::setLocale('en');
-        }
-
-        return static::$translator;
-    }
 
     /**
      * Get the translator instance in use
@@ -269,13 +251,19 @@ class CarbonInterval extends DateInterval
     }
 
     /**
-     * Get the current translator locale
+     * Intialize the translator instance if necessary.
      *
-     * @return string
+     * @return TranslatorInterface
      */
-    public static function getLocale()
+    protected static function translator()
     {
-        return static::translator()->getLocale();
+        if (static::$translator == null) {
+            static::$translator = new Translator('en');
+            static::$translator->addLoader('array', new ArrayLoader());
+            static::setLocale('en');
+        }
+
+        return static::$translator;
     }
 
     /**
@@ -288,7 +276,17 @@ class CarbonInterval extends DateInterval
         static::translator()->setLocale($locale);
 
         // Ensure the locale has been loaded.
-        static::translator()->addResource('array', require __DIR__.'/Lang/'.$locale.'.php', $locale);
+        static::translator()->addResource('array', require __DIR__ . '/Lang/' . $locale . '.php', $locale);
+    }
+
+    /**
+     * Get the current translator locale
+     *
+     * @return string
+     */
+    public static function getLocale()
+    {
+        return static::translator()->getLocale();
     }
 
     ///////////////////////////////////////////////////////////////////
@@ -394,10 +392,10 @@ class CarbonInterval extends DateInterval
 
     /**
      * Allow fluent calls on the setters... CarbonInterval::years(3)->months(5)->day().
-     * 
+     *
      * Note: This is done using the magic method to allow static and instance methods to
      *       have the same names.
-     *  
+     *
      * @return static
      */
     public function __call($name, $args)
@@ -446,6 +444,16 @@ class CarbonInterval extends DateInterval
     }
 
     /**
+     * Format the instance as a string using the forHumans() function.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->forHumans();
+    }
+
+    /**
      * Get the current interval in a human readable format in the current locale.
      *
      * @return string
@@ -473,22 +481,12 @@ class CarbonInterval extends DateInterval
     }
 
     /**
-     * Format the instance as a string using the forHumans() function.
+     * Add the passed interval to the current instance
      *
-     * @return string
+     * @param DateInterval $interval
+     *
+     * @return static
      */
-    public function __toString()
-    {
-        return $this->forHumans();
-    }
-
-    /**
-    * Add the passed interval to the current instance
-    *
-    * @param DateInterval $interval
-    *
-    * @return static
-    */
     public function add(DateInterval $interval)
     {
         $sign = ($interval->invert === 1) ? -1 : 1;

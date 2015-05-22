@@ -20,7 +20,6 @@ use Psy\Presenter\PresenterManager;
 use Psy\Readline\GNUReadline;
 use Psy\Readline\Libedit;
 use Psy\Readline\Readline;
-use Psy\Readline\Transient;
 use Psy\TabCompletion\AutoCompleter;
 use XdgBaseDir\Xdg;
 
@@ -98,6 +97,28 @@ class Configuration
     }
 
     /**
+     * Load configuration values from an array of options.
+     *
+     * @param array $options
+     */
+    public function loadConfig(array $options)
+    {
+        foreach (self::$AVAILABLE_OPTIONS as $option) {
+            if (isset($options[$option])) {
+                $method = 'set' . ucfirst($option);
+                $this->$method($options[$option]);
+            }
+        }
+
+        foreach (array('commands', 'tabCompletionMatchers', 'presenters') as $option) {
+            if (isset($options[$option])) {
+                $method = 'add' . ucfirst($option);
+                $this->$method($options[$option]);
+            }
+        }
+    }
+
+    /**
      * Initialize the configuration.
      *
      * This checks for the presence of Readline and Pcntl extensions.
@@ -108,7 +129,7 @@ class Configuration
     {
         // feature detection
         $this->hasReadline = function_exists('readline');
-        $this->hasPcntl    = function_exists('pcntl_signal') && function_exists('posix_getpid');
+        $this->hasPcntl = function_exists('pcntl_signal') && function_exists('posix_getpid');
 
         if ($configFile = $this->getConfigFile()) {
             $this->loadConfigFile($configFile);
@@ -149,40 +170,6 @@ class Configuration
     }
 
     /**
-     * Helper function to get the proper home directory.
-     *
-     * @return string
-     */
-    private function getPsyHome()
-    {
-        if ($home = getenv('HOME')) {
-            return $home . '/.psysh';
-        }
-
-        if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
-            // Check the old default
-            $oldHome = strtr(getenv('HOMEDRIVE') . '/' . getenv('HOMEPATH') . '/.psysh', '\\', '/');
-
-            if ($appData = getenv('APPDATA')) {
-                $home = strtr($appData, '\\', '/') . '/PsySH';
-
-                if (is_dir($oldHome) && !is_dir($home)) {
-                    $msg = sprintf(
-                        "Config directory found at '%s'. Please move it to '%s'.",
-                        strtr($oldHome, '/', '\\'),
-                        strtr($home, '/', '\\')
-                    );
-                    trigger_error($msg, E_USER_DEPRECATED);
-
-                    return $oldHome;
-                }
-
-                return $home;
-            }
-        }
-    }
-
-    /**
      * Get potential config directory paths.
      *
      * If a `configDir` option was explicitly set, returns an array containing
@@ -213,53 +200,35 @@ class Configuration
     }
 
     /**
-     * Get potential data directory paths.
+     * Helper function to get the proper home directory.
      *
-     * If a `dataDir` option was explicitly set, returns an array containing
-     * just that directory.
-     *
-     * Otherwise, it returns `~/.psysh` and all XDG Base Directory data directories:
-     *
-     *     http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
-     *
-     * @return string[]
+     * @return string
      */
-    protected function getDataDirs()
+    private function getPsyHome()
     {
-        if (isset($this->dataDir)) {
-            return array($this->dataDir);
+        if ($home = getenv('HOME')) {
+            return $home . '/.psysh';
         }
 
-        $xdg = new Xdg();
-        $dirs = array_map(function ($dir) {
-            return $dir . '/psysh';
-        }, $xdg->getDataDirs());
+        if (defined('PHP_WINDOWS_VERSION_MAJOR')) {
+            // Check the old default
+            $oldHome = strtr(getenv('HOMEDRIVE') . '/' . getenv('HOMEPATH') . '/.psysh', '\\', '/');
 
-        if ($home = $this->getPsyHome()) {
-            array_unshift($dirs, $home);
-        }
+            if ($appData = getenv('APPDATA')) {
+                $home = strtr($appData, '\\', '/') . '/PsySH';
 
-        return $dirs;
-    }
+                if (is_dir($oldHome) && !is_dir($home)) {
+                    $msg = sprintf(
+                        "Config directory found at '%s'. Please move it to '%s'.",
+                        strtr($oldHome, '/', '\\'),
+                        strtr($home, '/', '\\')
+                    );
+                    trigger_error($msg, E_USER_DEPRECATED);
 
-    /**
-     * Load configuration values from an array of options.
-     *
-     * @param array $options
-     */
-    public function loadConfig(array $options)
-    {
-        foreach (self::$AVAILABLE_OPTIONS as $option) {
-            if (isset($options[$option])) {
-                $method = 'set' . ucfirst($option);
-                $this->$method($options[$option]);
-            }
-        }
+                    return $oldHome;
+                }
 
-        foreach (array('commands', 'tabCompletionMatchers', 'presenters') as $option) {
-            if (isset($options[$option])) {
-                $method = 'add' . ucfirst($option);
-                $this->$method($options[$option]);
+                return $home;
             }
         }
     }
@@ -296,16 +265,6 @@ class Configuration
     }
 
     /**
-     * Set files to be included by default at the start of each shell session.
-     *
-     * @param array $includes
-     */
-    public function setDefaultIncludes(array $includes = array())
-    {
-        $this->defaultIncludes = $includes;
-    }
-
-    /**
      * Get files to be included by default at the start of each shell session.
      *
      * @return array
@@ -316,13 +275,13 @@ class Configuration
     }
 
     /**
-     * Set the shell's config directory location.
+     * Set files to be included by default at the start of each shell session.
      *
-     * @param string $dir
+     * @param array $includes
      */
-    public function setConfigDir($dir)
+    public function setDefaultIncludes(array $includes = array())
     {
-        $this->configDir = (string) $dir;
+        $this->defaultIncludes = $includes;
     }
 
     /**
@@ -336,13 +295,13 @@ class Configuration
     }
 
     /**
-     * Set the shell's data directory location.
+     * Set the shell's config directory location.
      *
      * @param string $dir
      */
-    public function setDataDir($dir)
+    public function setConfigDir($dir)
     {
-        $this->dataDir = (string) $dir;
+        $this->configDir = (string)$dir;
     }
 
     /**
@@ -356,35 +315,13 @@ class Configuration
     }
 
     /**
-     * Set the shell's temporary directory location.
+     * Set the shell's data directory location.
      *
      * @param string $dir
      */
-    public function setRuntimeDir($dir)
+    public function setDataDir($dir)
     {
-        $this->runtimeDir = (string) $dir;
-    }
-
-    /**
-     * Get the shell's temporary directory location.
-     *
-     * Defaults to  `/psysh` inside the system's temp dir unless explicitly
-     * overridden.
-     *
-     * @return string
-     */
-    public function getRuntimeDir()
-    {
-        if (!isset($this->runtimeDir)) {
-            $xdg = new Xdg();
-            $this->runtimeDir = $xdg->getRuntimeDir() . '/psysh';
-        }
-
-        if (!is_dir($this->runtimeDir)) {
-            mkdir($this->runtimeDir, 0700, true);
-        }
-
-        return $this->runtimeDir;
+        $this->dataDir = (string)$dir;
     }
 
     /**
@@ -412,13 +349,155 @@ class Configuration
     }
 
     /**
-     * Set the readline history file path.
+     * Get the shell's temporary directory location.
      *
-     * @param string $file
+     * Defaults to  `/psysh` inside the system's temp dir unless explicitly
+     * overridden.
+     *
+     * @return string
      */
-    public function setHistoryFile($file)
+    public function getRuntimeDir()
     {
-        $this->historyFile = (string) $file;
+        if (!isset($this->runtimeDir)) {
+            $xdg = new Xdg();
+            $this->runtimeDir = $xdg->getRuntimeDir() . '/psysh';
+        }
+
+        if (!is_dir($this->runtimeDir)) {
+            mkdir($this->runtimeDir, 0700, true);
+        }
+
+        return $this->runtimeDir;
+    }
+
+    /**
+     * Set the shell's temporary directory location.
+     *
+     * @param string $dir
+     */
+    public function setRuntimeDir($dir)
+    {
+        $this->runtimeDir = (string)$dir;
+    }
+
+    /**
+     * Get a temporary file of type $type for process $pid.
+     *
+     * The file will be created inside the current temporary directory.
+     *
+     * @see self::getRuntimeDir
+     *
+     * @param string $type
+     * @param int $pid
+     *
+     * @return string Temporary file name
+     */
+    public function getTempFile($type, $pid)
+    {
+        return tempnam($this->getRuntimeDir(), $type . '_' . $pid . '_');
+    }
+
+    /**
+     * Get a filename suitable for a FIFO pipe of $type for process $pid.
+     *
+     * The pipe will be created inside the current temporary directory.
+     *
+     * @param string $type
+     * @param id $pid
+     *
+     * @return string Pipe name
+     */
+    public function getPipe($type, $pid)
+    {
+        return sprintf('%s/%s_%s', $this->getRuntimeDir(), $type, $pid);
+    }
+
+    /**
+     * Check whether this PHP instance has Readline available.
+     *
+     * @return bool True if Readline is available.
+     */
+    public function hasReadline()
+    {
+        return $this->hasReadline;
+    }
+
+    /**
+     * Enable or disable Readline usage.
+     *
+     * @param bool $useReadline
+     */
+    public function setUseReadline($useReadline)
+    {
+        $this->useReadline = (bool)$useReadline;
+    }
+
+    /**
+     * Get the Psy Shell readline service.
+     *
+     * By default, this service uses (in order of preference):
+     *
+     *  * GNU Readline
+     *  * Libedit
+     *  * A transient array-based readline emulation.
+     *
+     * @return Readline
+     */
+    public function getReadline()
+    {
+        if (!isset($this->readline)) {
+            $className = $this->getReadlineClass();
+            $this->readline = new $className(
+                $this->getHistoryFile(),
+                $this->getHistorySize(),
+                $this->getEraseDuplicates()
+            );
+        }
+
+        return $this->readline;
+    }
+
+    /**
+     * Set the Psy Shell readline service.
+     *
+     * @param Readline $readline
+     */
+    public function setReadline(Readline $readline)
+    {
+        $this->readline = $readline;
+    }
+
+    /**
+     * Get the appropriate Readline implementation class name.
+     *
+     * @see self::getReadline
+     *
+     * @return string
+     */
+    private function getReadlineClass()
+    {
+        if ($this->useReadline()) {
+            if (GNUReadline::isSupported()) {
+                return 'Psy\Readline\GNUReadline';
+            } elseif (Libedit::isSupported()) {
+                return 'Psy\Readline\Libedit';
+            }
+        }
+
+        return 'Psy\Readline\Transient';
+    }
+
+    /**
+     * Check whether to use Readline.
+     *
+     * If `setUseReadline` as been set to true, but Readline is not actually
+     * available, this will return false.
+     *
+     * @return bool True if the current Shell should use Readline.
+     */
+    public function useReadline()
+    {
+        return isset($this->useReadline) ? ($this->hasReadline && $this->useReadline) : $this->hasReadline;
     }
 
     /**
@@ -465,13 +544,13 @@ class Configuration
     }
 
     /**
-     * Set the readline max history size.
+     * Set the readline history file path.
      *
-     * @param int $value
+     * @param string $file
      */
-    public function setHistorySize($value)
+    public function setHistoryFile($file)
     {
-        $this->historySize = (int) $value;
+        $this->historyFile = (string)$file;
     }
 
     /**
@@ -485,13 +564,13 @@ class Configuration
     }
 
     /**
-     * Sets whether readline erases old duplicate history entries.
+     * Set the readline max history size.
      *
-     * @param bool $value
+     * @param int $value
      */
-    public function setEraseDuplicates($value)
+    public function setHistorySize($value)
     {
-        $this->eraseDuplicates = (bool) $value;
+        $this->historySize = (int)$value;
     }
 
     /**
@@ -505,123 +584,13 @@ class Configuration
     }
 
     /**
-     * Get a temporary file of type $type for process $pid.
+     * Sets whether readline erases old duplicate history entries.
      *
-     * The file will be created inside the current temporary directory.
-     *
-     * @see self::getRuntimeDir
-     *
-     * @param string $type
-     * @param int    $pid
-     *
-     * @return string Temporary file name
+     * @param bool $value
      */
-    public function getTempFile($type, $pid)
+    public function setEraseDuplicates($value)
     {
-        return tempnam($this->getRuntimeDir(), $type . '_' . $pid . '_');
-    }
-
-    /**
-     * Get a filename suitable for a FIFO pipe of $type for process $pid.
-     *
-     * The pipe will be created inside the current temporary directory.
-     *
-     * @param string $type
-     * @param id     $pid
-     *
-     * @return string Pipe name
-     */
-    public function getPipe($type, $pid)
-    {
-        return sprintf('%s/%s_%s', $this->getRuntimeDir(), $type, $pid);
-    }
-
-    /**
-     * Check whether this PHP instance has Readline available.
-     *
-     * @return bool True if Readline is available.
-     */
-    public function hasReadline()
-    {
-        return $this->hasReadline;
-    }
-
-    /**
-     * Enable or disable Readline usage.
-     *
-     * @param bool $useReadline
-     */
-    public function setUseReadline($useReadline)
-    {
-        $this->useReadline = (bool) $useReadline;
-    }
-
-    /**
-     * Check whether to use Readline.
-     *
-     * If `setUseReadline` as been set to true, but Readline is not actually
-     * available, this will return false.
-     *
-     * @return bool True if the current Shell should use Readline.
-     */
-    public function useReadline()
-    {
-        return isset($this->useReadline) ? ($this->hasReadline && $this->useReadline) : $this->hasReadline;
-    }
-
-    /**
-     * Set the Psy Shell readline service.
-     *
-     * @param Readline $readline
-     */
-    public function setReadline(Readline $readline)
-    {
-        $this->readline = $readline;
-    }
-
-    /**
-     * Get the Psy Shell readline service.
-     *
-     * By default, this service uses (in order of preference):
-     *
-     *  * GNU Readline
-     *  * Libedit
-     *  * A transient array-based readline emulation.
-     *
-     * @return Readline
-     */
-    public function getReadline()
-    {
-        if (!isset($this->readline)) {
-            $className = $this->getReadlineClass();
-            $this->readline = new $className(
-                $this->getHistoryFile(),
-                $this->getHistorySize(),
-                $this->getEraseDuplicates()
-            );
-        }
-
-        return $this->readline;
-    }
-
-    /**
-     * Get the appropriate Readline implementation class name.
-     *
-     * @see self::getReadline
-     *
-     * @return string
-     */
-    private function getReadlineClass()
-    {
-        if ($this->useReadline()) {
-            if (GNUReadline::isSupported()) {
-                return 'Psy\Readline\GNUReadline';
-            } elseif (Libedit::isSupported()) {
-                return 'Psy\Readline\Libedit';
-            }
-        }
-
-        return 'Psy\Readline\Transient';
+        $this->eraseDuplicates = (bool)$value;
     }
 
     /**
@@ -641,20 +610,7 @@ class Configuration
      */
     public function setUsePcntl($usePcntl)
     {
-        $this->usePcntl = (bool) $usePcntl;
-    }
-
-    /**
-     * Check whether to use Pcntl.
-     *
-     * If `setUsePcntl` has been set to true, but Pcntl is not actually
-     * available, this will return false.
-     *
-     * @return bool True if the current Shell should use Pcntl.
-     */
-    public function usePcntl()
-    {
-        return isset($this->usePcntl) ? ($this->hasPcntl && $this->usePcntl) : $this->hasPcntl;
+        $this->usePcntl = (bool)$usePcntl;
     }
 
     /**
@@ -666,7 +622,7 @@ class Configuration
      */
     public function setRequireSemicolons($requireSemicolons)
     {
-        $this->requireSemicolons = (bool) $requireSemicolons;
+        $this->requireSemicolons = (bool)$requireSemicolons;
     }
 
     /**
@@ -710,16 +666,6 @@ class Configuration
     }
 
     /**
-     * Enable or disable tab completion.
-     *
-     * @param bool $tabCompletion
-     */
-    public function setTabCompletion($tabCompletion)
-    {
-        $this->tabCompletion = (bool) $tabCompletion;
-    }
-
-    /**
      * Check whether to use tab completion.
      *
      * If `setTabCompletion` has been set to true, but readline is not actually
@@ -733,13 +679,13 @@ class Configuration
     }
 
     /**
-     * Set the Shell Output service.
+     * Enable or disable tab completion.
      *
-     * @param ShellOutput $output
+     * @param bool $tabCompletion
      */
-    public function setOutput(ShellOutput $output)
+    public function setTabCompletion($tabCompletion)
     {
-        $this->output = $output;
+        $this->tabCompletion = (bool)$tabCompletion;
     }
 
     /**
@@ -762,22 +708,13 @@ class Configuration
     }
 
     /**
-     * Set the OutputPager service.
+     * Set the Shell Output service.
      *
-     * If a string is supplied, a ProcOutputPager will be used which shells out
-     * to the specified command.
-     *
-     * @throws \InvalidArgumentException if $pager is not a string or OutputPager instance.
-     *
-     * @param string|OutputPager $pager
+     * @param ShellOutput $output
      */
-    public function setPager($pager)
+    public function setOutput(ShellOutput $output)
     {
-        if ($pager && !is_string($pager) && !$pager instanceof OutputPager) {
-            throw new \InvalidArgumentException('Unexpected pager instance.');
-        }
-
-        $this->pager = $pager;
+        $this->output = $output;
     }
 
     /**
@@ -804,13 +741,35 @@ class Configuration
     }
 
     /**
-     * Set the Shell evaluation Loop service.
+     * Set the OutputPager service.
      *
-     * @param Loop $loop
+     * If a string is supplied, a ProcOutputPager will be used which shells out
+     * to the specified command.
+     *
+     * @throws \InvalidArgumentException if $pager is not a string or OutputPager instance.
+     *
+     * @param string|OutputPager $pager
      */
-    public function setLoop(Loop $loop)
+    public function setPager($pager)
     {
-        $this->loop = $loop;
+        if ($pager && !is_string($pager) && !$pager instanceof OutputPager) {
+            throw new \InvalidArgumentException('Unexpected pager instance.');
+        }
+
+        $this->pager = $pager;
+    }
+
+    /**
+     * Check whether to use Pcntl.
+     *
+     * If `setUsePcntl` has been set to true, but Pcntl is not actually
+     * available, this will return false.
+     *
+     * @return bool True if the current Shell should use Pcntl.
+     */
+    public function usePcntl()
+    {
+        return isset($this->usePcntl) ? ($this->hasPcntl && $this->usePcntl) : $this->hasPcntl;
     }
 
     /**
@@ -832,6 +791,16 @@ class Configuration
         }
 
         return $this->loop;
+    }
+
+    /**
+     * Set the Shell evaluation Loop service.
+     *
+     * @param Loop $loop
+     */
+    public function setLoop(Loop $loop)
+    {
+        $this->loop = $loop;
     }
 
     /**
@@ -923,38 +892,6 @@ class Configuration
     }
 
     /**
-     * Set the PHP manual database file.
-     *
-     * This file should be an SQLite database generated from the phpdoc source
-     * with the `bin/build_manual` script.
-     *
-     * @param string $filename
-     */
-    public function setManualDbFile($filename)
-    {
-        $this->manualDbFile = (string) $filename;
-    }
-
-    /**
-     * Get the current PHP manual database file.
-     *
-     * @return string Default: '~/.local/share/psysh/php_manual.sqlite'
-     */
-    public function getManualDbFile()
-    {
-        if (isset($this->manualDbFile)) {
-            return $this->manualDbFile;
-        }
-
-        foreach ($this->getDataDirs() as $dir) {
-            $file = $dir . '/php_manual.sqlite';
-            if (@is_file($file)) {
-                return $this->manualDbFile = $file;
-            }
-        }
-    }
-
-    /**
      * Get a PHP manual database connection.
      *
      * @return PDO
@@ -977,6 +914,68 @@ class Configuration
         }
 
         return $this->manualDb;
+    }
+
+    /**
+     * Get the current PHP manual database file.
+     *
+     * @return string Default: '~/.local/share/psysh/php_manual.sqlite'
+     */
+    public function getManualDbFile()
+    {
+        if (isset($this->manualDbFile)) {
+            return $this->manualDbFile;
+        }
+
+        foreach ($this->getDataDirs() as $dir) {
+            $file = $dir . '/php_manual.sqlite';
+            if (@is_file($file)) {
+                return $this->manualDbFile = $file;
+            }
+        }
+    }
+
+    /**
+     * Set the PHP manual database file.
+     *
+     * This file should be an SQLite database generated from the phpdoc source
+     * with the `bin/build_manual` script.
+     *
+     * @param string $filename
+     */
+    public function setManualDbFile($filename)
+    {
+        $this->manualDbFile = (string)$filename;
+    }
+
+    /**
+     * Get potential data directory paths.
+     *
+     * If a `dataDir` option was explicitly set, returns an array containing
+     * just that directory.
+     *
+     * Otherwise, it returns `~/.psysh` and all XDG Base Directory data directories:
+     *
+     *     http://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+     *
+     * @return string[]
+     */
+    protected function getDataDirs()
+    {
+        if (isset($this->dataDir)) {
+            return array($this->dataDir);
+        }
+
+        $xdg = new Xdg();
+        $dirs = array_map(function ($dir) {
+            return $dir . '/psysh';
+        }, $xdg->getDataDirs());
+
+        if ($home = $this->getPsyHome()) {
+            array_unshift($dirs, $home);
+        }
+
+        return $dirs;
     }
 
     /**

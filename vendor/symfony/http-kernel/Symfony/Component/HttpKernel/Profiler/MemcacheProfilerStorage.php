@@ -24,6 +24,14 @@ class MemcacheProfilerStorage extends BaseMemcacheProfilerStorage
     private $memcache;
 
     /**
+     * {@inheritdoc}
+     */
+    protected function getValue($key)
+    {
+        return $this->getMemcache()->get($key);
+    }
+
+    /**
      * Internal convenience method that returns the instance of the Memcache.
      *
      * @return \Memcache
@@ -62,14 +70,6 @@ class MemcacheProfilerStorage extends BaseMemcacheProfilerStorage
     /**
      * {@inheritdoc}
      */
-    protected function getValue($key)
-    {
-        return $this->getMemcache()->get($key);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function setValue($key, $value, $expiration = 0)
     {
         return $this->getMemcache()->set($key, $value, false, time() + $expiration);
@@ -102,6 +102,6 @@ class MemcacheProfilerStorage extends BaseMemcacheProfilerStorage
         // simulate append in Memcache <3.0
         $content = $memcache->get($key);
 
-        return $memcache->set($key, $content.$value, false, $expiration);
+        return $memcache->set($key, $content . $value, false, $expiration);
     }
 }

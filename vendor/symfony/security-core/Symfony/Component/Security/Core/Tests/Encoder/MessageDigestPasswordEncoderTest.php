@@ -31,7 +31,7 @@ class MessageDigestPasswordEncoderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(base64_encode(hash('sha256', 'password', true)), $encoder->encodePassword('password', ''));
 
         $encoder = new MessageDigestPasswordEncoder('sha256', false, 2);
-        $this->assertSame(hash('sha256', hash('sha256', 'password', true).'password'), $encoder->encodePassword('password', ''));
+        $this->assertSame(hash('sha256', hash('sha256', 'password', true) . 'password'), $encoder->encodePassword('password', ''));
     }
 
     /**

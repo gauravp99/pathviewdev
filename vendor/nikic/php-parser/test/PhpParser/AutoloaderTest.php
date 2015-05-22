@@ -7,8 +7,10 @@ use PhpParser\Node\Scalar;
 
 /* The autoloader is already active at this point, so we only check effects here. */
 
-class AutoloaderTest extends \PHPUnit_Framework_TestCase {
-    public function testLegacyNames() {
+class AutoloaderTest extends \PHPUnit_Framework_TestCase
+{
+    public function testLegacyNames()
+    {
         $lexer = new \PHPParser_Lexer;
         $parser = new \PHPParser_Parser($lexer);
         $prettyPrinter = new \PHPParser_PrettyPrinter_Default;
@@ -18,7 +20,8 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceof('PhpParser\PrettyPrinter\Standard', $prettyPrinter);
     }
 
-    public function testPhp7ReservedNames() {
+    public function testPhp7ReservedNames()
+    {
         if (version_compare(PHP_VERSION, '7.0-dev', '>=')) {
             $this->markTestSkipped('Cannot create aliases to reserved names on PHP 7');
         }
@@ -31,7 +34,8 @@ class AutoloaderTest extends \PHPUnit_Framework_TestCase {
         $this->assertInstanceof('PhpParser\Node\Scalar\String_', new Scalar\String('foobar'));
     }
 
-    public function testClassExists() {
+    public function testClassExists()
+    {
         $this->assertTrue(class_exists('PhpParser\NodeVisitorAbstract'));
         $this->assertTrue(class_exists('PHPParser_NodeVisitor_NameResolver'));
 

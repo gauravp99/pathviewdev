@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\Security\Core\Authentication\Token;
 
-use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\Role\Role;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\Role\RoleInterface;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\User\EquatableInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Base class for Token instances.
@@ -61,13 +61,27 @@ abstract class AbstractToken implements TokenInterface
     /**
      * {@inheritdoc}
      */
-    public function getUsername()
+    public function isAuthenticated()
     {
-        if ($this->user instanceof UserInterface) {
-            return $this->user->getUsername();
-        }
+        return $this->authenticated;
+    }
 
-        return (string) $this->user;
+    /**
+     * {@inheritdoc}
+     */
+    public function setAuthenticated($authenticated)
+    {
+        $this->authenticated = (bool)$authenticated;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
+        if ($this->getUser() instanceof UserInterface) {
+            $this->getUser()->eraseCredentials();
+        }
     }
 
     /**
@@ -105,7 +119,7 @@ abstract class AbstractToken implements TokenInterface
         } elseif ($user instanceof UserInterface) {
             $changed = true;
         } else {
-            $changed = (string) $this->user !== (string) $user;
+            $changed = (string)$this->user !== (string)$user;
         }
 
         if ($changed) {
@@ -115,30 +129,49 @@ abstract class AbstractToken implements TokenInterface
         $this->user = $user;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isAuthenticated()
+    private function hasUserChanged(UserInterface $user)
     {
-        return $this->authenticated;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setAuthenticated($authenticated)
-    {
-        $this->authenticated = (bool) $authenticated;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function eraseCredentials()
-    {
-        if ($this->getUser() instanceof UserInterface) {
-            $this->getUser()->eraseCredentials();
+        if (!($this->user instanceof UserInterface)) {
+            throw new \BadMethodCallException('Method "hasUserChanged" should be called when current user class is instance of "UserInterface".');
         }
+
+        if ($this->user instanceof EquatableInterface) {
+            return !(bool)$this->user->isEqualTo($user);
+        }
+
+        if ($this->user->getPassword() !== $user->getPassword()) {
+            return true;
+        }
+
+        if ($this->user->getSalt() !== $user->getSalt()) {
+            return true;
+        }
+
+        if ($this->user->getUsername() !== $user->getUsername()) {
+            return true;
+        }
+
+        if ($this->user instanceof AdvancedUserInterface && $user instanceof AdvancedUserInterface) {
+            if ($this->user->isAccountNonExpired() !== $user->isAccountNonExpired()) {
+                return true;
+            }
+
+            if ($this->user->isAccountNonLocked() !== $user->isAccountNonLocked()) {
+                return true;
+            }
+
+            if ($this->user->isCredentialsNonExpired() !== $user->isCredentialsNonExpired()) {
+                return true;
+            }
+
+            if ($this->user->isEnabled() !== $user->isEnabled()) {
+                return true;
+            }
+        } elseif ($this->user instanceof AdvancedUserInterface xor $user instanceof AdvancedUserInterface) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -217,8 +250,8 @@ abstract class AbstractToken implements TokenInterface
     /**
      * Sets an attribute.
      *
-     * @param string $name  The attribute name
-     * @param mixed  $value The attribute value
+     * @param string $name The attribute name
+     * @param mixed $value The attribute value
      */
     public function setAttribute($name, $value)
     {
@@ -241,48 +274,15 @@ abstract class AbstractToken implements TokenInterface
         return sprintf('%s(user="%s", authenticated=%s, roles="%s")', $class, $this->getUsername(), json_encode($this->authenticated), implode(', ', $roles));
     }
 
-    private function hasUserChanged(UserInterface $user)
+    /**
+     * {@inheritdoc}
+     */
+    public function getUsername()
     {
-        if (!($this->user instanceof UserInterface)) {
-            throw new \BadMethodCallException('Method "hasUserChanged" should be called when current user class is instance of "UserInterface".');
+        if ($this->user instanceof UserInterface) {
+            return $this->user->getUsername();
         }
 
-        if ($this->user instanceof EquatableInterface) {
-            return !(bool) $this->user->isEqualTo($user);
-        }
-
-        if ($this->user->getPassword() !== $user->getPassword()) {
-            return true;
-        }
-
-        if ($this->user->getSalt() !== $user->getSalt()) {
-            return true;
-        }
-
-        if ($this->user->getUsername() !== $user->getUsername()) {
-            return true;
-        }
-
-        if ($this->user instanceof AdvancedUserInterface && $user instanceof AdvancedUserInterface) {
-            if ($this->user->isAccountNonExpired() !== $user->isAccountNonExpired()) {
-                return true;
-            }
-
-            if ($this->user->isAccountNonLocked() !== $user->isAccountNonLocked()) {
-                return true;
-            }
-
-            if ($this->user->isCredentialsNonExpired() !== $user->isCredentialsNonExpired()) {
-                return true;
-            }
-
-            if ($this->user->isEnabled() !== $user->isEnabled()) {
-                return true;
-            }
-        } elseif ($this->user instanceof AdvancedUserInterface xor $user instanceof AdvancedUserInterface) {
-            return true;
-        }
-
-        return false;
+        return (string)$this->user;
     }
 }

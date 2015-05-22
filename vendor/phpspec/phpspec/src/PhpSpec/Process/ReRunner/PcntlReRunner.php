@@ -21,8 +21,8 @@ class PcntlReRunner extends PhpExecutableReRunner
     public function isSupported()
     {
         return (php_sapi_name() == 'cli')
-            && $this->getExecutablePath()
-            && function_exists('pcntl_exec');
+        && $this->getExecutablePath()
+        && function_exists('pcntl_exec');
     }
 
     /**

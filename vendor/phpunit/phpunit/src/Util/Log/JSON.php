@@ -45,8 +45,8 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      * An error occurred.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception              $e
-     * @param float                  $time
+     * @param Exception $e
+     * @param float $time
      */
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
@@ -62,11 +62,53 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
     }
 
     /**
+     * @param string $status
+     * @param float $time
+     * @param array $trace
+     * @param string $message
+     * @param PHPUnit_Framework_TestCase|null $test
+     */
+    protected function writeCase($status, $time, array $trace = array(), $message = '', $test = null)
+    {
+        $output = '';
+        // take care of TestSuite producing error (e.g. by running into exception) as TestSuite doesn't have hasOutput
+        if ($test !== null && method_exists($test, 'hasOutput') && $test->hasOutput()) {
+            $output = $test->getActualOutput();
+        }
+        $this->write(
+            array(
+                'event' => 'test',
+                'suite' => $this->currentTestSuiteName,
+                'test' => $this->currentTestName,
+                'status' => $status,
+                'time' => $time,
+                'trace' => $trace,
+                'message' => PHPUnit_Util_String::convertToUtf8($message),
+                'output' => $output,
+            )
+        );
+    }
+
+    /**
+     * @param string $buffer
+     */
+    public function write($buffer)
+    {
+        array_walk_recursive($buffer, function (&$input) {
+            if (is_string($input)) {
+                $input = PHPUnit_Util_String::convertToUtf8($input);
+            }
+        });
+
+        parent::write(json_encode($buffer, JSON_PRETTY_PRINT));
+    }
+
+    /**
      * A failure occurred.
      *
-     * @param PHPUnit_Framework_Test                 $test
+     * @param PHPUnit_Framework_Test $test
      * @param PHPUnit_Framework_AssertionFailedError $e
-     * @param float                                  $time
+     * @param float $time
      */
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
@@ -85,8 +127,8 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      * Incomplete test.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception              $e
-     * @param float                  $time
+     * @param Exception $e
+     * @param float $time
      */
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
@@ -105,8 +147,8 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      * Risky test.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception              $e
-     * @param float                  $time
+     * @param Exception $e
+     * @param float $time
      * @since  Method available since Release 4.0.0
      */
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
@@ -126,8 +168,8 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      * Skipped test.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception              $e
-     * @param float                  $time
+     * @param Exception $e
+     * @param float $time
      */
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
@@ -150,13 +192,13 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
     public function startTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         $this->currentTestSuiteName = $suite->getName();
-        $this->currentTestName      = '';
+        $this->currentTestName = '';
 
         $this->write(
             array(
-            'event' => 'suiteStart',
-            'suite' => $this->currentTestSuiteName,
-            'tests' => count($suite)
+                'event' => 'suiteStart',
+                'suite' => $this->currentTestSuiteName,
+                'tests' => count($suite)
             )
         );
     }
@@ -169,7 +211,7 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
     public function endTestSuite(PHPUnit_Framework_TestSuite $suite)
     {
         $this->currentTestSuiteName = '';
-        $this->currentTestName      = '';
+        $this->currentTestName = '';
     }
 
     /**
@@ -184,9 +226,9 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
 
         $this->write(
             array(
-            'event' => 'testStart',
-            'suite' => $this->currentTestSuiteName,
-            'test'  => $this->currentTestName
+                'event' => 'testStart',
+                'suite' => $this->currentTestSuiteName,
+                'test' => $this->currentTestName
             )
         );
     }
@@ -195,54 +237,12 @@ class PHPUnit_Util_Log_JSON extends PHPUnit_Util_Printer implements PHPUnit_Fram
      * A test ended.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param float                  $time
+     * @param float $time
      */
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
         if ($this->currentTestPass) {
             $this->writeCase('pass', $time, array(), '', $test);
         }
-    }
-
-    /**
-     * @param string $status
-     * @param float  $time
-     * @param array  $trace
-     * @param string $message
-     * @param PHPUnit_Framework_TestCase|null $test
-     */
-    protected function writeCase($status, $time, array $trace = array(), $message = '', $test = null)
-    {
-        $output = '';
-        // take care of TestSuite producing error (e.g. by running into exception) as TestSuite doesn't have hasOutput
-        if ($test !== null && method_exists($test, 'hasOutput') && $test->hasOutput()) {
-            $output = $test->getActualOutput();
-        }
-        $this->write(
-            array(
-            'event'   => 'test',
-            'suite'   => $this->currentTestSuiteName,
-            'test'    => $this->currentTestName,
-            'status'  => $status,
-            'time'    => $time,
-            'trace'   => $trace,
-            'message' => PHPUnit_Util_String::convertToUtf8($message),
-            'output'  => $output,
-            )
-        );
-    }
-
-    /**
-     * @param string $buffer
-     */
-    public function write($buffer)
-    {
-        array_walk_recursive($buffer, function (&$input) {
-            if (is_string($input)) {
-                $input = PHPUnit_Util_String::convertToUtf8($input);
-            }
-        });
-
-        parent::write(json_encode($buffer, JSON_PRETTY_PRINT));
     }
 }

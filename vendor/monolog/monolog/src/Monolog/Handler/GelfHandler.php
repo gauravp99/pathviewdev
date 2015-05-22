@@ -14,8 +14,8 @@ namespace Monolog\Handler;
 use Gelf\IMessagePublisher;
 use Gelf\PublisherInterface;
 use InvalidArgumentException;
-use Monolog\Logger;
 use Monolog\Formatter\GelfMessageFormatter;
+use Monolog\Logger;
 
 /**
  * Handler to send messages to a Graylog2 (http://www.graylog2.org) server
@@ -32,8 +32,8 @@ class GelfHandler extends AbstractProcessingHandler
 
     /**
      * @param PublisherInterface|IMessagePublisher $publisher a publisher object
-     * @param integer                              $level     The minimum logging level at which this handler will be triggered
-     * @param boolean                              $bubble    Whether the messages that are handled can bubble up the stack or not
+     * @param integer $level The minimum logging level at which this handler will be triggered
+     * @param boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($publisher, $level = Logger::DEBUG, $bubble = true)
     {

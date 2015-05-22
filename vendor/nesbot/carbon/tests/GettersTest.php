@@ -64,7 +64,7 @@ class GettersTest extends TestFixture
     public function testMicroGetter()
     {
         $micro = 345678;
-        $d = Carbon::parse('2014-01-05 12:34:11.'.$micro);
+        $d = Carbon::parse('2014-01-05 12:34:11.' . $micro);
         $this->assertSame($micro, $d->micro);
     }
 

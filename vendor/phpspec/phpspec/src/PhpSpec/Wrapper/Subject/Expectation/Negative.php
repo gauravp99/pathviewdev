@@ -32,8 +32,8 @@ class Negative implements ExpectationInterface
 
     /**
      * @param string $alias
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return mixed
      */

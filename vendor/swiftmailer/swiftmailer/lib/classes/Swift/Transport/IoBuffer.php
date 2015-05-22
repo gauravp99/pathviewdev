@@ -34,7 +34,7 @@ interface Swift_Transport_IoBuffer extends Swift_InputByteStream, Swift_OutputBy
      * Set an individual param on the buffer (e.g. switching to SSL).
      *
      * @param string $param
-     * @param mixed  $value
+     * @param mixed $value
      */
     public function setParam($param, $value);
 
@@ -59,7 +59,7 @@ interface Swift_Transport_IoBuffer extends Swift_InputByteStream, Swift_OutputBy
      * The $sequence number comes from any writes and may or may not be used
      * depending upon the implementation.
      *
-     * @param int     $sequence of last write to scan from
+     * @param int $sequence of last write to scan from
      *
      * @return string
      */

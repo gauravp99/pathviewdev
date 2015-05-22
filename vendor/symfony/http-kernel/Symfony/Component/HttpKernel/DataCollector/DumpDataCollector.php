@@ -17,8 +17,8 @@ use Symfony\Component\Stopwatch\Stopwatch;
 use Symfony\Component\VarDumper\Cloner\Data;
 use Symfony\Component\VarDumper\Cloner\VarCloner;
 use Symfony\Component\VarDumper\Dumper\CliDumper;
-use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 use Symfony\Component\VarDumper\Dumper\DataDumperInterface;
+use Symfony\Component\VarDumper\Dumper\HtmlDumper;
 
 /**
  * @author Nicolas Grekas <p@tchwork.com>
@@ -33,21 +33,6 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
     private $clonesIndex = 0;
     private $rootRefs;
     private $charset;
-
-    public function __construct(Stopwatch $stopwatch = null, $fileLinkFormat = null, $charset = null)
-    {
-        $this->stopwatch = $stopwatch;
-        $this->fileLinkFormat = $fileLinkFormat ?: ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format');
-        $this->charset = $charset ?: ini_get('php.output_encoding') ?: ini_get('default_charset') ?: 'UTF-8';
-
-        // All clones share these properties by reference:
-        $this->rootRefs = array(
-            &$this->data,
-            &$this->dataCount,
-            &$this->isCollected,
-            &$this->clonesCount,
-        );
-    }
 
     public function __clone()
     {
@@ -94,17 +79,17 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
                         $name = $info->getTemplateName();
                         $src = $info->getEnvironment()->getLoader()->getSource($name);
                         $info = $info->getDebugInfo();
-                        if (isset($info[$trace[$i-1]['line']])) {
+                        if (isset($info[$trace[$i - 1]['line']])) {
                             $file = false;
-                            $line = $info[$trace[$i-1]['line']];
+                            $line = $info[$trace[$i - 1]['line']];
                             $src = explode("\n", $src);
                             $fileExcerpt = array();
 
                             for ($i = max($line - 3, 1), $max = min($line + 3, count($src)); $i <= $max; ++$i) {
-                                $fileExcerpt[] = '<li'.($i === $line ? ' class="selected"' : '').'><code>'.$this->htmlEncode($src[$i - 1]).'</code></li>';
+                                $fileExcerpt[] = '<li' . ($i === $line ? ' class="selected"' : '') . '><code>' . $this->htmlEncode($src[$i - 1]) . '</code></li>';
                             }
 
-                            $fileExcerpt = '<ol start="'.max($line - 3, 1).'">'.implode("\n", $fileExcerpt).'</ol>';
+                            $fileExcerpt = '<ol start="' . max($line - 3, 1) . '">' . implode("\n", $fileExcerpt) . '</ol>';
                         }
                         break;
                     }
@@ -124,6 +109,22 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         if ($this->stopwatch) {
             $this->stopwatch->stop('dump');
         }
+    }
+
+    private function htmlEncode($s)
+    {
+        $html = '';
+
+        $dumper = new HtmlDumper(function ($line) use (&$html) {
+            $html .= $line;
+        }, $this->charset);
+        $dumper->setDumpHeader('');
+        $dumper->setDumpBoundaries('', '');
+
+        $cloner = new VarCloner();
+        $dumper->dump($cloner->cloneVar($s));
+
+        return substr(strip_tags($html), 1, -1);
     }
 
     public function collect(Request $request, Response $response, \Exception $exception = null)
@@ -149,6 +150,21 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
         parent::unserialize($data);
         $this->dataCount = count($this->data);
         self::__construct($this->stopwatch);
+    }
+
+    public function __construct(Stopwatch $stopwatch = null, $fileLinkFormat = null, $charset = null)
+    {
+        $this->stopwatch = $stopwatch;
+        $this->fileLinkFormat = $fileLinkFormat ?: ini_get('xdebug.file_link_format') ?: get_cfg_var('xdebug.file_link_format');
+        $this->charset = $charset ?: ini_get('php.output_encoding') ?: ini_get('default_charset') ?: 'UTF-8';
+
+        // All clones share these properties by reference:
+        $this->rootRefs = array(
+            &$this->data,
+            &$this->dataCount,
+            &$this->isCollected,
+            &$this->clonesCount,
+        );
     }
 
     public function getDumpsCount()
@@ -192,7 +208,7 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
 
             $h = headers_list();
             $i = count($h);
-            array_unshift($h, 'Content-Type: '.ini_get('default_mimetype'));
+            array_unshift($h, 'Content-Type: ' . ini_get('default_mimetype'));
             while (0 !== stripos($h[$i], 'Content-Type:')) {
                 --$i;
             }
@@ -228,19 +244,5 @@ class DumpDataCollector extends DataCollector implements DataDumperInterface
             $this->data = array();
             $this->dataCount = 0;
         }
-    }
-
-    private function htmlEncode($s)
-    {
-        $html = '';
-
-        $dumper = new HtmlDumper(function ($line) use (&$html) {$html .= $line;}, $this->charset);
-        $dumper->setDumpHeader('');
-        $dumper->setDumpBoundaries('', '');
-
-        $cloner = new VarCloner();
-        $dumper->dump($cloner->cloneVar($s));
-
-        return substr(strip_tags($html), 1, -1);
     }
 }

@@ -37,14 +37,14 @@ final class Context
      */
     public function __construct()
     {
-        $this->arrays  = array();
+        $this->arrays = array();
         $this->objects = new \SplObjectStorage;
     }
 
     /**
      * Adds a value to the context.
      *
-     * @param  array|object $value      The value to add.
+     * @param  array|object $value The value to add.
      * @return integer|string           The ID of the stored value, either as
      *                                  a string or integer.
      * @throws InvalidArgumentException Thrown if $value is not an array or
@@ -54,35 +54,8 @@ final class Context
     {
         if (is_array($value)) {
             return $this->addArray($value);
-        }
-
-        else if (is_object($value)) {
+        } else if (is_object($value)) {
             return $this->addObject($value);
-        }
-
-        throw new InvalidArgumentException(
-            'Only arrays and objects are supported'
-        );
-    }
-
-    /**
-     * Checks if the given value exists within the context.
-     *
-     * @param  array|object $value  The value to check.
-     * @return integer|string|false The string or integer ID of the stored
-     *                              value if it has already been seen, or
-     *                              false if the value is not stored.
-     * @throws InvalidArgumentException Thrown if $value is not an array or
-     *                                  object
-     */
-    public function contains(&$value)
-    {
-        if (is_array($value)) {
-            return $this->containsArray($value);
-        }
-
-        else if (is_object($value)) {
-            return $this->containsObject($value);
         }
 
         throw new InvalidArgumentException(
@@ -108,19 +81,6 @@ final class Context
     }
 
     /**
-     * @param  object $object
-     * @return string
-     */
-    private function addObject($object)
-    {
-        if (!$this->objects->contains($object)) {
-            $this->objects->attach($object);
-        }
-
-        return spl_object_hash($object);
-    }
-
-    /**
      * @param  array $array
      * @return integer|false
      */
@@ -141,6 +101,42 @@ final class Context
         }
 
         return false;
+    }
+
+    /**
+     * @param  object $object
+     * @return string
+     */
+    private function addObject($object)
+    {
+        if (!$this->objects->contains($object)) {
+            $this->objects->attach($object);
+        }
+
+        return spl_object_hash($object);
+    }
+
+    /**
+     * Checks if the given value exists within the context.
+     *
+     * @param  array|object $value The value to check.
+     * @return integer|string|false The string or integer ID of the stored
+     *                              value if it has already been seen, or
+     *                              false if the value is not stored.
+     * @throws InvalidArgumentException Thrown if $value is not an array or
+     *                                  object
+     */
+    public function contains(&$value)
+    {
+        if (is_array($value)) {
+            return $this->containsArray($value);
+        } else if (is_object($value)) {
+            return $this->containsObject($value);
+        }
+
+        throw new InvalidArgumentException(
+            'Only arrays and objects are supported'
+        );
     }
 
     /**

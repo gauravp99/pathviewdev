@@ -204,7 +204,7 @@
                                                 canvasBordersColor: "#205081",
                                                 scaleOverride: true,
                                                 scaleSteps: 6,
-                                                scaleStepWidth:200 ,
+                                                scaleStepWidth: 200,
                                                 scaleStartValue: 250,
                                                 scaleLabel: "<%=value%>",
                                                 legend: true,
@@ -298,7 +298,7 @@
 
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-lg register" style="border-radius: 1px;"
-                                data-toggle="modal" data-target="#myModal" >
+                                data-toggle="modal" data-target="#myModal">
                             Click here to Register
                         </button>
 
@@ -382,6 +382,7 @@
                         <div class="panel-heading" style="align:left;">Usage Statistics</div>
                         <div class="panel-body">
                             <p style="text-align:left;">Pathview web</p>
+
                             <div id="graph" class="col-md-12">
                                 <section>
 
@@ -412,8 +413,8 @@
                                 </section>
                             </div>
                             <p style="text-align:left;"> Bioc Package</p>
-                            <div id="graph1" class="col-md-12">
 
+                            <div id="graph1" class="col-md-12">
 
 
                                 <section>

@@ -11,11 +11,11 @@
 
 namespace Symfony\Component\HttpKernel\Tests\Profiler;
 
-use Symfony\Component\HttpKernel\Profiler\MongoDbProfilerStorage;
-use Symfony\Component\HttpKernel\Profiler\Profile;
-use Symfony\Component\HttpKernel\DataCollector\DataCollector;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector;
+use Symfony\Component\HttpKernel\Profiler\MongoDbProfilerStorage;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 class DummyMongoDbProfilerStorage extends MongoDbProfilerStorage
 {
@@ -102,7 +102,7 @@ class MongoDbProfilerStorageTest extends AbstractProfilerStorageTest
         $dt = new \DateTime('-2 day');
         for ($i = 0; $i < 3; $i++) {
             $dt->modify('-1 day');
-            $profile = new Profile('time_'.$i);
+            $profile = new Profile('time_' . $i);
             $profile->setTime($dt->getTimestamp());
             $profile->setMethod('GET');
             self::$storage->write($profile);

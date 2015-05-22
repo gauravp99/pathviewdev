@@ -15,13 +15,13 @@ namespace PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Loader\Node\ExampleNode;
 use PhpSpec\Matcher\MatcherInterface;
+use PhpSpec\Runner\MatcherManager;
 use PhpSpec\Wrapper\Subject\Expectation\ConstructorDecorator;
 use PhpSpec\Wrapper\Subject\Expectation\DispatcherDecorator;
 use PhpSpec\Wrapper\Subject\Expectation\ExpectationInterface;
 use PhpSpec\Wrapper\Subject\Expectation\UnwrapDecorator;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use PhpSpec\Runner\MatcherManager;
 use PhpSpec\Wrapper\Unwrapper;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ExpectationFactory
 {
@@ -39,9 +39,9 @@ class ExpectationFactory
     private $matchers;
 
     /**
-     * @param ExampleNode              $example
+     * @param ExampleNode $example
      * @param EventDispatcherInterface $dispatcher
-     * @param MatcherManager           $matchers
+     * @param MatcherManager $matchers
      */
     public function __construct(ExampleNode $example, EventDispatcherInterface $dispatcher, MatcherManager $matchers)
     {
@@ -52,8 +52,8 @@ class ExpectationFactory
 
     /**
      * @param string $expectation
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return ExpectationInterface
      */
@@ -70,24 +70,8 @@ class ExpectationFactory
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
-     *
-     * @return ExpectationInterface
-     */
-    private function createPositive($name, $subject, array $arguments = array())
-    {
-        if (strtolower($name) === 'throw') {
-            return $this->createDecoratedExpectation("PositiveThrow", $name, $subject, $arguments);
-        }
-
-        return $this->createDecoratedExpectation("Positive", $name, $subject, $arguments);
-    }
-
-    /**
-     * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return ExpectationInterface
      */
@@ -103,15 +87,15 @@ class ExpectationFactory
     /**
      * @param string $expectation
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return ExpectationInterface
      */
     private function createDecoratedExpectation($expectation, $name, $subject, array $arguments)
     {
         $matcher = $this->findMatcher($name, $subject, $arguments);
-        $expectation = "\\PhpSpec\\Wrapper\\Subject\\Expectation\\".$expectation;
+        $expectation = "\\PhpSpec\\Wrapper\\Subject\\Expectation\\" . $expectation;
 
         $expectation = new $expectation($matcher);
 
@@ -124,8 +108,8 @@ class ExpectationFactory
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return MatcherInterface
      */
@@ -139,7 +123,7 @@ class ExpectationFactory
 
     /**
      * @param ExpectationInterface $expectation
-     * @param MatcherInterface     $matcher
+     * @param MatcherInterface $matcher
      *
      * @return ConstructorDecorator
      */
@@ -150,5 +134,21 @@ class ExpectationFactory
         $constructorDecorator = new ConstructorDecorator($unwrapperDecorator);
 
         return $constructorDecorator;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $subject
+     * @param array $arguments
+     *
+     * @return ExpectationInterface
+     */
+    private function createPositive($name, $subject, array $arguments = array())
+    {
+        if (strtolower($name) === 'throw') {
+            return $this->createDecoratedExpectation("PositiveThrow", $name, $subject, $arguments);
+        }
+
+        return $this->createDecoratedExpectation("Positive", $name, $subject, $arguments);
     }
 }

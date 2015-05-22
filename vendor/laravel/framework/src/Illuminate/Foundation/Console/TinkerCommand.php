@@ -1,101 +1,101 @@
 <?php namespace Illuminate\Foundation\Console;
 
-use Psy\Shell;
-use Psy\Configuration;
 use Illuminate\Console\Command;
-use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Foundation\Console\Tinker\Presenters\EloquentModelPresenter;
-use Illuminate\Foundation\Console\Tinker\Presenters\IlluminateCollectionPresenter;
 use Illuminate\Foundation\Console\Tinker\Presenters\IlluminateApplicationPresenter;
+use Illuminate\Foundation\Console\Tinker\Presenters\IlluminateCollectionPresenter;
+use Psy\Configuration;
+use Psy\Shell;
+use Symfony\Component\Console\Input\InputArgument;
 
-class TinkerCommand extends Command {
+class TinkerCommand extends Command
+{
 
-	/**
-	 * artisan commands to include in the tinker shell.
-	 *
-	 * @var array
-	 */
-	protected $commandWhitelist = [
-		'clear-compiled', 'down', 'env', 'inspire', 'migrate', 'optimize', 'up',
-	];
+    /**
+     * artisan commands to include in the tinker shell.
+     *
+     * @var array
+     */
+    protected $commandWhitelist = [
+        'clear-compiled', 'down', 'env', 'inspire', 'migrate', 'optimize', 'up',
+    ];
 
-	/**
-	 * The console command name.
-	 *
-	 * @var string
-	 */
-	protected $name = 'tinker';
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = 'tinker';
 
-	/**
-	 * The console command description.
-	 *
-	 * @var string
-	 */
-	protected $description = "Interact with your application";
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = "Interact with your application";
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @return void
-	 */
-	public function fire()
-	{
-		$this->getApplication()->setCatchExceptions(false);
+    /**
+     * Execute the console command.
+     *
+     * @return void
+     */
+    public function fire()
+    {
+        $this->getApplication()->setCatchExceptions(false);
 
-		$config = new Configuration;
+        $config = new Configuration;
 
-		$config->getPresenterManager()->addPresenters(
-			$this->getPresenters()
-		);
+        $config->getPresenterManager()->addPresenters(
+            $this->getPresenters()
+        );
 
-		$shell = new Shell($config);
-		$shell->addCommands($this->getCommands());
-		$shell->setIncludes($this->argument('include'));
+        $shell = new Shell($config);
+        $shell->addCommands($this->getCommands());
+        $shell->setIncludes($this->argument('include'));
 
-		$shell->run();
-	}
+        $shell->run();
+    }
 
-	/**
-	 * Get artisan commands to pass through to PsySH.
-	 *
-	 * @return array
-	 */
-	protected function getCommands()
-	{
-		$commands = [];
+    /**
+     * Get an array of Laravel tailored Presenters.
+     *
+     * @return array
+     */
+    protected function getPresenters()
+    {
+        return [
+            new EloquentModelPresenter,
+            new IlluminateCollectionPresenter,
+            new IlluminateApplicationPresenter,
+        ];
+    }
 
-		foreach ($this->getApplication()->all() as $name => $command)
-		{
-			if (in_array($name, $this->commandWhitelist)) $commands[] = $command;
-		}
+    /**
+     * Get artisan commands to pass through to PsySH.
+     *
+     * @return array
+     */
+    protected function getCommands()
+    {
+        $commands = [];
 
-		return $commands;
-	}
+        foreach ($this->getApplication()->all() as $name => $command) {
+            if (in_array($name, $this->commandWhitelist)) $commands[] = $command;
+        }
 
-	/**
-	 * Get an array of Laravel tailored Presenters.
-	 *
-	 * @return array
-	 */
-	protected function getPresenters()
-	{
-		return [
-			new EloquentModelPresenter,
-			new IlluminateCollectionPresenter,
-			new IlluminateApplicationPresenter,
-		];
-	}
+        return $commands;
+    }
 
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [
-			['include', InputArgument::IS_ARRAY, 'Include file(s) before starting tinker'],
-		];
-	}
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [
+            ['include', InputArgument::IS_ARRAY, 'Include file(s) before starting tinker'],
+        ];
+    }
 
 }

@@ -21,10 +21,10 @@ use Psy\Util\Mirror;
  */
 abstract class ReflectingCommand extends Command implements ContextAware
 {
-    const CLASS_OR_FUNC   = '/^[\\\\\w]+$/';
-    const INSTANCE        = '/^\$(\w+)$/';
-    const CLASS_MEMBER    = '/^([\\\\\w]+)::(\w+)$/';
-    const CLASS_STATIC    = '/^([\\\\\w]+)::\$(\w+)$/';
+    const CLASS_OR_FUNC = '/^[\\\\\w]+$/';
+    const INSTANCE = '/^\$(\w+)$/';
+    const CLASS_MEMBER = '/^([\\\\\w]+)::(\w+)$/';
+    const CLASS_STATIC = '/^([\\\\\w]+)::\$(\w+)$/';
     const INSTANCE_MEMBER = '/^\$(\w+)(::|->)(\w+)$/';
     const INSTANCE_STATIC = '/^\$(\w+)::\$(\w+)$/';
 
@@ -46,11 +46,26 @@ abstract class ReflectingCommand extends Command implements ContextAware
     }
 
     /**
+     * Get a Reflector and documentation for a function, class or instance, constant, method or property.
+     *
+     * @param string $valueName Function, class, variable, constant, method or property name.
+     * @param boolean $classOnly True if the name should only refer to a class, function or instance
+     *
+     * @return array (value, Reflector)
+     */
+    protected function getTargetAndReflector($valueName, $classOnly = false)
+    {
+        list($value, $member, $kind) = $this->getTarget($valueName, $classOnly);
+
+        return array($value, Mirror::get($value, $member, $kind));
+    }
+
+    /**
      * Get the target for a value.
      *
      * @throws \InvalidArgumentException when the value specified can't be resolved.
      *
-     * @param string  $valueName Function, class, variable, constant, method or property name.
+     * @param string $valueName Function, class, variable, constant, method or property name.
      * @param boolean $classOnly True if the name should only refer to a class, function or instance
      *
      * @return array (class or instance name, member name, kind)
@@ -58,7 +73,7 @@ abstract class ReflectingCommand extends Command implements ContextAware
     protected function getTarget($valueName, $classOnly = false)
     {
         $valueName = trim($valueName);
-        $matches   = array();
+        $matches = array();
         switch (true) {
             case preg_match(self::CLASS_OR_FUNC, $valueName, $matches):
                 return array($this->resolveName($matches[0], true), null, 0);
@@ -93,7 +108,7 @@ abstract class ReflectingCommand extends Command implements ContextAware
      * Resolve a class or function name (with the current shell namespace).
      *
      * @param string $name
-     * @param bool   $includeFunctions (default: false)
+     * @param bool $includeFunctions (default: false)
      *
      * @return string
      */
@@ -112,21 +127,6 @@ abstract class ReflectingCommand extends Command implements ContextAware
         }
 
         return $name;
-    }
-
-    /**
-     * Get a Reflector and documentation for a function, class or instance, constant, method or property.
-     *
-     * @param string  $valueName Function, class, variable, constant, method or property name.
-     * @param boolean $classOnly True if the name should only refer to a class, function or instance
-     *
-     * @return array (value, Reflector)
-     */
-    protected function getTargetAndReflector($valueName, $classOnly = false)
-    {
-        list($value, $member, $kind) = $this->getTarget($valueName, $classOnly);
-
-        return array($value, Mirror::get($value, $member, $kind));
     }
 
     /**

@@ -30,7 +30,7 @@ class NamedConstructorNotFoundListener implements EventSubscriberInterface
 
     public function __construct(IO $io, ResourceManager $resources, GeneratorManager $generator)
     {
-        $this->io        = $io;
+        $this->io = $io;
         $this->resources = $resources;
         $this->generator = $generator;
     }
@@ -39,7 +39,7 @@ class NamedConstructorNotFoundListener implements EventSubscriberInterface
     {
         return array(
             'afterExample' => array('afterExample', 10),
-            'afterSuite'   => array('afterSuite', -10),
+            'afterSuite' => array('afterSuite', -10),
         );
     }
 
@@ -53,7 +53,7 @@ class NamedConstructorNotFoundListener implements EventSubscriberInterface
             return;
         }
 
-        $this->methods[get_class($exception->getSubject()).'::'.$exception->getMethodName()] = $exception->getArguments();
+        $this->methods[get_class($exception->getSubject()) . '::' . $exception->getMethodName()] = $exception->getArguments();
     }
 
     public function afterSuite(SuiteEvent $event)
@@ -74,7 +74,7 @@ class NamedConstructorNotFoundListener implements EventSubscriberInterface
 
             if ($this->io->askConfirmation($message)) {
                 $this->generator->generate($resource, 'named_constructor', array(
-                    'name'      => $method,
+                    'name' => $method,
                     'arguments' => $arguments
                 ));
                 $event->markAsWorthRerunning();

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dotenv
  *
@@ -78,44 +79,6 @@ class Dotenv
     }
 
     /**
-     * Require specified ENV vars to be present, or throw Exception.
-     * You can also pass through an set of allowed values for the environment variable.
-     *
-     * @throws \RuntimeException
-     * @param  mixed             $environmentVariables the name of the environment variable or an array of names
-     * @param  string[]          $allowedValues
-     * @return true              (or throws exception on error)
-     */
-    public static function required($environmentVariables, array $allowedValues = array())
-    {
-        $environmentVariables = (array) $environmentVariables;
-        $missingEnvironmentVariables = array();
-
-        foreach ($environmentVariables as $environmentVariable) {
-            $value = static::findEnvironmentVariable($environmentVariable);
-            if (is_null($value)) {
-                $missingEnvironmentVariables[] = $environmentVariable;
-            } elseif ($allowedValues) {
-                if (!in_array($value, $allowedValues)) {
-                    // may differentiate in the future, but for now this does the job
-                    $missingEnvironmentVariables[] = $environmentVariable;
-                }
-            }
-        }
-
-        if ($missingEnvironmentVariables) {
-            throw new \RuntimeException(
-                sprintf(
-                    "Required environment variable missing, or value not allowed: '%s'",
-                    implode("', '", $missingEnvironmentVariables)
-                )
-            );
-        }
-
-        return true;
-    }
-
-    /**
      * Takes value as passed in by developer and:
      * - ensures we're dealing with a separate name and value, breaking apart the name string if needed
      * - cleaning the value of quotes
@@ -129,7 +92,7 @@ class Dotenv
     protected static function normaliseEnvironmentVariable($name, $value)
     {
         list($name, $value) = static::splitCompoundStringIntoParts($name, $value);
-        $name  = static::sanitiseVariableName($name);
+        $name = static::sanitiseVariableName($name);
         $value = static::sanitiseVariableValue($value);
         $value = static::resolveNestedVariables($value);
 
@@ -150,6 +113,17 @@ class Dotenv
         }
 
         return array($name, $value);
+    }
+
+    /**
+     * Strips quotes and the optional leading "export " from the environment variable name.
+     *
+     * @param $name
+     * @return string
+     */
+    protected static function sanitiseVariableName($name)
+    {
+        return trim(str_replace(array('export ', '\'', '"'), '', $name));
     }
 
     /**
@@ -187,17 +161,6 @@ class Dotenv
     }
 
     /**
-     * Strips quotes and the optional leading "export " from the environment variable name.
-     *
-     * @param $name
-     * @return string
-     */
-    protected static function sanitiseVariableName($name)
-    {
-        return trim(str_replace(array('export ', '\'', '"'), '', $name));
-    }
-
-    /**
      * Look for {$varname} patterns in the variable value and replace with an existing
      * environment variable.
      *
@@ -214,7 +177,7 @@ class Dotenv
                     if (is_null($nestedVariable)) {
                         return $matchedPatterns[0];
                     } else {
-                        return  $nestedVariable;
+                        return $nestedVariable;
                     }
                 },
                 $value
@@ -241,6 +204,44 @@ class Dotenv
 
                 return $value === false ? null : $value; // switch getenv default to null
         }
+    }
+
+    /**
+     * Require specified ENV vars to be present, or throw Exception.
+     * You can also pass through an set of allowed values for the environment variable.
+     *
+     * @throws \RuntimeException
+     * @param  mixed $environmentVariables the name of the environment variable or an array of names
+     * @param  string[] $allowedValues
+     * @return true              (or throws exception on error)
+     */
+    public static function required($environmentVariables, array $allowedValues = array())
+    {
+        $environmentVariables = (array)$environmentVariables;
+        $missingEnvironmentVariables = array();
+
+        foreach ($environmentVariables as $environmentVariable) {
+            $value = static::findEnvironmentVariable($environmentVariable);
+            if (is_null($value)) {
+                $missingEnvironmentVariables[] = $environmentVariable;
+            } elseif ($allowedValues) {
+                if (!in_array($value, $allowedValues)) {
+                    // may differentiate in the future, but for now this does the job
+                    $missingEnvironmentVariables[] = $environmentVariable;
+                }
+            }
+        }
+
+        if ($missingEnvironmentVariables) {
+            throw new \RuntimeException(
+                sprintf(
+                    "Required environment variable missing, or value not allowed: '%s'",
+                    implode("', '", $missingEnvironmentVariables)
+                )
+            );
+        }
+
+        return true;
     }
 
     /**

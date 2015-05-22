@@ -12,10 +12,10 @@
 namespace Symfony\Component\HttpKernel\Tests\Debug;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
-use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
+use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 class TraceableEventDispatcherTest extends \PHPUnit_Framework_TestCase
@@ -23,7 +23,9 @@ class TraceableEventDispatcherTest extends \PHPUnit_Framework_TestCase
     public function testStopwatchSections()
     {
         $dispatcher = new TraceableEventDispatcher(new EventDispatcher(), $stopwatch = new Stopwatch());
-        $kernel = $this->getHttpKernel($dispatcher, function () { return new Response(); });
+        $kernel = $this->getHttpKernel($dispatcher, function () {
+            return new Response();
+        });
         $request = Request::create('/');
         $response = $kernel->handle($request);
         $kernel->terminate($request, $response);
@@ -39,6 +41,15 @@ class TraceableEventDispatcherTest extends \PHPUnit_Framework_TestCase
         ), array_keys($events));
     }
 
+    protected function getHttpKernel($dispatcher, $controller)
+    {
+        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
+        $resolver->expects($this->once())->method('getController')->will($this->returnValue($controller));
+        $resolver->expects($this->once())->method('getArguments')->will($this->returnValue(array()));
+
+        return new HttpKernel($dispatcher, $resolver);
+    }
+
     public function testStopwatchCheckControllerOnRequestEvent()
     {
         $stopwatch = $this->getMockBuilder('Symfony\Component\Stopwatch\Stopwatch')
@@ -50,7 +61,9 @@ class TraceableEventDispatcherTest extends \PHPUnit_Framework_TestCase
 
         $dispatcher = new TraceableEventDispatcher(new EventDispatcher(), $stopwatch);
 
-        $kernel = $this->getHttpKernel($dispatcher, function () { return new Response(); });
+        $kernel = $this->getHttpKernel($dispatcher, function () {
+            return new Response();
+        });
         $request = Request::create('/');
         $kernel->handle($request);
     }
@@ -70,7 +83,9 @@ class TraceableEventDispatcherTest extends \PHPUnit_Framework_TestCase
 
         $dispatcher = new TraceableEventDispatcher(new EventDispatcher(), $stopwatch);
 
-        $kernel = $this->getHttpKernel($dispatcher, function () { return new Response(); });
+        $kernel = $this->getHttpKernel($dispatcher, function () {
+            return new Response();
+        });
         $request = Request::create('/');
         $kernel->handle($request);
     }
@@ -91,14 +106,5 @@ class TraceableEventDispatcherTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($called2);
         $dispatcher->dispatch('my-event');
         $this->assertTrue($called2);
-    }
-
-    protected function getHttpKernel($dispatcher, $controller)
-    {
-        $resolver = $this->getMock('Symfony\Component\HttpKernel\Controller\ControllerResolverInterface');
-        $resolver->expects($this->once())->method('getController')->will($this->returnValue($controller));
-        $resolver->expects($this->once())->method('getArguments')->will($this->returnValue(array()));
-
-        return new HttpKernel($dispatcher, $resolver);
     }
 }

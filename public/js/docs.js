@@ -1,11 +1,11 @@
-$(function() {
+$(function () {
     // Code for docs demos
     function createColorpickers() {
         // Api demo
         var bodyStyle = $('body')[0].style;
         $('#demo_apidemo').colorpicker({
             color: bodyStyle.backgroundColor
-        }).on('changeColor', function(ev) {
+        }).on('changeColor', function (ev) {
             bodyStyle.backgroundColor = ev.color.toHex();
         });
 
@@ -18,12 +18,12 @@ $(function() {
         $('.demo-auto').colorpicker();
 
         // Disabled / enabled triggers
-        $(".disable-button").click(function(e) {
+        $(".disable-button").click(function (e) {
             e.preventDefault();
             $("#demo_endis").colorpicker('disable');
         });
 
-        $(".enable-button").click(function(e) {
+        $(".enable-button").click(function (e) {
             e.preventDefault();
             $("#demo_endis").colorpicker('enable');
         });
@@ -32,13 +32,13 @@ $(function() {
     createColorpickers();
 
     // Create / destroy instances
-    $('.demo-destroy').click(function(e) {
+    $('.demo-destroy').click(function (e) {
         e.preventDefault();
         $('.demo').colorpicker('destroy');
         $(".disable-button, .enable-button").off('click');
     });
 
-    $('.demo-create').click(function(e) {
+    $('.demo-create').click(function (e) {
         e.preventDefault();
         createColorpickers();
     });

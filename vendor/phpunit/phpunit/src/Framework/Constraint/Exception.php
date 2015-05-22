@@ -36,6 +36,19 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
     }
 
     /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return sprintf(
+            'exception of type "%s"',
+            $this->className
+        );
+    }
+
+    /**
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
      *
@@ -53,7 +66,7 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed  $other Evaluated value or object.
+     * @param  mixed $other Evaluated value or object.
      * @return string
      */
     protected function failureDescription($other)
@@ -62,7 +75,7 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
             $message = '';
             if ($other instanceof Exception) {
                 $message = '. Message was: "' . $other->getMessage() . '" at'
-                        . "\n" . $other->getTraceAsString();
+                    . "\n" . $other->getTraceAsString();
             }
 
             return sprintf(
@@ -75,19 +88,6 @@ class PHPUnit_Framework_Constraint_Exception extends PHPUnit_Framework_Constrain
 
         return sprintf(
             'exception of type "%s" is thrown',
-            $this->className
-        );
-    }
-
-    /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return sprintf(
-            'exception of type "%s"',
             $this->className
         );
     }

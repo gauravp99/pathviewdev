@@ -11,22 +11,12 @@
 
 namespace Symfony\Component\Yaml\Tests;
 
-use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Parser;
+use Symfony\Component\Yaml\Yaml;
 
 class ParserTest extends \PHPUnit_Framework_TestCase
 {
     protected $parser;
-
-    protected function setUp()
-    {
-        $this->parser = new Parser();
-    }
-
-    protected function tearDown()
-    {
-        $this->parser = null;
-    }
 
     /**
      * @dataProvider getDataFormSpecifications
@@ -39,12 +29,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     public function getDataFormSpecifications()
     {
         $parser = new Parser();
-        $path = __DIR__.'/Fixtures';
+        $path = __DIR__ . '/Fixtures';
 
         $tests = array();
-        $files = $parser->parse(file_get_contents($path.'/index.yml'));
+        $files = $parser->parse(file_get_contents($path . '/index.yml'));
         foreach ($files as $file) {
-            $yamls = file_get_contents($path.'/'.$file.'.yml');
+            $yamls = file_get_contents($path . '/' . $file . '.yml');
 
             // split YAMLs documents
             foreach (preg_split('/^---( %YAML\:1\.0)?/m', $yamls) as $yaml) {
@@ -56,7 +46,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                 if (isset($test['todo']) && $test['todo']) {
                     // TODO
                 } else {
-                    eval('$expected = '.trim($test['php']).';');
+                    eval('$expected = ' . trim($test['php']) . ';');
 
                     $tests[] = array($file, var_export($expected, true), $test['yaml'], $test['test']);
                 }
@@ -83,7 +73,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                 $this->fail('YAML files must not contain tabs');
             } catch (\Exception $e) {
                 $this->assertInstanceOf('\Exception', $e, 'YAML files must not contain tabs');
-                $this->assertEquals('A YAML file cannot contain tabs as indentation at line 2 (near "'.strpbrk($yaml, "\t").'").', $e->getMessage(), 'YAML files must not contain tabs');
+                $this->assertEquals('A YAML file cannot contain tabs as indentation at line 2 (near "' . strpbrk($yaml, "\t") . '").', $e->getMessage(), 'YAML files must not contain tabs');
             }
         }
     }
@@ -731,6 +721,16 @@ foo: 1
 bar: 2
 EOF;
         $this->assertEquals(array('foo' => 1, 'bar' => 2), $this->parser->parse($yaml));
+    }
+
+    protected function setUp()
+    {
+        $this->parser = new Parser();
+    }
+
+    protected function tearDown()
+    {
+        $this->parser = null;
     }
 }
 

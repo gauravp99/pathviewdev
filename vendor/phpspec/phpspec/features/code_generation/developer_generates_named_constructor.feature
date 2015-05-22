@@ -4,7 +4,7 @@ Feature: Developer generates a named constructor
   In order to avoid repetitive tasks and interruptions in development flow
 
   Scenario: Generating a named constructor in an empty class
-  Given the spec file "spec/CodeGeneration/NamedConstructor/UserSpec.php" contains:
+    Given the spec file "spec/CodeGeneration/NamedConstructor/UserSpec.php" contains:
     """
     <?php
 
@@ -23,7 +23,7 @@ Feature: Developer generates a named constructor
     }
 
     """
-  And the class file "src/CodeGeneration/NamedConstructor/User.php" contains:
+    And the class file "src/CodeGeneration/NamedConstructor/User.php" contains:
     """
     <?php
 
@@ -34,8 +34,8 @@ Feature: Developer generates a named constructor
     }
 
     """
-  When I run phpspec and answer "y" when asked if I want to generate the code
-  Then the class in "src/CodeGeneration/NamedConstructor/User.php" should contain:
+    When I run phpspec and answer "y" when asked if I want to generate the code
+    Then the class in "src/CodeGeneration/NamedConstructor/User.php" should contain:
     """
     <?php
 
@@ -57,7 +57,7 @@ Feature: Developer generates a named constructor
     """
 
   Scenario: Generating a named constructor with more arguments than an existing constructor accepts
-  Given the spec file "spec/CodeGeneration/NamedConstructor/TooManyArguments/UserSpec.php" contains:
+    Given the spec file "spec/CodeGeneration/NamedConstructor/TooManyArguments/UserSpec.php" contains:
     """
     <?php
 
@@ -76,7 +76,7 @@ Feature: Developer generates a named constructor
     }
 
     """
-  And the class file "src/CodeGeneration/NamedConstructor/TooManyArguments/User.php" contains:
+    And the class file "src/CodeGeneration/NamedConstructor/TooManyArguments/User.php" contains:
     """
     <?php
 
@@ -90,8 +90,8 @@ Feature: Developer generates a named constructor
     }
 
     """
-  When I run phpspec and answer "y" when asked if I want to generate the code
-  Then the class in "src/CodeGeneration/NamedConstructor/TooManyArguments/User.php" should contain:
+    When I run phpspec and answer "y" when asked if I want to generate the code
+    Then the class in "src/CodeGeneration/NamedConstructor/TooManyArguments/User.php" should contain:
     """
     <?php
 
@@ -112,7 +112,7 @@ Feature: Developer generates a named constructor
     """
 
   Scenario: Generating a named constructor with less arguments than an existing constructor accepts
-  Given the spec file "spec/CodeGeneration/NamedConstructor/TooFewArguments/UserSpec.php" contains:
+    Given the spec file "spec/CodeGeneration/NamedConstructor/TooFewArguments/UserSpec.php" contains:
     """
     <?php
 
@@ -131,7 +131,7 @@ Feature: Developer generates a named constructor
     }
 
     """
-  And the class file "src/CodeGeneration/NamedConstructor/TooFewArguments/User.php" contains:
+    And the class file "src/CodeGeneration/NamedConstructor/TooFewArguments/User.php" contains:
     """
     <?php
 
@@ -145,8 +145,8 @@ Feature: Developer generates a named constructor
     }
 
     """
-  When I run phpspec and answer "y" when asked if I want to generate the code
-  Then the class in "src/CodeGeneration/NamedConstructor/TooFewArguments/User.php" should contain:
+    When I run phpspec and answer "y" when asked if I want to generate the code
+    Then the class in "src/CodeGeneration/NamedConstructor/TooFewArguments/User.php" should contain:
     """
     <?php
 
@@ -226,7 +226,7 @@ Feature: Developer generates a named constructor
     """
 
   Scenario: Generating a named constructor with the correct number of required constructor arguments
-  Given the spec file "spec/CodeGeneration/NamedConstructor/OptionalArguments/UserSpec.php" contains:
+    Given the spec file "spec/CodeGeneration/NamedConstructor/OptionalArguments/UserSpec.php" contains:
     """
     <?php
 
@@ -245,7 +245,7 @@ Feature: Developer generates a named constructor
     }
 
     """
-  And the class file "src/CodeGeneration/NamedConstructor/OptionalArguments/User.php" contains:
+    And the class file "src/CodeGeneration/NamedConstructor/OptionalArguments/User.php" contains:
     """
     <?php
 
@@ -259,8 +259,8 @@ Feature: Developer generates a named constructor
     }
 
     """
-  When I run phpspec and answer "y" when asked if I want to generate the code
-  Then the class in "src/CodeGeneration/NamedConstructor/OptionalArguments/User.php" should contain:
+    When I run phpspec and answer "y" when asked if I want to generate the code
+    Then the class in "src/CodeGeneration/NamedConstructor/OptionalArguments/User.php" should contain:
     """
     <?php
 

@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Runner;
 
-use PhpSpec\Matcher\MatcherInterface;
 use PhpSpec\Exception\Wrapper\MatcherNotFoundException;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Matcher\MatcherInterface;
 
 class MatcherManager
 {
@@ -59,8 +59,8 @@ class MatcherManager
 
     /**
      * @param string $keyword
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return MatcherInterface
      *

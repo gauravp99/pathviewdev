@@ -1,8 +1,21 @@
 <?php $__env->startSection('content'); ?>
-    <h1 class="page-header">Result </h1>
+    <h1 class="page-header" style="margin-left: 40%;">Result </h1>
+    <div class="col-sm-12">
+        <div class="col-sm-8">
     <?php
+            $anal_id = $_GET['analyses'];
+            if (Auth::user()) {
+                $user_id = Auth::user()->id;
 
-    session_start();
+                $val1 = DB::select(DB::raw("select analysis_id from analyses where id = $user_id  and analysis_id ='$anal_id'"));
+            } else {
+                $val1 = DB::select(DB::raw("select analysis_id from analyses where id = 0  and analysis_id ='$anal_id'"));
+            }
+            if(sizeof($val1) == 0)
+            {
+                echo "<h1 class='alert alert-danger'> Alert Yo don't have access to this analysis </h1>";
+            }
+            else{
     function extract_unit($oneByThreeing, $start, $end)
     {
         $pivotFlag = stripos($oneByThreeing, $start);
@@ -44,31 +57,30 @@
     }
 
     $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $_GET['id']);
+            # $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $id);
     //echo $a;
     $c = extract_unit($a, "<map name=\"mapdata\">", "</map>");
     $d = str_replace("href=\"", "href=\"http://www.genome.jp", $c);
 
-    //$directory = $_SESSION['workingdir'];
-
-    echo "<html>";
-    echo "<head>";
-    echo "<title>KEGG View</title>";
-    echo "<head>";
-
+            # $directory = $_SESSION['workingdir'];
+            #echo "directoru:". $directory;
     echo "<img src=" . $_GET['image'] . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
+            #echo "<img src=" . $image . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
     echo "<map name=\"mapdata\">";
     echo $d;
     echo "</map>";
-    echo "</html>";
+
+            ?>
+            <p class="alert alert-info">Note: Hover on the image to get the details of the states.</p>
+
+        </div>
+    </div>
+
+    <?php }?>
 
 
 
 
-
-
-    ?>
-    <br/>
-    <br/>
 <?php $__env->stopSection(); ?>
 
 

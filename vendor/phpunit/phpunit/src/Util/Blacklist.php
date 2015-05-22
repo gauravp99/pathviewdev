@@ -63,27 +63,6 @@ class PHPUnit_Util_Blacklist
         return self::$directories;
     }
 
-    /**
-     * @param  string  $file
-     * @return boolean
-     */
-    public function isBlacklisted($file)
-    {
-        if (defined('PHPUNIT_TESTSUITE')) {
-            return false;
-        }
-
-        $this->initialize();
-
-        foreach (self::$directories as $directory) {
-            if (strpos($file, $directory) === 0) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     private function initialize()
     {
         if (self::$directories === null) {
@@ -113,5 +92,26 @@ class PHPUnit_Util_Blacklist
                 self::$directories[] = sys_get_temp_dir() . '\\PHP';
             }
         }
+    }
+
+    /**
+     * @param  string $file
+     * @return boolean
+     */
+    public function isBlacklisted($file)
+    {
+        if (defined('PHPUNIT_TESTSUITE')) {
+            return false;
+        }
+
+        $this->initialize();
+
+        foreach (self::$directories as $directory) {
+            if (strpos($file, $directory) === 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

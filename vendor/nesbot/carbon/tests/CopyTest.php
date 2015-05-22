@@ -31,7 +31,7 @@ class CopyTest extends TestFixture
     public function testCopyEnsureMicrosAreCopied()
     {
         $micro = 254687;
-        $dating = Carbon::createFromFormat('Y-m-d H:i:s.u', '2014-02-01 03:45:27.'.$micro);
+        $dating = Carbon::createFromFormat('Y-m-d H:i:s.u', '2014-02-01 03:45:27.' . $micro);
         $dating2 = $dating->copy();
         $this->assertSame($micro, $dating2->micro);
     }

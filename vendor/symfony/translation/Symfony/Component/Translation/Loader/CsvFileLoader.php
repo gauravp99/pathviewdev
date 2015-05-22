@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Translation\Loader;
 
+use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
-use Symfony\Component\Config\Resource\FileResource;
 
 /**
  * CsvFileLoader loads translations from CSV files.
@@ -81,7 +81,7 @@ class CsvFileLoader extends ArrayLoader
      *
      * @param string $delimiter delimiter character
      * @param string $enclosure enclosure character
-     * @param string $escape    escape character
+     * @param string $escape escape character
      */
     public function setCsvControl($delimiter = ';', $enclosure = '"', $escape = '\\')
     {

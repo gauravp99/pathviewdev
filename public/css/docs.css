@@ -2,18 +2,19 @@
     background: #fff;
 }
 
-h4 ~ p{
-    padding-left:20px;
+h4 ~ p {
+    padding-left: 20px;
 }
 
-.inl-bl{
-    display:inline-block;
+.inl-bl {
+    display: inline-block;
 }
 
-.well .markup-heading{
-    
+.well .markup-heading {
+
 }
-.well .markup{
+
+.well .markup {
     background: #fff;
     color: #777;
     position: relative;
@@ -24,7 +25,7 @@ h4 ~ p{
     box-shadow: none;
 }
 
-.well .markup::after{
+.well .markup::after {
     content: "Example";
     position: absolute;
     top: 15px;

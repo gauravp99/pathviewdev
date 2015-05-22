@@ -6,33 +6,29 @@ use PhpParser\Node\Scalar;
 
 class String_ extends Scalar
 {
-    /** @var string String value */
-    public $value;
-
     protected static $replacements = array(
         '\\' => '\\',
-        '$'  =>  '$',
-        'n'  => "\n",
-        'r'  => "\r",
-        't'  => "\t",
-        'f'  => "\f",
-        'v'  => "\v",
-        'e'  => "\x1B",
+        '$' => '$',
+        'n' => "\n",
+        'r' => "\r",
+        't' => "\t",
+        'f' => "\f",
+        'v' => "\v",
+        'e' => "\x1B",
     );
+    /** @var string String value */
+    public $value;
 
     /**
      * Constructs a string scalar node.
      *
-     * @param string $value      Value of the string
-     * @param array  $attributes Additional attributes
+     * @param string $value Value of the string
+     * @param array $attributes Additional attributes
      */
-    public function __construct($value = '', array $attributes = array()) {
+    public function __construct($value = '', array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->value = $value;
-    }
-
-    public function getSubNodeNames() {
-        return array('value');
     }
 
     /**
@@ -44,7 +40,8 @@ class String_ extends Scalar
      *
      * @return string The parsed string
      */
-    public static function parse($str) {
+    public static function parse($str)
+    {
         $bLength = 0;
         if ('b' === $str[0]) {
             $bLength = 1;
@@ -53,7 +50,7 @@ class String_ extends Scalar
         if ('\'' === $str[$bLength]) {
             return str_replace(
                 array('\\\\', '\\\''),
-                array(  '\\',   '\''),
+                array('\\', '\''),
                 substr($str, $bLength + 1, -1)
             );
         } else {
@@ -66,12 +63,13 @@ class String_ extends Scalar
      *
      * Parses escape sequences in strings (all string types apart from single quoted).
      *
-     * @param string      $str   String without quotes
+     * @param string $str String without quotes
      * @param null|string $quote Quote type
      *
      * @return string String with escape sequences parsed
      */
-    public static function parseEscapeSequences($str, $quote) {
+    public static function parseEscapeSequences($str, $quote)
+    {
         if (null !== $quote) {
             $str = str_replace('\\' . $quote, $quote, $str);
         }
@@ -83,7 +81,31 @@ class String_ extends Scalar
         );
     }
 
-    private static function parseCallback($matches) {
+    /**
+     * @internal
+     *
+     * Parses a constant doc string.
+     *
+     * @param string $startToken Doc string start token content (<<<SMTHG)
+     * @param string $str String token content
+     *
+     * @return string Parsed string
+     */
+    public static function parseDocString($startToken, $str)
+    {
+        // strip last newline (thanks tokenizer for sticking it into the string!)
+        $str = preg_replace('~(\r\n|\n|\r)$~', '', $str);
+
+        // nowdoc string
+        if (false !== strpos($startToken, '\'')) {
+            return $str;
+        }
+
+        return self::parseEscapeSequences($str, null);
+    }
+
+    private static function parseCallback($matches)
+    {
         $str = $matches[1];
 
         if (isset(self::$replacements[$str])) {
@@ -95,25 +117,8 @@ class String_ extends Scalar
         }
     }
 
-    /**
-     * @internal
-     *
-     * Parses a constant doc string.
-     *
-     * @param string $startToken Doc string start token content (<<<SMTHG)
-     * @param string $str        String token content
-     *
-     * @return string Parsed string
-     */
-    public static function parseDocString($startToken, $str) {
-        // strip last newline (thanks tokenizer for sticking it into the string!)
-        $str = preg_replace('~(\r\n|\n|\r)$~', '', $str);
-
-        // nowdoc string
-        if (false !== strpos($startToken, '\'')) {
-            return $str;
-        }
-
-        return self::parseEscapeSequences($str, null);
+    public function getSubNodeNames()
+    {
+        return array('value');
     }
 }

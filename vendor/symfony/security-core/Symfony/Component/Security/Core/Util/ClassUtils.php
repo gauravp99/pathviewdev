@@ -56,7 +56,7 @@ class ClassUtils
     {
         $class = is_object($object) ? get_class($object) : $object;
 
-        if (false === $pos = strrpos($class, '\\'.self::MARKER.'\\')) {
+        if (false === $pos = strrpos($class, '\\' . self::MARKER . '\\')) {
             return $class;
         }
 

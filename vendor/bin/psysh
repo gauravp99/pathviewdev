@@ -50,14 +50,14 @@ if (Shell::isIncluded($trace)) {
 // Clean up after ourselves.
 unset($trace);
 
-call_user_func(function() {
+call_user_func(function () {
     $usageException = null;
 
     $input = new ArgvInput();
     try {
         $input->bind(new InputDefinition(array(
-            new InputOption('help',    'h', InputOption::VALUE_NONE),
-            new InputOption('config',  'c', InputOption::VALUE_REQUIRED),
+            new InputOption('help', 'h', InputOption::VALUE_NONE),
+            new InputOption('config', 'c', InputOption::VALUE_REQUIRED),
             new InputOption('version', 'v', InputOption::VALUE_NONE),
 
             new InputArgument('include', InputArgument::IS_ARRAY),
@@ -82,7 +82,7 @@ call_user_func(function() {
         }
 
         $version = $shell->getVersion();
-        $name    = basename(reset($_SERVER['argv']));
+        $name = basename(reset($_SERVER['argv']));
         echo <<<EOL
 $version
 

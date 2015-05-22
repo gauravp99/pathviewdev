@@ -13,11 +13,11 @@
 
 namespace PhpSpec\Runner\Maintainer;
 
-use PhpSpec\Loader\Node\ExampleNode;
-use PhpSpec\SpecificationInterface;
-use PhpSpec\Runner\MatcherManager;
-use PhpSpec\Runner\CollaboratorManager;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Loader\Node\ExampleNode;
+use PhpSpec\Runner\CollaboratorManager;
+use PhpSpec\Runner\MatcherManager;
+use PhpSpec\SpecificationInterface;
 use PhpSpec\Wrapper\Unwrapper;
 use PhpSpec\Wrapper\Wrapper;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -38,8 +38,8 @@ class SubjectMaintainer implements MaintainerInterface
     private $dispatcher;
 
     /**
-     * @param PresenterInterface       $presenter
-     * @param Unwrapper                $unwrapper
+     * @param PresenterInterface $presenter
+     * @param Unwrapper $unwrapper
      * @param EventDispatcherInterface $dispatcher
      */
     public function __construct(PresenterInterface $presenter, Unwrapper $unwrapper, EventDispatcherInterface $dispatcher)
@@ -62,10 +62,10 @@ class SubjectMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function prepare(ExampleNode $example, SpecificationInterface $context,
                             MatcherManager $matchers, CollaboratorManager $collaborators)
@@ -80,10 +80,10 @@ class SubjectMaintainer implements MaintainerInterface
     }
 
     /**
-     * @param ExampleNode            $example
+     * @param ExampleNode $example
      * @param SpecificationInterface $context
-     * @param MatcherManager         $matchers
-     * @param CollaboratorManager    $collaborators
+     * @param MatcherManager $matchers
+     * @param CollaboratorManager $collaborators
      */
     public function teardown(ExampleNode $example, SpecificationInterface $context,
                              MatcherManager $matchers, CollaboratorManager $collaborators)

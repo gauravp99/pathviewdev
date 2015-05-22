@@ -17,7 +17,7 @@ namespace Psy\Presenter;
 abstract class RecursivePresenter implements Presenter, PresenterManagerAware
 {
     const MAX_DEPTH = 5;
-    const INDENT    = '    ';
+    const INDENT = '    ';
 
     protected $manager;
     protected $depth;
@@ -41,8 +41,8 @@ abstract class RecursivePresenter implements Presenter, PresenterManagerAware
      * @see self::presentValue()
      *
      * @param mixed $value
-     * @param int   $depth   (default: null)
-     * @param int   $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */
@@ -52,16 +52,6 @@ abstract class RecursivePresenter implements Presenter, PresenterManagerAware
 
         return $this->presentValue($value, $depth, $options);
     }
-
-    /**
-     * RecursivePresenter subclasses implement a `presentValue` method for
-     * actually doing the presentation.
-     *
-     * @param mixed $value
-     *
-     * @return string
-     */
-    abstract protected function presentValue($value);
 
     /**
      * Keep track of the remaining recursion depth.
@@ -76,6 +66,16 @@ abstract class RecursivePresenter implements Presenter, PresenterManagerAware
     }
 
     /**
+     * RecursivePresenter subclasses implement a `presentValue` method for
+     * actually doing the presentation.
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    abstract protected function presentValue($value);
+
+    /**
      * Present a sub-value.
      *
      * If the current recursion depth is greater than self::MAX_DEPTH, it will
@@ -86,7 +86,7 @@ abstract class RecursivePresenter implements Presenter, PresenterManagerAware
      * @see PresenterManager::presentRef()
      *
      * @param mixed $value
-     * @param int   $options One of Presenter constants
+     * @param int $options One of Presenter constants
      *
      * @return string
      */

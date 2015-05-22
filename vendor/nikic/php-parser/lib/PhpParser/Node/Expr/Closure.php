@@ -23,7 +23,7 @@ class Closure extends Expr
     /**
      * Constructs a lambda function node.
      *
-     * @param array $subNodes   Array of the following optional subnodes:
+     * @param array $subNodes Array of the following optional subnodes:
      *                          'static'     => false  : Whether the closure is static
      *                          'byRef'      => false  : Whether to return by reference
      *                          'params'     => array(): Parameters
@@ -32,7 +32,8 @@ class Closure extends Expr
      *                          'stmts'      => array(): Statements
      * @param array $attributes Additional attributes
      */
-    public function __construct(array $subNodes = array(), array $attributes = array()) {
+    public function __construct(array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->static = isset($subNodes['static']) ? $subNodes['static'] : false;
         $this->byRef = isset($subNodes['byRef']) ? $subNodes['byRef'] : false;
@@ -42,7 +43,8 @@ class Closure extends Expr
         $this->stmts = isset($subNodes['stmts']) ? $subNodes['stmts'] : array();
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('static', 'byRef', 'params', 'uses', 'returnType', 'stmts');
     }
 }

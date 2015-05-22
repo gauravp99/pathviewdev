@@ -11,7 +11,8 @@ class ParserTest extends CodeTestAbstract
     /**
      * @dataProvider provideTestParse
      */
-    public function testParse($name, $code, $dump) {
+    public function testParse($name, $code, $dump)
+    {
         $parser = new Parser(new Lexer\Emulative);
         $dumper = new NodeDumper;
 
@@ -23,14 +24,16 @@ class ParserTest extends CodeTestAbstract
         );
     }
 
-    public function provideTestParse() {
+    public function provideTestParse()
+    {
         return $this->getTests(__DIR__ . '/../code/parser', 'test');
     }
 
     /**
      * @dataProvider provideTestParseFail
      */
-    public function testParseFail($name, $code, $msg) {
+    public function testParseFail($name, $code, $msg)
+    {
         $parser = new Parser(new Lexer\Emulative);
 
         try {
@@ -42,11 +45,13 @@ class ParserTest extends CodeTestAbstract
         }
     }
 
-    public function provideTestParseFail() {
+    public function provideTestParseFail()
+    {
         return $this->getTests(__DIR__ . '/../code/parser', 'test-fail');
     }
 
-    public function testAttributeAssignment() {
+    public function testAttributeAssignment()
+    {
         $lexer = new Lexer(array(
             'usedAttributes' => array(
                 'comments', 'startLine', 'endLine',
@@ -119,13 +124,15 @@ EOC;
      * @expectedException \RangeException
      * @expectedExceptionMessage The lexer returned an invalid token (id=999, value=foobar)
      */
-    public function testInvalidToken() {
+    public function testInvalidToken()
+    {
         $lexer = new InvalidTokenLexer;
         $parser = new Parser($lexer);
         $parser->parse('dummy');
     }
 
-    public function testInvalidOctals() {
+    public function testInvalidOctals()
+    {
         if (version_compare(PHP_VERSION, '7.0-dev', '>=')) {
             $this->markTestSkipped('Cannot parse invalid octal numbers on PHP 7');
         }
@@ -139,8 +146,10 @@ EOC;
     }
 }
 
-class InvalidTokenLexer extends Lexer {
-    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null) {
+class InvalidTokenLexer extends Lexer
+{
+    public function getNextToken(&$value = null, &$startAttributes = null, &$endAttributes = null)
+    {
         $value = 'foobar';
         return 999;
     }

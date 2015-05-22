@@ -26,17 +26,17 @@ class ExistingConstructorTemplate
 
     /**
      * @param TemplateRenderer $templates
-     * @param string           $class
-     * @param string           $className
-     * @param array            $arguments
-     * @param string           $methodName
+     * @param string $class
+     * @param string $className
+     * @param array $arguments
+     * @param string $methodName
      */
     public function __construct(TemplateRenderer $templates, $methodName, array $arguments, $className, $class)
     {
-        $this->templates  = $templates;
-        $this->class      = $class;
-        $this->className  = $className;
-        $this->arguments  = $arguments;
+        $this->templates = $templates;
+        $this->class = $class;
+        $this->className = $className;
+        $this->arguments = $arguments;
         $this->methodName = $methodName;
     }
 
@@ -88,6 +88,33 @@ class ExistingConstructorTemplate
     }
 
     /**
+     * @param  bool $constructorArguments
+     * @return array
+     */
+    private function getValues($constructorArguments = false)
+    {
+        $argString = count($this->arguments)
+            ? '$argument' . implode(', $argument', range(1, count($this->arguments)))
+            : '';
+
+        return array(
+            '%methodName%' => $this->methodName,
+            '%arguments%' => $argString,
+            '%returnVar%' => '$' . lcfirst($this->className),
+            '%className%' => $this->className,
+            '%constructorArguments%' => $constructorArguments ? $argString : ''
+        );
+    }
+
+    /**
+     * @return string
+     */
+    private function getExceptionTemplate()
+    {
+        return file_get_contents(__DIR__ . '/templates/named_constructor_exception.template');
+    }
+
+    /**
      * @return string
      */
     private function getCreateObjectContent()
@@ -104,38 +131,10 @@ class ExistingConstructorTemplate
     }
 
     /**
-     * @param  bool  $constructorArguments
-     * @return array
-     */
-    private function getValues($constructorArguments = false)
-    {
-        $argString = count($this->arguments)
-            ? '$argument'.implode(', $argument',  range(1, count($this->arguments)))
-            : ''
-        ;
-
-        return array(
-            '%methodName%'           => $this->methodName,
-            '%arguments%'            => $argString,
-            '%returnVar%'            => '$'.lcfirst($this->className),
-            '%className%'            => $this->className,
-            '%constructorArguments%' => $constructorArguments ? $argString : ''
-        );
-    }
-
-    /**
      * @return string
      */
     private function getCreateObjectTemplate()
     {
-        return file_get_contents(__DIR__.'/templates/named_constructor_create_object.template');
-    }
-
-    /**
-     * @return string
-     */
-    private function getExceptionTemplate()
-    {
-        return file_get_contents(__DIR__.'/templates/named_constructor_exception.template');
+        return file_get_contents(__DIR__ . '/templates/named_constructor_create_object.template');
     }
 }

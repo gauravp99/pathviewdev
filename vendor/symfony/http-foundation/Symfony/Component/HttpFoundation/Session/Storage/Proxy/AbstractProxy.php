@@ -66,6 +66,32 @@ abstract class AbstractProxy
     }
 
     /**
+     * Gets the session ID.
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return session_id();
+    }
+
+    /**
+     * Sets the session ID.
+     *
+     * @param string $id
+     *
+     * @throws \LogicException
+     */
+    public function setId($id)
+    {
+        if ($this->isActive()) {
+            throw new \LogicException('Cannot change the ID of an active session');
+        }
+
+        session_id($id);
+    }
+
+    /**
      * Has a session started?
      *
      * @return bool
@@ -97,33 +123,7 @@ abstract class AbstractProxy
             throw new \LogicException('This method is disabled in PHP 5.4.0+');
         }
 
-        $this->active = (bool) $flag;
-    }
-
-    /**
-     * Gets the session ID.
-     *
-     * @return string
-     */
-    public function getId()
-    {
-        return session_id();
-    }
-
-    /**
-     * Sets the session ID.
-     *
-     * @param string $id
-     *
-     * @throws \LogicException
-     */
-    public function setId($id)
-    {
-        if ($this->isActive()) {
-            throw new \LogicException('Cannot change the ID of an active session');
-        }
-
-        session_id($id);
+        $this->active = (bool)$flag;
     }
 
     /**

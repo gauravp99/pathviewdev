@@ -20,15 +20,16 @@ class Function_ extends Node\Stmt
     /**
      * Constructs a function node.
      *
-     * @param string $name       Name
-     * @param array  $subNodes   Array of the following optional subnodes:
+     * @param string $name Name
+     * @param array $subNodes Array of the following optional subnodes:
      *                           'byRef'      => false  : Whether to return by reference
      *                           'params'     => array(): Parameters
      *                           'returnType' => null   : Return type
      *                           'stmts'      => array(): Statements
-     * @param array  $attributes Additional attributes
+     * @param array $attributes Additional attributes
      */
-    public function __construct($name, array $subNodes = array(), array $attributes = array()) {
+    public function __construct($name, array $subNodes = array(), array $attributes = array())
+    {
         parent::__construct(null, $attributes);
         $this->byRef = isset($subNodes['byRef']) ? $subNodes['byRef'] : false;
         $this->name = $name;
@@ -37,7 +38,8 @@ class Function_ extends Node\Stmt
         $this->stmts = isset($subNodes['stmts']) ? $subNodes['stmts'] : array();
     }
 
-    public function getSubNodeNames() {
+    public function getSubNodeNames()
+    {
         return array('byRef', 'name', 'params', 'returnType', 'stmts');
     }
 }

@@ -10,8 +10,8 @@
  */
 
 use Carbon\Carbon;
-use Symfony\Component\Translation\Translator;
 use Symfony\Component\Translation\Loader\ArrayLoader;
+use Symfony\Component\Translation\Translator;
 
 class LocalizationTest extends TestFixture
 {

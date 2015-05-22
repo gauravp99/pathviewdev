@@ -2,10 +2,9 @@
 
 namespace spec\PhpSpec\Matcher;
 
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
-
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class ObjectStateMatcherSpec extends ObjectBehavior
 {
@@ -86,7 +85,8 @@ class ObjectStateMatcherSpec extends ObjectBehavior
 
     function it_does_not_match_if_subject_is_callable()
     {
-        $subject = function () {};
+        $subject = function () {
+        };
 
         $this->supports('beCallable', $subject, array())->shouldReturn(false);
     }

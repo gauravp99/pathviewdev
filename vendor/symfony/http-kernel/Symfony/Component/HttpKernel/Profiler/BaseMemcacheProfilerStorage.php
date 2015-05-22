@@ -26,15 +26,15 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     /**
      * Constructor.
      *
-     * @param string $dsn      A data source name
+     * @param string $dsn A data source name
      * @param string $username
      * @param string $password
-     * @param int    $lifetime The lifetime to use for the purge
+     * @param int $lifetime The lifetime to use for the purge
      */
     public function __construct($dsn, $username = '', $password = '', $lifetime = 86400)
     {
         $this->dsn = $dsn;
-        $this->lifetime = (int) $lifetime;
+        $this->lifetime = (int)$lifetime;
     }
 
     /**
@@ -63,7 +63,7 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
 
             list($itemToken, $itemIp, $itemMethod, $itemUrl, $itemTime, $itemParent) = explode("\t", $item, 6);
 
-            $itemTime = (int) $itemTime;
+            $itemTime = (int)$itemTime;
 
             if ($ip && false === strpos($itemIp, $ip) || $url && false === strpos($itemUrl, $url) || $method && false === strpos($itemMethod, $method)) {
                 continue;
@@ -100,6 +100,42 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
+     * Get name of index.
+     *
+     * @return string
+     */
+    private function getIndexName()
+    {
+        $name = self::TOKEN_PREFIX . 'index';
+
+        if ($this->isItemNameValid($name)) {
+            return $name;
+        }
+
+        return false;
+    }
+
+    private function isItemNameValid($name)
+    {
+        $length = strlen($name);
+
+        if ($length > 250) {
+            throw new \RuntimeException(sprintf('The memcache item key "%s" is too long (%s bytes). Allowed maximum size is 250 bytes.', $name, $length));
+        }
+
+        return true;
+    }
+
+    /**
+     * Retrieve item from the memcache server.
+     *
+     * @param string $key
+     *
+     * @return mixed
+     */
+    abstract protected function getValue($key);
+
+    /**
      * {@inheritdoc}
      */
     public function purge()
@@ -129,6 +165,33 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
+     * Delete item from the memcache server.
+     *
+     * @param string $key
+     *
+     * @return bool
+     */
+    abstract protected function delete($key);
+
+    /**
+     * Get item name.
+     *
+     * @param string $token
+     *
+     * @return string
+     */
+    private function getItemName($token)
+    {
+        $name = self::TOKEN_PREFIX . $token;
+
+        if ($this->isItemNameValid($name)) {
+            return $name;
+        }
+
+        return false;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function read($token)
@@ -145,87 +208,6 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
 
         return $profile;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function write(Profile $profile)
-    {
-        $data = array(
-            'token' => $profile->getToken(),
-            'parent' => $profile->getParentToken(),
-            'children' => array_map(function ($p) { return $p->getToken(); }, $profile->getChildren()),
-            'data' => $profile->getCollectors(),
-            'ip' => $profile->getIp(),
-            'method' => $profile->getMethod(),
-            'url' => $profile->getUrl(),
-            'time' => $profile->getTime(),
-        );
-
-        $profileIndexed = false !== $this->getValue($this->getItemName($profile->getToken()));
-
-        if ($this->setValue($this->getItemName($profile->getToken()), $data, $this->lifetime)) {
-            if (!$profileIndexed) {
-                // Add to index
-                $indexName = $this->getIndexName();
-
-                $indexRow = implode("\t", array(
-                    $profile->getToken(),
-                    $profile->getIp(),
-                    $profile->getMethod(),
-                    $profile->getUrl(),
-                    $profile->getTime(),
-                    $profile->getParentToken(),
-                ))."\n";
-
-                return $this->appendValue($indexName, $indexRow, $this->lifetime);
-            }
-
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * Retrieve item from the memcache server.
-     *
-     * @param string $key
-     *
-     * @return mixed
-     */
-    abstract protected function getValue($key);
-
-    /**
-     * Store an item on the memcache server under the specified key.
-     *
-     * @param string $key
-     * @param mixed  $value
-     * @param int    $expiration
-     *
-     * @return bool
-     */
-    abstract protected function setValue($key, $value, $expiration = 0);
-
-    /**
-     * Delete item from the memcache server.
-     *
-     * @param string $key
-     *
-     * @return bool
-     */
-    abstract protected function delete($key);
-
-    /**
-     * Append data to an existing item on the memcache server.
-     *
-     * @param string $key
-     * @param string $value
-     * @param int    $expiration
-     *
-     * @return bool
-     */
-    abstract protected function appendValue($key, $value, $expiration = 0);
 
     private function createProfileFromData($token, $data, $parent = null)
     {
@@ -260,47 +242,67 @@ abstract class BaseMemcacheProfilerStorage implements ProfilerStorageInterface
     }
 
     /**
-     * Get item name.
-     *
-     * @param string $token
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    private function getItemName($token)
+    public function write(Profile $profile)
     {
-        $name = self::TOKEN_PREFIX.$token;
+        $data = array(
+            'token' => $profile->getToken(),
+            'parent' => $profile->getParentToken(),
+            'children' => array_map(function ($p) {
+                return $p->getToken();
+            }, $profile->getChildren()),
+            'data' => $profile->getCollectors(),
+            'ip' => $profile->getIp(),
+            'method' => $profile->getMethod(),
+            'url' => $profile->getUrl(),
+            'time' => $profile->getTime(),
+        );
 
-        if ($this->isItemNameValid($name)) {
-            return $name;
+        $profileIndexed = false !== $this->getValue($this->getItemName($profile->getToken()));
+
+        if ($this->setValue($this->getItemName($profile->getToken()), $data, $this->lifetime)) {
+            if (!$profileIndexed) {
+                // Add to index
+                $indexName = $this->getIndexName();
+
+                $indexRow = implode("\t", array(
+                        $profile->getToken(),
+                        $profile->getIp(),
+                        $profile->getMethod(),
+                        $profile->getUrl(),
+                        $profile->getTime(),
+                        $profile->getParentToken(),
+                    )) . "\n";
+
+                return $this->appendValue($indexName, $indexRow, $this->lifetime);
+            }
+
+            return true;
         }
 
         return false;
     }
 
     /**
-     * Get name of index.
+     * Store an item on the memcache server under the specified key.
      *
-     * @return string
+     * @param string $key
+     * @param mixed $value
+     * @param int $expiration
+     *
+     * @return bool
      */
-    private function getIndexName()
-    {
-        $name = self::TOKEN_PREFIX.'index';
+    abstract protected function setValue($key, $value, $expiration = 0);
 
-        if ($this->isItemNameValid($name)) {
-            return $name;
-        }
-
-        return false;
-    }
-
-    private function isItemNameValid($name)
-    {
-        $length = strlen($name);
-
-        if ($length > 250) {
-            throw new \RuntimeException(sprintf('The memcache item key "%s" is too long (%s bytes). Allowed maximum size is 250 bytes.', $name, $length));
-        }
-
-        return true;
-    }
+    /**
+     * Append data to an existing item on the memcache server.
+     *
+     * @param string $key
+     * @param string $value
+     * @param int $expiration
+     *
+     * @return bool
+     */
+    abstract protected function appendValue($key, $value, $expiration = 0);
 }

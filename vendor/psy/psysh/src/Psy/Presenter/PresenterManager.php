@@ -104,6 +104,24 @@ class PresenterManager implements Presenter, \IteratorAggregate
     }
 
     /**
+     * Find the highest precedence Presenter available for $value.
+     *
+     * Returns null if none is present.
+     *
+     * @param mixed $value
+     *
+     * @return null|Presenter
+     */
+    protected function getPresenter($value)
+    {
+        foreach ($this->presenters as $presenter) {
+            if ($presenter->canPresent($value)) {
+                return $presenter;
+            }
+        }
+    }
+
+    /**
      * Present a reference to the value.
      *
      * @param mixed $value
@@ -127,8 +145,8 @@ class PresenterManager implements Presenter, \IteratorAggregate
      * If $depth is 0, the value will be presented as a ref instead.
      *
      * @param mixed $value
-     * @param int   $depth   (default: null)
-     * @param int   $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @throws \InvalidArgumentException If no Presenter is registered for $value
      *
@@ -155,23 +173,5 @@ class PresenterManager implements Presenter, \IteratorAggregate
     public function getIterator()
     {
         return new \ArrayIterator(array_reverse($this->presenters));
-    }
-
-    /**
-     * Find the highest precedence Presenter available for $value.
-     *
-     * Returns null if none is present.
-     *
-     * @param mixed $value
-     *
-     * @return null|Presenter
-     */
-    protected function getPresenter($value)
-    {
-        foreach ($this->presenters as $presenter) {
-            if ($presenter->canPresent($value)) {
-                return $presenter;
-            }
-        }
     }
 }

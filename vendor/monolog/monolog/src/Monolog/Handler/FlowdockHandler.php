@@ -32,9 +32,9 @@ class FlowdockHandler extends SocketHandler
     protected $apiToken;
 
     /**
-     * @param string   $apiToken
-     * @param bool|int $level    The minimum logging level at which this handler will be triggered
-     * @param bool     $bubble   Whether the messages that are handled can bubble up the stack or not
+     * @param string $apiToken
+     * @param bool|int $level The minimum logging level at which this handler will be triggered
+     * @param bool $bubble Whether the messages that are handled can bubble up the stack or not
      *
      * @throws MissingExtensionException if OpenSSL is missing
      */
@@ -63,7 +63,7 @@ class FlowdockHandler extends SocketHandler
     /**
      * {@inheritdoc}
      *
-     * @param  array  $record
+     * @param  array $record
      * @return string
      */
     protected function generateDataStream($record)
@@ -76,7 +76,7 @@ class FlowdockHandler extends SocketHandler
     /**
      * Builds the body of API call
      *
-     * @param  array  $record
+     * @param  array $record
      * @return string
      */
     private function buildContent($record)

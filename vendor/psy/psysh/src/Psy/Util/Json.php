@@ -19,7 +19,7 @@ class Json
     /**
      * Encode a value as JSON.
      *
-     * @param mixed   $val
+     * @param mixed $val
      * @param integer $opt
      *
      * @return string

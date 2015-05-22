@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of PHPUnit.
  *
@@ -32,6 +33,19 @@ class BankAccount
     protected $balance = 0;
 
     /**
+     * Deposits an amount of money to the bank account.
+     *
+     * @param  float $balance
+     * @throws BankAccountException
+     */
+    public function depositMoney($balance)
+    {
+        $this->setBalance($this->getBalance() + $balance);
+
+        return $this->getBalance();
+    }
+
+    /**
      * Returns the bank account's balance.
      *
      * @return float
@@ -54,19 +68,6 @@ class BankAccount
         } else {
             throw new BankAccountException;
         }
-    }
-
-    /**
-     * Deposits an amount of money to the bank account.
-     *
-     * @param  float $balance
-     * @throws BankAccountException
-     */
-    public function depositMoney($balance)
-    {
-        $this->setBalance($this->getBalance() + $balance);
-
-        return $this->getBalance();
     }
 
     /**

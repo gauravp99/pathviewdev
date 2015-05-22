@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\VarDumper\Caster;
 
-use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 use Symfony\Component\VarDumper\Cloner\Stub;
+use Symfony\Component\VarDumper\Exception\ThrowingCasterException;
 
 /**
  * Casts common Exception classes to array representation.
@@ -58,38 +58,6 @@ class ExceptionCaster
         return $a;
     }
 
-    public static function castErrorException(\ErrorException $e, array $a, Stub $stub, $isNested)
-    {
-        if (isset($a[$s = "\0*\0severity"], self::$errorTypes[$a[$s]])) {
-            $a[$s] = new ConstStub(self::$errorTypes[$a[$s]], $a[$s]);
-        }
-
-        return $a;
-    }
-
-    public static function castThrowingCasterException(ThrowingCasterException $e, array $a, Stub $stub, $isNested)
-    {
-        $b = (array) $a["\0Exception\0previous"];
-
-        if (isset($b["\0*\0message"])) {
-            $a["\0~\0message"] = $b["\0*\0message"];
-        }
-
-        if (isset($a["\0Exception\0trace"])) {
-            $b["\0Exception\0trace"][0] += array(
-                'file' => $b["\0*\0file"],
-                'line' => $b["\0*\0line"],
-            );
-            array_splice($b["\0Exception\0trace"], -1 - count($a["\0Exception\0trace"]));
-            static::filterTrace($b["\0Exception\0trace"], false);
-            $a["\0~\0trace"] = $b["\0Exception\0trace"];
-        }
-
-        unset($a["\0Exception\0trace"], $a["\0Exception\0previous"], $a["\0*\0code"], $a["\0*\0file"], $a["\0*\0line"]);
-
-        return $a;
-    }
-
     public static function filterTrace(&$trace, $dumpArgs, $offset = 0)
     {
         if (0 > $offset || empty($trace[$offset])) {
@@ -110,7 +78,7 @@ class ExceptionCaster
 
         foreach ($trace as &$t) {
             $t = array(
-                'call' => (isset($t['class']) ? $t['class'].$t['type'] : '').$t['function'].'()',
+                'call' => (isset($t['class']) ? $t['class'] . $t['type'] : '') . $t['function'] . '()',
                 'file' => isset($t['line']) ? "{$t['file']}:{$t['line']}" : '',
                 'args' => &$t['args'],
             );
@@ -119,5 +87,37 @@ class ExceptionCaster
                 unset($t['args']);
             }
         }
+    }
+
+    public static function castErrorException(\ErrorException $e, array $a, Stub $stub, $isNested)
+    {
+        if (isset($a[$s = "\0*\0severity"], self::$errorTypes[$a[$s]])) {
+            $a[$s] = new ConstStub(self::$errorTypes[$a[$s]], $a[$s]);
+        }
+
+        return $a;
+    }
+
+    public static function castThrowingCasterException(ThrowingCasterException $e, array $a, Stub $stub, $isNested)
+    {
+        $b = (array)$a["\0Exception\0previous"];
+
+        if (isset($b["\0*\0message"])) {
+            $a["\0~\0message"] = $b["\0*\0message"];
+        }
+
+        if (isset($a["\0Exception\0trace"])) {
+            $b["\0Exception\0trace"][0] += array(
+                'file' => $b["\0*\0file"],
+                'line' => $b["\0*\0line"],
+            );
+            array_splice($b["\0Exception\0trace"], -1 - count($a["\0Exception\0trace"]));
+            static::filterTrace($b["\0Exception\0trace"], false);
+            $a["\0~\0trace"] = $b["\0Exception\0trace"];
+        }
+
+        unset($a["\0Exception\0trace"], $a["\0Exception\0previous"], $a["\0*\0code"], $a["\0*\0file"], $a["\0*\0line"]);
+
+        return $a;
     }
 }

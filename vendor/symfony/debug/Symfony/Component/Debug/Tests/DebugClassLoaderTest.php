@@ -24,21 +24,6 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
 
     private $loader;
 
-    protected function setUp()
-    {
-        $this->errorReporting = error_reporting(E_ALL | E_STRICT);
-        $this->loader = new ClassLoader();
-        spl_autoload_register(array($this->loader, 'loadClass'), true, true);
-        DebugClassLoader::enable();
-    }
-
-    protected function tearDown()
-    {
-        DebugClassLoader::disable();
-        spl_autoload_unregister(array($this->loader, 'loadClass'));
-        error_reporting($this->errorReporting);
-    }
-
     public function testIdempotence()
     {
         DebugClassLoader::enable();
@@ -68,7 +53,7 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
 
         // See below: this will fail with parse error
         // but this should not be @-silenced.
-        @class_exists(__NAMESPACE__.'\TestingUnsilencing', true);
+        @class_exists(__NAMESPACE__ . '\TestingUnsilencing', true);
 
         $output = ob_get_clean();
 
@@ -92,7 +77,7 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
             // Error stacking works around the bug above and everything is fine.
 
             eval('
-                namespace '.__NAMESPACE__.';
+                namespace ' . __NAMESPACE__ . ';
                 class ChildTestingStacking extends TestingStacking { function foo($bar) {} }
             ');
             $this->fail('ContextErrorException expected');
@@ -116,7 +101,7 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testNameCaseMismatch()
     {
-        class_exists(__NAMESPACE__.'\TestingCaseMismatch', true);
+        class_exists(__NAMESPACE__ . '\TestingCaseMismatch', true);
     }
 
     /**
@@ -124,11 +109,11 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testFileCaseMismatch()
     {
-        if (!file_exists(__DIR__.'/Fixtures/CaseMismatch.php')) {
+        if (!file_exists(__DIR__ . '/Fixtures/CaseMismatch.php')) {
             $this->markTestSkipped('Can only be run on case insensitive filesystems');
         }
 
-        class_exists(__NAMESPACE__.'\Fixtures\CaseMismatch', true);
+        class_exists(__NAMESPACE__ . '\Fixtures\CaseMismatch', true);
     }
 
     /**
@@ -136,22 +121,37 @@ class DebugClassLoaderTest extends \PHPUnit_Framework_TestCase
      */
     public function testPsr4CaseMismatch()
     {
-        class_exists(__NAMESPACE__.'\Fixtures\Psr4CaseMismatch', true);
+        class_exists(__NAMESPACE__ . '\Fixtures\Psr4CaseMismatch', true);
     }
 
     public function testNotPsr0()
     {
-        $this->assertTrue(class_exists(__NAMESPACE__.'\Fixtures\NotPSR0', true));
+        $this->assertTrue(class_exists(__NAMESPACE__ . '\Fixtures\NotPSR0', true));
     }
 
     public function testNotPsr0Bis()
     {
-        $this->assertTrue(class_exists(__NAMESPACE__.'\Fixtures\NotPSR0bis', true));
+        $this->assertTrue(class_exists(__NAMESPACE__ . '\Fixtures\NotPSR0bis', true));
     }
 
     public function testClassAlias()
     {
-        $this->assertTrue(class_exists(__NAMESPACE__.'\Fixtures\ClassAlias', true));
+        $this->assertTrue(class_exists(__NAMESPACE__ . '\Fixtures\ClassAlias', true));
+    }
+
+    protected function setUp()
+    {
+        $this->errorReporting = error_reporting(E_ALL | E_STRICT);
+        $this->loader = new ClassLoader();
+        spl_autoload_register(array($this->loader, 'loadClass'), true, true);
+        DebugClassLoader::enable();
+    }
+
+    protected function tearDown()
+    {
+        DebugClassLoader::disable();
+        spl_autoload_unregister(array($this->loader, 'loadClass'));
+        error_reporting($this->errorReporting);
     }
 }
 
@@ -163,25 +163,25 @@ class ClassLoader
 
     public function getClassMap()
     {
-        return array(__NAMESPACE__.'\Fixtures\NotPSR0bis' => __DIR__.'/Fixtures/notPsr0Bis.php');
+        return array(__NAMESPACE__ . '\Fixtures\NotPSR0bis' => __DIR__ . '/Fixtures/notPsr0Bis.php');
     }
 
     public function findFile($class)
     {
-        if (__NAMESPACE__.'\TestingUnsilencing' === $class) {
+        if (__NAMESPACE__ . '\TestingUnsilencing' === $class) {
             eval('-- parse error --');
-        } elseif (__NAMESPACE__.'\TestingStacking' === $class) {
-            eval('namespace '.__NAMESPACE__.'; class TestingStacking { function foo() {} }');
-        } elseif (__NAMESPACE__.'\TestingCaseMismatch' === $class) {
-            eval('namespace '.__NAMESPACE__.'; class TestingCaseMisMatch {}');
-        } elseif (__NAMESPACE__.'\Fixtures\CaseMismatch' === $class) {
-            return __DIR__.'/Fixtures/CaseMismatch.php';
-        } elseif (__NAMESPACE__.'\Fixtures\Psr4CaseMismatch' === $class) {
-            return __DIR__.'/Fixtures/psr4/Psr4CaseMismatch.php';
-        } elseif (__NAMESPACE__.'\Fixtures\NotPSR0' === $class) {
-            return __DIR__.'/Fixtures/reallyNotPsr0.php';
-        } elseif (__NAMESPACE__.'\Fixtures\NotPSR0bis' === $class) {
-            return __DIR__.'/Fixtures/notPsr0Bis.php';
+        } elseif (__NAMESPACE__ . '\TestingStacking' === $class) {
+            eval('namespace ' . __NAMESPACE__ . '; class TestingStacking { function foo() {} }');
+        } elseif (__NAMESPACE__ . '\TestingCaseMismatch' === $class) {
+            eval('namespace ' . __NAMESPACE__ . '; class TestingCaseMisMatch {}');
+        } elseif (__NAMESPACE__ . '\Fixtures\CaseMismatch' === $class) {
+            return __DIR__ . '/Fixtures/CaseMismatch.php';
+        } elseif (__NAMESPACE__ . '\Fixtures\Psr4CaseMismatch' === $class) {
+            return __DIR__ . '/Fixtures/psr4/Psr4CaseMismatch.php';
+        } elseif (__NAMESPACE__ . '\Fixtures\NotPSR0' === $class) {
+            return __DIR__ . '/Fixtures/reallyNotPsr0.php';
+        } elseif (__NAMESPACE__ . '\Fixtures\NotPSR0bis' === $class) {
+            return __DIR__ . '/Fixtures/notPsr0Bis.php';
         }
     }
 }

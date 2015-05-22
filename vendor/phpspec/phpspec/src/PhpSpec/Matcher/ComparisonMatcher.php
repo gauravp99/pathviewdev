@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Exception\Example\NotEqualException;
 use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Exception\Example\NotEqualException;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class ComparisonMatcher extends BasicMatcher
 {
@@ -34,16 +34,15 @@ class ComparisonMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return bool
      */
     public function supports($name, $subject, array $arguments)
     {
         return 'beLike' === $name
-            && 1 == count($arguments)
-        ;
+        && 1 == count($arguments);
     }
 
     /**
@@ -59,8 +58,8 @@ class ComparisonMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return NotEqualException
      */
@@ -75,8 +74,8 @@ class ComparisonMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return FailureException
      */

@@ -10,7 +10,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = new S('foo bar', 'UTF-8');
         $this->assertStringy($stringy);
-        $this->assertEquals('foo bar', (string) $stringy);
+        $this->assertEquals('foo bar', (string)$stringy);
         $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 
@@ -19,7 +19,7 @@ class StringyTestCase extends CommonTest
      */
     public function testConstructWithArray()
     {
-        (string) new S(array());
+        (string)new S(array());
         $this->fail('Expecting exception when the constructor is passed an array');
     }
 
@@ -28,9 +28,9 @@ class StringyTestCase extends CommonTest
      */
     public function testMissingToString()
     {
-        (string) new S(new stdClass());
+        (string)new S(new stdClass());
         $this->fail('Expecting exception when the constructor is passed an ' .
-                    'object without a __toString method');
+            'object without a __toString method');
     }
 
     /**
@@ -38,7 +38,7 @@ class StringyTestCase extends CommonTest
      */
     public function testToString($expected, $str)
     {
-        $this->assertEquals($expected, (string) new S($str));
+        $this->assertEquals($expected, (string)new S($str));
     }
 
     public function toStringProvider()
@@ -57,7 +57,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create('foo bar', 'UTF-8');
         $this->assertStringy($stringy);
-        $this->assertEquals('foo bar', (string) $stringy);
+        $this->assertEquals('foo bar', (string)$stringy);
         $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 

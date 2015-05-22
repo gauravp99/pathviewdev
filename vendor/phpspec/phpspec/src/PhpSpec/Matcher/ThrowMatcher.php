@@ -13,14 +13,14 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Wrapper\Unwrapper;
-use PhpSpec\Wrapper\DelayedCall;
-use PhpSpec\Factory\ReflectionFactory;
-use PhpSpec\Exception\Example\MatcherException;
 use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Exception\Example\MatcherException;
 use PhpSpec\Exception\Example\NotEqualException;
 use PhpSpec\Exception\Fracture\MethodNotFoundException;
+use PhpSpec\Factory\ReflectionFactory;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Wrapper\DelayedCall;
+use PhpSpec\Wrapper\Unwrapper;
 
 class ThrowMatcher implements MatcherInterface
 {
@@ -43,21 +43,21 @@ class ThrowMatcher implements MatcherInterface
     private $factory;
 
     /**
-     * @param Unwrapper          $unwrapper
+     * @param Unwrapper $unwrapper
      * @param PresenterInterface $presenter
-     * @param ReflectionFactory  $factory
+     * @param ReflectionFactory $factory
      */
     public function __construct(Unwrapper $unwrapper, PresenterInterface $presenter, ReflectionFactory $factory = null)
     {
         $this->unwrapper = $unwrapper;
         $this->presenter = $presenter;
-        $this->factory   = $factory ?: new ReflectionFactory();
+        $this->factory = $factory ?: new ReflectionFactory();
     }
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return bool
      */
@@ -68,8 +68,8 @@ class ThrowMatcher implements MatcherInterface
 
     /**
      * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return DelayedCall
      */
@@ -79,139 +79,9 @@ class ThrowMatcher implements MatcherInterface
     }
 
     /**
-     * @param string $name
-     * @param mixed  $subject
-     * @param array  $arguments
-     *
-     * @return DelayedCall
-     */
-    public function negativeMatch($name, $subject, array $arguments)
-    {
-        return $this->getDelayedCall(array($this, 'verifyNegative'), $subject, $arguments);
-    }
-
-    /**
-     * @param callable $callable
-     * @param array    $arguments
-     * @param null     $exception
-     *
-     * @throws \PhpSpec\Exception\Example\FailureException
-     * @throws \PhpSpec\Exception\Example\NotEqualException
-     */
-    public function verifyPositive($callable, array $arguments, $exception = null)
-    {
-        try {
-            call_user_func_array($callable, $arguments);
-        } catch (\Exception $e) {
-            if (null === $exception) {
-                return;
-            }
-
-            if (!$e instanceof $exception) {
-                throw new FailureException(sprintf(
-                    'Expected exception of class %s, but got %s.',
-                    $this->presenter->presentValue($exception),
-                    $this->presenter->presentValue($e)
-                ));
-            }
-
-            if (is_object($exception)) {
-                $exceptionRefl = $this->factory->create($exception);
-                foreach ($exceptionRefl->getProperties() as $property) {
-                    if (in_array($property->getName(), self::$ignoredProperties)) {
-                        continue;
-                    }
-
-                    $property->setAccessible(true);
-                    $expected = $property->getValue($exception);
-                    $actual   = $property->getValue($e);
-
-                    if (null !== $expected && $actual !== $expected) {
-                        throw new NotEqualException(sprintf(
-                            'Expected exception `%s` to be %s, but it is %s.',
-                            $property->getName(),
-                            $this->presenter->presentValue($expected),
-                            $this->presenter->presentValue($actual)
-                        ), $expected, $actual);
-                    }
-                }
-            }
-
-            return;
-        }
-
-        throw new FailureException('Expected to get exception, none got.');
-    }
-
-    /**
-     * @param callable    $callable
-     * @param array       $arguments
-     * @param string|null $exception
-     *
-     * @throws \PhpSpec\Exception\Example\FailureException
-     */
-    public function verifyNegative($callable, array $arguments, $exception = null)
-    {
-        try {
-            call_user_func_array($callable, $arguments);
-        } catch (\Exception $e) {
-            if (null === $exception) {
-                throw new FailureException(sprintf(
-                    'Expected to not throw any exceptions, but got %s.',
-                    $this->presenter->presentValue($e)
-                ));
-            }
-
-            if ($e instanceof $exception) {
-                $invalidProperties = array();
-                if (is_object($exception)) {
-                    $exceptionRefl = $this->factory->create($exception);
-                    foreach ($exceptionRefl->getProperties() as $property) {
-                        if (in_array($property->getName(), self::$ignoredProperties)) {
-                            continue;
-                        }
-
-                        $property->setAccessible(true);
-                        $expected = $property->getValue($exception);
-                        $actual   = $property->getValue($e);
-
-                        if (null !== $expected && $actual === $expected) {
-                            $invalidProperties[] = sprintf('  `%s`=%s',
-                                $property->getName(),
-                                $this->presenter->presentValue($expected)
-                            );
-                        }
-                    }
-                }
-
-                $withProperties = '';
-                if (count($invalidProperties) > 0) {
-                    $withProperties = sprintf(' with'.PHP_EOL.'%s,'.PHP_EOL,
-                        implode(",\n", $invalidProperties)
-                    );
-                }
-
-                throw new FailureException(sprintf(
-                    'Expected to not throw %s exception%s but got it.',
-                    $this->presenter->presentValue($exception),
-                    $withProperties
-                ));
-            }
-        }
-    }
-
-    /**
-     * @return int
-     */
-    public function getPriority()
-    {
-        return 1;
-    }
-
-    /**
      * @param callable $check
-     * @param mixed    $subject
-     * @param array    $arguments
+     * @param mixed $subject
+     * @param array $arguments
      *
      * @return DelayedCall
      */
@@ -224,7 +94,7 @@ class ThrowMatcher implements MatcherInterface
             function ($method, $arguments) use ($check, $subject, $exception, $unwrapper) {
                 $arguments = $unwrapper->unwrapAll($arguments);
 
-                $methodName  = $arguments[0];
+                $methodName = $arguments[0];
                 $arguments = isset($arguments[1]) ? $arguments[1] : array();
                 $callable = array($subject, $methodName);
 
@@ -262,10 +132,140 @@ class ThrowMatcher implements MatcherInterface
         }
 
         throw new MatcherException(sprintf(
-            "Wrong argument provided in throw matcher.\n".
-            "Fully qualified classname or exception instance expected,\n".
+            "Wrong argument provided in throw matcher.\n" .
+            "Fully qualified classname or exception instance expected,\n" .
             "Got %s.",
             $this->presenter->presentValue($arguments[0])
         ));
+    }
+
+    /**
+     * @param string $name
+     * @param mixed $subject
+     * @param array $arguments
+     *
+     * @return DelayedCall
+     */
+    public function negativeMatch($name, $subject, array $arguments)
+    {
+        return $this->getDelayedCall(array($this, 'verifyNegative'), $subject, $arguments);
+    }
+
+    /**
+     * @param callable $callable
+     * @param array $arguments
+     * @param null $exception
+     *
+     * @throws \PhpSpec\Exception\Example\FailureException
+     * @throws \PhpSpec\Exception\Example\NotEqualException
+     */
+    public function verifyPositive($callable, array $arguments, $exception = null)
+    {
+        try {
+            call_user_func_array($callable, $arguments);
+        } catch (\Exception $e) {
+            if (null === $exception) {
+                return;
+            }
+
+            if (!$e instanceof $exception) {
+                throw new FailureException(sprintf(
+                    'Expected exception of class %s, but got %s.',
+                    $this->presenter->presentValue($exception),
+                    $this->presenter->presentValue($e)
+                ));
+            }
+
+            if (is_object($exception)) {
+                $exceptionRefl = $this->factory->create($exception);
+                foreach ($exceptionRefl->getProperties() as $property) {
+                    if (in_array($property->getName(), self::$ignoredProperties)) {
+                        continue;
+                    }
+
+                    $property->setAccessible(true);
+                    $expected = $property->getValue($exception);
+                    $actual = $property->getValue($e);
+
+                    if (null !== $expected && $actual !== $expected) {
+                        throw new NotEqualException(sprintf(
+                            'Expected exception `%s` to be %s, but it is %s.',
+                            $property->getName(),
+                            $this->presenter->presentValue($expected),
+                            $this->presenter->presentValue($actual)
+                        ), $expected, $actual);
+                    }
+                }
+            }
+
+            return;
+        }
+
+        throw new FailureException('Expected to get exception, none got.');
+    }
+
+    /**
+     * @param callable $callable
+     * @param array $arguments
+     * @param string|null $exception
+     *
+     * @throws \PhpSpec\Exception\Example\FailureException
+     */
+    public function verifyNegative($callable, array $arguments, $exception = null)
+    {
+        try {
+            call_user_func_array($callable, $arguments);
+        } catch (\Exception $e) {
+            if (null === $exception) {
+                throw new FailureException(sprintf(
+                    'Expected to not throw any exceptions, but got %s.',
+                    $this->presenter->presentValue($e)
+                ));
+            }
+
+            if ($e instanceof $exception) {
+                $invalidProperties = array();
+                if (is_object($exception)) {
+                    $exceptionRefl = $this->factory->create($exception);
+                    foreach ($exceptionRefl->getProperties() as $property) {
+                        if (in_array($property->getName(), self::$ignoredProperties)) {
+                            continue;
+                        }
+
+                        $property->setAccessible(true);
+                        $expected = $property->getValue($exception);
+                        $actual = $property->getValue($e);
+
+                        if (null !== $expected && $actual === $expected) {
+                            $invalidProperties[] = sprintf('  `%s`=%s',
+                                $property->getName(),
+                                $this->presenter->presentValue($expected)
+                            );
+                        }
+                    }
+                }
+
+                $withProperties = '';
+                if (count($invalidProperties) > 0) {
+                    $withProperties = sprintf(' with' . PHP_EOL . '%s,' . PHP_EOL,
+                        implode(",\n", $invalidProperties)
+                    );
+                }
+
+                throw new FailureException(sprintf(
+                    'Expected to not throw %s exception%s but got it.',
+                    $this->presenter->presentValue($exception),
+                    $withProperties
+                ));
+            }
+        }
+    }
+
+    /**
+     * @return int
+     */
+    public function getPriority()
+    {
+        return 1;
     }
 }

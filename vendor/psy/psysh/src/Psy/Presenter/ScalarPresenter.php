@@ -50,8 +50,8 @@ class ScalarPresenter implements Presenter
      * Present the scalar value.
      *
      * @param mixed $value
-     * @param int   $depth   (default: null)
-     * @param int   $options One of Presenter constants
+     * @param int $depth (default: null)
+     * @param int $options One of Presenter constants
      *
      * @return string
      */

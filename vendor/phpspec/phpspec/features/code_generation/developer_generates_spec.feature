@@ -6,7 +6,7 @@ Feature: Developer generates a spec
   Scenario: Generating a spec
     When I start describing the "CodeGeneration/SpecExample1/Markdown" class
     Then a new spec should be generated in the "spec/CodeGeneration/SpecExample1/MarkdownSpec.php":
-      """
+    """
       <?php
 
       namespace spec\CodeGeneration\SpecExample1;
@@ -28,7 +28,7 @@ Feature: Developer generates a spec
   Scenario: Generating a spec with PSR0 must convert classname underscores to directory separator
     When I start describing the "CodeGeneration/SpecExample1/Text_Markdown" class
     Then a new spec should be generated in the "spec/CodeGeneration/SpecExample1/Text/MarkdownSpec.php":
-      """
+    """
       <?php
 
       namespace spec\CodeGeneration\SpecExample1;
@@ -50,7 +50,7 @@ Feature: Developer generates a spec
   Scenario: Generating a spec with PSR0 must not convert namespace underscores to directory separator
     When I start describing the "CodeGeneration/Spec_Example2/Text_Markdown" class
     Then a new spec should be generated in the "spec/CodeGeneration/Spec_Example2/Text/MarkdownSpec.php":
-      """
+    """
       <?php
 
       namespace spec\CodeGeneration\Spec_Example2;
@@ -70,7 +70,7 @@ Feature: Developer generates a spec
 
   Scenario: Generating a spec for a class with psr4 prefix
     Given the config file contains:
-      """
+    """
       suites:
         behat_suite:
           namespace: Behat\CodeGeneration
@@ -78,7 +78,7 @@ Feature: Developer generates a spec
       """
     When I start describing the "Behat/CodeGeneration/Markdown" class
     Then a new spec should be generated in the "spec/MarkdownSpec.php":
-      """
+    """
       <?php
 
       namespace spec\Behat\CodeGeneration;

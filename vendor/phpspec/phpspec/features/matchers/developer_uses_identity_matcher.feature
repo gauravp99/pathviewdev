@@ -5,7 +5,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Return" alias matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample1/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample1;
@@ -23,7 +23,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample1/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample1;
@@ -42,7 +42,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Return" alias not matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample2/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample2;
@@ -60,7 +60,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample2/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample2;
@@ -79,7 +79,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Return" alias not matching type using identity operator
     Given the spec file "spec/Matchers/IdentityExample3/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample3;
@@ -97,7 +97,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample3/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample3;
@@ -116,7 +116,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Be" alias matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample4/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample4;
@@ -134,7 +134,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample4/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample4;
@@ -153,7 +153,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Be" alias not matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample5/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample5;
@@ -171,7 +171,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample5/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample5;
@@ -190,7 +190,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Be" alias not matching type using identity operator
     Given the spec file "spec/Matchers/IdentityExample6/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample6;
@@ -208,7 +208,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample6/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample6;
@@ -227,7 +227,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Equal" alias matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample7/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample7;
@@ -245,7 +245,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample7/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample7;
@@ -264,7 +264,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Equal" alias not matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample8/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample8;
@@ -282,7 +282,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample8/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample8;
@@ -301,7 +301,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Equal" alias not matching type using identity operator
     Given the spec file "spec/Matchers/IdentityExample9/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample9;
@@ -319,7 +319,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample9/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample9;
@@ -338,7 +338,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "BeEqualTo" alias matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample10/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample10;
@@ -356,7 +356,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample10/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample10;
@@ -375,7 +375,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Equal" alias not matching using identity operator
     Given the spec file "spec/Matchers/IdentityExample11/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample11;
@@ -393,7 +393,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample11/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample11;
@@ -412,7 +412,7 @@ Feature: Developer uses identity matcher
 
   Scenario: "Equal" alias not matching type using identity operator
     Given the spec file "spec/Matchers/IdentityExample12/CalculatorSpec.php" contains:
-      """
+    """
       <?php
 
       namespace spec\Matchers\IdentityExample12;
@@ -430,7 +430,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/IdentityExample12/Calculator.php" contains:
-      """
+    """
       <?php
 
       namespace Matchers\IdentityExample12;

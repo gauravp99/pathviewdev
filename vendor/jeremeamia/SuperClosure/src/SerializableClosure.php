@@ -35,13 +35,14 @@ class SerializableClosure implements \Serializable
     /**
      * Create a new serializable closure instance.
      *
-     * @param \Closure                 $closure
+     * @param \Closure $closure
      * @param SerializerInterface|null $serializer
      */
     public function __construct(
         \Closure $closure,
         SerializerInterface $serializer = null
-    ) {
+    )
+    {
         $this->closure = $closure;
         $this->serializer = $serializer ?: new Serializer;
     }

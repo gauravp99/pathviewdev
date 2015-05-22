@@ -23,7 +23,19 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
     public function testMonobit($secureRandom)
     {
         $nbOnBits = substr_count($this->getBitSequence($secureRandom, 20000), '1');
-        $this->assertTrue($nbOnBits > 9654 && $nbOnBits < 10346, 'Monobit test failed, number of turned on bits: '.$nbOnBits);
+        $this->assertTrue($nbOnBits > 9654 && $nbOnBits < 10346, 'Monobit test failed, number of turned on bits: ' . $nbOnBits);
+    }
+
+    private function getBitSequence($secureRandom, $length)
+    {
+        $bitSequence = '';
+        for ($i = 0; $i < $length; $i += 40) {
+            $value = unpack('H*', $secureRandom->nextBytes(5));
+            $value = str_pad(base_convert($value[1], 16, 2), 40, '0', STR_PAD_LEFT);
+            $bitSequence .= $value;
+        }
+
+        return substr($bitSequence, 0, $length);
     }
 
     /**
@@ -51,7 +63,7 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
 
         $Y = 16 / 5000 * $f - 5000;
 
-        $this->assertTrue($Y > 1.03 && $Y < 57.4, 'Poker test failed, Y = '.$Y);
+        $this->assertTrue($Y > 1.03 && $Y < 57.4, 'Poker test failed, Y = ' . $Y);
     }
 
     /**
@@ -94,12 +106,12 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
             $addRun($currentRun);
         }
 
-        $this->assertTrue($runs[1] > 2267 && $runs[1] < 2733, 'Runs of length 1 outside of defined interval: '.$runs[1]);
-        $this->assertTrue($runs[2] > 1079 && $runs[2] < 1421, 'Runs of length 2 outside of defined interval: '.$runs[2]);
-        $this->assertTrue($runs[3] > 502 && $runs[3] < 748, 'Runs of length 3 outside of defined interval: '.$runs[3]);
-        $this->assertTrue($runs[4] > 233 && $runs[4] < 402, 'Runs of length 4 outside of defined interval: '.$runs[4]);
-        $this->assertTrue($runs[5] > 90 && $runs[5] < 223, 'Runs of length 5 outside of defined interval: '.$runs[5]);
-        $this->assertTrue($runs[6] > 90 && $runs[6] < 233, 'Runs of length 6 outside of defined interval: '.$runs[6]);
+        $this->assertTrue($runs[1] > 2267 && $runs[1] < 2733, 'Runs of length 1 outside of defined interval: ' . $runs[1]);
+        $this->assertTrue($runs[2] > 1079 && $runs[2] < 1421, 'Runs of length 2 outside of defined interval: ' . $runs[2]);
+        $this->assertTrue($runs[3] > 502 && $runs[3] < 748, 'Runs of length 3 outside of defined interval: ' . $runs[3]);
+        $this->assertTrue($runs[4] > 233 && $runs[4] < 402, 'Runs of length 4 outside of defined interval: ' . $runs[4]);
+        $this->assertTrue($runs[5] > 90 && $runs[5] < 223, 'Runs of length 5 outside of defined interval: ' . $runs[5]);
+        $this->assertTrue($runs[6] > 90 && $runs[6] < 233, 'Runs of length 6 outside of defined interval: ' . $runs[6]);
     }
 
     /**
@@ -128,7 +140,7 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
             $longestRun = $currentRun;
         }
 
-        $this->assertTrue($longestRun < 34, 'Failed longest run test: '.$longestRun);
+        $this->assertTrue($longestRun < 34, 'Failed longest run test: ' . $longestRun);
     }
 
     /**
@@ -146,7 +158,7 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
             $Z += $b[$i] === $b[$i + $shift] ? 1 : 0;
         }
 
-        $this->assertTrue($Z > 2326 && $Z < 2674, 'Failed serial correlation test: '.$Z);
+        $this->assertTrue($Z > 2326 && $Z < 2674, 'Failed serial correlation test: ' . $Z);
     }
 
     public function getSecureRandoms()
@@ -160,19 +172,11 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
         }
 
         // no-openssl with custom seed provider
-        $secureRandom = new SecureRandom(sys_get_temp_dir().'/_sf2.seed');
+        $secureRandom = new SecureRandom(sys_get_temp_dir() . '/_sf2.seed');
         $this->disableOpenSsl($secureRandom);
         $secureRandoms[] = array($secureRandom);
 
         return $secureRandoms;
-    }
-
-    protected function disableOpenSsl($secureRandom)
-    {
-        $ref = new \ReflectionProperty($secureRandom, 'useOpenSsl');
-        $ref->setAccessible(true);
-        $ref->setValue($secureRandom, false);
-        $ref->setAccessible(false);
     }
 
     protected function hasOpenSsl($secureRandom)
@@ -187,15 +191,11 @@ class SecureRandomTest extends \PHPUnit_Framework_TestCase
         return $ret;
     }
 
-    private function getBitSequence($secureRandom, $length)
+    protected function disableOpenSsl($secureRandom)
     {
-        $bitSequence = '';
-        for ($i = 0; $i < $length; $i += 40) {
-            $value = unpack('H*', $secureRandom->nextBytes(5));
-            $value = str_pad(base_convert($value[1], 16, 2), 40, '0', STR_PAD_LEFT);
-            $bitSequence .= $value;
-        }
-
-        return substr($bitSequence, 0, $length);
+        $ref = new \ReflectionProperty($secureRandom, 'useOpenSsl');
+        $ref->setAccessible(true);
+        $ref->setValue($secureRandom, false);
+        $ref->setAccessible(false);
     }
 }

@@ -63,37 +63,6 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
     }
 
     /**
-     * Reads $length bytes from the stream into a string and moves the pointer
-     * through the stream by $length.
-     *
-     * If less bytes exist than are requested the
-     * remaining bytes are given instead. If no bytes are remaining at all, boolean
-     * false is returned.
-     *
-     * @param int     $length
-     *
-     * @return string
-     */
-    public function read($length)
-    {
-        if ($this->_offset == $this->_arraySize) {
-            return false;
-        }
-
-        // Don't use array slice
-        $end = $length + $this->_offset;
-        $end = $this->_arraySize<$end
-            ? $this->_arraySize
-            : $end;
-        $ret = '';
-        for (; $this->_offset < $end; ++$this->_offset) {
-            $ret .= $this->_array[$this->_offset];
-        }
-
-        return $ret;
-    }
-
-    /**
      * Writes $bytes to the end of the stream.
      *
      * @param string $bytes
@@ -109,6 +78,37 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
         foreach ($this->_mirrors as $stream) {
             $stream->write($bytes);
         }
+    }
+
+    /**
+     * Reads $length bytes from the stream into a string and moves the pointer
+     * through the stream by $length.
+     *
+     * If less bytes exist than are requested the
+     * remaining bytes are given instead. If no bytes are remaining at all, boolean
+     * false is returned.
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function read($length)
+    {
+        if ($this->_offset == $this->_arraySize) {
+            return false;
+        }
+
+        // Don't use array slice
+        $end = $length + $this->_offset;
+        $end = $this->_arraySize < $end
+            ? $this->_arraySize
+            : $end;
+        $ret = '';
+        for (; $this->_offset < $end; ++$this->_offset) {
+            $ret .= $this->_array[$this->_offset];
+        }
+
+        return $ret;
     }
 
     /**
@@ -152,7 +152,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
     /**
      * Move the internal read pointer to $byteOffset in the stream.
      *
-     * @param int     $byteOffset
+     * @param int $byteOffset
      *
      * @return bool
      */

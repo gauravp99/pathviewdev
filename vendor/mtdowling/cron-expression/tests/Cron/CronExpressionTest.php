@@ -12,6 +12,21 @@ use InvalidArgumentException;
 class CronExpressionTest extends \PHPUnit_Framework_TestCase
 {
     /**
+     * Data provider for testParsesCronScheduleWithAnySpaceCharsAsSeparators
+     *
+     * @return array
+     */
+    public static function scheduleWithDifferentSeparatorsProvider()
+    {
+        return array(
+            array("*\t*\t*\t*\t*\t*", array('*', '*', '*', '*', '*', '*')),
+            array("*  *  *  *  *  *", array('*', '*', '*', '*', '*', '*')),
+            array("* \t * \t * \t * \t * \t *", array('*', '*', '*', '*', '*', '*')),
+            array("*\t \t*\t \t*\t \t*\t \t*\t \t*", array('*', '*', '*', '*', '*', '*')),
+        );
+    }
+
+    /**
      * @covers Cron\CronExpression::factory
      */
     public function testFactoryRecognizesTemplates()
@@ -36,7 +51,7 @@ class CronExpressionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('4,5,6', $cron->getExpression(CronExpression::MONTH));
         $this->assertEquals('*/3', $cron->getExpression(CronExpression::WEEKDAY));
         $this->assertEquals('1 2-4 * 4,5,6 */3', $cron->getExpression());
-        $this->assertEquals('1 2-4 * 4,5,6 */3', (string) $cron);
+        $this->assertEquals('1 2-4 * 4,5,6 */3', (string)$cron);
         $this->assertNull($cron->getExpression('foo'));
 
         try {
@@ -47,8 +62,8 @@ class CronExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cron\CronExpression::__construct
-     * @covers Cron\CronExpression::getExpression
+     * @covers       Cron\CronExpression::__construct
+     * @covers       Cron\CronExpression::getExpression
      * @dataProvider scheduleWithDifferentSeparatorsProvider
      */
     public function testParsesCronScheduleWithAnySpaceCharsAsSeparators($schedule, array $expected)
@@ -60,21 +75,6 @@ class CronExpressionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected[3], $cron->getExpression(CronExpression::MONTH));
         $this->assertEquals($expected[4], $cron->getExpression(CronExpression::WEEKDAY));
         $this->assertEquals($expected[5], $cron->getExpression(CronExpression::YEAR));
-    }
-
-    /**
-     * Data provider for testParsesCronScheduleWithAnySpaceCharsAsSeparators
-     *
-     * @return array
-     */
-    public static function scheduleWithDifferentSeparatorsProvider()
-    {
-        return array(
-            array("*\t*\t*\t*\t*\t*", array('*', '*', '*', '*', '*', '*')),
-            array("*  *  *  *  *  *", array('*', '*', '*', '*', '*', '*')),
-            array("* \t * \t * \t * \t * \t *", array('*', '*', '*', '*', '*', '*')),
-            array("*\t \t*\t \t*\t \t*\t \t*\t \t*", array('*', '*', '*', '*', '*', '*')),
-        );
     }
 
     /**
@@ -176,15 +176,15 @@ class CronExpressionTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cron\CronExpression::isDue
-     * @covers Cron\CronExpression::getNextRunDate
-     * @covers Cron\DayOfMonthField
-     * @covers Cron\DayOfWeekField
-     * @covers Cron\MinutesField
-     * @covers Cron\HoursField
-     * @covers Cron\MonthField
-     * @covers Cron\YearField
-     * @covers Cron\CronExpression::getRunDate
+     * @covers       Cron\CronExpression::isDue
+     * @covers       Cron\CronExpression::getNextRunDate
+     * @covers       Cron\DayOfMonthField
+     * @covers       Cron\DayOfWeekField
+     * @covers       Cron\MinutesField
+     * @covers       Cron\HoursField
+     * @covers       Cron\MonthField
+     * @covers       Cron\YearField
+     * @covers       Cron\CronExpression::getRunDate
      * @dataProvider scheduleProvider
      */
     public function testDeterminesIfCronIsDue($schedule, $relativeTime, $nextRun, $isDue)
@@ -223,7 +223,7 @@ class CronExpressionTest extends \PHPUnit_Framework_TestCase
         $cron = CronExpression::factory('0 15 * * 3'); //Wednesday at 15:00
         $date = '2014-01-01 15:00'; //Wednesday
         $utc = new \DateTimeZone('UTC');
-        $amsterdam =  new \DateTimeZone('Europe/Amsterdam');
+        $amsterdam = new \DateTimeZone('Europe/Amsterdam');
         $tokyo = new \DateTimeZone('Asia/Tokyo');
 
         date_default_timezone_set('UTC');
@@ -345,7 +345,8 @@ class CronExpressionTest extends \PHPUnit_Framework_TestCase
     /**
      * @see https://github.com/mtdowling/cron-expression/issues/20
      */
-    public function testIssue20() {
+    public function testIssue20()
+    {
         $e = CronExpression::factory('* * * * MON#1');
         $this->assertTrue($e->isDue(new DateTime('2014-04-07 00:00:00')));
         $this->assertFalse($e->isDue(new DateTime('2014-04-14 00:00:00')));

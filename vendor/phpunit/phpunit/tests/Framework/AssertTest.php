@@ -23,9 +23,12 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
 {
     private $filesDirectory;
 
-    protected function setUp()
+    public static function validInvalidJsonDataprovider()
     {
-        $this->filesDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
+        return array(
+            'error syntax in expected JSON' => array('{"Mascott"::}', '{"Mascott" : "Tux"}'),
+            'error UTF-8 in actual JSON' => array('{"Mascott" : "Tux"}', '{"Mascott" : :}'),
+        );
     }
 
     /**
@@ -267,8 +270,8 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertArraySubset
-     * @covers PHPUnit_Framework_Constraint_ArraySubset
+     * @covers       PHPUnit_Framework_Assert::assertArraySubset
+     * @covers       PHPUnit_Framework_Constraint_ArraySubset
      * @expectedException PHPUnit_Framework_Exception
      * @expectedExceptionMessage array or ArrayAccess
      * @dataProvider assertArraySubsetInvalidArgumentProvider
@@ -662,6 +665,124 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         $this->fail();
     }
 
+    public function equalProvider()
+    {
+        // same |= equal
+        return array_merge($this->equalValues(), $this->sameValues());
+    }
+
+    protected function equalValues()
+    {
+        // cyclic dependencies
+        $book1 = new Book;
+        $book1->author = new Author('Terry Pratchett');
+        $book1->author->books[] = $book1;
+        $book2 = new Book;
+        $book2->author = new Author('Terry Pratchett');
+        $book2->author->books[] = $book2;
+
+        $object1 = new SampleClass(4, 8, 15);
+        $object2 = new SampleClass(4, 8, 15);
+        $storage1 = new SplObjectStorage;
+        $storage1->attach($object1);
+        $storage2 = new SplObjectStorage;
+        $storage2->attach($object1);
+
+        return array(
+            // strings
+            array('a', 'A', 0, false, true), // ignore case
+            // arrays
+            array(array('a' => 1, 'b' => 2), array('b' => 2, 'a' => 1)),
+            array(array(1), array('1')),
+            array(array(3, 2, 1), array(2, 3, 1), 0, true), // canonicalized comparison
+            // floats
+            array(2.3, 2.5, 0.5),
+            array(array(2.3), array(2.5), 0.5),
+            array(array(array(2.3)), array(array(2.5)), 0.5),
+            array(new Struct(2.3), new Struct(2.5), 0.5),
+            array(array(new Struct(2.3)), array(new Struct(2.5)), 0.5),
+            // numeric with delta
+            array(1, 2, 1),
+            // objects
+            array($object1, $object2),
+            array($book1, $book2),
+            // SplObjectStorage
+            array($storage1, $storage2),
+            // DOMDocument
+            array(
+                $this->createDOMDocument('<root></root>'),
+                $this->createDOMDocument('<root/>'),
+            ),
+            array(
+                $this->createDOMDocument('<root attr="bar"></root>'),
+                $this->createDOMDocument('<root attr="bar"/>'),
+            ),
+            array(
+                $this->createDOMDocument('<root><foo attr="bar"></foo></root>'),
+                $this->createDOMDocument('<root><foo attr="bar"/></root>'),
+            ),
+            array(
+                $this->createDOMDocument("<root>\n  <child/>\n</root>"),
+                $this->createDOMDocument('<root><child/></root>'),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 04:13:25', new DateTimeZone('America/New_York')),
+                10
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 04:14:40', new DateTimeZone('America/New_York')),
+                65
+            ),
+            array(
+                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 03:13:35', new DateTimeZone('America/Chicago')),
+            ),
+            array(
+                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 03:13:49', new DateTimeZone('America/Chicago')),
+                15
+            ),
+            array(
+                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 23:00:00', new DateTimeZone('America/Chicago')),
+            ),
+            array(
+                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
+                new DateTime('2013-03-29 23:01:30', new DateTimeZone('America/Chicago')),
+                100
+            ),
+            array(
+                new DateTime('@1364616000'),
+                new DateTime('2013-03-29 23:00:00', new DateTimeZone('America/Chicago')),
+            ),
+            array(
+                new DateTime('2013-03-29T05:13:35-0500'),
+                new DateTime('2013-03-29T04:13:35-0600'),
+            ),
+            // Exception
+            //array(new Exception('Exception 1'), new Exception('Exception 1')),
+            // mixed types
+            array(0, '0'),
+            array('0', 0),
+            array(2.3, '2.3'),
+            array('2.3', 2.3),
+            array((string)(1 / 3), 1 - 2 / 3),
+            array(1 / 3, (string)(1 - 2 / 3)),
+            array('string representation', new ClassWithToString),
+            array(new ClassWithToString, 'string representation'),
+        );
+    }
+
     protected function createDOMDocument($content)
     {
         $document = new DOMDocument;
@@ -688,7 +809,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
             array(0, 0),
             // floats
             array(2.3, 2.3),
-            array(1/3, 1 - 2/3),
+            array(1 / 3, 1 - 2 / 3),
             array(log(0), log(0)),
             // arrays
             array(array(), array()),
@@ -700,6 +821,11 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
             // resources
             array($resource, $resource),
         );
+    }
+
+    public function notEqualProvider()
+    {
+        return $this->notEqualValues();
     }
 
     protected function notEqualValues()
@@ -734,7 +860,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
             array('a', 'b'),
             array('a', 'A'),
             // https://github.com/sebastianbergmann/phpunit/issues/1023
-            array('9E6666666','9E7777777'),
+            array('9E6666666', '9E7777777'),
             // integers
             array(1, 2),
             array(2, 1),
@@ -845,129 +971,6 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    protected function equalValues()
-    {
-        // cyclic dependencies
-        $book1 = new Book;
-        $book1->author = new Author('Terry Pratchett');
-        $book1->author->books[] = $book1;
-        $book2 = new Book;
-        $book2->author = new Author('Terry Pratchett');
-        $book2->author->books[] = $book2;
-
-        $object1 = new SampleClass(4, 8, 15);
-        $object2 = new SampleClass(4, 8, 15);
-        $storage1 = new SplObjectStorage;
-        $storage1->attach($object1);
-        $storage2 = new SplObjectStorage;
-        $storage2->attach($object1);
-
-        return array(
-            // strings
-            array('a', 'A', 0, false, true), // ignore case
-            // arrays
-            array(array('a' => 1, 'b' => 2), array('b' => 2, 'a' => 1)),
-            array(array(1), array('1')),
-            array(array(3, 2, 1), array(2, 3, 1), 0, true), // canonicalized comparison
-            // floats
-            array(2.3, 2.5, 0.5),
-            array(array(2.3), array(2.5), 0.5),
-            array(array(array(2.3)), array(array(2.5)), 0.5),
-            array(new Struct(2.3), new Struct(2.5), 0.5),
-            array(array(new Struct(2.3)), array(new Struct(2.5)), 0.5),
-            // numeric with delta
-            array(1, 2, 1),
-            // objects
-            array($object1, $object2),
-            array($book1, $book2),
-            // SplObjectStorage
-            array($storage1, $storage2),
-            // DOMDocument
-            array(
-                $this->createDOMDocument('<root></root>'),
-                $this->createDOMDocument('<root/>'),
-            ),
-            array(
-                $this->createDOMDocument('<root attr="bar"></root>'),
-                $this->createDOMDocument('<root attr="bar"/>'),
-            ),
-            array(
-                $this->createDOMDocument('<root><foo attr="bar"></foo></root>'),
-                $this->createDOMDocument('<root><foo attr="bar"/></root>'),
-            ),
-            array(
-                $this->createDOMDocument("<root>\n  <child/>\n</root>"),
-                $this->createDOMDocument('<root><child/></root>'),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 04:13:25', new DateTimeZone('America/New_York')),
-                10
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 04:14:40', new DateTimeZone('America/New_York')),
-                65
-            ),
-            array(
-                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29', new DateTimeZone('America/New_York')),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 03:13:35', new DateTimeZone('America/Chicago')),
-            ),
-            array(
-                new DateTime('2013-03-29 04:13:35', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 03:13:49', new DateTimeZone('America/Chicago')),
-                15
-            ),
-            array(
-                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 23:00:00', new DateTimeZone('America/Chicago')),
-            ),
-            array(
-                new DateTime('2013-03-30', new DateTimeZone('America/New_York')),
-                new DateTime('2013-03-29 23:01:30', new DateTimeZone('America/Chicago')),
-                100
-            ),
-            array(
-                new DateTime('@1364616000'),
-                new DateTime('2013-03-29 23:00:00', new DateTimeZone('America/Chicago')),
-            ),
-            array(
-                new DateTime('2013-03-29T05:13:35-0500'),
-                new DateTime('2013-03-29T04:13:35-0600'),
-            ),
-            // Exception
-            //array(new Exception('Exception 1'), new Exception('Exception 1')),
-            // mixed types
-            array(0, '0'),
-            array('0', 0),
-            array(2.3, '2.3'),
-            array('2.3', 2.3),
-            array((string)(1/3), 1 - 2/3),
-            array(1/3, (string)(1 - 2/3)),
-            array('string representation', new ClassWithToString),
-            array(new ClassWithToString, 'string representation'),
-        );
-    }
-
-    public function equalProvider()
-    {
-        // same |= equal
-        return array_merge($this->equalValues(), $this->sameValues());
-    }
-
-    public function notEqualProvider()
-    {
-        return $this->notEqualValues();
-    }
-
     public function sameProvider()
     {
         return $this->sameValues();
@@ -981,7 +984,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertEquals
+     * @covers       PHPUnit_Framework_Assert::assertEquals
      * @dataProvider equalProvider
      */
     public function testAssertEqualsSucceeds($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -990,7 +993,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertEquals
+     * @covers       PHPUnit_Framework_Assert::assertEquals
      * @dataProvider notEqualProvider
      */
     public function testAssertEqualsFails($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -1005,7 +1008,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotEquals
+     * @covers       PHPUnit_Framework_Assert::assertNotEquals
      * @dataProvider notEqualProvider
      */
     public function testAssertNotEqualsSucceeds($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -1014,7 +1017,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotEquals
+     * @covers       PHPUnit_Framework_Assert::assertNotEquals
      * @dataProvider equalProvider
      */
     public function testAssertNotEqualsFails($a, $b, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
@@ -1029,7 +1032,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertSame
+     * @covers       PHPUnit_Framework_Assert::assertSame
      * @dataProvider sameProvider
      */
     public function testAssertSameSucceeds($a, $b)
@@ -1038,7 +1041,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertSame
+     * @covers       PHPUnit_Framework_Assert::assertSame
      * @dataProvider notSameProvider
      */
     public function testAssertSameFails($a, $b)
@@ -1053,7 +1056,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotSame
+     * @covers       PHPUnit_Framework_Assert::assertNotSame
      * @dataProvider notSameProvider
      */
     public function testAssertNotSameSucceeds($a, $b)
@@ -1062,7 +1065,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers PHPUnit_Framework_Assert::assertNotSame
+     * @covers       PHPUnit_Framework_Assert::assertNotSame
      * @dataProvider sameProvider
      */
     public function testAssertNotSameFails($a, $b)
@@ -2902,6 +2905,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     {
         $this->assertThat(array('foo'), $this->containsOnly('string'));
     }
+
     /**
      * @covers PHPUnit_Framework_Assert::assertThat
      * @covers PHPUnit_Framework_Assert::containsOnlyInstancesOf
@@ -2971,7 +2975,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertThatIdenticalTo()
     {
-        $value      = new StdClass;
+        $value = new StdClass;
         $constraint = $this->identicalTo($value);
 
         $this->assertThat($value, $constraint);
@@ -3064,7 +3068,8 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertThatCallback()
     {
-        $this->assertThat(null, $this->callback(function ($other) { return true;
+        $this->assertThat(null, $this->callback(function ($other) {
+            return true;
         }));
     }
 
@@ -3407,7 +3412,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeEmpty()
     {
-        $o    = new StdClass;
+        $o = new StdClass;
         $o->a = array();
 
         $this->assertAttributeEmpty('a', $o);
@@ -3427,7 +3432,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeNotEmpty()
     {
-        $o    = new StdClass;
+        $o = new StdClass;
         $o->a = array('b');
 
         $this->assertAttributeNotEmpty('a', $o);
@@ -3543,7 +3548,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeCount()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = array();
 
         $this->assertAttributeCount(0, 'a', $o);
@@ -3588,7 +3593,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeNotCount()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = array();
 
         $this->assertAttributeNotCount(1, 'a', $o);
@@ -3691,15 +3696,15 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     public function testAssertJsonStringEqualsJsonString()
     {
         $expected = '{"Mascott" : "Tux"}';
-        $actual   = '{"Mascott" : "Tux"}';
-        $message  = 'Given Json strings do not match';
+        $actual = '{"Mascott" : "Tux"}';
+        $message = 'Given Json strings do not match';
 
         $this->assertJsonStringEqualsJsonString($expected, $actual, $message);
     }
 
     /**
      * @dataProvider validInvalidJsonDataprovider
-     * @covers PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString
+     * @covers       PHPUnit_Framework_Assert::assertJsonStringEqualsJsonString
      */
     public function testAssertJsonStringEqualsJsonStringErrorRaised($expected, $actual)
     {
@@ -3717,15 +3722,15 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     public function testAssertJsonStringNotEqualsJsonString()
     {
         $expected = '{"Mascott" : "Beastie"}';
-        $actual   = '{"Mascott" : "Tux"}';
-        $message  = 'Given Json strings do match';
+        $actual = '{"Mascott" : "Tux"}';
+        $message = 'Given Json strings do match';
 
         $this->assertJsonStringNotEqualsJsonString($expected, $actual, $message);
     }
 
     /**
      * @dataProvider validInvalidJsonDataprovider
-     * @covers PHPUnit_Framework_Assert::assertJsonStringNotEqualsJsonString
+     * @covers       PHPUnit_Framework_Assert::assertJsonStringNotEqualsJsonString
      */
     public function testAssertJsonStringNotEqualsJsonStringErrorRaised($expected, $actual)
     {
@@ -3814,7 +3819,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
     public function testAssertJsonFileNotEqualsJsonFile()
     {
         $fileExpected = __DIR__ . '/../_files/JsonData/simpleObject.json';
-        $fileActual   = __DIR__ . '/../_files/JsonData/arrayObject.json';
+        $fileActual = __DIR__ . '/../_files/JsonData/arrayObject.json';
         $message = '';
         $this->assertJsonFileNotEqualsJsonFile($fileExpected, $fileActual, $message);
     }
@@ -3859,7 +3864,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeInstanceOf()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = new stdClass;
 
         $this->assertAttributeInstanceOf('stdClass', 'a', $o);
@@ -3895,7 +3900,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeNotInstanceOf()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = new stdClass;
 
         $this->assertAttributeNotInstanceOf('Exception', 'a', $o);
@@ -3947,7 +3952,7 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeInternalType()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = 1;
 
         $this->assertAttributeInternalType('integer', 'a', $o);
@@ -3983,17 +3988,14 @@ class Framework_AssertTest extends PHPUnit_Framework_TestCase
      */
     public function testAssertAttributeNotInternalType()
     {
-        $o    = new stdClass;
+        $o = new stdClass;
         $o->a = 1;
 
         $this->assertAttributeNotInternalType('string', 'a', $o);
     }
 
-    public static function validInvalidJsonDataprovider()
+    protected function setUp()
     {
-        return array(
-            'error syntax in expected JSON' => array('{"Mascott"::}', '{"Mascott" : "Tux"}'),
-            'error UTF-8 in actual JSON'    => array('{"Mascott" : "Tux"}', '{"Mascott" : :}'),
-        );
+        $this->filesDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . '_files' . DIRECTORY_SEPARATOR;
     }
 }

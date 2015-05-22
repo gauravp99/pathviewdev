@@ -48,9 +48,9 @@ interface VoterInterface
      * This method must return one of the following constants:
      * ACCESS_GRANTED, ACCESS_DENIED, or ACCESS_ABSTAIN.
      *
-     * @param TokenInterface $token      A TokenInterface instance
-     * @param object|null    $object     The object to secure
-     * @param array          $attributes An array of attributes associated with the method being invoked
+     * @param TokenInterface $token A TokenInterface instance
+     * @param object|null $object The object to secure
+     * @param array $attributes An array of attributes associated with the method being invoked
      *
      * @return int either ACCESS_GRANTED, ACCESS_ABSTAIN, or ACCESS_DENIED
      */

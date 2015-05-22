@@ -11,12 +11,27 @@ class Error extends \RuntimeException
      * Creates an Exception signifying a parse error.
      *
      * @param string $message Error message
-     * @param int    $line    Error line in PHP file
+     * @param int $line Error line in PHP file
      */
-    public function __construct($message, $line = -1) {
-        $this->rawMessage = (string) $message;
-        $this->rawLine    = (int) $line;
+    public function __construct($message, $line = -1)
+    {
+        $this->rawMessage = (string)$message;
+        $this->rawLine = (int)$line;
         $this->updateMessage();
+    }
+
+    /**
+     * Updates the exception message after a change to rawMessage or rawLine.
+     */
+    protected function updateMessage()
+    {
+        $this->message = $this->rawMessage;
+
+        if (-1 === $this->rawLine) {
+            $this->message .= ' on unknown line';
+        } else {
+            $this->message .= ' on line ' . $this->rawLine;
+        }
     }
 
     /**
@@ -24,7 +39,8 @@ class Error extends \RuntimeException
      *
      * @return string Error message
      */
-    public function getRawMessage() {
+    public function getRawMessage()
+    {
         return $this->rawMessage;
     }
 
@@ -33,8 +49,9 @@ class Error extends \RuntimeException
      *
      * @param string $message Error message
      */
-    public function setRawMessage($message) {
-        $this->rawMessage = (string) $message;
+    public function setRawMessage($message)
+    {
+        $this->rawMessage = (string)$message;
         $this->updateMessage();
     }
 
@@ -43,7 +60,8 @@ class Error extends \RuntimeException
      *
      * @return int Error line in the PHP file
      */
-    public function getRawLine() {
+    public function getRawLine()
+    {
         return $this->rawLine;
     }
 
@@ -52,21 +70,9 @@ class Error extends \RuntimeException
      *
      * @param int $line Error line in the PHP file
      */
-    public function setRawLine($line) {
-        $this->rawLine = (int) $line;
+    public function setRawLine($line)
+    {
+        $this->rawLine = (int)$line;
         $this->updateMessage();
-    }
-
-    /**
-     * Updates the exception message after a change to rawMessage or rawLine.
-     */
-    protected function updateMessage() {
-        $this->message = $this->rawMessage;
-
-        if (-1 === $this->rawLine) {
-            $this->message .= ' on unknown line';
-        } else {
-            $this->message .= ' on line ' . $this->rawLine;
-        }
     }
 }

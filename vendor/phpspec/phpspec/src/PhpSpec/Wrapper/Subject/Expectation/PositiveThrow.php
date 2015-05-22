@@ -18,7 +18,7 @@ class PositiveThrow extends DuringCall implements ThrowExpectation
     /**
      * @param object $object
      * @param string $method
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return mixed
      */

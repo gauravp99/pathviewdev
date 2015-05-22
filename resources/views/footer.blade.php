@@ -34,7 +34,7 @@
     <h5 class="footer_content">
         <a href="http://bioservices.uncc.edu/">Bioinformatics Services Division</a> - <a
                 href="http://bioinformatics.uncc.edu/">Department of Bioinformatics and Genomics</a> - <a
-                href="http://www.uncc.eu/">UNC Charlotte</a>
+                href="http://www.uncc.edu/">UNC Charlotte</a>
     </h5>
 
 

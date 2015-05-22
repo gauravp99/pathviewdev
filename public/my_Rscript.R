@@ -31,6 +31,7 @@ suffix <- "pathview"
 nsum <- "sum"
 ncolor <- "transparent"
 offset <- 1.0
+align <- 'y'
 multistate <- NULL
 
 # @arguments are split on comma as they are passed to Rscript with comma separated
