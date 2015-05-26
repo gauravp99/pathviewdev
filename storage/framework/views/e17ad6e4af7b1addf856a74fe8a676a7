@@ -111,7 +111,8 @@
 
 
                 <fieldset class="step">
-                    <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0" />
+                    <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0"/>
+
                     <p id="file" <?php if(isset(Session::get('err_atr')['gfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>>
                         <a href="tutorial#gene_data" title="Upload gene data accepts CSV, txt file"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
@@ -268,40 +269,38 @@
                         var i = 1;
                         var dirty_bit = document.getElementById('page_is_dirty');
 
-                        if (dirty_bit.value != '1'){
+                        if (dirty_bit.value != '1') {
                             dirty_bit.value = '1';
-                            for(var j=1;j<=parseInt(readCookie("pathidx"));j++) {
+                            for (var j = 1; j <= parseInt(readCookie("pathidx")); j++) {
                                 eraseCookie("pathway" + j);
                             }
                             eraseCookie("pathidx");
 
 
                         }
-                       else{
+                        else {
 
 
-                           if(readCookie("pathidx")===null)
-                           {
+                            if (readCookie("pathidx") === null) {
 
-                           }
-                        else
-                           {
-                              i = parseInt(readCookie("pathidx"));
-                               for(var j=1;j<parseInt(readCookie("pathidx"));j++)
-                               {
-                                   var el = document.createElement("input");
-                                   el.setAttribute("list", "pathwaylist");
-                                   el.setAttribute("class", "fex8");
-                                   el.setAttribute("name", "pathway" + j);
-                                   el.setAttribute("id", "pathway" + j);
-                                   el.setAttribute("value", readCookie("pathway" + j));
-                                   el.setAttribute("required", "required");
-                                   var foo = document.getElementById("pat_div");
-                                   foo.appendChild(document.createElement("br"));
-                                   foo.appendChild(el);
-                                   foo.appendChild(document.createElement("br"));
-                               }
-                           }}
+                            }
+                            else {
+                                i = parseInt(readCookie("pathidx"));
+                                for (var j = 1; j < parseInt(readCookie("pathidx")); j++) {
+                                    var el = document.createElement("input");
+                                    el.setAttribute("list", "pathwaylist");
+                                    el.setAttribute("class", "fex8");
+                                    el.setAttribute("name", "pathway" + j);
+                                    el.setAttribute("id", "pathway" + j);
+                                    el.setAttribute("value", readCookie("pathway" + j));
+                                    el.setAttribute("required", "required");
+                                    var foo = document.getElementById("pat_div");
+                                    foo.appendChild(document.createElement("br"));
+                                    foo.appendChild(el);
+                                    foo.appendChild(document.createElement("br"));
+                                }
+                            }
+                        }
                         function addText() {
 
 
@@ -342,26 +341,24 @@
 
                                 if (i > 1) {
 
-                                    for( j= 1;j <= i; j++) {
+                                    for (j = 1; j <= i; j++) {
 
-                                        createCookie("pathidx",j,1);
+                                        createCookie("pathidx", j, 1);
 
-                                        createCookie("pathway" + j, ""+document.getElementById("pathway" + j).value, 1);
+                                        createCookie("pathway" + j, "" + document.getElementById("pathway" + j).value, 1);
 
 
                                     }
 
                                 }
-                                else
-                                {
+                                else {
                                     i = parseInt(readCookie("pathidx"));
-                                    if(i === null )
-                                    {
+                                    if (i === null) {
 
                                     }
                                     else {
                                         for (var j = 1; j < parseInt(readCookie("pathidx")); j++) {
-                                          eraseCookie("pathway" + j);
+                                            eraseCookie("pathway" + j);
                                             eraseCookie("pathidx");
                                         }
                                     }
@@ -376,39 +373,39 @@
 
                         }
                         function colorCheck() {
-                            document.getElementById("glow").value="#00FF00"
-                          /*  $glow = "#00FF00";
-                            $gmid = "#D3D3D3";
-                            $ghigh = "#FF0000";
-                            $clmt = 1;
-                            $cbins = 10;
-                            $clow = "#0000FF";
-                            $cmid = "#D3D3D3";
-                            $chigh = "#FFFF00";*/
+                            document.getElementById("glow").value = "#00FF00";
+                            /*  $glow = "#00FF00";
+                             $gmid = "#D3D3D3";
+                             $ghigh = "#FF0000";
+                             $clmt = 1;
+                             $cbins = 10;
+                             $clow = "#0000FF";
+                             $cmid = "#D3D3D3";
+                             $chigh = "#FFFF00";*/
                         }
-                        function createCookie(name,value,days) {
+                        function createCookie(name, value, days) {
                             if (days) {
                                 var date = new Date();
-                                date.setTime(date.getTime()+(days*24*60*60*1000));
-                                var expires = "; expires="+date.toGMTString();
+                                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                                var expires = "; expires=" + date.toGMTString();
                             }
                             else var expires = "";
-                            document.cookie = name+"="+value+expires+"; path=/";
+                            document.cookie = name + "=" + value + expires + "; path=/";
                         }
 
                         function readCookie(name) {
                             var nameEQ = name + "=";
                             var ca = document.cookie.split(';');
-                            for(var i=0;i < ca.length;i++) {
+                            for (var i = 0; i < ca.length; i++) {
                                 var c = ca[i];
-                                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
                             }
                             return null;
                         }
 
                         function eraseCookie(name) {
-                            createCookie(name,"",-1);
+                            createCookie(name, "", -1);
                         }
 
 
@@ -712,7 +709,8 @@
                                value=<?php echo e(isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : $glow); ?>>
                         <?php echo form::label('clow','Compound Low:'); ?>
 
-                        <input class="color coloration {hash:true}" id="clow" name="clow" value= <?php echo e(isset(Session::get('genecolor')['clow']) ? Session::get('genecolor')['clow'] : $clow); ?>>
+                        <input class="color coloration {hash:true}" id="clow" name="clow"
+                               value= <?php echo e(isset(Session::get('genecolor')['clow']) ? Session::get('genecolor')['clow'] : $clow); ?>>
                         <?php /*<?php echo form::text('clow',isset(Session::get('Sess')['clow']) ? Session::get('Sess')['clow'] :
                              $clow,array('class' => 'coloration')); ?><input style="width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                     </p>
@@ -728,13 +726,15 @@
                             <span class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('gmid','Gene Mid:'); ?>
 
-                        <input class="color coloration {hash:true}" id="gmid" name="gmid" value=<?php echo e(isset(Session::get('genecolor')['gmid']) ? Session::get('genecolor')['gmid'] : $gmid); ?>>
+                        <input class="color coloration {hash:true}" id="gmid" name="gmid"
+                               value=<?php echo e(isset(Session::get('genecolor')['gmid']) ? Session::get('genecolor')['gmid'] : $gmid); ?>>
                         <?php /*<?php echo form::text('gmid',isset(Session::get('Sess')['gmid']) ? Session::get('Sess')['gmid'] :
                         $gmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
 
                         <?php echo form::label('cmid','Compound Mid:'); ?>
 
-                        <input class="color coloration {hash:true}" id="cmid" name="cmid" value=<?php echo e(isset(Session::get('genecolor')['cmid']) ? Session::get('genecolor')['cmid'] : $cmid); ?>>
+                        <input class="color coloration {hash:true}" id="cmid" name="cmid"
+                               value=<?php echo e(isset(Session::get('genecolor')['cmid']) ? Session::get('genecolor')['cmid'] : $cmid); ?>>
                         <?php /* <?php echo form::text('cmid',isset(Session::get('Sess')['cmid']) ? Session::get('Sess')['cmid'] :
                          $cmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                     </p>
@@ -750,12 +750,14 @@
                             <span class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('ghigh','Gene High:'); ?>
 
-                        <input class="color coloration {hash:true}" id="ghigh" name="ghigh" value=<?php echo e(isset(Session::get('genecolor')['ghigh']) ? Session::get('genecolor')['ghigh'] : $ghigh); ?>>
+                        <input class="color coloration {hash:true}" id="ghigh" name="ghigh"
+                               value=<?php echo e(isset(Session::get('genecolor')['ghigh']) ? Session::get('genecolor')['ghigh'] : $ghigh); ?>>
                         <?php /*<?php echo form::text('ghigh',isset(Session::get('Sess')['ghigh']) ? Session::get('Sess')['ghigh'] :$ghigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
 
                         <?php echo form::label('chigh','Compound High:'); ?>
 
-                        <input class="color coloration {hash:true}" id="chigh" name="chigh" value=<?php echo e(isset(Session::get('genecolor')['chigh']) ? Session::get('genecolor')['chigh'] : $chigh); ?>>
+                        <input class="color coloration {hash:true}" id="chigh" name="chigh"
+                               value=<?php echo e(isset(Session::get('genecolor')['chigh']) ? Session::get('genecolor')['chigh'] : $chigh); ?>>
                         <?php /*<?php echo form::text('chigh',isset(Session::get('Sess')['chigh']) ? Session::get('Sess')['chigh'] :$chigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
                     </p>
 
@@ -778,7 +780,8 @@
                        style="font-size: 20px;width: 30%;margin-left:0%;margin-top: 10px;" value="Submit"
                        onclick="return fileCheck()"/>
                 <input type="Reset" class="btn btn-primary"
-                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;" value="Reset" onclick="resetcolor()"/>
+                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;" value="Reset"
+                       onclick="resetcolor()"/>
             </div>
             <?php echo form::close(); ?>
 

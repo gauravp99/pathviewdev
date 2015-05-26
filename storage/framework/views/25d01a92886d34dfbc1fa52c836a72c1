@@ -111,7 +111,7 @@
 
 
                 <fieldset class="step">
-                    <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0" />
+                    <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0"/>
                     <p <?php if(isset(Session::get('err_atr')['gfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>>
                         <a href="tutorial#gene_data" title="Upload gene data accepts CSV, txt file"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
@@ -249,6 +249,26 @@
                         <input class="ex88" id="addbtn" value="Add" onclick="addText()" type="button">
                         <input class="ex88" id="rmvbtn" value="Remove" onclick="removeText()" type="button">
                         <br/>
+
+                        <?php
+
+                        $pathidx = 1;
+                        while (isset(Session::get('Sess')["pathway$pathidx"])) {
+                            $pathidx++;
+                        }
+
+
+                        for ($pathnidx = 1; $pathnidx < $pathidx; $pathnidx++) {
+                            echo "<input class=\"ex8\" list=\"pathwaylist\" name=\"pathway" . $pathnidx . " id=\"pathway" . $pathnidx . " value=" . Session::get('Sess')["pathway$pathnidx"] . " >";
+                            echo "<br/>";
+                            echo "<br/>";
+                            
+
+
+                        }
+
+
+                        ?>
                     </p>
 
                     <datalist id="pathwaylist">
@@ -260,48 +280,38 @@
                         ?>
 
                     </datalist>
-                    <?php
 
-                    $pathidx = -1;
-                    while (isset($_POST["pathway$pathidx"])) {
-                        $pathidx++;
-                    }
-
-                    for ($pathnidx = 1; $pathnidx < $pathidx; $pathnidx++) {
-                        echo "<input class=\"ex8\" list=\"pathwaylist\" name=\"pathway" . $pathnidx . " id=\"pathway" . $pathnidx . " value=" . Session::get('Sess')["pathway$pathnidx"] . " >";
-
-                    }
-
-
-                    ?>
                     <script type="text/javascript">
                         var initialLoad = false;
 
 
                         var i = 1;
+                        var php_i = 0;
+                          php_i= '<?php echo $pathnidx ;?>';
+                        if(php_i>0)
+                        {
+                            i = php_i;
+                        }
                         var dirty_bit = document.getElementById('page_is_dirty');
 
-                        if (dirty_bit.value != '1'){
+                        if (dirty_bit.value != '1') {
                             dirty_bit.value = '1';
-                            for(var j=1;j<=parseInt(readCookie("pathidx"));j++) {
+                            for (var j = 1; j <= parseInt(readCookie("pathidx")); j++) {
                                 eraseCookie("pathway" + j);
                             }
                             eraseCookie("pathidx");
 
 
                         }
-                        else{
+                        else {
 
 
-                            if(readCookie("pathidx")===null)
-                            {
+                            if (readCookie("pathidx") === null) {
 
                             }
-                            else
-                            {
+                            else {
                                 i = parseInt(readCookie("pathidx"));
-                                for(var j=1;j<parseInt(readCookie("pathidx"));j++)
-                                {
+                                for (var j = 1; j < parseInt(readCookie("pathidx")); j++) {
                                     var el = document.createElement("input");
                                     el.setAttribute("list", "pathwaylist");
                                     el.setAttribute("class", "fex8");
@@ -314,7 +324,8 @@
                                     foo.appendChild(el);
                                     foo.appendChild(document.createElement("br"));
                                 }
-                            }}
+                            }
+                        }
                         function addText() {
 
 
@@ -336,6 +347,7 @@
                         }
 
                         function removeText() {
+
                             if (i > 0) {
 
                                 console.log(i);
@@ -355,21 +367,19 @@
 
                                 if (i > 1) {
 
-                                    for( j= 1;j <= i; j++) {
+                                    for (j = 1; j <= i; j++) {
 
-                                        createCookie("pathidx",j,1);
+                                        createCookie("pathidx", j, 1);
 
-                                        createCookie("pathway" + j, ""+document.getElementById("pathway" + j).value, 1);
+                                        createCookie("pathway" + j, "" + document.getElementById("pathway" + j).value, 1);
 
 
                                     }
 
                                 }
-                                else
-                                {
+                                else {
                                     i = parseInt(readCookie("pathidx"));
-                                    if(i === null )
-                                    {
+                                    if (i === null) {
 
                                     }
                                     else {
@@ -389,7 +399,7 @@
 
                         }
                         function colorCheck() {
-                            document.getElementById("glow").value="#00FF00"
+                            document.getElementById("glow").value = "#00FF00";
                             /*  $glow = "#00FF00";
                              $gmid = "#D3D3D3";
                              $ghigh = "#FF0000";
@@ -399,29 +409,29 @@
                              $cmid = "#D3D3D3";
                              $chigh = "#FFFF00";*/
                         }
-                        function createCookie(name,value,days) {
+                        function createCookie(name, value, days) {
                             if (days) {
                                 var date = new Date();
-                                date.setTime(date.getTime()+(days*24*60*60*1000));
-                                var expires = "; expires="+date.toGMTString();
+                                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                                var expires = "; expires=" + date.toGMTString();
                             }
                             else var expires = "";
-                            document.cookie = name+"="+value+expires+"; path=/";
+                            document.cookie = name + "=" + value + expires + "; path=/";
                         }
 
                         function readCookie(name) {
                             var nameEQ = name + "=";
                             var ca = document.cookie.split(';');
-                            for(var i=0;i < ca.length;i++) {
+                            for (var i = 0; i < ca.length; i++) {
                                 var c = ca[i];
-                                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
                             }
                             return null;
                         }
 
                         function eraseCookie(name) {
-                            createCookie(name,"",-1);
+                            createCookie(name, "", -1);
                         }
 
 
