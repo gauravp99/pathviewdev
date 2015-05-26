@@ -52,6 +52,7 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
+        #return "Temeprory outage testing for issues";
         $errors = array();
         $gene_cmpd_color = array();
         $err_atr = array();
@@ -292,9 +293,22 @@ class AnalysisController extends Controller
                 }
                 $argument .= "glmt:" . $_POST["glmt"] . ",";
                 $argument .= "gbins:" . $_POST["gbins"] . ",";
-                $argument .= "glow:" . '#' . $_POST["glow"] . ",";
-                $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
-                $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
+                if (strpos($_POST["glow"], '#') !== false) {
+                    $argument .= "glow:" . $_POST["glow"] . ",";
+                } else {
+                    $argument .= "glow:" . '#' . $_POST["glow"] . ",";
+                }
+                if (strpos($_POST["gmid"], '#') !== false) {
+                    $argument .= "gmid:" . $_POST["gmid"] . ",";
+                } else {
+                    $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
+                }
+                if (strpos($_POST["ghigh"], '#') !== false) {
+                    $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+                } else {
+                    $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
+                }
+
                 $gene_cmpd_color["glow"] = $_POST["glow"];
                 $gene_cmpd_color["gmid"] = $_POST["gmid"];
                 $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
@@ -312,9 +326,21 @@ class AnalysisController extends Controller
             }
             $argument .= "glmt:" . $_POST["glmt"] . ",";
             $argument .= "gbins:" . $_POST["gbins"] . ",";
-            $argument .= "glow:" . '#' . $_POST["glow"] . ",";
-            $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
-            $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
+            if (strpos($_POST["glow"], '#') !== false) {
+                $argument .= "glow:" . $_POST["glow"] . ",";
+            } else {
+                $argument .= "glow:" . '#' . $_POST["glow"] . ",";
+            }
+            if (strpos($_POST["gmid"], '#') !== false) {
+                $argument .= "gmid:" . $_POST["gmid"] . ",";
+            } else {
+                $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
+            }
+            if (strpos($_POST["ghigh"], '#') !== false) {
+                $argument .= "ghigh:" . $_POST["ghigh"] . ",";
+            } else {
+                $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
+            }
             $gene_cmpd_color["glow"] = $_POST["glow"];
             $gene_cmpd_color["gmid"] = $_POST["gmid"];
             $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
@@ -334,9 +360,26 @@ class AnalysisController extends Controller
                 }
                 $argument .= "clmt:" . $_POST["clmt"] . ",";
                 $argument .= "cbins:" . $_POST["cbins"] . ",";
-                $argument .= "clow:" . '#' . $_POST["clow"] . ",";
-                $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
-                $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+
+
+                if (strpos($_POST["clow"], '#') !== false) {
+                    $argument .= "clow:" . $_POST["clow"] . ",";
+                } else {
+                    $argument .= "clow:" . '#' . $_POST["clow"] . ",";
+                }
+                if (strpos($_POST["gmid"], '#') !== false) {
+                    $argument .= "cmid:" . $_POST["cmid"] . ",";
+                } else {
+                    $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
+                }
+                if (strpos($_POST["chigh"], '#') !== false) {
+                    $argument .= "chigh:" . $_POST["chigh"] . ",";
+                } else {
+                    $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+                }
+
+
+
                 $gene_cmpd_color["clow"] = $_POST["clow"];
                 $gene_cmpd_color["cmid"] = $_POST["cmid"];
                 $gene_cmpd_color["chigh"] = $_POST["chigh"];
@@ -352,9 +395,23 @@ class AnalysisController extends Controller
             }
             $argument .= "clmt:" . $_POST["clmt"] . ",";
             $argument .= "cbins:" . $_POST["cbins"] . ",";
-            $argument .= "clow:" . '#' . $_POST["clow"] . ",";
-            $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
-            $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+
+            if (strpos($_POST["clow"], '#') !== false) {
+                $argument .= "clow:" . $_POST["clow"] . ",";
+            } else {
+                $argument .= "clow:" . '#' . $_POST["clow"] . ",";
+            }
+            if (strpos($_POST["gmid"], '#') !== false) {
+                $argument .= "cmid:" . $_POST["cmid"] . ",";
+            } else {
+                $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
+            }
+            if (strpos($_POST["chigh"], '#') !== false) {
+                $argument .= "chigh:" . $_POST["chigh"] . ",";
+            } else {
+                $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+            }
+
             $gene_cmpd_color["clow"] = $_POST["clow"];
             $gene_cmpd_color["cmid"] = $_POST["cmid"];
             $gene_cmpd_color["chigh"] = $_POST["chigh"];
@@ -490,6 +547,17 @@ class AnalysisController extends Controller
                         $email = Auth::user()->email;
                         if (!file_exists("all/$email"))
                             mkdir("all/$email");
+                        $f = './all/' . Auth::user()->email;
+                        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+                        $size = fgets($io, 4096);
+                        $size = substr($size, 0, strpos($size, "\t"));
+
+                        pclose($io);
+                        $size = 100 - intval($size);
+                        if ($size < 0) {
+                            return view('/home');
+                        }
+
                     }
                     $time = time();
                     mkdir("all/$email/$time", 0755, true);
@@ -584,6 +652,16 @@ class AnalysisController extends Controller
                         $email = Auth::user()->email;
                         if (!file_exists("all/$email"))
                             mkdir("all/$email");
+                        $f = './all/' . Auth::user()->email;
+                        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+                        $size = fgets($io, 4096);
+                        $size = substr($size, 0, strpos($size, "\t"));
+
+                        pclose($io);
+                        $size = 100 - intval($size);
+                        if ($size < 0) {
+                            return view('/home');
+                        }
                     }
 
 
@@ -644,7 +722,7 @@ class AnalysisController extends Controller
 
                 $argument .= ",pathidx:" . ($pathcounter);
             } else {
-                return view('analysis.NewAnalysis');
+                return view('analysis.exampleAnalysis1');
             }
         } else if ($anal_type == "exampleAnalysis3") {
 
@@ -664,6 +742,16 @@ class AnalysisController extends Controller
                         $email = Auth::user()->email;
                         if (!file_exists("all/$email"))
                             mkdir("all/$email");
+                        $f = './all/' . Auth::user()->email;
+                        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+                        $size = fgets($io, 4096);
+                        $size = substr($size, 0, strpos($size, "\t"));
+
+                        pclose($io);
+                        $size = 100 - intval($size);
+                        if ($size < 0) {
+                            return view('/home')->with('error', 'No space avaialable please delete some previous analysis');
+                        }
                     }
                     $time = time();
                     mkdir("all/$email/$time", 0755, true);
@@ -719,7 +807,7 @@ class AnalysisController extends Controller
                 }
                 $argument .= ",pathidx:" . ($pathcounter);
             } else {
-                return view('analysis.NewAnalysis');
+                return view('analysis.exampleAnalysis2');
             }
         }
 

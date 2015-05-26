@@ -14,5 +14,21 @@
     @endif
     <p><b>User Email: {{ $user->email }}</b></p>
     <p><b>Member since: {{ $user->created_at }}</b></p>
+    <?php
+    $f = './all/' . $user->email;
+    $io = popen('/usr/bin/du -sh ' . $f, 'r');
+    $size = fgets($io, 4096);
+    $size = substr($size, 0, strpos($size, "\t"));
+
+    pclose($io);
+    $size = 100 - intval($size);
+    if($size < 10)
+    {
+    ?>
+    <p class="alert alert-danger"><b>Remaining space {{ $size}} MB </b></p>
+    <?php } else { ?>
+    <p class="alert alert-info"><b>Remaining space {{ $size}} MB </b></p>
+
+    <?php }?>
 
 @stop

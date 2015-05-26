@@ -11,13 +11,27 @@
         <p>User Email: {{ $user->email }}</p>
 
         <p>User Created at: {{ $user->created_at }}</p>
+        <?php
+        $f = './all/' . $user->email;
+        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+        $size = fgets($io, 4096);
+        $size = substr($size, 0, strpos($size, "\t"));
+
+        pclose($io);
+        $size = 100 - intval($size);
+        if($size < 10)
+        {
+        ?>
+        <p class="alert alert-danger"><b>Remaining space: {{ $size}} MB </b></p>
+        <?php } else { ?>
+        <p class="alert alert-info"><b>Remaining space: {{ $size}} MB </b></p>
+
+        <?php }?>
 
         <h2>Recent activity: </h2>
         <?php
         $analyses = DB::table('analyses')->where('id', $user->id)->get();
-        if (empty($analyses)) {
-            echo "No recenet Activity's";
-        }
+
         function get_string_between($string, $start, $end)
         {
             $string = " " . $string;
@@ -26,7 +40,11 @@
             $ini += strlen($start);
             $len = strpos($string, $end, $ini) - $ini;
             return substr($string, $ini, $len);
-        }?>
+        }
+        if (empty($analyses)) {
+            echo "No recenet Activity's";
+        } else {?>
+
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -56,7 +74,7 @@
 
                 //echo "$analyses1->arguments";
             }
-            ?>
+            }?>
         </table>
     </div>
 

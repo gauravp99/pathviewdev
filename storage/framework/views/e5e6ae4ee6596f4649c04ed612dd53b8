@@ -112,7 +112,7 @@
                 <fieldset class="step">
 
                     <p <?php if(isset(Session::get('err_atr')['gfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>><a
-                                href="tutorial#gene_data" title="Upload gene data accepts CSV, Rdata, txt file"
+                                href="tutorial#gene_data" title="Upload gene data accepts CSV, txt file"
                                 target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                     class="glyphicon glyphicon-info-sign"></span></a>
                         <?php echo form::label('gfile','Gene Data:'); ?>
@@ -126,7 +126,7 @@
                     <br/>
 
                     <p <?php if(isset(Session::get('err_atr')['cfile'])): ?> style="background-color:#DA6666;" <?php endif; ?>><a
-                                href="tutorial#cpd_data" title="Upload Compound data accepts CSV, Rdata, txt file"
+                                href="tutorial#cpd_data" title="Upload Compound data accepts CSV, txt file"
                                 target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                     class="glyphicon glyphicon-info-sign"></span></a><?php echo form::label('cpdfile','Compound
                         Data:'); ?>
@@ -258,54 +258,161 @@
 
                     ?>
                     <script type="text/javascript">
+                        var initialLoad = false;
+
+
                         var i = 1;
+                        var dirty_bit = document.getElementById('page_is_dirty');
+
+                        if (dirty_bit.value != '1'){
+                            dirty_bit.value = '1';
+                            for(var j=1;j<=parseInt(readCookie("pathidx"));j++) {
+                                eraseCookie("pathway" + j);
+                            }
+                            eraseCookie("pathidx");
+
+
+                        }
+                        else{
+
+
+                            if(readCookie("pathidx")===null)
+                            {
+
+                            }
+                            else
+                            {
+                                i = parseInt(readCookie("pathidx"));
+                                for(var j=1;j<parseInt(readCookie("pathidx"));j++)
+                                {
+                                    var el = document.createElement("input");
+                                    el.setAttribute("list", "pathwaylist");
+                                    el.setAttribute("class", "fex8");
+                                    el.setAttribute("name", "pathway" + j);
+                                    el.setAttribute("id", "pathway" + j);
+                                    el.setAttribute("value", readCookie("pathway" + j));
+                                    el.setAttribute("required", "required");
+                                    var foo = document.getElementById("pat_div");
+                                    foo.appendChild(document.createElement("br"));
+                                    foo.appendChild(el);
+                                    foo.appendChild(document.createElement("br"));
+                                }
+                            }}
                         function addText() {
 
+
                             var el = document.createElement("input");
+                            el.setAttribute("list", "pathwaylist");
+                            el.setAttribute("class", "fex8");
                             el.setAttribute("name", "pathway" + i);
                             el.setAttribute("id", "pathway" + i);
-                            el.setAttribute("list", "pathwaylist");
                             el.setAttribute("value", "00010-Glycolysis / Gluconeogenesis");
                             el.setAttribute("required", "required");
-
                             var foo = document.getElementById("pat_div");
-
                             foo.appendChild(document.createElement("br"));
                             foo.appendChild(el);
                             foo.appendChild(document.createElement("br"));
                             i++;
 
 
+
                         }
 
                         function removeText() {
+                            if (i > 0) {
 
-                            if (i > 1) {
                                 console.log(i);
                                 var pat = document.getElementById("pat_div");
                                 for (j = 0; j < 3; j++)
                                     pat.removeChild(pat.lastChild);
                                 i--;
+
                             }
                         }
-                        function fileCheck() {
 
+                        function fileCheck() {
+                            var j;
                             var f = document.getElementById("gfile");
                             if (f.value.length < 4) {
                                 alert('No Gene Data file Uploaded');
                                 return false;
                             }
                             else {
+
                                 document.getElementById('submit-button').setAttribute("data-toggle", "modal");
                                 document.getElementById('submit-button').setAttribute("data-target", "#myModal");
+
+                                if (i > 1) {
+
+                                    for( j= 1;j <= i; j++) {
+
+                                        createCookie("pathidx",j,1);
+
+                                        createCookie("pathway" + j, ""+document.getElementById("pathway" + j).value, 1);
+
+
+                                    }
+
+                                }
+                                else
+                                {
+                                    i = parseInt(readCookie("pathidx"));
+                                    if(i === null )
+                                    {
+
+                                    }
+                                    else {
+                                        for (var j = 1; j < parseInt(readCookie("pathidx")); j++) {
+                                            eraseCookie("pathway" + j);
+                                            eraseCookie("pathidx");
+                                        }
+                                    }
+
+                                }
 
                             }
 
 
                         }
+                        function colorCheck() {
+                            document.getElementById("glow").value="#00FF00"
+                            /*  $glow = "#00FF00";
+                             $gmid = "#D3D3D3";
+                             $ghigh = "#FF0000";
+                             $clmt = 1;
+                             $cbins = 10;
+                             $clow = "#0000FF";
+                             $cmid = "#D3D3D3";
+                             $chigh = "#FFFF00";*/
+                        }
+                        function createCookie(name,value,days) {
+                            if (days) {
+                                var date = new Date();
+                                date.setTime(date.getTime()+(days*24*60*60*1000));
+                                var expires = "; expires="+date.toGMTString();
+                            }
+                            else var expires = "";
+                            document.cookie = name+"="+value+expires+"; path=/";
+                        }
+
+                        function readCookie(name) {
+                            var nameEQ = name + "=";
+                            var ca = document.cookie.split(';');
+                            for(var i=0;i < ca.length;i++) {
+                                var c = ca[i];
+                                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+                            }
+                            return null;
+                        }
+
+                        function eraseCookie(name) {
+                            createCookie(name,"",-1);
+                        }
 
 
                     </script>
+
 
                     <p <?php if (isset(Session::get('err_atr')['suffix'])) {
                         echo "style='background-color:#DA6666;'";
@@ -325,6 +432,7 @@
                 <fieldset class="step">
 
                     <p>
+                        <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0" />
                         <a href="tutorial#kegg"
                            title="to render pathway graph as native KEGG graph"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">

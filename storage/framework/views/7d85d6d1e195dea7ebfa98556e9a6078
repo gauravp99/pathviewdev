@@ -125,39 +125,7 @@
 <link rel="stylesheet" href="<?php echo e(asset('/css/style.css')); ?>" type="text/css" media="screen"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="<?php echo e(asset('/js/sliding.form.js')); ?>"></script>
-<script type="text/javascript">
-    var i = 1;
-    function addText() {
 
-
-        var el = document.createElement("input");
-        el.setAttribute("list", "pathwaylist");
-        el.setAttribute("class", "fex8");
-        el.setAttribute("name", "pathway" + i);
-        el.setAttribute("id", "pathway" + i);
-        el.setAttribute("value", "00010");
-        el.setAttribute("required", "required");
-
-        var foo = document.getElementById("pat_div");
-        foo.appendChild(document.createElement("br"));
-        foo.appendChild(el);
-        foo.appendChild(document.createElement("br"));
-        i++;
-
-
-    }
-
-    function removeText() {
-
-        if (i > 0) {
-            console.log(i);
-            var pat = document.getElementById("pat_div");
-            for (j = 0; j < 3; j++)
-                pat.removeChild(pat.lastChild);
-            i--;
-        }
-    }
-</script>
 <?php echo $__env->make('footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 </body>
 </html>

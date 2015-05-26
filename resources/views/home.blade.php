@@ -8,19 +8,38 @@
 
     <div class='col-md-2-result sidebar col-md-offset-2'>
         <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile</h1>
+        @if(Session::get('error')!=NULL)
 
+            <p class="alert alert-danger">
+                You don't have enough space to do more analysis
+            </p>
+
+        @endif
         <p>User ID: {{Auth::user()->id }}</p>
 
         <p>User Email: {{Auth::user()->email }}</p>
 
         <p>User Created at: {{Auth::user()->created_at }}</p>
+        <?php
+        $f = './all/' . Auth::user()->email;
+        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+        $size = fgets($io, 4096);
+        $size = substr($size, 0, strpos($size, "\t"));
 
+        pclose($io);
+        $size = 100 - intval($size);
+        if($size < 10)
+        {
+        ?>
+        <p class="alert alert-danger"><b>Remaining space:  {{ $size}} MB </b></p>
+        <?php } else { ?>
+        <p class="alert alert-info"><b>Remaining space:  {{ $size}} MB </b></p>
+
+        <?php }?>
         <h2>Recent activity: </h2>
         <?php
         $analyses = DB::table('analyses')->where('id', Auth::user()->id)->get();
-        if (empty($analyses)) {
-            echo "No recenet Activity's";
-        }
+
         function get_string_between($string, $start, $end)
         {
             $string = " " . $string;
@@ -29,7 +48,10 @@
             $ini += strlen($start);
             $len = strpos($string, $end, $ini) - $ini;
             return substr($string, $ini, $len);
-        }?>
+        }
+        if (empty($analyses)) {
+            echo "No recenet Activity's";
+        } else { ?>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -59,7 +81,7 @@
 
                 //echo "$analyses1->arguments";
             }
-            ?>
+            }?>
         </table>
     </div>
 

@@ -171,7 +171,7 @@ session_start();?>
                                 <dt><a name="gene_data">Gene Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Gene data typically accepts CSV, Rdata, txt file</dd>
+                                <dd>Gene data typically accepts CSV and txt file</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -179,7 +179,7 @@ session_start();?>
                                 <dt><a name="cpd_data">Compound Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Compound gene data accepts CSV, Rdata, txt file</dd>
+                                <dd>Compound gene data accepts CSV, txt file</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
