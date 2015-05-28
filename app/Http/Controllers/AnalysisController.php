@@ -19,27 +19,20 @@ require "Rserv_Connection.php";
 
 class AnalysisController extends Controller
 {
-    /**
-     * New Analysis page
-     * @return \Illuminate\View\View
-     */
+
     public function new_analysis()
     {
         return view('analysis.NewAnalysis');
     }
 
-    /**
-     * @param CraeteAnalysisRequest $resqest
-     * @return $this|\Illuminate\View\View
-     */
     public function postAnalysis(CraeteAnalysisRequest $resqest)
     {
 
         $d = new AnalysisController();
         return $d->analysis("newAnalysis");
-        //this.analysis("new_analysis");
 
     }
+
 
     /**
      * @param $anal_type
@@ -55,22 +48,19 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
-        $r = new Rserve_Connection(RSERVE_HOST);
 
+        $r = new Rserve_Connection(RSERVE_HOST);
+        $analyses = new Analysis();
         $errors = array();
         $gene_cmpd_color = array();
         $err_atr = array();
         $argument = "";
         $time = time();
         $email = "";
-        $path_id = "";
-        $pathway_array1 = array();
 
 
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
-        /**
-         * Start check if the @geneid (Gene id) entered is present if not present then add to @errors
-         */
+
 
         $geneid = $_POST["geneid"];
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
@@ -82,17 +72,8 @@ class AnalysisController extends Controller
             $err_atr["geneid"] = 1;
 
         }
-        /**
-         * Start check if the @geneid (Gene id) entered is present if not present then add to @errors
-         */
-
-
-        /**
-         * Start check if the @cmpdid (Compound id) entered is present if not present then add to @errors
-         */
 
         $cpdid = $_POST["cpdid"];
-
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
             $argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
@@ -101,17 +82,8 @@ class AnalysisController extends Controller
             $err_atr["cpdid"] = 1;
         }
 
-        /**
-         * End check if the @cmpdid (Compound id) entered is present if not present then add to @errors
-         */
-
-
-        /**
-         * Start check if the @species (Species id) entered is present if not present then add to @errors
-         */
 
         $spe = substr($_POST["species"], 0, 3);
-
         $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe' LIMIT 1"));
         $species1 = explode("-", $_POST["species"]);
         if (sizeof($val) > 0) {
@@ -120,35 +92,12 @@ class AnalysisController extends Controller
             array_push($errors, "Entered Species ID doesn't exist");
             $err_atr["species"] = 1;
         }
-        /**
-         * End check if the @species (Species id) entered is present if not present then add to @errors
-         */
 
-
-        /**
-         * Start check if the @suffix (Suffix) contains any illegal character is present if present then remove those
-         */
         $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST["suffix"]);
-
         $argument .= "suffix:" . $suffix . ",";
-        /**
-         * End check if the @suffix (Suffix) contains any illegal character is present if present then remove those
-         */
 
-        /**
-         * Start check if the @pathway (Pathway ID) is present if not present then add to @errors
-         */
         $path = explode("-", $_POST["pathway"]);
-
-        $path_id = substr($path[0], 0, 5);
-
-        /** if pathway contains both species id and pathway id then devide the species and pathway check again for existance
-         * and add to arguments list if not present the add to errors list
-         *
-         */
-        /*Check for pathway  having speceis regular expression match */
         if (preg_match('/[a-z]+[0-9]+/', substr($path[0], 0, 5))) {
-
             $path_id = substr($path[0], 3, 8);
             $spe = substr($path[0], 0, 3);
             $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe' LIMIT 1"));
@@ -160,12 +109,8 @@ class AnalysisController extends Controller
                 $err_atr["species"] = 1;
             }
         } else {
-            /**
-             * If only the pathway id is present
-             */
             $path_id = substr($path[0], 0, 5);
         }
-
         $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id' LIMIT 1"));
         if (sizeof($val) > 0) {
             $argument .= "pathway:" . $val[0]->pathway_id . ",";
@@ -173,21 +118,7 @@ class AnalysisController extends Controller
             array_push($errors, "Entered pathway ID doesn't exist");
             $err_atr["pathway"] = 1;
         }
-        /**
-         * End check if the @pathway (Pathway ID) is present if not present then add to @errors
-         */
 
-        /**
-         * Start adding to arguments
-         * @kegg (Kegg Native),
-         * @layer (Same Layer),
-         * @split (Split Group),
-         * @expand (Expand Node),
-         * @multistate (Multi State),
-         * @matchd  (Matched data),
-         * @gdisc (Discrete Gene),
-         * @cdisc (Discrete Compound),
-         * adding to arguments */
 
         if (isset($_POST["kegg"]))
             $argument .= "kegg:T,";
@@ -229,62 +160,19 @@ class AnalysisController extends Controller
         else
             $argument .= "cdisc:F,";
 
-        /**
-         * End adding to arguments
-         * @kegg (Kegg Native),
-         * @layer (Same Layer),
-         * @split (Split Group),
-         * @expand (Expand Node),
-         * @multistate (Multi State),
-         * @matchd  (Matched data),
-         * @gdisc (Discrete Gene),
-         * @cdisc (Discrete Compound),
-         * adding to arguments */
-
-        /**
-         * Start adding to arguments
-         * @kpos Key position ,
-         * @pos Signature position,
-         */
         $argument .= "kpos:" . $_POST["kpos"] . ",";
         $argument .= "pos:" . $_POST["pos"] . ",";
-        /**
-         * End adding to arguments
-         * @kpos Key position ,
-         * @pos Signature position,
-         */
 
-        /**
-         * Start adding the offset
-         * here we check the argument contains non neumeric characters
-         * if contains non neumeric character add it to the @errors list
-         */
         if (preg_match('/[a-z]+/', $_POST["offset"])) {
             array_push($errors, "offset should be Numeric");
             $err_atr["offset"] = 1;
         } else {
             $argument .= "offset:" . $_POST["offset"] . ",";
         }
-        $argument .= "align:" . $_POST["align"] . ",";
-        /**
-         * End adding the offset
-         * here we check the argument contains non neumeric characters
-         * if contains non neumeric character add it to the @errors list
-         */
 
-        /**
-         * Start adding the arguments
-         * @glmt (Gene limit Range)
-         * @gbins (Gene Bins)
-         * @glow (Gene low level color)
-         * @gmid (Gene mid level color)
-         * @ghigh (Gene high level color)
-         * @climt (Cmpound limits range)
-         * @cbins (Compound number of bins)
-         * @clow  (Compound low level color)
-         * @cmid (Compound mid level color)
-         * @chigh (Compound high level color)
-         */
+        $argument .= "align:" . $_POST["align"] . ",";
+
+
         if ($anal_type == "newAnalysis") {
             if (Input::hasFile('gfile')) {
                 if (preg_match('/[a-z]+/', $_POST["glmt"])) {
@@ -383,7 +271,6 @@ class AnalysisController extends Controller
                 }
 
 
-
                 $gene_cmpd_color["clow"] = $_POST["clow"];
                 $gene_cmpd_color["cmid"] = $_POST["cmid"];
                 $gene_cmpd_color["chigh"] = $_POST["chigh"];
@@ -422,38 +309,10 @@ class AnalysisController extends Controller
 
         }
 
-        /**
-         * end adding the arguments
-         * @glmt (Gene limit Range)
-         * @gbins (Gene Bins)
-         * @glow (Gene low level color)
-         * @gmid (Gene mid level color)
-         * @ghigh (Gene high level color)
-         * @climt (Cmpound limits range)
-         * @cbins (Compound number of bins)
-         * @clow  (Compound low level color)
-         * @cmid (Compound mid level color)
-         * @chigh (Compound high level color)
-         */
 
-        /**
-         * Start adding the arguments
-         * @nsum (Node summing function)
-         * @ncolor (NA Color)
-         */
         $argument .= "nsum:" . $_POST["nodesun"] . ",";
         $argument .= "ncolor:" . $_POST["nacolor"] . ",";
-        /**
-         * end adding the arguments
-         * @nsum (Node summing function)
-         * @ncolor (NA Color)
-         */
 
-        /**
-         * @param $filename
-         * @return mixed|string
-         * Function getting the filename extension
-         */
         function file_ext($filename)
         {
             if (!preg_match('/\./', $filename)) return '';
@@ -465,10 +324,7 @@ class AnalysisController extends Controller
             return preg_replace('/\.[^.]*$/', '', $filename);
         }
 
-        /**
-         * @gfile Checking if the file extension is correct and in the supported list or not
-         *
-         */
+
         if (Input::hasFile('gfile')) {
             $filename = Input::file('gfile')->getClientOriginalName();
 
@@ -479,10 +335,7 @@ class AnalysisController extends Controller
             }
         }
 
-        /**
-         * @cfile Checking if the file extension is correct and in the supported list or not
-         *
-         */
+
         if (Input::hasFile('cfile')) {
             $filename1 = Input::file('cfile')->getClientOriginalName();
             $cpd_extension = file_ext($filename1);
@@ -493,10 +346,7 @@ class AnalysisController extends Controller
             }
         }
 
-        /**
-         * Checking if the any of the arguments contains errors or not if contains @error
-         * then redirect ot the same page with @errors as the session attribute
-         */
+
         $pathidx = 1;
         $pathway_array = array();
         $path = "pathway" . $pathidx;
@@ -507,9 +357,6 @@ class AnalysisController extends Controller
 
                 array_push($pathway_array, $path1[0]);
             }
-            /* $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);*/
-
-
             $pathidx++;
             $path = "pathway" . $pathidx;
         }

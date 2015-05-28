@@ -45,7 +45,8 @@ class Analysis
     var $nacolor;
     var $pathidx;
     var $targdir;
-
+    var $err_atr = array();
+    var $errors = array();
     function __toString()
     {
         // TODO: Implement __toString() method.
@@ -482,7 +483,14 @@ class Analysis
      */
     public function setSpecies($species)
     {
-        $this->species = $species;
+        $val = DB::select(DB::raw("select species_id from Species where species_id like '$species' LIMIT 1"));
+        if (sizeof($val) > 0) {
+            $this->species = $species;
+        } else {
+            array_push($errors, "Entered Species ID doesn't exist");
+            $err_atr["species"] = 1;
+        }
+
     }
 
     /**
@@ -498,7 +506,15 @@ class Analysis
      */
     public function setCpdid($cpdid)
     {
+        $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
+        if (sizeof($val) == 0) {
+            array_push($errors, "Entered compound ID doesn't exist");
+            $err_atr["cpdid"] = 1;
+        } else {
         $this->cpdid = $cpdid;
+
+        }
+
     }
 
     /**
@@ -514,7 +530,16 @@ class Analysis
      */
     public function setGeneid($geneid)
     {
-        $this->geneid = $geneid;
+        $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
+
+        if (sizeof($val) == 0) {
+            array_push($errors, "Entered Gene ID doesn't exist");
+            $err_atr["geneid"] = 1;
+
+        } else {
+            $this->geneid = $val[0]->geneid;
+        }
+
     }
 
     /**

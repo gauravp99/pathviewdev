@@ -1,11 +1,10 @@
-<?php
-session_start();?>
+
 @extends('app')
 
 @section('content')
 
 
-    <div class="col-md-12 content">
+    <div class="col-md-12 content" style="text-align: center;">
 
         <h1><b>Help Information</b></h1>
 
@@ -480,9 +479,9 @@ session_start();?>
         <div class="col-sm-12">
 
             <section id="example1">
-                <div class="arg_content">
 
-                    <h1 class="arg_content">Example 1: Multiple sample KEGG view</h1></div>
+
+                <h1 class="arg_content">Example 1: Multiple sample KEGG view</h1>
                 <p>
                     This example shows the capability of multiple sample data handling in Pathview. Data files are pre
                     loaded and All the parameters have been preset.
