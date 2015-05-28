@@ -35,6 +35,7 @@ align <- 'y'
 multistate <- NULL
 
 # @arguments are split on comma as they are passed to Rscript with comma separated
+
 v = strsplit(args[1],split=",",fixed=TRUE)
 
 v.split=strsplit(v[[1]], ":", fixed=T)

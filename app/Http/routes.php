@@ -100,6 +100,9 @@ Route::get('example1', 'AnalysisController@example_one');
 Route::get('example2', 'AnalysisController@example_two');
 
 Route::get('example3', 'AnalysisController@example_three');
+Route::get('test', function () {
+    return view("rserve.index");
+});
 /*-----------------------------5. end Analysis Routes-----------------------------*/
 
 

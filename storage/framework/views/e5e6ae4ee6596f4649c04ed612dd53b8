@@ -48,7 +48,7 @@
     $species = "hsa-Homo sapiens";
     $pathway = "00010-Glycolysis / Gluconeogenesis";
     $pathidx = 0;
-    $suffix = "multistate.kegg";
+    $suffix = "pathview";
     $kegg = true;
     $layer = true;
     $split = false;
@@ -215,7 +215,14 @@
                             ?>
 
                         </datalist>
-                    <p <?php if (isset(Session::get('err_atr')['pathway'])) {
+                    <p <?php
+
+                            /**function preg_array_key_exists($pattern, $array) {
+                                $keys = array_keys($array);
+                                return (int) preg_grep($pattern,$keys);
+                            }
+                            ||preg_array_key_exists('pathway[0-9]*',Session::get('err_atr'))==1 **/
+                            if (isset(Session::get('err_atr')['pathway'])) {
                         echo "style='background-color:#DA6666;'";
                     } ?> id="pat_div">
                         <a href="tutorial#pwy_id"
@@ -232,6 +239,24 @@
                         <input class="ex88" id="addbtn" value="Add" onclick="addText()" type="button">
                         <input class="ex88" id="rmvbtn" value="Remove" onclick="removeText()" type="button">
                         <br/>
+                        <?php
+
+                        $pathidx = 1;
+                        while (isset(Session::get('Sess')["pathway$pathidx"])) {
+                            $pathidx++;
+                        }
+
+
+                        for ($pathnidx = 1; $pathnidx < $pathidx; $pathnidx++) {
+                            echo "<input class='ex8' list='pathwaylist' name=\"pathway$pathnidx\" id=\"pathway$pathnidx\" value=" . Session::get('Sess')["pathway$pathnidx"] . " >";
+                            echo "<br/>";
+                            echo "<br/>";
+
+
+                        }
+
+
+                        ?>
                     </p>
 
                     <datalist id="pathwaylist">
@@ -262,6 +287,11 @@
 
 
                         var i = 1;
+                        var php_i = 0;
+                        php_i = '<?php echo $pathnidx ;?>';
+                        if (php_i > 0) {
+                            i = php_i;
+                        }
                         var dirty_bit = document.getElementById('page_is_dirty');
 
                         if (dirty_bit.value != '1') {
