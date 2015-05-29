@@ -212,7 +212,6 @@
                                                 annotateDisplay: true,
                                                 inGraphDataShow: false,
                                                 annotateDisplay: true,
-                                                animationEasing: "easeOutBounce",
                                                 graphTitleFontSize: 18
 
 

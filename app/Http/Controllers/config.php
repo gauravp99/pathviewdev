@@ -2,4 +2,4 @@
 define('RSERVE_HOST', 'localhost');
 
 // Used in LoginTest.php
-define('RSERVE_PORT', 6311);
+define('RSERVE_PORT', 6312);

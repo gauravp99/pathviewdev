@@ -1,4 +1,4 @@
-<?php
+<?php namespace App\Http\Controllers;
 /**
  * Created by PhpStorm.
  * User: ybhavnasi
@@ -6,7 +6,7 @@
  * Time: 9:21 AM
  */
 
-namespace App\Http\Controllers;
+
 
 
 class Analysis
@@ -47,532 +47,112 @@ class Analysis
     var $targdir;
     var $err_atr = array();
     var $errors = array();
-    function __toString()
-    {
-        // TODO: Implement __toString() method.
-        return "hello";
-    }
 
-    /**
-     * @return mixed
-     */
-    public function getNacolor()
-    {
-        return $this->nacolor;
-    }
-
-    /**
-     * @param mixed $nacolor
-     */
-    public function setNacolor($nacolor)
+    function __construct($_POST, $anal_type)
     {
 
-        $this->nacolor = $nacolor;
-    }
+        if (isset($_POST["geneid"])) {
+            $gene = $_POST["geneid"];
+            $val = DB::select(DB::raw("select geneid  from gene where geneid = '$gene' LIMIT 1 "));
 
-    /**
-     * @return mixed
-     */
-    public function getNodesum()
-    {
-        return $this->nodesum;
-    }
+            if (sizeof($val) > 0) {
+                $this->$geneid = $_POST["geneid"];
+            } else {
+                array_push($errors, "Entered Gene ID doesn't exist");
+                $err_atr["geneid"] = 1;
+            }
+        }
 
-    /**
-     * @param mixed $nodesum
-     */
-    public function setNodesum($nodesum)
-    {
-        $this->nodesum = $nodesum;
-    }
+        if (isset($_POST["geneid"])) {
+            $cpdid = $_POST["cpdid"];
+            $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid = '$cpdid' LIMIT 1 "));
+            if (sizeof($val) > 0) {
+                $this->cpdid = str_replace(" ", "-", $val[0]->cmpdid);
+            } else {
+                array_push($errors, "Entered compound ID doesn't exist");
+                $err_atr["cpdid"] = 1;
+            }
+        }
 
-    /**
-     * @return mixed
-     */
-    public function getChigh()
-    {
-        return $this->chigh;
-    }
+        $spe = substr($_POST["species"], 0, 3);
+        $val = DB::select(DB::raw("select species_id from Species where species_id = '$spe' LIMIT 1"));
 
-    /**
-     * @param mixed $chigh
-     */
-    public function setChigh($chigh)
-    {
-        $this->chigh = $chigh;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCmid()
-    {
-        return $this->cmid;
-    }
-
-    /**
-     * @param mixed $cmid
-     */
-    public function setCmid($cmid)
-    {
-        $this->cmid = $cmid;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClow()
-    {
-        return $this->clow;
-    }
-
-    /**
-     * @param mixed $clow
-     */
-    public function setClow($clow)
-    {
-        $this->clow = $clow;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCbins()
-    {
-        return $this->cbins;
-    }
-
-    /**
-     * @param mixed $cbins
-     */
-    public function setCbins($cbins)
-    {
-        $this->cbins = $cbins;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getClmt()
-    {
-        return $this->clmt;
-    }
-
-    /**
-     * @param mixed $clmt
-     */
-    public function setClmt($clmt)
-    {
-        $this->clmt = $clmt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGhigh()
-    {
-        return $this->ghigh;
-    }
-
-    /**
-     * @param mixed $ghigh
-     */
-    public function setGhigh($ghigh)
-    {
-        $this->ghigh = $ghigh;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGmid()
-    {
-        return $this->gmid;
-    }
-
-    /**
-     * @param mixed $gmid
-     */
-    public function setGmid($gmid)
-    {
-        $this->gmid = $gmid;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGlow()
-    {
-        return $this->glow;
-    }
-
-    /**
-     * @param mixed $glow
-     */
-    public function setGlow($glow)
-    {
-        $this->glow = $glow;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGbins()
-    {
-        return $this->gbins;
-    }
-
-    /**
-     * @param mixed $gbins
-     */
-    public function setGbins($gbins)
-    {
-        $this->gbins = $gbins;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGlmt()
-    {
-        return $this->glmt;
-    }
-
-    /**
-     * @param mixed $glmt
-     */
-    public function setGlmt($glmt)
-    {
-        $this->glmt = $glmt;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAlign()
-    {
-        return $this->align;
-    }
-
-    /**
-     * @param mixed $align
-     */
-    public function setAlign($align)
-    {
-        $this->align = $align;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOffset()
-    {
-        return $this->offset;
-    }
-
-    /**
-     * @param mixed $offset
-     */
-    public function setOffset($offset)
-    {
-        $this->offset = $offset;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getPos()
-    {
-        return $this->pos;
-    }
-
-    /**
-     * @param mixed $pos
-     */
-    public function setPos($pos)
-    {
-        $this->pos = $pos;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKpos()
-    {
-        return $this->kpos;
-    }
-
-    /**
-     * @param mixed $kpos
-     */
-    public function setKpos($kpos)
-    {
-        $this->kpos = $kpos;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCdisc()
-    {
-        return $this->cdisc;
-    }
-
-    /**
-     * @param mixed $cdisc
-     */
-    public function setCdisc($cdisc)
-    {
-        $this->cdisc = $cdisc;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGdisc()
-    {
-        return $this->gdisc;
-    }
-
-    /**
-     * @param mixed $gdisc
-     */
-    public function setGdisc($gdisc)
-    {
-        $this->gdisc = $gdisc;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMatchd()
-    {
-        return $this->matchd;
-    }
-
-    /**
-     * @param mixed $matchd
-     */
-    public function setMatchd($matchd)
-    {
-        $this->matchd = $matchd;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMultistate()
-    {
-        return $this->multistate;
-    }
-
-    /**
-     * @param mixed $multistate
-     */
-    public function setMultistate($multistate)
-    {
-        $this->multistate = $multistate;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getExpand()
-    {
-        return $this->expand;
-    }
-
-    /**
-     * @param mixed $expand
-     */
-    public function setExpand($expand)
-    {
-        $this->expand = $expand;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSplit()
-    {
-        return $this->split;
-    }
-
-    /**
-     * @param mixed $split
-     */
-    public function setSplit($split)
-    {
-        $this->split = $split;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getLayer()
-    {
-        return $this->layer;
-    }
-
-    /**
-     * @param mixed $layer
-     */
-    public function setLayer($layer)
-    {
-        $this->layer = $layer;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getKegg()
-    {
-        return $this->kegg;
-    }
-
-    /**
-     * @param mixed $kegg
-     */
-    public function setKegg($kegg)
-    {
-        $this->kegg = $kegg;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSuffix()
-    {
-        return $this->suffix;
-    }
-
-    /**
-     * @param mixed $suffix
-     */
-    public function setSuffix($suffix)
-    {
-        $this->suffix = $suffix;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPathway()
-    {
-        return $this->pathway;
-    }
-
-    /**
-     * @param array $pathway
-     */
-    public function setPathway($pathway)
-    {
-        $this->pathway = $pathway;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSpecies()
-    {
-        return $this->species;
-    }
-
-    /**
-     * @param mixed $species
-     */
-    public function setSpecies($species)
-    {
-        $val = DB::select(DB::raw("select species_id from Species where species_id like '$species' LIMIT 1"));
         if (sizeof($val) > 0) {
-            $this->species = $species;
+            $this->species = $val[0]->species_id;
         } else {
             array_push($errors, "Entered Species ID doesn't exist");
             $err_atr["species"] = 1;
         }
 
-    }
+        $this->suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST["suffix"]);
 
-    /**
-     * @return mixed
-     */
-    public function getCpdid()
-    {
-        return $this->cpdid;
-    }
+        if (isset($_POST["kegg"]))
+            $this->kegg = "T";
+        else
+            $this->kegg = "F";
 
-    /**
-     * @param mixed $cpdid
-     */
-    public function setCpdid($cpdid)
-    {
-        $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
-        if (sizeof($val) == 0) {
-            array_push($errors, "Entered compound ID doesn't exist");
-            $err_atr["cpdid"] = 1;
+        if (isset($_POST["layer"]))
+            $this->layer = "T";
+        else
+            $this->layer = "F";
+
+        if (isset($_POST["split"]))
+            $this->split = "T";
+        else
+            $this->split = "F";
+
+        if (isset($_POST["expand"]))
+            $this->expand = "T";
+        else
+            $this->expand = "F";
+
+        if (isset($_POST["multistate"]))
+            $this->multistate = "T";
+        else
+            $this->multistate = "F";
+
+        if (isset($_POST["matchd"]))
+            $this->matchd = "T";
+        else
+            $this->matchd = "F";
+
+        if (isset($_POST["gdisc"]))
+            $this->gdisc = "T";
+        else
+            $this->gdisc = "F";
+
+        if (isset($_POST["cdisc"]))
+            $this->cdisc = "T";
+        else
+            $this->cdisc = "F";
+
+        $this->kpos = $_POST["kpos"];
+        $this->pos = $_POST["pos"];
+
+        if (preg_match('/[a-z]+/', $_POST["offset"])) {
+            array_push($errors, "offset should be Numeric");
+            $err_atr["offset"] = 1;
         } else {
-        $this->cpdid = $cpdid;
+            $this->offset = $_POST["offset"];
+        }
+
+        $this->align = $_POST["align"];
+
+        if ((($anal_type == "newAnalysis") && isset($_POST["gfile"])) || isset($_POST["gcheck"])) {
+
+
+
 
         }
 
+
+
     }
 
-    /**
-     * @return mixed
-     */
-    public function getGeneid()
+    function __toString()
     {
-        return $this->geneid;
+
+        return "hello";
     }
-
-    /**
-     * @param mixed $geneid
-     */
-    public function setGeneid($geneid)
-    {
-        $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
-
-        if (sizeof($val) == 0) {
-            array_push($errors, "Entered Gene ID doesn't exist");
-            $err_atr["geneid"] = 1;
-
-        } else {
-            $this->geneid = $val[0]->geneid;
-        }
-
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCfile()
-    {
-        return $this->cfile;
-    }
-
-    /**
-     * @param mixed $cfile
-     */
-    public function setCfile($cfile)
-    {
-        $this->cfile = $cfile;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getGfile()
-    {
-        return $this->gfile;
-    }
-
-    /**
-     * @param mixed $gfile
-     */
-    public function setGfile($gfile)
-    {
-        $this->gfile = $gfile;
-    }
-
 
 }

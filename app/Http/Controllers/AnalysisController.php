@@ -48,9 +48,12 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
+        try {
+            $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
+        } catch (Exception $e) {
+            echo "Exception occurred" . $e->getMessage();
+        }
 
-        $r = new Rserve_Connection(RSERVE_HOST);
-        $analyses = new Analysis();
         $errors = array();
         $gene_cmpd_color = array();
         $err_atr = array();
@@ -64,13 +67,11 @@ class AnalysisController extends Controller
 
         $geneid = $_POST["geneid"];
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
-
         if (sizeof($val) > 0) {
             $argument .= "geneid:" . $val[0]->geneid . ",";
         } else {
             array_push($errors, "Entered Gene ID doesn't exist");
             $err_atr["geneid"] = 1;
-
         }
 
         $cpdid = $_POST["cpdid"];
@@ -101,7 +102,6 @@ class AnalysisController extends Controller
             $path_id = substr($path[0], 3, 8);
             $spe = substr($path[0], 0, 3);
             $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe' LIMIT 1"));
-
             if (sizeof($val) > 0) {
                 $argument .= "species:" . $val[0]->species_id . ",";
             } else {
@@ -112,6 +112,7 @@ class AnalysisController extends Controller
             $path_id = substr($path[0], 0, 5);
         }
         $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id' LIMIT 1"));
+
         if (sizeof($val) > 0) {
             $argument .= "pathway:" . $val[0]->pathway_id . ",";
         } else {
@@ -173,41 +174,8 @@ class AnalysisController extends Controller
         $argument .= "align:" . $_POST["align"] . ",";
 
 
-        if ($anal_type == "newAnalysis") {
-            if (Input::hasFile('gfile')) {
-                if (preg_match('/[a-z]+/', $_POST["glmt"])) {
-                    array_push($errors, "glimit should be Numeric");
-                    $err_atr["glmt"] = 1;
-                }
-                if (preg_match('/[a-z]+/', $_POST["gbins"])) {
-                    array_push($errors, "gbins should be Numeric");
-                    $err_atr["gbins"] = 1;
-                }
-                $argument .= "glmt:" . $_POST["glmt"] . ",";
-                $argument .= "gbins:" . $_POST["gbins"] . ",";
-                if (strpos($_POST["glow"], '#') !== false) {
-                    $argument .= "glow:" . $_POST["glow"] . ",";
-                } else {
-                    $argument .= "glow:" . '#' . $_POST["glow"] . ",";
-                }
-                if (strpos($_POST["gmid"], '#') !== false) {
-                    $argument .= "gmid:" . $_POST["gmid"] . ",";
-                } else {
-                    $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
-                }
-                if (strpos($_POST["ghigh"], '#') !== false) {
-                    $argument .= "ghigh:" . $_POST["ghigh"] . ",";
-                } else {
-                    $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
-                }
+        if ((($anal_type == "newAnalysis") && (Input::hasFile('gfile'))) || isset($_POST["gcheck"])) {
 
-                $gene_cmpd_color["glow"] = $_POST["glow"];
-                $gene_cmpd_color["gmid"] = $_POST["gmid"];
-                $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
-
-
-            }
-        } else if (isset($_POST["gcheck"])) {
             if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                 array_push($errors, "glimit should be Numeric");
                 $err_atr["glmt"] = 1;
@@ -233,66 +201,36 @@ class AnalysisController extends Controller
             } else {
                 $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
             }
+
             $gene_cmpd_color["glow"] = $_POST["glow"];
             $gene_cmpd_color["gmid"] = $_POST["gmid"];
             $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
 
+
         }
 
+        if ((($anal_type == "newAnalysis") && (Input::hasFile('cfile'))) || isset($_POST["cpdcheck"])) {
 
-        if ($anal_type == "newAnalysis") {
-            if (Input::hasFile('cfile')) {
-                if (preg_match('/[a-z]+/', $_POST["clmt"])) {
-                    array_push($errors, "climit should be Numeric");
-                    $err_atr["clmt"] = 1;
-                }
-                if (preg_match('/[a-z]+/', $_POST["cbins"])) {
-                    array_push($errors, "cbins should be Numeric");
-                    $err_atr["cbins"] = 1;
-                }
-                $argument .= "clmt:" . $_POST["clmt"] . ",";
-                $argument .= "cbins:" . $_POST["cbins"] . ",";
-
-
-                if (strpos($_POST["clow"], '#') !== false) {
-                    $argument .= "clow:" . $_POST["clow"] . ",";
-                } else {
-                    $argument .= "clow:" . '#' . $_POST["clow"] . ",";
-                }
-                if (strpos($_POST["gmid"], '#') !== false) {
-                    $argument .= "cmid:" . $_POST["cmid"] . ",";
-                } else {
-                    $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
-                }
-                if (strpos($_POST["chigh"], '#') !== false) {
-                    $argument .= "chigh:" . $_POST["chigh"] . ",";
-                } else {
-                    $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
-                }
-
-
-                $gene_cmpd_color["clow"] = $_POST["clow"];
-                $gene_cmpd_color["cmid"] = $_POST["cmid"];
-                $gene_cmpd_color["chigh"] = $_POST["chigh"];
-            }
-        } else if (isset($_POST["cpdcheck"])) {
             if (preg_match('/[a-z]+/', $_POST["clmt"])) {
                 array_push($errors, "climit should be Numeric");
                 $err_atr["clmt"] = 1;
             }
+
             if (preg_match('/[a-z]+/', $_POST["cbins"])) {
                 array_push($errors, "cbins should be Numeric");
                 $err_atr["cbins"] = 1;
             }
             $argument .= "clmt:" . $_POST["clmt"] . ",";
+
             $argument .= "cbins:" . $_POST["cbins"] . ",";
+
 
             if (strpos($_POST["clow"], '#') !== false) {
                 $argument .= "clow:" . $_POST["clow"] . ",";
             } else {
                 $argument .= "clow:" . '#' . $_POST["clow"] . ",";
             }
-            if (strpos($_POST["gmid"], '#') !== false) {
+            if (strpos($_POST["cmid"], '#') !== false) {
                 $argument .= "cmid:" . $_POST["cmid"] . ",";
             } else {
                 $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
@@ -302,6 +240,7 @@ class AnalysisController extends Controller
             } else {
                 $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
             }
+
 
             $gene_cmpd_color["clow"] = $_POST["clow"];
             $gene_cmpd_color["cmid"] = $_POST["cmid"];
@@ -329,7 +268,7 @@ class AnalysisController extends Controller
             $filename = Input::file('gfile')->getClientOriginalName();
 
             $gene_extension = file_ext($filename);
-            if ($gene_extension != "txt" && $gene_extension != "csv" && $gene_extension != "rda") {
+            if ($gene_extension != "txt" && $gene_extension != "csv" && $gene_extension != "Rdata") {
                 array_push($errors, "Gene data file extension is not supported( use .txt,.csv,.rda)");
                 $err_atr["gfile"] = 1;
             }
@@ -340,12 +279,11 @@ class AnalysisController extends Controller
             $filename1 = Input::file('cfile')->getClientOriginalName();
             $cpd_extension = file_ext($filename1);
 
-            if ($cpd_extension != "txt" && $cpd_extension != "csv" && $cpd_extension != "rda") {
+            if ($cpd_extension != "txt" && $cpd_extension != "csv" && $cpd_extension != "Rdata") {
                 array_push($errors, "compound data file extension is not supported( use .txt,.csv,.rda)");
                 $err_atr["cfile"] = 1;
             }
         }
-
 
         $pathidx = 1;
         $pathway_array = array();
@@ -492,9 +430,6 @@ class AnalysisController extends Controller
 
                             array_push($pathway_array, substr($path1[0], 0, 5));
                         }
-                        /* $argument .= ",pathway$pathidx:" . substr($path1[0], 0, 5);*/
-
-
                         $pathidx++;
                         $path = "pathway" . $pathidx;
                     }
@@ -614,7 +549,11 @@ class AnalysisController extends Controller
 
                 $argument .= ",pathidx:" . ($pathcounter);
             } else {
-                return view('analysis.exampleAnalysis1');
+                if ($anal_type == "exampleAnalysis1") {
+                    return view('analysis.exampleAnalysis1');
+                } else {
+                    return view('analysis.exampleAnalysis2');
+                }
             }
         } else if ($anal_type == "exampleAnalysis3") {
 
@@ -675,7 +614,7 @@ class AnalysisController extends Controller
                             copy("all/demo/example/cpd.cas.csv", $destFile . "/cpd.cas.csv");
                         }
                     }
-                    $_SESSION['argument'] = "cfilename:" . $filename1 . ",filename:" . $filename . "," . $argument;
+                    $_SESSION['argument'] = $argument;
                     $pathway_array = array();
                     $pathidx = 1;
                     $path = "pathway" . $pathidx;
@@ -728,12 +667,10 @@ class AnalysisController extends Controller
 
         /** Rscript code running with the arguments */
         #exec("Rscript my_Rscript.R $argument  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-        #exec("Rscript my_input.R $argument > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-        #exec("library(\"RSclient\") c=RS.connect() RS.eval(c,analyses(input))");
         try {
 
             $r->evalString('analyses("' . $argument . '")');
-            #return print_r($x);
+
 
             $r->close();
         } catch (Exception $e) {
@@ -777,8 +714,6 @@ class AnalysisController extends Controller
 
 
         }*/
-
-
         $destFile1 = "/all/$email/$time/";
 
         return view('analysis.Result')->with(array('directory' => $destFile, 'directory1' => $destFile1));
