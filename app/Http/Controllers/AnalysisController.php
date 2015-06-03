@@ -24,38 +24,22 @@ class AnalysisController extends Controller
     {
         return view('analysis.NewAnalysis');
     }
-
     public function postAnalysis(CraeteAnalysisRequest $resqest)
     {
-
         $d = new AnalysisController();
         return $d->analysis("newAnalysis");
-
     }
 
 
-    /**
-     * @param $anal_type
-     * @return $this|\Illuminate\View\View
-     *
-     * This function does the following things
-     *
-     * 1. Read the arguments from the form and copy into the arguments variable which is send to R script
-     * 2. Check for any issue with input like adding some values which are not supported
-     * 3. Checking for values with a comma or code. detect any abnormal input
-     * 4. once analysis is successfully done insert data into database
-     */
+
     public function analysis($anal_type)
     {
-        // return sizeof($_GET['selectto']);
 
         try {
             $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
         } catch (Exception $e) {
             return Redirect::to('error')->with('error', 'error');
-            #echo "Exception occurred" . $e->getMessage();
         }
-
 
         $errors = array();
         $gene_cmpd_color = array();
@@ -64,22 +48,23 @@ class AnalysisController extends Controller
         $time = time();
         $email = "";
 
-        $dest = public_path() . "/all/temp/" . $time;
-
-
         foreach ($_POST as $key => $value) {
             $_SESSION[$key] = $value;
         }
         $Session = $_SESSION;
 
-
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
+
         $i = 0;
+
         $pathway_array = array();
+
         foreach ($_POST['selectto'] as $pathway) {
             array_push($pathway_array, $pathway);
         }
+
         $pathway_array1 = array_unique($pathway_array);
+
         $argument .= "pathway:";
 
         foreach ($pathway_array1 as $pathway) {
@@ -93,8 +78,8 @@ class AnalysisController extends Controller
                 $err_atr["pathway"] = 1;
             }
         }
-        $argument .= ",";
 
+        $argument .= ",";
 
         $geneid = $_POST["geneid"];
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
@@ -108,8 +93,7 @@ class AnalysisController extends Controller
         $cpdid = $_POST["cpdid"];
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
-            #$argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
-            $argument .= "cpdid:" . $val[0]->cmpdid. ",";
+            $argument .= "cpdid:" . $val[0]->cmpdid . ",";
 
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
@@ -217,49 +201,45 @@ class AnalysisController extends Controller
             $gene_cmpd_color["glow"] = $_POST["glow"];
             $gene_cmpd_color["gmid"] = $_POST["gmid"];
             $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
-
-
         }
         /*if ((($anal_type == "newAnalysis") && (Input::hasFile('cpdfile'))) || isset($_POST["cpdcheck"])) {*/
 
-            if (preg_match('/[a-z]+/', $_POST["clmt"])) {
-                array_push($errors, "Compound Limit should be Numeric");
-                $err_atr["clmt"] = 1;
-            }
+        if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+            array_push($errors, "Compound Limit should be Numeric");
+            $err_atr["clmt"] = 1;
+        }
 
-            if (preg_match('/[a-z]+/', $_POST["cbins"])) {
-                array_push($errors, "Compound Bins should be Numeric");
-                $err_atr["cbins"] = 1;
-            }
+        if (preg_match('/[a-z]+/', $_POST["cbins"])) {
+            array_push($errors, "Compound Bins should be Numeric");
+            $err_atr["cbins"] = 1;
+        }
         $clmtrange = str_replace(",", ";", $_POST["clmt"]);
 
         $argument .= "clmt:" . $clmtrange . ",";
 
-            $argument .= "cbins:" . $_POST["cbins"] . ",";
+        $argument .= "cbins:" . $_POST["cbins"] . ",";
 
 
-            if (strpos($_POST["clow"], '#') !== false) {
-                $argument .= "clow:" . $_POST["clow"] . ",";
-            } else {
-                $argument .= "clow:" . '#' . $_POST["clow"] . ",";
-            }
-            if (strpos($_POST["cmid"], '#') !== false) {
-                $argument .= "cmid:" . $_POST["cmid"] . ",";
-            } else {
-                $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
-            }
-            if (strpos($_POST["chigh"], '#') !== false) {
-                $argument .= "chigh:" . $_POST["chigh"] . ",";
-            } else {
-                $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
-            }
+        if (strpos($_POST["clow"], '#') !== false) {
+            $argument .= "clow:" . $_POST["clow"] . ",";
+        } else {
+            $argument .= "clow:" . '#' . $_POST["clow"] . ",";
+        }
+        if (strpos($_POST["cmid"], '#') !== false) {
+            $argument .= "cmid:" . $_POST["cmid"] . ",";
+        } else {
+            $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
+        }
+        if (strpos($_POST["chigh"], '#') !== false) {
+            $argument .= "chigh:" . $_POST["chigh"] . ",";
+        } else {
+            $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+        }
 
 
-            $gene_cmpd_color["clow"] = $_POST["clow"];
-            $gene_cmpd_color["cmid"] = $_POST["cmid"];
-            $gene_cmpd_color["chigh"] = $_POST["chigh"];
-
-
+        $gene_cmpd_color["clow"] = $_POST["clow"];
+        $gene_cmpd_color["cmid"] = $_POST["cmid"];
+        $gene_cmpd_color["chigh"] = $_POST["chigh"];
 
 
         $argument .= "nsum:" . $_POST["nodesun"] . ",";
@@ -301,48 +281,7 @@ class AnalysisController extends Controller
         $pathidx = 1;
         $pathway_array = array();
         $path = "pathway" . $pathidx;
-        /* while (isset($_POST[$path])) {
-             $path1 = explode("-", $_POST["pathway$pathidx"]);
 
-             if (strcmp(substr($path1[0], 0, 5), $path_id) != 0) {
-
-                 array_push($pathway_array, $path1[0]);
-             }
-             $pathidx++;
-             $path = "pathway" . $pathidx;
-         }*/
-
-        /*  $pathway_array1 = array_unique($pathway_array);
-
-          $pathcounter = 1;
-
-          foreach ($pathway_array1 as $val1) {
-              if (preg_match('/[a-z]+[0-9]+/', substr($val1, 0, 5))) {
-                  $spec_id12 = substr($val1, 0, 3);
-                  if (strcmp($spec_id12, $spe) != 0) {
-                      array_push($errors, "Entered species '" . $spec_id12 . "' for pathway ID " . $pathcounter . " value " . substr($val1, 3, 8) . " is not matched with '" . $spe . "'");
-                      $err_atr["pathway" . $pathcounter] = 1;
-
-
-                  }
-                  $path_id12 = substr($val1, 3, 8);
-              }
-              else
-              {
-                  $path_id12 = substr($val1, 0, 5);
-              }
-
-              $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id12' LIMIT 1"));
-              if (sizeof($val) > 0) {
-                  $argument .= "pathway$pathcounter:" . $val[0]->pathway_id . ",";
-
-              } else {
-                  array_push($errors, "Entered pathway ID " . $pathcounter . " value " . $val1 . " doesn't exist");
-                  $err_atr["pathway" . $pathcounter] = 1;
-              }
-              $pathcounter++;
-
-          }*/
 
         if (sizeof($errors) > 0) {
 
@@ -524,28 +463,10 @@ class AnalysisController extends Controller
                         }
                     }
                     $_SESSION['argument'] = $argument;
-                    /*    $pathway_array = array();
-                        $pathidx = 1;
-                        $path = "pathway" . $pathidx;
-                        while (isset($_POST[$path])) {
-                            $path1 = explode("-", $_POST["pathway$pathidx"]);
 
-                            if (strcmp(substr($path1[0], 0, 5), $path_id) != 0) {
-                                array_push($pathway_array, substr($path1[0], 0, 5));
-                            }
-                            $pathway_array1 = array_unique($pathway_array);
-
-                            $pathidx++;
-                            $path = "pathway" . $pathidx;
-                        }
-                        $pathcounter = 1;
-                        foreach ($pathway_array1 as $val) {
-                            $argument .= ",pathway$pathcounter:" . $val;
-                            $pathcounter++;
-                        }*/
                 }
 
-                // $argument .= ",pathidx:" . ($pathcounter);
+
             } else {
                 if ($anal_type == "exampleAnalysis1") {
                     return view('analysis.exampleAnalysis1');
@@ -613,28 +534,9 @@ class AnalysisController extends Controller
                         }
                     }
                     $_SESSION['argument'] = $argument;
-                    /*$pathway_array = array();
-                    $pathidx = 1;
-                    $path = "pathway" . $pathidx;
-                    while (isset($_POST[$path])) {
-                        $path1 = explode("-", $_POST["pathway$pathidx"]);
 
-                        if (strcmp(substr($path1[0], 0, 5), $path_id) != 0) {
-                            array_push($pathway_array, substr($path1[0], 0, 5));
-                        }
-
-                        $pathway_array1 = array_unique($pathway_array);
-
-                        $pathidx++;
-                        $path = "pathway" . $pathidx;
-                    }
-                    $pathcounter = 1;
-                    foreach ($pathway_array1 as $val) {
-                        $argument .= ",pathway$pathcounter:" . $val;
-                        $pathcounter++;
-                    }*/
                 }
-                // $argument .= ",pathidx:" . ($pathcounter);
+
             } else {
                 return view('analysis.exampleAnalysis2');
             }
@@ -643,7 +545,7 @@ class AnalysisController extends Controller
         /** gettingthe client ip address stored into database */
         function get_client_ip()
         {
-            $ipaddress = '';
+
             if (getenv('HTTP_CLIENT_IP'))
                 $ipaddress = getenv('HTTP_CLIENT_IP');
             else if (getenv('HTTP_X_FORWARDED_FOR'))
