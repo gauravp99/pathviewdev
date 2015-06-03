@@ -24,10 +24,10 @@
                 <div class="list-group">
                     <ul class="nav navbar-nav" style="  margin-left: 30px;">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                            <a href="#" class="dropdown-toggle list-group-item active" style="width:500px;"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:300px;">
+                            <ul class="dropdown-menu" style="width:500px;">
                                 <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
@@ -61,10 +61,10 @@
                 <div class="list-group">
                     <ul class="nav navbar-nav" style="  margin-left: 30px;">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                            <a href="#" class="dropdown-toggle list-group-item active" style="width:500px;"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:300px;">
+                            <ul class="dropdown-menu" style="width:500px;">
                                 <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#layer">Same Layer</a></li>
@@ -107,10 +107,10 @@
                 <div class="list-group">
                     <ul class="nav navbar-nav" style="  margin-left: 30px;">
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                            <a href="#" class="dropdown-toggle list-group-item active" style="width:500px;"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:300px;">
+                            <ul class="dropdown-menu" style="width:500px;">
                                 <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#ncolor">NA Color</a></li>

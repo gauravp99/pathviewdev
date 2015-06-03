@@ -108,7 +108,8 @@ class AnalysisController extends Controller
         $cpdid = $_POST["cpdid"];
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
-            $argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
+            #$argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
+            $argument .= "cpdid:" . $val[0]->cmpdid. ",";
 
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
