@@ -25,6 +25,14 @@ class PHPUnit_Runner_Version
     private static $version;
 
     /**
+     * @return string
+     */
+    public static function getVersionString()
+    {
+        return 'PHPUnit ' . self::id() . ' by Sebastian Bergmann and contributors.';
+    }
+
+    /**
      * Returns the current version of PHPUnit.
      *
      * @return string
@@ -41,14 +49,6 @@ class PHPUnit_Runner_Version
         }
 
         return self::$version;
-    }
-
-    /**
-     * @return string
-     */
-    public static function getVersionString()
-    {
-        return 'PHPUnit ' . self::id() . ' by Sebastian Bergmann and contributors.';
     }
 
     /**

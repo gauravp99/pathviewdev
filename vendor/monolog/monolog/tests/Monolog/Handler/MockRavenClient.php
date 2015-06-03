@@ -15,12 +15,12 @@ use Raven_Client;
 
 class MockRavenClient extends Raven_Client
 {
+    public $lastData;
+    public $lastStack;
+
     public function capture($data, $stack, $vars = null)
     {
         $this->lastData = $data;
         $this->lastStack = $stack;
     }
-
-    public $lastData;
-    public $lastStack;
 }

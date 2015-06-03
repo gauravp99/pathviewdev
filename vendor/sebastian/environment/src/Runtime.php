@@ -38,6 +38,36 @@ class Runtime
     }
 
     /**
+     * Returns true when the runtime used is HHVM.
+     *
+     * @return boolean
+     */
+    public function isHHVM()
+    {
+        return defined('HHVM_VERSION');
+    }
+
+    /**
+     * Returns true when the runtime used is PHP and Xdebug is loaded.
+     *
+     * @return boolean
+     */
+    public function hasXdebug()
+    {
+        return $this->isPHP() && extension_loaded('xdebug');
+    }
+
+    /**
+     * Returns true when the runtime used is PHP.
+     *
+     * @return boolean
+     */
+    public function isPHP()
+    {
+        return !$this->isHHVM();
+    }
+
+    /**
      * Returns the path to the binary of the current runtime.
      * Appends ' --php' to the path when the runtime is HHVM.
      *
@@ -122,18 +152,6 @@ class Runtime
     /**
      * @return string
      */
-    public function getVendorUrl()
-    {
-        if ($this->isHHVM()) {
-            return 'http://hhvm.com/';
-        } else {
-            return 'http://php.net/';
-        }
-    }
-
-    /**
-     * @return string
-     */
     public function getVersion()
     {
         if ($this->isHHVM()) {
@@ -144,32 +162,14 @@ class Runtime
     }
 
     /**
-     * Returns true when the runtime used is PHP and Xdebug is loaded.
-     *
-     * @return boolean
+     * @return string
      */
-    public function hasXdebug()
+    public function getVendorUrl()
     {
-        return $this->isPHP() && extension_loaded('xdebug');
-    }
-
-    /**
-     * Returns true when the runtime used is HHVM.
-     *
-     * @return boolean
-     */
-    public function isHHVM()
-    {
-        return defined('HHVM_VERSION');
-    }
-
-    /**
-     * Returns true when the runtime used is PHP.
-     *
-     * @return boolean
-     */
-    public function isPHP()
-    {
-        return !$this->isHHVM();
+        if ($this->isHHVM()) {
+            return 'http://hhvm.com/';
+        } else {
+            return 'http://php.net/';
+        }
     }
 }

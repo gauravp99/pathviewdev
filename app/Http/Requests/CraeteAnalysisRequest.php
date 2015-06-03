@@ -29,11 +29,11 @@ class CraeteAnalysisRequest extends Request
         suffix*/
 
         return [
-            'geneid' => 'required',
+            /*'geneid' => 'required',
             'cpdid' => 'required',
             'species' => 'required|min:3',
             'pathway' => 'required|min:3',
-            'suffix' => 'required|min:1'
+            'suffix' => 'required|min:1'*/
         ];
     }
 

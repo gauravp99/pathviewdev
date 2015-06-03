@@ -1,5 +1,5 @@
 #!/bin/sh
-#this script is for getting teh stats from bioc web site and upload to pathway database
+#this script is for getting teh stats from bioc web site and upload to pathway database every day morning 2:30
 
 wget "http://bioconductor.org/packages/stats/bioc/pathview.html"
 

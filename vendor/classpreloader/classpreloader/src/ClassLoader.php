@@ -32,18 +32,6 @@ class ClassLoader
     }
 
     /**
-     * Destroy the class loader.
-     *
-     * This makes sure we're unregistered from the autoloader.
-     *
-     * @return void
-     */
-    public function __destruct()
-    {
-        $this->unregister();
-    }
-
-    /**
      * Wrap a block of code in the autoloader and get a list of loaded classes.
      *
      * @param callable $func
@@ -65,16 +53,6 @@ class ClassLoader
     }
 
     /**
-     * Registers this instance as an autoloader.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        spl_autoload_register(array($this, 'loadClass'), true, true);
-    }
-
-    /**
      * Unregisters this instance as an autoloader.
      *
      * @return void
@@ -82,32 +60,6 @@ class ClassLoader
     public function unregister()
     {
         spl_autoload_unregister(array($this, 'loadClass'));
-    }
-
-    /**
-     * Loads the given class, interface or trait.
-     *
-     * We'll return true if it was loaded.
-     *
-     * @param string $class
-     *
-     * @return bool|null
-     */
-    public function loadClass($class)
-    {
-        foreach (spl_autoload_functions() as $func) {
-            if (is_array($func) && $func[0] === $this) {
-                continue;
-            }
-            $this->classList->push($class);
-            if (call_user_func($func, $class)) {
-                break;
-            }
-        }
-
-        $this->classList->next();
-
-        return true;
     }
 
     /**
@@ -147,5 +99,53 @@ class ClassLoader
         }
 
         return $files;
+    }
+
+    /**
+     * Destroy the class loader.
+     *
+     * This makes sure we're unregistered from the autoloader.
+     *
+     * @return void
+     */
+    public function __destruct()
+    {
+        $this->unregister();
+    }
+
+    /**
+     * Registers this instance as an autoloader.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        spl_autoload_register(array($this, 'loadClass'), true, true);
+    }
+
+    /**
+     * Loads the given class, interface or trait.
+     *
+     * We'll return true if it was loaded.
+     *
+     * @param string $class
+     *
+     * @return bool|null
+     */
+    public function loadClass($class)
+    {
+        foreach (spl_autoload_functions() as $func) {
+            if (is_array($func) && $func[0] === $this) {
+                continue;
+            }
+            $this->classList->push($class);
+            if (call_user_func($func, $class)) {
+                break;
+            }
+        }
+
+        $this->classList->next();
+
+        return true;
     }
 }

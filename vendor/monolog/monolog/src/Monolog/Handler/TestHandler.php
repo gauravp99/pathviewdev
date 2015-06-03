@@ -35,6 +35,25 @@ class TestHandler extends AbstractProcessingHandler
         return $this->hasRecord($record, Logger::EMERGENCY);
     }
 
+    protected function hasRecord($record, $level)
+    {
+        if (!isset($this->recordsByLevel[$level])) {
+            return false;
+        }
+
+        if (is_array($record)) {
+            $record = $record['message'];
+        }
+
+        foreach ($this->recordsByLevel[$level] as $rec) {
+            if ($rec['message'] === $record) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function hasAlert($record)
     {
         return $this->hasRecord($record, Logger::ALERT);
@@ -108,25 +127,6 @@ class TestHandler extends AbstractProcessingHandler
     public function hasDebugRecords()
     {
         return isset($this->recordsByLevel[Logger::DEBUG]);
-    }
-
-    protected function hasRecord($record, $level)
-    {
-        if (!isset($this->recordsByLevel[$level])) {
-            return false;
-        }
-
-        if (is_array($record)) {
-            $record = $record['message'];
-        }
-
-        foreach ($this->recordsByLevel[$level] as $rec) {
-            if ($rec['message'] === $record) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

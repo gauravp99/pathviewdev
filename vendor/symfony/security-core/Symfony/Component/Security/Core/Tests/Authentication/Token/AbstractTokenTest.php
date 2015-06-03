@@ -74,6 +74,11 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('fabien', $token->getUsername());
     }
 
+    protected function getToken(array $roles = array())
+    {
+        return $this->getMockForAbstractClass('Symfony\Component\Security\Core\Authentication\Token\AbstractToken', array($roles));
+    }
+
     public function testEraseCredentials()
     {
         $token = $this->getToken(array('ROLE_FOO'));
@@ -278,10 +283,5 @@ class AbstractTokenTest extends \PHPUnit_Framework_TestCase
 
         $token->setUser($user);
         $this->assertTrue($token->isAuthenticated());
-    }
-
-    protected function getToken(array $roles = array())
-    {
-        return $this->getMockForAbstractClass('Symfony\Component\Security\Core\Authentication\Token\AbstractToken', array($roles));
     }
 }

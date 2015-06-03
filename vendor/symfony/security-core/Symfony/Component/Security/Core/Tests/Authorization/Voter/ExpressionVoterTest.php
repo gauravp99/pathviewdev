@@ -26,6 +26,23 @@ class ExpressionVoterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($voter->supportsAttribute($expression));
     }
 
+    protected function createExpression()
+    {
+        return $this->getMockBuilder('Symfony\Component\ExpressionLanguage\Expression')
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    protected function createTrustResolver()
+    {
+        return $this->getMock('Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface');
+    }
+
+    protected function createRoleHierarchy()
+    {
+        return $this->getMock('Symfony\Component\Security\Core\Role\RoleHierarchyInterface');
+    }
+
     /**
      * @dataProvider getVoteTests
      */
@@ -36,17 +53,17 @@ class ExpressionVoterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $voter->vote($this->getToken($roles, $tokenExpectsGetRoles), null, $attributes));
     }
 
-    public function getVoteTests()
+    protected function createExpressionLanguage($expressionLanguageExpectsEvaluate = true)
     {
-        return array(
-            array(array(), array(), VoterInterface::ACCESS_ABSTAIN, false, false),
-            array(array(), array('FOO'), VoterInterface::ACCESS_ABSTAIN, false, false),
+        $mock = $this->getMock('Symfony\Component\Security\Core\Authorization\ExpressionLanguage');
 
-            array(array(), array($this->createExpression()), VoterInterface::ACCESS_DENIED, true, false),
+        if ($expressionLanguageExpectsEvaluate) {
+            $mock->expects($this->once())
+                ->method('evaluate')
+                ->will($this->returnValue(true));
+        }
 
-            array(array('ROLE_FOO'), array($this->createExpression(), $this->createExpression()), VoterInterface::ACCESS_GRANTED),
-            array(array('ROLE_BAR', 'ROLE_FOO'), array($this->createExpression()), VoterInterface::ACCESS_GRANTED),
-        );
+        return $mock;
     }
 
     protected function getToken(array $roles, $tokenExpectsGetRoles = true)
@@ -65,33 +82,16 @@ class ExpressionVoterTest extends \PHPUnit_Framework_TestCase
         return $token;
     }
 
-    protected function createExpressionLanguage($expressionLanguageExpectsEvaluate = true)
+    public function getVoteTests()
     {
-        $mock = $this->getMock('Symfony\Component\Security\Core\Authorization\ExpressionLanguage');
+        return array(
+            array(array(), array(), VoterInterface::ACCESS_ABSTAIN, false, false),
+            array(array(), array('FOO'), VoterInterface::ACCESS_ABSTAIN, false, false),
 
-        if ($expressionLanguageExpectsEvaluate) {
-            $mock->expects($this->once())
-                ->method('evaluate')
-                ->will($this->returnValue(true));
-        }
+            array(array(), array($this->createExpression()), VoterInterface::ACCESS_DENIED, true, false),
 
-        return $mock;
-    }
-
-    protected function createTrustResolver()
-    {
-        return $this->getMock('Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolverInterface');
-    }
-
-    protected function createRoleHierarchy()
-    {
-        return $this->getMock('Symfony\Component\Security\Core\Role\RoleHierarchyInterface');
-    }
-
-    protected function createExpression()
-    {
-        return $this->getMockBuilder('Symfony\Component\ExpressionLanguage\Expression')
-            ->disableOriginalConstructor()
-            ->getMock();
+            array(array('ROLE_FOO'), array($this->createExpression(), $this->createExpression()), VoterInterface::ACCESS_GRANTED),
+            array(array('ROLE_BAR', 'ROLE_FOO'), array($this->createExpression()), VoterInterface::ACCESS_GRANTED),
+        );
     }
 }

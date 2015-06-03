@@ -54,6 +54,16 @@ class Config implements \IteratorAggregate
     }
 
     /**
+     * Get an iterator for the filenames.
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->getFilenames());
+    }
+
+    /**
      * Get an array of file names that satisfy any added filters.
      *
      * @return array
@@ -76,16 +86,6 @@ class Config implements \IteratorAggregate
         }
 
         return $filenames;
-    }
-
-    /**
-     * Get an iterator for the filenames.
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->getFilenames());
     }
 
     /**

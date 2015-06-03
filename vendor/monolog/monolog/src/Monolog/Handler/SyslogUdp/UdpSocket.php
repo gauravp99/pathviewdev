@@ -27,11 +27,6 @@ class UdpSocket
         $this->send($this->assembleMessage($line, $header));
     }
 
-    public function close()
-    {
-        socket_close($this->socket);
-    }
-
     protected function send($chunk)
     {
         socket_sendto($this->socket, $chunk, strlen($chunk), $flags = 0, $this->ip, $this->port);
@@ -42,5 +37,10 @@ class UdpSocket
         $chunkSize = self::DATAGRAM_MAX_LENGTH - strlen($header);
 
         return $header . substr($line, 0, $chunkSize);
+    }
+
+    public function close()
+    {
+        socket_close($this->socket);
     }
 }

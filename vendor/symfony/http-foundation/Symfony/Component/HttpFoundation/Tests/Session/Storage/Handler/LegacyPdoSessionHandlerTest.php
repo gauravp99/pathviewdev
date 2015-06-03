@@ -20,20 +20,6 @@ class LegacyPdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
 {
     private $pdo;
 
-    protected function setUp()
-    {
-        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
-
-        if (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers())) {
-            $this->markTestSkipped('This test requires SQLite support in your environment');
-        }
-
-        $this->pdo = new \PDO('sqlite::memory:');
-        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
-        $sql = 'CREATE TABLE sessions (sess_id VARCHAR(128) PRIMARY KEY, sess_data TEXT, sess_time INTEGER)';
-        $this->pdo->exec($sql);
-    }
-
     public function testIncompleteOptions()
     {
         $this->setExpectedException('InvalidArgumentException');
@@ -112,5 +98,19 @@ class LegacyPdoSessionHandlerTest extends \PHPUnit_Framework_TestCase
         $method->setAccessible(true);
 
         $this->assertInstanceOf('\PDO', $method->invoke($storage));
+    }
+
+    protected function setUp()
+    {
+        $this->iniSet('error_reporting', -1 & ~E_USER_DEPRECATED);
+
+        if (!class_exists('PDO') || !in_array('sqlite', \PDO::getAvailableDrivers())) {
+            $this->markTestSkipped('This test requires SQLite support in your environment');
+        }
+
+        $this->pdo = new \PDO('sqlite::memory:');
+        $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+        $sql = 'CREATE TABLE sessions (sess_id VARCHAR(128) PRIMARY KEY, sess_data TEXT, sess_time INTEGER)';
+        $this->pdo->exec($sql);
     }
 }

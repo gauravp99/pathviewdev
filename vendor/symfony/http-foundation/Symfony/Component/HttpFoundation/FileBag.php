@@ -53,13 +53,11 @@ class FileBag extends ParameterBag
      *
      * @api
      */
-    public function set($key, $value)
+    public function add(array $files = array())
     {
-        if (!is_array($value) && !$value instanceof UploadedFile) {
-            throw new \InvalidArgumentException('An uploaded file must be an array or an instance of UploadedFile.');
+        foreach ($files as $key => $file) {
+            $this->set($key, $file);
         }
-
-        parent::set($key, $this->convertFileInformation($value));
     }
 
     /**
@@ -67,11 +65,13 @@ class FileBag extends ParameterBag
      *
      * @api
      */
-    public function add(array $files = array())
+    public function set($key, $value)
     {
-        foreach ($files as $key => $file) {
-            $this->set($key, $file);
+        if (!is_array($value) && !$value instanceof UploadedFile) {
+            throw new \InvalidArgumentException('An uploaded file must be an array or an instance of UploadedFile.');
         }
+
+        parent::set($key, $this->convertFileInformation($value));
     }
 
     /**

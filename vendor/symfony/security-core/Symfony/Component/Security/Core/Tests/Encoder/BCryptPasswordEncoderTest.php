@@ -54,6 +54,13 @@ class BCryptPasswordEncoderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(60, strlen($result));
     }
 
+    private function skipIfPhpVersionIsNotSupported()
+    {
+        if (PHP_VERSION_ID < 50307) {
+            $this->markTestSkipped('Requires PHP >= 5.3.7');
+        }
+    }
+
     public function testValidation()
     {
         $this->skipIfPhpVersionIsNotSupported();
@@ -62,13 +69,6 @@ class BCryptPasswordEncoderTest extends \PHPUnit_Framework_TestCase
         $result = $encoder->encodePassword(self::PASSWORD, null);
         $this->assertTrue($encoder->isPasswordValid($result, self::PASSWORD, null));
         $this->assertFalse($encoder->isPasswordValid($result, 'anotherPassword', null));
-    }
-
-    private function skipIfPhpVersionIsNotSupported()
-    {
-        if (PHP_VERSION_ID < 50307) {
-            $this->markTestSkipped('Requires PHP >= 5.3.7');
-        }
     }
 
     /**

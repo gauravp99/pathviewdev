@@ -38,6 +38,18 @@ class AuthenticationTrustResolver implements AuthenticationTrustResolverInterfac
     /**
      * {@inheritdoc}
      */
+    public function isFullFledged(TokenInterface $token = null)
+    {
+        if (null === $token) {
+            return false;
+        }
+
+        return !$this->isAnonymous($token) && !$this->isRememberMe($token);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isAnonymous(TokenInterface $token = null)
     {
         if (null === $token) {
@@ -57,17 +69,5 @@ class AuthenticationTrustResolver implements AuthenticationTrustResolverInterfac
         }
 
         return $token instanceof $this->rememberMeClass;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isFullFledged(TokenInterface $token = null)
-    {
-        if (null === $token) {
-            return false;
-        }
-
-        return !$this->isAnonymous($token) && !$this->isRememberMe($token);
     }
 }

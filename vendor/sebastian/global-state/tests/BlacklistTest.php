@@ -57,11 +57,6 @@ class BlacklistTest extends PHPUnit_Framework_TestCase
      */
     private $blacklist;
 
-    protected function setUp()
-    {
-        $this->blacklist = new Blacklist;
-    }
-
     public function testGlobalVariableThatIsNotBlacklistedIsNotTreatedAsBlacklisted()
     {
         $this->assertFalse($this->blacklist->isGlobalVariableBlacklisted('variable'));
@@ -145,5 +140,10 @@ class BlacklistTest extends PHPUnit_Framework_TestCase
                 'attribute'
             )
         );
+    }
+
+    protected function setUp()
+    {
+        $this->blacklist = new Blacklist;
     }
 }

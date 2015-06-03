@@ -103,6 +103,9 @@ Route::get('example3', 'AnalysisController@example_three');
 Route::get('test', function () {
     return view("rserve.index");
 });
+Route::get('error', function () {
+    return view("errors.customError");
+});
 /*-----------------------------5. end Analysis Routes-----------------------------*/
 
 

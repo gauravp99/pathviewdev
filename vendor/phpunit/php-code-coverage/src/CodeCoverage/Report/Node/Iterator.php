@@ -51,16 +51,6 @@ class PHP_CodeCoverage_Report_Node_Iterator implements RecursiveIterator
     }
 
     /**
-     * Checks if there is a current element after calls to rewind() or next().
-     *
-     * @return boolean
-     */
-    public function valid()
-    {
-        return $this->position < count($this->nodes);
-    }
-
-    /**
      * Returns the key of the current element.
      *
      * @return integer
@@ -78,6 +68,16 @@ class PHP_CodeCoverage_Report_Node_Iterator implements RecursiveIterator
     public function current()
     {
         return $this->valid() ? $this->nodes[$this->position] : null;
+    }
+
+    /**
+     * Checks if there is a current element after calls to rewind() or next().
+     *
+     * @return boolean
+     */
+    public function valid()
+    {
+        return $this->position < count($this->nodes);
     }
 
     /**
