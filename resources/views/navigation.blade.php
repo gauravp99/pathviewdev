@@ -6,7 +6,7 @@
  * Time: 12:17 PM
  */
 ?>
-<div class="col-sm-5 col-md-2 sidebar">
+<div class="col-sm-5 col-md-2">
     <ul class="nav nav-sidebar">
         <li <?php if (basename($_SERVER['PHP_SELF']) == "index.php") {
             echo "class=\"active\"";

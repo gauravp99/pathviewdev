@@ -98,6 +98,7 @@ a {
     width: 800px;
     overflow: hidden;
     border-color: steelblue;
+    text-align: left;
 }
 
 #steps {
@@ -325,10 +326,10 @@ span.error {
 .stepsdiv {
     float: left;
     clear: both;
-    margin: 5px 0px 5px 100px;
+    margin: 5px 0px 5px 70px;
     background-color: #F4F4F4;
     border: 1px solid #FFF;
-    width: 600px;
+    width: 660px;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0px 0px 3px #AAA;
@@ -355,7 +356,7 @@ span.error {
     border-radius: 3px;
     outline: none;
     padding: 6px;
-    float: left;
+
     margin-left: -10px;
 
 }

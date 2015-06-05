@@ -1,7 +1,10 @@
 <?php $__env->startSection('content'); ?>
     <h1 class="page-header" style="margin-left: 40%;">Result </h1>
+
     <div class="col-sm-12">
         <div class="col-sm-8">
+
+                <p class="alert alert-success" style="margin-left:30px;"> Species: <?php echo e(substr($_GET['id'],0,3)); ?> Pathway: <?php echo e(substr($_GET['id'],3,8)); ?></p>
     <?php
             $anal_id = $_GET['analyses'];
             if (Auth::user()) {
@@ -56,6 +59,7 @@
         curl_close($ch);
     }
 
+
     $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $_GET['id']);
             # $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $id);
     //echo $a;
@@ -71,6 +75,8 @@
     echo "</map>";
 
             ?>
+            <br/>
+            <br/>
             <p class="alert alert-info">Note: Hover on the image to get the details of the states.</p>
 
         </div>

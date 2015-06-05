@@ -9,7 +9,6 @@ use App\Http\Requests;
 use App\Http\Requests\CraeteAnalysisRequest;
 use Auth;
 use DB;
-use Exception;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Request;
@@ -49,12 +48,12 @@ class AnalysisController extends Controller
     {
         // return sizeof($_GET['selectto']);
 
-        try {
-            $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
-        } catch (Exception $e) {
-            return Redirect::to('error')->with('error', 'error');
-            #echo "Exception occurred" . $e->getMessage();
-        }
+        /* try {
+             $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
+         } catch (Exception $e) {
+             return Redirect::to('error')->with('error', 'error');
+             #echo "Exception occurred" . $e->getMessage();
+         }*/
 
 
         $errors = array();
@@ -64,7 +63,7 @@ class AnalysisController extends Controller
         $time = time();
         $email = "";
 
-        $dest = public_path() . "/all/temp/" . $time;
+
 
 
         foreach ($_POST as $key => $value) {
@@ -75,11 +74,27 @@ class AnalysisController extends Controller
 
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
         $i = 0;
+        preg_match_all('!\d+!', $_POST['selecttextfield'], $matches);
+        #return print_r($matches);
+
+
         $pathway_array = array();
-        foreach ($_POST['selectto'] as $pathway) {
+
+        /* foreach ($_POST['selectto'] as $pathway) {
+             array_push($pathway_array, $pathway);
+         }*/
+
+
+        foreach ($matches as $pathway1) {
+            foreach ($pathway1 as $pathway)
+
             array_push($pathway_array, $pathway);
         }
         $pathway_array1 = array_unique($pathway_array);
+        #return print_r($pathway_array1);
+
+
+
         $argument .= "pathway:";
 
         foreach ($pathway_array1 as $pathway) {
@@ -109,6 +124,7 @@ class AnalysisController extends Controller
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
             $argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
+            #$argument .= "cpdid:" . $val[0]->cmpdid;
 
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
@@ -300,48 +316,7 @@ class AnalysisController extends Controller
         $pathidx = 1;
         $pathway_array = array();
         $path = "pathway" . $pathidx;
-        /* while (isset($_POST[$path])) {
-             $path1 = explode("-", $_POST["pathway$pathidx"]);
 
-             if (strcmp(substr($path1[0], 0, 5), $path_id) != 0) {
-
-                 array_push($pathway_array, $path1[0]);
-             }
-             $pathidx++;
-             $path = "pathway" . $pathidx;
-         }*/
-
-        /*  $pathway_array1 = array_unique($pathway_array);
-
-          $pathcounter = 1;
-
-          foreach ($pathway_array1 as $val1) {
-              if (preg_match('/[a-z]+[0-9]+/', substr($val1, 0, 5))) {
-                  $spec_id12 = substr($val1, 0, 3);
-                  if (strcmp($spec_id12, $spe) != 0) {
-                      array_push($errors, "Entered species '" . $spec_id12 . "' for pathway ID " . $pathcounter . " value " . substr($val1, 3, 8) . " is not matched with '" . $spe . "'");
-                      $err_atr["pathway" . $pathcounter] = 1;
-
-
-                  }
-                  $path_id12 = substr($val1, 3, 8);
-              }
-              else
-              {
-                  $path_id12 = substr($val1, 0, 5);
-              }
-
-              $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$path_id12' LIMIT 1"));
-              if (sizeof($val) > 0) {
-                  $argument .= "pathway$pathcounter:" . $val[0]->pathway_id . ",";
-
-              } else {
-                  array_push($errors, "Entered pathway ID " . $pathcounter . " value " . $val1 . " doesn't exist");
-                  $err_atr["pathway" . $pathcounter] = 1;
-              }
-              $pathcounter++;
-
-          }*/
 
         if (sizeof($errors) > 0) {
 
@@ -406,7 +381,10 @@ class AnalysisController extends Controller
 
                     }
                     $time = time();
-                    mkdir("all/$email/$time", 0755, true);
+                    $oldmask = umask(0);
+                    mkdir("all/$email/$time", 0777, false);
+                    umask($oldmask);
+
 
 
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
@@ -582,7 +560,7 @@ class AnalysisController extends Controller
                         }
                     }
                     $time = time();
-                    mkdir("all/$email/$time", 0755, true);
+                    mkdir("all/$email/$time", 0777, true);
 
 
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
@@ -612,28 +590,9 @@ class AnalysisController extends Controller
                         }
                     }
                     $_SESSION['argument'] = $argument;
-                    /*$pathway_array = array();
-                    $pathidx = 1;
-                    $path = "pathway" . $pathidx;
-                    while (isset($_POST[$path])) {
-                        $path1 = explode("-", $_POST["pathway$pathidx"]);
 
-                        if (strcmp(substr($path1[0], 0, 5), $path_id) != 0) {
-                            array_push($pathway_array, substr($path1[0], 0, 5));
-                        }
-
-                        $pathway_array1 = array_unique($pathway_array);
-
-                        $pathidx++;
-                        $path = "pathway" . $pathidx;
-                    }
-                    $pathcounter = 1;
-                    foreach ($pathway_array1 as $val) {
-                        $argument .= ",pathway$pathcounter:" . $val;
-                        $pathcounter++;
-                    }*/
                 }
-                // $argument .= ",pathidx:" . ($pathcounter);
+
             } else {
                 return view('analysis.exampleAnalysis2');
             }
@@ -663,19 +622,9 @@ class AnalysisController extends Controller
         }
 
         /** Rscript code running with the arguments */
-        #exec("Rscript my_Rscript.R $argument  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-        try {
-            #$r->evalString('source(/home/ybhavnasi/Desktop/Script_Rserv.R');
-            #return $argument;
-            $r->evalString('analyses("' . $argument . '")');
+        #return $argument;
 
-
-            $r->close();
-        } catch (Exception $e) {
-            #return Redirect::to('error');
-            $destFile1 = "/all/$email/$time/";
-            return view('analysis.Result')->with(array('exception' => $e->getMessage(), 'directory' => $destFile, 'directory1' => $destFile1));
-        }
+        exec("Rscript my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         /** check if rscript generated any error if generated then log into database */
         $date = new \DateTime;

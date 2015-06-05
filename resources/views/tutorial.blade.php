@@ -22,12 +22,12 @@
                 <br/>
 
                 <div class="list-group">
-                    <ul class="nav navbar-nav" style="  margin-left: 30px;">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                    <ul class="nav navbar-nav" style="width:100%">
+                        <li class="dropdown" style="width:100%">
+                            <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:300px;">
+                            <ul class="dropdown-menu" style="width:100%">
                                 <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
@@ -59,12 +59,12 @@
                     For example number of bins in the pathview key position and signature position.</p>
 
                 <div class="list-group">
-                    <ul class="nav navbar-nav" style="  margin-left: 30px;">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                    <ul class="nav navbar-nav" style="width:100%">
+                        <li class="dropdown" style="width:100%">
+                            <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:300px;">
+                            <ul class="dropdown-menu" style="width:100%">
                                 <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#layer">Same Layer</a></li>
@@ -105,12 +105,12 @@
                     when gene is on high state, mid state and low state for both gene and compound data</p>
 
                 <div class="list-group">
-                    <ul class="nav navbar-nav" style="  margin-left: 30px;">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                    <ul class="nav navbar-nav" style="width:100%">
+                        <li class="dropdown" style="width:100%">
+                            <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:300px;">
+                            <ul class="dropdown-menu" style="width:100%">
                                 <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
@@ -170,7 +170,7 @@
                                 <dt><a name="gene_data">Gene Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Gene data typically accepts CSV and txt file</dd>
+                                <dd>Gene data typically accepts csv, txt file</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -178,7 +178,7 @@
                                 <dt><a name="cpd_data">Compound Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Compound gene data accepts CSV, txt file</dd>
+                                <dd>Compound gene data accepts csv, txt file</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -207,10 +207,11 @@
                                 <dt><a name="pwy_id">Pathway ID</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>The KEGG pathway ID, usually 5 digit, may also include the 3 letter KEGG species
-                                    code.
+                                <dd>The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and
+                                    text box.
                                     (Suggestions are shown on entering the initial letters). Multiple Pathway IDs can be
-                                    entered by clicking the “Add” button
+                                    entered by clicking the “Add(+)” button.Pathways can be removed/added dynamically by
+                                    using buttons "<<" and ">>".
                                 </dd>
                             </div>
                         </div>
@@ -266,7 +267,7 @@
                                 <dt><a name="layer">Same Layer</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd> Can either be TRUE or FALSE. Controls plotting layers: a) if node colors be plotted
+                                <dd> Can either be TRUE or FALSE. Controls plotting layers: 1) if node colors be plotted
                                     in
                                     the same layer as the pathway graph when kegg native is TRUE, 2) if edge/node type
                                     legend be plotted in the same page when kegg native is FALSE.
@@ -364,7 +365,7 @@
                             <div class="panel-body argument">
                                 <dd>Controls the position of pathview signature. Default value is “bottomright”.
                                     Potential
-                                    values can be found in the drop down list, or by typing in the initial letters.
+                                    values can be found in the drop down list.
                                 </dd>
                             </div>
                         </div>
@@ -375,7 +376,7 @@
                             <div class="panel-body argument">
                                 <dd>Controls the position of color key(s). Default value is “topleft”. Potential values
                                     can
-                                    be found in the drop down list, or by typing in the initial letters.
+                                    be found in the drop down list.
                                 </dd>
                             </div>
                         </div>
@@ -408,9 +409,8 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd>The method name to calculate node summary given that multiple genes or compounds are
-                                    mapped to it. Potential values can be found in the drop down list, or by typing in
-                                    the
-                                    initial letters. Default Value is “Sum”
+                                    mapped to it. Potential values can be found in the drop down list. Default Value is
+                                    “Sum”
                                 </dd>
                             </div>
                         </div>
@@ -431,7 +431,11 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd> This argument specifies the limit values for Gene Data and Compound Data when
-                                    converting them to pseudo colors. Input fields are enabled after checking respective
+                                    converting them to pseudo colors.This field is a numeric field you can enter two
+                                    values separated by a comma for example(1,2). first value for lower limit and second
+                                    value is for higher limit. If a single value is given then limit is taken from -n to
+                                    n.
+                                    Input fields are enabled after checking respective
                                     checkpoints for Gene and Compound Data
                                 </dd>
                             </div>
@@ -459,17 +463,7 @@
                                 </dd>
                             </div>
                         </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading argument">
-                                <dt><a name="trans">Transformation Function (Trans)</a></dt>
-                            </div>
-                            <div class="panel-body argument">
-                                <dd>This argument specifies whether and how gene.data and cpd.data are transformed.
-                                    Examples
-                                    are log, abs or users’ own functions.
-                                </dd>
-                            </div>
-                        </div>
+
                     </dl>
                 </div>
             </section>
@@ -552,6 +546,8 @@
                         <li class="list-group-item">Multi State : TRUE</li>
                         <li class="list-group-item">Match Data : FALSE</li>
                         <li class="list-group-item">keys Align : y</li>
+                        <li class="list-group-item">Gene Limit : 1(min),2(max)</li>
+
                     </ul>
                     <a href="/example2">
                         <button type="button" class="btn btn-primary btn-lg GetStarted  " data-toggle="modal">

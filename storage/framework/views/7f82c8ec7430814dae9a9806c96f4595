@@ -1,10 +1,16 @@
 <?php $__env->startSection('content'); ?>
 
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-    <div class="row1 placeholders">
+    <div class="col-md-10">
+        <div class="col-md-8">
+            <div class="placeholders ">
         <?php
         echo "<h1> Analysis Results </h1>";
+
         global $dirct;
+                if (!is_null($exception)) {
+                    echo "<h4 class='alert alert-danger'> Sorry !!! there was an issue in the analysis</h4>";
+                }
         $direct = $directory;
         $contents = scandir($directory);
 
@@ -129,7 +135,7 @@
         // Zip archive will be created only after closing object
         #print_r($zip);
         $zip->close();
-        echo "<h2 class='alert alert-info'>Click here to download zipped output files generated <span class='label label-info'><a  href=\"" . $directory1 . "file.zip\">Zipped Output file</a></span><h2>";
+        echo "<h2 class='alert alert-info'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. <h2>";
 
         $data['path'] = $direct;
 
@@ -155,7 +161,7 @@
                 }
             });
         } else{
-        echo "<br/><h2 class='alert alert-info'>Register to save the pathways generated and lot more.It is Free.<h2>";
+        echo "<br/><h2 class='alert alert-info'><a style='color:black;' href='/auth/register'>Register</a> to save the outputs and a lot more.<h2>";
 
         ?>
         <div class="col-sm-4">
@@ -510,12 +516,30 @@
                 </tr>
                 <?php
                 break;
+                case "glmtlow":
+                $arg1[0] = "Gene Limit Lower Range";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e($arg1[1]); ?></td>
+                </tr>
+                <?php
+                break;
+                case "glmthigh":
+                $arg1[0] = "Gene Limit Range";
+                ?>
+                <tr>
+                    <td><b><?php echo e($arg1[0]); ?></b></td>
+                    <td><?php echo e(str_replace(';',', ',$arg1[1])); ?></td>
+                </tr>
+                <?php
+                break;
                 case "clmt":
                 $arg1[0] = "Compound Limit Range";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
-                    <td><?php echo e($arg1[1]); ?></td>
+                    <td><?php echo e(str_replace(';',', ',$arg1[1])); ?></td>
                 </tr>
                 <?php
                 break;
@@ -538,7 +562,7 @@
                 <?php
                 break;
                 case "clow":
-                $arg1[0] = "Compound Lower Limit Color";
+                $arg1[0] = "Compound Low  Color";
 
                 ?>
                 <tr>
@@ -548,7 +572,7 @@
                 <?php
                 break;
                 case "cmid":
-                $arg1[0] = "Compound Medium Limit Color";
+                $arg1[0] = "Compound Medium Color";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -557,7 +581,7 @@
                 <?php
                 break;
                 case "chigh":
-                $arg1[0] = "Compound High Limit Color";
+                $arg1[0] = "Compound High Color";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -566,7 +590,7 @@
                 <?php
                 break;
                 case "glow":
-                $arg1[0] = "Gene Lower Limit Color";
+                $arg1[0] = "Gene Low Color";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -575,7 +599,7 @@
                 <?php
                 break;
                 case "gmid":
-                $arg1[0] = "Gene Medium Limit Color";
+                $arg1[0] = "Gene Medium Color";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -584,7 +608,7 @@
                 <?php
                 break;
                 case "ghigh":
-                $arg1[0] = "Gene high Limit Color";
+                $arg1[0] = "Gene high Color";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -654,7 +678,37 @@
                 </tbody>
             </table>
         </div>
+            </div>
 
     </div>
+        <div class="list-group col-md-4">
+            <ul class="nav navbar-nav" style="  margin-left: 30px;">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
+                       data-toggle="dropdown">Click her to see Analysis Logs<span
+                                class="glyphicon glyphicon-download pull-right"></span></a>
+                    <ul class="dropdown-menu" style="width:600px;">
+
+                        <?php
+                        $lines = file($directory . "errorFile.Rout");
+                        $flag = false;
+
+                        foreach ($lines as $temp) {
+
+                            echo "<pre>" . $temp . "</pre>";
+                            /**echo "<li style='width:300px;'>" . $temp ."</li>";
+                            echo "<li class='divider'></li>";*/
+
+
+                        }
+                        ?>
+
+
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

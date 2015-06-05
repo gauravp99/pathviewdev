@@ -1752,6 +1752,7 @@ h6,
 
 p {
     margin: 0 0 10px;
+    text-align: justify;
 }
 
 .lead {
@@ -4295,6 +4296,8 @@ input[type="button"].btn-block {
 .collapse.in {
     display: block;
     visibility: visible;
+    background-color: #205081;
+    overflow: hidden;
 }
 
 tr.collapse.in {
@@ -4309,6 +4312,7 @@ tbody.collapse.in {
     position: relative;
     height: 0;
     overflow: hidden;
+    background-color: #205081;
     -webkit-transition-timing-function: ease;
     -o-transition-timing-function: ease;
     transition-timing-function: ease;
@@ -6482,7 +6486,7 @@ a.list-group-item:focus {
     z-index: 2;
     color: #fff;
     background-color: #337ab7;
-    border-color: #337ab7;
+    border-color: #ffffff;
 }
 
 .list-group-item.active .list-group-item-heading,

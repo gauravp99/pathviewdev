@@ -142,11 +142,7 @@
                                                 canvasBordersWidth: 3,
                                                 canvasBordersColor: "#205081",
                                                 //graphTitle : "Pathview Web",
-                                                inGraphDataShow: true,
-                                                annotateDisplay: true,
                                                 legend: true,
-                                                inGraphDataShow: false,
-                                                annotateDisplay: true,
                                                 graphTitleFontSize: 18,
                                                 logarithmic: true
                                             };
@@ -203,15 +199,11 @@
                                                 canvasBordersWidth: 3,
                                                 canvasBordersColor: "#205081",
                                                 scaleOverride: true,
-                                                scaleSteps: 6,
+                                                scaleSteps: 7,
                                                 scaleStepWidth: 200,
                                                 scaleStartValue: 250,
                                                 scaleLabel: "<%=value%>",
                                                 legend: true,
-                                                inGraphDataShow: true,
-                                                annotateDisplay: true,
-                                                inGraphDataShow: false,
-                                                annotateDisplay: true,
                                                 graphTitleFontSize: 18
 
 
@@ -385,19 +377,19 @@
                             <div id="graph" class="col-md-12">
                                 <section>
 
-                                    <table style="margin:5px;font-size: 12px;">
+                                    <table style="margin:5px;font-size: 12px;width:100%;">
                                         <tr>
 
                                             <td>
-                                                <div style="width:80%;background-color:#C1DBF0; width=100%;">
-                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <div style="background-color:#C1DBF0;width:60%;">
+                                                    &nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>Graphs:</td>
+                                            <td width="">Graphs:</td>
                                             <td><?php echo $web_dnld_cnt ?></td>
                                             <td>
-                                                <div style="width:80%;background-color:#D4DBE0; width=100%;">
-                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <div style="width:80%;background-color:#D4DBE0; width:60%;">
+                                                    &nbsp&nbsp
                                                 </div>
                                             </td>
                                             <td>IP's:</td>
@@ -418,19 +410,19 @@
 
                                 <section>
 
-                                    <table style="margin:5px;font-size: 12px;">
+                                    <table style="margin:5px;font-size: 12px;width:100%;">
                                         <tr>
 
                                             <td>
                                                 <div style="width:80%;background-color:#C1DBF0; width=100%;">
-                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                    &nbsp&nbsp
                                                 </div>
                                             </td>
                                             <td>Downloads:</td>
                                             <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
                                             <td>
-                                                <div style="width:80%;background-color:#D4DBE0; width=100%;">
-                                                    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                                <div style="width:80%;background-color:#D4DBE0;">
+                                                    &nbsp&nbsp
                                                 </div>
                                             </td>
                                             <td>IP's:</td>
