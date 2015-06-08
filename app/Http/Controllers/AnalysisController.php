@@ -34,20 +34,13 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
-<<<<<<< HEAD
+
         /* try {
              $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
          } catch (Exception $e) {
              return Redirect::to('error')->with('error', 'error');
              #echo "Exception occurred" . $e->getMessage();
          }*/
-=======
-        try {
-            $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
-        } catch (Exception $e) {
-            return Redirect::to('error')->with('error', 'error');
-        }
->>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
 
         $errors = array();
         $gene_cmpd_color = array();
@@ -56,12 +49,6 @@ class AnalysisController extends Controller
         $time = time();
         $email = "";
 
-<<<<<<< HEAD
-
-
-
-=======
->>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
         foreach ($_POST as $key => $value) {
             $_SESSION[$key] = $value;
         }
@@ -70,8 +57,7 @@ class AnalysisController extends Controller
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
 
         $i = 0;
-<<<<<<< HEAD
-        preg_match_all('!\d+!', $_POST['selecttextfield'], $matches);
+        preg_match_all('!\d{5}!', $_POST['selecttextfield'], $matches);
         #return print_r($matches);
 
 
@@ -85,22 +71,15 @@ class AnalysisController extends Controller
         foreach ($matches as $pathway1) {
             foreach ($pathway1 as $pathway)
 
-=======
 
-        $pathway_array = array();
-
-        foreach ($_POST['selectto'] as $pathway) {
->>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
             array_push($pathway_array, $pathway);
         }
 
         $pathway_array1 = array_unique($pathway_array);
-<<<<<<< HEAD
+
         #return print_r($pathway_array1);
 
 
-=======
->>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
 
         $argument .= "pathway:";
 
@@ -130,12 +109,10 @@ class AnalysisController extends Controller
         $cpdid = $_POST["cpdid"];
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
-<<<<<<< HEAD
-            $argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
-            #$argument .= "cpdid:" . $val[0]->cmpdid;
-=======
+
             $argument .= "cpdid:" . $val[0]->cmpdid . ",";
->>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
+            #$argument .= "cpdid:" . $val[0]->cmpdid;
+
 
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
@@ -209,7 +186,8 @@ class AnalysisController extends Controller
         $argument .= "align:" . $_POST["align"] . ",";
 
 
-        if ((($anal_type == "newAnalysis") && (Input::hasFile('gfile'))) || isset($_POST["gcheck"])) {
+       /* if ((($anal_type == "newAnalysis") && (Input::hasFile('gfile'))) || isset($_POST["gcheck"])) {*/
+       /* if (($anal_type == "newAnalysis")) {*/
 
             if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                 array_push($errors, "Gene Limit should be Numeric");
@@ -243,7 +221,7 @@ class AnalysisController extends Controller
             $gene_cmpd_color["glow"] = $_POST["glow"];
             $gene_cmpd_color["gmid"] = $_POST["gmid"];
             $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
-        }
+        /*}*/
         /*if ((($anal_type == "newAnalysis") && (Input::hasFile('cpdfile'))) || isset($_POST["cpdcheck"])) {*/
 
         if (preg_match('/[a-z]+/', $_POST["clmt"])) {
@@ -363,12 +341,14 @@ class AnalysisController extends Controller
                 $pathidx = 1;
                 $file = Input::file('gfile');
                 $filename = Input::file('gfile')->getClientOriginalName();
-                $destFile = public_path();
+
                 $gene_extension = file_ext($filename);
                 if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
                     $argument .= "geneextension:" . $gene_extension . ",";
-
-
+                    $argument .= "filename:" . $filename . ",";
+                }
+            }
+                    $destFile = public_path();
                     if (is_null(Auth::user())) {
                         $email = "demo";
                     } else {
@@ -393,7 +373,6 @@ class AnalysisController extends Controller
                     umask($oldmask);
 
 
-
                     $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
@@ -407,18 +386,8 @@ class AnalysisController extends Controller
 
                     $destFile = public_path() . "/all/$email/$time/";
                     $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time;
-                    $argument .= ",filename:" . $filename;
-                    if ($_FILES['gfile']['size'] > 0) {
-                        $file->move($destFile, $filename);
-                    } else {
-                        array_push($errors, "Input file cannot be empty");
-                        $err_atr['gfile'] = 1;
-                        return Redirect::to('analysis')
-                            ->with('err', $errors)
-                            ->with('err_atr', $err_atr)
-                            ->with('Sess', $Session)->with('genecolor', $gene_cmpd_color);
 
-                    }
+
                     $_SESSION['argument'] = $argument;
 
                     if (Input::hasFile('cpdfile')) {
@@ -428,51 +397,64 @@ class AnalysisController extends Controller
                         if ($cpd_extension == "txt" || $cpd_extension == "csv" || $cpd_extension == "rda") {
                             $argument .= ",cpdextension:" . $cpd_extension;
                             $argument .= ",cfilename:" . $filename1;
-                            $file1->move($destFile, $filename1);
+
                         }
                     }
+            if ($_FILES['gfile']['size'] > 0) {
+                $file->move($destFile, $filename);
+            }
+            else if($_FILES['cpdfile']['size'] > 0)
+            {
+                $file1->move($destFile, $filename1);
+            }
+            else
+            {
+                array_push($errors, "Input file cannot be empty");
+                $err_atr['gfile'] = 1;
+                return Redirect::to('analysis')
+                    ->with('err', $errors)
+                    ->with('err_atr', $err_atr)
+                    ->with('Sess', $Session)->with('genecolor', $gene_cmpd_color);
+
+            }
                     $_SESSION['argument'] = $argument;
 
 
-                }
-
+/*
             } else if (isset($_POST['genetemp'])) {
                 return $_POST['genetemp'];
 
             } else {
                 return view('analysis.NewAnalysis');
-            }
+            }*/
 
         } /* analysis type is example analysis */
         else if ($anal_type == "exampleAnalysis1" || $anal_type == "exampleAnalysis2") {
 
-            if (Input::get('gcheck') == 'T') {
+            if (Input::get('gcheck') == 'T' || Input::get('cpdcheck') == 'T' ) {
 
-                //$file = Input::file('gfile');
-                $filename = "gse16873.d3.txt";
-                $destFile = public_path();
-                $gene_extension = file_ext($filename);
-                if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
-                    $argument .= "geneextension:" . $gene_extension . ",";
+                if (is_null(Auth::user())) {
+                    $email = "demo";
+                } else {
+                    $email = Auth::user()->email;
+                    if (!file_exists("all/$email"))
+                        mkdir("all/$email");
+                    $f = './all/' . Auth::user()->email;
+                    $io = popen('/usr/bin/du -sh ' . $f, 'r');
+                    $size = fgets($io, 4096);
+                    $size = substr($size, 0, strpos($size, "\t"));
 
-
-                    if (is_null(Auth::user())) {
-                        $email = "demo";
-                    } else {
-                        $email = Auth::user()->email;
-                        if (!file_exists("all/$email"))
-                            mkdir("all/$email");
-                        $f = './all/' . Auth::user()->email;
-                        $io = popen('/usr/bin/du -sh ' . $f, 'r');
-                        $size = fgets($io, 4096);
-                        $size = substr($size, 0, strpos($size, "\t"));
-
-                        pclose($io);
-                        $size = 100 - intval($size);
-                        if ($size < 0) {
-                            return view('/home');
-                        }
+                    pclose($io);
+                    $size = 100 - intval($size);
+                    if ($size < 0) {
+                        return view('/home');
                     }
+                }
+                $destFile = public_path() . "/all/$email/$time/";
+                //$file = Input::file('gfile');
+
+
+
 
 
                     mkdir("all/$email/$time", 0755, true);
@@ -492,24 +474,34 @@ class AnalysisController extends Controller
 
                     $destFile = public_path() . "/all/$email/$time/";
                     $destFile1 = "/all/$email/$time/";
-                    $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time;
-                    $argument .= ",filename:" . $filename;
-                    copy("all/demo/example/gse16873.d3.txt", $destFile . "/gse16873.d3.txt");
+                    $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time.",";
+
+                if(Input::get('gcheck') == 'T') {
+                    $filename = "gse16873.d3.txt";
+                    $destFile = public_path() . "/all/$email/$time/";
+                    $gene_extension = file_ext($filename);
+                    if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
+                        $argument .= "geneextension:" . $gene_extension . ",";
+                        $argument .= "filename:" . $filename . ",";
+                        copy("all/demo/example/gse16873.d3.txt", $destFile . "/gse16873.d3.txt");
+                    }
+                }
+
 
                     if (Input::get('cpdcheck') == 'T') {
                         //$file1 = Input::file('cfile');
                         $filename1 = "sim.cpd.data2.csv";
                         $cpd_extension = file_ext($filename1);
                         if ($cpd_extension == "txt" || $cpd_extension == "csv" || $cpd_extension == "rda") {
-                            $argument .= ",cpdextension:" . $cpd_extension;
-                            $argument .= ",cfilename:" . $filename1;
+                            $argument .= "cpdextension:" . $cpd_extension .",";
+                            $argument .= "cfilename:" . $filename1 . ",";
 
                             copy("all/demo/example/sim.cpd.data2.csv", $destFile . "/sim.cpd.data2.csv");
                         }
                     }
                     $_SESSION['argument'] = $argument;
 
-                }
+
 
 
             } else {
@@ -521,66 +513,74 @@ class AnalysisController extends Controller
             }
         } else if ($anal_type == "exampleAnalysis3") {
 
-            if (Input::get('gcheck') == 'T') {
+            if (Input::get('gcheck') == 'T' ||Input::get('cpdcheck') == 'T' ) {
 
                 //$file = Input::file('gfile');
-                $filename = "gene.ensprot.txt";
+
                 $destFile = public_path();
-                $gene_extension = file_ext($filename);
-                if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
-                    $argument .= "geneextension:" . $gene_extension . ",";
+                if (is_null(Auth::user())) {
+                    $email = "demo";
+                } else {
+                    $email = Auth::user()->email;
+                    if (!file_exists("all/$email"))
+                        mkdir("all/$email");
+                    $f = './all/' . Auth::user()->email;
+                    $io = popen('/usr/bin/du -sh ' . $f, 'r');
+                    $size = fgets($io, 4096);
+                    $size = substr($size, 0, strpos($size, "\t"));
 
-
-                    if (is_null(Auth::user())) {
-                        $email = "demo";
-                    } else {
-                        $email = Auth::user()->email;
-                        if (!file_exists("all/$email"))
-                            mkdir("all/$email");
-                        $f = './all/' . Auth::user()->email;
-                        $io = popen('/usr/bin/du -sh ' . $f, 'r');
-                        $size = fgets($io, 4096);
-                        $size = substr($size, 0, strpos($size, "\t"));
-
-                        pclose($io);
-                        $size = 100 - intval($size);
-                        if ($size < 0) {
-                            return view('/home')->with('error', 'No space avaialable please delete some previous analysis');
-                        }
+                    pclose($io);
+                    $size = 100 - intval($size);
+                    if ($size < 0) {
+                        return view('/home')->with('error', 'No space avaialable please delete some previous analysis');
                     }
-                    $time = time();
-                    mkdir("all/$email/$time", 0777, true);
+                }
+                $time = time();
+                mkdir("all/$email/$time", 0777, true);
 
 
-                    $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
-                    $_SESSION['suffix'] = $suffix;
-                    $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
-                    $_SESSION['anal_type'] = $anal_type;
-                    $_SESSION['analyses_id'] = $time;
-                    if (isset($_POST["multistate"]))
-                        $_SESSION['multistate'] = "T";
-                    else
-                        $_SESSION['multistate'] = "T";
+                $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
+                $_SESSION['suffix'] = $suffix;
+                $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
+                $_SESSION['anal_type'] = $anal_type;
+                $_SESSION['analyses_id'] = $time;
+                if (isset($_POST["multistate"]))
+                    $_SESSION['multistate'] = "T";
+                else
+                    $_SESSION['multistate'] = "T";
 
-                    $destFile = public_path() . "/all/$email/$time/";
-                    $destFile1 = "/all/$email/$time/";
-                    $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time;
-                    $argument .= ",filename:" . $filename;
-                    copy("all/demo/example/gene.ensprot.txt", $destFile . "/gene.ensprot.txt");
+                $destFile = public_path() . "/all/$email/$time/";
+                $destFile1 = "/all/$email/$time/";
+                $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time .",";
+
+
+                if(Input::get('gcheck') == 'T') {
+                    $filename = "gene.ensprot.txt";
+                    $gene_extension = file_ext($filename);
+                    if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
+                        $argument .= "geneextension:" . $gene_extension . ",";
+                        $argument .= "filename:" . $filename . ",";
+                        copy("all/demo/example/gene.ensprot.txt", $destFile . "/gene.ensprot.txt");
+                    }
+                }
+
+
+
+
 
                     if (Input::get('cpdcheck') == 'T') {
                         //$file1 = Input::file('cfile');
                         $filename1 = "cpd.cas.csv";
                         $cpd_extension = file_ext($filename1);
                         if ($cpd_extension == "txt" || $cpd_extension == "csv" || $cpd_extension == "rda") {
-                            $argument .= ",cpdextension:" . $cpd_extension;
-                            $argument .= ",cfilename:" . $filename1;
+                            $argument .= "cpdextension:" . $cpd_extension . ",";
+                            $argument .= "cfilename:" . $filename1 .",";
                             copy("all/demo/example/cpd.cas.csv", $destFile . "/cpd.cas.csv");
                         }
                     }
                     $_SESSION['argument'] = $argument;
 
-                }
+
 
             } else {
                 return view('analysis.exampleAnalysis2');
@@ -611,7 +611,7 @@ class AnalysisController extends Controller
         }
 
         /** Rscript code running with the arguments */
-        #return $argument;
+       #return $argument;
 
         exec("Rscript my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 

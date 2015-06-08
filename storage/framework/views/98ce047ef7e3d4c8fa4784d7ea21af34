@@ -4,9 +4,7 @@
     <div class="col-sm-12">
         <div class="col-sm-8">
 
-            <p class="alert alert-success" style="margin-left:30px;"> Species: <?php echo e(substr($_GET['id'],0,3)); ?>
-
-                Pathway: <?php echo e(substr($_GET['id'],3,8)); ?></p>
+            <p class="alert alert-info">Note: Hover on the image to get the details of the states.</p>
     <?php
             $anal_id = $_GET['analyses'];
             if (Auth::user()) {
@@ -79,7 +77,7 @@
             ?>
             <br/>
             <br/>
-            <p class="alert alert-info">Note: Hover on the image to get the details of the states.</p>
+
 
         </div>
     </div>

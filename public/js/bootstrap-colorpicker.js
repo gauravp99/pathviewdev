@@ -749,6 +749,7 @@
                 type: 'hidePicker',
                 color: this.color
             });
+
         },
         updateData: function (val) {
             val = val || this.color.toString(this.format);
@@ -1022,4 +1023,7 @@
 
     $.fn.colorpicker.constructor = Colorpicker;
 
-}));
+}
+
+)
+);

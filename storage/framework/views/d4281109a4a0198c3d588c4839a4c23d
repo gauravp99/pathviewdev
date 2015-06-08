@@ -14,17 +14,17 @@
 
                 <h2>Input & Output</h2>
 
-                <p>Uploading Data Files for gene and compound data, selecting the species ID pathway ID,Gene id,Compound
-                    id,Suffix of your output </p>
-                <br/>
+                <p>Upload your gene and/or compound data, specify species, pathways, ID type etc. </p>
 
                 <div class="list-group">
+
                     <ul class="nav navbar-nav" style="width:100%">
                         <li class="dropdown" style="width:100%">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
+
                                 <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
@@ -37,7 +37,7 @@
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#pwy_id">Pathway</a></li>
                                 <li class="divider"></li>
-                                <li style="width:300px;"><a href="#suffix">suffix</a></li>
+                                <li style="width:300px;"><a href="#suffix">Suffix</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -51,26 +51,26 @@
 
                 <h2>Graphics</h2>
 
-                <p>Graphics deal with Location of elements in the graph and elements modification in the pathviw
-                    generation.
-                    For example number of bins in the pathview key position and signature position.</p>
+                <p>Specify the layout, style, and node/edge or legend attributes of the output graphs.</p>
 
                 <div class="list-group">
+
                     <ul class="nav navbar-nav" style="width:100%">
                         <li class="dropdown" style="width:100%">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
+
                                 <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#layer">Same Layer</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#desc">Descrete</a></li>
                                 <li class="divider"></li>
-                                <li style="width:300px;"><a href="#split">Split</a></li>
+                                <li style="width:300px;"><a href="#split">Split Group</a></li>
                                 <li class="divider"></li>
-                                <li style="width:300px;"><a href="#expand">Expand</a></li>
+                                <li style="width:300px;"><a href="#expand">Expand Node</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#multi">Multi State</a></li>
                                 <li class="divider"></li>
@@ -98,17 +98,18 @@
 
                 <h2>Coloration</h2>
 
-                <p>Colouration deal with various states of the gene using colors you can enter the colors gene should be
-                    when gene is on high state, mid state and low state for both gene and compound data</p>
+                <p>Customize the color coding of your gene and compound data.</p>
 
                 <div class="list-group">
+
                     <ul class="nav navbar-nav" style="width:100%">
                         <li class="dropdown" style="width:100%">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
-                                <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
+
+                                <li style="width:300px;"><a href="#nsum">Node Summary</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
                                 <li class="divider"></li>
@@ -134,24 +135,23 @@
 
 
             <div class="col-md-4">
-                <h2>Multiple sample KEGG view</h2>
+                <h2>Multiple Sample KEGG view</h2>
 
-                <p>This example shows the capability of multiple sample data handling in Pathview.</p>
+                <p>This example shows the multiple sample/state integration with Pathview KEGG view.</p>
 
                 <p><a class="btn btn-default" href="#example1" role="button">View details »</a></p>
             </div>
             <div class="col-md-5">
                 <h2>Multiple Sample Graphviz view</h2>
 
-                <p>This example shows the capability of multiple sample data handling in Pathview.with GRAPHVIZ output
-                    generation</p>
+                <p>This example shows the multiple sample/state integration with Pathview Graphviz viewo. n</p>
 
                 <p><a class="btn btn-default" href="#example2" role="button">View details »</a></p>
             </div>
             <div class="col-md-3">
                 <h2>ID Mapping</h2>
 
-                <p>Here's an example showing the ID mapping capability of pathview.</p>
+                <p>This example shows the ID mapping capability of Pathview.</p>
 
                 <p><a class="btn btn-default" href="#example3" role="button">View details »</a></p>
             </div>
@@ -580,10 +580,10 @@
                         <a class="list-group-item disabled">
                             Applied Arguments
                         </a>
-                        <li class="list-group-item">Pathway ID : 00640-Propanoate metabolism</li>
+                        <li class="list-group-item">Pathway ID: 00640-Propanoate metabolism</li>
                         <li class="list-group-item">Species : hsa</li>
-                        <li class="list-group-item">Gene Id: ENSEMBLPROT</li>
-                        <li class="list-group-item">Compound Id: CAS Registry Number</li>
+                        <li class="list-group-item">Gene ID: ENSEMBLPROT</li>
+                        <li class="list-group-item">Compound ID: CAS Registry Number</li>
                         <li class="list-group-item">Kegg Native : TRUE</li>
                         <li class="list-group-item">Same Layer : TRUE</li>
                         <li class="list-group-item">keys Align : y</li>

@@ -50,7 +50,8 @@
     $geneid = "ENTREZ";
     $cpdid = "KEGG";
     $species = "hsa-Homo sapiens";
-    $pathway = "00010";
+    $pathway = "00010-Glycolysis / Gluconeogenesis";
+    $pathway1 = "00640-Propanoate metabolism";
     $pathidx = -1;
     $suffix = "multistatekegg";
     $kegg = true;
@@ -75,7 +76,7 @@
     $clow = "#0000FF";
     $cmid = "#D3D3D3";
     $chigh = "#FFFF00";
-    $nsum = "median";
+    $nsum = "sum";
     $ncolor = "transparent";
     ?>
 
@@ -395,15 +396,8 @@
                                 </a>
                                 <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add"
                                    style="font-size:24px;"><span class="glyphicon glyphicon-forward"
-                                                                 style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;top: 3px;left: 2px;  "></span></a></button>
-                                <a class="" href="JavaScript:void(0);"
-                                   id="btn-remove" style="font-size:24px;">
+                                                                 style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;top: 83px;left: 2px;  "></span></a></button>
 
-                                    <span class="glyphicon glyphicon-backward" style="border: 1px solid #FEF7F7;box-shadow: 0px 0px 3px #AAA;margin-top: 145px;padding: 6px;">
-                                        </span><span class="glyphicon glyphicon-minus" style="top: -34px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;left: -34px;padding: 6px;">
-
-                                        </span>
-                                </a>
                             </div>
                             <div class="col-sm-5" style="margin-left: -30px;">
                                 <select hidden="true" name="selectto[]"
@@ -418,7 +412,7 @@
                                     ?>
 
                                 </select>
-                                <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;" rows="11" cols="14" >00010-Glycolysis / Gluconeogenesis</textarea>
+                                <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;" rows="11" cols="14" >00640-Propanoate metabolism</textarea>
 
                             </div>
                         </div>
@@ -554,23 +548,25 @@
                             var error = false;
 
                             document.getElementById("nacolor").value = document.getElementById("nacolor").value.replace(/\W/g, "");
-                            if (!document.getElementById('gcheck').checked) {
+                            if (!document.getElementById('gcheck').checked && !document.getElementById('cpdcheck').checked) {
 
                                 var li = document.createElement("li");
-                                li.appendChild(document.createTextNode("Upload the Gene data file "));
+                                li.appendChild(document.createTextNode("Gene data or compound data any one of them should be checked "));
                                 errors.appendChild(li);
                                 document.getElementById('gfile-div').style.backgroundColor = "#DA6666";
+                                document.getElementById('cfile-div').style.backgroundColor = "#DA6666";
                                 error = true;
 
 
                             }
                             else {
                                 document.getElementById('gfile-div').style.backgroundColor = "#F4F4F4";
+                                document.getElementById('cfile-div').style.backgroundColor = "#F4F4F4";
 
                             }
 
 
-                            if (selectBox.options.length == 0) {
+                            if (document.getElementById('selecttextfield').value.length < 5) {
 
                                 var myElement = document.getElementById("pat-select");
                                 myElement.style.backgroundColor = "#DA6666";
@@ -581,11 +577,21 @@
 
 
                             }
+                            else if (!in_pathway_array(pathway_array, document.getElementById('selecttextfield').value.substring(0, 5))) {
+                                var myElement = document.getElementById("pat-select");
+                                myElement.style.backgroundColor = "#DA6666";
+                                var li = document.createElement("li");
+                                li.appendChild(document.createTextNode("Pathway enetered is not valid pathway"));
+                                errors.appendChild(li);
+                                error = true;
+
+                            }
                             else {
                                 var myElement = document.getElementById("pat-select");
                                 myElement.style.backgroundColor = "#F4F4F4";
 
                             }
+
 
 
                             if (geneid.value == "") {
@@ -948,7 +954,7 @@
                 </fieldset>
                 <fieldset class="step">
 
-                    <div class="stepsdiv"id="kegg-layer-div">
+                    <div class="stepsdiv" id="kegg-layer-div">
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 <a href="tutorial#kegg"
@@ -956,7 +962,7 @@
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
-                                <?php echo form::label('kegg','Kegg Native:',array('style' => 'margin-left: 20px')); ?>
+                                <?php echo form::label('kegg','Kegg Native:'); ?>
 
 
                                 <input name="kegg" value="T" id="kegg"
@@ -969,10 +975,15 @@
                                 }?>
 
 
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <?php echo form::label('layer','Same Layer:',array('style' => 'margin-left: 20px') ); ?>
+                                <a href="tutorial#kegg"
+                                   title="To render graph as single layer or double layer,Controls plotting layers"
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                </a>
+                                <?php echo form::label('layer','Same Layer:' ); ?>
 
 
                                 <input name="layer" value="T" id="layer"
@@ -983,7 +994,7 @@
                                         echo "checked";
                                     }
                                 }?>
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                         </div>
                     </div>
@@ -995,11 +1006,11 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#desc"
-                                   title="This argument tells whether gene data or compound data should be treated as discrete"
+                                   title="This argument tells whether gene data should be treated as discrete"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
-                                <?php echo form::label('gdesc',' Descrete Gene:',array('style' => 'margin-left: 20px')); ?>
+                                <?php echo form::label('gdesc',' Descrete Gene:'); ?>
 
                                 <input name="gdisc" value="T" id="gdisc"
                                 <?php if (isset(Session::get('Sess')['gdisc'])) {
@@ -1008,10 +1019,15 @@
                                     if (Session::get('Sess') == NULL) {
                                     }
                                 }?>
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <?php echo form::label('cdesc','Descrete Compound:',array('style' => 'margin-left: 20px')); ?>
+                                <a href="tutorial#desc"
+                                   title="This argument tells whether compound data should be treated as discrete"
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                </a>
+                                <?php echo form::label('cdesc','Descrete Compound:'); ?>
 
                                 <input name="cdisc" value="T" id="cdisc"
                                 <?php if (isset(Session::get('Sess')['cdisc'])) {
@@ -1020,7 +1036,7 @@
                                     if (Session::get('Sess') == NULL) {
                                     }
                                 }?>
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                         </div>
                     </div>
@@ -1031,12 +1047,12 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#split"
-                                   title="This argument tells whether gene data or compound data should be treated as discrete"
+                                   title="Whether split node groups are split to individual nodes"
                                    target="_blank" class="scrollToTop"
                                    style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
                                 </a>
-                                <?php echo form::label('split','Split Group:',array('style' => 'margin-left: 20px')); ?>
+                                <?php echo form::label('split','Split Group:'); ?>
 
                                 <input name="split" value="T" id="split"
                                 <?php if (isset(Session::get('Sess')['split'])) {
@@ -1045,10 +1061,15 @@
                                     if (Session::get('Sess') == NULL) {
                                     }
                                 }?>
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <?php echo form::label('expand','Expand Node:',array('style' => 'margin-left: 20px')); ?>
+                                <a href="tutorial#expand"
+                                   title="Whether the multiple-gene nodes are expanded into single-gene nodes"
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                </a>
+                                <?php echo form::label('expand','Expand Node:'); ?>
 
                                 <input name="expand" value="T" id="expand"
                                 <?php if (isset(Session::get('Sess')['expand'])) {
@@ -1057,7 +1078,7 @@
                                     if (Session::get('Sess') == NULL) {
                                     }
                                 }?>
-                                       type="checkbox"style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                         </div>
                     </div>
@@ -1068,10 +1089,10 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#multi"
-                                   title="Whether multiple states (samples or columns) gene data or compound data should be integrated / Whether the samples of gene data and Compound data are paired"
+                                   title="Whether multiple states (samples or columns) gene data or compound data should be integrated "
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                </a><?php echo form::label('multistate','Multi State:',array('style' => 'margin-left: 20px')); ?>
+                                </a><?php echo form::label('multistate','Multi State:'); ?>
 
 
                                 <input name="multistate" value="T" id="multistate"
@@ -1082,11 +1103,16 @@
                                         echo "checked";
                                     }
                                 }?>
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
+                                <a href="tutorial#match"
+                                   title="Whether the samples of gene data and Compound data are paired"
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                </a>
 
-                                <?php echo form::label('matchd','Match Data:',array('style' => 'margin-left: 20px')); ?>
+                                <?php echo form::label('matchd','Match Data:'); ?>
 
 
                                 <input name="matchd" value="T" id="matchd"
@@ -1094,10 +1120,10 @@
                                     echo "checked";
                                 } else {
                                     if (Session::get('Sess') == NULL) {
-
+                                       
                                     }
                                 }?>
-                                       type="checkbox" style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;">
                             </div>
                         </div>
                     </div>
@@ -1108,7 +1134,7 @@
                         <div class="col-sm-12">
 
                             <div class="col-sm-6">
-                                <a href="tutorial#offset"
+                                <a href="tutorial#clabel"
                                    title="Specifies how much compound labels should be put above the default position or node center"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
@@ -1142,22 +1168,23 @@
                     </div>
 
                     <div class="stepsdiv" id="pos-kpos-div">
-                        <a href="tutorial#spos"
-                           title="Controls the position of pathview signature and color keys"
-                           target="_blank" class="scrollToTop" style="float:left;margin-right:15px;margin-left: 30px;">
-                            <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+
                         <div class="col-sm-12">
 
 
                             <div class="col-sm-6">
+                                <a href="tutorial#spos"
+                                   title="Controls the position of pathview signature"
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
 
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" style="margin-left: -20px;">
 
                                     <?php echo form::label('pos','Sign
                                     Position:',array('class' => 'awesome')); ?>
 
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" style="margin-left: -40px;">
                                     <?php echo form::select('pos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
                                     right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['pos']) ?
                                     Session::get('Sess')['pos'] : $pos); ?>
@@ -1165,11 +1192,15 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
-                                <div class="col-sm-6">
+                                <a href="tutorial#kpos"
+                                   title="Controls the position of color key(s)."
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+                                <div class="col-sm-6" style="margin-left: -20px;">
                                     <?php echo form::label('kpos','Key Position:'); ?>
 
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6" style="margin-left: -40px;">
                                     <?php echo form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
                                     right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['kpos']) ?
                                     Session::get('Sess')['kpos'] : $kpos); ?>
@@ -1177,6 +1208,7 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
 
 
                 </fieldset>
@@ -1299,7 +1331,8 @@
 
                             </div>
                             <div class="col-sm-8">
-                                <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ? Session::get('Sess')['gbins'] :
+                                <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ?
+                                Session::get('Sess')['gbins'] :
                                 $gbins,array('class' => 'coloration', 'id' => 'gbins')); ?>
 
 
@@ -1331,12 +1364,12 @@
                             </div>
 
 
-
                             <div class="col-sm-8">
                                 <input class="color coloration {hash:true}" id="glow" name="glow"
                                        value=<?php echo e(isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : '#00FF00'); ?>>
 
-                                <input class="color coloration {hash:true}" id="clow" name="clow" value="#0000FF" style="margin-left:50px">
+                                <input class="color coloration {hash:true}" id="clow" name="clow" value="#0000FF"
+                                       style="margin-left:50px">
                                 <?php /*<?php echo form::text('clow',isset(Session::get('Sess')['clow']) ? Session::get('Sess')['clow'] :
                                      $clow,array('class' => 'coloration')); ?><input style="width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                             </div>
@@ -1365,7 +1398,8 @@
                                 $gmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
 
                                 <input class="color coloration {hash:true}" id="gmid" name="gmid" value="#D3D3D3">
-                                <input class="color coloration {hash:true}" id="cmid" name="cmid" value="#D3D3D3" style="margin-left:50px">
+                                <input class="color coloration {hash:true}" id="cmid" name="cmid" value="#D3D3D3"
+                                       style="margin-left:50px">
                                 <?php /* <?php echo form::text('cmid',isset(Session::get('Sess')['cmid']) ? Session::get('Sess')['cmid'] :
                                  $cmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                             </div>
@@ -1393,7 +1427,8 @@
                                 <?php /*<?php echo form::text('ghigh',isset(Session::get('Sess')['ghigh']) ? Session::get('Sess')['ghigh'] :$ghigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
                                 <input class="color coloration {hash:true}" id="ghigh" name="ghigh" value="#FF0000">
 
-                                <input class="color coloration {hash:true}" id="chigh" name="chigh" value="#FFFF00" style="margin-left:50px">
+                                <input class="color coloration {hash:true}" id="chigh" name="chigh" value="#FFFF00"
+                                       style="margin-left:50px">
                                 <?php /*<?php echo form::text('chigh',isset(Session::get('Sess')['chigh']) ? Session::get('Sess')['chigh'] :$chigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
                             </div>
                         </div>
@@ -1425,7 +1460,8 @@
                        style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit"
                        onclick="return fileCheck()"/>
                 <input type="Reset" id="reset" class="btn btn-primary"
-                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" onclick="return reset()"/>
+                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset"
+                       onclick="return reset()"/>
             </div>
             <?php echo form::close(); ?>
 

@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/images/icon.png">
+    <link rel="icon" href="/images/logo-notext.png" height="160px" sizes="32x32">
     <title>Pathview</title>
 
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
@@ -37,8 +37,10 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{{ url('/') }}"><img src="/images/logo.png" height="40px"
-                                                               style="margin-top: -17px">
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="/images/logo-notext.png" height="58px"
+                                                               style="margin-top: -15px;background-color: white;">
+            <a class="navbar-brand" href="{{ url('/') }}"><img src="/images/logo-text.png" height="40px"
+                                                               style="margin-top: -16px">
                 Pathway based data integration and visualization
             </a>
         </div>

@@ -312,9 +312,26 @@
 
 
                         <script>
+                            function colorReset()
+                            {
+                                var v = $('#glow').val();
+                                if( $('#glow').val().indexOf('#') === -1)
+                                $('#glow').val("#"+v);
+
+                                $('#clow').val("#"+$('#clow').val());
+                                $('#gmid').val($('#gmid').val());
+                                $('#cmid').val($('#clow').val());
+                                $('#ghigh').val($('#ghigh').val());
+                                $('#chigh').val($('#chigh').val());
+                            }
+
                             $(document).ready(function () {
+
+
+
                                 $('#selecttextfield').append(",\r\n");
                                 $('#reset').click(function () {
+
                                     $('#select-to')
                                             .find('option')
                                             .remove()
@@ -322,6 +339,8 @@
                                             .append('<option value="00010-Glycolysis / Gluconeogenesis">00010-Glycolysis / Gluconeogenesis</option>')
                                             .val('whatever')
                                     ;
+
+
                                 });
 
                                 $('#btn-add').click(function () {
@@ -356,6 +375,8 @@
                                         $(this).remove();
                                     });
                                 });
+
+
 
                             });
                         </script>
@@ -407,16 +428,16 @@
 
 
                             </div>
-                            <div class="col-sm-2" style="margin-left: 30px;">
-                                <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1">
-                                    <span style="margin-top: 1px;padding: 6px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;margin-left: 2px;"
-                                          class="glyphicon glyphicon-plus"></span>
-                                </a>
-                                <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add"
-                                   style="font-size:24px;"><span class="glyphicon glyphicon-forward"
-                                                                 style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;top: 83px;left: 2px;  "></span></a></button>
+                                <div class="col-sm-2" style="margin-left: 30px;">
+                                    <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1">
+                                        <span style="margin-top: 1px;padding: 6px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;margin-left: 2px;"
+                                              class="glyphicon glyphicon-plus"></span>
+                                    </a>
+                                    <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add"
+                                       style="font-size:24px;"><span class="glyphicon glyphicon-forward"
+                                                                     style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;top: 83px;left: 2px;  "></span></a></button>
 
-                            </div>
+                                </div>
                             <div class="col-sm-5" style="margin-left: -30px;">
                                 <select hidden="true" name="selectto[]"
                                         style="float:none;width:220px;font-size: 15px;margin-left: 5px" id="select-to"
@@ -566,20 +587,21 @@
 
                             var j;
                             var f = document.getElementById("gfile");
+                            var f1 = document.getElementById("cpdfile");
                             var regex = new RegExp("(.*?)\.(txt|csv)$");
                             var error = false;
 
                             document.getElementById("nacolor").value = document.getElementById("nacolor").value.replace(/\W/g, "");
-                            if (f.value.length < 4) {
+                            if (f.value.length < 4 && f1.value.length < 4 ) {
 
                                 var li = document.createElement("li");
-                                li.appendChild(document.createTextNode("Upload the Gene data file "));
+                                li.appendChild(document.createTextNode("Upload the Gene data or compound data file "));
                                 errors.appendChild(li);
                                 document.getElementById('gfile-div').style.backgroundColor = "#DA6666";
                                 error = true;
 
                             }
-                            else if (!regex.test(document.getElementById('gfile').value)) {
+                            else if (f.value.length > 4 && !regex.test(document.getElementById('gfile').value)) {
                                 var li = document.createElement("li");
                                 li.appendChild(document.createTextNode("Upload the Gene data file extension is not supported. supports only txt and csv files "));
                                 errors.appendChild(li);
@@ -651,7 +673,7 @@
 
                             }
 
-                            var f1 = document.getElementById("cpdfile");
+
                             if (f1.value.length > 4 && cpdid.value == "") {
                                 var myElement = document.getElementById("cpdid-div");
                                 myElement.style.backgroundColor = "#DA6666";
@@ -1018,7 +1040,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <a href="tutorial#kegg"
-                                   title="to render pathway graph as native KEGG graph"
+                                   title="To render graph as single layer or double layer,Controls plotting layers"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -1045,7 +1067,7 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#desc"
-                                   title="This argument tells whether gene data or compound data should be treated as discrete"
+                                   title="This argument tells whether gene data should be treated as discrete"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -1061,8 +1083,8 @@
                                type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <a href="tutorial#kegg"
-                                   title="to render pathway graph as native KEGG graph"
+                                <a href="tutorial#desc"
+                                   title="This argument tells whether compound data should be treated as discrete"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -1086,7 +1108,7 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#split"
-                                                title="This argument tells whether gene data or compound data should be treated as discrete"
+                                                title="Whether split node groups are split to individual nodes"
                                                 target="_blank" class="scrollToTop"
                                                 style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
@@ -1103,8 +1125,8 @@
                                type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <a href="tutorial#kegg"
-                                   title="to render pathway graph as native KEGG graph"
+                                <a href="tutorial#expand"
+                                   title="Whether the multiple-gene nodes are expanded into single-gene nodes"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -1128,7 +1150,7 @@
 
                             <div class="col-sm-6">
                         <a href="tutorial#multi"
-                           title="Whether multiple states (samples or columns) gene data or compound data should be integrated / Whether the samples of gene data and Compound data are paired"
+                           title="Whether multiple states (samples or columns) gene data or compound data should be integrated "
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a><?php echo form::label('multistate','Multi State:'); ?>
@@ -1145,8 +1167,8 @@
                                type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <a href="tutorial#kegg"
-                                   title="to render pathway graph as native KEGG graph"
+                                <a href="tutorial#match"
+                                   title="Whether the samples of gene data and Compound data are paired"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -1173,7 +1195,7 @@
                         <div class="col-sm-12">
 
                             <div class="col-sm-6">
-                        <a href="tutorial#offset"
+                        <a href="tutorial#clabel"
                            title="Specifies how much compound labels should be put above the default position or node center"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                     class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
@@ -1213,7 +1235,7 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#spos"
-                                   title="Controls the position of pathview signature and color keys"
+                                   title="Controls the position of pathview signature"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
 
@@ -1231,6 +1253,10 @@
                                 </div>
                             </div>
                             <div class="col-sm-6">
+                                <a href="tutorial#kpos"
+                                   title="Controls the position of color key(s)."
+                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                                 <div class="col-sm-6" style="margin-left: -20px;">
                         <?php echo form::label('kpos','Key Position:'); ?>
 
