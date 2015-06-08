@@ -4,7 +4,7 @@
     <div class="col-sm-12">
         <div class="col-sm-8">
 
-            <p class="alert alert-info">Note: Hover on the image to get the details of the states.</p>
+            <p class="alert alert-info">Note:  Nodes in native KEGG view graphs are hyperlinked.</p>
     <?php
             $anal_id = $_GET['analyses'];
             if (Auth::user()) {

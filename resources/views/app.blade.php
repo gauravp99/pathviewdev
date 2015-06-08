@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/images/logo-notext.png" height="160px" sizes="32x32">
+    <link rel="icon" href="/images/l.ico" height="160px" sizes="32x32">
     <title>Pathview</title>
 
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">

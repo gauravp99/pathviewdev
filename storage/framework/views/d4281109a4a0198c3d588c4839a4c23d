@@ -103,7 +103,7 @@
                 <div class="list-group">
 
                     <ul class="nav navbar-nav" style="width:100%">
-                        <li class="dropdown" style="width:100%">
+                        <li class="dropdown" style="width:100%;margin-top: 24px;">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
@@ -144,7 +144,7 @@
             <div class="col-md-5">
                 <h2>Multiple Sample Graphviz view</h2>
 
-                <p>This example shows the multiple sample/state integration with Pathview Graphviz viewo. n</p>
+                <p>This example shows the multiple sample/state integration with Pathview Graphviz viewo. </p>
 
                 <p><a class="btn btn-default" href="#example2" role="button">View details »</a></p>
             </div>
@@ -207,8 +207,7 @@
                                 <dd>The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and
                                     text box.
                                     (Suggestions are shown on entering the initial letters). Multiple Pathway IDs can be
-                                    entered by clicking the “Add(+)” button.Pathways can be removed/added dynamically by
-                                    using buttons "<<" and ">>".
+                                    entered by clicking the “Add(+) and >> ” button.
                                 </dd>
                             </div>
                         </div>

@@ -1120,7 +1120,7 @@
                                     echo "checked";
                                 } else {
                                     if (Session::get('Sess') == NULL) {
-                                       
+
                                     }
                                 }?>
                                        type="checkbox" style="margin-left: 10px;">
