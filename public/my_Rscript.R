@@ -22,11 +22,18 @@ save.image("workenv.RData")
 path.ids = strsplit(args2$pathway,split=";")[[1]]
 args2$glmt = as.numeric(strsplit(args2$glmt,split=";")[[1]])
 args2$clmt = as.numeric(strsplit(args2$clmt,split=";")[[1]])
+<<<<<<< HEAD
 args2$cpdid=tolower(args2$cpdid)
 
 setwd(args2$targedir)
 zz <- file("errorFile.Rout", open = "wt")
 sink(zz,type = "message")
+=======
+
+setwd(args2$targedir)
+#zz <- file("errorFile1.Rout", open = "wt")
+#sink(zz,type = "message")
+>>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
 if(!is.null(args2$geneextension)){
     if(args2$geneextension == "txt"){
         a=read.delim(args2$filename, sep="\t")

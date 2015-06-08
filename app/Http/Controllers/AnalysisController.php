@@ -23,38 +23,31 @@ class AnalysisController extends Controller
     {
         return view('analysis.NewAnalysis');
     }
-
     public function postAnalysis(CraeteAnalysisRequest $resqest)
     {
-
         $d = new AnalysisController();
         return $d->analysis("newAnalysis");
-
     }
 
 
-    /**
-     * @param $anal_type
-     * @return $this|\Illuminate\View\View
-     *
-     * This function does the following things
-     *
-     * 1. Read the arguments from the form and copy into the arguments variable which is send to R script
-     * 2. Check for any issue with input like adding some values which are not supported
-     * 3. Checking for values with a comma or code. detect any abnormal input
-     * 4. once analysis is successfully done insert data into database
-     */
+
     public function analysis($anal_type)
     {
-        // return sizeof($_GET['selectto']);
 
+<<<<<<< HEAD
         /* try {
              $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
          } catch (Exception $e) {
              return Redirect::to('error')->with('error', 'error');
              #echo "Exception occurred" . $e->getMessage();
          }*/
-
+=======
+        try {
+            $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
+        } catch (Exception $e) {
+            return Redirect::to('error')->with('error', 'error');
+        }
+>>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
 
         $errors = array();
         $gene_cmpd_color = array();
@@ -63,17 +56,21 @@ class AnalysisController extends Controller
         $time = time();
         $email = "";
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
         foreach ($_POST as $key => $value) {
             $_SESSION[$key] = $value;
         }
         $Session = $_SESSION;
 
-
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
+
         $i = 0;
+<<<<<<< HEAD
         preg_match_all('!\d+!', $_POST['selecttextfield'], $matches);
         #return print_r($matches);
 
@@ -88,12 +85,22 @@ class AnalysisController extends Controller
         foreach ($matches as $pathway1) {
             foreach ($pathway1 as $pathway)
 
+=======
+
+        $pathway_array = array();
+
+        foreach ($_POST['selectto'] as $pathway) {
+>>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
             array_push($pathway_array, $pathway);
         }
+
         $pathway_array1 = array_unique($pathway_array);
+<<<<<<< HEAD
         #return print_r($pathway_array1);
 
 
+=======
+>>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
 
         $argument .= "pathway:";
 
@@ -108,8 +115,8 @@ class AnalysisController extends Controller
                 $err_atr["pathway"] = 1;
             }
         }
-        $argument .= ",";
 
+        $argument .= ",";
 
         $geneid = $_POST["geneid"];
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
@@ -123,8 +130,12 @@ class AnalysisController extends Controller
         $cpdid = $_POST["cpdid"];
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
+<<<<<<< HEAD
             $argument .= "cpdid:" . str_replace(" ", "-", $val[0]->cmpdid) . ",";
             #$argument .= "cpdid:" . $val[0]->cmpdid;
+=======
+            $argument .= "cpdid:" . $val[0]->cmpdid . ",";
+>>>>>>> b2951e13a89321e5be233308c1b73900b1eee9c0
 
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
@@ -232,49 +243,45 @@ class AnalysisController extends Controller
             $gene_cmpd_color["glow"] = $_POST["glow"];
             $gene_cmpd_color["gmid"] = $_POST["gmid"];
             $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
-
-
         }
         /*if ((($anal_type == "newAnalysis") && (Input::hasFile('cpdfile'))) || isset($_POST["cpdcheck"])) {*/
 
-            if (preg_match('/[a-z]+/', $_POST["clmt"])) {
-                array_push($errors, "Compound Limit should be Numeric");
-                $err_atr["clmt"] = 1;
-            }
+        if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+            array_push($errors, "Compound Limit should be Numeric");
+            $err_atr["clmt"] = 1;
+        }
 
-            if (preg_match('/[a-z]+/', $_POST["cbins"])) {
-                array_push($errors, "Compound Bins should be Numeric");
-                $err_atr["cbins"] = 1;
-            }
+        if (preg_match('/[a-z]+/', $_POST["cbins"])) {
+            array_push($errors, "Compound Bins should be Numeric");
+            $err_atr["cbins"] = 1;
+        }
         $clmtrange = str_replace(",", ";", $_POST["clmt"]);
 
         $argument .= "clmt:" . $clmtrange . ",";
 
-            $argument .= "cbins:" . $_POST["cbins"] . ",";
+        $argument .= "cbins:" . $_POST["cbins"] . ",";
 
 
-            if (strpos($_POST["clow"], '#') !== false) {
-                $argument .= "clow:" . $_POST["clow"] . ",";
-            } else {
-                $argument .= "clow:" . '#' . $_POST["clow"] . ",";
-            }
-            if (strpos($_POST["cmid"], '#') !== false) {
-                $argument .= "cmid:" . $_POST["cmid"] . ",";
-            } else {
-                $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
-            }
-            if (strpos($_POST["chigh"], '#') !== false) {
-                $argument .= "chigh:" . $_POST["chigh"] . ",";
-            } else {
-                $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
-            }
+        if (strpos($_POST["clow"], '#') !== false) {
+            $argument .= "clow:" . $_POST["clow"] . ",";
+        } else {
+            $argument .= "clow:" . '#' . $_POST["clow"] . ",";
+        }
+        if (strpos($_POST["cmid"], '#') !== false) {
+            $argument .= "cmid:" . $_POST["cmid"] . ",";
+        } else {
+            $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
+        }
+        if (strpos($_POST["chigh"], '#') !== false) {
+            $argument .= "chigh:" . $_POST["chigh"] . ",";
+        } else {
+            $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
+        }
 
 
-            $gene_cmpd_color["clow"] = $_POST["clow"];
-            $gene_cmpd_color["cmid"] = $_POST["cmid"];
-            $gene_cmpd_color["chigh"] = $_POST["chigh"];
-
-
+        $gene_cmpd_color["clow"] = $_POST["clow"];
+        $gene_cmpd_color["cmid"] = $_POST["cmid"];
+        $gene_cmpd_color["chigh"] = $_POST["chigh"];
 
 
         $argument .= "nsum:" . $_POST["nodesun"] . ",";
@@ -501,28 +508,10 @@ class AnalysisController extends Controller
                         }
                     }
                     $_SESSION['argument'] = $argument;
-                    /*    $pathway_array = array();
-                        $pathidx = 1;
-                        $path = "pathway" . $pathidx;
-                        while (isset($_POST[$path])) {
-                            $path1 = explode("-", $_POST["pathway$pathidx"]);
 
-                            if (strcmp(substr($path1[0], 0, 5), $path_id) != 0) {
-                                array_push($pathway_array, substr($path1[0], 0, 5));
-                            }
-                            $pathway_array1 = array_unique($pathway_array);
-
-                            $pathidx++;
-                            $path = "pathway" . $pathidx;
-                        }
-                        $pathcounter = 1;
-                        foreach ($pathway_array1 as $val) {
-                            $argument .= ",pathway$pathcounter:" . $val;
-                            $pathcounter++;
-                        }*/
                 }
 
-                // $argument .= ",pathidx:" . ($pathcounter);
+
             } else {
                 if ($anal_type == "exampleAnalysis1") {
                     return view('analysis.exampleAnalysis1');
@@ -601,7 +590,7 @@ class AnalysisController extends Controller
         /** gettingthe client ip address stored into database */
         function get_client_ip()
         {
-            $ipaddress = '';
+
             if (getenv('HTTP_CLIENT_IP'))
                 $ipaddress = getenv('HTTP_CLIENT_IP');
             else if (getenv('HTTP_X_FORWARDED_FOR'))

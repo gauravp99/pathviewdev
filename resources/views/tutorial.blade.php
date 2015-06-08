@@ -22,12 +22,14 @@
                 <br/>
 
                 <div class="list-group">
+
                     <ul class="nav navbar-nav" style="width:100%">
                         <li class="dropdown" style="width:100%">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
+
                                 <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
@@ -59,12 +61,14 @@
                     For example number of bins in the pathview key position and signature position.</p>
 
                 <div class="list-group">
+
                     <ul class="nav navbar-nav" style="width:100%">
                         <li class="dropdown" style="width:100%">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
+
                                 <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#layer">Same Layer</a></li>
@@ -105,12 +109,14 @@
                     when gene is on high state, mid state and low state for both gene and compound data</p>
 
                 <div class="list-group">
+
                     <ul class="nav navbar-nav" style="width:100%">
                         <li class="dropdown" style="width:100%">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
+
                                 <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
