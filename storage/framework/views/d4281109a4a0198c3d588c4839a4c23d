@@ -204,9 +204,11 @@
                                 <dt><a name="pwy_id">Pathway ID</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and text box.
+                                <dd>The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and
+                                    text box.
                                     (Suggestions are shown on entering the initial letters). Multiple Pathway IDs can be
-                                    entered by clicking the “Add(+)” button.Pathways can be removed/added dynamically by using buttons "<<" and ">>".
+                                    entered by clicking the “Add(+)” button.Pathways can be removed/added dynamically by
+                                    using buttons "<<" and ">>".
                                 </dd>
                             </div>
                         </div>
@@ -404,7 +406,8 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd>The method name to calculate node summary given that multiple genes or compounds are
-                                    mapped to it. Potential values can be found in the drop down list. Default Value is “Sum”
+                                    mapped to it. Potential values can be found in the drop down list. Default Value is
+                                    “Sum”
                                 </dd>
                             </div>
                         </div>
@@ -425,7 +428,10 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd> This argument specifies the limit values for Gene Data and Compound Data when
-                                    converting them to pseudo colors.This field is a numeric field you can enter two values separated by a comma for example(1,2). first value for lower limit and second value is for higher limit. If a single value is given then limit is taken from -n to n.
+                                    converting them to pseudo colors.This field is a numeric field you can enter two
+                                    values separated by a comma for example(1,2). first value for lower limit and second
+                                    value is for higher limit. If a single value is given then limit is taken from -n to
+                                    n.
                                     Input fields are enabled after checking respective
                                     checkpoints for Gene and Compound Data
                                 </dd>

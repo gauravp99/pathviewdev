@@ -391,7 +391,7 @@
                                                 </div>
                                             </td>
                                             <td>IP's:</td>
-                                            <td ><?php echo $web_ip_cnt ?></td>
+                                            <td><?php echo $web_ip_cnt ?></td>
                                         </tr>
 
                                     </table>

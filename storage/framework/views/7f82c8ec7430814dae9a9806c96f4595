@@ -135,7 +135,7 @@
         // Zip archive will be created only after closing object
         #print_r($zip);
         $zip->close();
-        echo "<h2 class='alert alert-info'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. <h2>";
+            echo "<h2 class='alert alert-info'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. <h2>";
 
         $data['path'] = $direct;
 
@@ -161,7 +161,7 @@
                 }
             });
         } else{
-        echo "<br/><h2 class='alert alert-info'><a style='color:black;' href='/auth/register'>Register</a> to save the outputs and a lot more.<h2>";
+            echo "<br/><h2 class='alert alert-info'><a style='color:black;' href='/auth/register'>Register</a> to save the outputs and a lot more.<h2>";
 
         ?>
         <div class="col-sm-4">

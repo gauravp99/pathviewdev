@@ -123,7 +123,8 @@
                                 <a href="tutorial#gene_data" title="Upload gene data accepts CSV, txt file"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
-                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span> </a>
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
+                                </a>
                                 <?php echo form::label('gcheck','Gene Data:'); ?>
 
                             </div>
@@ -157,8 +158,8 @@
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                                 <?php echo form::label('cpdcheck','Compound Data:'); ?>
 
-                            </div><div class="col-sm-7">
-
+                            </div>
+                            <div class="col-sm-7">
 
 
                                 <input name="cpdcheck" id="cpdcheck" value="T" type="checkbox"
@@ -174,20 +175,10 @@
                         </div>
 
 
-
-
-
                     </div>
 
                     <br/>
                     <br/>
-
-
-
-
-
-
-
 
 
                     <div class="stepsdiv" id="geneid-div"
@@ -310,7 +301,7 @@
                                     var val = $(this).val();
 
                                     $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
-                                    $('#selecttextfield').val($('#selecttextfield').val()+val+",\r\n");
+                                    $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
 
 
 
@@ -325,7 +316,7 @@
                                 }
                                 else {
                                     $("<option />", {'value': val, text: val}).appendTo("#select-to");
-                                    $('#selecttextfield').val($('#selecttextfield').val()+val+",\r\n");
+                                    $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
                                 }
 
                             });
@@ -351,13 +342,15 @@
                                        title="TThe KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and text box.Multiple Pathway entered by clicking the “Add(+)” button.Pathways can be removed/added dynamically by using buttons '<<' and '>>'"
                                        target="_blank" class="scrollToTop"
                                        style="float:left;margin-right:5px;margin-left: -15px"><span
-                                                class="glyphicon glyphicon-info-sign" style="margin-right: 20px;" style="margin-left:20px"></span></a>
+                                                class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"
+                                                style="margin-left:20px"></span></a>
                                     <?php echo form::label('pathway','Pathway:'); ?>
 
                                 </div>
                             </div>
 
                             <br/>
+
                             <div class="col-sm-5">
 
                                 <input class="ex8" list="pathwaylist" name="pathway" id="pathway1"
@@ -383,9 +376,6 @@
                                 </select>
 
 
-
-
-
                             </div>
                             <div class="col-sm-2" style="margin-left: 30px;">
                                 <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1">
@@ -398,8 +388,10 @@
                                 <a class="" href="JavaScript:void(0);"
                                    id="btn-remove" style="font-size:24px;">
 
-                                    <span class="glyphicon glyphicon-backward" style="border: 1px solid #FEF7F7;box-shadow: 0px 0px 3px #AAA;margin-top: 145px;padding: 6px;">
-                                        </span><span class="glyphicon glyphicon-minus" style="top: -34px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;left: -34px;padding: 6px;">
+                                    <span class="glyphicon glyphicon-backward"
+                                          style="border: 1px solid #FEF7F7;box-shadow: 0px 0px 3px #AAA;margin-top: 145px;padding: 6px;">
+                                        </span><span class="glyphicon glyphicon-minus"
+                                                     style="top: -34px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;left: -34px;padding: 6px;">
 
                                         </span>
                                 </a>
@@ -417,7 +409,9 @@
                                     ?>
 
                                 </select>
-                                <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;" rows="11" cols="14" >00010-Glycolysis / Gluconeogenesis</textarea>
+                                <textarea id="selecttextfield" name="selecttextfield" wrap="off"
+                                          style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;"
+                                          rows="11" cols="14">00010-Glycolysis / Gluconeogenesis</textarea>
 
                             </div>
                         </div>
@@ -931,7 +925,8 @@
                                    target="_blank"
                                    class="scrollToTop"
                                    style="float:left;margin-right:5px;"><span
-                                            class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+                                            class="glyphicon glyphicon-info-sign"
+                                            style="margin-right: 20px;"></span></a>
                                 <?php echo form::label('suffix','suffix:'); ?>
 
                             </div>
@@ -947,7 +942,7 @@
                 </fieldset>
                 <fieldset class="step">
 
-                    <div class="stepsdiv"id="kegg-layer-div">
+                    <div class="stepsdiv" id="kegg-layer-div">
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                                 <a href="tutorial#kegg"
@@ -1056,7 +1051,7 @@
                                     if (Session::get('Sess') == NULL) {
                                     }
                                 }?>
-                                       type="checkbox"style="margin-left: 10px;float:left">
+                                       type="checkbox" style="margin-left: 10px;float:left">
                             </div>
                         </div>
                     </div>
@@ -1110,7 +1105,8 @@
                                 <a href="tutorial#offset"
                                    title="Specifies how much compound labels should be put above the default position or node center"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
-                                            class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+                                            class="glyphicon glyphicon-info-sign"
+                                            style="margin-right: 20px;"></span></a>
                                 <?php echo form::label('offset','Compound Label Offset:'); ?>
 
                             </div>
@@ -1133,7 +1129,8 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <?php echo form::select('align', array('x' => 'x', 'y' => 'y'), isset(Session::get('Sess')['align']) ?
+                                <?php echo form::select('align', array('x' => 'x', 'y' => 'y'),
+                                isset(Session::get('Sess')['align']) ?
                                 Session::get('Sess')['align'] : $align); ?>
 
                             </div>
@@ -1145,6 +1142,7 @@
                            title="Controls the position of pathview signature and color keys"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:15px;margin-left: 30px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+
                         <div class="col-sm-12">
 
 
@@ -1157,8 +1155,10 @@
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <?php echo form::select('pos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
-                                    right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['pos']) ?
+                                    <?php echo form::select('pos', array('bottomleft' => 'bottom left', 'bottomright' =>
+                                    'bottom
+                                    right','topleft' => 'top left', 'topright' => 'top
+                                    right'),isset(Session::get('Sess')['pos']) ?
                                     Session::get('Sess')['pos'] : $pos); ?>
 
                                 </div>
@@ -1169,8 +1169,10 @@
 
                                 </div>
                                 <div class="col-sm-6">
-                                    <?php echo form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
-                                    right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['kpos']) ?
+                                    <?php echo form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' =>
+                                    'bottom
+                                    right','topleft' => 'top left', 'topright' => 'top
+                                    right'),isset(Session::get('Sess')['kpos']) ?
                                     Session::get('Sess')['kpos'] : $kpos); ?>
 
                                 </div>
@@ -1207,8 +1209,10 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <?php echo form::select('nodesun', array('sum' => 'sum', 'mean' => 'mean','median' => 'median', 'max'
-                                => 'max','max.abs' => 'max.abs' ,'random' => 'random'),isset(Session::get('Sess')['nodesun']) ?
+                                <?php echo form::select('nodesun', array('sum' => 'sum', 'mean' => 'mean','median' => 'median',
+                                'max'
+                                => 'max','max.abs' => 'max.abs' ,'random' =>
+                                'random'),isset(Session::get('Sess')['nodesun']) ?
                                 Session::get('Sess')['nodesun'] : $nsum); ?>
 
                             </div>
@@ -1231,7 +1235,8 @@
 
                             </div>
                             <div class="col-sm-6">
-                                <?php echo form::select('nacolor', array('transparent' => 'transparent', 'grey' => 'grey'),isset(Session::get('Sess')['nacolor']) ?
+                                <?php echo form::select('nacolor', array('transparent' => 'transparent', 'grey' =>
+                                'grey'),isset(Session::get('Sess')['nacolor']) ?
                                 Session::get('Sess')['nacolor'] : $ncolor); ?>
 
                             </div>
@@ -1271,7 +1276,8 @@
                                 <?php echo form::text('glmt',isset(Session::get('Sess')['glmt']) ? Session::get('Sess')['glmt']
                                 :$glmt,array('class' => 'coloration', 'id' => 'glmt')); ?>
 
-                                <?php echo form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt'] :
+                                <?php echo form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt']
+                                :
                                 $clmt,array('class' => 'coloration', 'id' => 'clmt','style'=>'margin-left:50px')); ?>
 
                             </div>
@@ -1298,11 +1304,13 @@
 
                             </div>
                             <div class="col-sm-8">
-                                <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ? Session::get('Sess')['gbins'] :
+                                <?php echo form::text('gbins',isset(Session::get('Sess')['gbins']) ?
+                                Session::get('Sess')['gbins'] :
                                 $gbins,array('class' => 'coloration', 'id' => 'gbins')); ?>
 
 
-                                <?php echo form::text('cbins',isset(Session::get('Sess')['cbins']) ? Session::get('Sess')['cbins'] :
+                                <?php echo form::text('cbins',isset(Session::get('Sess')['cbins']) ?
+                                Session::get('Sess')['cbins'] :
                                 $cbins,array('class' => 'coloration', 'id' => 'cbins','style'=>'margin-left:50px')); ?>
 
                             </div>
@@ -1330,12 +1338,12 @@
                             </div>
 
 
-
                             <div class="col-sm-8">
                                 <input class="color coloration {hash:true}" id="glow" name="glow"
                                        value=<?php echo e(isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : '#00FF00'); ?>>
 
-                                <input class="color coloration {hash:true}" id="clow" name="clow" value="#0000FF" style="margin-left:50px">
+                                <input class="color coloration {hash:true}" id="clow" name="clow" value="#0000FF"
+                                       style="margin-left:50px">
                                 <?php /*<?php echo form::text('clow',isset(Session::get('Sess')['clow']) ? Session::get('Sess')['clow'] :
                                      $clow,array('class' => 'coloration')); ?><input style="width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                             </div>
@@ -1364,7 +1372,8 @@
                                 $gmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
 
                                 <input class="color coloration {hash:true}" id="gmid" name="gmid" value="#D3D3D3">
-                                <input class="color coloration {hash:true}" id="cmid" name="cmid" value="#D3D3D3" style="margin-left:50px">
+                                <input class="color coloration {hash:true}" id="cmid" name="cmid" value="#D3D3D3"
+                                       style="margin-left:50px">
                                 <?php /* <?php echo form::text('cmid',isset(Session::get('Sess')['cmid']) ? Session::get('Sess')['cmid'] :
                                  $cmid,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color">*/ ?>
                             </div>
@@ -1392,7 +1401,8 @@
                                 <?php /*<?php echo form::text('ghigh',isset(Session::get('Sess')['ghigh']) ? Session::get('Sess')['ghigh'] :$ghigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
                                 <input class="color coloration {hash:true}" id="ghigh" name="ghigh" value="#FF0000">
 
-                                <input class="color coloration {hash:true}" id="chigh" name="chigh" value="#FFFF00" style="margin-left:50px">
+                                <input class="color coloration {hash:true}" id="chigh" name="chigh" value="#FFFF00"
+                                       style="margin-left:50px">
                                 <?php /*<?php echo form::text('chigh',isset(Session::get('Sess')['chigh']) ? Session::get('Sess')['chigh'] :$chigh,array('class' => 'coloration')); ?><input style="  width: 6%;padding: 6px; height: 40px;" id="glow_picker" class="form-control" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" type="color" onclick="return colorCheck()"/>*/ ?>
                             </div>
                         </div>
@@ -1424,7 +1434,8 @@
                        style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit"
                        onclick="return fileCheck()"/>
                 <input type="Reset" id="reset" class="btn btn-primary"
-                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" onclick="return reset()"/>
+                       style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset"
+                       onclick="return reset()"/>
             </div>
             <?php echo form::close(); ?>
 
