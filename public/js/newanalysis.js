@@ -142,6 +142,8 @@ function in_pathway_array(gene, id) {
     return false;
 }
 function fileCheck() {
+    document.getElementById('submit-button').setAttribute("data-toggle", "");
+    document.getElementById('submit-button').setAttribute("data-target", "");
     var errors = document.getElementById("errors");
     errors.innerHTML = "";
     var selectBox = document.getElementById("select-to");

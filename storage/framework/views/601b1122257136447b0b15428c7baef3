@@ -309,7 +309,7 @@
                                            style="float:none;width: 110%;"
 
                                            value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>"
-                                           required="" autocomplete="on">
+                                            autocomplete="on">
 
 
                                     <select name="selectfrom" style="float:none;width:250px;font-size: 15px;"
@@ -354,7 +354,7 @@
                                     </select>
                                 <textarea id="selecttextfield" name="selecttextfield" wrap="off"
                                           style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;"
-                                          rows="11" cols="14">00640-Propanoate metabolism</textarea>
+                                          rows="11" cols="14"><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : "00640-Propanoate metabolism" ?></textarea>
 
                                 </div>
                             </div>
@@ -908,20 +908,7 @@
                     </fieldset>
 
 
-                    <fieldset class="step">
 
-                        <p class="success">
-                            <b>Ready to go?</b>
-                        </p>
-
-                        <input type="submit" class="btn btn-primary"
-                               style="font-size: 16px;width: 30%;margin-left:13%;margin-top: 10px;" value="Submit"
-                               onclick="return fileCheck()"/>
-                        <input type="Reset" class="btn btn-primary"
-                               style="font-size: 16px;width: 30%;margin-left:13%;margin-top: 10px;" value="Reset"/>
-
-
-                    </fieldset>
 
 
                 </div>

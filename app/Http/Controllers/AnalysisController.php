@@ -384,11 +384,13 @@ class AnalysisController extends Controller
             if ($_FILES['gfile']['size'] > 0) {
                 $file->move($destFile, $filename);
             }
-            else if($_FILES['cpdfile']['size'] > 0)
+
+            if($_FILES['cpdfile']['size'] > 0)
             {
                 $file1->move($destFile, $filename1);
             }
-            else
+
+             if($_FILES['cpdfile']['size'] ==0 && $_FILES['gfile']['size'] == 0 )
             {
                 array_push($errors, "Input file cannot be empty");
                 $err_atr['gfile'] = 1;

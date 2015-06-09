@@ -81,9 +81,9 @@
     1. Input and Output
     2. Graphics
     3. Coloration */ ?>
-<div class="col-sm-5">
-    <div id="content">
-        <div id="wrapper">
+    <div class="col-sm-5">
+        <div id="content">
+         <div id="wrapper">
             <div id="navigation" style="display:none;">
                 <ul>
                     <li class="selected">
@@ -95,9 +95,7 @@
                     <li>
                         <a href="#">Coloration</a>
                     </li>
-                    <?php /* <li>
-                         <a href="#">Confirm</a>
-                     </li>*/ ?>
+
                 </ul>
             </div>
 
@@ -339,7 +337,7 @@
                                        style="float:none;width: 110%;"
 
                                        value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>"
-                                       required="" autocomplete="on">
+                                        autocomplete="on">
 
 
                                 <select name="selectfrom" style="float:none;width:250px;font-size: 15px;"
@@ -384,7 +382,7 @@
                                 </select>
                                 <textarea id="selecttextfield" name="selecttextfield" wrap="off"
                                           style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;"
-                                          rows="11" cols="14">00010-Glycolysis / Gluconeogenesis</textarea>
+                                          rows="11" cols="14"><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : "00010-Glycolysis / Gluconeogenesis" ?></textarea>
 
                             </div>
 
@@ -413,11 +411,9 @@
                         <?php
                         $species = DB::table('Species')->get(array('species_id'));?>
                         <?php
-              $species = DB::table('Species')->get(array('species_id'));?>
+                         $gene = DB::table('gene')->get(array('geneid'));?>
                         <?php
-              $gene = DB::table('gene')->get(array('geneid'));?>
-                        <?php
-            $cmpd = DB::table('compound')->get(array('cmpdid'));?>
+                        $cmpd = DB::table('compound')->get(array('cmpdid'));?>
                         pathway_array = <?php echo JSON_encode($pathway);?>;
                         species_array = <?php echo JSON_encode($species);?>;
                         gene_array = <?php echo JSON_encode($gene);?>;
@@ -937,20 +933,6 @@
                 </fieldset>
 
 
-                <fieldset class="step">
-
-                    <p class="success">
-                        <b>Ready to go?</b>
-                    </p>
-
-                    <input type="submit" class="btn btn-primary"
-                           style="font-size: 16px;width: 30%;margin-left:13%;margin-top: 10px;" value="Submit"
-                           onclick="return fileCheck()"/>
-                    <input type="Reset" class="btn btn-primary"
-                           style="font-size: 16px;width: 30%;margin-left:13%;margin-top: 10px;" value="Reset"/>
-
-
-                </fieldset>
 
 
             </div>
