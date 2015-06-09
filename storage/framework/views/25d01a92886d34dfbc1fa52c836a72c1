@@ -83,7 +83,7 @@
     1. Input and Output
     2. Graphics
     3. Coloration */ ?>
-
+    <div class="col-sm-5">
     <div id="content">
         <div id="wrapper">
             <div id="navigation" style="display:none;">
@@ -340,7 +340,7 @@
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
                                     <a href="tutorial#pwy_id"
-                                       title="TThe KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and text box.Multiple Pathway entered by clicking the “Add(+)” button.Pathways can be removed/added dynamically by using buttons '<<' and '>>'"
+                                       title="The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and Input text box.Multiple Pathway entered by clicking the Add(+) and >> button."
                                        target="_blank" class="scrollToTop"
                                        style="float:left;margin-right:5px;margin-left: -15px"><span
                                                 class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"
@@ -1469,7 +1469,7 @@
 
     </div>
 
-
+</div>
 
 
 
