@@ -9,19 +9,10 @@
 
     <link href="<?php echo e(asset('/css/bootstrap.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('/css/carousel.css')); ?>" rel="stylesheet">
-    <link href="http://mjolnic.com/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-    <link href="http://mjolnic.com/bootstrap-colorpicker/src/css/docs.css" rel="stylesheet">
-    <?php /*<link href="<?php echo e(asset('/css/bootstrap.css')); ?>" rel="stylesheet">
-    <link href="<?php echo e(asset('/css/dashboard.css')); ?>" rel="stylesheet">*/ ?>
 
-    <!-- Fonts
-    <link href='//fonts.googleapis.com/css?family=Roboto:400,300' rel='stylesheet' type='text/css'>-->
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,600,700' rel='stylesheet'
-          type='text/css'>
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
     <script src="<?php echo e(asset('/js/ChartNew.js')); ?>"></script>
     <script src="<?php echo e(asset('/js/bootstrap-colorpicker.js')); ?>"></script>
-    <?php /*  <script src="http://mjolnic.com/bootstrap-colorpicker/src/js/docs.js"></script>*/ ?>
     <script type="text/javascript" src="http://jscolor.com/example/jscolor/jscolor.js"></script>
 
 </head>

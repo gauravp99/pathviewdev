@@ -1,4 +1,7 @@
-<?php $__env->startSection('content'); ?>
+
+@extends('app')
+
+@section('content')
 
 
     <div class="col-md-12 content" style="text-align: center;">
@@ -637,5 +640,4 @@
         });
     </script>
 
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@stop

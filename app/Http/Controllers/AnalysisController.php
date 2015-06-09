@@ -3,7 +3,7 @@
 /**
  * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
  * @Contact: byeshvant@hotmail.com
- * Pathview web @main controller here are all the analysis examples control functions
+ * Pathview web @main controller here are all the analysis examples control functions are done
  */
 use App\Http\Requests;
 use App\Http\Requests\CraeteAnalysisRequest;
@@ -12,8 +12,6 @@ use DB;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Request;
-
-
 require "Rserv_Connection.php";
 
 class AnalysisController extends Controller
@@ -34,14 +32,6 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
-
-        /* try {
-             $r = new Rserve_Connection(RSERVE_HOST, RSERVE_PORT);
-         } catch (Exception $e) {
-             return Redirect::to('error')->with('error', 'error');
-             #echo "Exception occurred" . $e->getMessage();
-         }*/
-
         $errors = array();
         $gene_cmpd_color = array();
         $err_atr = array();
@@ -57,32 +47,21 @@ class AnalysisController extends Controller
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
 
         $i = 0;
+        //get all pathways entered from the textfield checked for all id's having a 5 digit numbers, performed regular expression match
         preg_match_all('!\d{5}!', $_POST['selecttextfield'], $matches);
-        #return print_r($matches);
-
 
         $pathway_array = array();
 
-        /* foreach ($_POST['selectto'] as $pathway) {
-             array_push($pathway_array, $pathway);
-         }*/
-
-
         foreach ($matches as $pathway1) {
             foreach ($pathway1 as $pathway)
-
-
             array_push($pathway_array, $pathway);
         }
 
+        //remove the duplicate values and unique values are retained
         $pathway_array1 = array_unique($pathway_array);
-
-        #return print_r($pathway_array1);
-
 
 
         $argument .= "pathway:";
-
         foreach ($pathway_array1 as $pathway) {
             $pathway = substr($pathway, 0, 5);
             $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$pathway' LIMIT 1"));
@@ -94,8 +73,8 @@ class AnalysisController extends Controller
                 $err_atr["pathway"] = 1;
             }
         }
-
         $argument .= ",";
+
 
         $geneid = $_POST["geneid"];
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
@@ -109,10 +88,7 @@ class AnalysisController extends Controller
         $cpdid = $_POST["cpdid"];
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
         if (sizeof($val) > 0) {
-
             $argument .= "cpdid:" . $val[0]->cmpdid . ",";
-            #$argument .= "cpdid:" . $val[0]->cmpdid;
-
 
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
@@ -129,6 +105,7 @@ class AnalysisController extends Controller
             array_push($errors, "Entered Species ID doesn't exist");
             $err_atr["species"] = 1;
         }
+
         $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST["suffix"]);
         $argument .= "suffix:" . $suffix . ",";
 
@@ -186,43 +163,46 @@ class AnalysisController extends Controller
         $argument .= "align:" . $_POST["align"] . ",";
 
 
-       /* if ((($anal_type == "newAnalysis") && (Input::hasFile('gfile'))) || isset($_POST["gcheck"])) {*/
-       /* if (($anal_type == "newAnalysis")) {*/
 
-            if (preg_match('/[a-z]+/', $_POST["glmt"])) {
+
+       if (preg_match('/[a-z]+/', $_POST["glmt"])) {
                 array_push($errors, "Gene Limit should be Numeric");
                 $err_atr["glmt"] = 1;
-            }
-            if (preg_match('/[a-z]+/', $_POST["gbins"])) {
+       }
+
+       if (preg_match('/[a-z]+/', $_POST["gbins"])) {
                 array_push($errors, "Gene Bins should be Numeric");
                 $err_atr["gbins"] = 1;
-            }
-            $glmtrange = str_replace(",", ";", $_POST["glmt"]);
+        }
 
-            $argument .= "glmt:" . $glmtrange . ",";
+       $glmtrange = str_replace(",", ";", $_POST["glmt"]);
 
-            $argument .= "gbins:" . $_POST["gbins"] . ",";
-            if (strpos($_POST["glow"], '#') !== false) {
+        $argument .= "glmt:" . $glmtrange . ",";
+
+       $argument .= "gbins:" . $_POST["gbins"] . ",";
+
+        if (strpos($_POST["glow"], '#') !== false) {
                 $argument .= "glow:" . $_POST["glow"] . ",";
-            } else {
-                $argument .= "glow:" . '#' . $_POST["glow"] . ",";
-            }
-            if (strpos($_POST["gmid"], '#') !== false) {
+         } else {
+            $argument .= "glow:" . '#' . $_POST["glow"] . ",";
+         }
+
+         if (strpos($_POST["gmid"], '#') !== false) {
                 $argument .= "gmid:" . $_POST["gmid"] . ",";
-            } else {
+         } else {
                 $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
-            }
-            if (strpos($_POST["ghigh"], '#') !== false) {
+         }
+
+         if (strpos($_POST["ghigh"], '#') !== false) {
                 $argument .= "ghigh:" . $_POST["ghigh"] . ",";
-            } else {
+         } else {
                 $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
-            }
+         }
 
             $gene_cmpd_color["glow"] = $_POST["glow"];
             $gene_cmpd_color["gmid"] = $_POST["gmid"];
             $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
-        /*}*/
-        /*if ((($anal_type == "newAnalysis") && (Input::hasFile('cpdfile'))) || isset($_POST["cpdcheck"])) {*/
+
 
         if (preg_match('/[a-z]+/', $_POST["clmt"])) {
             array_push($errors, "Compound Limit should be Numeric");
@@ -233,6 +213,7 @@ class AnalysisController extends Controller
             array_push($errors, "Compound Bins should be Numeric");
             $err_atr["cbins"] = 1;
         }
+
         $clmtrange = str_replace(",", ";", $_POST["clmt"]);
 
         $argument .= "clmt:" . $clmtrange . ",";
@@ -451,7 +432,7 @@ class AnalysisController extends Controller
                     }
                 }
                 $destFile = public_path() . "/all/$email/$time/";
-                //$file = Input::file('gfile');
+
 
 
 

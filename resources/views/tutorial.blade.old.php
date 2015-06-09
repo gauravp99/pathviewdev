@@ -1,4 +1,7 @@
-<?php $__env->startSection('content'); ?>
+
+@extends('app')
+
+@section('content')
 
 
     <div class="col-md-12 content" style="text-align: center;">
@@ -103,7 +106,7 @@
                 <div class="list-group">
 
                     <ul class="nav navbar-nav" style="width:100%">
-                        <li class="dropdown" style="width:100%">
+                        <li class="dropdown" style="width:100%;margin-top: 24px;">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
                                         class="glyphicon glyphicon-download pull-right"></span></a>
@@ -167,7 +170,7 @@
                                 <dt><a name="gene_data">Gene Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Gene data accepts data matrices in tab- or comma-delimited format (txt or csv). Data matrix has genes as rows and samples as columns. First column should be gene IDs, first row sample IDs. The data may also be a single-column of gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. </dd>
+                                <dd>Gene data typically accepts csv, txt file</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -175,7 +178,7 @@
                                 <dt><a name="cpd_data">Compound Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Compound data accepts data matrices in tab- or comma-delimited format (txt or csv). The format is the same as gene data in format, excpet rows are compounds including metabolites, drugs, small molecules etc.</dd>
+                                <dd>Compound gene data accepts csv, txt file</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -183,7 +186,10 @@
                                 <dt><a name="gene_id">Gene ID Type</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>ID type used for the Gene Data. This can be selected from the autosuggest drop down list. </dd>
+                                <dd>ID type used for the Gene Data. This can be selected from the drop down.
+                                    (Suggestions
+                                    are shown on entering the initial letters)
+                                </dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -191,15 +197,8 @@
                                 <dt><a name="cpd_id">Compound ID Type</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>ID type used for the Compound Data. This can be selected from the autosuggest drop down list. </dd>
-                            </div>
-                        </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading argument">
-                                <dt><a name="species">Species</a></dt>
-                            </div>
-                            <div class="panel-body argument">
-                                <dd>Either the KEGG code, scientific name or the common name of the target species. Species may also be "ko" for KEGG Orthology pathways. This can be selected from the autosuggest drop down list. 
+                                <dd>ID type used for the Compound Data. This can be selected from the drop down.
+                                    (Suggestions are shown on entering the initial letters)
                                 </dd>
                             </div>
                         </div>
@@ -208,7 +207,21 @@
                                 <dt><a name="pwy_id">Pathway ID</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box.
+                                <dd>The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and
+                                    text box.
+                                    (Suggestions are shown on entering the initial letters). Multiple Pathway IDs can be
+                                    entered by clicking the “Add(+) and >> ” button.
+                                </dd>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading argument">
+                                <dt><a name="species">Species</a></dt>
+                            </div>
+                            <div class="panel-body argument">
+                                <dd>Either the KEGG code, scientific name or the common name of the target species. When
+                                    KEGG ortholog pathway is considered, species is "ko". Default value for species is
+                                    "hsa". (Suggestions are shown on entering the initial letters)
                                 </dd>
                             </div>
                         </div>
@@ -217,9 +230,11 @@
                                 <dt><a name="suffix">Output Suffix</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>The suffix to be added after the pathway name as part of the output graph file name.
-                                    Sample names or column names of the Gene Data or Compound Data are also added when there are
-                                    multiple samples.
+                                <dd>The suffix to be added after the pathway name as part of the output graph file.
+                                    Sample
+                                    names or column names of the Gene Data or Compound Data are also added when there
+                                    are
+                                    multiple samples. Default value is "pathview".
                                 </dd>
                             </div>
                         </div>
@@ -240,9 +255,9 @@
                                 <dt><a name="kegg">Kegg Native</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd> Whether to render the pathway as native KEGG graph (.png) or using graphviz
+                                <dd> Whether to render pathway graph as native KEGG graph (.png) or using graphviz
                                     layout
-                                    engine (.pdf). 
+                                    engine (.pdf). Default is set to TRUE.
                                 </dd>
                             </div>
                         </div>
@@ -251,10 +266,10 @@
                                 <dt><a name="layer">Same Layer</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>  Controls plotting layers: 1) if node colors be plotted
+                                <dd> Can either be TRUE or FALSE. Controls plotting layers: 1) if node colors be plotted
                                     in
-                                    the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type
-                                    legend be plotted in the same page when Kegg Native is unchecked.
+                                    the same layer as the pathway graph when kegg native is TRUE, 2) if edge/node type
+                                    legend be plotted in the same page when kegg native is FALSE.
                                 </dd>
                             </div>
                         </div>
@@ -637,5 +652,4 @@
         });
     </script>
 
-<?php $__env->stopSection(); ?>
-<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+@stop
