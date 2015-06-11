@@ -1,12 +1,16 @@
 @extends('app')
 @section('content')
     @include('navigation')
+<div class="col-sm-7">
+    <div class="col-sm-7 col-md-5">
 
-    <h1>
         <div class="avtar"><img src={{asset('/images/avtar.png')}} height="102" width="102"></div>
         <a href="/edit_user/{{Auth::user()->id}}"><input type="button" class="styled-button-2" value="Manage Profile"/></a>
-    </h1>
-    <p><b>User ID: {{ $user->id }}</b></p>
+
+        </div>
+    <div class="col-sm-12">
+
+        <p><b>User ID: {{ $user->id }}</b></p>
     @if(($user->name)=="")
         <p><b>User Name: {{ $user->email }}</b></p>
     @else
@@ -30,5 +34,7 @@
     <p class="alert alert-info"><b>Remaining space {{ $size}} MB </b></p>
 
     <?php }?>
+    </div>
+</div>
 
 @stop

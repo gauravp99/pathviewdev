@@ -48,7 +48,8 @@ if(!is.null(args2$cpdextension)){
         a1=read.delim(args2$cfilename, sep="\t")
     } else if(args2$cpdextension == "csv"){
         a1=read.delim(args2$cfilename, sep=",")
-    } else stop(paste(args2$cpdextension, ": unsupported compound data file type!"), sep="")
+    }
+    else stop(paste(args2$cpdextension, ": unsupported compound data file type!"), sep="")
 
     if(ncol(a1)>1){
         cpd.d=as.matrix(a1[,-1])

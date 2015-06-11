@@ -42,53 +42,7 @@
 if(!$flag1)
                 {
         foreach ($contents as $k => $v) {
-                if(strcmp($v, "errorFile.Rout") == 0)
-                {
-                $v = $directory . "/" . $v;
-                if(filesize($v) > 0)
-                {
 
-                $lines = file($v);
-                foreach ($lines as $temp) {
-
-                    $temp = strtolower($temp);
-                    $array_string = explode(" ", $temp);
-                    foreach ($array_string as $a_string) {
-
-                        if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:')==0 ) {
-                            if (!$flag) {
-                                echo "<h4 class='alert alert-info'> Species and pathway id combination is not Valid/present at KEGG   ";
-                                echo " Or make sure your input gene and compound uploaded data is in the requested format</h4><ul class='alert alert-danger'>";
-                                if(strcmp($a_string, 'error')==0||strcmp($a_string, 'warning:')==0)
-                                {
-                                    $flag1 = true;
-                                }
-                            }
-                            echo "<li>" . $temp . "</li>";
-                            $flag = true;
-
-                        }
-
-                    }
-
-
-                }
-                if ($flag1) {
-                    echo "</ul>";
-                    echo "<button onclick='goBack()'>Go Back</button>";
-                }
-
-
-
-                ?>
-
-                <script>
-                    function goBack() {
-                        window.history.back();
-                    }
-                </script><?php
-                }
-                }
         //echo $k;
         if (strpos($v, $_SESSION['suffix'])) {
         $val = $v;
@@ -107,7 +61,9 @@ if(!$flag1)
                 }
 
             }
+
         }
+
 
 
         chdir($directory);
@@ -274,6 +230,55 @@ if(!$flag1)
     <?php
         }
                 }
+            foreach ($contents as $k => $v) {
+            if(strcmp($v, "errorFile.Rout") == 0)
+            {
+            $v = $directory . "/" . $v;
+            if(filesize($v) > 0)
+            {
+
+            $lines = file($v);
+            foreach ($lines as $temp) {
+
+                $temp = strtolower($temp);
+                $array_string = explode(" ", $temp);
+                foreach ($array_string as $a_string) {
+
+                    if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:')==0 ) {
+                        if (!$flag) {
+                            echo "<h4 class='alert alert-info'> Species and pathway id combination is not Valid/present at KEGG   ";
+                            echo " Or make sure your input gene and compound uploaded data is in the requested format</h4><ul class='alert alert-danger'>";
+                            if(strcmp($a_string, 'error')==0||strcmp($a_string, 'warning:')==0)
+                            {
+                                $flag1 = true;
+                            }
+                        }
+                        echo "<li>" . $temp . "</li>";
+                        $flag = true;
+
+                    }
+
+                }
+
+
+            }
+            if ($flag1) {
+                echo "</ul>";
+                echo "<button onclick='goBack()'>Go Back</button>";
+            }
+
+
+
+            ?>
+
+            <script>
+                function goBack() {
+                    window.history.back();
+                }
+            </script><?php
+            }
+            }
+            }
         ?>
         <h1> Analysis Input arguments </h1>
         <br/>
@@ -306,7 +311,7 @@ if(!$flag1)
                     switch($arg1[0])
                     {
                     case "geneid":
-                    $arg1[0] = "Gene ID";
+                    $arg1[0] = "Gene ID Type";
                     ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -316,7 +321,7 @@ if(!$flag1)
                 break;
 
                 case "cmpdid":
-                $arg1[0] = "Compound ID";
+                $arg1[0] = "Compound ID Type";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -326,7 +331,7 @@ if(!$flag1)
                 break;
 
                 case "species":
-                $arg1[0] = "Species ID";
+                $arg1[0] = "Species";
                 $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from Species where species_id like '$arg1[1]' LIMIT 1"));
 
                 if (sizeof($val) > 0) {
@@ -419,7 +424,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "split":
-                $arg1[0] = "Split Node";
+                $arg1[0] = "Split Group";
                 if ($arg1[1] == 'T') {
                     $arg1[1] = "True";
                 } else {
@@ -516,7 +521,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "glmt":
-                $arg1[0] = "Gene Limit Range";
+                $arg1[0] = "Gene Limit";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -525,7 +530,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "glmtlow":
-                $arg1[0] = "Gene Limit Lower Range";
+                $arg1[0] = "Gene Low";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -534,7 +539,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "glmthigh":
-                $arg1[0] = "Gene Limit Range";
+                $arg1[0] = "Gene High";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -543,7 +548,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "clmt":
-                $arg1[0] = "Compound Limit Range";
+                $arg1[0] = "Compound Limit";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -552,7 +557,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "gbins":
-                $arg1[0] = "Number of Gene Bins";
+                $arg1[0] = "Gene Bins";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -561,7 +566,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "cbins":
-                $arg1[0] = "Number of Compound Bins";
+                $arg1[0] = "Compound Bins";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -570,7 +575,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "clow":
-                $arg1[0] = "Compound Low  Color";
+                $arg1[0] = "Compound Low";
 
                 ?>
                 <tr>
@@ -580,7 +585,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "cmid":
-                $arg1[0] = "Compound Medium Color";
+                $arg1[0] = "Compound Mid";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -589,7 +594,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "chigh":
-                $arg1[0] = "Compound High Color";
+                $arg1[0] = "Compound High";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -598,7 +603,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "glow":
-                $arg1[0] = "Gene Low Color";
+                $arg1[0] = "Gene Low";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -607,7 +612,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "gmid":
-                $arg1[0] = "Gene Medium Color";
+                $arg1[0] = "Gene Mid";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -616,7 +621,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "ghigh":
-                $arg1[0] = "Gene high Color";
+                $arg1[0] = "Gene High";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -625,7 +630,7 @@ if(!$flag1)
                 <?php
                 break;
                 case "nsum":
-                $arg1[0] = "Node Sum Function";
+                $arg1[0] = "Node Sum";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -643,7 +648,7 @@ if(!$flag1)
                 <?php
                 break;
                 case 'filename':
-                $arg1[0] = "Gene Data File";
+                $arg1[0] = "Gene Data";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>
@@ -655,7 +660,7 @@ if(!$flag1)
                 break;
                 case 'cfilename':
 
-                $arg1[0] = "Compound Data File";
+                $arg1[0] = "Compound Data";
                 ?>
                 <tr>
                     <td><b><?php echo e($arg1[0]); ?></b></td>

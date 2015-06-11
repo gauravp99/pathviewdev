@@ -1,11 +1,15 @@
 <?php $__env->startSection('content'); ?>
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="col-sm-7">
+    <div class="col-sm-7 col-md-5">
 
-    <h1>
         <div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div>
         <a href="/edit_user/<?php echo e(Auth::user()->id); ?>"><input type="button" class="styled-button-2" value="Manage Profile"/></a>
-    </h1>
-    <p><b>User ID: <?php echo e($user->id); ?></b></p>
+    
+        </div>
+    <div class="col-sm-12">
+
+        <p><b>User ID: <?php echo e($user->id); ?></b></p>
     <?php if(($user->name)==""): ?>
         <p><b>User Name: <?php echo e($user->email); ?></b></p>
     <?php else: ?>
@@ -29,6 +33,8 @@
     <p class="alert alert-info"><b>Remaining space <?php echo e($size); ?> MB </b></p>
 
     <?php }?>
+    </div>
+</div>
 
 <?php $__env->stopSection(); ?>
 <?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

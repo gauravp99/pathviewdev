@@ -26,7 +26,9 @@
 
         }
         echo "</ul>";
+$analysis_id= explode("/",$directory1);
 
+$analysis = $analysis_id[sizeof($analysis_id)-1];
         foreach ($contents as $k => $v) {
             //echo $k;
             if (strpos($v, $_GET['suffix'])) {
@@ -34,7 +36,7 @@
 
                 $id = substr($val, 0, 8);
                 if (strpos($val, 'png')) {
-                    echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"viewer?id=$id&image=$directory1/$val\" > " . $val . "</a>";
+                    echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"viewer?analyses=$analysis&id=$id&image=$directory1/$val\" > " . $val . "</a>";
 
                 } else
                     echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";

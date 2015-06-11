@@ -50,7 +50,7 @@ $(document).ready(function () {
         var val = $("#pathway1").val();
 
         if (!in_pathway_array(pathway_array, val.substring(0, 5))) {
-            alert("Not a Valid pathway");
+            alert("'"+val.substring(0, 5)+"' is not a Valid PathwayID");
         }
         else {
             $("<option />", {'value': val, text: val}).appendTo("#select-to");
@@ -160,6 +160,8 @@ function fileCheck() {
     var gmid = document.getElementById("gmid");
     var ghigh = document.getElementById("ghigh");
     var gfilediv = document.getElementById("gfile-div");
+    var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
+    var most_flag = false;
 
 
 
@@ -171,11 +173,12 @@ function fileCheck() {
     var regex = new RegExp("(.*?)\.(txt|csv)$");
     var error = false;
 
+
     document.getElementById("nacolor").value = document.getElementById("nacolor").value.replace(/\W/g, "");
     if (f.value.length < 4 && f1.value.length < 4 ) {
 
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Upload the Gene data or compound data file "));
+        li.appendChild(document.createTextNode("Upload the Gene Data or Compound Data file."));
         errors.appendChild(li);
         document.getElementById('gfile-div').style.backgroundColor = "#DA6666";
         error = true;
@@ -183,7 +186,7 @@ function fileCheck() {
     }
     else if (f.value.length > 4 && !regex.test(document.getElementById('gfile').value)) {
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Upload the Gene data file extension is not supported. supports only txt and csv files "));
+        li.appendChild(document.createTextNode("Uploaded Gene Data file extension is not supported. Supports only txt/csv."));
         errors.appendChild(li);
         gfilediv.style.backgroundColor = "#DA6666";
         error = true;
@@ -199,7 +202,7 @@ function fileCheck() {
     {
         var myElement = document.getElementById("cfile-div");
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Upload the Compound data file extension is not supported. supports only txt and csv files "));
+        li.appendChild(document.createTextNode("Uploaded Compound Data file extension is not supported. Supports only txt/csv."));
         errors.appendChild(li);
         myElement.style.backgroundColor = "#DA6666";
         error = true;
@@ -212,7 +215,7 @@ function fileCheck() {
         var myElement = document.getElementById("pat-select");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("At least one Pathway should be selected"));
+        li.appendChild(document.createTextNode("At least one Pathway should be selected."));
         errors.appendChild(li);
         error = true;
 
@@ -222,7 +225,7 @@ function fileCheck() {
         var myElement = document.getElementById("pat-select");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Pathway enetered is not valid pathway"));
+        li.appendChild(document.createTextNode("Entered Pathway ID is not a valid pathway."));
         errors.appendChild(li);
         error = true;
 
@@ -239,7 +242,7 @@ function fileCheck() {
         var myElement = document.getElementById("geneid-div");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Gene id Cannot be empty"));
+        li.appendChild(document.createTextNode("Gene ID Type Cannot be empty."));
         errors.appendChild(li);
         error = true;
 
@@ -252,7 +255,7 @@ function fileCheck() {
 
         var li = document.createElement("li");
 
-        li.appendChild(document.createTextNode("Gene id is not valid"));
+        li.appendChild(document.createTextNode("Gene ID Type is not valid."));
         errors.appendChild(li);
         error = true;
 
@@ -265,39 +268,26 @@ function fileCheck() {
     }
 
 
-    if (f1.value.length > 4     ) {
 
-        if (!regex.test(document.getElementById('cpdfile').value)) {
-            var myElement = document.getElementById("cfile-div");
-            myElement.style.backgroundColor = "#DA6666";
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Compound data file extension is not supported"));
-            errors.appendChild(li);
-            error = true;
-
-        }
-
-    }
-
-    if ((!in_cmpd_array(cmpd_array, cpdid.value) && cpdid.value != "")) {
-        var myElement = document.getElementById("cpdid-div");
-        myElement.style.backgroundColor = "#DA6666";
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Entered Compound ID does not exist"));
-        errors.appendChild(li);
-        error = true;
-    }
-    else if(cpdid.value == "")
+   if(cpdid.value == "")
     {
         var myElement = document.getElementById("cpdid-div");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Compound ID Cannot be empty"));
+        li.appendChild(document.createTextNode("Compound ID Type Cannot be empty"));
         errors.appendChild(li);
         error = true;
 
     }
-    else {
+   else if (!in_cmpd_array(cmpd_array, cpdid.value)) {
+           var myElement = document.getElementById("cpdid-div");
+           myElement.style.backgroundColor = "#DA6666";
+           var li = document.createElement("li");
+           li.appendChild(document.createTextNode("Entered Compound ID Type does not exist"));
+           errors.appendChild(li);
+           error = true;
+       }
+   else {
         var myElement = document.getElementById("cpdid-div");
         myElement.style.backgroundColor = "#F4F4F4";
 
@@ -308,7 +298,7 @@ function fileCheck() {
         var myElement = document.getElementById("suffix-div");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Suffix Cannot be left empty"));
+        li.appendChild(document.createTextNode("Output Suffix Cannot be left empty"));
         errors.appendChild(li);
         error = true;
     }
@@ -332,15 +322,38 @@ function fileCheck() {
             var myElement = document.getElementById("species-div");
             myElement.style.backgroundColor = "#F4F4F4";
         }
-        else if ((!in_species_array(species_array, species.value.substring(0, 3)))) {
+        else if ((!in_species_array(species_array, species.value.split("-")[0]))) {
             var myElement = document.getElementById("species-div");
             myElement.style.backgroundColor = "#DA6666";
             var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Species is not valid"));
+            li.appendChild(document.createTextNode("Species: '"+species.value.split("-")[0]+"' is not valid"));
             errors.appendChild(li);
             error = true;
         }
         else {
+
+            for(var i=0;i<most_spec.length;i++)
+            {
+                if(species.value.split("-")[0] == most_spec[i])
+                {
+
+                    most_flag = true;
+                    break;
+
+                }
+            }
+
+
+            if(!most_flag && ( geneid.value.toUpperCase() != 'ENTREZ' && geneid.value.toUpperCase() != 'KEGG' ))
+            {
+                alert("For Species: "+species.value+" Gene ID Type should be either 'ENTREZ' or 'KEGG'.");
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("For Species: "+species.value+" Gene ID Type  should be either 'ENTREZ' or 'KEGG'."));
+                errors.appendChild(li);
+                error = true;
+
+            }
+
             var myElement = document.getElementById("species-div");
             myElement.style.backgroundColor = "#F4F4F4";
 
@@ -350,7 +363,7 @@ function fileCheck() {
         var myElement = document.getElementById("species-div");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Species is not valid usually having minimum 3 characters"));
+        li.appendChild(document.createTextNode("Species is not valid"));
         errors.appendChild(li);
         error = true;
 
@@ -359,7 +372,7 @@ function fileCheck() {
         var myElement = document.getElementById("offset-div");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Offset Cannot be left empty"));
+        li.appendChild(document.createTextNode("Compound Label Offset value cannot be left empty"));
         errors.appendChild(li);
         error = true;
 
@@ -369,7 +382,7 @@ function fileCheck() {
 
         glmt.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Gene Limit Cannot be left empty"));
+        li.appendChild(document.createTextNode("Gene Limit value cannot be left empty"));
         errors.appendChild(li);
         error = true;
 
@@ -455,7 +468,7 @@ function fileCheck() {
         if (!(/^-?\d*.?\d+$/.test(clmt.value))) {
             clmt.style.backgroundColor = "#DA6666";
             var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Compound limit value should be neumeric"));
+            li.appendChild(document.createTextNode("Compound Limit value should be numeric"));
             errors.appendChild(li);
             error = true;
         }
@@ -477,7 +490,7 @@ function fileCheck() {
     else if (!(/^\d+$/.test(cbins.value))) {
         cbins.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Compound Bins values must be neumeric"));
+        li.appendChild(document.createTextNode("Compound Bins values must be numeric"));
         errors.appendChild(li);
         error = true;
     }

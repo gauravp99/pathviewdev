@@ -34,17 +34,17 @@ Please click here to see the output generated <a href={{url('/anal_hist'.$conten
             {
 
             $arg1 = explode(':', $arg);
-            if(sizeof($arg1) > 1 && strcmp($arg1[0], "targedir") != 0 )
+            if(sizeof($arg1) > 1 && strcmp($arg1[0], "targedir") != 0 && strcmp($arg1[0], "geneextension") != 0 )
             {
             switch ($arg1[0]) {
                 case "geneid":
-                    $arg1[0] = "Gene ID";
+                    $arg1[0] = "Gene ID Type";
                     break;
-                case "cmpdid":
-                    $arg1[0] = "Compound ID";
+                case "cpdid":
+                    $arg1[0] = "Compound ID Type";
                     break;
                 case "species":
-                    $arg1[0] = "Species ID";
+                    $arg1[0] = "Species";
                     $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from Species where species_id like '$arg1[1]' LIMIT 1"));
 
                     if (sizeof($val) > 0) {
@@ -143,46 +143,46 @@ Please click here to see the output generated <a href={{url('/anal_hist'.$conten
                     }
                     break;
                 case "glmt":
-                    $arg1[0] = "Gene Limit Range";
+                    $arg1[0] = "Gene Limit";
                     break;
                 case "clmt":
-                    $arg1[0] = "Compound Limit Range";
+                    $arg1[0] = "Compound Limit";
                     break;
                 case "gbins":
-                    $arg1[0] = "Number of Gene Bins";
+                    $arg1[0] = "Gene Bins";
                     break;
                 case "cbins":
-                    $arg1[0] = "Number of Compound Bins";
+                    $arg1[0] = "Compound Bins";
                     break;
                 case "clow":
-                    $arg1[0] = "Compound Lower Limit Color";
+                    $arg1[0] = "Compound Low";
                     break;
                 case "cmid":
-                    $arg1[0] = "Compound Medium Limit Color";
+                    $arg1[0] = "Compound Mid";
                     break;
                 case "chigh":
-                    $arg1[0] = "Compound High Limit Color";
+                    $arg1[0] = "Compound High";
                     break;
                 case "glow":
-                    $arg1[0] = "Gene Lower Limit Color";
+                    $arg1[0] = "Gene Low";
                     break;
                 case "gmid":
-                    $arg1[0] = "Gene Medium Limit Color";
+                    $arg1[0] = "Gene Mid";
                     break;
                 case "ghigh":
-                    $arg1[0] = "Gene high Limit Color";
+                    $arg1[0] = "Gene High";
                     break;
                 case "nsum":
-                    $arg1[0] = "Node Sum Function";
+                    $arg1[0] = "Node Sum";
                     break;
                 case "ncolor":
                     $arg1[0] = "NA Color";
                     break;
                 case 'filename':
-                    $arg1[0] = "Gene Data File";
+                    $arg1[0] = "Gene Data";
                     break;
                 case 'cfilename':
-                    $arg1[0] = "Compound Data File";
+                    $arg1[0] = "Compound Data";
                     break;
 
             }

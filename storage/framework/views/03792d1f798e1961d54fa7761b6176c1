@@ -12,18 +12,18 @@
         <p>User Created at: <?php echo e($user->created_at); ?></p>
         <?php
         $f = './all/' . $user->email;
-        $io = popen ( '/usr/bin/du -sh ' . $f, 'r' );
-        $size = fgets ( $io, 4096);
-        $size = substr ( $size, 0, strpos ( $size, "\t" ) );
+        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+        $size = fgets($io, 4096);
+        $size = substr($size, 0, strpos($size, "\t"));
 
-        pclose ( $io );
-        $size = 100-intval($size);
+        pclose($io);
+        $size = 100 - intval($size);
         if($size < 10)
         {
         ?>
-        <p class ="alert alert-danger" ><b>Remaining space <?php echo e($size); ?> MB </b></p>
+        <p class="alert alert-danger"><b>Remaining space: <?php echo e($size); ?> MB </b></p>
         <?php } else { ?>
-        <p class ="alert alert-info" ><b>Remaining space <?php echo e($size); ?> MB </b></p>
+        <p class="alert alert-info"><b>Remaining space: <?php echo e($size); ?> MB </b></p>
 
         <?php }?>
 

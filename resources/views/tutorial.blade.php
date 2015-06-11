@@ -8,9 +8,10 @@
 
         <h1><b>Help Information</b></h1>
 
-        <h1 class="arg_content">Custom Analysis</h1>
 
-        <div class="row">
+
+        <div class="col-md-12 content">
+            <h1 class="arg_content">Custom Analysis</h1>
             <div class="col-lg-4">
                 <a href="#Input"><img class="img-circle content" src="/images/file_upload.png" alt="Input & output"
                                       height="140" width="140"></a>
@@ -19,33 +20,9 @@
 
                 <p>Upload your gene and/or compound data, specify species, pathways, ID type etc. </p>
 
-                <div class="list-group">
 
-                    <ul class="nav navbar-nav" style="width:100%">
-                        <li class="dropdown" style="width:100%">
-                            <a href="#" class="dropdown-toggle list-group-item active"
-                               data-toggle="dropdown">Options<span
-                                        class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:100%">
-
-                                <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#gene_id">Gene Id</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#cpd_id">Compound ID</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#species">Species</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#pwy_id">Pathway</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#suffix">Suffix</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
             </div>
+
             <!-- /.col-lg-4 -->
 
             <div class="col-lg-4">
@@ -56,41 +33,7 @@
 
                 <p>Specify the layout, style, and node/edge or legend attributes of the output graphs.</p>
 
-                <div class="list-group">
 
-                    <ul class="nav navbar-nav" style="width:100%">
-                        <li class="dropdown" style="width:100%">
-                            <a href="#" class="dropdown-toggle list-group-item active"
-                               data-toggle="dropdown">Options<span
-                                        class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:100%">
-
-                                <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#layer">Same Layer</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#desc">Descrete</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#split">Split Group</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#expand">Expand Node</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#multi">Multi State</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#match">Match Data</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#clabel">Compound Label Offset</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#kalign">Key Alignment</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#spos">Signature Position</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#kpos">Key Position</a></li>
-
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
 
 
             </div>
@@ -103,39 +46,110 @@
 
                 <p>Customize the color coding of your gene and compound data.</p>
 
-                <div class="list-group">
 
-                    <ul class="nav navbar-nav" style="width:100%;margin-top:24px;">
-                        <li class="dropdown" style="width:100%">
-                            <a href="#" class="dropdown-toggle list-group-item active"
-                               data-toggle="dropdown">Options<span
-                                        class="glyphicon glyphicon-download pull-right"></span></a>
-                            <ul class="dropdown-menu" style="width:100%">
-
-                                <li style="width:300px;"><a href="#nsum">Node Summary</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#limit">Limit</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#bins">Bins</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#color">Low</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#color">Mid</a></li>
-                                <li class="divider"></li>
-                                <li style="width:300px;"><a href="#color">High</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
 
             </div>
             <!-- /.col-lg-4 -->
         </div>
-        <div class="col-sm-12">
-            <h1 class="arg_content">Example Analysis</h1>
+        <div class="col-md-12 content">
+            <div class="col-lg-4">
+            <div class="list-group">
 
+                <ul class="nav navbar-nav" style="width:100%">
+                    <li class="dropdown" style="width:100%">
+                        <a href="#" class="dropdown-toggle list-group-item active"
+                           data-toggle="dropdown">Options<span
+                                    class="glyphicon glyphicon-download pull-right"></span></a>
+                        <ul class="dropdown-menu" style="width:100%">
+
+                            <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#gene_id">Gene ID Type</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#cpd_id">Compound ID Type</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#species">Species</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#pwy_id">Pathway ID</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#suffix">Output Suffix</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+                </div>
+            <div class="col-lg-4">
+            <div class="list-group">
+
+                <ul class="nav navbar-nav" style="width:100%">
+                    <li class="dropdown" style="width:100%">
+                        <a href="#" class="dropdown-toggle list-group-item active"
+                           data-toggle="dropdown">Options<span
+                                    class="glyphicon glyphicon-download pull-right"></span></a>
+                        <ul class="dropdown-menu" style="width:100%">
+
+                            <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#layer">Same Layer</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#desc">Descrete</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#split">Split Group</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#expand">Expand Node</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#multi">Multi State</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#match">Match Data</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#clabel">Compound Label Offset</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#kalign">Key Alignment</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#spos">Signature Position</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#kpos">Key Position</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+                </div>
+                <div class="col-lg-4">
+            <div class="list-group">
+
+                <ul class="nav navbar-nav" style="width:100%">
+                    <li class="dropdown" style="width:100%">
+                        <a href="#" class="dropdown-toggle list-group-item active"
+                           data-toggle="dropdown">Options<span
+                                    class="glyphicon glyphicon-download pull-right"></span></a>
+                        <ul class="dropdown-menu" style="width:100%">
+
+                            <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#limit">Limit</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#bins">Bins</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#color">Low</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#color">Mid</a></li>
+                            <li class="divider"></li>
+                            <li style="width:300px;"><a href="#color">High</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+                    </div>
+        </div>
+
+        <div class="col-md-12 content">
+
+            <h1 class="arg_content">Example Analysis</h1>
 
             <div class="col-md-4">
                 <h2>Multiple Sample KEGG view</h2>
@@ -144,14 +158,14 @@
 
                 <p><a class="btn btn-default" href="#example1" role="button">View details »</a></p>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
                 <h2>Multiple Sample Graphviz view</h2>
 
                 <p>This example shows the multiple sample/state integration with Pathview Graphviz viewo. </p>
 
                 <p><a class="btn btn-default" href="#example2" role="button">View details »</a></p>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <h2>ID Mapping</h2>
 
                 <p>This example shows the ID mapping capability of Pathview.</p>
@@ -243,7 +257,7 @@
                                 <dt><a name="kegg">Kegg Native</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd> Whether to render the pathway as native KEGG graph (.png) or using graphviz
+                                <dd> Whether to render the pathway as native KEGG graph (.png) or using Graphviz
                                     layout
                                     engine (.pdf). 
                                 </dd>
@@ -290,7 +304,7 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd>Whether split node groups are split to individual nodes. Each split member nodes
-                                    inherits all edges from the node group. This option only affects graphviz graph
+                                    inherits all edges from the node group. This option only affects Graphviz graph
                                     view,
                                     i.e. when Kegg Native is FALSE. This option also effects most metabolic pathways
                                     even
@@ -310,7 +324,7 @@
                                 <dd>Whether the multiple-gene nodes are expanded into single-gene nodes. Each expanded
                                     single-gene nodes inherits all edges from the original multiple gene node. This
                                     option
-                                    only affects graphviz graph view, i.e. when Kegg Native is FALSE. This option is not
+                                    only affects Graphviz graph view, i.e. when Kegg Native is FALSE. This option is not
                                     effective for most metabolic pathways where it conflicts with converting reactions
                                     to
                                     edges. Default value is FALSE.
@@ -350,7 +364,7 @@
                                 <dt><a name="spos">Signature Position</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Controls the position of pathview signature. Default value is "bottomright". No pathview signature will be put when "None" is selected.
+                                <dd>Controls the position of pathview signature. Default value is "bottom right". No pathview signature will be put when "None" is selected.
                                     Potential
                                     values can be found in the drop down list.
                                 </dd>
@@ -361,7 +375,7 @@
                                 <dt><a name="kpos">Key Position</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Controls the position of color key(s). Default value is  "toplet". No color key will be plot when "None" is selected. Potential values
+                                <dd>Controls the position of color key(s). Default value is  "top left". No color key will be plot when "None" is selected. Potential values
                                     can
                                     be found in the drop down list.
                                 </dd>
@@ -524,13 +538,13 @@
                         <a class="list-group-item disabled">
                             Applied Arguments
                         </a>
-                        <li class="list-group-item">Pathway ID : 00640-Propanoate metabolism</li>
-                        <li class="list-group-item">Species : hsa</li>
-                        <li class="list-group-item">Kegg Native : FALSE</li>
-                        <li class="list-group-item">Same Layer : TRUE</li>
-                        <li class="list-group-item">Multi State : TRUE</li>
-                        <li class="list-group-item">Match Data : FALSE</li>
-                        <li class="list-group-item">Gene Limit : 1(min),2(max)</li>
+                        <li class="list-group-item">Pathway ID: 00640-Propanoate metabolism</li>
+                        <li class="list-group-item">Species: hsa</li>
+                        <li class="list-group-item">Kegg Native: FALSE</li>
+                        <li class="list-group-item">Same Layer: TRUE</li>
+                        <li class="list-group-item">Multi State: TRUE</li>
+                        <li class="list-group-item">Match Data: FALSE</li>
+                        <li class="list-group-item">Gene Limit: -1(min),2(max)</li>
 
                     </ul>
                     <a href="/example2">
@@ -566,13 +580,13 @@
                             Applied Arguments
                         </a>
                         <li class="list-group-item">Pathway ID: 00640-Propanoate metabolism</li>
-                        <li class="list-group-item">Species : hsa</li>
+                        <li class="list-group-item">Species: hsa</li>
                         <li class="list-group-item">Gene ID: ENSEMBLPROT</li>
                         <li class="list-group-item">Compound ID: CAS Registry Number</li>
-                        <li class="list-group-item">Kegg Native : TRUE</li>
-                        <li class="list-group-item">Same Layer : TRUE</li>
-                        <li class="list-group-item">Limit Gene:3 Compound:3</li>
-                        <li class="list-group-item">Bins Gene:6 Compound:6</li>
+                        <li class="list-group-item">Kegg Native: TRUE</li>
+                        <li class="list-group-item">Same Layer: TRUE</li>
+                        <li class="list-group-item">Limit Gene: 3; Compound: 3</li>
+                        <li class="list-group-item">Bins Gene: 6; Compound: 6</li>
 
                     </ul>
                     <a href="/example3">

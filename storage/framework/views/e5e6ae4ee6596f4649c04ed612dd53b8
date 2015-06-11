@@ -2,6 +2,8 @@
 
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <?php /*Start to check if the user is logged in or not if user is logged in then user profile is loaded */ ?>
+    <div class="col-sm-9">
+        <div class="col-sm-5">
     <?php if(is_null(Auth::user())): ?>
         <h2> Welcome Guest </h2>
     <?php else: ?>
@@ -12,12 +14,13 @@
     <?php /*Main Heading/Title of the page */ ?>
 
     <p><b>New Pathway Analysis</b></p>
-
+        </div>
+        <div class="col-sm-5">
     <?php /*Error Displaying div for the web page */ ?>
-    <div class="col-sm-2">
+
         <?php /*Printing errors detected from laravel validation of the page */ ?>
         <?php if($errors->any()): ?>
-            <ul class="alert alert-danger">
+            <ul class="alert alert-danger" style="font-size: 14px;">
                 <?php foreach($errors->all() as $error): ?>
                     <li><?php echo e($error); ?></li>
                 <?php endforeach; ?>
@@ -27,7 +30,7 @@
         <?php /*Printing errors handled manually of the page */ ?>
         <?php if(Session::get('err')!=NULL): ?>
 
-            <ul class="alert alert-danger">
+            <ul class="alert alert-danger" style="font-size: 14px;">
                 <?php
                 for ($x = 0; $x < sizeof(Session::get('err')); $x++) {
                     echo "<li>" . Session::get('err')[$x] . "</li>";
@@ -36,11 +39,13 @@
             </ul>
 
         <?php endif; ?>
-        <ul id="errors" hidden="true" class="alert alert-danger">
+        <ul id="errors" hidden="true" class="alert alert-danger" style="font-size: 14px;">
 
         </ul>
+            </div>
+        </div>
 
-    </div>
+
 <?php /*Default/Inital values for the each attribute for the analysis*/ ?>
     <?php
     $gfile = "";
@@ -81,7 +86,7 @@
     1. Input and Output
     2. Graphics
     3. Coloration */ ?>
-    <div class="col-sm-5">
+    <div class="col-sm-7">
         <div id="content">
          <div id="wrapper">
             <div id="navigation" style="display:none;">
@@ -117,7 +122,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-5">
                                 <a
-                                href="tutorial#gene_data" title="Upload gene data accepts CSV, txt file"
+                                href="tutorial#gene_data" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
                                 target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign"
                                             style="margin-right: 20px;"></span></a>
@@ -166,7 +171,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-5">
                                 <a
-                                href="tutorial#cpd_data" id="cfile" title="Upload Compound data accepts CSV, txt file"
+                                href="tutorial#cpd_data" id="cfile" title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
                                 target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign"
                                             style="margin-right: 20px;"></span></a><?php echo form::label('cpdfile','Compound
@@ -213,12 +218,12 @@
                     <?php if(isset(Session::get('err_atr')['geneid'])): ?> style="background-color:#DA6666;" <?php endif; ?>>
                         <div class="col-sm-12">
                             <div class="col-sm-5">
-                        <a href="tutorial#gene_id" title="ID type used for the Gene Data"
+                        <a href="tutorial#gene_id" title="ID type used for the Gene Data. This can be selected from the autosuggest drop down list. "
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a>
 
-                        <?php echo form::label('geneid','Gene Id:'); ?>
+                        <?php echo form::label('geneid','Gene ID Type:'); ?>
 
                             </div>
                             <div class="col-sm-7">
@@ -248,11 +253,11 @@
                     } ?>>
                         <div class="col-sm-12">
                             <div class="col-sm-5">
-                        <a href="tutorial#cpd_id" title="ID type used for the Compound Data" target="_blank"
+                        <a href="tutorial#cpd_id" title="IID type used for the Compound Data. This can be selected from the autosuggest drop down list." target="_blank"
                            class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a>
-                        <?php echo form::label('cpdid','Compound ID:'); ?>
+                        <?php echo form::label('cpdid','Compound ID Type:'); ?>
 
                             </div>
                             <div class="col-sm-7">
@@ -282,7 +287,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-5">
                         <a href="tutorial#species"
-                           title="KEGG code, scientific name or the common name of the target species"
+                           title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways. "
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a>
@@ -319,12 +324,12 @@
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
                                     <a href="tutorial#pwy_id"
-                                       title="The KEGG pathway ID, usually 5 digit. Can be entered in 2 ways from select box and Input text box.Multiple Pathway entered by clicking the Add(+) and >> button."
+                                       title="KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box. "
                                        target="_blank" class="scrollToTop"
                                        style="float:left;margin-right:5px;margin-left: -15px"><span
                                                 class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"
                                                 style="margin-left:20px"></span></a>
-                                    <?php echo form::label('pathway','Pathway:'); ?>
+                                    <?php echo form::label('pathway','Pathway ID:'); ?>
 
                                 </div>
                             </div>
@@ -428,13 +433,13 @@
                         <div class="col-sm-12">
                             <div class="col-sm-5">
                                 <a href="tutorial#suffix"
-                                                                                                  title="The suffix to be added after the pathway name as part of the output graph file"
+                                                                                                  title="The suffix to be added after the pathway name as part of the output graph file name."
                                                                                                   target="_blank"
                                                                                                   class="scrollToTop"
                                                                                                   style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign"
                                             style="margin-right: 20px;"></span></a>
-                                <?php echo form::label('suffix','suffix:'); ?>
+                                <?php echo form::label('suffix','Output Suffix:'); ?>
 
                             </div>
                             <div class="col-sm-7">
@@ -453,7 +458,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                         <a href="tutorial#kegg"
-                           title="to render pathway graph as native KEGG graph"
+                           title="Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf). "
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a>
@@ -473,8 +478,8 @@
                                type="checkbox" style="margin-left: 10px;">
                             </div>
                             <div class="col-sm-6">
-                                <a href="tutorial#kegg"
-                                   title="To render graph as single layer or double layer,Controls plotting layers"
+                                <a href="tutorial#layer"
+                                   title="Controls plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type legend be plotted in the same page when Kegg Native is unchecked. "
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -501,7 +506,7 @@
 
                             <div class="col-sm-6">
                                 <a href="tutorial#desc"
-                                   title="This argument tells whether gene data should be treated as discrete"
+                                   title="Whether gene data should be treated as discrete"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                             class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -518,7 +523,7 @@
                             </div>
                             <div class="col-sm-6">
                                 <a href="tutorial#desc"
-                                   title="This argument tells whether compound data should be treated as discrete"
+                                   title="Whether compound data should be treated as discrete"
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
@@ -584,7 +589,7 @@
 
                             <div class="col-sm-6">
                         <a href="tutorial#multi"
-                           title="Whether multiple states (samples or columns) gene data or compound data should be integrated "
+                           title="Whether multiple states (samples or columns) gene data or compound data should be integrated and plotted in the same graph"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a><?php echo form::label('multistate','Multi State:'); ?>
@@ -648,7 +653,7 @@
                         <div class="col-sm-12">
                             <div class="col-sm-6">
                         <a href="tutorial#kalign"
-                           title="Controls how the color keys are aligned when both Gene Data and Compound Data "
+                           title="How the color keys are aligned when both Gene Data and Compound Data are not NULL."
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                         <?php echo form::label('align','Key Alignment:'); ?>
@@ -675,13 +680,13 @@
 
                                 <div class="col-sm-6" style="margin-left: -20px;">
 
-                                    <?php echo form::label('pos','Sign
+                                    <?php echo form::label('pos','Signature
                         Position:',array('class' => 'awesome')); ?>
 
                                 </div>
                                 <div class="col-sm-6" style="margin-left: -40px;">
                         <?php echo form::select('pos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
-                        right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['pos']) ?
+                        right','topleft' => 'top left', 'topright' => 'top right','none' => 'none'),isset(Session::get('Sess')['pos']) ?
                         Session::get('Sess')['pos'] : $pos); ?>
 
                                 </div>
@@ -697,7 +702,7 @@
                                 </div>
                                 <div class="col-sm-6" style="margin-left: -40px;">
                         <?php echo form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
-                        right','topleft' => 'top left', 'topright' => 'top right'),isset(Session::get('Sess')['kpos']) ?
+                        right','topleft' => 'top left', 'topright' => 'top right','none' => 'none'),isset(Session::get('Sess')['kpos']) ?
                         Session::get('Sess')['kpos'] : $kpos); ?>
 
                                 </div>
@@ -751,7 +756,7 @@
 
                             <div class="col-sm-6">
                         <a href="tutorial#ncolor"
-                           title="Color used for Not applicable data or missing values in Gene Data and Compound Data.."
+                           title="Color used for NA's or missing values in Gene Data and Compound Data. Potential value can be 'transparent' or 'grey'. "
                            target="_blank" class="scrollToTop" style="float:left;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a>
@@ -786,7 +791,7 @@
 
                             <div class="col-sm-4">
                         <a href="tutorial#limit"
-                           title="This argument specifies the limit values for Gene Data and Compound Data when converting them to pseudo colors.This field is a numeric field. It can take 2 values separated by a comma for low and high values."
+                           title="The limit values for Gene Data and Compound Data when converting them to pseudo colors. This field is a numeric field you can enter two values separated by a comma for example 1,2"
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                             <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                                 <?php echo form::label('limit',' Limit:'); ?>
@@ -817,7 +822,7 @@
 
                             <div class="col-sm-4">
                         <a href="tutorial#bins"
-                           title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors"
+                           title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors. Default value is 10. "
                            target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                     class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                         </a>

@@ -38,7 +38,7 @@ class AnalysisController extends Controller
         $argument = "";
         $time = time();
         $email = "";
-
+        $spcl_Pathway_Flag = false;
         foreach ($_POST as $key => $value) {
             $_SESSION[$key] = $value;
         }
@@ -66,6 +66,16 @@ class AnalysisController extends Controller
             $pathway = substr($pathway, 0, 5);
             $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$pathway' LIMIT 1"));
             if (sizeof($val) > 0) {
+if(strcmp($val[0]->pathway_id,'01100')==0||
+    strcmp($val[0]->pathway_id,'01130')==0||
+    strcmp($val[0]->pathway_id,'01200')==0||
+    strcmp($val[0]->pathway_id,'01210')==0||
+    strcmp($val[0]->pathway_id,'01212')==0||
+    strcmp($val[0]->pathway_id,'01230')==0||
+    strcmp($val[0]->pathway_id,'01220')==0)
+{
+    $spcl_Pathway_Flag=true;
+}
                 $argument .= $val[0]->pathway_id . ";";
                 $i++;
             } else {
@@ -95,12 +105,14 @@ class AnalysisController extends Controller
             $err_atr["cpdid"] = 1;
         }
 
-
-        $spe = substr($_POST["species"], 0, 3);
-        $val = DB::select(DB::raw("select species_id from Species where species_id like '$spe' LIMIT 1"));
         $species1 = explode("-", $_POST["species"]);
+
+        $val = DB::select(DB::raw("select species_id from Species where species_id like '$species1[0]' LIMIT 1"));
+
         if (sizeof($val) > 0) {
+
             $argument .= "species:" . $val[0]->species_id . ",";
+
         } else {
             array_push($errors, "Entered Species ID doesn't exist");
             $err_atr["species"] = 1;
@@ -354,7 +366,7 @@ class AnalysisController extends Controller
                     umask($oldmask);
 
 
-                    $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
+                    $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
                     $_SESSION['anal_type'] = $anal_type;
@@ -443,7 +455,7 @@ class AnalysisController extends Controller
                     mkdir("all/$email/$time", 0755, true);
 
 
-                    $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
+                    $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
                     $_SESSION['anal_type'] = $anal_type;
@@ -522,7 +534,7 @@ class AnalysisController extends Controller
                 mkdir("all/$email/$time", 0777, true);
 
 
-                $_SESSION['id'] = substr($species1[0], 0, 3) . substr($path[0], 0, 5);
+                $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
                 $_SESSION['suffix'] = $suffix;
                 $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
                 $_SESSION['anal_type'] = $anal_type;
