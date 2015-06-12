@@ -87,7 +87,7 @@
     1. Input and Output
     2. Graphics
     3. Coloration */ ?>
-    <div class="col-sm-5">
+    <div class="col-sm-7">
     <div id="content">
         <div id="wrapper">
             <div id="navigation" style="display:none;">
@@ -392,7 +392,7 @@
                     </script>
                     <script src="<?php echo e(asset('/js/analysis.js')); ?>"></script>
 
-                    <div class="stepsdiv" <?php if (isset(Session::get('err_atr')['suffix'])) {
+                    <div id="suffix-div" class="stepsdiv" <?php if (isset(Session::get('err_atr')['suffix'])) {
                         echo "style='background-color:#DA6666;'";
                     } ?> <?php if($errors->has('suffix')): ?> style="background-color:#DA6666;" <?php endif; ?>>
                         <div class="col-sm-12">

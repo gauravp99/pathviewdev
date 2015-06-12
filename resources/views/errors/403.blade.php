@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="col-sm-12">
-        <h1 class="alert alert-danger"> Error: You are not currently Authorised to the application Please Login to continue</h1>
+        <h1 class="alert alert-danger"> Error: You are not Authorised for this request</h1>
         <div class="col-sm-8 ">
             <div class="container-fluid">
                 <div class="row">

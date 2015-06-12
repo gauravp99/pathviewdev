@@ -1,4 +1,3 @@
-
 @extends('app')
 
 @section('content')
@@ -174,7 +173,7 @@
             </div>
         </div>
         <div class="col-sm-12">
-            <section id="Input">
+            <section id="input">
                 <h1 class="arg_content">Input and Output</h1>
 
                 <div class="page-header col-sm-12">

@@ -29,7 +29,13 @@ $(document).ready(function () {
             .val('whatever')
         ;
 
-
+        $("#errors").empty();
+        $("#errors").hide();
+        $(".stepsdiv").css('background-color','#F4F4F4');
+        $("#glmt").css('background-color','#FFFFFF');
+        $("#clmt").css('background-color','#FFFFFF');
+        $("#gbins").css('background-color','#FFFFFF');
+        $("#cbins").css('background-color','#FFFFFF');
     });
 
     $('#btn-add').click(function () {
@@ -57,12 +63,6 @@ $(document).ready(function () {
             $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
         }
 
-    });
-    $('#btn-remove').click(function () {
-        $('#select-to option:selected').each(function () {
-
-            $(this).remove();
-        });
     });
 
 
@@ -142,6 +142,7 @@ function in_pathway_array(gene, id) {
     return false;
 }
 function fileCheck() {
+    $("#errors").show();
     document.getElementById('submit-button').setAttribute("data-toggle", "");
     document.getElementById('submit-button').setAttribute("data-target", "");
     var errors = document.getElementById("errors");
@@ -162,6 +163,7 @@ function fileCheck() {
     var gfilediv = document.getElementById("gfile-div");
     var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
     var most_flag = false;
+
 
 
 
@@ -378,6 +380,20 @@ function fileCheck() {
 
 
     }
+    else if (!(/^-?\d*.?\d+$/.test(offset.value))) {
+        var myElement = document.getElementById("offset-div");
+        myElement.style.backgroundColor = "#DA6666";
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Compound Label Offset  Value must be numeric"));
+        errors.appendChild(li);
+        error = true;
+
+    }
+    else {
+        var myElement = document.getElementById("offset-div");
+        myElement.style.backgroundColor = "#F4F4F4";
+
+    }
     if (glmt.value == "") {
 
         glmt.style.backgroundColor = "#DA6666";
@@ -388,35 +404,37 @@ function fileCheck() {
 
 
     }
-    var str_array = glmt.value.split(',');
-    if (str_array.length > 1) {
-        if ((!(/^-?\d*.?\d+$/.test(str_array[0]))) || (!(/^-?\d*.?\d+$/.test(str_array[1])))) {
-            glmt.style.backgroundColor = "#DA6666";
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Gene Limit Value must be numeric values separated by comma"));
-            errors.appendChild(li);
-            error = true;
-
-        }
-        else {
-            glmt.style.backgroundColor = "#FFF";
-        }
-
-    }
     else {
-        if (!(/^-?\d*.?\d+$/.test(glmt.value))) {
-            glmt.style.backgroundColor = "#DA6666";
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Gene Limit Value must be numeric"));
-            errors.appendChild(li);
-            error = true;
+        var str_array = glmt.value.split(',');
+        if (str_array.length > 1) {
+            if ((!(/^-?\d*.?\d+$/.test(str_array[0]))) || (!(/^-?\d*.?\d+$/.test(str_array[1])))) {
+                glmt.style.backgroundColor = "#DA6666";
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("Gene Limit Value must be numeric values separated by comma"));
+                errors.appendChild(li);
+                error = true;
+
+            }
+            else {
+                glmt.style.backgroundColor = "#FFF";
+            }
 
         }
-
         else {
-            glmt.style.backgroundColor = "#FFF";
-        }
+            if (!(/^-?\d*.?\d+$/.test(glmt.value))) {
+                glmt.style.backgroundColor = "#DA6666";
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("Gene Limit Value must be numeric"));
+                errors.appendChild(li);
+                error = true;
 
+            }
+
+            else {
+                glmt.style.backgroundColor = "#FFF";
+            }
+
+        }
     }
     if (gbins.value == "") {
 
@@ -449,34 +467,35 @@ function fileCheck() {
         error = true;
 
     }
-    var str_array = clmt.value.split(',');
-    if (str_array.length > 1) {
-        if ((!(/^-?\d*.?\d+$/.test(str_array[0]))) || (!(/^-?\d*.?\d+$/.test(str_array[1])))) {
-            clmt.style.backgroundColor = "#DA6666";
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Compound Limit Value must be numeric values separated by comma"));
-            errors.appendChild(li);
-            error = true;
-
-        }
-        else {
-            clmt.style.backgroundColor = "#FFF";
-        }
-
-    }
     else {
-        if (!(/^-?\d*.?\d+$/.test(clmt.value))) {
-            clmt.style.backgroundColor = "#DA6666";
-            var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Compound Limit value should be numeric"));
-            errors.appendChild(li);
-            error = true;
+        var str_array = clmt.value.split(',');
+        if (str_array.length > 1) {
+            if ((!(/^-?\d*.?\d+$/.test(str_array[0]))) || (!(/^-?\d*.?\d+$/.test(str_array[1])))) {
+                clmt.style.backgroundColor = "#DA6666";
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("Compound Limit Value must be numeric values separated by comma"));
+                errors.appendChild(li);
+                error = true;
+
+            }
+            else {
+                clmt.style.backgroundColor = "#FFF";
+            }
+
         }
         else {
-            clmt.style.backgroundColor = "#FFF";
+            if (!(/^-?\d*.?\d+$/.test(clmt.value))) {
+                clmt.style.backgroundColor = "#DA6666";
+                var li = document.createElement("li");
+                li.appendChild(document.createTextNode("Compound Limit value should be numeric"));
+                errors.appendChild(li);
+                error = true;
+            }
+            else {
+                clmt.style.backgroundColor = "#FFF";
+            }
         }
     }
-
     if (cbins.value == "") {
 
         cbins.style.backgroundColor = "#DA6666";
@@ -497,20 +516,7 @@ function fileCheck() {
     else {
         cbins.style.backgroundColor = "#FFF";
     }
-    if (!(/^-?\d*.?\d+$/.test(offset.value))) {
-        var myElement = document.getElementById("offset-div");
-        myElement.style.backgroundColor = "#DA6666";
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Compound level offset  Value must be numeric"));
-        errors.appendChild(li);
-        error = true;
 
-    }
-    else {
-        var myElement = document.getElementById("offset-div");
-        myElement.style.backgroundColor = "#F4F4F4";
-
-    }
 
 
     if (error) {
@@ -522,7 +528,7 @@ function fileCheck() {
     else {
         document.getElementById('submit-button').setAttribute("data-toggle", "modal");
         document.getElementById('submit-button').setAttribute("data-target", "#myModal");
-
+        $("#errors").hide();
 
         for (var i = 0; i < selectBox.options.length; i++) {
 

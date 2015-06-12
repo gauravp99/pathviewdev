@@ -5,7 +5,7 @@
 
         <div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div>
         <a href="/edit_user/<?php echo e(Auth::user()->id); ?>"><input type="button" class="styled-button-2" value="Manage Profile"/></a>
-    
+
         </div>
     <div class="col-sm-12">
 

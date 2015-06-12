@@ -8,6 +8,11 @@
         <div class='col-md-2-result sidebar col-md-offset-2'>
 
             <div class="panel-body">
+                Hello Guest You are ready to do Analysis!
+                <br/>
+                <br/>
+
+
                 @if (count($errors) > 0)
                     <div class="alert alert-danger">
                         <strong>Whoops!</strong> There were some problems with your input.<br><br>

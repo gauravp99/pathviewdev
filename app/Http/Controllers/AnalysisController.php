@@ -21,13 +21,12 @@ class AnalysisController extends Controller
     {
         return view('analysis.NewAnalysis');
     }
+
     public function postAnalysis(CraeteAnalysisRequest $resqest)
     {
         $d = new AnalysisController();
         return $d->analysis("newAnalysis");
     }
-
-
 
     public function analysis($anal_type)
     {
@@ -38,7 +37,6 @@ class AnalysisController extends Controller
         $argument = "";
         $time = time();
         $email = "";
-        $spcl_Pathway_Flag = false;
         foreach ($_POST as $key => $value) {
             $_SESSION[$key] = $value;
         }
@@ -47,7 +45,7 @@ class AnalysisController extends Controller
         /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
 
         $i = 0;
-        //get all pathways entered from the textfield checked for all id's having a 5 digit numbers, performed regular expression match
+
         preg_match_all('!\d{5}!', $_POST['selecttextfield'], $matches);
 
         $pathway_array = array();
@@ -57,25 +55,13 @@ class AnalysisController extends Controller
             array_push($pathway_array, $pathway);
         }
 
-        //remove the duplicate values and unique values are retained
         $pathway_array1 = array_unique($pathway_array);
-
 
         $argument .= "pathway:";
         foreach ($pathway_array1 as $pathway) {
             $pathway = substr($pathway, 0, 5);
             $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$pathway' LIMIT 1"));
             if (sizeof($val) > 0) {
-if(strcmp($val[0]->pathway_id,'01100')==0||
-    strcmp($val[0]->pathway_id,'01130')==0||
-    strcmp($val[0]->pathway_id,'01200')==0||
-    strcmp($val[0]->pathway_id,'01210')==0||
-    strcmp($val[0]->pathway_id,'01212')==0||
-    strcmp($val[0]->pathway_id,'01230')==0||
-    strcmp($val[0]->pathway_id,'01220')==0)
-{
-    $spcl_Pathway_Flag=true;
-}
                 $argument .= $val[0]->pathway_id . ";";
                 $i++;
             } else {
@@ -84,7 +70,6 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
             }
         }
         $argument .= ",";
-
 
         $geneid = $_POST["geneid"];
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
@@ -106,13 +91,9 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
         }
 
         $species1 = explode("-", $_POST["species"]);
-
         $val = DB::select(DB::raw("select species_id from Species where species_id like '$species1[0]' LIMIT 1"));
-
         if (sizeof($val) > 0) {
-
             $argument .= "species:" . $val[0]->species_id . ",";
-
         } else {
             array_push($errors, "Entered Species ID doesn't exist");
             $err_atr["species"] = 1;
@@ -174,89 +155,84 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
 
         $argument .= "align:" . $_POST["align"] . ",";
 
-
-
-
        if (preg_match('/[a-z]+/', $_POST["glmt"])) {
-                array_push($errors, "Gene Limit should be Numeric");
-                $err_atr["glmt"] = 1;
+           array_push($errors, "Gene Limit should be Numeric");
+           $err_atr["glmt"] = 1;
        }
 
        if (preg_match('/[a-z]+/', $_POST["gbins"])) {
                 array_push($errors, "Gene Bins should be Numeric");
                 $err_atr["gbins"] = 1;
-        }
+       }
 
        $glmtrange = str_replace(",", ";", $_POST["glmt"]);
-
-        $argument .= "glmt:" . $glmtrange . ",";
+       $argument .= "glmt:" . $glmtrange . ",";
 
        $argument .= "gbins:" . $_POST["gbins"] . ",";
 
-        if (strpos($_POST["glow"], '#') !== false) {
+       if (strpos($_POST["glow"], '#') !== false) {
                 $argument .= "glow:" . $_POST["glow"] . ",";
-         } else {
+       } else {
             $argument .= "glow:" . '#' . $_POST["glow"] . ",";
-         }
+       }
 
-         if (strpos($_POST["gmid"], '#') !== false) {
+       if (strpos($_POST["gmid"], '#') !== false) {
                 $argument .= "gmid:" . $_POST["gmid"] . ",";
-         } else {
+       } else {
                 $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
-         }
+       }
 
-         if (strpos($_POST["ghigh"], '#') !== false) {
+       if (strpos($_POST["ghigh"], '#') !== false) {
                 $argument .= "ghigh:" . $_POST["ghigh"] . ",";
-         } else {
+       } else {
                 $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
-         }
+       }
 
-            $gene_cmpd_color["glow"] = $_POST["glow"];
-            $gene_cmpd_color["gmid"] = $_POST["gmid"];
-            $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
+       $gene_cmpd_color["glow"] = $_POST["glow"];
+       $gene_cmpd_color["gmid"] = $_POST["gmid"];
+       $gene_cmpd_color["ghigh"] = $_POST["ghigh"];
 
-
-        if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+       if (preg_match('/[a-z]+/', $_POST["clmt"])) {
             array_push($errors, "Compound Limit should be Numeric");
             $err_atr["clmt"] = 1;
-        }
+       }
 
-        if (preg_match('/[a-z]+/', $_POST["cbins"])) {
+       if (preg_match('/[a-z]+/', $_POST["cbins"])) {
             array_push($errors, "Compound Bins should be Numeric");
             $err_atr["cbins"] = 1;
-        }
+       }
 
-        $clmtrange = str_replace(",", ";", $_POST["clmt"]);
+       $clmtrange = str_replace(",", ";", $_POST["clmt"]);
 
-        $argument .= "clmt:" . $clmtrange . ",";
+       $argument .= "clmt:" . $clmtrange . ",";
 
-        $argument .= "cbins:" . $_POST["cbins"] . ",";
+       $argument .= "cbins:" . $_POST["cbins"] . ",";
 
 
-        if (strpos($_POST["clow"], '#') !== false) {
+       if (strpos($_POST["clow"], '#') !== false) {
             $argument .= "clow:" . $_POST["clow"] . ",";
-        } else {
+       } else {
             $argument .= "clow:" . '#' . $_POST["clow"] . ",";
-        }
-        if (strpos($_POST["cmid"], '#') !== false) {
+       }
+
+       if (strpos($_POST["cmid"], '#') !== false) {
             $argument .= "cmid:" . $_POST["cmid"] . ",";
-        } else {
+       } else {
             $argument .= "cmid:" . '#' . $_POST["cmid"] . ",";
-        }
-        if (strpos($_POST["chigh"], '#') !== false) {
+       }
+
+       if (strpos($_POST["chigh"], '#') !== false) {
             $argument .= "chigh:" . $_POST["chigh"] . ",";
-        } else {
+       } else {
             $argument .= "chigh:" . '#' . $_POST["chigh"] . ",";
-        }
+       }
 
+       $gene_cmpd_color["clow"] = $_POST["clow"];
+       $gene_cmpd_color["cmid"] = $_POST["cmid"];
+       $gene_cmpd_color["chigh"] = $_POST["chigh"];
 
-        $gene_cmpd_color["clow"] = $_POST["clow"];
-        $gene_cmpd_color["cmid"] = $_POST["cmid"];
-        $gene_cmpd_color["chigh"] = $_POST["chigh"];
-
-
-        $argument .= "nsum:" . $_POST["nodesun"] . ",";
-        $argument .= "ncolor:" . $_POST["nacolor"] . ",";
+       $argument .= "nsum:" . $_POST["nodesun"] . ",";
+       $argument .= "ncolor:" . $_POST["nacolor"] . ",";
 
         function file_ext($filename)
         {
@@ -272,7 +248,6 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
 
         if (Input::hasFile('gfile')) {
             $filename = Input::file('gfile')->getClientOriginalName();
-
             $gene_extension = file_ext($filename);
             if ($gene_extension != "txt" && $gene_extension != "csv" && $gene_extension != "Rdata") {
                 array_push($errors, "Gene data file extension is not supported( use .txt,.csv,.rda)");
@@ -280,11 +255,9 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
             }
         }
 
-
         if (Input::hasFile('cpdfile')) {
             $filename1 = Input::file('cpdfile')->getClientOriginalName();
             $cpd_extension = file_ext($filename1);
-
             if ($cpd_extension != "txt" && $cpd_extension != "csv" && $cpd_extension != "Rdata") {
                 array_push($errors, "compound data file extension is not supported( use .txt,.csv,.rda)");
                 $err_atr["cpdfile"] = 1;
@@ -295,12 +268,8 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
         $pathway_array = array();
         $path = "pathway" . $pathidx;
 
-
         if (sizeof($errors) > 0) {
-
-
             if (strcmp($anal_type, 'exampleAnalysis1') == 0) {
-
                 return Redirect::to('example1')
                     ->with('err', $errors)
                     ->with('err_atr', $err_atr)
@@ -334,7 +303,6 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
                 $pathidx = 1;
                 $file = Input::file('gfile');
                 $filename = Input::file('gfile')->getClientOriginalName();
-
                 $gene_extension = file_ext($filename);
                 if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
                     $argument .= "geneextension:" . $gene_extension . ",";
@@ -352,7 +320,6 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
                         $io = popen('/usr/bin/du -sh ' . $f, 'r');
                         $size = fgets($io, 4096);
                         $size = substr($size, 0, strpos($size, "\t"));
-
                         pclose($io);
                         $size = 100 - intval($size);
                         if ($size < 0) {
@@ -365,13 +332,12 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
                     mkdir("all/$email/$time", 0777, false);
                     umask($oldmask);
 
-
                     $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
                     $_SESSION['anal_type'] = $anal_type;
-
                     $_SESSION['analyses_id'] = $time;
+
                     if (isset($_POST["multistate"]))
                         $_SESSION['multistate'] = "T";
                     else
@@ -379,7 +345,6 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
 
                     $destFile = public_path() . "/all/$email/$time/";
                     $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time;
-
 
                     $_SESSION['argument'] = $argument;
 
@@ -412,18 +377,12 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
                     ->with('Sess', $Session)->with('genecolor', $gene_cmpd_color);
 
             }
-                    $_SESSION['argument'] = $argument;
+                   $_SESSION['argument'] = $argument;
 
 
-/*
-            } else if (isset($_POST['genetemp'])) {
-                return $_POST['genetemp'];
+        }
+        /* analysis type is example analysis */
 
-            } else {
-                return view('analysis.NewAnalysis');
-            }*/
-
-        } /* analysis type is example analysis */
         else if ($anal_type == "exampleAnalysis1" || $anal_type == "exampleAnalysis2") {
 
             if (Input::get('gcheck') == 'T' || Input::get('cpdcheck') == 'T' ) {
@@ -447,30 +406,20 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
                 }
                 $destFile = public_path() . "/all/$email/$time/";
 
-
-
-
-
-
                     mkdir("all/$email/$time", 0755, true);
-
-
                     $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
                     $_SESSION['suffix'] = $suffix;
                     $_SESSION['workingdir'] = "/all/" . $email . "/" . $time;
                     $_SESSION['anal_type'] = $anal_type;
                     $_SESSION['analyses_id'] = $time;
 
-
                     if (isset($_POST["multistate"]))
                         $_SESSION['multistate'] = "T";
                     else
                         $_SESSION['multistate'] = "T";
-
                     $destFile = public_path() . "/all/$email/$time/";
                     $destFile1 = "/all/$email/$time/";
                     $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time.",";
-
                 if(Input::get('gcheck') == 'T') {
                     $filename = "gse16873.d3.txt";
                     $destFile = public_path() . "/all/$email/$time/";
@@ -483,21 +432,16 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
                 }
 
 
-                    if (Input::get('cpdcheck') == 'T') {
-                        //$file1 = Input::file('cfile');
+                if (Input::get('cpdcheck') == 'T') {
                         $filename1 = "sim.cpd.data2.csv";
                         $cpd_extension = file_ext($filename1);
                         if ($cpd_extension == "txt" || $cpd_extension == "csv" || $cpd_extension == "rda") {
                             $argument .= "cpdextension:" . $cpd_extension .",";
                             $argument .= "cfilename:" . $filename1 . ",";
-
                             copy("all/demo/example/sim.cpd.data2.csv", $destFile . "/sim.cpd.data2.csv");
                         }
                     }
                     $_SESSION['argument'] = $argument;
-
-
-
 
             } else {
                 if ($anal_type == "exampleAnalysis1") {
@@ -509,8 +453,6 @@ if(strcmp($val[0]->pathway_id,'01100')==0||
         } else if ($anal_type == "exampleAnalysis3") {
 
             if (Input::get('gcheck') == 'T' ||Input::get('cpdcheck') == 'T' ) {
-
-                //$file = Input::file('gfile');
 
                 $destFile = public_path();
                 if (is_null(Auth::user())) {

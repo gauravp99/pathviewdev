@@ -38,8 +38,9 @@ if(!is.null(args2$geneextension)){
         gene.d=as.matrix(a[,-1])
         rownames(gene.d)=make.unique(as.character(a[,1]))
     } else if(ncol(a)==1) {
-        if(is.null(names(a)))  gene.d=make.unique(as.character(a[,1]))
-        else gene.d=a
+        a=as.matrix(a)
+        gene.d=a[,1]
+        if(is.null(names(gene.d))) gene.d=as.character(gene.d)
     } else stop("Empty gene data file!")
 } else gene.d=NULL
 
@@ -48,15 +49,15 @@ if(!is.null(args2$cpdextension)){
         a1=read.delim(args2$cfilename, sep="\t")
     } else if(args2$cpdextension == "csv"){
         a1=read.delim(args2$cfilename, sep=",")
-    }
-    else stop(paste(args2$cpdextension, ": unsupported compound data file type!"), sep="")
+    } else stop(paste(args2$cpdextension, ": unsupported compound data file type!"), sep="")
 
     if(ncol(a1)>1){
         cpd.d=as.matrix(a1[,-1])
         rownames(cpd.d)=make.unique(as.character(a1[,1]))
     } else if(ncol(a1)==1) {
-        if(is.null(names(a1)))  cpd.d=make.unique(as.character(a1[,1]))
-        else cpd.d=a1
+        a1=as.matrix(a1)
+        cpd.d=a1[,1]
+        if(is.null(names(cpd.d))) cpd.d=as.character(cpd.d)
     } else stop("Empty compound data file!")
 } else cpd.d=NULL
 

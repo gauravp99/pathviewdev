@@ -28,14 +28,6 @@
                                     <input type="text" class="form-control" name="name" value="{{ old('name') }}">
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">E-Mail</label>
-
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
-                                </div>
-                            </div>
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Organisation</label>
 
@@ -44,6 +36,15 @@
                                            value="{{ old('organisation') }}">
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-md-4 control-label">E-Mail</label>
+
+                                <div class="col-md-6">
+                                    <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                </div>
+                            </div>
+
 
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Password</label>
