@@ -21,13 +21,6 @@ $(document).ready(function () {
     $('#selecttextfield').append(",\r\n");
     $('#reset').click(function () {
 
-        $('#select-to')
-            .find('option')
-            .remove()
-            .end()
-            .append('<option value="00010-Glycolysis / Gluconeogenesis">00010-Glycolysis / Gluconeogenesis</option>')
-            .val('whatever')
-        ;
 
         $("#errors").empty();
         $("#errors").hide();

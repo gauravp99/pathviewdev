@@ -550,7 +550,7 @@ class AnalysisController extends Controller
         /** Rscript code running with the arguments */
        #return $argument;
 
-        exec("Rscript my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         /** check if rscript generated any error if generated then log into database */
         $date = new \DateTime;

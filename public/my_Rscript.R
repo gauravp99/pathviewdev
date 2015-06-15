@@ -62,7 +62,8 @@ if(!is.null(args2$cpdextension)){
 } else cpd.d=NULL
 
 kegg.dir=paste("/home/ybhavnasi/Desktop/Kegg/", args2$species, sep="")
-if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
+#if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
+system(paste("mkdir -p", kegg.dir))
                                         #path.ids=args1[grep("^pathway", names(args1))]
 save.image("workenv.Rdata")
 

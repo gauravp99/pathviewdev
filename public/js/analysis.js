@@ -128,6 +128,7 @@ function in_pathway_array(gene, id) {
     return false;
 }
 function fileCheck() {
+    $("#errors").show();
     document.getElementById('submit-button').setAttribute("data-toggle", "");
     document.getElementById('submit-button').setAttribute("data-target", "");
     var selectBox = document.getElementById("select-to");
@@ -158,7 +159,7 @@ function fileCheck() {
     if (!document.getElementById('gcheck').checked && !document.getElementById('cpdcheck').checked) {
 
         var li = document.createElement("li");
-        li.appendChild(document.createTextNode("Gene data or compound data any one of them should be checked "));
+        li.appendChild(document.createTextNode("Either Gene Data or Compound Data should be checked "));
         errors.appendChild(li);
         document.getElementById('gfile-div').style.backgroundColor = "#DA6666";
         document.getElementById('cfile-div').style.backgroundColor = "#DA6666";
