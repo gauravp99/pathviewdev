@@ -597,6 +597,36 @@
             </section>
 
         </div>
+        <div class="col-sm-12">
+
+            <section id="refrence">
+
+                <h1 class="arg_content">Reference</h1>
+
+                <p class="content1">Luo W, Brouwer C. Pathview: an R/Biocondutor package for
+                    pathway-based data integration and visualization. Bioinformatics, 2013,
+                    29(14):1830-1831, doi:
+                    <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">
+                        <u>10.1093/bioinformatics/btt285</u></a>
+                </p>
+            </section>
+
+        </div>
+
+        <div class="col-sm-12">
+
+            <section id="contact">
+
+                <h1 class="arg_content">Contact</h1>
+
+                <p class="contact">Project Contact: <a
+                            href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></p>
+
+                <p class="contact"> Report Issues : <a
+                            href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a>   </p>
+            </section>
+
+        </div>
 
     </div>
     <div class="scroll">

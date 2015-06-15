@@ -7,6 +7,8 @@
  */
 use App\Http\Requests;
 use App\User;
+use Auth;
+use App;
 
 class PreviousAnalysis extends Controller
 {
@@ -14,10 +16,13 @@ class PreviousAnalysis extends Controller
     public function user($username)
     {
 
+
         $user = User::where('id', '=', $username);
-        if ($user->count()) {
-            $user = $user->first();
-            return view('profile.user_anal')->with('user', $user);
+        if(Auth::user()->id==$username) {
+            if ($user->count()) {
+                $user = $user->first();
+                return view('home')->with('user', $user);
+            }
         }
         return App::abort(404);
 

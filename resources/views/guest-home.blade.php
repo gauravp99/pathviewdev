@@ -27,16 +27,10 @@
                     <p class="alert alert-danger">Alert!! You are on Guest Login and your analysis is NOT saved..</p>
 
                     <p class="alert alert-success">To save your inputs, outputs and analysis, please <a
-                                style="border-radius: 1px;"
+                                href="#" style="border-radius: 1px;"
                                 data-toggle="modal" data-target="#myModal">register</a> for free.</p>
 
-                <!-- Button trigger modal -->
-                <div class="col-sm-4 col-md-offset-2">
-                    <button type="button" class="  btn btn-primary btn-lg register" style="border-radius: 1px;"
-                            data-toggle="modal" data-target="#myModal">
-                        Click here to Register
-                    </button>
-                </div>
+
 
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
                      aria-hidden="true">

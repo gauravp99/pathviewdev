@@ -8,6 +8,52 @@
 
     <div class='col-md-2-result sidebar col-md-offset-2'>
         <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile</h1>
+        <?php
+        function xcopy($source, $dest, $permissions = 0755)
+        {
+            // Check for symlinks
+            if (is_link($source)) {
+                return symlink(readlink($source), $dest);
+            }
+
+            // Simple copy for a file
+            if (is_file($source)) {
+                return copy($source, $dest);
+            }
+
+            // Make destination directory
+            if (!is_dir($dest)) {
+                mkdir($dest, $permissions);
+            }
+
+            // Loop through the folder
+            $dir = dir($source);
+            while (false !== $entry = $dir->read()) {
+                // Skip pointers
+                if ($entry == '.' || $entry == '..') {
+                    continue;
+                }
+
+                // Deep copy directories
+                xcopy("$source/$entry", "$dest/$entry", $permissions);
+            }
+
+            // Clean up
+            $dir->close();
+            return true;
+        }
+        ?>
+        @if(Session::get('anal_id')!=NULL)
+            <?php
+            xcopy(public_path().'/all/demo/'.Session::get('anal_id'),public_path().'/all/'.Auth::user()->email.'/'.Session::get('anal_id'));
+            DB::table('analyses')
+                    ->where('analysis_id', Session::get('anal_id'))
+                    ->update(array('id' => Auth::user()->id));
+            ?>
+
+        @endif
+        <div class="col-md-12">
+        <div class="col-md-6">
         @if(Session::get('error')!=NULL)
 
             <p class="alert alert-danger">
@@ -33,9 +79,14 @@
         ?>
         <p class="alert alert-danger"><b>Remaining space:  {{ $size}} MB </b></p>
         <?php } else { ?>
-        <p class="alert alert-info"><b>Remaining space:  {{ $size}} MB </b></p>
+        <p ><b>Remaining space:  {{ $size}} MB </b></p>
 
         <?php }?>
+        </div>
+        <div class="col-md-6">
+            <a href="/edit_user/{{Auth::user()->id}}"><input type="button" class="styled-button-2" value="Manage Profile"/></a>
+        </div>
+        </div>
         <h2>Recent activity: </h2>
         <?php
         $analyses = DB::table('analyses')->where('id', Auth::user()->id)->get();
@@ -58,7 +109,7 @@
                 <th>#</th>
                 <th>Analysis Type</th>
                 <th>Number of days</th>
-                <th>Click Here</th>
+                <th>Analysis Result</th>
             </tr>
             </thead>
             <?php
@@ -76,13 +127,15 @@
                 $id = get_string_between($analyses1->arguments, "species:", ",") . get_string_between($analyses1->arguments, "pathway:", ",");
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ",");
                 echo "</td>";
-                echo "<td><p> Click to see results  at folder$analyses1->analysis_id <a href=/anal_hist?directory=$directory&dir=$dir&id=$id&suffix=$suffix>click here</a> </p></td></tr>";
+               // echo "<td><p>  <a href=/anal_hist?directory=$directory&dir=$dir&id=$id&suffix=$suffix>Analysis : $analyses1->analysis_id</a> </p></td></tr>";
+                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis : $analyses1->analysis_id</a> </p></td></tr>";
 
 
                 //echo "$analyses1->arguments";
             }
             }?>
         </table>
+
     </div>
 
 @stop

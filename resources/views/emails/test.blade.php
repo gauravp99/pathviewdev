@@ -206,7 +206,7 @@ Please click here to see the output generated <a href={{url('/anal_hist'.$conten
 <br/>
 
 
-<b>Pathway Team</b>
+
 <br/>
 Pathview Project
 <br/>
@@ -219,11 +219,11 @@ Pathview Project
 
 <br/>
 
-Project Contact Mail ID: luo_weijun@yahoo.com
+Project Contact : luo_weijun@yahoo.com
 
 <br/>
 
-Report Issues Mail ID: byeshvant@hotmail.com
+Report Issues : byeshvant@hotmail.com
 
 <br/>
 @include('footer')

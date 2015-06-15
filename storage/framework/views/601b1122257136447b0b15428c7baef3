@@ -186,14 +186,33 @@
                         <br/>
 
 
-                       <?php echo $__env->make('analysis', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>;
+                       <?php echo $__env->make('analysis', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
         </div>
 
 
     </div>
     </div>
 
+        <script type="text/javascript">
+            <?php
+                                   $pathway = DB::table('Pathway')->get(array('pathway_id'));?>
+            <?php
+            $species = DB::table('Species')->get(array('species_id'));?>
+            <?php
+    $species = DB::table('Species')->get(array('species_id'));?>
+            <?php
+    $gene = DB::table('gene')->get(array('geneid'));?>
+            <?php
+    $cmpd = DB::table('compound')->get(array('cmpdid'));?>
+            pathway_array = <?php echo JSON_encode($pathway);?>;
+            species_array = <?php echo JSON_encode($species);?>;
+            gene_array = <?php echo JSON_encode($gene);?>;
+            cmpd_array = <?php echo JSON_encode($cmpd);?>;
 
+
+
+        </script>
+        <script src="<?php echo e(asset('/js/analysis.js')); ?>"></script>
 
 
 <?php $__env->stopSection(); ?>

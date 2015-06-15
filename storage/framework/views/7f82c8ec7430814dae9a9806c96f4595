@@ -6,7 +6,7 @@
             <div class="placeholders ">
         <?php
         echo "<h1> Analysis Results </h1>";
-
+                echo "<h2>Analysis ID:".$_SESSION['analyses_id']."</h2>";
         global $dirct;
                 if (!is_null($exception)) {
                     echo "<h4 class='alert alert-danger'> Sorry !!! there was an issue in the analysis</h4>";
@@ -22,12 +22,13 @@
                 }
             }
         }
-        echo "<ul>";
+
         $val = "";
         $id = $_SESSION['id'];
         $id = substr($id, 0, 8);
         $flag = false;
         $flag1 = false;
+        $flag2 = false;
         $files_to_zip = array();
 
         foreach ($contents as $k => $v) {
@@ -37,10 +38,12 @@
             array_push($files_to_zip, $directory1 . "/" . $v);
         }
         }
-        echo "</ul>";
+
 
 if(!$flag1)
                 {
+                echo "<h2>Pathview Graphs:</h2>";
+                echo "<ul class='alert alert-success'>";
         foreach ($contents as $k => $v) {
 
         //echo $k;
@@ -49,20 +52,22 @@ if(!$flag1)
         $analyses_id = $_SESSION['analyses_id'];
         $id = substr($val, 0, 8);
         if (strpos($val, 'png')) {
-        echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"viewer?analyses=$analyses_id&id=$id&image=$directory1/$val\" > " . $val . "</a>";?>
+        echo "<li  style='font-size: 24px; list-style-type: none;'>  <a target=\"_blank\" href=\"viewer?analyses=$analyses_id&id=$id&image=$val\" > " . $val . "</a></li>";?>
 
         <?php
 
         array_push($files_to_zip, $directory1 . "/" . $val);
 
         } else {
-            echo "<li>Click here to view the pathview  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
+            echo "<li  style='font-size: 24px;list-style-type: none;'>  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
             array_push($files_to_zip, $directory1 . "/" . $val);
                 }
 
             }
 
         }
+
+            echo "</ul>";
 
 
 
@@ -98,14 +103,14 @@ if(!$flag1)
         // Zip archive will be created only after closing object
         #print_r($zip);
         $zip->close();
-            echo "<h2 class='alert alert-info'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. <h2>";
+                echo "<h2 class='alert alert-info' style='font-size: 18px;'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. <h2>";
 
         $data['path'] = $direct;
 
         if(Auth::user())
         {
 
-            $data['content'] = "?directory=" . $directory . "&dir=" . $directory1 . "&id=" . $_SESSION['id'] . "&suffix=" . $_SESSION['suffix'];
+            $data['content'] = "?analyses=".$_SESSION['analyses_id'] . "&id=" . $_SESSION['id'] . "&suffix=" . $_SESSION['suffix'] ."&email=" . Auth::user()->email;
             $data['name'] = Auth::user()->name;
             $data['time'] = date('l jS \of F Y h:i:s A');
             $data['anal_type'] = $_SESSION['anal_type'];
@@ -118,26 +123,19 @@ if(!$flag1)
 
                     $message->to($user->email, $user->name)->subject('Pathway success');
 
-                    echo "<br/><h2 class='alert alert-success'>Mail sent to your email id . $user->email. check your mail to access all output files generated<h2>";
+                    echo "<h2 class='alert alert-success'>Results were also emailed to $user->email <h2>";
                 } catch (Exception $e) {
                     echo "Sorry Not able to send the files in mail";
                 }
             });
         } else{
-            echo "<br/><h2 class='alert alert-info'><a style='color:black;' href='/auth/register'>Register</a> to save the outputs and a lot more.<h2>";
+            Session::put('anal_id', $_SESSION['analyses_id']);
+            $anal = $_SESSION['analyses_id'];
+            echo "<h2 style='font-size:18px;' class='alert alert-info'><a style='color:black;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:black;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
 
         ?>
-        <div class="col-sm-4">
-            <a href="/auth/register">
-                <button type="button" class="  btn btn-primary btn-lg register" style="border-radius: 1px;"
-                        >
-                    Click here to Register
-                </button>
-            </a>
-        </div>
-        <br/>
-        <br/>
-        <br/>
+
+
         <?php if(count($errors) > 0): ?>
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -244,16 +242,22 @@ if(!$flag1)
                 $array_string = explode(" ", $temp);
                 foreach ($array_string as $a_string) {
 
+
                     if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:')==0 ) {
                         if (!$flag) {
-                            echo "<h4 class='alert alert-info'> Species and pathway id combination is not Valid/present at KEGG   ";
+                            echo "<h4 class='alert alert-warning'> Species and pathway id combination is not Valid/present at KEGG";
                             echo " Or make sure your input gene and compound uploaded data is in the requested format</h4><ul class='alert alert-danger'>";
                             if(strcmp($a_string, 'error')==0||strcmp($a_string, 'warning:')==0)
                             {
                                 $flag1 = true;
                             }
+
                         }
-                        echo "<li>" . $temp . "</li>";
+
+
+
+                    echo "<li>" . $temp . "</li>";
+
                         $flag = true;
 
                     }
@@ -707,8 +711,13 @@ if(!$flag1)
                         $flag = false;
 
                         foreach ($lines as $temp) {
+                            if (strpos($temp,'directory') == false)
+                            {
 
-                            echo "<pre>" . $temp . "</pre>";
+                                echo "<pre>" . $temp . "</pre>";
+                            }
+
+
                             /**echo "<li style='width:300px;'>" . $temp ."</li>";
                             echo "<li class='divider'></li>";*/
 

@@ -60,6 +60,12 @@ Route::get('guest-home', array(
     'users' => function () {
         return view('guest-home');
     }));
+Route::get('passwordReset', array(
+    'as' => 'passwordReset ',
+    'users' => function () {
+        return view('auth.password_edit');
+    }));
+
 /*-----------------------------4. End Guest user Routes--------------------------*/
 
 
@@ -247,4 +253,5 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
 /*----------------------------------8. End Authroisation page Route ------------------------------*/

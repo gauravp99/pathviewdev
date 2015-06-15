@@ -23,7 +23,7 @@
         ?>
         <p class="alert alert-danger"><b>Remaining space: <?php echo e($size); ?> MB </b></p>
         <?php } else { ?>
-        <p class="alert alert-info"><b>Remaining space: <?php echo e($size); ?> MB </b></p>
+        <p ><b>Remaining space: <?php echo e($size); ?> MB </b></p>
 
         <?php }?>
 

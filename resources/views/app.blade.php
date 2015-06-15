@@ -32,7 +32,12 @@
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li class="dropdown">
+                <li    <?php
+                        if (basename($_SERVER['PHP_SELF']) == "tutorial") {
+                            echo "class=\"active\"";
+                        }
+                        ?>
+                         class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
                         Help<span class="caret"></span>
                     </a>
@@ -41,12 +46,10 @@
                                 Help</a></li>
                         <li><a href="/tutorial">Custom
                                 Analysis</a></li>
-                        <li><a href="/tutorial#example1">Multiple
-                                Sample Analysis</a></li>
-                        <li><a href="/tutorial#example2">Multiple
-                                Sample Graphviz analysis</a></li>
-                        <li><a href="/tutorial#example3">ID
-                                mapping Analysis</a></li>
+                        <li><a href="/tutorial#example1">Example Analysis</a></li>
+                        <li><a href="/tutorial#refrence">References</a></li>
+                        <li><a href="/tutorial#contact">Contact</a></li>
+
                     </ul>
                 </li>
 
@@ -57,17 +60,22 @@
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a target="_blank" href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html">
-                                Pathview Bioconductor
+                                Bioconductor
                             </a>
                         </li>
                         <li>
-                            <a target="_blank" href="http://www.bioconductor.org/packages/release/bioc/vignettes/pathview/inst/doc/pathview.pdf">Pathview
-                                Bioconductor Tutorial
+                            <a target="_blank" href="http://www.bioconductor.org/packages/release/bioc/vignettes/pathview/inst/doc/pathview.pdf">
+                                Tutorial
                             </a>
                         </li>
                         <li>
                             <a target="_blank" href="http://pathview.r-forge.r-project.org/">
-                                Pathview R-Forge
+                                R-Forge
+                            </a>
+                        </li>
+                        <li>
+                            <a target="_blank" href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full">
+                                Paper
                             </a>
                         </li>
                     </ul>
@@ -140,7 +148,7 @@
                                         }
                                     ?>
                                     >
-                                <a href="{{ url('/prev_anal/'.Auth::user()->id) }}">Previous Analysis</a>
+                                <a href="{{ url('/prev_anal/'.Auth::user()->id) }}">Status & History</a>
                             </li>
 
                             <li <?php
@@ -148,9 +156,11 @@
                                         echo "class=\"active\"";
                                         }
                                     ?>>
-                                <a href="{{ url('/user/'.Auth::user()->id) }}">Edit Profile</a>
+                                <a href="{{ url('/edit_user/'.Auth::user()->id) }}">Edit Profile</a>
                             </li>
-
+                            <li>
+                                <a href="{{ url('/passwordReset') }}">Password Reset</a>
+                            </li>
                             <li>
                                 <a href="{{ url('/auth/logout') }}">Logout</a>
                             </li>

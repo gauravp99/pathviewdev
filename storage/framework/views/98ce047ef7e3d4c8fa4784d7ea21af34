@@ -14,9 +14,10 @@
             } else {
                 $val1 = DB::select(DB::raw("select analysis_id from analyses where id = 0  and analysis_id ='$anal_id'"));
             }
-            if(sizeof($val1) == 0)
+            if(sizeof($val1) == 0 && !isset($_GET['email']))
             {
                 echo "<h1 class='alert alert-danger'> Alert Yo don't have access to this analysis </h1>";
+
             }
             else{
     function extract_unit($oneByThreeing, $start, $end)
@@ -61,15 +62,22 @@
 
 
             $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $_GET['id']);
-            # $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $id);
-    //echo $a;
+
     $c = extract_unit($a, "<map name=\"mapdata\">", "</map>");
     $d = str_replace("href=\"", "href=\"http://www.genome.jp", $c);
+                if(Auth::user())
+                    {
+$dir = "all/".Auth::user()->email."/".$_GET['analyses']."/".$_GET['image'];
+                    }
+                else if(isset($_GET['email']))
+                    {
+                        $dir = "all/".$_GET['email']."/".$_GET['analyses']."/".$_GET['image'];
+                    }
+                else{
+                    $dir = "all/demo/".$_GET['analyses']."/".$_GET['image'];
+                }
+    echo "<img src=" . $dir . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
 
-            # $directory = $_SESSION['workingdir'];
-            #echo "directoru:". $directory;
-    echo "<img src=" . $_GET['image'] . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
-            #echo "<img src=" . $image . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
     echo "<map name=\"mapdata\">";
     echo $d;
     echo "</map>";

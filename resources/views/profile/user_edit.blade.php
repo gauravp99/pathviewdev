@@ -19,7 +19,9 @@
         @endif
         {!!form::label('email','Email:') !!}
         {!!form::text('email',$user->email) !!}
-        <input type="submit" class="styled-button-2" value="Submit"/>
+        <br/>
+        <br/>
+        <input type="submit" style="margin-left:17%"class="styled-button-2" value="Submit"/>
         {!! form::close() !!}
     </p>
 

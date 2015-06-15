@@ -350,7 +350,7 @@ span.error {
 #steps form input:not([type=radio]),
 #steps form textarea,
 #steps form select {
-    border: 1px solid #ddd;
+    border: 1px solid #F9F1F1;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     border-radius: 3px;
