@@ -43,10 +43,16 @@
         ?>
         <?php if(Session::get('anal_id')!=NULL): ?>
             <?php
+                if(!file_exists(public_path().'/all/'.Auth::user()->email))
+                    {
+                mkdir(public_path().'/all/'.Auth::user()->email);
+                }
+
             xcopy(public_path().'/all/demo/'.Session::get('anal_id'),public_path().'/all/'.Auth::user()->email.'/'.Session::get('anal_id'));
             DB::table('analyses')
                     ->where('analysis_id', Session::get('anal_id'))
                     ->update(array('id' => Auth::user()->id));
+            Session::forget('anal_id');
             ?>
 
         <?php endif; ?>

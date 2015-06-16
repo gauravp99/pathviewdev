@@ -48,7 +48,7 @@ Route::get('/edit_user/{username}', array(
     'uses' => 'ProfileController@edit'));
 
 /*-----------------------------3. End User Profile routes----------------------*/
-
+Route::post('/reset','Auth\PasswordEditController@index');
 
 /*-----------------------------4. Guest user Routes--------------------------*/
 /* URL route for Controller for Guest page */

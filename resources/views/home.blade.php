@@ -45,10 +45,16 @@
         ?>
         @if(Session::get('anal_id')!=NULL)
             <?php
+                if(!file_exists(public_path().'/all/'.Auth::user()->email))
+                    {
+                mkdir(public_path().'/all/'.Auth::user()->email);
+                }
+
             xcopy(public_path().'/all/demo/'.Session::get('anal_id'),public_path().'/all/'.Auth::user()->email.'/'.Session::get('anal_id'));
             DB::table('analyses')
                     ->where('analysis_id', Session::get('anal_id'))
                     ->update(array('id' => Auth::user()->id));
+            Session::forget('anal_id');
             ?>
 
         @endif
@@ -109,7 +115,7 @@
                 <th>#</th>
                 <th>Analysis Type</th>
                 <th>Number of days</th>
-                <th>Analysis Result</th>
+                <th>Result access</th>
             </tr>
             </thead>
             <?php
@@ -128,7 +134,7 @@
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ",");
                 echo "</td>";
                // echo "<td><p>  <a href=/anal_hist?directory=$directory&dir=$dir&id=$id&suffix=$suffix>Analysis : $analyses1->analysis_id</a> </p></td></tr>";
-                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis : $analyses1->analysis_id</a> </p></td></tr>";
+                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td></tr>";
 
 
                 //echo "$analyses1->arguments";

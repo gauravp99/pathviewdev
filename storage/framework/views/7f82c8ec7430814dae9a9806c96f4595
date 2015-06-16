@@ -9,7 +9,7 @@
                 echo "<h2>Analysis ID:".$_SESSION['analyses_id']."</h2>";
         global $dirct;
                 if (!is_null($exception)) {
-                    echo "<h4 class='alert alert-danger'> Sorry !!! there was an issue in the analysis</h4>";
+                        echo "<h1 class='alert alert-danger' style='font-size: 18px;'> Sorry !!! there was an issue in the analysis</h1>";
                 }
         $direct = $directory;
         $contents = scandir($directory);
@@ -43,7 +43,7 @@
 if(!$flag1)
                 {
                 echo "<h2>Pathview Graphs:</h2>";
-                echo "<ul class='alert alert-success'>";
+                echo "<ul >";
         foreach ($contents as $k => $v) {
 
         //echo $k;
@@ -103,7 +103,7 @@ if(!$flag1)
         // Zip archive will be created only after closing object
         #print_r($zip);
         $zip->close();
-                echo "<h2 class='alert alert-info' style='font-size: 18px;'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. <h2>";
+                echo "<h2 class='alert alert-info' style='font-size: 18px;'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. </h2>";
 
         $data['path'] = $direct;
 
@@ -123,7 +123,7 @@ if(!$flag1)
 
                     $message->to($user->email, $user->name)->subject('Pathway success');
 
-                    echo "<h2 class='alert alert-success'>Results were also emailed to $user->email <h2>";
+                    echo "<h2 class='alert alert-info' style='font-size: 18px;'>Results were also emailed to $user->email </h2>";
                 } catch (Exception $e) {
                     echo "Sorry Not able to send the files in mail";
                 }
@@ -131,7 +131,7 @@ if(!$flag1)
         } else{
             Session::put('anal_id', $_SESSION['analyses_id']);
             $anal = $_SESSION['analyses_id'];
-            echo "<h2 style='font-size:18px;' class='alert alert-info'><a style='color:black;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:black;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
+            echo "<h2 style='font-size:18px;' class='alert alert-info' ><a style='color:black;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:black;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
 
         ?>
 
@@ -146,81 +146,7 @@ if(!$flag1)
                 </ul>
             </div>
         <?php endif; ?>
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-             aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title " id="myModalLabel">Register</h4>
-                    </div>
-                    <div class="modal-body">
-
-
-                        <form class="form-horizontal" role="form" method="POST" action="<?php echo e(url('/auth/register')); ?>">
-                            <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Name</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="name"
-                                           value="<?php echo e(old('name')); ?>">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">E-Mail</label>
-
-                                <div class="col-md-6">
-                                    <input type="email" class="form-control" name="email"
-                                           value="<?php echo e(old('email')); ?>">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Organisation</label>
-
-                                <div class="col-md-6">
-                                    <input type="text" class="form-control" name="organisation"
-                                           value="<?php echo e(old('organisation')); ?>">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Password</label>
-
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control" name="password">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-md-4 control-label">Confirm Password</label>
-
-                                <div class="col-md-6">
-                                    <input type="password" class="form-control"
-                                           name="password_confirmation">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Register
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-            </div>
-        <br/>
+       
 
 
 

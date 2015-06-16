@@ -159,7 +159,7 @@
                                 <a href="{{ url('/edit_user/'.Auth::user()->id) }}">Edit Profile</a>
                             </li>
                             <li>
-                                <a href="{{ url('/passwordReset') }}">Password Reset</a>
+                                <a href="{{ url('/passwordReset') }}">Reset Password</a>
                             </li>
                             <li>
                                 <a href="{{ url('/auth/logout') }}">Logout</a>

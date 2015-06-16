@@ -2,9 +2,9 @@ Hello {{$name}},
 
 <br/><br/>
 
-You have successfully generated the pathview from <b>{{$anal_type}}</b> option on <b>{{$time}}</b>
+Your Pathview web job was completed from <b>{{$anal_type}}</b> option on <b>{{$time}}</b>
 <br/>
-Please click here to see the output generated <a href={{url('/anal_hist'.$content)}}>{{$anal_type}}</a>
+To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_type}}</a>
 
 <br/>
 

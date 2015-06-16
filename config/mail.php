@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'byeshvant@gmail.com', 'name' => 'Pathway_Auth'],
+    'from' => ['address' => 'byeshvant@gmail.com', 'name' => 'Pathview Web'],
 
     /*
     |--------------------------------------------------------------------------
