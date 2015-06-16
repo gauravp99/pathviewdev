@@ -1,0 +1,12 @@
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/by1eshvant@hotmail.com/1434391490
+Info: Writing image file hsa00640.multi.multi.pdf
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/by1eshvant@hotmail.com/1434391490
+Info: Writing image file hsa00051.multi.multi.pdf
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/by1eshvant@hotmail.com/1434391490
+Info: Writing image file hsa00052.multi.multi.pdf
+Warning messages:
+1: In .local(from, to, graph) :
+  edges replaced: ‘177|59’, ‘177|60’, ‘122|119’, ‘122|120’
+2: In .local(from, to, graph) :
+  edges replaced: ‘119|56’, ‘154|57’, ‘154|59’, ‘121|69’, ‘154|72’, ‘140|92’, ‘140|95’, ‘160|116’
+3: In .local(from, to, graph) : edges replaced: ‘170|171’
