@@ -6,33 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="/images/plogo.png" height="160px" sizes="32x32">
     <title>Pathview</title>
-    <link href="<?php echo e(asset('/css/bootstrap.css')); ?>" rel="stylesheet">
+    <link href="<?php echo e(asset('/css/bootstrap1.css')); ?>" rel="stylesheet">
     <link href="<?php echo e(asset('/css/carousel.css')); ?>" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 </head>
 
 <body onLoad="init()">
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default" style="background-color: #205081;">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pathview">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-             <a class="navbar-brand" href="<?php echo e(url('/')); ?>"><img src="/images/plogo.png" height="58px" style="margin-top: -15px;background-color: white;padding:3px;margin-left:-18px;">
+             <a class="navbar-brand" href="<?php echo e(url('/')); ?>"><img src="/images/plogo.png" height="58px" style="margin-top: -15px;background-color: white;padding:3px;margin-left:-10px;">
              </a>
              <a class="navbar-brand" href="<?php echo e(url('/')); ?>"><img src="/images/logo-text.png" height="40px" style="margin-top: -16px">
                 Pathway based data integration and visualization
              </a>
         </div>
 
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <div class="collapse navbar-collapse" style="height:60px" id="pathview" >
 
             <ul class="nav navbar-nav navbar-right">
 
-                <li    <?php
+                <li <?php
                         if (basename($_SERVER['PHP_SELF']) == "tutorial") {
                             echo "class=\"active\"";
                         }
@@ -160,7 +160,7 @@
                                 <a href="<?php echo e(url('/edit_user/'.Auth::user()->id)); ?>">Edit Profile</a>
                             </li>
                             <li>
-                                <a href="<?php echo e(url('/passwordReset')); ?>">Password Reset</a>
+                                <a href="<?php echo e(url('/passwordReset')); ?>">Reset Password</a>
                             </li>
                             <li>
                                 <a href="<?php echo e(url('/auth/logout')); ?>">Logout</a>
@@ -174,11 +174,13 @@
         </div>
     </div>
 </nav>
+
 <div class="container-fluid">
     <div class="row">
 <?php echo $__env->yieldContent('content'); ?>
 
 <!-- Scripts -->
+
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="<?php echo e(asset('/css/style.css')); ?>" type="text/css" media="screen"/>
 <script type="text/javascript" src="<?php echo e(asset('/js/sliding.form.js')); ?>"></script>

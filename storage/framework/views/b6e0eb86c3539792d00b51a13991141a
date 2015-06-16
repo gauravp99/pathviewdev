@@ -87,9 +87,14 @@
 
         <?php }?>
         </div>
-        <div class="col-md-6">
-            <a href="/edit_user/<?php echo e(Auth::user()->id); ?>"><input type="button" class="styled-button-2" value="Manage Profile"/></a>
+            <div class="col-md-6">
+        <div class="col-md-12">
+            <a href="/edit_user/<?php echo e(Auth::user()->id); ?>"><input type="button" class="styled-button-2" value="Edit Profile"/></a>
         </div>
+            <div class="col-md-12">
+                <a href="/passwordReset"><input type="button" class="styled-button-2" value="Change Password"/></a>
+            </div>
+            </div>
         </div>
         <h2>Recent activity: </h2>
         <?php
@@ -113,7 +118,7 @@
                 <th>#</th>
                 <th>Analysis Type</th>
                 <th>Number of days</th>
-                <th>Analysis Result</th>
+                <th>Result access</th>
             </tr>
             </thead>
             <?php
@@ -132,7 +137,7 @@
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ",");
                 echo "</td>";
                // echo "<td><p>  <a href=/anal_hist?directory=$directory&dir=$dir&id=$id&suffix=$suffix>Analysis : $analyses1->analysis_id</a> </p></td></tr>";
-                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis : $analyses1->analysis_id</a> </p></td></tr>";
+                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td></tr>";
 
 
                 //echo "$analyses1->arguments";

@@ -54,7 +54,7 @@ $email = Auth::user()->email;
 
         }
             else {
-                echo "<li class='alert alert-success' style='font-size: 24px;list-style-type: none;'>  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
+                echo "<li  style='font-size: 24px;list-style-type: none;'>  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
 
             }
 

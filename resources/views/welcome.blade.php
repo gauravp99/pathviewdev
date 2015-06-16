@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-sm-4" style="">
                     <a href="/guest">
-                        <button type="button" class="btn btn-primary btn-lg GetStarted  " data-toggle="modal">
+                        <button type="button" style="margin-bottom: 10%" class="btn btn-primary btn-lg GetStarted " >
                             Quick Start
                         </button>
                     </a>

@@ -121,7 +121,7 @@ if(!$flag1)
                     #$file =$data['path'] . 'file' . '.zip';
                     #$message->attach($file, array('as' => 'Pathway-files', 'mime' => 'application/zip'));
 
-                    $message->to($user->email, $user->name)->subject('Pathway success');
+                    $message->to($user->email, $user->name)->subject('Analysis completed');
 
                     echo "<h2 class='alert alert-info' style='font-size: 18px;'>Results were also emailed to $user->email </h2>";
                 } catch (Exception $e) {
@@ -146,7 +146,7 @@ if(!$flag1)
                 </ul>
             </div>
         <?php endif; ?>
-       
+
 
 
 

@@ -79,7 +79,8 @@
 
         <div class="col-sm-5">
 
-            <input class="ex8" list="pathwaylist" name="pathway" id="pathway1" style="float:none;width: 110%;" value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>" autocomplete="on">
+            <input class="ex8" style="width:250px;" list="pathwaylist" name="pathway" id="pathway1" style="float:none;width: 110%;" value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>" autocomplete="on">
+            <br/>
             <select name="selectfrom" style="float:none;width:250px;font-size: 15px;" id="select-from" multiple="" size="10" class="multiple-select">
                 <?php
                 $pathway = DB::table('Pathway')->get();
@@ -92,6 +93,7 @@
             </select>
 
         </div>
+
         <div class="col-sm-2" style="margin-left: 30px;">
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1">
                 <span style="margin-top: 1px;padding: 6px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;margin-left: 2px;" class="glyphicon glyphicon-plus"></span>
@@ -101,6 +103,7 @@
             </a>
 
         </div>
+
         <div class="col-sm-5" style="margin-left: -30px;">
             <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
         </div>

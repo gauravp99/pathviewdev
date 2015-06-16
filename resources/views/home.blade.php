@@ -89,9 +89,14 @@
 
         <?php }?>
         </div>
-        <div class="col-md-6">
-            <a href="/edit_user/{{Auth::user()->id}}"><input type="button" class="styled-button-2" value="Manage Profile"/></a>
+            <div class="col-md-6">
+        <div class="col-md-12">
+            <a href="/edit_user/{{Auth::user()->id}}"><input type="button" class="styled-button-2" value="Edit Profile"/></a>
         </div>
+            <div class="col-md-12">
+                <a href="/passwordReset"><input type="button" class="styled-button-2" value="Change Password"/></a>
+            </div>
+            </div>
         </div>
         <h2>Recent activity: </h2>
         <?php
