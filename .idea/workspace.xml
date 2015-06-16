@@ -2,6 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="925ff104-9ab6-4512-bc64-29f946b5eaae" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/resources/1.php" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/resources/views/emails/test.blade.php" afterPath="$PROJECT_DIR$/resources/views/emails/result.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis" afterPath="$PROJECT_DIR$/resources/views/analysis" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/25d01a92886d34dfbc1fa52c836a72c1" afterPath="$PROJECT_DIR$/storage/framework/views/25d01a92886d34dfbc1fa52c836a72c1" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/45e9c8fcd754f1a9f01afea0e798c8d3" afterPath="$PROJECT_DIR$/storage/framework/views/45e9c8fcd754f1a9f01afea0e798c8d3" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/7f82c8ec7430814dae9a9806c96f4595" afterPath="$PROJECT_DIR$/storage/framework/views/7f82c8ec7430814dae9a9806c96f4595" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/storage/framework/views/e17ad6e4af7b1addf856a74fe8a676a7" afterPath="$PROJECT_DIR$/storage/framework/views/e17ad6e4af7b1addf856a74fe8a676a7" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nohup.out" afterPath="$PROJECT_DIR$/nohup.out" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/workenv.RData" afterPath="$PROJECT_DIR$/public/workenv.RData" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Pathway.iws" />
@@ -65,127 +75,36 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
+      <file leaf-file-name="result.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/emails/result.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="3600">
-              <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
+            <state vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="4284">
+              <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
               <folding>
-                <element signature="n#style#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#div#1;n#div#0;n#nav#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <marker date="1434468630534" expanded="true" signature="1307:1420" placeholder="select conca..Species..." />
+                <marker date="1434468630534" expanded="true" signature="1798:1912" placeholder="select conca..Pathway..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="password_edit.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/auth/password_edit.blade.php">
+      <file leaf-file-name="Result.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/analysis/Result.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.222222" vertical-offset="66" max-vertical-offset="1332">
-              <caret line="25" column="117" selection-start-line="25" selection-start-column="117" selection-end-line="25" selection-end-column="117" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/css/bootstrap.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.806452" vertical-offset="123829" max-vertical-offset="146700">
-              <caret line="6898" column="12" selection-start-line="6898" selection-start-column="12" selection-end-line="6898" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PasswordEditController.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordEditController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.36950147" vertical-offset="378" max-vertical-offset="2142">
-              <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="bootstrap1.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/public/css/bootstrap1.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.967742" vertical-offset="22975" max-vertical-offset="118890">
-              <caret line="1297" column="24" selection-start-line="1297" selection-start-column="24" selection-end-line="1297" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="anal_hist.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/profile/anal_hist.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-30.666666" vertical-offset="0" max-vertical-offset="9144">
-              <caret line="46" column="73" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="73" />
+            <state vertical-scroll-proportion="0.5366337" vertical-offset="1528" max-vertical-offset="12006">
+              <caret line="115" column="20" selection-start-line="115" selection-start-column="20" selection-end-line="115" selection-end-column="20" />
               <folding>
-                <marker date="1434482285270" expanded="true" signature="1475:1514" placeholder="..." />
-                <marker date="1434482285270" expanded="true" signature="1791:1830" placeholder="..." />
-                <marker date="1434482285270" expanded="true" signature="2021:2059" placeholder="..." />
-                <marker date="1434482285270" expanded="true" signature="4458:4571" placeholder="select conca..Species..." />
-                <marker date="1434482285270" expanded="true" signature="5267:5381" placeholder="select conca..Pathway..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="example_one.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/analysis/example_one.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.666667" vertical-offset="0" max-vertical-offset="3060">
-              <caret line="19" column="92" selection-start-line="19" selection-start-column="92" selection-end-line="19" selection-end-column="92" />
-              <folding>
-                <element signature="e#327#373#0#HTML" expanded="true" />
-                <element signature="e#641#687#0#HTML" expanded="true" />
-                <element signature="e#1019#1065#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="example_three.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/analysis/example_three.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-30.666666" vertical-offset="0" max-vertical-offset="4050">
-              <caret line="46" column="114" selection-start-line="46" selection-start-column="114" selection-end-line="46" selection-end-column="114" />
-              <folding>
-                <element signature="e#993#1039#0#HTML" expanded="true" />
-                <element signature="e#1374#1420#0#HTML" expanded="true" />
-                <element signature="e#1752#1798#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="example_two.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/analysis/example_two.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.0" vertical-offset="108" max-vertical-offset="4032">
-              <caret line="45" column="114" selection-start-line="45" selection-start-column="114" selection-end-line="45" selection-end-column="114" />
-              <folding>
-                <element signature="e#961#1007#0#HTML" expanded="true" />
-                <element signature="e#1342#1388#0#HTML" expanded="true" />
-                <element signature="e#1720#1766#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NewAnalysis.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/analysis/NewAnalysis.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.666666" vertical-offset="0" max-vertical-offset="3384">
-              <caret line="40" column="114" selection-start-line="40" selection-start-column="114" selection-end-line="40" selection-end-column="114" />
-              <folding>
-                <element signature="e#557#603#0#HTML" expanded="true" />
-                <element signature="e#875#921#0#HTML" expanded="true" />
-                <element signature="e#1252#1298#0#HTML" expanded="true" />
+                <marker date="1434482812294" expanded="true" signature="430:446" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="1665:1704" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="1938:1976" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="3483:3499" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="3517:3529" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="4543:4559" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="4909:4924" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="4962:4989" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="5039:5066" placeholder="..." />
+                <marker date="1434482812294" expanded="true" signature="8770:8883" placeholder="select conca..Species..." />
+                <marker date="1434482812294" expanded="true" signature="9579:9693" placeholder="select conca..Pathway..." />
               </folding>
             </state>
           </provider>
@@ -199,7 +118,7 @@
         <option value="yeshvant" />
       </list>
     </option>
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/resources/views/analysis" />
     <option name="PUSH_TAGS">
       <GitPushTagMode />
     </option>
@@ -241,7 +160,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/AnalysisController.php" />
         <option value="$PROJECT_DIR$/resources/views/auth/password_edit.blade.php" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Foundation/Auth/ResetsPasswords.php" />
-        <option value="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" />
         <option value="$PROJECT_DIR$/config/mail.php" />
         <option value="$PROJECT_DIR$/resources/views/emails/test.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/emails/password.blade.php" />
@@ -258,6 +176,7 @@
         <option value="$PROJECT_DIR$/resources/views/analysis/example_two.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/analysis/NewAnalysis.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordEditController.php" />
+        <option value="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" />
       </list>
     </option>
   </component>
@@ -345,20 +264,6 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
@@ -404,7 +309,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="auth" />
+              <option name="myItemId" value="emails" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -440,91 +345,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Auth" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Commands" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -864,7 +685,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="24" width="1855" height="1176" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3295238" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.32962963" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
@@ -878,7 +699,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2498618" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31177446" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31177446" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1170,37 +991,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/analysis/Result.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.4827585" vertical-offset="1798" max-vertical-offset="12006">
-          <caret line="124" column="88" selection-start-line="124" selection-start-column="88" selection-end-line="124" selection-end-column="88" />
-          <folding>
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="select conca..Species..." />
-            <marker date="1434468533966" expanded="true" signature="-1:-1" placeholder="select conca..Pathway..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/emails/test.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="4284">
-          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
-          <folding>
-            <marker date="1434468630534" expanded="true" signature="-1:-1" placeholder="select conca..Species..." />
-            <marker date="1434468630534" expanded="true" signature="-1:-1" placeholder="select conca..Pathway..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/auth/reset.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.888889" vertical-offset="201" max-vertical-offset="1224">
@@ -1255,14 +1045,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-7.4827585" vertical-offset="1294" max-vertical-offset="2844">
           <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/1.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1050">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1367,7 +1149,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/css/bootstrap1.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.967742" vertical-offset="22975" max-vertical-offset="118890">
+        <state vertical-scroll-proportion="0.3687873" vertical-offset="22975" max-vertical-offset="118890">
           <caret line="1297" column="24" selection-start-line="1297" selection-start-column="24" selection-end-line="1297" selection-end-column="24" />
           <folding />
         </state>
@@ -1375,21 +1157,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/profile/anal_hist.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.666666" vertical-offset="0" max-vertical-offset="9144">
+        <state vertical-scroll-proportion="0.819802" vertical-offset="0" max-vertical-offset="9144">
           <caret line="46" column="73" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="73" />
           <folding>
-            <marker date="1434482285270" expanded="true" signature="1475:1514" placeholder="..." />
-            <marker date="1434482285270" expanded="true" signature="1791:1830" placeholder="..." />
-            <marker date="1434482285270" expanded="true" signature="2021:2059" placeholder="..." />
-            <marker date="1434482285270" expanded="true" signature="4458:4571" placeholder="select conca..Species..." />
-            <marker date="1434482285270" expanded="true" signature="5267:5381" placeholder="select conca..Pathway..." />
+            <marker date="1434482285270" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1434482285270" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1434482285270" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1434482285270" expanded="true" signature="-1:-1" placeholder="select conca..Species..." />
+            <marker date="1434482285270" expanded="true" signature="-1:-1" placeholder="select conca..Pathway..." />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/analysis/example_one.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.666667" vertical-offset="0" max-vertical-offset="3060">
+        <state vertical-scroll-proportion="0.33861387" vertical-offset="0" max-vertical-offset="3060">
           <caret line="19" column="92" selection-start-line="19" selection-start-column="92" selection-end-line="19" selection-end-column="92" />
           <folding>
             <element signature="e#327#373#0#HTML" expanded="true" />
@@ -1401,7 +1183,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/analysis/example_three.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-30.666666" vertical-offset="0" max-vertical-offset="4050">
+        <state vertical-scroll-proportion="0.819802" vertical-offset="0" max-vertical-offset="4050">
           <caret line="46" column="114" selection-start-line="46" selection-start-column="114" selection-end-line="46" selection-end-column="114" />
           <folding>
             <element signature="e#993#1039#0#HTML" expanded="true" />
@@ -1413,7 +1195,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/analysis/example_two.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.0" vertical-offset="108" max-vertical-offset="4032">
+        <state vertical-scroll-proportion="0.6950495" vertical-offset="108" max-vertical-offset="4032">
           <caret line="45" column="114" selection-start-line="45" selection-start-column="114" selection-end-line="45" selection-end-column="114" />
           <folding>
             <element signature="e#961#1007#0#HTML" expanded="true" />
@@ -1425,7 +1207,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/analysis/NewAnalysis.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.666666" vertical-offset="0" max-vertical-offset="3384">
+        <state vertical-scroll-proportion="0.7128713" vertical-offset="0" max-vertical-offset="3384">
           <caret line="40" column="114" selection-start-line="40" selection-start-column="114" selection-end-line="40" selection-end-column="114" />
           <folding>
             <element signature="e#557#603#0#HTML" expanded="true" />
@@ -1445,9 +1227,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordEditController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36950147" vertical-offset="378" max-vertical-offset="2142">
+        <state vertical-scroll-proportion="0.4222874" vertical-offset="324" max-vertical-offset="2142">
           <caret line="48" column="42" selection-start-line="48" selection-start-column="42" selection-end-line="48" selection-end-column="42" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/emails/result.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.0" vertical-offset="0" max-vertical-offset="4284">
+          <caret line="6" column="31" selection-start-line="6" selection-start-column="31" selection-end-line="6" selection-end-column="31" />
+          <folding>
+            <marker date="1434468630534" expanded="true" signature="1307:1420" placeholder="select conca..Species..." />
+            <marker date="1434468630534" expanded="true" signature="1798:1912" placeholder="select conca..Pathway..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/analysis/Result.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5366337" vertical-offset="1528" max-vertical-offset="12006">
+          <caret line="115" column="20" selection-start-line="115" selection-start-column="20" selection-end-line="115" selection-end-column="20" />
+          <folding>
+            <marker date="1434482812294" expanded="true" signature="430:446" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="1665:1704" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="1938:1976" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="3483:3499" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="3517:3529" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="4543:4559" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="4909:4924" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="4962:4989" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="5039:5066" placeholder="..." />
+            <marker date="1434482812294" expanded="true" signature="8770:8883" placeholder="select conca..Species..." />
+            <marker date="1434482812294" expanded="true" signature="9579:9693" placeholder="select conca..Pathway..." />
+          </folding>
         </state>
       </provider>
     </entry>

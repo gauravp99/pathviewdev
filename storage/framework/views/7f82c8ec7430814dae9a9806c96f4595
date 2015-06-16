@@ -115,7 +115,7 @@ if(!$flag1)
             $data['time'] = date('l jS \of F Y h:i:s A');
             $data['anal_type'] = $_SESSION['anal_type'];
             $data['argument'] = $_SESSION['argument'];
-            Mail::queue('emails.test', $data, function ($message) use ($data) {
+            Mail::queue('emails.result', $data, function ($message) use ($data) {
                 try {
                     $user = Auth::user();
                     #$file =$data['path'] . 'file' . '.zip';
