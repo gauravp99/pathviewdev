@@ -19,7 +19,7 @@
         <div class="col-sm-5">
 
             <?php if($errors->any()): ?>
-                <ul class="alert alert-danger" style="font-size: 14px;">
+                <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
                      <?php foreach($errors->all() as $error): ?>
                         <li><?php echo e($error); ?></li>
                      <?php endforeach; ?>
@@ -28,7 +28,7 @@
 
             <?php if(Session::get('err')!=NULL): ?>
 
-                <ul class="alert alert-danger" style="font-size: 14px;">
+                <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
                     <?php
                     for ($x = 0; $x < sizeof(Session::get('err')); $x++) {
                         echo "<li>" . Session::get('err')[$x] . "</li>";
@@ -36,7 +36,7 @@
                     ?>
                 </ul>
             <?php endif; ?>
-            <ul id="errors" hidden="true" class="alert alert-danger" style="font-size: 14px;"></ul>
+            <ul id="errors" hidden="true" class="alert alert-danger" style="font-size: 14px;list-style-type: none;"></ul>
         </div>
     </div>
 

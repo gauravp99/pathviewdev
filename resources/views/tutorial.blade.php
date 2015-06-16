@@ -58,7 +58,7 @@
                     <li class="dropdown" style="width:100%">
                         <a href="#" class="dropdown-toggle list-group-item active"
                            data-toggle="dropdown">Options<span
-                                    class="glyphicon glyphicon-download pull-right"></span></a>
+                                    class="glyphicon glyphicon-download pull-right" style="margin-top: 20px;"></span></a>
                         <ul class="dropdown-menu" style="width:100%">
 
                             <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
@@ -86,7 +86,7 @@
                     <li class="dropdown" style="width:100%">
                         <a href="#" class="dropdown-toggle list-group-item active"
                            data-toggle="dropdown">Options<span
-                                    class="glyphicon glyphicon-download pull-right"></span></a>
+                                    class="glyphicon glyphicon-download pull-right" style="margin-top: 20px;"></span></a>
                         <ul class="dropdown-menu" style="width:100%">
 
                             <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
@@ -123,7 +123,7 @@
                     <li class="dropdown" style="width:100%">
                         <a href="#" class="dropdown-toggle list-group-item active"
                            data-toggle="dropdown">Options<span
-                                    class="glyphicon glyphicon-download pull-right"></span></a>
+                                    class="glyphicon glyphicon-download pull-right" style="margin-top: 20px;"></span></a>
                         <ul class="dropdown-menu" style="width:100%">
 
                             <li style="width:300px;"><a href="#nsum">Node Sum</a></li>

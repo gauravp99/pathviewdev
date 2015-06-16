@@ -89,10 +89,21 @@
         </div>
             <div class="col-md-6">
         <div class="col-md-12">
-            <a href="/edit_user/<?php echo e(Auth::user()->id); ?>"><input type="button" class="styled-button-2" value="Edit Profile"/></a>
+            <a href="/edit_user/<?php echo e(Auth::user()->id); ?>">
+                <button type="submit" class="btn btn-primary" style="width:200px;font-size: 18px">
+                   Edit Profile
+                </button>
+            </a>
+
         </div>
+
             <div class="col-md-12">
-                <a href="/passwordReset"><input type="button" class="styled-button-2" value="Change Password"/></a>
+                <a href="/passwordReset">
+                    <br/>
+                    <button type="submit" class="btn btn-primary" style="width:200px;font-size: 18px">
+                        Reset Password
+                    </button>
+                </a>
             </div>
             </div>
         </div>

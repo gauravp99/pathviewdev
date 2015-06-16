@@ -21,7 +21,10 @@
         {!!form::text('email',$user->email) !!}
         <br/>
         <br/>
-        <input type="submit" style="margin-left:17%"class="styled-button-2" value="Submit"/>
+        <button type="submit" class="btn btn-primary" style="margin-left:17%;font-size: 18px;width:10%;">
+           Submit
+        </button>
+
         {!! form::close() !!}
     </p>
 

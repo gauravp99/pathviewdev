@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-sm-4" style="">
                     <a href="/guest">
-                        <button type="button" style="margin-bottom: 10%" class="btn btn-primary btn-lg GetStarted " >
+                        <button type="button" style="margin-bottom: 3%" class="btn btn-primary btn-lg GetStarted " >
                             Quick Start
                         </button>
                     </a>

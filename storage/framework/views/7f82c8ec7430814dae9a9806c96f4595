@@ -103,7 +103,7 @@ if(!$flag1)
         // Zip archive will be created only after closing object
         #print_r($zip);
         $zip->close();
-                echo "<h2 class='alert alert-info' style='font-size: 18px;'>Click <a style='color:black;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. </h2>";
+                echo "<h2 class='alert alert-info' style='font-size: 18px;color:black;'>Click <a style='color:blue;'  href=\"" . $directory1 . "file.zip\">here</a> to download zipped output files. </h2>";
 
         $data['path'] = $direct;
 
@@ -123,7 +123,7 @@ if(!$flag1)
 
                     $message->to($user->email, $user->name)->subject('Analysis completed');
 
-                    echo "<h2 class='alert alert-info' style='font-size: 18px;'>Results were also emailed to $user->email </h2>";
+                    echo "<h2 class='alert alert-info' style='font-size: 18px;color:black;'>Results were also emailed to $user->email </h2>";
                 } catch (Exception $e) {
                     echo "Sorry Not able to send the files in mail";
                 }
@@ -131,7 +131,7 @@ if(!$flag1)
         } else{
             Session::put('anal_id', $_SESSION['analyses_id']);
             $anal = $_SESSION['analyses_id'];
-            echo "<h2 style='font-size:18px;' class='alert alert-info' ><a style='color:black;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:black;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
+            echo "<h2 style='font-size:18px;color:black;' class='alert alert-info' ><a style='color:blue;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:black;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
 
         ?>
 
