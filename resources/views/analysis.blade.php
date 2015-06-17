@@ -11,12 +11,14 @@
         </div>
     </div>
     <datalist id="geneidlist">
+        <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
         $gene = DB::table('gene')->get();
         foreach ($gene as $gene1) {
             echo "<option>$gene1->geneid</option>";
         }
         ?>
+        <!--[if (lt IE 10)]></select><![endif]-->
     </datalist>
 </div>
 
@@ -36,7 +38,9 @@
     </div>
 
     <datalist id="cpdidlist">
+        <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php $compound = DB::table('compound')->get(); foreach ($compound as $compound1) { echo "<option>$compound1->cmpdid</option>"; } ?>
+        <!--[if (lt IE 10)]></select><![endif]-->
     </datalist>
 </div>
 
@@ -54,12 +58,14 @@
         </div>
     </div>
     <datalist id="specieslist">
+        <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
         $species = DB::table('Species')->get();
         foreach ($species as $species1) {
             echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
         }
         ?>
+        <!--[if (lt IE 10)]></select><![endif]-->
 
     </datalist>
 </div>
@@ -79,9 +85,9 @@
 
         <div class="col-sm-5">
 
-            <input class="ex8" style="width:250px;" list="pathwaylist" name="pathway" id="pathway1" style="float:none;width: 110%;" value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>" autocomplete="on">
+            <input class="ex8" style="width:100%;" list="pathwaylist" name="pathway" id="pathway1" style="float:none;width: 110%;" value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>" autocomplete="on">
             <br/>
-            <select name="selectfrom" style="float:none;width:250px;font-size: 15px;" id="select-from" multiple="" size="10" class="multiple-select">
+            <select name="selectfrom" style="float:none;width:100%;font-size: 15px;" id="select-from" multiple="" size="10" class="multiple-select">
                 <?php
                 $pathway = DB::table('Pathway')->get();
 
@@ -94,28 +100,34 @@
 
         </div>
 
-        <div class="col-sm-2" style="margin-left: 30px;">
-            <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1">
-                <span style="margin-top: 1px;padding: 6px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;margin-left: 2px;" class="glyphicon glyphicon-plus"></span>
+        <div class="col-sm-2" style="margin-left: 20px;">
+            <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1" style="font-size:24px;">
+                <span style="margin-top: 1px;padding: 6px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;margin-left: 2px;margin:5px" class="glyphicon glyphicon-plus"></span>
             </a>
+
+            <div class="pathwayiconsep" style="margin-top: 60px">
+                </div>
+
+
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add" style="font-size:24px;">
-                <span class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;top: 83px;left: 2px;  "></span>
+                <span class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;margin:5px"></span>
             </a>
 
         </div>
 
-        <div class="col-sm-5" style="margin-left: -30px;">
-            <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:220px;font-size:15px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
+        <div class="col-sm-5" style="margin-left: -20px;">
+            <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:100%;font-size:15px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
         </div>
     </div>
     <datalist id="pathwaylist">
+        <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
         $pathway = DB::table('Pathway')->get();
         foreach ($pathway as $pathway1) {
             echo "<option>" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
         }
         ?>
-
+        <!--[if (lt IE 10)]></select><![endif]-->
     </datalist>
 </div>
 

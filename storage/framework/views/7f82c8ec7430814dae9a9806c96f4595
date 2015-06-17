@@ -629,7 +629,7 @@ if(!$flag1)
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
                        data-toggle="dropdown">Click her to see Analysis Logs<span
-                                class="glyphicon glyphicon-download pull-right"></span></a>
+                                class="glyphicon glyphicon-download pull-right" style="margin-top: 20px;"></span></a>
                     <ul class="dropdown-menu" style="width:600px;">
 
                         <?php
