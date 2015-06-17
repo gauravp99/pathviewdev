@@ -12,7 +12,7 @@
 </head>
 
 <body onLoad="init()">
-<nav class="navbar navbar-default" style="background-color: #205081;">
+<nav class="navbar navbar-default navbar-change" style="background-color: #205081;">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pathview">
@@ -21,10 +21,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-             <a class="navbar-brand" href="{{ url('/') }}"><img src="/images/plogo.png" height="58px" style="margin-top: -15px;background-color: white;padding:3px;margin-left:-10px;">
+             <a class="navbar-brand navbar-brand-img " href="{{ url('/') }}"><img src="/images/plogo.png"  class="navbrand-image">
              </a>
-             <a class="navbar-brand" href="{{ url('/') }}"><img src="/images/logo-text.png" height="40px" style="margin-top: -16px">
-                Pathway based data integration and visualization
+             <a class="navbar-brand textlogo" href="{{ url('/') }}"><img src="/images/logo-text.png" height="40px" style="margin-top: -16px">
+               <div class="navbrand-text"> Pathway based data integration and visualization</div>
+
              </a>
         </div>
 
@@ -100,37 +101,168 @@
 
                 @if (Auth::guest())
 
-                    <li <?php
-                            if (basename($_SERVER['PHP_SELF']) == "login") {
-                                echo "class=\"active\"";
-                                }
-                            ?>
-                            >
-                        <a href="{{ url('/auth/login') }}">
-                            Login
-                        </a>
-                    </li>
+                    <?php
 
-                    <li <?php
-                            if (basename($_SERVER['PHP_SELF']) == "register") {
-                                echo "class=\"active\"";
-                                }
-                            ?>
-                            >
-                        <a href="{{ url('/auth/register') }}">Register</a>
-                    </li>
+                  if(basename($_SERVER['PHP_SELF']) == "login")
+                            {
+                                ?>
+                        <li class="dropdown active" >
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
 
-                    <li <?php
-                            if (basename($_SERVER['PHP_SELF']) == "guest") {
-                                echo "class=\"active\"";
+                                Login
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "register") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/auth/register') }}">Register</a>
+                                </li>
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "guest") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/guest') }}">
+                                        <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px"> Guest</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php
+
                             }
-                            ?>
-                            >
-                        <a href="{{ url('/guest') }}">
-                            <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px">
-                            Guest
-                        </a>
-                    </li>
+                            else if(basename($_SERVER['PHP_SELF']) == "register")
+                            {
+?>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+
+                                Register
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "register") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/auth/login') }}">Login</a>
+                                </li>
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "guest") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/guest') }}">
+                                        <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px"> Guest</a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php
+                            }
+                            else if(basename($_SERVER['PHP_SELF']) == "guest")
+                            {
+                                ?>
+                        <li class="dropdown active">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px">
+                                Guest
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "register") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/auth/login') }}">Login</a>
+                                </li>
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "guest") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/auth/register') }}">
+                                         Register</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <?php
+
+                            }
+                            else  {
+                        ?>
+                        <li class="dropdown" >
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px">
+                                Account
+
+                                <span class="caret"></span>
+                            </a>
+
+                            <ul class="dropdown-menu" role="menu">
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "login") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/auth/login') }}">
+                                        Login
+                                    </a>
+                                </li>
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "register") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/auth/register') }}">Register</a>
+                                </li>
+
+                                <li <?php
+                                        if (basename($_SERVER['PHP_SELF']) == "guest") {
+                                            echo "class=\"active\"";
+                                        }
+                                        ?>
+                                        >
+                                    <a href="{{ url('/guest') }}">
+                                        Guest</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <?php
+                        }
+
+
+                    ?>
+
 
                 @else
                     <li class="dropdown">
@@ -185,6 +317,7 @@
 <script type="text/javascript" src="{{ asset('/js/sliding.form.js') }}"></script>
 <script src="{{asset('/js/ChartNew.js')}}"></script>
 <script type="text/javascript" src="http://jscolor.com/example/jscolor/jscolor.js"></script>
+
 
 @include('footer')
 

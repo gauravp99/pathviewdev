@@ -2,7 +2,7 @@
 
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="col-sm-9">
-        <div class="col-sm-5">
+        <div class="conetent-header">
     <?php /*Start to check if the user is logged in or not if user is logged in then user profile is loaded */ ?>
     <?php /*<?php if(is_null(Auth::user())): ?>
         <h2> welcome Guest </h2>

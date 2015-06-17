@@ -2,7 +2,7 @@
 
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="col-sm-9">
-        <div class="col-sm-5">
+        <div class="conetent-header">
                     <p><b>Example Analysis: Multiple Sample KEGG View</b></p>
         </div>
         <div class="col-sm-5">

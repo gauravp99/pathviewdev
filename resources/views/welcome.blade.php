@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-sm-4" style="">
                     <a href="/guest">
-                        <button type="button" style="margin-bottom: 3%" class="btn btn-primary btn-lg GetStarted " >
+                        <button type="button" style="margin-bottom: 6%" class="btn btn-primary btn-lg GetStarted " >
                             Quick Start
                         </button>
                     </a>
@@ -45,7 +45,7 @@
             <div class="col-sm-12">
 
 
-                <div class="marketing col-sm-8">
+                <div class="col-sm-8 corousel-content">
 
                     <div class="marketing-hero-inner">
                         <div id="myCarousel" class=" carousel slide col col-sm-12 " data-ride="carousel">
@@ -92,6 +92,7 @@
                     </div>
 
 
+
                     <div class="homepage-content-inner col-sm-12">
                         <div class="homepage-content-image-container">
                             <div class="col-sm-12 ">
@@ -113,7 +114,7 @@
                         </div>
                     </div>
 
-                    <div class="homepage-content-inner col-sm-12 ">
+                    <div class="homepage-content-inner col-sm-12 " style="margin-bottom: 5%">
                         <div class="homepage-content-image-container">
                             <div class="col-sm-8 ">
                                 <h2 class="homepage-heading">Contact</h2>
@@ -124,96 +125,6 @@
                                 <p class="contact"> Report Issues : <a
                                             href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a>
 
-
-                                    <script type="text/javascript">
-                                        window.onLoad = function () {
-                                            init();
-
-
-                                        };
-
-
-                                        function init() {
-
-
-                                            var ctx = $("#myChart").get(0).getContext("2d");
-                                            var opt2 = {
-
-                                                canvasBordersWidth: 3,
-                                                canvasBordersColor: "#205081",
-                                                //graphTitle : "Pathview Web",
-                                                legend: true,
-                                                graphTitleFontSize: 18,
-                                                logarithmic: true
-                                            };
-
-                                            var data = {
-
-                                                labels: JSON.parse('<?php echo JSON_encode($months);?>'),
-                                                datasets: [
-                                                    {
-                                                        fillColor: "rgba(220,220,220,0.5)",
-                                                        strokeColor: "rgba(220,220,220,1)",
-                                                        pointColor: "rgba(220,220,220,1)",
-                                                        pointStrokeColor: "#fff",
-                                                        data: JSON.parse('<?php echo JSON_encode($usage);?>')
-                                                        //title:"No of Graphs"
-                                                    },
-                                                    {
-                                                        fillColor: "rgba(151,187,205,0.5)",
-                                                        strokeColor: "rgba(151,187,205,1)",
-                                                        pointColor: "rgba(151,187,205,1)",
-                                                        pointStrokeColor: "#fff",
-                                                        data: JSON.parse('<?php echo JSON_encode($ip);?>')
-                                                        // title:"Unique IP's"
-                                                    }
-                                                ]
-                                            };
-
-                                            var myBarChart = new Chart(ctx).Bar(data, opt2);
-
-                                            var ctx1 = $("#myChart1").get(0).getContext("2d");
-
-                                            var data1 = {
-                                                labels: JSON.parse('<?php echo JSON_encode($bioc_months);?>'),
-                                                datasets: [
-                                                    {
-                                                        fillColor: "rgba(220,220,220,0.5)",
-                                                        strokeColor: "rgba(220,220,220,1)",
-                                                        pointColor: "rgba(220,220,220,1)",
-                                                        pointStrokeColor: "#fff",
-                                                        data: JSON.parse('<?php echo JSON_encode($bioc_downloads);?>')
-                                                    },
-                                                    {
-                                                        fillColor: "rgba(151,187,205,0.5)",
-                                                        strokeColor: "rgba(151,187,205,1)",
-                                                        pointColor: "rgba(151,187,205,1)",
-                                                        pointStrokeColor: "#fff",
-                                                        data: JSON.parse('<?php echo JSON_encode($bioc_ip);?>')
-                                                    }
-                                                ]
-                                            };
-//graphTitle : "Bioc Package",
-                                            var opt1 = {
-
-                                                canvasBordersWidth: 3,
-                                                canvasBordersColor: "#205081",
-                                                scaleOverride: true,
-                                                scaleSteps: 7,
-                                                scaleStepWidth: 200,
-                                                scaleStartValue: 250,
-                                                scaleLabel: "<%=value%>",
-                                                legend: true,
-                                                graphTitleFontSize: 18
-
-
-                                            };
-                                            var myBarChart1 = new Chart(ctx1).Bar(data1, opt1);
-
-                                        }
-
-                                    </script>
-
                             </div>
 
                         </div>
@@ -221,10 +132,10 @@
                 </div>
 
 
-                <div class="col-md-4">
+                <div class="col-sm-4 leftsidebar">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading">Login</div>
+                        <div class="panel-heading" style="text-align: center;">Login</div>
                         <div class="panel-body">
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger">
@@ -285,13 +196,16 @@
 
 
                         </div>
-
-
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary btn-lg register" style="border-radius: 1px;"
                                 data-toggle="modal" data-target="#myModal">
                             Click here to Register
                         </button>
+                        </div>
+
+
+
+
 
 
                         <!-- Modal -->
@@ -368,14 +282,14 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="align:left;">Usage Statistics</div>
+                        <div class="panel-heading" style="text-align: center;">Usage Statistics</div>
                         <div class="panel-body">
                             <p style="text-align:left;">Pathview web</p>
 
                             <div id="graph" class="col-md-12">
-                                <section>
+
 
                                     <table style="margin:5px;font-size: 12px;width:100%;">
                                         <tr>
@@ -397,19 +311,21 @@
                                         </tr>
 
                                     </table>
-                                    <article>
-                                        <canvas id="myChart" width="450" height="200">
-                                        </canvas>
-                                    </article>
-                                </section>
-                            </div>
+
+
+
+
+
+
+
+                                </div>
+                            <canvas id="myChart" ></canvas>
                             <p style="text-align:left;"> Bioc Package</p>
 
                             <div id="graph1" class="col-md-12">
 
 
                                 <section>
-
                                     <table style="margin:5px;font-size: 12px;width:100%;">
                                         <tr>
 
@@ -431,23 +347,24 @@
                                         </tr>
 
                                     </table>
-                                    <article>
-                                        <canvas id="myChart1" width="450" height="200">
-                                        </canvas>
-                                    </article>
+
+
+
+                                    <script>
+
+                                        $(document).ready(function () {
+                                            $("#myChart1").width($("#myChart1").parent().width());
+
+                                        });
+
+                                    </script>
                                 </section>
                             </div>
+                            <canvas id="myChart1" ></canvas>
 
                         </div>
                     </div>
-                    <script>
-                        var canvas = document.getElementsByTagName('canvas')[0];
-                        canvas.width = document.getElementById("graph").offsetWidth;
-                        var canvas1 = document.getElementsByTagName('canvas')[1];
-                        canvas1.width = document.getElementById("graph1").offsetWidth;
 
-
-                    </script>
 
                     <style>
 
@@ -471,13 +388,104 @@
                         }
                     </style>
 
+                    <script type="text/javascript">
+    window.onLoad = function () {
+        init();
+
+
+    };
+
+
+    function init() {
+
+
+        var ctx = $("#myChart").get(0).getContext("2d");
+
+        var opt2 = {
+
+            canvasBordersWidth: 3,
+            canvasBordersColor: "#205081",
+            legend: true,
+            graphTitleFontSize: 18,
+            logarithmic: true,
+            responsive: true
+        };
+
+        var data = {
+
+            labels: JSON.parse('<?php echo JSON_encode($months);?>'),
+            datasets: [
+                {
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    data: JSON.parse('<?php echo JSON_encode($usage);?>')
+                    //title:"No of Graphs"
+                },
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    data: JSON.parse('<?php echo JSON_encode($ip);?>')
+                    // title:"Unique IP's"
+                }
+            ]
+        };
+
+        var myBarChart = new Chart(ctx).Bar(data, opt2);
+
+        var ctx1 = $("#myChart1").get(0).getContext("2d");
+
+        var data1 = {
+            labels: JSON.parse('<?php echo JSON_encode($bioc_months);?>'),
+            datasets: [
+                {
+                    fillColor: "rgba(220,220,220,0.5)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    data: JSON.parse('<?php echo JSON_encode($bioc_downloads);?>')
+                },
+                {
+                    fillColor: "rgba(151,187,205,0.5)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    data: JSON.parse('<?php echo JSON_encode($bioc_ip);?>')
+                }
+            ]
+        };
+
+        var opt1 = {
+
+            canvasBordersWidth: 3,
+            canvasBordersColor: "#205081",
+            scaleOverride: true,
+            scaleSteps: 4,
+            scaleStepWidth: 500,
+            scaleStartValue: 0,
+            scaleLabel: "<%=value%>",
+            legend: true,
+            graphTitleFontSize: 18,
+            responsive: true
+
+
+        };
+        var myBarChart1 = new Chart(ctx1).Bar(data1, opt1);
+
+    }
+
+</script>
 
                 </div>
 
             </div>
 
 
-        </div>
+
+    </div>
 
 
 

@@ -5521,7 +5521,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default {
     background-color: #205081;
     border-color: #e7e7e7;
-    height: 60px;
+    height: 62px;
 }
 
 .navbar-default .navbar-brand {
@@ -5546,7 +5546,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > li > a:focus {
     /* color: #3572B0;*/
     background-color: #3572B0;
-    height: 60px;
+    height: 62px;
 }
 
 .navbar-default .navbar-nav > .active > a,
