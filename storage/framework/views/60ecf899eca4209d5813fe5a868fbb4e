@@ -6,8 +6,8 @@
  * Time: 12:17 PM
  */
 ?>
-<div class=" col-md-2 sidebar"  >
-    <ul class="nav nav-sidebar" style="margin-right: 4%">
+<div class="col-md-2"  >
+    <ul class="navigation nav" style="margin-right: 4%">
         <li <?php if (basename($_SERVER['PHP_SELF']) == "home"||basename($_SERVER['PHP_SELF']) == "guest-home"||basename($_SERVER['PHP_SELF']) == "guest") {
             echo "class=\"active\"";
         }?>>
@@ -52,7 +52,7 @@
     }
     @media (max-width: 400px)
     {
-        .nav{
+        .navigation{
             visibility: hidden;
             position:absolute;
         }
@@ -226,7 +226,7 @@
         }
     }
 
-    @media (min-width: 20px) {
+    @media (min-width: 1020px) {
         .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
             float: left;
         }

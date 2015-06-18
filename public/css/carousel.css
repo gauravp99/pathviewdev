@@ -39,9 +39,11 @@ body {
 
 /* Carousel base class */
 .carousel {
-    height: 500px;
-    margin-bottom: 60px;
-    border: 4px solid rgba(9, 20, 243, 0.05);
+    height: 520px;
+    margin-bottom: 20px;
+    border: 2px solid #204D74;
+
+
 }
 
 /* Since positioning the image, we need to help out the caption */

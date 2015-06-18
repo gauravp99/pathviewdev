@@ -1,3 +1,4 @@
+
 <div class="stepsdiv" id="geneid-div" @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -428,4 +429,5 @@
     </div>
 
 </div>
+
 

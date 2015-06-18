@@ -1,15 +1,18 @@
 <?php $__env->startSection('content'); ?>
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
-    <h1>
-        <div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div>
-    </h1>
-    <p><b>User ID: <?php echo e($user->id); ?></b></p>
-    <p><b>User Email: <?php echo e($user->email); ?></b></p>
-    <p><b>Member since: <?php echo e($user->created_at); ?></b></p>
 
 
-    <p> <?php echo form::open(array('url' => 'edit_post','method'=>'POST','files'=>true)); ?>
+
+    <div class="col-md-8 editDiv" >
+        <div class="col-md-12">
+        <h1>
+            <div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div>
+        </h1>
+        <p><b>User ID: <?php echo e($user->id); ?></b></p>
+        <p><b>User Email: <?php echo e($user->email); ?></b></p>
+        <p><b>Member since: <?php echo e($user->created_at); ?></b></p>
+        <?php echo form::open(array('url' => 'edit_post','method'=>'POST','files'=>true)); ?>
 
         <?php echo form::label('Name','Name:'); ?>
 
@@ -26,13 +29,16 @@
 
         <br/>
         <br/>
-        <button type="submit" class="btn btn-primary" style="margin-left:17%;font-size: 18px;width:10%;">
+            </div>
+        <div class="col-md-1 ">
+        <button type="submit" class="btn btn-primary" style="margin-left:17%;font-size: 18px;width:200px;">
            Submit
         </button>
+            </div>
 
         <?php echo form::close(); ?>
 
-    </p>
+    </div>
 
 
 

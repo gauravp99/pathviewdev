@@ -107,7 +107,7 @@
             </div>
             </div>
         </div>
-        <h2>Recent activity: </h2>
+        <h2 class="success">Recent activity: </h2>
         <?php
         $analyses = DB::table('analyses')->where('id', Auth::user()->id)->get();
 

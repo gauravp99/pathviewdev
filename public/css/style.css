@@ -5,6 +5,55 @@
 .navbar-fixed-top {
     min-height: 60px;
 }
+.tables
+{
+    margin:5px;
+    font-size: 12px;
+    width:100%;
+}
+.bar1
+{
+    background-color:#C1DBF0;
+    width:80%;
+}
+.bar2
+{
+    width:80%;
+    background-color:#D4DBE0;
+
+}
+
+.footer_title {
+    text-align: center;
+    font-size: 14px;
+
+}
+
+.footer_content {
+    text-align: center;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+}
+.editDiv
+{
+
+    border-radius: 4px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+    border: 2px solid #204D74;
+    padding: 10px;
+}
+.footer {
+
+    height: 80px;
+    position: relative;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    text-align: center;
+}
+
 @media (min-width: 768px) and (max-width: 1100px) {
     .leftsidebar
     {
@@ -23,10 +72,26 @@
 width:60%;
     }
 }
-@media (max-width:486px)
+@media (max-width:385px)
+{
+    .panel > .table
+{
+    width:50%;
+    font-size: 5px;
+}
+}
+@media (max-width:490px)
 {
     .navbrand-text{
         position: absolute;
+        visibility:hidden;
+        font-size: 0px;
+    }
+    .textlogo  {
+        position: absolute;
+        visibility:hidden;
+        height:1px;
+        width:1px;
     }
 
 }
@@ -49,8 +114,32 @@ visibility:hidden;
 }
 
 
+.leftpanel
+{
+    text-align: center;
+}
+.clickRegister
+{
+    border-radius: 1px;
+}
 
+td, th {
+    padding: 5px;
+    text-align: center;
 
+}
+
+table {
+    border: 3px solid #8C8484;
+    padding: 5px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+th {
+    background-color: #205081;
+    color: white;
+}
 @media (min-width: 768px) and (max-width: 880px) {
     .navbar-header > a > .navbrand-image
     {
@@ -269,7 +358,8 @@ a {
 
 .success {
 
-    column-rule: #009933;;
+    column-rule: #009933;
+    margin-left: 30px;
 }
 
 #navigation {
@@ -348,8 +438,14 @@ a {
     border-color: #204D74;
     margin-bottom: -10px;
     bottom: 0;
+    margin-bottom: 6%;
 }
-
+.contactDiv {
+    margin-bottom: 5%;
+}
+.welcomeLogin{
+    font-size: 16px;width: 100%;
+}
 .marketing-hero-heading {
     color: rgb(45, 45, 45);
     font-family: LLCircularWeb-Bold, sans-serif;

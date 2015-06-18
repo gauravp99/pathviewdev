@@ -4,7 +4,7 @@
     <div class="col-sm-9">
     <div class="panel panel-default">
         <div class="panel-heading">Guest Login</div>
-        <div class='col-md-2-result sidebar col-md-offset-2'>
+        <div class=' col-md-offset-2'>
 
             <div class="panel-body">
                 Hello Guest You are ready to do Analysis!
