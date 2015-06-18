@@ -214,7 +214,7 @@ if(!$flag1)
         <br/>
 
         <div class="bs-example" data-example-id="condensed-table">
-            <table border=1 style="width:70%" class="table table-condensed">
+            <table border=1 style="width:70%;text-align: justify;" class="table table-condensed">
                 <thead>
                 <tr>
                     <th>Argument Name</th>

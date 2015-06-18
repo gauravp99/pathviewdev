@@ -15,11 +15,26 @@
                 </p>
             </div>
             <div class="col-sm-4 leftsidebar">
-                <a href="/guest">
-                    <button type="button" style="margin-bottom: 6%" class="btn btn-primary btn-lg GetStarted " >
+
+                    <?php
+                    if(Auth::user())
+                    {
+                        ?>
+                        <a href="/analysis">
+                        <button type="button"  class="btn btn-primary btn-lg GetStarted " >
+                            Quick Start
+                        </button>
+                            </a>
+                    <?php
+                    }
+                        else{?>
+                        <a href="/guest">
+                    <button type="button"  class="btn btn-primary btn-lg GetStarted " >
                         Quick Start
                     </button>
-                </a>
+                        </a>
+                    <?php }?>
+
                 <div class="panel panel-default">
                     <div class="panel-heading leftpanel" >Usage Statistics</div>
                     <div class="panel-body">

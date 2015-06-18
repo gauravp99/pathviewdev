@@ -88,7 +88,7 @@
 
             <input class="ex8" style="width:100%;" list="pathwaylist" name="pathway" id="pathway1" style="float:none;width: 110%;" value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>" autocomplete="on">
             <br/>
-            <select name="selectfrom" style="float:none;width:100%;font-size: 15px;" id="select-from" multiple="" size="10" class="multiple-select">
+            <select name="selectfrom" style="float:none;width:100%;font-size: 17px;" id="select-from" multiple="" size="10" class="multiple-select">
                 <?php
                 $pathway = DB::table('Pathway')->get();
 
@@ -117,7 +117,7 @@
         </div>
 
         <div class="col-sm-5" style="margin-left: -20px;">
-            <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:100%;font-size:15px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
+            <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:100%;height:90%;font-size:16px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
         </div>
     </div>
     <datalist id="pathwaylist">

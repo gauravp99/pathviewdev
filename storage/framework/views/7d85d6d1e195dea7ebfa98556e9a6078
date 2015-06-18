@@ -8,6 +8,7 @@
     <link rel="icon" href="/images/plogo.png"  sizes="32x32">
     <link href="<?php echo e(asset('/css/bootstrap1.css')); ?>" rel="stylesheet">
     <link rel="stylesheet" href="<?php echo e(asset('/css/style.css')); ?>" type="text/css" media="screen"/>
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <title>Pathview</title>
 </head>
 <body >
@@ -225,7 +226,7 @@
 
 
         <?php echo $__env->yieldContent('content'); ?>
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+
         <?php echo $__env->make('footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
 

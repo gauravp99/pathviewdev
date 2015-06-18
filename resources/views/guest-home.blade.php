@@ -30,11 +30,6 @@
                     <p class="alert alert-info" style="color:black;">To save your inputs, outputs and analysis, please <a
                                 href="#" style="border-radius: 1px; color:blue;"
                                 data-toggle="modal" data-target="#myModal">register</a> for free.</p>
-
-
-
-
-
             </div>
         </div>
     </div>

@@ -43,21 +43,19 @@
 <style>
     @media (max-width: 636px)
     {
-        .nav{
-            font-size: 13px;
-        }
+
         .active{
 
         }
     }
-    @media (max-width: 400px)
+  /*  @media (max-width: 400px)
     {
         .navigation{
             visibility: hidden;
             position:absolute;
         }
 
-    }
+    }*/
     @media (max-width: 768px)
     {
         .conetent-header > p

@@ -151,14 +151,14 @@
                                                     &nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td width="">Graphs:</td>
+                                            <td class="tdContent">Graphs:</td>
                                             <td><?php echo $web_dnld_cnt ?></td>
                                             <td>
                                                 <div class="bar2">
                                                     &nbsp&nbsp
                                                 </div>
                                             </td>
-                                            <td>IP's:</td>
+                                            <td  class="tdContent">IP's:</td>
                                             <td><?php echo $web_ip_cnt ?></td>
                                         </tr>
 
@@ -175,7 +175,7 @@
                                                 </div>
                                             </td>
 
-                                            <td>Downloads:</td>
+                                            <td  class="tdContent">Downloads:</td>
 
                                             <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
 
@@ -185,7 +185,7 @@
                                                 </div>
                                             </td>
 
-                                            <td>IP's:</td>
+                                            <td  class="tdContent">IP's:</td>
 
                                             <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
                                         </tr>

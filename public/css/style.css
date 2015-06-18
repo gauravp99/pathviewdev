@@ -74,11 +74,23 @@ width:60%;
 }
 @media (max-width:385px)
 {
-    .panel > .table
+.bar1
 {
-    width:50%;
-    font-size: 5px;
+
+    font-size: 0px;
 }
+    .bar2
+    {
+
+        font-size: 0px;
+    }
+    .tables
+    {
+        font-size: 10px;
+        border:hidden;
+        margin-left: -40px;
+    }
+
 }
 @media (max-width:490px)
 {
