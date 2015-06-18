@@ -133,7 +133,7 @@
                                         ?>
                                         >
                                     <a href="<?php echo e(url('/guest')); ?>">
-                                        <img src="<?php echo e(asset('/images/user.png')); ?>" alt="Login as Guest" height="20px"> Guest</a>
+                                        Guest</a>
                                 </li>
                             </ul>
                         </li>
@@ -170,7 +170,7 @@
                                         ?>
                                         >
                                     <a href="<?php echo e(url('/guest')); ?>">
-                                        <img src="<?php echo e(asset('/images/user.png')); ?>" alt="Login as Guest" height="20px"> Guest</a>
+                                         Guest</a>
                                 </li>
                             </ul>
                         </li>

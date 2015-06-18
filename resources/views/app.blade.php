@@ -133,7 +133,7 @@
                                         ?>
                                         >
                                     <a href="{{ url('/guest') }}">
-                                        <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px"> Guest</a>
+                                        Guest</a>
                                 </li>
                             </ul>
                         </li>
@@ -170,7 +170,7 @@
                                         ?>
                                         >
                                     <a href="{{ url('/guest') }}">
-                                        <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px"> Guest</a>
+                                         Guest</a>
                                 </li>
                             </ul>
                         </li>
