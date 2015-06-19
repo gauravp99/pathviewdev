@@ -33,22 +33,19 @@ class AnalysisController extends Controller
 
         $errors = array();
         $gene_cmpd_color = array();
+        $pathway_array = array();
         $err_atr = array();
         $argument = "";
         $time = time();
         $email = "";
+
         foreach ($_POST as $key => $value) {
             $_SESSION[$key] = $value;
         }
+
         $Session = $_SESSION;
 
-        /*--------------------------------------------------------------Start checking for the arguments list--------------------------------------------------------*/
-
-        $i = 0;
-
         preg_match_all('!\d{5}!', $_POST['selecttextfield'], $matches);
-
-        $pathway_array = array();
 
         foreach ($matches as $pathway1) {
             foreach ($pathway1 as $pathway)
@@ -58,6 +55,9 @@ class AnalysisController extends Controller
         $pathway_array1 = array_unique($pathway_array);
 
         $argument .= "pathway:";
+
+        $i = 0;
+
         foreach ($pathway_array1 as $pathway) {
             $pathway = substr($pathway, 0, 5);
             $val = DB::select(DB::raw("select pathway_id from Pathway where pathway_id like '$pathway' LIMIT 1"));
@@ -69,10 +69,13 @@ class AnalysisController extends Controller
                 $err_atr["pathway"] = 1;
             }
         }
+
         $argument .= ",";
 
         $geneid = $_POST["geneid"];
+
         $val = DB::select(DB::raw("select geneid  from gene where geneid  like '$geneid' LIMIT 1 "));
+
         if (sizeof($val) > 0) {
             $argument .= "geneid:" . $val[0]->geneid . ",";
         } else {
@@ -81,17 +84,20 @@ class AnalysisController extends Controller
         }
 
         $cpdid = $_POST["cpdid"];
+
         $val = DB::select(DB::raw("select cmpdid  from compound where cmpdid  like '$cpdid' LIMIT 1 "));
+
         if (sizeof($val) > 0) {
             $argument .= "cpdid:" . $val[0]->cmpdid . ",";
-
         } else {
             array_push($errors, "Entered compound ID doesn't exist");
             $err_atr["cpdid"] = 1;
         }
 
         $species1 = explode("-", $_POST["species"]);
+
         $val = DB::select(DB::raw("select species_id from Species where species_id like '$species1[0]' LIMIT 1"));
+
         if (sizeof($val) > 0) {
             $argument .= "species:" . $val[0]->species_id . ",";
         } else {
@@ -100,8 +106,8 @@ class AnalysisController extends Controller
         }
 
         $suffix = preg_replace("/[^A-Za-z0-9 ]/", '', $_POST["suffix"]);
-        $argument .= "suffix:" . $suffix . ",";
 
+        $argument .= "suffix:" . $suffix . ",";
 
         if (isset($_POST["kegg"]))
             $argument .= "kegg:T,";
@@ -144,6 +150,7 @@ class AnalysisController extends Controller
             $argument .= "cdisc:F,";
 
         $argument .= "kpos:" . $_POST["kpos"] . ",";
+
         $argument .= "pos:" . $_POST["pos"] . ",";
 
         if (preg_match('/[a-z]+/', $_POST["offset"])) {
@@ -165,28 +172,29 @@ class AnalysisController extends Controller
                 $err_atr["gbins"] = 1;
        }
 
-       $glmtrange = str_replace(",", ";", $_POST["glmt"]);
-       $argument .= "glmt:" . $glmtrange . ",";
+        $glmtrange = str_replace(",", ";", $_POST["glmt"]);
 
-       $argument .= "gbins:" . $_POST["gbins"] . ",";
+        $argument .= "glmt:" . $glmtrange . ",";
 
-       if (strpos($_POST["glow"], '#') !== false) {
+        $argument .= "gbins:" . $_POST["gbins"] . ",";
+
+        if (strpos($_POST["glow"], '#') !== false) {
                 $argument .= "glow:" . $_POST["glow"] . ",";
-       } else {
+        } else {
             $argument .= "glow:" . '#' . $_POST["glow"] . ",";
-       }
+        }
 
-       if (strpos($_POST["gmid"], '#') !== false) {
+        if (strpos($_POST["gmid"], '#') !== false) {
                 $argument .= "gmid:" . $_POST["gmid"] . ",";
-       } else {
+        } else {
                 $argument .= "gmid:" . '#' . $_POST["gmid"] . ",";
-       }
+        }
 
-       if (strpos($_POST["ghigh"], '#') !== false) {
+        if (strpos($_POST["ghigh"], '#') !== false) {
                 $argument .= "ghigh:" . $_POST["ghigh"] . ",";
-       } else {
+        } else {
                 $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ",";
-       }
+        }
 
        $gene_cmpd_color["glow"] = $_POST["glow"];
        $gene_cmpd_color["gmid"] = $_POST["gmid"];
@@ -207,7 +215,6 @@ class AnalysisController extends Controller
        $argument .= "clmt:" . $clmtrange . ",";
 
        $argument .= "cbins:" . $_POST["cbins"] . ",";
-
 
        if (strpos($_POST["clow"], '#') !== false) {
             $argument .= "clow:" . $_POST["clow"] . ",";
@@ -232,6 +239,7 @@ class AnalysisController extends Controller
        $gene_cmpd_color["chigh"] = $_POST["chigh"];
 
        $argument .= "nsum:" . $_POST["nodesun"] . ",";
+
        $argument .= "ncolor:" . $_POST["nacolor"] . ",";
 
         function file_ext($filename)
@@ -244,7 +252,6 @@ class AnalysisController extends Controller
         {
             return preg_replace('/\.[^.]*$/', '', $filename);
         }
-
 
         if (Input::hasFile('gfile')) {
             $filename = Input::file('gfile')->getClientOriginalName();
@@ -265,7 +272,6 @@ class AnalysisController extends Controller
         }
 
         $pathidx = 1;
-        $pathway_array = array();
         $path = "pathway" . $pathidx;
 
         if (sizeof($errors) > 0) {
@@ -293,14 +299,10 @@ class AnalysisController extends Controller
 
         }
 
-        /*--------------------------------------------------------------End checking for the arguments--------------------------------------------------------*/
 
-
-        /** Different pipeline for different analysis type */
         if ($anal_type == "newAnalysis") {
 
             if (Input::hasFile('gfile')) {
-                $pathidx = 1;
                 $file = Input::file('gfile');
                 $filename = Input::file('gfile')->getClientOriginalName();
                 $gene_extension = file_ext($filename);
@@ -309,7 +311,7 @@ class AnalysisController extends Controller
                     $argument .= "filename:" . $filename . ",";
                 }
             }
-                    $destFile = public_path();
+
                     if (is_null(Auth::user())) {
                         $email = "demo";
                     } else {
@@ -329,7 +331,7 @@ class AnalysisController extends Controller
                     }
                     $time = time();
                     $oldmask = umask(0);
-                    mkdir("all/$email/$time", 0777, false);
+                    mkdir("all/$email/$time", 0755, false);
                     umask($oldmask);
 
                     $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
@@ -404,7 +406,7 @@ class AnalysisController extends Controller
                         return view('/home');
                     }
                 }
-                $destFile = public_path() . "/all/$email/$time/";
+
 
                     mkdir("all/$email/$time", 0755, true);
                     $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
@@ -473,7 +475,7 @@ class AnalysisController extends Controller
                     }
                 }
                 $time = time();
-                mkdir("all/$email/$time", 0777, true);
+                mkdir("all/$email/$time", 0755, true);
 
 
                 $_SESSION['id'] = $species1[0] . substr($path[0], 0, 5);
@@ -487,7 +489,6 @@ class AnalysisController extends Controller
                     $_SESSION['multistate'] = "T";
 
                 $destFile = public_path() . "/all/$email/$time/";
-                $destFile1 = "/all/$email/$time/";
                 $argument .= "targedir:" . public_path() . "/all/" . $email . "/" . $time .",";
 
 
@@ -500,9 +501,6 @@ class AnalysisController extends Controller
                         copy("all/demo/example/gene.ensprot.txt", $destFile . "/gene.ensprot.txt");
                     }
                 }
-
-
-
 
 
                     if (Input::get('cpdcheck') == 'T') {
@@ -524,7 +522,7 @@ class AnalysisController extends Controller
             }
         }
 
-        /** gettingthe client ip address stored into database */
+
         function get_client_ip()
         {
 
@@ -547,14 +545,9 @@ class AnalysisController extends Controller
             return $ipaddress;
         }
 
-        /** Rscript code running with the arguments */
-       #return $argument;
-
         exec("/home/ybhavnasi/R-3.1.2/bin/Rscript my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
-        /** check if rscript generated any error if generated then log into database */
         $date = new \DateTime;
-
 
         if (Auth::user())
             DB::table('analyses')->insert(
@@ -565,9 +558,6 @@ class AnalysisController extends Controller
                 array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'ipadd' => get_client_ip())
             );
 
-        /**
-         * If error occured save the error into a database for debugging and error for administrator
-         */
         $lines = file($destFile . "errorFile.Rout");
         $flag = false;
         foreach ($lines as $temp) {

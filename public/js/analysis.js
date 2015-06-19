@@ -18,13 +18,9 @@ $(document).ready(function () {
     $('#btn-add').click(function () {
 
         $('#select-from option:selected').each(function () {
-
             var val = $(this).val();
-
             $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
             $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
-
-
         });
     });
     $('#btn-add1').click(function () {
@@ -278,6 +274,11 @@ function fileCheck() {
     else {
 
         suffix.value = suffix.value.replace(/\W/g, "-");
+        if(suffix.value.length>100)
+        {
+            suffix.value= suffix.value.substring(0,100);
+
+        }
     }
 
     if (species.value == "") {
@@ -287,8 +288,6 @@ function fileCheck() {
         li.appendChild(document.createTextNode("Species Cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
-
     }
     else if (species.value.length >= 3 || species.value.substring(0, 2) == 'ko') {
         if (species.value.substring(0, 2) == 'ko') {
@@ -309,13 +308,10 @@ function fileCheck() {
             {
                 if(species.value.split("-")[0] == most_spec[i])
                 {
-
                     most_flag = true;
                     break;
-
                 }
             }
-
 
             if(!most_flag && ( geneid.value.toUpperCase() != 'ENTREZ' && geneid.value.toUpperCase() != 'KEGG' ))
             {
@@ -326,10 +322,8 @@ function fileCheck() {
                 error = true;
 
             }
-
             var myElement = document.getElementById("species-div");
             myElement.style.backgroundColor = "#F4F4F4";
-
         }
     }
     else {
@@ -341,7 +335,6 @@ function fileCheck() {
         error = true;
 
     }
-
     if (offset.value == "") {
         var myElement = document.getElementById("offset-div");
         myElement.style.backgroundColor = "#DA6666";
@@ -349,8 +342,6 @@ function fileCheck() {
         li.appendChild(document.createTextNode("Compound Label Offset Cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
-
     }
     else if (!(/^-?\d*.?\d+$/.test(offset.value))) {
         var myElement = document.getElementById("offset-div");
@@ -359,23 +350,17 @@ function fileCheck() {
         li.appendChild(document.createTextNode("Compound Label Offset  Value must be numeric"));
         errors.appendChild(li);
         error = true;
-
     }
     else {
         var myElement = document.getElementById("offset-div");
         myElement.style.backgroundColor = "#F4F4F4";
-
     }
-
     if (glmt.value == "") {
-
         glmt.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Gene Limit Cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
-
     }
     else {
         var str_array = glmt.value.split(',');
@@ -386,12 +371,10 @@ function fileCheck() {
                 li.appendChild(document.createTextNode("Gene Limit Value must be numeric values separated by comma"));
                 errors.appendChild(li);
                 error = true;
-
             }
             else {
                 glmt.style.backgroundColor = "#FFF";
             }
-
         }
         else {
             if (!(/^-?\d*.?\d+$/.test(glmt.value))) {
@@ -400,24 +383,18 @@ function fileCheck() {
                 li.appendChild(document.createTextNode("Gene Limit Value must be numeric"));
                 errors.appendChild(li);
                 error = true;
-
             }
-
             else  {
                 glmt.style.backgroundColor = "#FFF";
             }
-
         }
     }
     if (gbins.value == "") {
-
         gbins.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Gene Bins Cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
-
     }
     else if (!(/^\d+$/.test(gbins.value))) {
         gbins.style.backgroundColor = "#DA6666";
@@ -425,20 +402,16 @@ function fileCheck() {
         li.appendChild(document.createTextNode("Gene Bins Value must be numeric"));
         errors.appendChild(li);
         error = true;
-
     }
     else {
         gbins.style.backgroundColor = "#FFF";
-
     }
     if (clmt.value == "") {
-
         clmt.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Compound Limit  Cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
     }
     else {
         var str_array = clmt.value.split(',');
@@ -449,7 +422,6 @@ function fileCheck() {
                 li.appendChild(document.createTextNode("Compound Limit Value must be numeric values separated by comma"));
                 errors.appendChild(li);
                 error = true;
-
             }
             else {
                 clmt.style.backgroundColor = "#FFF";
@@ -471,14 +443,11 @@ function fileCheck() {
     }
 
     if (cbins.value == "") {
-
         cbins.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Compound Bins Cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
-
     }
     else if (!(/^\d+$/.test(cbins.value))) {
         cbins.style.backgroundColor = "#DA6666";
@@ -490,26 +459,21 @@ function fileCheck() {
     else {
         cbins.style.backgroundColor = "#FFF";
     }
-
-
-
     if (error) {
         error = true;
         errors.removeAttribute("hidden");
         return false;
-
     }
     else {
+        $("#errors").hide();
         document.getElementById('submit-button').setAttribute("data-toggle", "modal");
         document.getElementById('submit-button').setAttribute("data-target", "#myModal");
 
-
         for (var i = 0; i < selectBox.options.length; i++) {
-
             selectBox.options[i].selected = true;
         }
-        var i = selectBox.options.length;
 
+        var i = selectBox.options.length;
 
         if (i > 0) {
             createCookie("pathidx", selectBox.options.length, 1);
@@ -531,23 +495,9 @@ function fileCheck() {
             }
 
         }
-
-
     }
-
-
 }
-function colorCheck() {
-    document.getElementById("glow").value = "#00FF00";
-    /*  $glow = "#00FF00";
-     $gmid = "#D3D3D3";
-     $ghigh = "#FF0000";
-     $clmt = 1;
-     $cbins = 10;
-     $clow = "#0000FF";
-     $cmid = "#D3D3D3";
-     $chigh = "#FFFF00";*/
-}
+
 function createCookie(name, value, days) {
     if (days) {
         var date = new Date();
@@ -568,11 +518,6 @@ function readCookie(name) {
     }
     return null;
 }
-
 function eraseCookie(name) {
     createCookie(name, "", -1);
-}
-
-function reset() {
-
 }

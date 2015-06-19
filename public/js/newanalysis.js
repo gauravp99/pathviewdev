@@ -300,6 +300,11 @@ function fileCheck() {
     else {
 
         suffix.value = suffix.value.replace(/\W/g, "-");
+        if(suffix.value.length>100)
+        {
+            suffix.value= suffix.value.substring(0,100);
+
+        }
     }
 
     if (species.value == "") {
