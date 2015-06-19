@@ -323,26 +323,7 @@ class Rserve_Connection
      *               https://github.com/SurajGupta/RserveCLI2/blob/master/RServeCLI2/RConnection.cs
      * @param string $salt
      */
-    /*public function login($salt=null) {
-        switch ( $this->auth_method )
-        {
-        case "plain":
-            break;
-        case "crypt":
-            if(!$salt) throw new Rserve_Exception("Should pass the salt for login");
-            $this->password=crypt($this->password,$salt);
-            break;
-        default:
-            throw new Rserve_Exception( "Could not interpret login method '{$this->auth_method}'" );
-        }
-        $data = _rserve_make_data(self::DT_STRING, "{$this->username}\n{$this->password}");
-        $r=$this->sendCommand(self::CMD_login, $data );
-        if( !$r['is_error'] ) {
-            return true;
-        }
-        throw new Rserve_Exception( "Could not login" );
-    }
-*/
+
 
     /**
      * Set Asynchronous mode
@@ -403,12 +384,7 @@ class Rserve_Connection
      */
     public function debugPacket($packet)
     {
-        /*
-          [0]  (int) command
-          [4]  (int) length of the message (bits 0-31)
-          [8]  (int) offset of the data part
-          [12] (int) length of the message (bits 32-63)
-        */
+
         if (is_array($packet)) {
             $buf = $packet['contents'];
             $header = $packet['header'];

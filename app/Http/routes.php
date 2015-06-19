@@ -11,18 +11,10 @@
 |
 */
 
-
-/*--------------------1. welcome page -----------------------------------*/
-
 /* URL route for Controller for welcome page */
 Route::get('/', array(
     'as' => 'home',
     'uses' => 'WelcomeController@index'));
-
-/*--------------------welcome page -----------------------------------*/
-
-
-/*-----------------------------2. Start User Profile routes----------------------*/
 
 /* URL route for Controller for user profile page */
 Route::get('/user/{username}', array(
@@ -47,10 +39,15 @@ Route::get('/edit_user/{username}', array(
     'as' => 'profile-edit-user',
     'uses' => 'ProfileController@edit'));
 
-/*-----------------------------3. End User Profile routes----------------------*/
+/* URL route for Password Reset Home  */
+Route::get('passwordReset', array(
+    'as' => 'passwordReset ',
+    'users' => function () {
+        return view('auth.password_edit');
+    }));
+
 Route::post('/reset','Auth\PasswordEditController@index');
 
-/*-----------------------------4. Guest user Routes--------------------------*/
 /* URL route for Controller for Guest page */
 Route::get('guest', 'GuestController@index');
 
@@ -60,16 +57,7 @@ Route::get('guest-home', array(
     'users' => function () {
         return view('guest-home');
     }));
-Route::get('passwordReset', array(
-    'as' => 'passwordReset ',
-    'users' => function () {
-        return view('auth.password_edit');
-    }));
 
-/*-----------------------------4. End Guest user Routes--------------------------*/
-
-
-/*-----------------------------5. Analysis Routes-----------------------------*/
 /* URL route for Controller for Analysis page user page */
 Route::get('analysis', 'AnalysisController@new_analysis');
 
@@ -88,7 +76,6 @@ Route::get('anal_hist', array(
         return view('profile.anal_hist');
     }));
 
-
 /* URL route for Analysis (New Analysis)  */
 Route::post('postAnalysis', 'AnalysisController@postAnalysis');
 
@@ -106,34 +93,25 @@ Route::get('example1', 'AnalysisController@example_one');
 Route::get('example2', 'AnalysisController@example_two');
 
 Route::get('example3', 'AnalysisController@example_three');
+
 Route::get('test', function () {
     return view("rserve.index");
 });
+
 Route::get('error', function () {
     return view("errors.customError");
 });
-/*-----------------------------5. end Analysis Routes-----------------------------*/
 
-
-/*----------------------------------6.Help Page------------------------------------*/
 Route::get('tutorial', function () {
     return view("tutorial");
 });
-/*----------------------------------6.end Help Page------------------------------------*/
 
-
-/*---------------------------------7.About page------------------------------------*/
 Route::get('about', function () {
-
-    /**
-     * this function is used to get the last 12 months analysis statistics from biostatisctics table
-     * for now I have written the mangeable code but this is not efficient have to change code to make it efficient
-     */
 
     $usage = array();
     $ip = array();
     $months = array();
-    /*get the all details from database for Analyses table Query is written in such a fashion that you can get last 6 months data only*/
+
     $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
     foreach ($val as $month) {
         array_push($usage, $month->count);
@@ -246,12 +224,10 @@ Route::get('about', function () {
         ->with('web_ip_cnt', $count_web_ips->ip);
 });
 
-/*---------------------------------7.end About page Route------------------------------------*/
 
-/*----------------------------------8. Authroisation page Route ------------------------------*/
+
+
 Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
-
-/*----------------------------------8. End Authroisation page Route ------------------------------*/

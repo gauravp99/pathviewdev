@@ -15,8 +15,6 @@ class PreviousAnalysis extends Controller
 
     public function user($username)
     {
-
-
         $user = User::where('id', '=', $username);
         if(Auth::user()->id==$username) {
             if ($user->count()) {
