@@ -214,7 +214,7 @@ if(!$flag1)
         <br/>
 
         <div class="bs-example" data-example-id="condensed-table">
-            <table border=1 style="width:70%;text-align: justify;" class="table table-condensed">
+            <table border=1 class="table table-condensed" style="width:70%;text-align: left;" >
                 <thead>
                 <tr>
                     <th>Argument Name</th>
@@ -627,10 +627,9 @@ if(!$flag1)
         <div class="list-group col-md-4">
             <ul class="nav navbar-nav" style="  margin-left: 30px;">
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle list-group-item active" style="width:300px;"
-                       data-toggle="dropdown">Click her to see Analysis Logs<span
-                                class="glyphicon glyphicon-download pull-right" style="margin-top: 20px;"></span></a>
-                    <ul class="dropdown-menu" style="width:600px;">
+                    <a href="#" class="dropdown-toggle list-group-item active" style="width:100%;"
+                       data-toggle="dropdown">Click here to see Analysis Logs</a>
+                    <ul class="dropdown-menu" style="width:100%;">
 
                         <?php
                         $lines = file($directory . "errorFile.Rout");
@@ -640,7 +639,7 @@ if(!$flag1)
                             if (strpos($temp,'directory') == false)
                             {
 
-                                echo "<pre>" . $temp . "</pre>";
+                                echo "<div style='width:100%;'>" . $temp . "</div>";
                             }
 
 

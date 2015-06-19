@@ -135,7 +135,20 @@
                     </li>
                     <?php
                     }
-                    else if(basename($_SERVER['PHP_SELF']) == "guest")
+                    else if((basename($_SERVER['PHP_SELF']) == "guest")
+                        ||(basename($_SERVER['PHP_SELF']) == "guest-home")
+                        ||(basename($_SERVER['PHP_SELF']) == "analysis")
+                        ||(basename($_SERVER['PHP_SELF']) == "example1")
+                        ||(basename($_SERVER['PHP_SELF']) == "example2")
+                        ||(basename($_SERVER['PHP_SELF']) == "example3")
+                        ||(basename($_SERVER['PHP_SELF']) == "viewer")
+                        ||(basename($_SERVER['PHP_SELF']) == "results")
+                        ||(basename($_SERVER['PHP_SELF']) == "postAnalysis")
+                        ||(basename($_SERVER['PHP_SELF']) == "post_exampleAnalysis1")
+                        ||(basename($_SERVER['PHP_SELF']) == "post_exampleAnalysis2")
+                        ||(basename($_SERVER['PHP_SELF']) == "post_exampleAnalysis3")
+
+                        )
                     {
                     ?>
                     <li class="dropdown active">
@@ -180,7 +193,7 @@
                                 }?>>
                                 <a href="<?php echo e(url('/auth/register')); ?>">Register</a>
                             </li>
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "guest") {
+                            <li <?php if ((basename($_SERVER['PHP_SELF']) == "guest")) {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="<?php echo e(url('/guest')); ?>">Guest</a>

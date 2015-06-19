@@ -6,7 +6,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-8">
                     <h2 class="marketing-hero-heading">
-                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a> maps, integrates and renders a wide variety of biological dataon relevant pathway graphs.
+                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a> maps, integrates and renders a wide variety of biological data on relevant pathway graphs.
                     </h2>
                 </div>
             </div>
@@ -59,9 +59,15 @@
 
                     <div class="col-sm-12 ">
                                 <h2 class="homepage-heading">Citations:</h2>
-                                    <p class="content1">
+                                    <p class="content1"><i>
                                         Luo W, Brouwer C. Pathview: an R/Biocondutor package for pathway-based data integration and visualization. Bioinformatics, 2013, 29(14):1830-1831, doi:
                                         <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">10.1093/bioinformatics/btt285</a>
+                                    </i></p>
+                                    <p class="content1">
+                                    </p>
+				    <br>
+                                    <p class="content1">
+                                        Please cite our paper if you use the Pathview package or this website. In addition, please cite this website if you use it. This will help the Pathview project in return.
                                     </p>
                     </div>
 
@@ -140,22 +146,22 @@
                         <div class="panel-body">
                             <p >Pathview web</p>
 
-                            <div id="graph" class="col-md-12">
+                            <div id="graph1" class="col-md-12">
 
 
                                     <table class="tables" >
                                         <tr>
 
                                             <td>
-                                                <div class="bar1" >
-                                                    &nbsp&nbsp
+                                                <div class="bar11" >
+                                                    &nbsp
                                                 </div>
                                             </td>
                                             <td class="tdContent">Graphs:</td>
                                             <td><?php echo $web_dnld_cnt ?></td>
                                             <td>
-                                                <div class="bar2">
-                                                    &nbsp&nbsp
+                                                <div class="bar12">
+                                                    &nbsp
                                                 </div>
                                             </td>
                                             <td  class="tdContent">IP's:</td>

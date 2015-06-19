@@ -50,122 +50,131 @@
             </div>
             <!-- /.col-lg-4 -->
         </div>
-        <div class="col-md-12 content">
-            <div class="col-lg-4">
-            <div class="list-group">
+        <div class="col-md-12 content" >
+            <div class="col-md-4">
+                <div class="list-group">
 
-                <ul class="nav navbar-nav" style="width:100%">
-                    <li class="dropdown" style="width:100%">
-                        <a href="#" class="dropdown-toggle list-group-item active"
-                           data-toggle="dropdown">Options<span
-                                    class="glyphicon glyphicon-download pull-right" ></span></a>
-                        <ul class="dropdown-menu" style="width:100%">
+                    <ul class="nav navbar-nav" style="width:100%">
+                        <li class="dropdown" style="width:100%;margin-bottom: 10px;">
+                            <a href="#" class="dropdown-toggle list-group-item active"
+                               data-toggle="dropdown">Options<span
+                                        class="glyphicon glyphicon-download pull-right" ></span></a>
+                            <ul class="dropdown-menu" style="width:100%">
 
-                            <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#gene_id">Gene ID Type</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#cpd_id">Compound ID Type</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#species">Species</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#pwy_id">Pathway ID</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#suffix">Output Suffix</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+                                <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#cpd_data">Compound Data</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#gene_id">Gene ID Type</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#cpd_id">Compound ID Type</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#species">Species</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#pwy_id">Pathway ID</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#suffix">Output Suffix</a></li>
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-            <div class="col-lg-4">
-            <div class="list-group">
-
-                <ul class="nav navbar-nav" style="width:100%">
-                    <li class="dropdown" style="width:100%">
-                        <a href="#" class="dropdown-toggle list-group-item active"
-                           data-toggle="dropdown">Options<span
-                                    class="glyphicon glyphicon-download pull-right" ></span></a>
-                        <ul class="dropdown-menu" style="width:100%">
-
-                            <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#layer">Same Layer</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#desc">Descrete</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#split">Split Group</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#expand">Expand Node</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#multi">Multi State</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#match">Match Data</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#clabel">Compound Label Offset</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#kalign">Key Alignment</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#spos">Signature Position</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#kpos">Key Position</a></li>
-
-                        </ul>
-                    </li>
-                </ul>
             </div>
+
+            <div class="col-md-4">
+                <div class="list-group">
+
+                    <ul class="nav navbar-nav" style="width:100%">
+                        <li class="dropdown" style="width:100%;margin-bottom: 10px;">
+                            <a href="#" class="dropdown-toggle list-group-item active"
+                               data-toggle="dropdown">Options<span
+                                        class="glyphicon glyphicon-download pull-right" ></span></a>
+                            <ul class="dropdown-menu" style="width:100%">
+
+                                <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#layer">Same Layer</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#desc">Descrete</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#split">Split Group</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#expand">Expand Node</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#multi">Multi State</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#match">Match Data</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#clabel">Compound Label Offset</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#kalign">Key Alignment</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#spos">Signature Position</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#kpos">Key Position</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
                 </div>
-                <div class="col-lg-4">
-            <div class="list-group">
-
-                <ul class="nav navbar-nav" style="width:100%">
-                    <li class="dropdown" style="width:100%">
-                        <a href="#" class="dropdown-toggle list-group-item active"
-                           data-toggle="dropdown">Options<span
-                                    class="glyphicon glyphicon-download pull-right" ></span></a>
-                        <ul class="dropdown-menu" style="width:100%">
-
-                            <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#limit">Limit</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#bins">Bins</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#color">Low</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#color">Mid</a></li>
-                            <li class="divider"></li>
-                            <li style="width:300px;"><a href="#color">High</a></li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
-                    </div>
+            <div class="col-md-4">
+                <div class="list-group">
+
+                    <ul class="nav navbar-nav" style="width:100%">
+                        <li class="dropdown" style="width:100%;margin-bottom: 10px;">
+                            <a href="#" class="dropdown-toggle list-group-item active"
+                               data-toggle="dropdown">Options<span
+                                        class="glyphicon glyphicon-download pull-right" ></span></a>
+                            <ul class="dropdown-menu" style="width:100%">
+
+                                <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#ncolor">NA Color</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#limit">Limit</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#bins">Bins</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#color">Low</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#color">Mid</a></li>
+                                <li class="divider"></li>
+                                <li style="width:300px;"><a href="#color">High</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
 
+        <br/>
+        <br/>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="col-md-12"></div>
         <div class="col-md-12 content">
 
             <h1 class="arg_content">Example Analysis</h1>
 
             <div class="col-md-4">
-                <h2>Multiple Sample KEGG view</h2>
+                <div style="height:70px"><h2>Multiple Sample KEGG View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview KEGG view.</p>
 
                 <p><a class="btn btn-default" href="#example1" role="button">View details »</a></p>
             </div>
             <div class="col-md-4">
-                <h2>Multiple Sample Graphviz view</h2>
+                <div style="height:70px"><h2>Multiple Sample Graphviz View</h2></div>
 
-                <p>This example shows the multiple sample/state integration with Pathview Graphviz viewo. </p>
+                <p>This example shows the multiple sample/state integration with Pathview Graphviz view. </p>
 
                 <p><a class="btn btn-default" href="#example2" role="button">View details »</a></p>
             </div>
             <div class="col-md-4">
-                <h2>ID Mapping</h2>
+                <div style="height:70px"> <h2>ID Mapping</h2></div>
 
                 <p>This example shows the ID mapping capability of Pathview.</p>
 
@@ -215,7 +224,7 @@
                                 <dt><a name="species">Species</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Either the KEGG code, scientific name or the common name of the target species. Species may also be "ko" for KEGG Orthology pathways. This can be selected from the autosuggest drop down list. 
+                                <dd>Either the KEGG code, scientific name or the common name of the target species. Species may also be "ko" for KEGG Orthology pathways. This can be selected from the autosuggest drop down list.
                                 </dd>
                             </div>
                         </div>
@@ -258,7 +267,7 @@
                             <div class="panel-body argument">
                                 <dd> Whether to render the pathway as native KEGG graph (.png) or using Graphviz
                                     layout
-                                    engine (.pdf). 
+                                    engine (.pdf).
                                 </dd>
                             </div>
                         </div>
@@ -410,8 +419,8 @@
                             <div class="panel-body argument">
                                 <dd>The method name to calculate node summary given that multiple genes or compounds are
                                     mapped to it. Potential values can be found in the drop down list. Default Value is
-                                   "Sum". 
-                            </dd>
+                                    "Sum".
+                                </dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -474,7 +483,7 @@
             <section id="example1">
 
 
-                <h1 class="arg_content">Example 1: Multiple Sample KEGG view</h1>
+                <h1 class="arg_content">Example 1: Multiple Sample KEGG View</h1>
                 <p>
                     This example shows the multiple sample/state integration with Pathview KEGG vieww. Data files are pre
                     loaded and the options have been preset as below.
@@ -513,7 +522,7 @@
         <div class="col-sm-12">
 
             <section id="example2">
-                <h1 class="arg_content">Example 2: Multiple sample Graphviz view</h1>
+                <h1 class="arg_content">Example 2: Multiple Sample Graphviz View</h1>
 
                 <p>
                     This example shows the multiple sample/state integration with Pathview Graphviz viewo. Data files are pre
@@ -565,7 +574,7 @@
                 <p>
                     Here's an example showing the ID mapping capability of pathview. Data files are pre loaded and  the options have been preset as below (including Gene ID type and Compound ID type).
                     Data files used in this example are <a href="all/demo/example/gene.ensprot.txt"
-                                                                target="_blank">Gene
+                                                           target="_blank">Gene
                         Data</a> and <a href="all/demo/example/cpd.cas.csv" target="_blank">Compound Data</a>.
 
                 </p>
@@ -603,12 +612,12 @@
 
                 <h1 class="arg_content">Reference</h1>
 
-                <p class="content1">Luo W, Brouwer C. Pathview: an R/Biocondutor package for
-                    pathway-based data integration and visualization. Bioinformatics, 2013,
-                    29(14):1830-1831, doi:
-                    <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">
-                        <u>10.1093/bioinformatics/btt285</u></a>
-                </p>
+                <p class="content1"><i>Luo W, Brouwer C. Pathview: an R/Biocondutor package for
+                        pathway-based data integration and visualization. Bioinformatics, 2013,
+                        29(14):1830-1831, doi:
+                        <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">
+                            <u>10.1093/bioinformatics/btt285</u></a>
+                    </i></p>
             </section>
 
         </div>
@@ -622,7 +631,7 @@
                 <p class="contact">Project Contact: <a
                             href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></p>
 
-                <p class="contact"> Report Issues : <a
+                <p class="contact"> Report Issues:  <a
                             href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a>   </p>
             </section>
 

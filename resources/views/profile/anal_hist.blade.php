@@ -32,7 +32,7 @@
         }
 
         echo "<h2>Pathview Graphs:</h2>";
-        echo "<ul class='alert alert-success'>";
+
 
         foreach ($contents as $k => $v) {
 
@@ -63,7 +63,7 @@ $email = Auth::user()->email;
         }
 
 
-        echo "</ul>";
+
 $argument ="";
         if(Auth::user())
             {
