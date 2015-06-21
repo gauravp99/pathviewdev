@@ -563,7 +563,7 @@ class AnalysisController extends Controller
             $array_string = explode(" ", $temp);
             foreach ($array_string as $a_string) {
 
-                if (strcmp($a_string, 'error') == 0) {
+if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:')==0 ) {
                     DB::table('analyses_errors')->insert(array('analysis_id' => $time . "", 'error_string' => $temp, 'created_at' => $date));
                     $flag = true;
                     break;

@@ -181,7 +181,7 @@ if(!$flag1)
                 try {
 
                     $file =$data['path'] . 'errorFile' . '.Rout';
-                    $message->attach($file, array('as' => 'Error Log', 'mime' => 'application/txt'));
+                    $message->attach($file, array('as' => 'ErrorLog.txt', 'mime' => 'application/txt'));
 
                     $message->to('byeshvant@gmail.com', 'admin')->subject('Analysis completed');
 

@@ -1,0 +1,17 @@
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/byeshvant@hotmail.com/1434912119
+Info: Writing image file hsa00640.multi.multi.pdf
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/byeshvant@hotmail.com/1434912119
+Info: Writing image file hsa00052.multi.multi.pdf
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/byeshvant@hotmail.com/1434912119
+Info: Writing image file hsa00062.multi.multi.pdf
+Warning: Parsing /home/ybhavnasi/Desktop/Kegg/hsa/hsa00072.xml file failed, please check the file!
+Warning: Parsing /home/ybhavnasi/Desktop/Kegg/hsa/hsa00100.xml file failed, please check the file!
+Info: Downloading xml files for hsa00121, 1/1 pathways..
+Info: Downloading png files for hsa00121, 1/1 pathways..
+Warning: Download of hsa00121 xml and png files failed!
+Warning: Failed to download KEGG xml/png files, hsa00121 skipped!
+Warning messages:
+1: In .local(from, to, graph) :
+  edges replaced: ‘177|59’, ‘177|60’, ‘122|119’, ‘122|120’
+2: In .local(from, to, graph) : edges replaced: ‘170|171’
+3: In .local(from, to, graph) : edges replaced: ‘108|141’
