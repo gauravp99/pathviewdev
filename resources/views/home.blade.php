@@ -111,7 +111,7 @@
         </div>
         <h2 class="success">Recent activity: </h2>
         <?php
-        $analyses = DB::table('analyses')->where('id', Auth::user()->id)->get();
+
 
         function get_string_between($string, $start, $end)
         {
@@ -141,8 +141,8 @@
                 $your_date = strtotime(str_split($analyses1->created_at, 10)[0]);
                 $date_diff = $now - $your_date;
 
-                echo "<tr><td>$i</td><td><h4> $analyses1->analysis_type </h4></td>";
-                $i = $i + 1;
+                echo "<tr><td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
+
                 echo "<td> " . floor($date_diff / (60 * 60 * 24)) . " days ago ";
                 $directory = get_string_between($analyses1->arguments, "targedir:", ",");
                 $dir = get_string_between($analyses1->arguments, public_path(), ",");
@@ -151,10 +151,17 @@
                 echo "</td>";
                 echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td></tr>";
 
-            }
-            }?>
+            }}?>
+
+            {!! $analyses->render() !!}
+
+
         </table>
 
-    </div>
+
+
+
+
+
 
 @stop

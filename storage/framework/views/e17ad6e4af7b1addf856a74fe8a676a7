@@ -156,7 +156,6 @@ $cmpd = DB::table('compound')->get(array('cmpdid'));?>
         cmpd_array = <?php echo JSON_encode($cmpd);?>;
 
 
-
     </script>
     <script src="<?php echo e(asset('/js/analysis.js')); ?>"></script>
 

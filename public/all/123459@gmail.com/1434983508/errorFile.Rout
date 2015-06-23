@@ -1,0 +1,17 @@
+Info: Getting gene ID data from KEGG...
+Info: Done with data retrieval!
+Note: None of the genes or compounds mapped to the pathway!
+Argument gene.idtype or cpd.idtype may be wrong.
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/demo/1434983508
+Info: Writing image file aga00640.multi.multi.pdf
+Info: Getting gene ID data from KEGG...
+Info: Done with data retrieval!
+Note: None of the genes or compounds mapped to the pathway!
+Argument gene.idtype or cpd.idtype may be wrong.
+Info: Working in directory /home/ybhavnasi/Desktop/Pathway/public/all/demo/1434983508
+Info: Writing image file aga00051.multi.multi.pdf
+Warning messages:
+1: In .local(from, to, graph) :
+  edges replaced: ‘177|59’, ‘177|60’, ‘122|119’, ‘122|120’
+2: In .local(from, to, graph) :
+  edges replaced: ‘119|56’, ‘154|57’, ‘154|59’, ‘121|69’, ‘154|72’, ‘140|92’, ‘140|95’

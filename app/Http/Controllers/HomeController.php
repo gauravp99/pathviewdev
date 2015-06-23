@@ -3,6 +3,8 @@
  * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
  * @Contact: byeshvant@hotmail.com
  */
+use App\analyses;
+use Auth;
 class HomeController extends Controller
 {
 
@@ -31,7 +33,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        return view('home');
+        return view('home')->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(6));
     }
 
 }

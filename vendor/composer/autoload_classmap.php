@@ -7,8 +7,16 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddOrgToUsers' => $baseDir . '/database/migrations/2015_04_13_192045_add_org_to_users.php',
+    'CreateAnalysesErrorsTable' => $baseDir . '/database/migrations/2015_06_22_201056_create_analyses_errors_table.php',
+    'CreateAnalysesTable' => $baseDir . '/database/migrations/2015_06_22_200957_create_analyses_table.php',
+    'CreateBiocstatisticsTable' => $baseDir . '/database/migrations/2015_06_22_201106_create_biocstatistics_table.php',
+    'CreateCompoundsTable' => $baseDir . '/database/migrations/2015_06_22_201116_create_compounds_table.php',
+    'CreateGenesTable' => $baseDir . '/database/migrations/2015_06_22_201126_create_genes_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
-    'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
+    'CreatePathwaysTable' => $baseDir . '/database/migrations/2015_06_22_201034_create_pathways_table.php',
+    'CreateSpeciesPathwayMatchesTable' => $baseDir . '/database/migrations/2015_06_22_201142_create_species_pathway_matches_table.php',
+    'CreateSpeciesTable' => $baseDir . '/database/migrations/2015_06_22_201046_create_species_table.php',
+    'CreateUsersTable' => $baseDir . '/database/migrations/2015_06_22_201150_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',

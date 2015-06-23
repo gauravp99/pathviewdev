@@ -154,7 +154,8 @@ if(!$flag1)
     <?php
         }
                 }
-            foreach ($contents as $k => $v) {
+            
+foreach ($contents as $k => $v) {
             if(strcmp($v, "errorFile.Rout") == 0)
             {
             $v = $directory . "/" . $v;
@@ -171,9 +172,17 @@ if(!$flag1)
 
                     if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:')==0 ) {
 
-                        if (!$flag) {
- $data['content'] = "?analyses=".$_SESSION['analyses_id'] . "&id=" . $_SESSION['id'] . "&suffix=" . $_SESSION['suffix'] ."&email=" . Auth::user()->email;
-            $data['name'] = 'Admin issue in pathway for '. Auth::user()->email;
+                        if (!$flag1) {
+           if(Auth::user())
+{
+$data['content'] = "?analyses=".$_SESSION['analyses_id'] . "&id=" . $_SESSION['id'] . "&suffix=" . $_SESSION['suffix'] ."&email=" . Auth::user()->email;
+		 $data['name'] = 'Admin issue in pathway for '. Auth::user()->email;
+}
+else
+{
+$data['content'] = "?analyses=".$_SESSION['analyses_id'] . "&id=" . $_SESSION['id'] . "&suffix=" . $_SESSION['suffix'] ."&email=demo" ;
+$data['name'] = 'Admin issue in pathway for guest';
+}
             $data['time'] = date('l jS \of F Y h:i:s A');
             $data['anal_type'] = $_SESSION['anal_type'];
             $data['argument'] = $_SESSION['argument'];

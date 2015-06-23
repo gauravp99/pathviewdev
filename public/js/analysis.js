@@ -4,6 +4,32 @@
 
 
 $(document).ready(function () {
+
+    $(document).ready(function () {
+
+
+            $('#species').change(function () {
+            species = $('#species').val();
+                $.ajax({
+                url: "/ajax/specPathMatch",
+                method: 'POST',
+                data: { 'species': species },
+                cache: false,
+                success: function (data) {
+                console.log(data);
+                console.log("success");
+                },
+                error: function (data) {
+                console.log("error");
+    }
+});
+
+});
+});
+
+
+
+
     $('#selecttextfield').append(",\r\n");
     $('#reset').click(function () {
         $("#errors").empty();

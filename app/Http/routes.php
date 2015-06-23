@@ -10,7 +10,7 @@
 | It's a breeze.
 |
 */
-
+Route::post('/ajax/specPathMatch','AjaxSpeciesPathwayMatch@index');
 /* URL route for Controller for welcome page */
 Route::get('/', array(
     'as' => 'home',

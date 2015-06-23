@@ -153,14 +153,14 @@
                                         <tr>
 
                                             <td>
-                                                <div class="bar11" >
+                                                <div class="bar12">
                                                     &nbsp
                                                 </div>
                                             </td>
                                             <td class="tdContent">Graphs:</td>
                                             <td><?php echo $web_dnld_cnt ?></td>
                                             <td>
-                                                <div class="bar12">
+                                                <div class="bar11" >
                                                     &nbsp
                                                 </div>
                                             </td>
@@ -176,24 +176,24 @@
                                     <table class="tables">
                                         <tr>
                                             <td>
-                                                <div class="bar1" >
-                                                    &nbsp&nbsp
-                                                </div>
-                                            </td>
-
-                                            <td  class="tdContent">Downloads:</td>
-
-                                            <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
-
-                                            <td>
                                                 <div class="bar2">
                                                     &nbsp&nbsp
                                                 </div>
                                             </td>
 
-                                            <td  class="tdContent">IP's:</td>
+                                            <td  class="tdContent">Downloads:</td>
+                                            <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
 
+
+                                            <td>
+                                                <div class="bar1" >
+                                                    &nbsp&nbsp
+                                                </div>
+                                            </td>
+
+                                            <td  class="tdContent">IP's:</td>
                                             <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
+
                                         </tr>
                                     </table>
                             </div>
