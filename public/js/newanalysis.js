@@ -1,6 +1,16 @@
 /**
  * Created by ybhavnasi on 6/9/15.
  */
+
+
+function openWindow() {
+    window.open('/tutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");
+
+    var w = window.innerWidth;
+    var h = window.innerHeight;
+
+}
+
 function colorReset()
 {
     var v = $('#glow').val();
@@ -15,8 +25,100 @@ function colorReset()
 }
 
 $(document).ready(function () {
+    var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
+    $(document).ready(function () {
+        species = $('#species').val();
+
+        most_flag = false;
+        species = $('#species').val();
+
+        for(var i=0;i<most_spec.length;i++)
+        {
+            if(species.split("-")[0] == most_spec[i])
+            {
+                most_flag = true;
+                break;
+            }
+        }
 
 
+        if(!most_flag) {
+            $('#geneidlist option').attr('disabled', 'disabled');
+            $("#geneidlist option[value='ENTREZ']").removeAttr('disabled');
+            $("#geneidlist option[value='KEGG']").removeAttr('disabled');
+        }
+        else
+        {
+            $('#geneidlist option').removeAttr('disabled');
+        }
+
+        $.ajax({
+            url: "/ajax/specPathMatch",
+            method: 'POST',
+            dataType:"json",
+            data: { 'species': species },
+            cache: false,
+            success: function (data) {
+                if(data.length>0)
+                {
+                    $('#select-from option').attr('disabled','disabled');
+                    $('#pathwaylist option').attr('disabled','disabled');
+                    pathway_array = [];
+                    jQuery.each(data,function(){
+                        var option1 = this['pathway_id'];
+
+                        pathway_array.push(option1);
+                        $("#select-from option[value=\"" + option1 + "\"]").removeAttr('disabled');
+                        $("#pathwaylist option[value=\"" + option1 + "\"]").removeAttr('disabled');
+                    });
+
+
+                }
+            },
+            error: function (data) {
+                console.log("error");
+            }
+
+
+        });
+    });
+
+
+
+        $('#species').change(function () {
+
+
+
+            species = $('#species').val();
+            $.ajax({
+                url: "/ajax/specPathMatch",
+                method: 'POST',
+                dataType:"json",
+                data: { 'species': species },
+                cache: false,
+                success: function (data) {
+                    if(data.length>0)
+                    {
+                        $('#select-from option').attr('disabled','disabled');
+                        $('#pathwaylist option').attr('disabled','disabled');
+                        pathway_array = [];
+                        jQuery.each(data,function(){
+                            var option1 = this['pathway_id'];
+
+                            pathway_array.push(option1);
+                            $("#select-from option[value=\"" + option1 + "\"]").removeAttr('disabled');
+                            $("#pathwaylist option[value=\"" + option1 + "\"]").removeAttr('disabled');
+                        });
+
+
+                    }
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+            });
+
+        });
 
     $('#selecttextfield').append(",\r\n");
     $('#reset').click(function () {
@@ -35,8 +137,7 @@ $(document).ready(function () {
 
         $('#select-from option:selected').each(function () {
 
-            var val = $(this).val();
-
+            var val = $(this).text();
             $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
             $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
 
@@ -127,8 +228,7 @@ function in_cmpd_array(gene, id) {
 }
 function in_pathway_array(gene, id) {
     for (var i = 0; i < gene.length; i++) {
-        //console.log(gene[i]['geneid']);
-        if (gene[i]['pathway_id'].toLowerCase() === id.toLowerCase()) {
+        if (gene[i].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }

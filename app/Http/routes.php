@@ -10,7 +10,10 @@
 | It's a breeze.
 |
 */
+
+/* Ajax controller for species and pathway match retrievel */
 Route::post('/ajax/specPathMatch','AjaxSpeciesPathwayMatch@index');
+
 /* URL route for Controller for welcome page */
 Route::get('/', array(
     'as' => 'home',
@@ -45,7 +48,7 @@ Route::get('passwordReset', array(
     'users' => function () {
         return view('auth.password_edit');
     }));
-
+/* URL rout for user password reset from insdie the profile*/
 Route::post('/reset','Auth\PasswordEditController@index');
 
 /* URL route for Controller for Guest page */
@@ -65,7 +68,6 @@ Route::get('analysis', 'AnalysisController@new_analysis');
 Route::get('viewer', array(
     'as' => 'viewer',
     'users' => function () {
-
         return view('analysis.viewer');
     }));
 
@@ -94,6 +96,7 @@ Route::get('example2', 'AnalysisController@example_two');
 
 Route::get('example3', 'AnalysisController@example_three');
 
+
 Route::get('test', function () {
     return view("rserve.index");
 });
@@ -102,10 +105,12 @@ Route::get('error', function () {
     return view("errors.customError");
 });
 
+/*URL route for tutrial/Help page */
 Route::get('tutorial', function () {
     return view("tutorial");
 });
 
+/* URL Route for About page*/
 Route::get('about', function () {
 
     $usage = array();

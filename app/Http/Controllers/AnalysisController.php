@@ -12,6 +12,7 @@ use DB;
 use Illuminate\Support\Facades\Redirect;
 use Input;
 use Request;
+use Response;
 
 require "Rserv_Connection.php";
 

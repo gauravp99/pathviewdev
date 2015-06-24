@@ -2,7 +2,7 @@
 <div class="stepsdiv" id="geneid-div" @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#gene_id" title="ID type used for the Gene Data. This can be selected from the autosuggest drop down list." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#gene_id" onclick="window.open('tutorial#gene_id', 'newwindow', 'width=300, height=250').focus();return false;" title="ID type used for the Gene Data. This can be selected from the autosuggest drop down list." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('geneid','Gene ID Type:')!!}
@@ -16,7 +16,7 @@
         <?php
         $gene = DB::table('gene')->get();
         foreach ($gene as $gene1) {
-            echo "<option>$gene1->geneid</option>";
+            echo "<option value='$gene1->geneid'>$gene1->geneid</option>";
         }
         ?>
         <!--[if (lt IE 10)]></select><![endif]-->
@@ -28,7 +28,7 @@
 <div class="stepsdiv" id="cpdid-div" <?php if (isset(Session::get('err_atr')['cpdid'])) { echo "style='background-color:#DA6666;'"; } ?>>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#cpd_id" title="ID type used for the Compound Data. This can be selected from the autosuggest drop down list." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#cpd_id" onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=300, height=250').focus();return false;" title="ID type used for the Compound Data. This can be selected from the autosuggest drop down list." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('cpdid','Compound ID Type:') !!}
@@ -49,7 +49,7 @@
 <div class="stepsdiv" id="species-div" <?php if (isset(Session::get('err_atr')['species'])) {echo "style='background-color:#DA6666;'";} ?>>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#species" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#species" onclick="window.open('tutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('species','Species:') !!}
@@ -77,7 +77,7 @@
     <div class="col-sm-12">
         <div class="col-sm-12">
             <div class="col-sm-5" >
-                <a href="tutorial#pwy_id" title="KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;margin-left: -15px">
+                <a href="tutorial#pwy_id" onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=300, height=250').focus();return false;" title="KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;margin-left: -15px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('pathway','Pathway ID:') !!}
@@ -93,7 +93,7 @@
                 $pathway = DB::table('Pathway')->get();
 
                 foreach ($pathway as $pathway1) {
-                    echo "<option>" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
+                    echo "<option value=".$pathway1->pathway_id.">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
                 }
                 ?>
 
@@ -125,7 +125,7 @@
         <?php
         $pathway = DB::table('Pathway')->get();
         foreach ($pathway as $pathway1) {
-            echo "<option>" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
+            echo "<option value=".$pathway1->pathway_id.">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
         }
         ?>
         <!--[if (lt IE 10)]></select><![endif]-->
@@ -137,7 +137,7 @@
 <div id="suffix-div" class="stepsdiv" <?php if (isset(Session::get('err_atr')['suffix'])) {echo "style='background-color:#DA6666;'";} ?> @if ($errors->has('suffix')) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#suffix" title="The suffix to be added after the pathway name as part of the output graph file name." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#suffix" onclick="window.open('tutorial#suffix', 'newwindow', 'width=300, height=250').focus();return false;" title="The suffix to be added after the pathway name as part of the output graph file name." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('suffix','Output Suffix:') !!}
@@ -153,14 +153,15 @@
     <div class="stepsdiv" id="kegg-layer-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#kegg" title="Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf). " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#kegg" onclick="window.open('tutorial#kegg', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf). " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('kegg','Kegg Native:') !!}
                 <input name="kegg" value="T" id="kegg" <?php if (isset(Session::get('Sess')['kegg'])) {echo "checked";} else {if ((Session::get('Sess') == NULL)) { if($kegg) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#layer" title="Controls plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type legend be plotted in the same page when Kegg Native is unchecked. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#layer" onclick="window.open('tutorial#layer', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type legend be plotted in the same page when Kegg Native is unchecked. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('layer','Same Layer:' ) !!}
@@ -173,7 +174,7 @@
     <div class="stepsdiv" id="desc-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#desc" title="Whether gene data should be treated as discrete." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#desc" onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether gene data should be treated as discrete." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('gdesc',' Descrete Gene:') !!}
@@ -181,7 +182,7 @@
                 <?php if (isset(Session::get('Sess')['gdisc'])) {echo "checked";} else {if ((Session::get('Sess') == NULL)) { if($gdisc) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#desc" title="Whether compound data should be treated as discrete." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#desc" onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether compound data should be treated as discrete." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('cdesc','Descrete Compound:') !!}
@@ -194,14 +195,14 @@
     <div class="stepsdiv" id="split-expand-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#split" title="Whether split node groups are split to individual nodes." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#split" onclick="window.open('tutorial#split', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether split node groups are split to individual nodes." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
                 </a>
                 {!!form::label('split','Split Group:') !!}
                 <input name="split" value="T" id="split"<?php if (isset(Session::get('Sess')['split'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {if($split) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#expand" title="Whether the multiple-gene nodes are expanded into single-gene nodes" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#expand" onclick="window.open('tutorial#expand', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether the multiple-gene nodes are expanded into single-gene nodes" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('expand','Expand Node:') !!}
@@ -213,14 +214,14 @@
     <div class="stepsdiv" id="multi-matchd-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#multi" title="Whether multiple states (samples or columns) gene data or compound data should be integrated and plotted in the same graph." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#multi" onclick="window.open('tutorial#multi', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether multiple states (samples or columns) gene data or compound data should be integrated and plotted in the same graph." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('multistate','Multi State:') !!}
                 <input name="multistate" value="T" id="multistate"<?php if (isset(Session::get('Sess')['multistate'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {if($multistate) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#match" title="Whether the samples of gene data and Compound data are paired" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#match" onclick="window.open('tutorial#match', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether the samples of gene data and Compound data are paired" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('matchd','Match Data:') !!}
@@ -232,7 +233,7 @@
     <div class="stepsdiv" id="offset-div" <?php if (isset(Session::get('err_atr')['offset'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#clabel" title="How much compound labels should be put above the default position or node center." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+                <a href="tutorial#clabel" onclick="window.open('tutorial#clabel', 'newwindow', 'width=300, height=250').focus();return false;" title="How much compound labels should be put above the default position or node center." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                 {!!form::label('offset','Compound Label Offset:') !!}
             </div>
             <div class="col-sm-6">
@@ -245,7 +246,7 @@
     <div class="stepsdiv" id="kalgin-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#kalign" title="How the color keys are aligned when both Gene Data and Compound Data are not NULL." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#kalign" onclick="window.open('tutorial#kalign', 'newwindow', 'width=300, height=250').focus();return false;" title="How the color keys are aligned when both Gene Data and Compound Data are not NULL." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('align','Key Alignment:') !!}
@@ -259,7 +260,7 @@
     <div class="stepsdiv" id="pos-kpos-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#spos" title="Controls the position of pathview signature." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                <a href="tutorial#spos" onclick="window.open('tutorial#spos', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls the position of pathview signature." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <div class="col-sm-6" style="margin-left: -20px;">
@@ -273,7 +274,7 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#kpos" title="Controls the position of color key(s)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                <a href="tutorial#kpos" onclick="window.open('tutorial#kpos', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls the position of color key(s)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <div class="col-sm-6" style="margin-left: -20px;">
@@ -293,7 +294,7 @@
     <div class="stepsdiv" id="nodesum-div" <?php if (isset(Session::get('err_atr')['nodesun'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#nsum" title="The method name to calculate node summary given that multiple genes or compounds are mapped to it." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#nsum" onclick="window.open('tutorial#nsum', 'newwindow', 'width=300, height=250').focus();return false;" title="The method name to calculate node summary given that multiple genes or compounds are mapped to it." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('nodesum','Node Sum:',array('class' => 'awesome')) !!}
@@ -308,7 +309,7 @@
     <div class="stepsdiv" id="nacolor-div" <?php if (isset(Session::get('err_atr')['nacolor'])) {echo "style='background-color:#DA6666;'";} ?> class="coloration">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#ncolor" title="Color used for NA's or missing values in Gene Data and Compound Data." target="_blank" class="scrollToTop" style="float:left;">
+                <a href="tutorial#ncolor" onclick="window.open('tutorial#ncolor', 'newwindow', 'width=300, height=250').focus();return false;"  title="Color used for NA's or missing values in Gene Data and Compound Data." target="_blank" class="scrollToTop" style="float:left;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('nacolor','NA Color:') !!}
@@ -332,7 +333,7 @@
     <div class="stepsdiv" id="glmt-clmt-div" <?php if (isset(Session::get('err_atr')['clmt'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['glmt'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#limit" title="The limit values for Gene Data and Compound Data when converting them to pseudo colors.This field is a numeric field you can enter two values separated by a comma for example 1,2." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#limit" onclick="window.open('tutorial#limit', 'newwindow', 'width=300, height=250').focus();return false;" title="The limit values for Gene Data and Compound Data when converting them to pseudo colors.This field is a numeric field you can enter two values separated by a comma for example 1,2." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('limit',' Limit:') !!}
@@ -349,7 +350,7 @@
     <div class="stepsdiv" id="gbins-cbins-div"<?php if (isset(Session::get('err_atr')['gbins'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['cbins'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#bins" title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#bins" onclick="window.open('tutorial#bins', 'newwindow', 'width=300, height=250').focus();return false;" title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('Bins',' Bins:')!!}
@@ -365,7 +366,7 @@
     <div class="stepsdiv" id="glow-clow-div"<?php if (isset(Session::get('err_atr')['glow'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['clow'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#color" title="These arguments specify specifies the color spectra to code Gene Data and Compound Data" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#color" onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;" title="These arguments specify specifies the color spectra to code Gene Data and Compound Data" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('glow',' Low:')!!}
@@ -382,7 +383,7 @@
     <div class="stepsdiv" id="gmid-cmid-div" <?php if (isset(Session::get('err_atr')['gmid'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['cmid'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#color" title="These arguments specify specifies the color spectra to code Gene Data and Compound Data" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#color" onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;" title="These arguments specify specifies the color spectra to code Gene Data and Compound Data" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('gmid',' Mid:')!!}
@@ -397,7 +398,7 @@
     <div class="stepsdiv" id="ghigh-chigh-div"<?php if (isset(Session::get('err_atr')['ghigh'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['chigh'])) {echo "style='background-color:#DA6666;'";} ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#color"
+                <a href="tutorial#color" onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
                    title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>

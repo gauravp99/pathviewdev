@@ -14,7 +14,7 @@ return array(
     'CreateGenesTable' => $baseDir . '/database/migrations/2015_06_22_201126_create_genes_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreatePathwaysTable' => $baseDir . '/database/migrations/2015_06_22_201034_create_pathways_table.php',
-    'CreateSpeciesPathwayMatchesTable' => $baseDir . '/database/migrations/2015_06_22_201142_create_species_pathway_matches_table.php',
+    'CreateSpeciesPathwayMatchesTable' => $baseDir . '/database/migrations/2015_06_24_132300_create_species_pathway_matches_table.php',
     'CreateSpeciesTable' => $baseDir . '/database/migrations/2015_06_22_201046_create_species_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2015_06_22_201150_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

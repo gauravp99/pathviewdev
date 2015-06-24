@@ -423,7 +423,7 @@
                         </div>
                         <div class="panel panel-default">
                             <div class="panel-heading argument">
-                                <dt><a name="nclolor">NA Color</a></dt>
+                                <dt><a name="ncolor">NA Color</a></dt>
                             </div>
                             <div class="panel-body argument">
                                 <dd>Color used for NA's or missing values in Gene Data and Compound Data. Potential value

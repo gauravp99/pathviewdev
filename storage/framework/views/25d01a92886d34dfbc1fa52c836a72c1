@@ -3,23 +3,13 @@
     <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
     <div class="col-sm-9">
         <div class="conetent-header">
-    <?php /*Start to check if the user is logged in or not if user is logged in then user profile is loaded */ ?>
-   <?php /* <?php if(is_null(Auth::user())): ?>
-        <h2> welcome Guest </h2>
-    <?php else: ?>
-        <p> welcome: <b><?php if(Auth::user()->name==""): ?> <?php echo Auth::user()->email; ?> <?php else: ?> <?php echo Auth::user()->name; ?>, <?php endif; ?> </b></p>
-    <?php endif; ?>*/ ?>
-    <?php /*end to check if the user is logged in or not if user is logged in then user profile is loaded */ ?>
 
-    <?php /*Main Heading/Title of the page */ ?>
 
-    <p><b>Example Analysis 2: Multiple sample Graphviz view</b></p>
+    <p><b>Example Analysis 2: Multiple Sample Graphviz View</b></p>
 
         </div>
         <div class="col-sm-5">
-            <?php /*Error Displaying div for the web page */ ?>
 
-            <?php /*Printing errors detected from laravel validation of the page */ ?>
             <?php if($errors->any()): ?>
                 <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
                     <?php foreach($errors->all() as $error): ?>
@@ -28,7 +18,7 @@
                 </ul>
             <?php endif; ?>
 
-            <?php /*Printing errors handled manually of the page */ ?>
+
             <?php if(Session::get('err')!=NULL): ?>
 
                 <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
@@ -101,9 +91,7 @@
                     <li>
                         <a href="#">Coloration</a>
                     </li>
-                    <?php /*  <li>
-                          <a href="#">Confirm</a>
-                      </li>*/ ?>
+
                 </ul>
             </div>
 
@@ -125,7 +113,7 @@
                          style="background-color:#DA6666;" <?php endif; ?>>
                         <div class="col-sm-12">
                             <div class="col-sm-5">
-                                <a href="tutorial#gene_data" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250'); return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
@@ -158,7 +146,7 @@
                          style="background-color:#DA6666;" <?php endif; ?>>
                         <div class="col-sm-12">
                             <div class="col-sm-5">
-                                <a href="tutorial#cpd_data" title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                <a href="tutorial#cpd_data" onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250'); return false;" title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
                                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                                 <?php echo form::label('cpdcheck','Compound Data:'); ?>

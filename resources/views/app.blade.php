@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="_token" content="{{ csrf_token() }}"/>
     <meta name="AUTHOR" content="Weijun Luo,Yeshvant Kumar Bhavnasi Venkat Satya">
     <link rel="icon" href="/images/plogo.png"  sizes="32x32">
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
@@ -236,7 +237,7 @@
     </div>
 </nav>
 
-
+<input id="csrf" type="text" hidden value="{{ csrf_token() }}">
         @yield('content')
 
         @include('footer')
