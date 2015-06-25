@@ -113,7 +113,7 @@
                              style="background-color:#DA6666;" <?php endif; ?>>
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
-                                    <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250'); return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                    <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
                                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
                                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
@@ -146,7 +146,7 @@
                              style="background-color:#DA6666;" <?php endif; ?>>
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
-                                    <a href="tutorial#cpd_data" onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250'); return false;"  title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                    <a href="tutorial#cpd_data" onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus(); return false;"  title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
                                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                                     <?php echo form::label('cpdcheck','Compound Data:'); ?>

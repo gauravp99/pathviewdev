@@ -250,13 +250,7 @@
 <script type="text/javascript" src="http://jscolor.com/example/jscolor/jscolor.js"></script>
 <script>
     $(document).ready(function () {
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': {!! json_encode(csrf_token()) !!},
-    }
-    });
-        var docHeight = $(window).height();
+    var docHeight = $(window).height();
         var footerHeight = $('#footer').height();
 
         var footerTop = $('#footer').position().top + footerHeight;

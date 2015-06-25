@@ -3,68 +3,75 @@
  */
 
 
-function openWindow() {
-    window.open('/tutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");
-
-    var w = window.innerWidth;
-    var h = window.innerHeight;
-
-}
-
-function colorReset()
-{
-    var v = $('#glow').val();
-    if( $('#glow').val().indexOf('#') === -1)
-        $('#glow').val("#"+v);
-
-    $('#clow').val("#"+$('#clow').val());
-    $('#gmid').val($('#gmid').val());
-    $('#cmid').val($('#clow').val());
-    $('#ghigh').val($('#ghigh').val());
-    $('#chigh').val($('#chigh').val());
-}
-
 $(document).ready(function () {
-    var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
+
+    //start check for the species when page loaded hide and show the pathway id list associated with it
     $(document).ready(function () {
         species = $('#species').val();
+        $.ajax({
+            url: "/ajax/specPathMatch",
+            method: 'POST',
+            dataType: "json",
+            data: {'species': species},
+            cache: false,
+            success: function (data) {
+                if (data.length > 0) {
+                    $('#select-from option').attr('disabled', 'disabled');
+                    $('#pathwaylist option').attr('disabled', 'disabled');
+                    pathway_array = [];
+                    jQuery.each(data, function () {
+                        var option1 = this['pathway_id'];
+                        pathway_array.push(option1);
+                        $("#select-from option[value=\"" + option1 + "\"]").removeAttr('disabled');
+                        $("#pathwaylist option[value=\"" + option1 + "\"]").removeAttr('disabled');
+                    });
+                }
+            },
+            error: function (data) {
+                console.log("error");
+            }
+        });
+    });
+    //start check for the species when page loaded hide and show the pathway id list associated with it
 
+    //start on each change in the species check for species and pathway list update
+    $('#species').change(function () {
+        /* Start Check for most used species if it is most used update the gene ID listed */
         most_flag = false;
         species = $('#species').val();
 
-        for(var i=0;i<most_spec.length;i++)
-        {
-            if(species.split("-")[0] == most_spec[i])
-            {
+        var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
+
+        for (var i = 0; i < most_spec.length; i++) {
+            if (species.split("-")[0] == most_spec[i]) {
                 most_flag = true;
                 break;
             }
         }
 
-
-        if(!most_flag) {
+        if (!most_flag) {
             $('#geneidlist option').attr('disabled', 'disabled');
             $("#geneidlist option[value='ENTREZ']").removeAttr('disabled');
             $("#geneidlist option[value='KEGG']").removeAttr('disabled');
         }
-        else
-        {
+        else {
             $('#geneidlist option').removeAttr('disabled');
         }
+        /* End Check for most used species if it is most used update the gene ID listed */
 
+        //start check for the species when species id hide and show the pathway id list associated with it
         $.ajax({
             url: "/ajax/specPathMatch",
             method: 'POST',
-            dataType:"json",
-            data: { 'species': species },
+            dataType: "json",
+            data: {'species': species},
             cache: false,
             success: function (data) {
-                if(data.length>0)
-                {
-                    $('#select-from option').attr('disabled','disabled');
-                    $('#pathwaylist option').attr('disabled','disabled');
+                if (data.length > 0) {
+                    $('#select-from option').attr('disabled', 'disabled');
+                    $('#pathwaylist option').attr('disabled', 'disabled');
                     pathway_array = [];
-                    jQuery.each(data,function(){
+                    jQuery.each(data, function () {
                         var option1 = this['pathway_id'];
 
                         pathway_array.push(option1);
@@ -81,76 +88,40 @@ $(document).ready(function () {
 
 
         });
+        //start check for the species when species id hide and show the pathway id list associated with it
     });
+    //end on each change in the species check for species and pathway list update
 
-
-
-        $('#species').change(function () {
-
-
-
-            species = $('#species').val();
-            $.ajax({
-                url: "/ajax/specPathMatch",
-                method: 'POST',
-                dataType:"json",
-                data: { 'species': species },
-                cache: false,
-                success: function (data) {
-                    if(data.length>0)
-                    {
-                        $('#select-from option').attr('disabled','disabled');
-                        $('#pathwaylist option').attr('disabled','disabled');
-                        pathway_array = [];
-                        jQuery.each(data,function(){
-                            var option1 = this['pathway_id'];
-
-                            pathway_array.push(option1);
-                            $("#select-from option[value=\"" + option1 + "\"]").removeAttr('disabled');
-                            $("#pathwaylist option[value=\"" + option1 + "\"]").removeAttr('disabled');
-                        });
-
-
-                    }
-                },
-                error: function (data) {
-                    console.log("error");
-                }
-            });
-
-        });
 
     $('#selecttextfield').append(",\r\n");
+
     $('#reset').click(function () {
-
-
         $("#errors").empty();
         $("#errors").hide();
-        $(".stepsdiv").css('background-color','#F4F4F4');
-        $("#glmt").css('background-color','#FFFFFF');
-        $("#clmt").css('background-color','#FFFFFF');
-        $("#gbins").css('background-color','#FFFFFF');
-        $("#cbins").css('background-color','#FFFFFF');
+        $(".stepsdiv").css('background-color', '#F4F4F4');
+        $("#glmt").css('background-color', '#FFFFFF');
+        $("#clmt").css('background-color', '#FFFFFF');
+        $("#gbins").css('background-color', '#FFFFFF');
+        $("#cbins").css('background-color', '#FFFFFF');
     });
 
+    //javascript code for the forward button adding pathway from select box to the text box
     $('#btn-add').click(function () {
 
         $('#select-from option:selected').each(function () {
-
             var val = $(this).text();
             $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
             $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
-
-
-
         });
     });
+
+    //javascript code for the add(+) button adding pathway from select box to the text box
     $('#btn-add1').click(function () {
 
         var val = $("#pathway1").val();
 
         if (!in_pathway_array(pathway_array, val.substring(0, 5))) {
-            alert("'"+val.substring(0, 5)+"' is not a Valid PathwayID");
+            alert("Not a Valid pathway");
         }
         else {
             $("<option />", {'value': val, text: val}).appendTo("#select-to");
@@ -160,8 +131,10 @@ $(document).ready(function () {
     });
 
 
-
 });
+
+
+//start check if the page is reviseted handled using a cookie
 var dirty_bit = document.getElementById('page_is_dirty');
 
 if (document.getElementById('page_is_dirty').value != '1') {
@@ -171,11 +144,8 @@ if (document.getElementById('page_is_dirty').value != '1') {
         eraseCookie("pathway" + j);
         eraseCookie("pathidx");
     }
-
-
 }
 else {
-
     if (readCookie("pathidx") === null) {
 
     }
@@ -193,47 +163,49 @@ else {
         }
     }
 }
-
-
-
+//end check if the page is reviseted handled using a cookie
 
 /*checking the geneid is in the list or not */
-
 function in_gene_array(gene, id) {
     for (var i = 0; i < gene.length; i++) {
-        //console.log(gene[i]['geneid']);
         if (gene[i]['geneid'].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }
     return false;
 }
-function in_species_array(gene, id) {
-    for (var i = 0; i < gene.length; i++) {
+
+/*checking the species is in the list or not */
+function in_species_array(species, id) {
+    for (var i = 0; i < species.length; i++) {
+        if (species[i]['species_id'].toLowerCase() === id.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/*checking the species is in the list or not */
+function in_cmpd_array(cpd, id) {
+    for (var i = 0; i < cpd.length; i++) {
+        if (cpd[i]['cmpdid'].toLowerCase() === id.toLowerCase()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/*checking the pathway is in the list or not */
+function in_pathway_array(pathway, id) {
+    for (var i = 0; i < pathway.length; i++) {
         //console.log(gene[i]['geneid']);
-        if (gene[i]['species_id'].toLowerCase() === id.toLowerCase()) {
+        if (pathway[i].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }
     return false;
 }
-function in_cmpd_array(gene, id) {
-    for (var i = 0; i < gene.length; i++) {
-        //console.log(gene[i]['geneid']);
-        if (gene[i]['cmpdid'].toLowerCase() === id.toLowerCase()) {
-            return true;
-        }
-    }
-    return false;
-}
-function in_pathway_array(gene, id) {
-    for (var i = 0; i < gene.length; i++) {
-        if (gene[i].toLowerCase() === id.toLowerCase()) {
-            return true;
-        }
-    }
-    return false;
-}
+
 function fileCheck() {
     $("#errors").show();
     document.getElementById('submit-button').setAttribute("data-toggle", "");
@@ -254,12 +226,25 @@ function fileCheck() {
     var gmid = document.getElementById("gmid");
     var ghigh = document.getElementById("ghigh");
     var gfilediv = document.getElementById("gfile-div");
+    var pathway_text = document.getElementById("selecttextfield");
+    var offset = document.getElementById("offset");
+
     var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
     var most_flag = false;
 
 
-
-
+    /**
+     * Trim the text field for spaces in all input fields not required for suffix already handled
+     */
+    document.getElementById("selecttextfield").value = document.getElementById("selecttextfield").value.trim();
+    geneid.value = geneid.value.trim();
+    cpdid.value = cpdid.value.trim();
+    species.value = species.value.trim();
+    document.getElementById("offset").value = document.getElementById("offset").value.trim();
+    clmt.value = clmt.value.trim();
+    cbins.value = cbins.value.trim();
+    glmt.value = glmt.value.trim();
+    gbins.value = gbins.value.trim();
 
 
     var j;
@@ -270,7 +255,7 @@ function fileCheck() {
 
 
     document.getElementById("nacolor").value = document.getElementById("nacolor").value.replace(/\W/g, "");
-    if (f.value.length < 4 && f1.value.length < 4 ) {
+    if (f.value.length < 4 && f1.value.length < 4) {
 
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Upload the Gene Data or Compound Data file."));
@@ -293,8 +278,7 @@ function fileCheck() {
 
     }
 
-    if(f1.value.length > 4 && !regex.test(document.getElementById('cpdfile').value) )
-    {
+    if (f1.value.length > 4 && !regex.test(document.getElementById('cpdfile').value)) {
         var myElement = document.getElementById("cfile-div");
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Uploaded Compound Data file extension is not supported. Supports only txt/csv."));
@@ -304,7 +288,7 @@ function fileCheck() {
 
     }
 
-
+    /*------------------------Pathway ID check ------------------------------*/
     if (document.getElementById('selecttextfield').value.length < 5) {
 
         var myElement = document.getElementById("pat-select");
@@ -330,8 +314,9 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
+    /*------------------------Pathway ID check ------------------------------*/
 
-
+    /*------------------------Gene ID check ------------------------------*/
     if (geneid.value == "") {
 
         var myElement = document.getElementById("geneid-div");
@@ -361,11 +346,11 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
+    /*------------------------Gene ID check ------------------------------*/
 
 
-
-   if(cpdid.value == "")
-    {
+    /*------------------------Compound ID check ------------------------------*/
+    if (cpdid.value == "") {
         var myElement = document.getElementById("cpdid-div");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
@@ -374,20 +359,22 @@ function fileCheck() {
         error = true;
 
     }
-   else if (!in_cmpd_array(cmpd_array, cpdid.value)) {
-           var myElement = document.getElementById("cpdid-div");
-           myElement.style.backgroundColor = "#DA6666";
-           var li = document.createElement("li");
-           li.appendChild(document.createTextNode("Entered Compound ID Type does not exist"));
-           errors.appendChild(li);
-           error = true;
-       }
-   else {
+    else if (!in_cmpd_array(cmpd_array, cpdid.value)) {
+        var myElement = document.getElementById("cpdid-div");
+        myElement.style.backgroundColor = "#DA6666";
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode("Entered Compound ID Type does not exist"));
+        errors.appendChild(li);
+        error = true;
+    }
+    else {
         var myElement = document.getElementById("cpdid-div");
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
+    /*------------------------Gene ID check ------------------------------*/
 
+    /*------------------------Suffix check ------------------------------*/
     if (suffix.value == "") {
 
         var myElement = document.getElementById("suffix-div");
@@ -400,13 +387,14 @@ function fileCheck() {
     else {
 
         suffix.value = suffix.value.replace(/\W/g, "-");
-        if(suffix.value.length>100)
-        {
-            suffix.value= suffix.value.substring(0,100);
+        if (suffix.value.length > 100) {
+            suffix.value = suffix.value.substring(0, 100);
 
         }
     }
+    /*------------------------Gene ID check ------------------------------*/
 
+    /*------------------------Species check ------------------------------*/
     if (species.value == "") {
         var myElement = document.getElementById("species-div");
         myElement.style.backgroundColor = "#DA6666";
@@ -426,16 +414,14 @@ function fileCheck() {
             var myElement = document.getElementById("species-div");
             myElement.style.backgroundColor = "#DA6666";
             var li = document.createElement("li");
-            li.appendChild(document.createTextNode("Species: '"+species.value.split("-")[0]+"' is not valid"));
+            li.appendChild(document.createTextNode("Species: '" + species.value.split("-")[0] + "' is not valid"));
             errors.appendChild(li);
             error = true;
         }
         else {
 
-            for(var i=0;i<most_spec.length;i++)
-            {
-                if(species.value.split("-")[0] == most_spec[i])
-                {
+            for (var i = 0; i < most_spec.length; i++) {
+                if (species.value.split("-")[0] == most_spec[i]) {
 
                     most_flag = true;
                     break;
@@ -444,11 +430,10 @@ function fileCheck() {
             }
 
 
-            if(!most_flag && ( geneid.value.toUpperCase() != 'ENTREZ' && geneid.value.toUpperCase() != 'KEGG' ))
-            {
-                alert("For Species: "+species.value+" Gene ID Type should be either 'ENTREZ' or 'KEGG'.");
+            if (!most_flag && ( geneid.value.toUpperCase() != 'ENTREZ' && geneid.value.toUpperCase() != 'KEGG' )) {
+                alert("For Species: " + species.value + " Gene ID Type should be either 'ENTREZ' or 'KEGG'.");
                 var li = document.createElement("li");
-                li.appendChild(document.createTextNode("For Species: "+species.value+" Gene ID Type  should be either 'ENTREZ' or 'KEGG'."));
+                li.appendChild(document.createTextNode("For Species: " + species.value + " Gene ID Type  should be either 'ENTREZ' or 'KEGG'."));
                 errors.appendChild(li);
                 error = true;
 
@@ -468,6 +453,10 @@ function fileCheck() {
         error = true;
 
     }
+    /*------------------------Species check ------------------------------*/
+
+
+    /*------------------------Compound Label offset check ------------------------------*/
     if (offset.value == "") {
         var myElement = document.getElementById("offset-div");
         myElement.style.backgroundColor = "#DA6666";
@@ -492,15 +481,16 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
-    if (glmt.value == "") {
+    /*------------------------Compound Label offset check------------------------------*/
 
+
+    /*------------------------Gene Limit check------------------------------*/
+    if (glmt.value == "") {
         glmt.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
         li.appendChild(document.createTextNode("Gene Limit value cannot be left empty"));
         errors.appendChild(li);
         error = true;
-
-
     }
     else {
         var str_array = glmt.value.split(',');
@@ -534,6 +524,9 @@ function fileCheck() {
 
         }
     }
+    /*------------------------Gene Limit check------------------------------*/
+
+    /*------------------------Gene Bins check------------------------------*/
     if (gbins.value == "") {
 
         gbins.style.backgroundColor = "#DA6666";
@@ -556,6 +549,9 @@ function fileCheck() {
         gbins.style.backgroundColor = "#FFF";
 
     }
+    /*------------------------Gene Bins check------------------------------*/
+
+    /*------------------------Compound Limit check------------------------------*/
     if (clmt.value == "") {
 
         clmt.style.backgroundColor = "#DA6666";
@@ -594,6 +590,9 @@ function fileCheck() {
             }
         }
     }
+    /*------------------------Compound Limit check------------------------------*/
+
+    /*------------------------Compound Bins check------------------------------*/
     if (cbins.value == "") {
 
         cbins.style.backgroundColor = "#DA6666";
@@ -614,9 +613,10 @@ function fileCheck() {
     else {
         cbins.style.backgroundColor = "#FFF";
     }
+    /*------------------------Compound Limit check------------------------------*/
 
 
-
+    //If error occurs then error div on analysis page is shown and
     if (error) {
         error = true;
         errors.removeAttribute("hidden");
@@ -661,17 +661,8 @@ function fileCheck() {
 
 
 }
-function colorCheck() {
-    document.getElementById("glow").value = "#00FF00";
-    /*  $glow = "#00FF00";
-     $gmid = "#D3D3D3";
-     $ghigh = "#FF0000";
-     $clmt = 1;
-     $cbins = 10;
-     $clow = "#0000FF";
-     $cmid = "#D3D3D3";
-     $chigh = "#FFFF00";*/
-}
+
+//Cookie functions are used to handle creating and reading and erase cookies
 function createCookie(name, value, days) {
     if (days) {
         var date = new Date();

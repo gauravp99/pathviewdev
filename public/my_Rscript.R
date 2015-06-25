@@ -61,13 +61,12 @@ if(!is.null(args2$cpdextension)){
     } else stop("Empty compound data file!")
 } else cpd.d=NULL
 
-kegg.dir=paste("/home/ybhavnasi/Desktop/Kegg/", args2$species, sep="")
+kegg.dir=paste(substr(getwd(),1,nchar(getwd())-20),paste("/Kegg/", args2$species, sep=""),sep="")
 #if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
 system(paste("mkdir -p", kegg.dir))
                                         #path.ids=args1[grep("^pathway", names(args1))]
 save.image("workenv.Rdata")
 
-library(pathview)
 pv.run=sapply(path.ids, function(pid){
 pv.out <- try(pathview(gene.data = gene.d,gene.idtype = args2$geneid,cpd.data = cpd.d,cpd.idtype=args2$cpdid, pathway.id = pid,species = args2$species,out.suffix = args2$suffix,kegg.native = args2$kegg, sign.pos =args2$pos,same.layer = args2$layer,keys.align = args2$align,split.group = args2$split,expand.node = args2$expand,multi.state=args2$multistate, match.data = args2$matchd ,node.sum=args2$nsum,key.pos = args2$kpos,cpd.lab.offset= args2$offset,limit = list(gene = args2$glmt, cpd = args2$clmt), bins = list(gene = args2$gbins, cpd= args2$cbins),low = list(gene = args2$glow, cpd = args2$clow),mid = list(gene = args2$gmid, cpd = args2$cmid), high = list(gene = args2$ghigh, cpd =args2$chigh),discrete = list(gene = args2$gdisc, cpd = args2$cdisc),kegg.dir =kegg.dir))
 

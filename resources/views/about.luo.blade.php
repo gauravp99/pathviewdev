@@ -18,7 +18,7 @@
                     Pathview web is designed and developed by Weijun Luo and Yeshvant Kumar Bhavnasi. We also get support from Steven Blanchard, Cory Brouwer and the whole Bioinformatics Service Division (BSD) at UNC Charlotte. 
                 </p>
                 <p class="content1">
-This project is sponsored by BSD and Department of Bioinformatics and Genomics, and is supported by the Faculty Innovaton Fund to Weijun Luo from the College of Computing and Informatics. 
+                    This project is sponsored by BSD and Department of Bioinformatics and Genomics, and is supported by the Faculty Innovaton Fund to Weijun Luo from the College of Computing and Informatics.
                 </p>
 
                 <h2 class="homepage-heading">Disclaimer</h2>
