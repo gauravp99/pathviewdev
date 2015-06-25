@@ -58,7 +58,7 @@ Route::get('guest', 'GuestController@index');
 Route::get('guest-home', array(
     'as' => 'guest-home ',
     'users' => function () {
-        return view('guest-home');
+        return view('guest.guest-home');
     }));
 
 /* URL route for Controller for Analysis page user page */

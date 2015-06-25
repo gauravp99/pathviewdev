@@ -13,6 +13,6 @@ class GuestController extends Controller
 
     public function index()
     {
-        return view('guest-home');
+        return view('guest.guest-home');
     }
 }
