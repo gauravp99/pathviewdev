@@ -56405,3 +56405,16 @@ Laravel development server started on http://10.38.138.17:80/
 [Thu Jun 25 14:44:13 2015] 10.38.138.17:38327 [200]: /images/plogo.png
 [Thu Jun 25 14:44:13 2015] 10.38.138.17:38328 [200]: /images/logo-text.png
 [Thu Jun 25 14:44:13 2015] 10.38.138.17:38329 [200]: /images/user.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38378 [200]: /css/bootstrap1.css
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38379 [200]: /css/style.css
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38380 [200]: /css/carousel.css
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38382 [200]: /js/sliding.form.js
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38383 [200]: /js/ChartNew.js
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38385 [200]: /images/plogo.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38386 [200]: /images/logo-text.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38387 [200]: /images/user.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38388 [200]: /images/firstslide.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38389 [200]: /images/secondslide.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38390 [200]: /images/thirdslide.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38391 [200]: /images/fourthslide.png
+[Thu Jun 25 14:48:50 2015] 10.38.138.17:38392 [200]: /images/fifthslide.jpg

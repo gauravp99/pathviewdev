@@ -11,6 +11,7 @@ You can find each file details at the following link in google docs: https://doc
 
 
 #1. Mysql client and server installation:
+----------------------------------------
 
 sudo apt-get install mysql-server mysql-client
 
@@ -21,6 +22,8 @@ Repeat password for the MySQL "root" user: <-- yourrootsqlpassword
 
 
 #2. Database creation and import data:
+--------------------------------------
+
 Open mysql database and create database named pathway and import the data from dump file dump.sql at location Pathway/public/dump.sql
 
 To import open the mysql command prompt and copy paste the following command:
@@ -30,6 +33,7 @@ To export the database into a file from existing database:
 mysqldump -u username -p pathway > dump.sql
 
 #3. R installation:
+-------------------
 
 3.1. Required R version 3.1.2 you can download R version from "http://cran.r-project.org/src/base/R-3/R-3.1.2.tar.gz"
 
@@ -54,21 +58,24 @@ Pathview Package installation:
 source("http://bioconductor.org/biocLite.R")
 biocLite("pathview")
 
-#4. Apache2 installation
+#4. Apache2 installation:
+-------------------------
 
 Check if the apache installed on the server if not install apache2 running the command
 
 sudo apt-get install apache2
 
 
-#5. PHP installation
+#5. PHP installation:
+---------------------
 
 Check if the PHP installed on the server if not install it required PHP version >5.6
 
 Command : sudo apt-get install php5 libapache2-mod-php5
 
 
-#6. Install PHP my adming to have the UI control over the database 
+#6. Install PHP my adming to have the UI control over the database :
+-------------------------------------------------------------------
 
 sudo apt-get install phpmyadmin
 
@@ -79,7 +86,8 @@ Configure database for phpmyadmin with dbconfig-common? <-- No
 
 you can access the database from  http://<ip address>/phpmyadmin/
 
-#7. Install composer (A dependency manager for the PHP)
+#7. Install composer (A dependency manager for the PHP):
+-------------------------------------------------------
 
 Command:
 
@@ -88,18 +96,21 @@ curl -sS https://getcomposer.org/installer | php
 
 rename composer.phar to composer copy it to /usr/bin and update the PATH variabl to the file location to use composer command from any place
 
-#8. Install Laravel 5.0 PHP framework for WEB
+#8. Install Laravel 5.0 PHP framework for WEB:
+---------------------------------------------
 
 composer global require "laravel/installer=~1.1"
 
 Make sure to place the ~/.composer/vendor/bin directory in your PATH so the laravel executable can be located by your system.
 
-#9. Copy the Project code to the /var/www/ folder
+#9. Copy the Project code to the /var/www/ folder on the server:
+---------------------------------------------------------------
 
-#10. open file .env under the Pathway directory update databsae details and mail details
+#10. open file .env under the Pathway directory update databsae details and mail details:
+----------------------------------------------------------------------------------------
 
 typical settings:
-
+<code>
 APP_ENV=prod  ## for production for local version have value = local
 APP_DEBUG=false ## for production no need to show the error occured location to debug change it to true
 APP_KEY=ALNqxwwt8hH6qh78zB4NskH1hcoiZEnz ## key used by the application for encryption of the cookies and session variables
@@ -118,7 +129,7 @@ MAIL_HOST=smtp.gmail.com
 MAIL_PORT=465
 MAIL_USERNAME=byeshvant@gmail.com
 MAIL_PASSWORD=*****
-
+</code>
 #11. unable the mod_rewrite option of apache2 web server by running the following command
 
 a2enmod rewrite
