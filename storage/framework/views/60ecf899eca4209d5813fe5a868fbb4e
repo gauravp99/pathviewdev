@@ -31,31 +31,14 @@
         <script>
             function openWindow() {
                 window.open('/tutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");
-
                 var w = window.innerWidth;
                 var h = window.innerHeight;
-
             }
         </script>
     </ul>
 </div>
 
 <style>
-    @media (max-width: 636px)
-    {
-
-        .active{
-
-        }
-    }
-  /*  @media (max-width: 400px)
-    {
-        .navigation{
-            visibility: hidden;
-            position:absolute;
-        }
-
-    }*/
     @media (max-width: 768px)
     {
         .conetent-header > p
@@ -433,7 +416,6 @@
             margin-left: 0;
         }
     }
-
 </style>
 
 

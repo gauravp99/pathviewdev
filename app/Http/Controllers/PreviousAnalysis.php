@@ -9,7 +9,7 @@ use App\Http\Requests;
 use App\User;
 use Auth;
 use App;
-
+use App\analyses;
 class PreviousAnalysis extends Controller
 {
 
@@ -19,7 +19,7 @@ class PreviousAnalysis extends Controller
         if(Auth::user()->id==$username) {
             if ($user->count()) {
                 $user = $user->first();
-                return view('home')->with('user', $user);
+                return view('profile.home')->with('user', $user)->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(6));
             }
         }
         return App::abort(404);
