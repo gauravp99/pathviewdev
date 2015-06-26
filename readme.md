@@ -4,7 +4,7 @@ Pathview maps, integrates and renders a wide variety of biological data on relev
 Pathview Web provides easy interactive access, and generates high quality,
 hyperlinked graphs. Pathview package is written in R/Bioconductor, this web interface is built on PHP with Laravel Framework and R.
 
-You can find each file details at the following link in google docs: https://docs.google.com/spreadsheets/d/1akyqXw25bGbwlS9Mb-cmfaIZHfr5bdKTv0QPjCvbEew/edit?usp=sharing
+You can find each file details at the following link in google docs: [Files Explanation doc](https://docs.google.com/spreadsheets/d/1akyqXw25bGbwlS9Mb-cmfaIZHfr5bdKTv0QPjCvbEew/edit?usp=sharing)
 
 ##Pathview web installation/Deployment procedure:
 -------------------------------------------------
@@ -177,7 +177,7 @@ __Command:__
 #14. try accessing the url/ip address
 
 
-References:
+##References:
 
 1. Laravel Installation:
 >[Official Laravel Website ](http://laravel.com/docs/5.0/installation)
@@ -187,4 +187,3 @@ References:
 
 3. Install Laravel application on Apache2 server
 >[Apache2 Laravel Installation Guide](http://ulyssesonline.com/2014/07/24/install-laravel-4-2-on-ubuntu-server-14-04-lts/)
-
