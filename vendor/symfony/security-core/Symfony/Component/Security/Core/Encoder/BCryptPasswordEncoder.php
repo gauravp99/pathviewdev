@@ -38,7 +38,7 @@ class BCryptPasswordEncoder extends BasePasswordEncoder
             throw new \RuntimeException('To use the BCrypt encoder, you need to upgrade to PHP 5.5 or install the "ircmaxell/password-compat" via Composer.');
         }
 
-        $cost = (int)$cost;
+        $cost = (int) $cost;
         if ($cost < 4 || $cost > 31) {
             throw new \InvalidArgumentException('Cost must be in the range of 4-31.');
         }
@@ -57,7 +57,7 @@ class BCryptPasswordEncoder extends BasePasswordEncoder
      *
      * It is almost best to **not** pass a salt and let PHP generate one for you.
      *
-     * @param string $raw The password to encode
+     * @param string $raw  The password to encode
      * @param string $salt The salt
      *
      * @return string The encoded password

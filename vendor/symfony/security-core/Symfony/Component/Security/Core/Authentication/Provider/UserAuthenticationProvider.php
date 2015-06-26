@@ -11,15 +11,15 @@
 
 namespace Symfony\Component\Security\Core\Authentication\Provider;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Role\SwitchUserRole;
-use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\Security\Core\Exception\AuthenticationServiceException;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Role\SwitchUserRole;
 
 /**
  * UserProviderInterface retrieves users for UsernamePasswordToken tokens.
@@ -35,9 +35,9 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
     /**
      * Constructor.
      *
-     * @param UserCheckerInterface $userChecker An UserCheckerInterface interface
-     * @param string $providerKey A provider key
-     * @param bool $hideUserNotFoundExceptions Whether to hide user not found exception or not
+     * @param UserCheckerInterface $userChecker                An UserCheckerInterface interface
+     * @param string               $providerKey                A provider key
+     * @param bool                 $hideUserNotFoundExceptions Whether to hide user not found exception or not
      *
      * @throws \InvalidArgumentException
      */
@@ -108,32 +108,9 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
     }
 
     /**
-     * Retrieves the user from an implementation-specific location.
-     *
-     * @param string $username The username to retrieve
-     * @param UsernamePasswordToken $token The Token
-     *
-     * @return UserInterface The user
-     *
-     * @throws AuthenticationException if the credentials could not be validated
-     */
-    abstract protected function retrieveUser($username, UsernamePasswordToken $token);
-
-    /**
-     * Does additional checks on the user and token (like validating the
-     * credentials).
-     *
-     * @param UserInterface $user The retrieved UserInterface instance
-     * @param UsernamePasswordToken $token The UsernamePasswordToken token to be authenticated
-     *
-     * @throws AuthenticationException if the credentials could not be validated
-     */
-    abstract protected function checkAuthentication(UserInterface $user, UsernamePasswordToken $token);
-
-    /**
      * Retrieves roles from user and appends SwitchUserRole if original token contained one.
      *
-     * @param UserInterface $user The user
+     * @param UserInterface  $user  The user
      * @param TokenInterface $token The token
      *
      * @return array The user roles
@@ -152,4 +129,27 @@ abstract class UserAuthenticationProvider implements AuthenticationProviderInter
 
         return $roles;
     }
+
+    /**
+     * Retrieves the user from an implementation-specific location.
+     *
+     * @param string                $username The username to retrieve
+     * @param UsernamePasswordToken $token    The Token
+     *
+     * @return UserInterface The user
+     *
+     * @throws AuthenticationException if the credentials could not be validated
+     */
+    abstract protected function retrieveUser($username, UsernamePasswordToken $token);
+
+    /**
+     * Does additional checks on the user and token (like validating the
+     * credentials).
+     *
+     * @param UserInterface         $user  The retrieved UserInterface instance
+     * @param UsernamePasswordToken $token The UsernamePasswordToken token to be authenticated
+     *
+     * @throws AuthenticationException if the credentials could not be validated
+     */
+    abstract protected function checkAuthentication(UserInterface $user, UsernamePasswordToken $token);
 }

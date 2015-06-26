@@ -32,16 +32,6 @@ class BasePasswordEncoderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->invokeComparePasswords('password', 'foo'));
     }
 
-    protected function invokeComparePasswords($p1, $p2)
-    {
-        $encoder = new PasswordEncoder();
-        $r = new \ReflectionObject($encoder);
-        $m = $r->getMethod('comparePasswords');
-        $m->setAccessible(true);
-
-        return $m->invoke($encoder, $p1, $p2);
-    }
-
     public function testDemergePasswordAndSalt()
     {
         $this->assertEquals(array('password', 'salt'), $this->invokeDemergePasswordAndSalt('password{salt}'));
@@ -49,30 +39,10 @@ class BasePasswordEncoderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('', ''), $this->invokeDemergePasswordAndSalt(''));
     }
 
-    protected function invokeDemergePasswordAndSalt($password)
-    {
-        $encoder = new PasswordEncoder();
-        $r = new \ReflectionObject($encoder);
-        $m = $r->getMethod('demergePasswordAndSalt');
-        $m->setAccessible(true);
-
-        return $m->invoke($encoder, $password);
-    }
-
     public function testMergePasswordAndSalt()
     {
         $this->assertEquals('password{salt}', $this->invokeMergePasswordAndSalt('password', 'salt'));
         $this->assertEquals('password', $this->invokeMergePasswordAndSalt('password', ''));
-    }
-
-    protected function invokeMergePasswordAndSalt($password, $salt)
-    {
-        $encoder = new PasswordEncoder();
-        $r = new \ReflectionObject($encoder);
-        $m = $r->getMethod('mergePasswordAndSalt');
-        $m->setAccessible(true);
-
-        return $m->invoke($encoder, $password, $salt);
     }
 
     /**
@@ -87,6 +57,36 @@ class BasePasswordEncoderTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue($this->invokeIsPasswordTooLong(str_repeat('a', 10000)));
         $this->assertFalse($this->invokeIsPasswordTooLong(str_repeat('a', 10)));
+    }
+
+    protected function invokeDemergePasswordAndSalt($password)
+    {
+        $encoder = new PasswordEncoder();
+        $r = new \ReflectionObject($encoder);
+        $m = $r->getMethod('demergePasswordAndSalt');
+        $m->setAccessible(true);
+
+        return $m->invoke($encoder, $password);
+    }
+
+    protected function invokeMergePasswordAndSalt($password, $salt)
+    {
+        $encoder = new PasswordEncoder();
+        $r = new \ReflectionObject($encoder);
+        $m = $r->getMethod('mergePasswordAndSalt');
+        $m->setAccessible(true);
+
+        return $m->invoke($encoder, $password, $salt);
+    }
+
+    protected function invokeComparePasswords($p1, $p2)
+    {
+        $encoder = new PasswordEncoder();
+        $r = new \ReflectionObject($encoder);
+        $m = $r->getMethod('comparePasswords');
+        $m->setAccessible(true);
+
+        return $m->invoke($encoder, $p1, $p2);
     }
 
     protected function invokeIsPasswordTooLong($p)

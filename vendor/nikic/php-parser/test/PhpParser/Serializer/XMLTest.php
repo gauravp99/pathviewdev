@@ -9,8 +9,7 @@ class XMLTest extends \PHPUnit_Framework_TestCase
     /**
      * @covers PhpParser\Serializer\XML<extended>
      */
-    public function testSerialize()
-    {
+    public function testSerialize() {
         $code = <<<CODE
 <?php
 // comment
@@ -148,7 +147,7 @@ CODE;
 </AST>
 XML;
 
-        $parser = new PhpParser\Parser(new PhpParser\Lexer);
+        $parser     = new PhpParser\Parser(new PhpParser\Lexer);
         $serializer = new XML;
 
         $stmts = $parser->parse($code);
@@ -159,8 +158,7 @@ XML;
      * @expectedException        \InvalidArgumentException
      * @expectedExceptionMessage Unexpected node type
      */
-    public function testError()
-    {
+    public function testError() {
         $serializer = new XML;
         $serializer->serialize(array(new \stdClass));
     }

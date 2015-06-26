@@ -21,13 +21,28 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
 class FlashBagTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var array
-     */
-    protected $array = array();
-    /**
      * @var \Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface
      */
     private $bag;
+
+    /**
+     * @var array
+     */
+    protected $array = array();
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->bag = new FlashBag();
+        $this->array = array('notice' => array('A previous flash message'));
+        $this->bag->initialize($this->array);
+    }
+
+    protected function tearDown()
+    {
+        $this->bag = null;
+        parent::tearDown();
+    }
 
     public function testInitialize()
     {
@@ -75,7 +90,7 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
         $this->bag->set('error', 'Bar');
         $this->assertEquals(array(
             'notice' => array('Foo'),
-            'error' => array('Bar'),), $this->bag->all()
+            'error' => array('Bar'), ), $this->bag->all()
         );
 
         $this->assertEquals(array(), $this->bag->all());
@@ -106,14 +121,14 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array(
             'notice' => array('Foo'),
             'error' => array('Bar'),
-        ), $this->bag->peekAll()
+            ), $this->bag->peekAll()
         );
         $this->assertTrue($this->bag->has('notice'));
         $this->assertTrue($this->bag->has('error'));
         $this->assertEquals(array(
             'notice' => array('Foo'),
             'error' => array('Bar'),
-        ), $this->bag->peekAll()
+            ), $this->bag->peekAll()
         );
     }
 
@@ -130,24 +145,10 @@ class FlashBagTest extends \PHPUnit_Framework_TestCase
         $i = 0;
         foreach ($this->bag as $key => $val) {
             $this->assertEquals(array($flashes[$key]), $val);
-            $i++;
+            ++$i;
         }
 
         $this->assertEquals(count($flashes), $i);
         $this->assertCount(0, $this->bag->all());
-    }
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $this->bag = new FlashBag();
-        $this->array = array('notice' => array('A previous flash message'));
-        $this->bag->initialize($this->array);
-    }
-
-    protected function tearDown()
-    {
-        $this->bag = null;
-        parent::tearDown();
     }
 }

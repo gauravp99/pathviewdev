@@ -22,8 +22,8 @@ interface GeneratorInterface
 {
     /**
      * @param ResourceInterface $resource
-     * @param string $generation
-     * @param array $data
+     * @param string            $generation
+     * @param array             $data
      *
      * @return bool
      */
@@ -31,7 +31,7 @@ interface GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param array $data
+     * @param array             $data
      */
     public function generate(ResourceInterface $resource, array $data);
 

@@ -11,7 +11,7 @@
 /**
  * A KeyCache which streams to and from disk.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
 {
@@ -57,7 +57,7 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      * InputByteStreams, and the given $path to save to.
      *
      * @param Swift_KeyCache_KeyCacheInputStream $stream
-     * @param string $path to save to
+     * @param string                             $path   to save to
      */
     public function __construct(Swift_KeyCache_KeyCacheInputStream $stream, $path)
     {
@@ -77,7 +77,7 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      * @param string $nsKey
      * @param string $itemKey
      * @param string $string
-     * @param int $mode
+     * @param int    $mode
      *
      * @throws Swift_IoException
      */
@@ -93,9 +93,9 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
                 break;
             default:
                 throw new Swift_SwiftException(
-                    'Invalid mode [' . $mode . '] used to set nsKey=' .
-                    $nsKey . ', itemKey=' . $itemKey
-                );
+                    'Invalid mode ['.$mode.'] used to set nsKey='.
+                    $nsKey.', itemKey='.$itemKey
+                    );
                 break;
         }
         fwrite($fp, $string);
@@ -103,77 +103,14 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     }
 
     /**
-     * Initialize the namespace of $nsKey if needed.
-     *
-     * @param string $nsKey
-     */
-    private function _prepareCache($nsKey)
-    {
-        $cacheDir = $this->_path . '/' . $nsKey;
-        if (!is_dir($cacheDir)) {
-            if (!mkdir($cacheDir)) {
-                throw new Swift_IoException('Failed to create cache directory ' . $cacheDir);
-            }
-            $this->_keys[$nsKey] = array();
-        }
-    }
-
-    /**
-     * Get a file handle on the cache item.
-     *
-     * @param string $nsKey
-     * @param string $itemKey
-     * @param int $position
-     *
-     * @return resource
-     */
-    private function _getHandle($nsKey, $itemKey, $position)
-    {
-        if (!isset($this->_keys[$nsKey][$itemKey])) {
-            $openMode = $this->hasKey($nsKey, $itemKey)
-                ? 'r+b'
-                : 'w+b';
-            $fp = fopen($this->_path . '/' . $nsKey . '/' . $itemKey, $openMode);
-            $this->_keys[$nsKey][$itemKey] = $fp;
-        }
-        if (self::POSITION_START == $position) {
-            fseek($this->_keys[$nsKey][$itemKey], 0, SEEK_SET);
-        } elseif (self::POSITION_END == $position) {
-            fseek($this->_keys[$nsKey][$itemKey], 0, SEEK_END);
-        }
-
-        return $this->_keys[$nsKey][$itemKey];
-    }
-
-    /**
-     * Check if the given $itemKey exists in the namespace $nsKey.
-     *
-     * @param string $nsKey
-     * @param string $itemKey
-     *
-     * @return bool
-     */
-    public function hasKey($nsKey, $itemKey)
-    {
-        return is_file($this->_path . '/' . $nsKey . '/' . $itemKey);
-    }
-
-    private function _freeHandle($nsKey, $itemKey)
-    {
-        $fp = $this->_getHandle($nsKey, $itemKey, self::POSITION_CURRENT);
-        fclose($fp);
-        $this->_keys[$nsKey][$itemKey] = null;
-    }
-
-    /**
      * Set a ByteStream into the cache under $itemKey for the namespace $nsKey.
      *
      * @see MODE_WRITE, MODE_APPEND
      *
-     * @param string $nsKey
-     * @param string $itemKey
+     * @param string                 $nsKey
+     * @param string                 $itemKey
      * @param Swift_OutputByteStream $os
-     * @param int $mode
+     * @param int                    $mode
      *
      * @throws Swift_IoException
      */
@@ -189,9 +126,9 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
                 break;
             default:
                 throw new Swift_SwiftException(
-                    'Invalid mode [' . $mode . '] used to set nsKey=' .
-                    $nsKey . ', itemKey=' . $itemKey
-                );
+                    'Invalid mode ['.$mode.'] used to set nsKey='.
+                    $nsKey.', itemKey='.$itemKey
+                    );
                 break;
         }
         while (false !== $bytes = $os->read(8192)) {
@@ -205,8 +142,8 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      *
      * NOTE: The stream will always write in append mode.
      *
-     * @param string $nsKey
-     * @param string $itemKey
+     * @param string                $nsKey
+     * @param string                $itemKey
      * @param Swift_InputByteStream $writeThrough
      *
      * @return Swift_InputByteStream
@@ -230,9 +167,9 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
      * @param string $nsKey
      * @param string $itemKey
      *
-     * @return string
-     *
      * @throws Swift_IoException
+     *
+     * @return string
      */
     public function getString($nsKey, $itemKey)
     {
@@ -258,9 +195,9 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     /**
      * Get data back out of the cache as a ByteStream.
      *
-     * @param string $nsKey
-     * @param string $itemKey
-     * @param Swift_InputByteStream $is to write the data to
+     * @param string                $nsKey
+     * @param string                $itemKey
+     * @param Swift_InputByteStream $is      to write the data to
      */
     public function exportToByteStream($nsKey, $itemKey, Swift_InputByteStream $is)
     {
@@ -280,12 +217,29 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
     }
 
     /**
-     * Destructor.
+     * Check if the given $itemKey exists in the namespace $nsKey.
+     *
+     * @param string $nsKey
+     * @param string $itemKey
+     *
+     * @return bool
      */
-    public function __destruct()
+    public function hasKey($nsKey, $itemKey)
     {
-        foreach ($this->_keys as $nsKey => $null) {
-            $this->clearAll($nsKey);
+        return is_file($this->_path.'/'.$nsKey.'/'.$itemKey);
+    }
+
+    /**
+     * Clear data for $itemKey in the namespace $nsKey if it exists.
+     *
+     * @param string $nsKey
+     * @param string $itemKey
+     */
+    public function clearKey($nsKey, $itemKey)
+    {
+        if ($this->hasKey($nsKey, $itemKey)) {
+            $this->_freeHandle($nsKey, $itemKey);
+            unlink($this->_path.'/'.$nsKey.'/'.$itemKey);
         }
     }
 
@@ -300,24 +254,71 @@ class Swift_KeyCache_DiskKeyCache implements Swift_KeyCache
             foreach ($this->_keys[$nsKey] as $itemKey => $null) {
                 $this->clearKey($nsKey, $itemKey);
             }
-            if (is_dir($this->_path . '/' . $nsKey)) {
-                rmdir($this->_path . '/' . $nsKey);
+            if (is_dir($this->_path.'/'.$nsKey)) {
+                rmdir($this->_path.'/'.$nsKey);
             }
             unset($this->_keys[$nsKey]);
         }
     }
 
     /**
-     * Clear data for $itemKey in the namespace $nsKey if it exists.
+     * Initialize the namespace of $nsKey if needed.
+     *
+     * @param string $nsKey
+     */
+    private function _prepareCache($nsKey)
+    {
+        $cacheDir = $this->_path.'/'.$nsKey;
+        if (!is_dir($cacheDir)) {
+            if (!mkdir($cacheDir)) {
+                throw new Swift_IoException('Failed to create cache directory '.$cacheDir);
+            }
+            $this->_keys[$nsKey] = array();
+        }
+    }
+
+    /**
+     * Get a file handle on the cache item.
      *
      * @param string $nsKey
      * @param string $itemKey
+     * @param int    $position
+     *
+     * @return resource
      */
-    public function clearKey($nsKey, $itemKey)
+    private function _getHandle($nsKey, $itemKey, $position)
     {
-        if ($this->hasKey($nsKey, $itemKey)) {
-            $this->_freeHandle($nsKey, $itemKey);
-            unlink($this->_path . '/' . $nsKey . '/' . $itemKey);
+        if (!isset($this->_keys[$nsKey][$itemKey])) {
+            $openMode = $this->hasKey($nsKey, $itemKey)
+                ? 'r+b'
+                : 'w+b'
+                ;
+            $fp = fopen($this->_path.'/'.$nsKey.'/'.$itemKey, $openMode);
+            $this->_keys[$nsKey][$itemKey] = $fp;
+        }
+        if (self::POSITION_START == $position) {
+            fseek($this->_keys[$nsKey][$itemKey], 0, SEEK_SET);
+        } elseif (self::POSITION_END == $position) {
+            fseek($this->_keys[$nsKey][$itemKey], 0, SEEK_END);
+        }
+
+        return $this->_keys[$nsKey][$itemKey];
+    }
+
+    private function _freeHandle($nsKey, $itemKey)
+    {
+        $fp = $this->_getHandle($nsKey, $itemKey, self::POSITION_CURRENT);
+        fclose($fp);
+        $this->_keys[$nsKey][$itemKey] = null;
+    }
+
+    /**
+     * Destructor.
+     */
+    public function __destruct()
+    {
+        foreach ($this->_keys as $nsKey => $null) {
+            $this->clearAll($nsKey);
         }
     }
 }

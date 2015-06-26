@@ -2,10 +2,11 @@
 
 namespace spec\PhpSpec\Formatter\Html;
 
-use PhpSpec\Event\ExampleEvent;
-use PhpSpec\Formatter\Html\Template;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+
+use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Formatter\Html\Template;
 
 class ReportPendingItemSpec extends ObjectBehavior
 {
@@ -19,7 +20,7 @@ class ReportPendingItemSpec extends ObjectBehavior
     function it_writes_a_pass_message_for_a_passing_example(Template $template, ExampleEvent $event)
     {
         $event->getTitle()->willReturn(self::EVENT_TITLE);
-        $template->render(Template::DIR . '/Template/ReportPending.html', array(
+        $template->render(Template::DIR.'/Template/ReportPending.html', array(
             'title' => self::EVENT_TITLE,
             'pendingExamplesCount' => 1
         ))->shouldBeCalled();

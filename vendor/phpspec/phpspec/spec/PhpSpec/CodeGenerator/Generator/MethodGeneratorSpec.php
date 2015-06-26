@@ -2,12 +2,13 @@
 
 namespace spec\PhpSpec\CodeGenerator\Generator;
 
-use PhpSpec\CodeGenerator\TemplateRenderer;
-use PhpSpec\Console\IO;
-use PhpSpec\Locator\ResourceInterface;
 use PhpSpec\ObjectBehavior;
-use PhpSpec\Util\Filesystem;
 use Prophecy\Argument;
+
+use PhpSpec\Console\IO;
+use PhpSpec\CodeGenerator\TemplateRenderer;
+use PhpSpec\Util\Filesystem;
+use PhpSpec\Locator\ResourceInterface;
 
 class MethodGeneratorSpec extends ObjectBehavior
 {
@@ -60,7 +61,7 @@ METHOD
 
 CODE;
         $values = array(
-            '%name%' => 'setName',
+            '%name%'      => 'setName',
             '%arguments%' => '$argument1',
         );
 

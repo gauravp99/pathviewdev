@@ -28,7 +28,7 @@ class OutputFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals('foo<bar', $formatter->format('foo\\<bar'));
         $this->assertEquals('<info>some info</info>', $formatter->format('\\<info>some info\\</info>'));
-        $this->assertEquals("\\<info>some info\\</info>", OutputFormatter::escape('<info>some info</info>'));
+        $this->assertEquals('\\<info>some info\\</info>', OutputFormatter::escape('<info>some info</info>'));
 
         $this->assertEquals(
             "\033[33mSymfony\\Component\\Console does work very well!\033[39m",
@@ -99,12 +99,12 @@ class OutputFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(
             "(\033[32mz>=2.0,<a2.3\033[39m)",
-            $formatter->format('(<info>' . $formatter->escape('z>=2.0,<a2.3') . '</info>)')
+            $formatter->format('(<info>'.$formatter->escape('z>=2.0,<a2.3').'</info>)')
         );
 
         $this->assertEquals(
             "\033[32m<error>some error</error>\033[39m",
-            $formatter->format('<info>' . $formatter->escape('<error>some error</error>') . '</info>')
+            $formatter->format('<info>'.$formatter->escape('<error>some error</error>').'</info>')
         );
     }
 
@@ -162,8 +162,16 @@ class OutputFormatterTest extends \PHPUnit_Framework_TestCase
     public function testFormatLongString()
     {
         $formatter = new OutputFormatter(true);
-        $long = str_repeat("\\", 14000);
-        $this->assertEquals("\033[37;41msome error\033[39;49m" . $long, $formatter->format('<error>some error</error>' . $long));
+        $long = str_repeat('\\', 14000);
+        $this->assertEquals("\033[37;41msome error\033[39;49m".$long, $formatter->format('<error>some error</error>'.$long));
+    }
+
+    public function testFormatToStringObject()
+    {
+        $formatter = new OutputFormatter(false);
+        $this->assertEquals(
+            'some info', $formatter->format(new TableCell())
+        );
     }
 
     public function testNotDecoratedFormatter()
@@ -216,7 +224,7 @@ EOF
 <info>
 some text</info>
 EOF
-            ));
+        ));
 
         $this->assertEquals(<<<EOF
 \033[32msome text
@@ -226,7 +234,7 @@ EOF
 <info>some text
 </info>
 EOF
-            ));
+        ));
 
         $this->assertEquals(<<<EOF
 \033[32m
@@ -238,7 +246,7 @@ EOF
 some text
 </info>
 EOF
-            ));
+        ));
 
         $this->assertEquals(<<<EOF
 \033[32m
@@ -252,6 +260,14 @@ some text
 more text
 </info>
 EOF
-            ));
+        ));
+    }
+}
+
+class TableCell
+{
+    public function __toString()
+    {
+        return '<info>some info</info>';
     }
 }

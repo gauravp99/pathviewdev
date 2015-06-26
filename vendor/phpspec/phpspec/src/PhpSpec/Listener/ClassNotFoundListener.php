@@ -13,14 +13,14 @@
 
 namespace PhpSpec\Listener;
 
-use PhpSpec\CodeGenerator\GeneratorManager;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use PhpSpec\Console\IO;
+use PhpSpec\Locator\ResourceManagerInterface;
+use PhpSpec\CodeGenerator\GeneratorManager;
 use PhpSpec\Event\ExampleEvent;
 use PhpSpec\Event\SuiteEvent;
 use PhpSpec\Exception\Fracture\ClassNotFoundException as PhpSpecClassException;
-use PhpSpec\Locator\ResourceManagerInterface;
 use Prophecy\Exception\Doubler\ClassNotFoundException as ProphecyClassException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class ClassNotFoundListener implements EventSubscriberInterface
 {
@@ -29,21 +29,32 @@ class ClassNotFoundListener implements EventSubscriberInterface
     private $generator;
     private $classes = array();
 
+    /**
+     * @param IO $io
+     * @param ResourceManagerInterface $resources
+     * @param GeneratorManager $generator
+     */
     public function __construct(IO $io, ResourceManagerInterface $resources, GeneratorManager $generator)
     {
-        $this->io = $io;
+        $this->io        = $io;
         $this->resources = $resources;
         $this->generator = $generator;
     }
 
+    /**
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return array(
             'afterExample' => array('afterExample', 10),
-            'afterSuite' => array('afterSuite', -10),
+            'afterSuite'   => array('afterSuite', -10),
         );
     }
 
+    /**
+     * @param ExampleEvent $event
+     */
     public function afterExample(ExampleEvent $event)
     {
         if (null === $exception = $event->getException()) {
@@ -51,14 +62,16 @@ class ClassNotFoundListener implements EventSubscriberInterface
         }
 
         if (!($exception instanceof PhpSpecClassException) &&
-            !($exception instanceof ProphecyClassException)
-        ) {
+            !($exception instanceof ProphecyClassException)) {
             return;
         }
 
         $this->classes[$exception->getClassname()] = true;
     }
 
+    /**
+     * @param SuiteEvent $event
+     */
     public function afterSuite(SuiteEvent $event)
     {
         if (!$this->io->isCodeGenerationEnabled()) {

@@ -31,8 +31,8 @@ class JsonResponse extends Response
     /**
      * Constructor.
      *
-     * @param mixed $data The response data
-     * @param int $status The response status code
+     * @param mixed $data    The response data
+     * @param int   $status  The response status code
      * @param array $headers An array of response headers
      */
     public function __construct($data = null, $status = 200, $headers = array())
@@ -47,6 +47,41 @@ class JsonResponse extends Response
         $this->encodingOptions = JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT;
 
         $this->setData($data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public static function create($data = null, $status = 200, $headers = array())
+    {
+        return new static($data, $status, $headers);
+    }
+
+    /**
+     * Sets the JSONP callback.
+     *
+     * @param string|null $callback The JSONP callback or null to use none
+     *
+     * @return JsonResponse
+     *
+     * @throws \InvalidArgumentException When the callback name is not valid
+     */
+    public function setCallback($callback = null)
+    {
+        if (null !== $callback) {
+            // taken from http://www.geekality.net/2011/08/03/valid-javascript-identifier/
+            $pattern = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u';
+            $parts = explode('.', $callback);
+            foreach ($parts as $part) {
+                if (!preg_match($pattern, $part)) {
+                    throw new \InvalidArgumentException('The callback name is not valid.');
+                }
+            }
+        }
+
+        $this->callback = $callback;
+
+        return $this->update();
     }
 
     /**
@@ -91,31 +126,28 @@ class JsonResponse extends Response
         return $this->update();
     }
 
-    private function transformJsonError()
+    /**
+     * Returns options used while encoding data to JSON.
+     *
+     * @return int
+     */
+    public function getEncodingOptions()
     {
-        if (function_exists('json_last_error_msg')) {
-            return json_last_error_msg();
-        }
+        return $this->encodingOptions;
+    }
 
-        switch (json_last_error()) {
-            case JSON_ERROR_DEPTH:
-                return 'Maximum stack depth exceeded.';
+    /**
+     * Sets options used while encoding data to JSON.
+     *
+     * @param int $encodingOptions
+     *
+     * @return JsonResponse
+     */
+    public function setEncodingOptions($encodingOptions)
+    {
+        $this->encodingOptions = (int) $encodingOptions;
 
-            case JSON_ERROR_STATE_MISMATCH:
-                return 'Underflow or the modes mismatch.';
-
-            case JSON_ERROR_CTRL_CHAR:
-                return 'Unexpected control character found.';
-
-            case JSON_ERROR_SYNTAX:
-                return 'Syntax error, malformed JSON.';
-
-            case JSON_ERROR_UTF8:
-                return 'Malformed UTF-8 characters, possibly incorrectly encoded.';
-
-            default:
-                return 'Unknown error.';
-        }
+        return $this->setData(json_decode($this->data));
     }
 
     /**
@@ -141,62 +173,30 @@ class JsonResponse extends Response
         return $this->setContent($this->data);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function create($data = null, $status = 200, $headers = array())
+    private function transformJsonError()
     {
-        return new static($data, $status, $headers);
-    }
-
-    /**
-     * Sets the JSONP callback.
-     *
-     * @param string|null $callback The JSONP callback or null to use none
-     *
-     * @return JsonResponse
-     *
-     * @throws \InvalidArgumentException When the callback name is not valid
-     */
-    public function setCallback($callback = null)
-    {
-        if (null !== $callback) {
-            // taken from http://www.geekality.net/2011/08/03/valid-javascript-identifier/
-            $pattern = '/^[$_\p{L}][$_\p{L}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\x{200C}\x{200D}]*+$/u';
-            $parts = explode('.', $callback);
-            foreach ($parts as $part) {
-                if (!preg_match($pattern, $part)) {
-                    throw new \InvalidArgumentException('The callback name is not valid.');
-                }
-            }
+        if (function_exists('json_last_error_msg')) {
+            return json_last_error_msg();
         }
 
-        $this->callback = $callback;
+        switch (json_last_error()) {
+            case JSON_ERROR_DEPTH:
+                return 'Maximum stack depth exceeded.';
 
-        return $this->update();
-    }
+            case JSON_ERROR_STATE_MISMATCH:
+                return 'Underflow or the modes mismatch.';
 
-    /**
-     * Returns options used while encoding data to JSON.
-     *
-     * @return int
-     */
-    public function getEncodingOptions()
-    {
-        return $this->encodingOptions;
-    }
+            case JSON_ERROR_CTRL_CHAR:
+                return 'Unexpected control character found.';
 
-    /**
-     * Sets options used while encoding data to JSON.
-     *
-     * @param int $encodingOptions
-     *
-     * @return JsonResponse
-     */
-    public function setEncodingOptions($encodingOptions)
-    {
-        $this->encodingOptions = (int)$encodingOptions;
+            case JSON_ERROR_SYNTAX:
+                return 'Syntax error, malformed JSON.';
 
-        return $this->setData(json_decode($this->data));
+            case JSON_ERROR_UTF8:
+                return 'Malformed UTF-8 characters, possibly incorrectly encoded.';
+
+            default:
+                return 'Unknown error.';
+        }
     }
 }

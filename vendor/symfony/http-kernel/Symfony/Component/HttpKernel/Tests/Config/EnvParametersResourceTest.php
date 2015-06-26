@@ -19,6 +19,29 @@ class EnvParametersResourceTest extends \PHPUnit_Framework_TestCase
     protected $initialEnv;
     protected $resource;
 
+    protected function setUp()
+    {
+        $this->initialEnv = array(
+            $this->prefix.'1' => 'foo',
+            $this->prefix.'2' => 'bar',
+        );
+
+        foreach ($this->initialEnv as $key => $value) {
+            $_SERVER[$key] = $value;
+        }
+
+        $this->resource = new EnvParametersResource($this->prefix);
+    }
+
+    protected function tearDown()
+    {
+        foreach ($_SERVER as $key => $value) {
+            if (0 === strpos($key, $this->prefix)) {
+                unset($_SERVER[$key]);
+            }
+        }
+    }
+
     public function testGetResource()
     {
         $this->assertSame(
@@ -32,7 +55,7 @@ class EnvParametersResourceTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertSame(
             serialize(array('prefix' => $this->prefix, 'variables' => $this->initialEnv)),
-            (string)$this->resource
+            (string) $this->resource
         );
     }
 
@@ -68,7 +91,7 @@ class EnvParametersResourceTest extends \PHPUnit_Framework_TestCase
 
     public function testIsFreshValueAdded()
     {
-        $_SERVER[$this->prefix . '3'] = 'foo';
+        $_SERVER[$this->prefix.'3'] = 'foo';
 
         $this->assertFalse(
             $this->resource->isFresh(time()),
@@ -79,28 +102,5 @@ class EnvParametersResourceTest extends \PHPUnit_Framework_TestCase
     public function testSerializeUnserialize()
     {
         $this->assertEquals($this->resource, unserialize(serialize($this->resource)));
-    }
-
-    protected function setUp()
-    {
-        $this->initialEnv = array(
-            $this->prefix . '1' => 'foo',
-            $this->prefix . '2' => 'bar',
-        );
-
-        foreach ($this->initialEnv as $key => $value) {
-            $_SERVER[$key] = $value;
-        }
-
-        $this->resource = new EnvParametersResource($this->prefix);
-    }
-
-    protected function tearDown()
-    {
-        foreach ($_SERVER as $key => $value) {
-            if (0 === strpos($key, $this->prefix)) {
-                unset($_SERVER[$key]);
-            }
-        }
     }
 }

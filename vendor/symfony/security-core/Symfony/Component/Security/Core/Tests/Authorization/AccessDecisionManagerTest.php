@@ -31,16 +31,6 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($manager->supportsClass('FooClass'));
     }
 
-    protected function getVoterSupportsClass($ret)
-    {
-        $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
-        $voter->expects($this->any())
-            ->method('supportsClass')
-            ->will($this->returnValue($ret));
-
-        return $voter;
-    }
-
     public function testSupportsAttribute()
     {
         $manager = new AccessDecisionManager(array(
@@ -54,16 +44,6 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
             $this->getVoterSupportsAttribute(false),
         ));
         $this->assertFalse($manager->supportsAttribute('foo'));
-    }
-
-    protected function getVoterSupportsAttribute($ret)
-    {
-        $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
-        $voter->expects($this->any())
-            ->method('supportsAttribute')
-            ->will($this->returnValue($ret));
-
-        return $voter;
     }
 
     /**
@@ -80,16 +60,6 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetUnsupportedStrategy()
     {
         new AccessDecisionManager(array($this->getVoter(VoterInterface::ACCESS_GRANTED)), 'fooBar');
-    }
-
-    protected function getVoter($vote)
-    {
-        $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
-        $voter->expects($this->any())
-            ->method('vote')
-            ->will($this->returnValue($vote));
-
-        return $voter;
     }
 
     /**
@@ -135,11 +105,12 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     {
         $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
         $voter->expects($this->exactly(2))
-            ->method('vote')
-            ->will($this->returnValueMap(array(
-                array($token, null, array('ROLE_FOO'), $vote1),
-                array($token, null, array('ROLE_BAR'), $vote2),
-            )));
+              ->method('vote')
+              ->will($this->returnValueMap(array(
+                  array($token, null, array('ROLE_FOO'), $vote1),
+                  array($token, null, array('ROLE_BAR'), $vote2),
+              )))
+        ;
 
         return $voter;
     }
@@ -182,16 +153,46 @@ class AccessDecisionManagerTest extends \PHPUnit_Framework_TestCase
     protected function getVoters($grants, $denies, $abstains)
     {
         $voters = array();
-        for ($i = 0; $i < $grants; $i++) {
+        for ($i = 0; $i < $grants; ++$i) {
             $voters[] = $this->getVoter(VoterInterface::ACCESS_GRANTED);
         }
-        for ($i = 0; $i < $denies; $i++) {
+        for ($i = 0; $i < $denies; ++$i) {
             $voters[] = $this->getVoter(VoterInterface::ACCESS_DENIED);
         }
-        for ($i = 0; $i < $abstains; $i++) {
+        for ($i = 0; $i < $abstains; ++$i) {
             $voters[] = $this->getVoter(VoterInterface::ACCESS_ABSTAIN);
         }
 
         return $voters;
+    }
+
+    protected function getVoter($vote)
+    {
+        $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
+        $voter->expects($this->any())
+              ->method('vote')
+              ->will($this->returnValue($vote));
+
+        return $voter;
+    }
+
+    protected function getVoterSupportsClass($ret)
+    {
+        $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
+        $voter->expects($this->any())
+              ->method('supportsClass')
+              ->will($this->returnValue($ret));
+
+        return $voter;
+    }
+
+    protected function getVoterSupportsAttribute($ret)
+    {
+        $voter = $this->getMock('Symfony\Component\Security\Core\Authorization\Voter\VoterInterface');
+        $voter->expects($this->any())
+              ->method('supportsAttribute')
+              ->will($this->returnValue($ret));
+
+        return $voter;
     }
 }

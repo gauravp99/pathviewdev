@@ -87,42 +87,6 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * Returns an instantiated controller
-     *
-     * @param string $class A class name
-     *
-     * @return object
-     */
-    protected function instantiateController($class)
-    {
-        return new $class();
-    }
-
-    /**
-     * Returns a callable for the given controller.
-     *
-     * @param string $controller A Controller string
-     *
-     * @return mixed A PHP callable
-     *
-     * @throws \InvalidArgumentException
-     */
-    protected function createController($controller)
-    {
-        if (false === strpos($controller, '::')) {
-            throw new \InvalidArgumentException(sprintf('Unable to find controller "%s".', $controller));
-        }
-
-        list($class, $method) = explode('::', $controller, 2);
-
-        if (!class_exists($class)) {
-            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
-        }
-
-        return array($this->instantiateController($class), $method);
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @api
@@ -166,5 +130,41 @@ class ControllerResolver implements ControllerResolverInterface
         }
 
         return $arguments;
+    }
+
+    /**
+     * Returns a callable for the given controller.
+     *
+     * @param string $controller A Controller string
+     *
+     * @return mixed A PHP callable
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function createController($controller)
+    {
+        if (false === strpos($controller, '::')) {
+            throw new \InvalidArgumentException(sprintf('Unable to find controller "%s".', $controller));
+        }
+
+        list($class, $method) = explode('::', $controller, 2);
+
+        if (!class_exists($class)) {
+            throw new \InvalidArgumentException(sprintf('Class "%s" does not exist.', $class));
+        }
+
+        return array($this->instantiateController($class), $method);
+    }
+
+    /**
+     * Returns an instantiated controller
+     *
+     * @param string $class A class name
+     *
+     * @return object
+     */
+    protected function instantiateController($class)
+    {
+        return new $class();
     }
 }

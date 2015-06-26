@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Logger;
 use Monolog\TestCase;
+use Monolog\Logger;
 
 class StreamHandlerTest extends TestCase
 {
@@ -87,7 +87,7 @@ class StreamHandlerTest extends TestCase
     /**
      * @dataProvider invalidArgumentProvider
      * @expectedException InvalidArgumentException
-     * @covers       Monolog\Handler\StreamHandler::__construct
+     * @covers Monolog\Handler\StreamHandler::__construct
      */
     public function testWriteInvalidArgument($invalidArgument)
     {
@@ -112,7 +112,7 @@ class StreamHandlerTest extends TestCase
      */
     public function testWriteNonExistingResource()
     {
-        $handler = new StreamHandler('/foo/bar/baz/' . rand(0, 10000));
+        $handler = new StreamHandler('/foo/bar/baz/'.rand(0, 10000));
         $handler->handle($this->getRecord());
     }
 }

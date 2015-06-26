@@ -2,9 +2,10 @@
 
 namespace spec\PhpSpec\Matcher;
 
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class ArrayContainMatcherSpec extends ObjectBehavior
 {
@@ -33,13 +34,13 @@ class ArrayContainMatcherSpec extends ObjectBehavior
 
     function it_does_not_match_array_without_specified_value()
     {
-        $this->shouldThrow()->duringPositiveMatch('contain', array(1, 2, 3), array('abc'));
+        $this->shouldThrow()->duringPositiveMatch('contain', array(1,2,3), array('abc'));
         $this->shouldThrow('PhpSpec\Exception\Example\FailureException')
-            ->duringPositiveMatch('contain', array(1, 2, 3), array(new \stdClass()));
+            ->duringPositiveMatch('contain', array(1,2,3), array(new \stdClass()));
     }
 
     function it_matches_array_without_specified_value()
     {
-        $this->shouldNotThrow()->duringNegativeMatch('contain', array(1, 2, 3), array('abc'));
+        $this->shouldNotThrow()->duringNegativeMatch('contain', array(1,2,3), array('abc'));
     }
 }

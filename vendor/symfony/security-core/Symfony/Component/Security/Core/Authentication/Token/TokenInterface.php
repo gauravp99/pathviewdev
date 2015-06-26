@@ -124,8 +124,8 @@ interface TokenInterface extends \Serializable
     /**
      * Sets an attribute.
      *
-     * @param string $name The attribute name
-     * @param mixed $value The attribute value
+     * @param string $name  The attribute name
+     * @param mixed  $value The attribute value
      */
     public function setAttribute($name, $value);
 }

@@ -26,10 +26,10 @@ namespace Symfony\Component\Debug;
  */
 class DebugClassLoader
 {
-    private static $caseCheck;
     private $classLoader;
     private $isFinder;
     private $wasFinder;
+    private static $caseCheck;
 
     /**
      * Constructor.
@@ -54,6 +54,18 @@ class DebugClassLoader
         if (!isset(self::$caseCheck)) {
             self::$caseCheck = false !== stripos(PHP_OS, 'win') ? (false !== stripos(PHP_OS, 'darwin') ? 2 : 1) : 0;
         }
+    }
+
+    /**
+     * Gets the wrapped class loader.
+     *
+     * @return callable|object a class loader
+     *
+     * @deprecated since 2.5, returning an object is deprecated and support for it will be removed in 3.0
+     */
+    public function getClassLoader()
+    {
+        return $this->wasFinder ? $this->classLoader[0] : $this->classLoader;
     }
 
     /**
@@ -102,18 +114,6 @@ class DebugClassLoader
 
             spl_autoload_register($function);
         }
-    }
-
-    /**
-     * Gets the wrapped class loader.
-     *
-     * @return callable|object a class loader
-     *
-     * @deprecated since 2.5, returning an object is deprecated and support for it will be removed in 3.0
-     */
-    public function getClassLoader()
-    {
-        return $this->wasFinder ? $this->classLoader[0] : $this->classLoader;
     }
 
     /**
@@ -196,8 +196,8 @@ class DebugClassLoader
                     chdir(substr($real, 0, $basename));
                     $basename = substr($real, $basename + 1);
                     // glob() patterns are case-sensitive even if the underlying fs is not
-                    if (!in_array($basename, glob($basename . '*', GLOB_NOSORT), true)) {
-                        $real = getcwd() . '/';
+                    if (!in_array($basename, glob($basename.'*', GLOB_NOSORT), true)) {
+                        $real = getcwd().'/';
                         $h = opendir('.');
                         while (false !== $f = readdir($h)) {
                             if (0 === strcasecmp($f, $basename)) {
@@ -211,7 +211,7 @@ class DebugClassLoader
                 }
 
                 if (0 === substr_compare($real, $tail, -strlen($tail), strlen($tail), true)
-                    && 0 !== substr_compare($real, $tail, -strlen($tail), strlen($tail), false)
+                  && 0 !== substr_compare($real, $tail, -strlen($tail), strlen($tail), false)
                 ) {
                     throw new \RuntimeException(sprintf('Case mismatch between class and source file names: %s vs %s', $class, $real));
                 }

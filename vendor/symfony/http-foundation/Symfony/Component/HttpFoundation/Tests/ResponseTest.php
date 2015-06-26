@@ -239,13 +239,6 @@ class ResponseTest extends ResponseTestCase
         $this->assertFalse($response->isValidateable(), '->isValidateable() returns false when no validator is present');
     }
 
-    protected function createDateTimeOneHourAgo()
-    {
-        $date = new \DateTime();
-
-        return $date->sub(new \DateInterval('PT1H'));
-    }
-
     public function testGetDate()
     {
         $oneHourAgo = $this->createDateTimeOneHourAgo();
@@ -264,11 +257,6 @@ class ResponseTest extends ResponseTestCase
         $response = new Response('', 200);
         $response->headers->remove('Date');
         $this->assertInstanceOf('\DateTime', $response->getDate());
-    }
-
-    protected function createDateTimeNow()
-    {
-        return new \DateTime();
     }
 
     public function testGetMaxAge()
@@ -293,13 +281,6 @@ class ResponseTest extends ResponseTestCase
 
         $response = new Response();
         $this->assertNull($response->getMaxAge(), '->getMaxAge() returns null if no freshness information available');
-    }
-
-    protected function createDateTimeOneHourLater()
-    {
-        $date = new \DateTime();
-
-        return $date->add(new \DateInterval('PT1H'));
     }
 
     public function testSetSharedMaxAge()
@@ -806,7 +787,7 @@ class ResponseTest extends ResponseTestCase
     {
         $response = new Response();
         $response->setContent($content);
-        $this->assertEquals((string)$content, $response->getContent());
+        $this->assertEquals((string) $content, $response->getContent());
     }
 
     /**
@@ -857,6 +838,25 @@ class ResponseTest extends ResponseTestCase
             'array' => array(array()),
             'bool' => array(true, '1'),
         );
+    }
+
+    protected function createDateTimeOneHourAgo()
+    {
+        $date = new \DateTime();
+
+        return $date->sub(new \DateInterval('PT1H'));
+    }
+
+    protected function createDateTimeOneHourLater()
+    {
+        $date = new \DateTime();
+
+        return $date->add(new \DateInterval('PT1H'));
+    }
+
+    protected function createDateTimeNow()
+    {
+        return new \DateTime();
     }
 
     protected function provideResponse()

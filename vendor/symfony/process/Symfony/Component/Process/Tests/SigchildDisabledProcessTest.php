@@ -159,17 +159,6 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
-    {
-        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
-        $process->setEnhanceSigchildCompatibility(false);
-
-        return $process;
-    }
-
-    /**
      * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      * @expectedExceptionMessage This PHP has been compiled with --enable-sigchild. You must use setEnhanceSigchildCompatibility() to use this method.
      */
@@ -259,5 +248,16 @@ class SigchildDisabledProcessTest extends AbstractProcessTest
             array('run', 'Symfony\Component\Process\Exception\LogicException', 'Output has been disabled, enable it to allow the use of a callback.'),
             array('mustRun', 'Symfony\Component\Process\Exception\RuntimeException', 'This PHP has been compiled with --enable-sigchild. You must use setEnhanceSigchildCompatibility() to use this method.'),
         );
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
+    {
+        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
+        $process->setEnhanceSigchildCompatibility(false);
+
+        return $process;
     }
 }

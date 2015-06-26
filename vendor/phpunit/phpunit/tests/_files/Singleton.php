@@ -1,5 +1,4 @@
 <?php
-
 class Singleton
 {
     private static $uniqueInstance = null;
@@ -8,16 +7,16 @@ class Singleton
     {
     }
 
+    final private function __clone()
+    {
+    }
+
     public static function getInstance()
     {
         if (self::$uniqueInstance === null) {
-            self::$uniqueInstance = new Singleton;
+            self::$uniqueInstance = new self;
         }
 
         return self::$uniqueInstance;
-    }
-
-    final private function __clone()
-    {
     }
 }

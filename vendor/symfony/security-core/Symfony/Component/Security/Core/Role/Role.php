@@ -28,7 +28,7 @@ class Role implements RoleInterface
      */
     public function __construct($role)
     {
-        $this->role = (string)$role;
+        $this->role = (string) $role;
     }
 
     /**

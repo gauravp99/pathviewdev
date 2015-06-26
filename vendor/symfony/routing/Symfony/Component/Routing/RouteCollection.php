@@ -71,8 +71,8 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Adds a route.
      *
-     * @param string $name The route name
-     * @param Route $route A Route instance
+     * @param string $name  The route name
+     * @param Route  $route A Route instance
      *
      * @api
      */
@@ -81,6 +81,16 @@ class RouteCollection implements \IteratorAggregate, \Countable
         unset($this->routes[$name]);
 
         $this->routes[$name] = $route;
+    }
+
+    /**
+     * Returns all routes in this collection.
+     *
+     * @return Route[] An array of routes
+     */
+    public function all()
+    {
+        return $this->routes;
     }
 
     /**
@@ -102,7 +112,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
      */
     public function remove($name)
     {
-        foreach ((array)$name as $n) {
+        foreach ((array) $name as $n) {
             unset($this->routes[$n]);
         }
     }
@@ -128,31 +138,11 @@ class RouteCollection implements \IteratorAggregate, \Countable
     }
 
     /**
-     * Returns all routes in this collection.
-     *
-     * @return Route[] An array of routes
-     */
-    public function all()
-    {
-        return $this->routes;
-    }
-
-    /**
-     * Returns an array of resources loaded to build this collection.
-     *
-     * @return ResourceInterface[] An array of resources
-     */
-    public function getResources()
-    {
-        return array_unique($this->resources);
-    }
-
-    /**
      * Adds a prefix to the path of all child routes.
      *
-     * @param string $prefix An optional prefix to add before each pattern of the route collection
-     * @param array $defaults An array of default values
-     * @param array $requirements An array of requirements
+     * @param string $prefix       An optional prefix to add before each pattern of the route collection
+     * @param array  $defaults     An array of default values
+     * @param array  $requirements An array of requirements
      *
      * @api
      */
@@ -165,7 +155,7 @@ class RouteCollection implements \IteratorAggregate, \Countable
         }
 
         foreach ($this->routes as $route) {
-            $route->setPath('/' . $prefix . $route->getPath());
+            $route->setPath('/'.$prefix.$route->getPath());
             $route->addDefaults($defaults);
             $route->addRequirements($requirements);
         }
@@ -174,9 +164,9 @@ class RouteCollection implements \IteratorAggregate, \Countable
     /**
      * Sets the host pattern on all routes.
      *
-     * @param string $pattern The pattern
-     * @param array $defaults An array of default values
-     * @param array $requirements An array of requirements
+     * @param string $pattern      The pattern
+     * @param array  $defaults     An array of default values
+     * @param array  $requirements An array of requirements
      */
     public function setHost($pattern, array $defaults = array(), array $requirements = array())
     {
@@ -271,6 +261,16 @@ class RouteCollection implements \IteratorAggregate, \Countable
         foreach ($this->routes as $route) {
             $route->setMethods($methods);
         }
+    }
+
+    /**
+     * Returns an array of resources loaded to build this collection.
+     *
+     * @return ResourceInterface[] An array of resources
+     */
+    public function getResources()
+    {
+        return array_unique($this->resources);
     }
 
     /**

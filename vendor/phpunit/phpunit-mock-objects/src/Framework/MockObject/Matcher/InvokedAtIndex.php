@@ -84,7 +84,6 @@ class PHPUnit_Framework_MockObject_Matcher_InvokedAtIndex implements PHPUnit_Fra
             throw new PHPUnit_Framework_ExpectationFailedException(
                 sprintf(
                     'The expected invocation at index %s was never reached.',
-
                     $this->sequenceIndex
                 )
             );

@@ -4,8 +4,7 @@ namespace PhpParser;
 
 abstract class CodeTestAbstract extends \PHPUnit_Framework_TestCase
 {
-    protected function getTests($directory, $fileExtension)
-    {
+    protected function getTests($directory, $fileExtension) {
         $it = new \RecursiveDirectoryIterator($directory);
         $it = new \RecursiveIteratorIterator($it, \RecursiveIteratorIterator::LEAVES_ONLY);
         $it = new \RegexIterator($it, '(\.' . preg_quote($fileExtension) . '$)');
@@ -37,13 +36,11 @@ abstract class CodeTestAbstract extends \PHPUnit_Framework_TestCase
         return $tests;
     }
 
-    protected function evalCallback($matches)
-    {
+    protected function evalCallback($matches) {
         return eval('return ' . $matches[1] . ';');
     }
 
-    protected function canonicalize($str)
-    {
+    protected function canonicalize($str) {
         // trim from both sides
         $str = trim($str);
 

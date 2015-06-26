@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Translation\Loader;
 
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
+use Symfony\Component\Config\Resource\FileResource;
 
 /**
  * CsvFileLoader loads translations from CSV files.
@@ -71,7 +71,10 @@ class CsvFileLoader extends ArrayLoader
         }
 
         $catalogue = parent::load($messages, $locale, $domain);
-        $catalogue->addResource(new FileResource($resource));
+
+        if (class_exists('Symfony\Component\Config\Resource\FileResource')) {
+            $catalogue->addResource(new FileResource($resource));
+        }
 
         return $catalogue;
     }
@@ -81,7 +84,7 @@ class CsvFileLoader extends ArrayLoader
      *
      * @param string $delimiter delimiter character
      * @param string $enclosure enclosure character
-     * @param string $escape escape character
+     * @param string $escape    escape character
      */
     public function setCsvControl($delimiter = ';', $enclosure = '"', $escape = '\\')
     {

@@ -13,13 +13,6 @@ use SebastianBergmann\Exporter\Exporter;
 /**
  * Abstract base class for constraints. which are placed upon any value.
  *
- * @package    PHPUnit
- * @subpackage Framework
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Interface available since Release 3.0.0
  */
 abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framework_SelfDescribing
@@ -41,9 +34,9 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param  mixed $other Value or object to evaluate.
-     * @param  string $description Additional information about the test
-     * @param  bool $returnResult Whether to return a result or throw an exception
+     * @param  mixed                                        $other        Value or object to evaluate.
+     * @param  string                                       $description  Additional information about the test
+     * @param  bool                                         $returnResult Whether to return a result or throw an exception
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
@@ -79,10 +72,21 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
     }
 
     /**
+     * Counts the number of constraint elements.
+     *
+     * @return int
+     * @since  Method available since Release 3.4.0
+     */
+    public function count()
+    {
+        return 1;
+    }
+
+    /**
      * Throws an exception for the given compared value and test description
      *
-     * @param  mixed $other Evaluated value or object.
-     * @param  string $description Additional information about the test
+     * @param  mixed                                          $other             Evaluated value or object.
+     * @param  string                                         $description       Additional information about the test
      * @param  SebastianBergmann\Comparator\ComparisonFailure $comparisonFailure
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
@@ -110,29 +114,12 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
     }
 
     /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * To provide additional failure information additionalFailureDescription
-     * can be used.
-     *
-     * @param  mixed $other Evaluated value or object.
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        return $this->exporter->export($other) . ' ' . $this->toString();
-    }
-
-    /**
      * Return additional failure description where needed
      *
      * The function can be overridden to provide additional failure
      * information like a diff
      *
-     * @param  mixed $other Evaluated value or object.
+     * @param  mixed  $other Evaluated value or object.
      * @return string
      */
     protected function additionalFailureDescription($other)
@@ -141,13 +128,19 @@ abstract class PHPUnit_Framework_Constraint implements Countable, PHPUnit_Framew
     }
 
     /**
-     * Counts the number of constraint elements.
+     * Returns the description of the failure
      *
-     * @return integer
-     * @since  Method available since Release 3.4.0
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * To provide additional failure information additionalFailureDescription
+     * can be used.
+     *
+     * @param  mixed  $other Evaluated value or object.
+     * @return string
      */
-    public function count()
+    protected function failureDescription($other)
     {
-        return 1;
+        return $this->exporter->export($other) . ' ' . $this->toString();
     }
 }

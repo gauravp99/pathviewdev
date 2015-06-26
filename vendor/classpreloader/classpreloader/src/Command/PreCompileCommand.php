@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of Class Preloader.
+ *
+ * (c) Graham Campbell <graham@cachethq.io>
+ * (c) Michael Dowling <mtdowling@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ClassPreloader\Command;
 
 use ClassPreloader\Config;
@@ -8,6 +18,7 @@ use ClassPreloader\Parser\DirVisitor;
 use ClassPreloader\Parser\FileVisitor;
 use ClassPreloader\Parser\NodeTraverser;
 use PhpParser\Lexer;
+use PhpParser\Node\Stmt\Namespace_ as NamespaceNode;
 use PhpParser\Parser;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 use Symfony\Component\Console\Command\Command;
@@ -92,58 +103,100 @@ The <info>%command.name%</info> command iterates over each script, normalizes
 the file to be wrapped in namespaces, and combines each file into a single PHP
 file.
 EOF
-            );
+        );
     }
 
     /**
-     * Executes the pre-compile command.
+     * Get the node traverser used by the command.
      *
-     * @param \Symfony\Component\Console\Input\InputInterface $input
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @return \ClassPreloader\Parser\NodeTraverser
+     */
+    protected function getTraverser()
+    {
+        if (!$this->traverser) {
+            $this->traverser = new NodeTraverser();
+            if ($this->input->getOption('fix_dir')) {
+                $this->traverser->addVisitor(new DirVisitor($this->input->getOption('skip_dir_file')));
+            }
+            if ($this->input->getOption('fix_file')) {
+                $this->traverser->addVisitor(new FileVisitor($this->input->getOption('skip_dir_file')));
+            }
+        }
+
+        return $this->traverser;
+    }
+
+    /**
+     * Get a pretty printed string of code from a file while applying visitors.
+     *
+     * @param string $file
      *
      * @throws \RuntimeException
      *
-     * @return null|int
+     * @return string
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function getCode($file)
     {
-        $this->input = $input;
-        $this->output = $output;
-        $this->validateCommand();
-        $outputFile = $this->input->getOption('output');
-        $config = $this->input->getOption('config');
-        $files = $this->getFileList($config);
-        $output->writeLn('- Found ' . count($files) . ' files');
-
-        // Make sure that the output dir can be used or create it
-        $this->prepareOutput($outputFile);
-
-        if (!$handle = fopen($input->getOption('output'), 'w')) {
-            throw new \RuntimeException("Unable to open {$outputFile} for writing");
+        if (!is_readable($file)) {
+            throw new \RuntimeException("Cannot open {$file} for reading");
         }
 
-        // Write the first line of the output
-        fwrite($handle, "<?php\n");
-        $output->writeln('> Compiling classes');
+        if ($this->input->getOption('strip_comments')) {
+            $content = php_strip_whitespace($file);
+        } else {
+            $content = file_get_contents($file);
+        }
 
-        $count = 0;
-        $countSkipped = 0;
-        foreach ($files as $file) {
-            $count++;
-            try {
-                $code = $this->getCode($file);
-                $this->output->writeln('- Writing ' . $file);
-                fwrite($handle, $code . "\n");
-            } catch (SkipFileException $ex) {
-                $countSkipped++;
-                $this->output->writeln('- Skipping ' . $file);
+        $parsed = $this->parser->parse($content);
+        $stmts = $this->getTraverser()->traverseFile($parsed, $file);
+        $pretty = $this->printer->prettyPrint($stmts);
+
+        // Remove the open PHP tag
+        if (substr($pretty, 5) === '<?php') {
+            $pretty = substr($pretty, 7);
+        }
+
+        return $this->getCodeWrappedIntoNamespace($parsed, $pretty);
+    }
+
+    /**
+     * Wrap the code into a namespace.
+     *
+     * @param array  $parsed
+     * @param string $pretty
+     *
+     * @return string
+     */
+    protected function getCodeWrappedIntoNamespace(array $parsed, $pretty)
+    {
+        if ($this->parsedCodeHasNamespaces($parsed)) {
+            $pretty = preg_replace('/^\s*(namespace.*);/i', '${1} {', $pretty, 1)."\n}\n";
+        } else {
+            $pretty = sprintf("namespace {\n%s\n}\n", $pretty);
+        }
+
+        return preg_replace('/(?<!.)[\r\n]+/', '', $pretty);
+    }
+
+    /**
+     * Check parsed code for having namespaces.
+     *
+     * @param array $parsed
+     *
+     * @return bool
+     */
+    protected function parsedCodeHasNamespaces(array $parsed)
+    {
+        // Namespaces can only be on first level in the code,
+        // so we make only check on it.
+        $node = array_filter(
+            $parsed,
+            function ($value) {
+                return $value instanceof NamespaceNode;
             }
-        }
-        fclose($handle);
+        );
 
-        $output->writeln("> Compiled loader written to {$outputFile}");
-        $output->writeln('- Files: ' . ($count - $countSkipped) . '/' . $count . ' (skipped: ' . $countSkipped . ')');
-        $output->writeln('- Filesize: ' . (round(filesize($outputFile) / 1024)) . ' kb');
+        return !empty($node);
     }
 
     /**
@@ -184,7 +237,7 @@ EOF
 
         // Ensure absolute paths are resolved
         if (!$filesystem->isAbsolutePath($config)) {
-            $config = getcwd() . '/' . $config;
+            $config = getcwd().'/'.$config;
         }
 
         // Ensure that the config file exists
@@ -208,26 +261,6 @@ EOF
     }
 
     /**
-     * Get the node traverser used by the command.
-     *
-     * @return \ClassPreloader\Parser\NodeTraverser
-     */
-    protected function getTraverser()
-    {
-        if (!$this->traverser) {
-            $this->traverser = new NodeTraverser();
-            if ($this->input->getOption('fix_dir')) {
-                $this->traverser->addVisitor(new DirVisitor($this->input->getOption('skip_dir_file')));
-            }
-            if ($this->input->getOption('fix_file')) {
-                $this->traverser->addVisitor(new FileVisitor($this->input->getOption('skip_dir_file')));
-            }
-        }
-
-        return $this->traverser;
-    }
-
-    /**
      * Prepare the output file and directory.
      *
      * @param string $outputFile
@@ -240,45 +273,58 @@ EOF
     {
         $dir = dirname($outputFile);
         if (!is_dir($dir) && !mkdir($dir, 0777, true)) {
-            throw new \RuntimeException('Unable to create directory ' . $dir);
+            throw new \RuntimeException('Unable to create directory '.$dir);
         }
     }
 
     /**
-     * Get a pretty printed string of code from a file while applying visitors.
+     * Executes the pre-compile command.
      *
-     * @param string $file
+     * @param \Symfony\Component\Console\Input\InputInterface   $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
      * @throws \RuntimeException
      *
-     * @return string
+     * @return null|int
      */
-    protected function getCode($file)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (!is_readable($file)) {
-            throw new \RuntimeException("Cannot open {$file} for reading");
+        $this->input = $input;
+        $this->output = $output;
+        $this->validateCommand();
+        $outputFile = $this->input->getOption('output');
+        $config = $this->input->getOption('config');
+        $files = $this->getFileList($config);
+        $output->writeLn('- Found '.count($files).' files');
+
+        // Make sure that the output dir can be used or create it
+        $this->prepareOutput($outputFile);
+
+        if (!$handle = fopen($input->getOption('output'), 'w')) {
+            throw new \RuntimeException("Unable to open {$outputFile} for writing");
         }
 
-        if ($this->input->getOption('strip_comments')) {
-            $content = php_strip_whitespace($file);
-        } else {
-            $content = file_get_contents($file);
+        // Write the first line of the output
+        fwrite($handle, "<?php\n");
+        $output->writeln('> Compiling classes');
+
+        $count = 0;
+        $countSkipped = 0;
+        foreach ($files as $file) {
+            $count++;
+            try {
+                $code = $this->getCode($file);
+                $this->output->writeln('- Writing '.$file);
+                fwrite($handle, $code."\n");
+            } catch (SkipFileException $ex) {
+                $countSkipped++;
+                $this->output->writeln('- Skipping '.$file);
+            }
         }
+        fclose($handle);
 
-        $parsed = $this->parser->parse($content);
-        $stmts = $this->getTraverser()->traverseFile($parsed, $file);
-        $pretty = $this->printer->prettyPrint($stmts);
-
-        // Remove the open PHP tag
-        if (substr($pretty, 5) === "<?php") {
-            $pretty = substr($pretty, 7);
-        }
-
-        // Add a wrapping namespace if needed
-        if (strpos($pretty, 'namespace ') === false) {
-            $pretty = "namespace {\n" . $pretty . "\n}\n";
-        }
-
-        return $pretty;
+        $output->writeln("> Compiled loader written to {$outputFile}");
+        $output->writeln('- Files: '.($count - $countSkipped).'/'.$count.' (skipped: '.$countSkipped.')');
+        $output->writeln('- Filesize: '.(round(filesize($outputFile) / 1024)).' kb');
     }
 }

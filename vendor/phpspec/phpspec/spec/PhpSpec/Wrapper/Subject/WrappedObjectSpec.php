@@ -3,9 +3,10 @@
 namespace spec\PhpSpec\Wrapper\Subject;
 
 use PhpSpec\Exception\Fracture\FactoryDoesNotReturnObjectException;
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 
 class WrappedObjectSpec extends ObjectBehavior
 {
@@ -73,10 +74,10 @@ class WrappedObjectSpec extends ObjectBehavior
     {
         $this->callOnWrappedObject('beAnInstanceOf', array('\DateTime'));
 
-        $this->callOnWrappedObject('beConstructedThrough', array('createFromFormat', array('d-m-Y', '01-01-1980')));
+        $this->callOnWrappedObject('beConstructedThrough', array('createFromFormat',array('d-m-Y', '01-01-1980')));
         $this->callOnWrappedObject('instantiate', array());
         $this->shouldThrow('PhpSpec\Exception\Wrapper\SubjectException')
-            ->duringBeConstructedThrough(array('createFromFormat', array('d-m-Y', '01-01-1970')));
+            ->duringBeConstructedThrough(array('createFromFormat',array('d-m-Y', '01-01-1970')));
     }
 
     function it_throws_an_exception_when_trying_to_change_from_constructor_to_factory_method_after_instantiation()
@@ -86,14 +87,14 @@ class WrappedObjectSpec extends ObjectBehavior
         $this->callOnWrappedObject('beConstructedWith', array(array('now')));
         $this->callOnWrappedObject('instantiate', array());
         $this->shouldThrow('PhpSpec\Exception\Wrapper\SubjectException')
-            ->duringBeConstructedThrough(array('createFromFormat', array('d-m-Y', '01-01-1970')));
+            ->duringBeConstructedThrough(array('createFromFormat',array('d-m-Y', '01-01-1970')));
     }
 
     function it_throws_an_exception_when_trying_to_change_from_factory_method_to_constructor_after_instantiation()
     {
         $this->callOnWrappedObject('beAnInstanceOf', array('\DateTime'));
 
-        $this->callOnWrappedObject('beConstructedThrough', array('createFromFormat', array('d-m-Y', '01-01-1980')));
+        $this->callOnWrappedObject('beConstructedThrough', array('createFromFormat',array('d-m-Y', '01-01-1980')));
         $this->callOnWrappedObject('instantiate', array());
         $this->shouldThrow('PhpSpec\Exception\Wrapper\SubjectException')->duringBeConstructedWith('tomorrow');
     }

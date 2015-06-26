@@ -3,6 +3,7 @@
 namespace spec\Prophecy\Prediction;
 
 use PhpSpec\ObjectBehavior;
+
 use RuntimeException;
 
 class CallbackPredictionSpec extends ObjectBehavior
@@ -20,7 +21,7 @@ class CallbackPredictionSpec extends ObjectBehavior
     /**
      * @param \Prophecy\Prophecy\ObjectProphecy $object
      * @param \Prophecy\Prophecy\MethodProphecy $method
-     * @param \Prophecy\Call\Call $call
+     * @param \Prophecy\Call\Call               $call
      */
     function it_proxies_call_to_callback($object, $method, $call)
     {

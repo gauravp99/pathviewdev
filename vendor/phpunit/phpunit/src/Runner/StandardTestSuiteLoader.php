@@ -11,19 +11,13 @@
 /**
  * The standard test suite loader.
  *
- * @package    PHPUnit
- * @subpackage Runner
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
 class PHPUnit_Runner_StandardTestSuiteLoader implements PHPUnit_Runner_TestSuiteLoader
 {
     /**
-     * @param  string $suiteClassName
-     * @param  string $suiteClassFile
+     * @param  string                      $suiteClassName
+     * @param  string                      $suiteClassFile
      * @return ReflectionClass
      * @throws PHPUnit_Framework_Exception
      */
@@ -53,8 +47,7 @@ class PHPUnit_Runner_StandardTestSuiteLoader implements PHPUnit_Runner_TestSuite
             foreach ($loadedClasses as $loadedClass) {
                 $class = new ReflectionClass($loadedClass);
                 if (substr($loadedClass, $offset) === $suiteClassName &&
-                    $class->getFileName() == $filename
-                ) {
+                    $class->getFileName() == $filename) {
                     $suiteClassName = $loadedClass;
                     break;
                 }
@@ -65,14 +58,13 @@ class PHPUnit_Runner_StandardTestSuiteLoader implements PHPUnit_Runner_TestSuite
             $testCaseClass = 'PHPUnit_Framework_TestCase';
 
             foreach ($loadedClasses as $loadedClass) {
-                $class = new ReflectionClass($loadedClass);
+                $class     = new ReflectionClass($loadedClass);
                 $classFile = $class->getFileName();
 
                 if ($class->isSubclassOf($testCaseClass) &&
-                    !$class->isAbstract()
-                ) {
+                    !$class->isAbstract()) {
                     $suiteClassName = $loadedClass;
-                    $testCaseClass = $loadedClass;
+                    $testCaseClass  = $loadedClass;
 
                     if ($classFile == realpath($suiteClassFile)) {
                         break;
@@ -84,8 +76,7 @@ class PHPUnit_Runner_StandardTestSuiteLoader implements PHPUnit_Runner_TestSuite
 
                     if (!$method->isAbstract() &&
                         $method->isPublic() &&
-                        $method->isStatic()
-                    ) {
+                        $method->isStatic()) {
                         $suiteClassName = $loadedClass;
 
                         if ($classFile == realpath($suiteClassFile)) {

@@ -11,7 +11,7 @@
 /**
  * Allows reading and writing of bytes to and from an array.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_OutputByteStream
 {
@@ -23,7 +23,7 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
     private $_array = array();
 
     /**
-     * The size of the stack
+     * The size of the stack.
      *
      * @var int
      */
@@ -63,24 +63,6 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
     }
 
     /**
-     * Writes $bytes to the end of the stream.
-     *
-     * @param string $bytes
-     */
-    public function write($bytes)
-    {
-        $to_add = str_split($bytes);
-        foreach ($to_add as $value) {
-            $this->_array[] = $value;
-        }
-        $this->_arraySize = count($this->_array);
-
-        foreach ($this->_mirrors as $stream) {
-            $stream->write($bytes);
-        }
-    }
-
-    /**
      * Reads $length bytes from the stream into a string and moves the pointer
      * through the stream by $length.
      *
@@ -109,6 +91,24 @@ class Swift_ByteStream_ArrayByteStream implements Swift_InputByteStream, Swift_O
         }
 
         return $ret;
+    }
+
+    /**
+     * Writes $bytes to the end of the stream.
+     *
+     * @param string $bytes
+     */
+    public function write($bytes)
+    {
+        $to_add = str_split($bytes);
+        foreach ($to_add as $value) {
+            $this->_array[] = $value;
+        }
+        $this->_arraySize = count($this->_array);
+
+        foreach ($this->_mirrors as $stream) {
+            $stream->write($bytes);
+        }
     }
 
     /**

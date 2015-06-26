@@ -11,28 +11,22 @@
 /**
  * Prettifies class and method names for use in TestDox documentation.
  *
- * @package    PHPUnit
- * @subpackage Util_TestDox
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.1.0
  */
 class PHPUnit_Util_TestDox_NamePrettifier
 {
     /**
-     * @var    string
+     * @var string
      */
     protected $prefix = 'Test';
 
     /**
-     * @var    string
+     * @var string
      */
     protected $suffix = 'Test';
 
     /**
-     * @var    array
+     * @var array
      */
     protected $strings = array();
 
@@ -47,14 +41,12 @@ class PHPUnit_Util_TestDox_NamePrettifier
         $title = $name;
 
         if ($this->suffix !== null &&
-            $this->suffix == substr($name, -1 * strlen($this->suffix))
-        ) {
+            $this->suffix == substr($name, -1 * strlen($this->suffix))) {
             $title = substr($title, 0, strripos($title, $this->suffix));
         }
 
         if ($this->prefix !== null &&
-            $this->prefix == substr($name, 0, strlen($this->prefix))
-        ) {
+            $this->prefix == substr($name, 0, strlen($this->prefix))) {
             $title = substr($title, strlen($this->prefix));
         }
 
@@ -96,7 +88,7 @@ class PHPUnit_Util_TestDox_NamePrettifier
         if (substr($name, 0, 4) == 'test') {
             $offset = 4;
         } else {
-            $offset = 0;
+            $offset  = 0;
             $name[0] = strtoupper($name[0]);
         }
 
@@ -105,14 +97,13 @@ class PHPUnit_Util_TestDox_NamePrettifier
         for ($i = $offset; $i < $max; $i++) {
             if ($i > $offset &&
                 ord($name[$i]) >= 65 &&
-                ord($name[$i]) <= 90
-            ) {
+                ord($name[$i]) <= 90) {
                 $buffer .= ' ' . strtolower($name[$i]);
             } else {
                 $isNumeric = is_numeric($name[$i]);
 
                 if (!$wasNumeric && $isNumeric) {
-                    $buffer .= ' ';
+                    $buffer    .= ' ';
                     $wasNumeric = true;
                 }
 

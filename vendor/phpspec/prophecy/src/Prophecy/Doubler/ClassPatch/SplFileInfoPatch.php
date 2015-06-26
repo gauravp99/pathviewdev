@@ -36,7 +36,8 @@ class SplFileInfoPatch implements ClassPatchInterface
         }
 
         return 'SplFileInfo' === $node->getParentClass()
-        || is_subclass_of($node->getParentClass(), 'SplFileInfo');
+            || is_subclass_of($node->getParentClass(), 'SplFileInfo')
+        ;
     }
 
     /**
@@ -62,17 +63,6 @@ class SplFileInfoPatch implements ClassPatchInterface
     }
 
     /**
-     * @param ClassNode $node
-     * @return boolean
-     */
-    private function nodeIsDirectoryIterator(ClassNode $node)
-    {
-        $parent = $node->getParentClass();
-        return 'DirectoryIterator' === $parent
-        || is_subclass_of($parent, 'DirectoryIterator');
-    }
-
-    /**
      * Returns patch priority, which determines when patch will be applied.
      *
      * @return int Priority number (higher - earlier)
@@ -80,5 +70,16 @@ class SplFileInfoPatch implements ClassPatchInterface
     public function getPriority()
     {
         return 50;
+    }
+
+    /**
+     * @param ClassNode $node
+     * @return boolean
+     */
+    private function nodeIsDirectoryIterator(ClassNode $node)
+    {
+        $parent = $node->getParentClass();
+        return 'DirectoryIterator' === $parent
+            || is_subclass_of($parent, 'DirectoryIterator');
     }
 }

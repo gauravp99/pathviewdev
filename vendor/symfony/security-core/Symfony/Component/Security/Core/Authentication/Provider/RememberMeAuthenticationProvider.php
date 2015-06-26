@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\Security\Core\Authentication\Provider;
 
-use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
+use Symfony\Component\Security\Core\Exception\BadCredentialsException;
 
 class RememberMeAuthenticationProvider implements AuthenticationProviderInterface
 {
@@ -26,8 +26,8 @@ class RememberMeAuthenticationProvider implements AuthenticationProviderInterfac
      * Constructor.
      *
      * @param UserCheckerInterface $userChecker An UserCheckerInterface interface
-     * @param string $key A key
-     * @param string $providerKey A provider key
+     * @param string               $key         A key
+     * @param string               $providerKey A provider key
      */
     public function __construct(UserCheckerInterface $userChecker, $key, $providerKey)
     {

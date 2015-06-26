@@ -5,7 +5,7 @@ Feature: Developer uses identity matcher
 
   Scenario: Inline matcher with no argument
     Given the spec file "spec/Matchers/InlineExample1/CalculatorSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Matchers\InlineExample1;
@@ -32,7 +32,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/InlineExample1/Calculator.php" contains:
-    """
+      """
       <?php
 
       namespace Matchers\InlineExample1;
@@ -58,7 +58,7 @@ Feature: Developer uses identity matcher
 
   Scenario: Inline matcher with an argument
     Given the spec file "spec/Matchers/InlineExample2/CalculatorSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Matchers\InlineExample2;
@@ -85,7 +85,7 @@ Feature: Developer uses identity matcher
 
       """
     And the class file "src/Matchers/InlineExample2/Calculator.php" contains:
-    """
+      """
       <?php
 
       namespace Matchers\InlineExample2;

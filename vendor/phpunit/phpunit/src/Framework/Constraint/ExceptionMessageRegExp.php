@@ -9,20 +9,12 @@
  */
 
 /**
- *
- *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Márcio Almada <marcio3w@gmail.com>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 4.3.0
  */
 class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framework_Constraint
 {
     /**
-     * @var integer
+     * @var int
      */
     protected $expectedMessageRegExp;
 
@@ -36,19 +28,11 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
     }
 
     /**
-     * @return string
-     */
-    public function toString()
-    {
-        return "exception message matches ";
-    }
-
-    /**
      * Evaluates the constraint for parameter $other. Returns true if the
      * constraint is met, false otherwise.
      *
      * @param  Exception $other
-     * @return boolean
+     * @return bool
      */
     protected function matches($other)
     {
@@ -69,7 +53,7 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
      * The beginning of failure messages is "Failed asserting that" in most
      * cases. This method should return the second part of that sentence.
      *
-     * @param  mixed $other Evaluated value or object.
+     * @param  mixed  $other Evaluated value or object.
      * @return string
      */
     protected function failureDescription($other)
@@ -79,5 +63,13 @@ class PHPUnit_Framework_Constraint_ExceptionMessageRegExp extends PHPUnit_Framew
             $other->getMessage(),
             $this->expectedMessageRegExp
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
+        return 'exception message matches ';
     }
 }

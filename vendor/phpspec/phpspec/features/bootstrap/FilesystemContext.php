@@ -1,7 +1,7 @@
 <?php
 
-use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use Behat\Behat\Context\Context;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Matcher\FileExistsMatcher;
@@ -49,21 +49,22 @@ class FilesystemContext implements Context, MatchersProviderInterface
     }
 
     /**
-     * @Given the class file :file contains:
-     * @Given the spec file :file contains:
-     */
-    public function theClassOrSpecFileContains($file, PyStringNode $contents)
-    {
-        $this->theFileContains($file, $contents);
-        require_once($file);
-    }
-
-    /**
      * @Given the bootstrap file :file contains:
      */
     public function theFileContains($file, PyStringNode $contents)
     {
         $this->filesystem->dumpFile($file, (string)$contents);
+    }
+
+    /**
+     * @Given the class file :file contains:
+     * @Given the spec file :file contains:
+     * @Given the trait file :file contains:
+     */
+    public function theClassOrTraitOrSpecFileContains($file, PyStringNode $contents)
+    {
+        $this->theFileContains($file, $contents);
+        require_once($file);
     }
 
     /**

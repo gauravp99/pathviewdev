@@ -84,11 +84,11 @@ class StatisticsCollectorSpec extends ObjectBehavior
 
         $this->getCountsHash()->shouldReturn(
             array(
-                'passed' => 1,
+                'passed'  => 1,
                 'pending' => 0,
                 'skipped' => 0,
-                'failed' => 1,
-                'broken' => 0,
+                'failed'  => 1,
+                'broken'  => 0,
             )
         );
     }

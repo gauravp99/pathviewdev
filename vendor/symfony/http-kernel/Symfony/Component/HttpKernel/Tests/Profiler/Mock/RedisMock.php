@@ -25,8 +25,8 @@ class RedisMock
      * Add a server to connection pool.
      *
      * @param string $host
-     * @param int $port
-     * @param float $timeout
+     * @param int    $port
+     * @param float  $timeout
      *
      * @return bool
      */
@@ -78,8 +78,8 @@ class RedisMock
      * Store data at the server with expiration time.
      *
      * @param string $key
-     * @param int $ttl
-     * @param mixed $value
+     * @param int    $ttl
+     * @param mixed  $value
      *
      * @return bool
      */
@@ -94,18 +94,11 @@ class RedisMock
         return true;
     }
 
-    private function storeData($key, $value)
-    {
-        $this->storage[$key] = serialize($value);
-
-        return true;
-    }
-
     /**
      * Sets an expiration time on an item.
      *
      * @param string $key
-     * @param int $ttl
+     * @param int    $ttl
      *
      * @return bool
      */
@@ -138,15 +131,6 @@ class RedisMock
         return $this->getData($key);
     }
 
-    private function getData($key)
-    {
-        if (isset($this->storage[$key])) {
-            return unserialize($this->storage[$key]);
-        }
-
-        return false;
-    }
-
     /**
      * Append data to an existing item.
      *
@@ -162,7 +146,7 @@ class RedisMock
         }
 
         if (isset($this->storage[$key])) {
-            $this->storeData($key, $this->getData($key) . $value);
+            $this->storeData($key, $this->getData($key).$value);
 
             return strlen($this->storage[$key]);
         }
@@ -228,6 +212,22 @@ class RedisMock
     public function close()
     {
         $this->connected = false;
+
+        return true;
+    }
+
+    private function getData($key)
+    {
+        if (isset($this->storage[$key])) {
+            return unserialize($this->storage[$key]);
+        }
+
+        return false;
+    }
+
+    private function storeData($key, $value)
+    {
+        $this->storage[$key] = serialize($value);
 
         return true;
     }

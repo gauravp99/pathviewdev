@@ -111,7 +111,7 @@ class ApacheUrlMatcher extends UrlMatcher
                 if (!isset($normalizedValues[$matches[1]])) {
                     $normalizedValues[$matches[1]] = array();
                 }
-                $normalizedValues[$matches[1]][(int)$matches[2]] = $value;
+                $normalizedValues[$matches[1]][(int) $matches[2]] = $value;
             } else {
                 $normalizedValues[$key] = $value;
             }

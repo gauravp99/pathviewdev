@@ -45,7 +45,6 @@ class PHPUnit_Framework_MockObject_Stub_ConsecutiveCalls implements PHPUnit_Fram
     {
         return sprintf(
             'return user-specified value %s',
-
             PHPUnit_Util_Type::export($this->value)
         );
     }

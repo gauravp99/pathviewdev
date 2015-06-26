@@ -13,11 +13,11 @@
 
 namespace PhpSpec;
 
-use ArrayAccess;
 use PhpSpec\Matcher\MatchersProviderInterface;
-use PhpSpec\Wrapper\Subject;
-use PhpSpec\Wrapper\SubjectContainerInterface;
 use PhpSpec\Wrapper\WrapperInterface;
+use PhpSpec\Wrapper\SubjectContainerInterface;
+use PhpSpec\Wrapper\Subject;
+use ArrayAccess;
 
 /**
  * The object behaviour is the default base class for specification.
@@ -34,7 +34,8 @@ use PhpSpec\Wrapper\WrapperInterface;
  * @method void shouldHaveType($type)
  * @method \PhpSpec\Wrapper\Subject\Expectation\DuringCall shouldThrow($exception = null)
  */
-class ObjectBehavior implements ArrayAccess,
+class ObjectBehavior implements
+    ArrayAccess,
     MatchersProviderInterface,
     SubjectContainerInterface,
     WrapperInterface,
@@ -106,7 +107,7 @@ class ObjectBehavior implements ArrayAccess,
      * Sets the value in a particular position in the ArrayAccess object
      *
      * @param string|integer $key
-     * @param mixed $value
+     * @param mixed          $value
      */
     public function offsetSet($key, $value)
     {
@@ -120,20 +121,31 @@ class ObjectBehavior implements ArrayAccess,
      */
     public function offsetUnset($key)
     {
-        return $this->object->offsetUnset($key);
+        $this->object->offsetUnset($key);
     }
 
     /**
      * Proxies all calls to the PhpSpec subject
      *
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return mixed
      */
     public function __call($method, array $arguments = array())
     {
         return call_user_func_array(array($this->object, $method), $arguments);
+    }
+
+    /**
+     * Proxies setting to the PhpSpec subject
+     *
+     * @param string $property
+     * @param mixed  $value
+     */
+    public function __set($property, $value)
+    {
+        $this->object->$property = $value;
     }
 
     /**
@@ -146,17 +158,6 @@ class ObjectBehavior implements ArrayAccess,
     public function __get($property)
     {
         return $this->object->$property;
-    }
-
-    /**
-     * Proxies setting to the PhpSpec subject
-     *
-     * @param string $property
-     * @param mixed $value
-     */
-    public function __set($property, $value)
-    {
-        $this->object->$property = $value;
     }
 
     /**

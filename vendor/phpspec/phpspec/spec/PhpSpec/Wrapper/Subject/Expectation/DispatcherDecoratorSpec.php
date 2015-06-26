@@ -2,13 +2,15 @@
 
 namespace spec\PhpSpec\Wrapper\Subject\Expectation;
 
-use PhpSpec\Event\ExpectationEvent;
+use PhpSpec\ObjectBehavior;
+use Prophecy\Argument;
+
+use PhpSpec\Wrapper\Subject\Expectation\ExpectationInterface;
 use PhpSpec\Loader\Node\ExampleNode;
 use PhpSpec\Matcher\MatcherInterface;
-use PhpSpec\ObjectBehavior;
-use PhpSpec\Wrapper\Subject\Expectation\ExpectationInterface;
-use Prophecy\Argument;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
+use PhpSpec\Event\ExpectationEvent;
 
 class DispatcherDecoratorSpec extends ObjectBehavior
 {

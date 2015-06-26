@@ -41,7 +41,7 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
             'datetime' => date('Y-m-d'),
             'extra' => array(
                 'foo' => '[object] (Monolog\\Formatter\\TestFooNorm: {"foo":"foo"})',
-                'bar' => '[object] (Monolog\\Formatter\\TestBarNorm: {})',
+                'bar' => '[object] (Monolog\\Formatter\\TestBarNorm: bar)',
                 'baz' => array(),
                 'res' => '[resource]',
             ),
@@ -70,10 +70,10 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array(
             'exception' => array(
-                'class' => get_class($e2),
+                'class'   => get_class($e2),
                 'message' => $e2->getMessage(),
-                'code' => $e2->getCode(),
-                'file' => $e2->getFile() . ':' . $e2->getLine(),
+                'code'    => $e2->getCode(),
+                'file'    => $e2->getFile().':'.$e2->getLine(),
             )
         ), $formatted);
     }
@@ -190,7 +190,8 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
             // This will contain $resource and $wrappedResource as arguments in the trace item
             $resource = fopen('php://memory', 'rw+');
             fwrite($resource, 'test_resource');
-            $wrappedResource = new TestStreamFoo($resource);
+            $wrappedResource = new TestFooNorm;
+            $wrappedResource->foo = $resource;
             // Just do something stupid with a resource/wrapped resource as argument
             array_keys($wrappedResource);
         } catch (\Exception $e) {
@@ -207,9 +208,9 @@ class NormalizerFormatterTest extends \PHPUnit_Framework_TestCase
         );
 
         if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
-            $pattern = '%"wrappedResource":"\[object\] \(Monolog\\\\\\\\Formatter\\\\\\\\TestStreamFoo: \)"%';
+            $pattern = '%"wrappedResource":"\[object\] \(Monolog\\\\\\\\Formatter\\\\\\\\TestFooNorm: \)"%';
         } else {
-            $pattern = '%\\\\"resource\\\\":null%';
+            $pattern = '%\\\\"foo\\\\":null%';
         }
 
         // Tests that the wrapped resource is ignored while encoding, only works for PHP <= 5.4
@@ -248,6 +249,6 @@ class TestStreamFoo
     {
         fseek($this->resource, 0);
 
-        return $this->foo . ' - ' . (string)stream_get_contents($this->resource);
+        return $this->foo . ' - ' . (string) stream_get_contents($this->resource);
     }
 }

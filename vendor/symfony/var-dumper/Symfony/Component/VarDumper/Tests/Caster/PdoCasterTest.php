@@ -46,8 +46,8 @@ class PdoCasterTest extends \PHPUnit_Framework_TestCase
                 'CLIENT_VERSION' => $pdo->getAttribute(\PDO::ATTR_CLIENT_VERSION),
                 'SERVER_VERSION' => $pdo->getAttribute(\PDO::ATTR_SERVER_VERSION),
                 'STATEMENT_CLASS' => array(
-                    'PDOStatement',
-                    array($pdo),
+                  'PDOStatement',
+                  array($pdo),
                 ),
                 'DEFAULT_FETCH_MODE' => $attr['DEFAULT_FETCH_MODE'],
             ),

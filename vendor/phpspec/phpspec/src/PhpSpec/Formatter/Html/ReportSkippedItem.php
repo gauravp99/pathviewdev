@@ -29,12 +29,12 @@ class ReportSkippedItem
 
     /**
      * @param TemplateInterface $template
-     * @param ExampleEvent $event
+     * @param ExampleEvent      $event
      */
     public function __construct(TemplateInterface $template, ExampleEvent $event)
     {
         $this->template = $template;
-        $this->event = $event;
+        $this->event    = $event;
     }
 
     /**
@@ -42,7 +42,7 @@ class ReportSkippedItem
      */
     public function write()
     {
-        $this->template->render(Template::DIR . '/Template/ReportSkipped.html', array(
+        $this->template->render(Template::DIR.'/Template/ReportSkipped.html', array(
             'title' => htmlentities(strip_tags($this->event->getTitle())),
             'message' => htmlentities(strip_tags($this->event->getMessage())),
         ));

@@ -11,12 +11,12 @@
 
 namespace Symfony\Component\HttpKernel\Bundle;
 
-use Symfony\Component\Console\Application;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
+use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 /**
  * An implementation of BundleInterface that adds a few conventions
@@ -76,6 +76,10 @@ abstract class Bundle extends ContainerAware implements BundleInterface
             if (class_exists($class)) {
                 $extension = new $class();
 
+                if (!$extension instanceof ExtensionInterface) {
+                    throw new \LogicException(sprintf('Extension %s must implement Symfony\Component\DependencyInjection\Extension\ExtensionInterface.', $class));
+                }
+
                 // check naming convention
                 $basename = preg_replace('/Bundle$/', '', $this->getName());
                 $expectedAlias = Container::underscore($basename);
@@ -98,15 +102,45 @@ abstract class Bundle extends ContainerAware implements BundleInterface
     }
 
     /**
-     * Returns the bundle's container extension class.
+     * Gets the Bundle namespace.
      *
-     * @return string
+     * @return string The Bundle namespace
+     *
+     * @api
      */
-    protected function getContainerExtensionClass()
+    public function getNamespace()
     {
-        $basename = preg_replace('/Bundle$/', '', $this->getName());
+        $class = get_class($this);
 
-        return $this->getNamespace() . '\\DependencyInjection\\' . $basename . 'Extension';
+        return substr($class, 0, strrpos($class, '\\'));
+    }
+
+    /**
+     * Gets the Bundle directory path.
+     *
+     * @return string The Bundle absolute path
+     *
+     * @api
+     */
+    public function getPath()
+    {
+        if (null === $this->path) {
+            $reflected = new \ReflectionObject($this);
+            $this->path = dirname($reflected->getFileName());
+        }
+
+        return $this->path;
+    }
+
+    /**
+     * Returns the bundle parent name.
+     *
+     * @return string The Bundle parent name it overrides or null if no parent
+     *
+     * @api
+     */
+    public function getParent()
+    {
     }
 
     /**
@@ -129,31 +163,6 @@ abstract class Bundle extends ContainerAware implements BundleInterface
     }
 
     /**
-     * Gets the Bundle namespace.
-     *
-     * @return string The Bundle namespace
-     *
-     * @api
-     */
-    public function getNamespace()
-    {
-        $class = get_class($this);
-
-        return substr($class, 0, strrpos($class, '\\'));
-    }
-
-    /**
-     * Returns the bundle parent name.
-     *
-     * @return string The Bundle parent name it overrides or null if no parent
-     *
-     * @api
-     */
-    public function getParent()
-    {
-    }
-
-    /**
      * Finds and registers Commands.
      *
      * Override this method if your bundle commands do not follow the conventions:
@@ -165,22 +174,22 @@ abstract class Bundle extends ContainerAware implements BundleInterface
      */
     public function registerCommands(Application $application)
     {
-        if (!is_dir($dir = $this->getPath() . '/Command')) {
+        if (!is_dir($dir = $this->getPath().'/Command')) {
             return;
         }
 
         $finder = new Finder();
         $finder->files()->name('*Command.php')->in($dir);
 
-        $prefix = $this->getNamespace() . '\\Command';
+        $prefix = $this->getNamespace().'\\Command';
         foreach ($finder as $file) {
             $ns = $prefix;
             if ($relativePath = $file->getRelativePath()) {
-                $ns .= '\\' . strtr($relativePath, '/', '\\');
+                $ns .= '\\'.strtr($relativePath, '/', '\\');
             }
-            $class = $ns . '\\' . $file->getBasename('.php');
+            $class = $ns.'\\'.$file->getBasename('.php');
             if ($this->container) {
-                $alias = 'console.command.' . strtolower(str_replace('\\', '_', $class));
+                $alias = 'console.command.'.strtolower(str_replace('\\', '_', $class));
                 if ($this->container->has($alias)) {
                     continue;
                 }
@@ -193,19 +202,14 @@ abstract class Bundle extends ContainerAware implements BundleInterface
     }
 
     /**
-     * Gets the Bundle directory path.
+     * Returns the bundle's container extension class.
      *
-     * @return string The Bundle absolute path
-     *
-     * @api
+     * @return string
      */
-    public function getPath()
+    protected function getContainerExtensionClass()
     {
-        if (null === $this->path) {
-            $reflected = new \ReflectionObject($this);
-            $this->path = dirname($reflected->getFileName());
-        }
+        $basename = preg_replace('/Bundle$/', '', $this->getName());
 
-        return $this->path;
+        return $this->getNamespace().'\\DependencyInjection\\'.$basename.'Extension';
     }
 }

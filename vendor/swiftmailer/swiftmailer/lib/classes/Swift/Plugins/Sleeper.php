@@ -11,7 +11,7 @@
 /**
  * Sleeps for a duration of time.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 interface Swift_Plugins_Sleeper
 {

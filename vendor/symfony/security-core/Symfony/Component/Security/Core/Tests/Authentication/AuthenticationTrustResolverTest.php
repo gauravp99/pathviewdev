@@ -25,29 +25,6 @@ class AuthenticationTrustResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($resolver->isAnonymous($this->getAnonymousToken()));
     }
 
-    protected function getResolver()
-    {
-        return new AuthenticationTrustResolver(
-            'Symfony\\Component\\Security\\Core\\Authentication\\Token\\AnonymousToken',
-            'Symfony\\Component\\Security\\Core\\Authentication\\Token\\RememberMeToken'
-        );
-    }
-
-    protected function getToken()
-    {
-        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-    }
-
-    protected function getRememberMeToken()
-    {
-        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken', array('setPersistent'), array(), '', false);
-    }
-
-    protected function getAnonymousToken()
-    {
-        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', null, array('', ''));
-    }
-
     public function testIsRememberMe()
     {
         $resolver = $this->getResolver();
@@ -66,5 +43,28 @@ class AuthenticationTrustResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($resolver->isFullFledged($this->getAnonymousToken()));
         $this->assertFalse($resolver->isFullFledged($this->getRememberMeToken()));
         $this->assertTrue($resolver->isFullFledged($this->getToken()));
+    }
+
+    protected function getToken()
+    {
+        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+    }
+
+    protected function getAnonymousToken()
+    {
+        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', null, array('', ''));
+    }
+
+    protected function getRememberMeToken()
+    {
+        return $this->getMock('Symfony\Component\Security\Core\Authentication\Token\RememberMeToken', array('setPersistent'), array(), '', false);
+    }
+
+    protected function getResolver()
+    {
+        return new AuthenticationTrustResolver(
+            'Symfony\\Component\\Security\\Core\\Authentication\\Token\\AnonymousToken',
+            'Symfony\\Component\\Security\\Core\\Authentication\\Token\\RememberMeToken'
+        );
     }
 }

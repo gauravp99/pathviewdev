@@ -11,7 +11,7 @@
 /**
  * Changes some global preference settings in Swift Mailer.
  *
- * @author  Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Preferences
 {

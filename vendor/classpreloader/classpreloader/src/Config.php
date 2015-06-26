@@ -1,15 +1,26 @@
 <?php
 
+/*
+ * This file is part of Class Preloader.
+ *
+ * (c) Graham Campbell <graham@cachethq.io>
+ * (c) Michael Dowling <mtdowling@gmail.com>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace ClassPreloader;
 
 use ClassPreloader\Parser\AbstractNodeVisitor;
+use IteratorAggregate;
 
 /**
  * This is the config class.
  *
  * This contains all the class preloader configuration.
  */
-class Config implements \IteratorAggregate
+class Config implements IteratorAggregate
 {
     /**
      * The array of AbstractNodeVisitor objects that visit nodes.
@@ -54,16 +65,6 @@ class Config implements \IteratorAggregate
     }
 
     /**
-     * Get an iterator for the filenames.
-     *
-     * @return \ArrayIterator
-     */
-    public function getIterator()
-    {
-        return new \ArrayIterator($this->getFilenames());
-    }
-
-    /**
      * Get an array of file names that satisfy any added filters.
      *
      * @return array
@@ -86,6 +87,16 @@ class Config implements \IteratorAggregate
         }
 
         return $filenames;
+    }
+
+    /**
+     * Get an iterator for the filenames.
+     *
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->getFilenames());
     }
 
     /**

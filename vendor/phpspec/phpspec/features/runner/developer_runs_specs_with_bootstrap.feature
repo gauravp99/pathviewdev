@@ -5,7 +5,7 @@ Feature: Developer runs the specs with bootstrap option
 
   Scenario: Running a spec with --bootstrap option
     Given the bootstrap file "bootstrap.php" contains:
-    """
+      """
       <?php
       throw new \Exception('bootstrap file is loaded');
       """
@@ -14,12 +14,12 @@ Feature: Developer runs the specs with bootstrap option
 
   Scenario: Running a spec with bootstrap option in config file
     Given the bootstrap file "bootstrap.php" contains:
-    """
+      """
       <?php
       throw new \Exception('bootstrap file is loaded');
       """
     And the config file contains:
-    """
+      """
       bootstrap: bootstrap.php
       """
     When I run phpspec

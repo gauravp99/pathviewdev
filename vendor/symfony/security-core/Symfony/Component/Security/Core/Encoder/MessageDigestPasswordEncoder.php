@@ -27,23 +27,15 @@ class MessageDigestPasswordEncoder extends BasePasswordEncoder
     /**
      * Constructor.
      *
-     * @param string $algorithm The digest algorithm to use
-     * @param bool $encodeHashAsBase64 Whether to base64 encode the password hash
-     * @param int $iterations The number of iterations to use to stretch the password hash
+     * @param string $algorithm          The digest algorithm to use
+     * @param bool   $encodeHashAsBase64 Whether to base64 encode the password hash
+     * @param int    $iterations         The number of iterations to use to stretch the password hash
      */
     public function __construct($algorithm = 'sha512', $encodeHashAsBase64 = true, $iterations = 5000)
     {
         $this->algorithm = $algorithm;
         $this->encodeHashAsBase64 = $encodeHashAsBase64;
         $this->iterations = $iterations;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isPasswordValid($encoded, $raw, $salt)
-    {
-        return !$this->isPasswordTooLong($raw) && $this->comparePasswords($encoded, $this->encodePassword($raw, $salt));
     }
 
     /**
@@ -63,10 +55,18 @@ class MessageDigestPasswordEncoder extends BasePasswordEncoder
         $digest = hash($this->algorithm, $salted, true);
 
         // "stretch" hash
-        for ($i = 1; $i < $this->iterations; $i++) {
-            $digest = hash($this->algorithm, $digest . $salted, true);
+        for ($i = 1; $i < $this->iterations; ++$i) {
+            $digest = hash($this->algorithm, $digest.$salted, true);
         }
 
         return $this->encodeHashAsBase64 ? base64_encode($digest) : bin2hex($digest);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isPasswordValid($encoded, $raw, $salt)
+    {
+        return !$this->isPasswordTooLong($raw) && $this->comparePasswords($encoded, $this->encodePassword($raw, $salt));
     }
 }

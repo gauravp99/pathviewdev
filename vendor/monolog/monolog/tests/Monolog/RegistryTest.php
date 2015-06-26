@@ -14,9 +14,14 @@ namespace Monolog;
 
 class RegistryTest extends \PHPUnit_Framework_TestCase
 {
+    protected function setUp()
+    {
+        Registry::clear();
+    }
+
     /**
      * @dataProvider hasLoggerProvider
-     * @covers       Monolog\Registry::hasLogger
+     * @covers Monolog\Registry::hasLogger
      */
     public function testHasLogger(array $loggersToAdd, array $loggersToCheck, array $expectedResult)
     {
@@ -54,10 +59,5 @@ class RegistryTest extends \PHPUnit_Framework_TestCase
                 array(true, true, false, false),
             ),
         );
-    }
-
-    protected function setUp()
-    {
-        Registry::clear();
     }
 }

@@ -2,10 +2,11 @@
 
 namespace spec\PhpSpec\Wrapper\Subject\Expectation;
 
-use PhpSpec\Matcher\MatcherInterface;
 use PhpSpec\ObjectBehavior;
 use PhpSpec\Wrapper\Subject;
 use Prophecy\Argument;
+
+use PhpSpec\Matcher\MatcherInterface;
 
 class NegativeSpec extends ObjectBehavior
 {

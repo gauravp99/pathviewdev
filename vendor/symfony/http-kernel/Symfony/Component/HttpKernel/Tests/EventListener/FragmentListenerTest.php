@@ -11,10 +11,10 @@
 
 namespace Symfony\Component\HttpKernel\Tests\EventListener;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\EventListener\FragmentListener;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\UriSigner;
 
 class FragmentListenerTest extends \PHPUnit_Framework_TestCase
@@ -34,9 +34,20 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($request->query->has('_path'));
     }
 
-    private function createGetResponseEvent(Request $request)
+
+    public function testOnlyTriggeredIfControllerWasNotDefinedYet()
     {
-        return new GetResponseEvent($this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface'), $request, HttpKernelInterface::MASTER_REQUEST);
+        $request = Request::create('http://example.com/_fragment?_path=foo%3Dbar%26_controller%3Dfoo');
+        $request->attributes->set('_controller', 'bar');
+
+        $listener = new FragmentListener(new UriSigner('foo'));
+        $event = $this->createGetResponseEvent($request, HttpKernelInterface::SUB_REQUEST);
+
+        $expected = $request->attributes->all();
+
+        $listener->onKernelRequest($event);
+
+        $this->assertEquals($expected, $request->attributes->all());
     }
 
     /**
@@ -77,5 +88,10 @@ class FragmentListenerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(array('foo' => 'bar', '_controller' => 'foo'), $request->attributes->get('_route_params'));
         $this->assertFalse($request->query->has('_path'));
+    }
+
+    private function createGetResponseEvent(Request $request, $requestType = HttpKernelInterface::MASTER_REQUEST)
+    {
+        return new GetResponseEvent($this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface'), $request, $requestType);
     }
 }

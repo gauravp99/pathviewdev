@@ -34,11 +34,11 @@ class InputOption
     /**
      * Constructor.
      *
-     * @param string $name The option name
-     * @param string|array $shortcut The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
-     * @param int $mode The option mode: One of the VALUE_* constants
-     * @param string $description A description text
-     * @param mixed $default The default value (must be null for self::VALUE_REQUIRED or self::VALUE_NONE)
+     * @param string       $name        The option name
+     * @param string|array $shortcut    The shortcuts, can be null, a string of shortcuts delimited by | or an array of shortcuts
+     * @param int          $mode        The option mode: One of the VALUE_* constants
+     * @param string       $description A description text
+     * @param mixed        $default     The default value (must be null for self::VALUE_REQUIRED or self::VALUE_NONE)
      *
      * @throws \InvalidArgumentException If option mode is invalid or incompatible
      *
@@ -90,13 +90,23 @@ class InputOption
     }
 
     /**
-     * Returns true if the option can take multiple values.
+     * Returns the option shortcut.
      *
-     * @return bool true if mode is self::VALUE_IS_ARRAY, false otherwise
+     * @return string The shortcut
      */
-    public function isArray()
+    public function getShortcut()
     {
-        return self::VALUE_IS_ARRAY === (self::VALUE_IS_ARRAY & $this->mode);
+        return $this->shortcut;
+    }
+
+    /**
+     * Returns the option name.
+     *
+     * @return string The name
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -130,60 +140,13 @@ class InputOption
     }
 
     /**
-     * Returns the description text.
+     * Returns true if the option can take multiple values.
      *
-     * @return string The description text
+     * @return bool true if mode is self::VALUE_IS_ARRAY, false otherwise
      */
-    public function getDescription()
+    public function isArray()
     {
-        return $this->description;
-    }
-
-    /**
-     * Checks whether the given option equals this one.
-     *
-     * @param InputOption $option option to compare
-     *
-     * @return bool
-     */
-    public function equals(InputOption $option)
-    {
-        return $option->getName() === $this->getName()
-        && $option->getShortcut() === $this->getShortcut()
-        && $option->getDefault() === $this->getDefault()
-        && $option->isArray() === $this->isArray()
-        && $option->isValueRequired() === $this->isValueRequired()
-        && $option->isValueOptional() === $this->isValueOptional();
-    }
-
-    /**
-     * Returns the option name.
-     *
-     * @return string The name
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Returns the option shortcut.
-     *
-     * @return string The shortcut
-     */
-    public function getShortcut()
-    {
-        return $this->shortcut;
-    }
-
-    /**
-     * Returns the default value.
-     *
-     * @return mixed The default value
-     */
-    public function getDefault()
-    {
-        return $this->default;
+        return self::VALUE_IS_ARRAY === (self::VALUE_IS_ARRAY & $this->mode);
     }
 
     /**
@@ -208,5 +171,43 @@ class InputOption
         }
 
         $this->default = $this->acceptValue() ? $default : false;
+    }
+
+    /**
+     * Returns the default value.
+     *
+     * @return mixed The default value
+     */
+    public function getDefault()
+    {
+        return $this->default;
+    }
+
+    /**
+     * Returns the description text.
+     *
+     * @return string The description text
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Checks whether the given option equals this one.
+     *
+     * @param InputOption $option option to compare
+     *
+     * @return bool
+     */
+    public function equals(InputOption $option)
+    {
+        return $option->getName() === $this->getName()
+            && $option->getShortcut() === $this->getShortcut()
+            && $option->getDefault() === $this->getDefault()
+            && $option->isArray() === $this->isArray()
+            && $option->isValueRequired() === $this->isValueRequired()
+            && $option->isValueOptional() === $this->isValueOptional()
+        ;
     }
 }

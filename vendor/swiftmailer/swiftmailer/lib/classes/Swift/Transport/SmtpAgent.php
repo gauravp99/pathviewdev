@@ -11,7 +11,7 @@
 /**
  * Wraps an IoBuffer to send/receive SMTP commands/responses.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 interface Swift_Transport_SmtpAgent
 {
@@ -28,8 +28,8 @@ interface Swift_Transport_SmtpAgent
      * If no response codes are given, the response will not be validated.
      * If codes are given, an exception will be thrown on an invalid response.
      *
-     * @param string $command
-     * @param int[] $codes
+     * @param string   $command
+     * @param int[]    $codes
      * @param string[] $failures An array of failures by-reference
      */
     public function executeCommand($command, $codes = array(), &$failures = null);

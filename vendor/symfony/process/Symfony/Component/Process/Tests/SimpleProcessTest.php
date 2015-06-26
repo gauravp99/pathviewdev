@@ -17,17 +17,18 @@ class SimpleProcessTest extends AbstractProcessTest
 {
     private $enabledSigchild = false;
 
+    protected function setUp()
+    {
+        ob_start();
+        phpinfo(INFO_GENERAL);
+
+        $this->enabledSigchild = false !== strpos(ob_get_clean(), '--enable-sigchild');
+    }
+
     public function testGetExitCode()
     {
         $this->skipIfPHPSigchild(); // This test use exitcode that is not available in this case
         parent::testGetExitCode();
-    }
-
-    private function skipIfPHPSigchild()
-    {
-        if ($this->enabledSigchild) {
-            $this->markTestSkipped('Your PHP has been compiled with --enable-sigchild, this test can not be executed');
-        }
     }
 
     public function testExitCodeCommandFailed()
@@ -40,13 +41,6 @@ class SimpleProcessTest extends AbstractProcessTest
     {
         $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException', 'This PHP has been compiled with --enable-sigchild. Term signal can not be retrieved');
         parent::testProcessIsSignaledIfStopped();
-    }
-
-    private function expectExceptionIfPHPSigchild($classname, $message)
-    {
-        if ($this->enabledSigchild) {
-            $this->setExpectedException($classname, $message);
-        }
     }
 
     public function testProcessWithTermSignal()
@@ -165,14 +159,6 @@ class SimpleProcessTest extends AbstractProcessTest
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
-    {
-        return new Process($commandline, $cwd, $env, $input, $timeout, $options);
-    }
-
     public function testKillSignalTerminatesProcessCleanly()
     {
         $this->expectExceptionIfPHPSigchild('Symfony\Component\Process\Exception\RuntimeException', 'This PHP has been compiled with --enable-sigchild. The process can not be signaled.');
@@ -212,11 +198,25 @@ class SimpleProcessTest extends AbstractProcessTest
         parent::testStopWithTimeoutIsActuallyWorking();
     }
 
-    protected function setUp()
+    /**
+     * {@inheritdoc}
+     */
+    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
     {
-        ob_start();
-        phpinfo(INFO_GENERAL);
+        return new Process($commandline, $cwd, $env, $input, $timeout, $options);
+    }
 
-        $this->enabledSigchild = false !== strpos(ob_get_clean(), '--enable-sigchild');
+    private function skipIfPHPSigchild()
+    {
+        if ($this->enabledSigchild) {
+            $this->markTestSkipped('Your PHP has been compiled with --enable-sigchild, this test can not be executed');
+        }
+    }
+
+    private function expectExceptionIfPHPSigchild($classname, $message)
+    {
+        if ($this->enabledSigchild) {
+            $this->setExpectedException($classname, $message);
+        }
     }
 }

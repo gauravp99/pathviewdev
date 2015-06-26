@@ -12,11 +12,10 @@ class Name extends NodeAbstract
     /**
      * Constructs a name node.
      *
-     * @param string|array $parts Parts of the name (or name as string)
-     * @param array $attributes Additional attributes
+     * @param string|array $parts      Parts of the name (or name as string)
+     * @param array        $attributes Additional attributes
      */
-    public function __construct($parts, array $attributes = array())
-    {
+    public function __construct($parts, array $attributes = array()) {
         if (!is_array($parts)) {
             $parts = explode('\\', $parts);
         }
@@ -25,8 +24,7 @@ class Name extends NodeAbstract
         $this->parts = $parts;
     }
 
-    public function getSubNodeNames()
-    {
+    public function getSubNodeNames() {
         return array('parts');
     }
 
@@ -35,8 +33,7 @@ class Name extends NodeAbstract
      *
      * @return string First part of the name
      */
-    public function getFirst()
-    {
+    public function getFirst() {
         return $this->parts[0];
     }
 
@@ -45,8 +42,7 @@ class Name extends NodeAbstract
      *
      * @return string Last part of the name
      */
-    public function getLast()
-    {
+    public function getLast() {
         return $this->parts[count($this->parts) - 1];
     }
 
@@ -55,8 +51,7 @@ class Name extends NodeAbstract
      *
      * @return bool Whether the name is unqualified
      */
-    public function isUnqualified()
-    {
+    public function isUnqualified() {
         return 1 == count($this->parts);
     }
 
@@ -65,8 +60,7 @@ class Name extends NodeAbstract
      *
      * @return bool Whether the name is qualified
      */
-    public function isQualified()
-    {
+    public function isQualified() {
         return 1 < count($this->parts);
     }
 
@@ -75,8 +69,7 @@ class Name extends NodeAbstract
      *
      * @return bool Whether the name is fully qualified
      */
-    public function isFullyQualified()
-    {
+    public function isFullyQualified() {
         return false;
     }
 
@@ -85,8 +78,7 @@ class Name extends NodeAbstract
      *
      * @return bool Whether the name is relative
      */
-    public function isRelative()
-    {
+    public function isRelative() {
         return false;
     }
 
@@ -97,8 +89,7 @@ class Name extends NodeAbstract
      *
      * @return string String representation
      */
-    public function toString($separator = '\\')
-    {
+    public function toString($separator = '\\') {
         return implode($separator, $this->parts);
     }
 
@@ -108,8 +99,7 @@ class Name extends NodeAbstract
      *
      * @return string String representation
      */
-    public function __toString()
-    {
+    public function __toString() {
         return implode('\\', $this->parts);
     }
 
@@ -118,9 +108,44 @@ class Name extends NodeAbstract
      *
      * @param string|array|self $name The name to set the whole name to
      */
-    public function set($name)
-    {
+    public function set($name) {
         $this->parts = $this->prepareName($name);
+    }
+
+    /**
+     * Prepends a name to this name.
+     *
+     * @param string|array|self $name Name to prepend
+     */
+    public function prepend($name) {
+        $this->parts = array_merge($this->prepareName($name), $this->parts);
+    }
+
+    /**
+     * Appends a name to this name.
+     *
+     * @param string|array|self $name Name to append
+     */
+    public function append($name) {
+        $this->parts = array_merge($this->parts, $this->prepareName($name));
+    }
+
+    /**
+     * Sets the first part of the name.
+     *
+     * @param string|array|self $name The name to set the first part to
+     */
+    public function setFirst($name) {
+        array_splice($this->parts, 0, 1, $this->prepareName($name));
+    }
+
+    /**
+     * Sets the last part of the name.
+     *
+     * @param string|array|self $name The name to set the last part to
+     */
+    public function setLast($name) {
+        array_splice($this->parts, -1, 1, $this->prepareName($name));
     }
 
     /**
@@ -131,8 +156,7 @@ class Name extends NodeAbstract
      *
      * @return array Prepared name
      */
-    protected function prepareName($name)
-    {
+    protected function prepareName($name) {
         if (is_string($name)) {
             return explode('\\', $name);
         } elseif (is_array($name)) {
@@ -144,45 +168,5 @@ class Name extends NodeAbstract
         throw new \InvalidArgumentException(
             'When changing a name you need to pass either a string, an array or a Name node'
         );
-    }
-
-    /**
-     * Prepends a name to this name.
-     *
-     * @param string|array|self $name Name to prepend
-     */
-    public function prepend($name)
-    {
-        $this->parts = array_merge($this->prepareName($name), $this->parts);
-    }
-
-    /**
-     * Appends a name to this name.
-     *
-     * @param string|array|self $name Name to append
-     */
-    public function append($name)
-    {
-        $this->parts = array_merge($this->parts, $this->prepareName($name));
-    }
-
-    /**
-     * Sets the first part of the name.
-     *
-     * @param string|array|self $name The name to set the first part to
-     */
-    public function setFirst($name)
-    {
-        array_splice($this->parts, 0, 1, $this->prepareName($name));
-    }
-
-    /**
-     * Sets the last part of the name.
-     *
-     * @param string|array|self $name The name to set the last part to
-     */
-    public function setLast($name)
-    {
-        array_splice($this->parts, -1, 1, $this->prepareName($name));
     }
 }

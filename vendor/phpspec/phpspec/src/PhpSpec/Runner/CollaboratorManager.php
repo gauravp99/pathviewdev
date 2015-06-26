@@ -38,31 +38,12 @@ class CollaboratorManager
     }
 
     /**
-     * @param string $name
+     * @param string       $name
      * @param Collaborator $collaborator
      */
     public function set($name, $collaborator)
     {
         $this->collaborators[$name] = $collaborator;
-    }
-
-    /**
-     * @param ReflectionFunctionAbstract $function
-     *
-     * @return array
-     */
-    public function getArgumentsFor(ReflectionFunctionAbstract $function)
-    {
-        $parameters = array();
-        foreach ($function->getParameters() as $parameter) {
-            if ($this->has($parameter->getName())) {
-                $parameters[] = $this->get($parameter->getName());
-            } else {
-                $parameters[] = null;
-            }
-        }
-
-        return $parameters;
     }
 
     /**
@@ -91,5 +72,24 @@ class CollaboratorManager
         }
 
         return $this->collaborators[$name];
+    }
+
+    /**
+     * @param ReflectionFunctionAbstract $function
+     *
+     * @return array
+     */
+    public function getArgumentsFor(ReflectionFunctionAbstract $function)
+    {
+        $parameters = array();
+        foreach ($function->getParameters() as $parameter) {
+            if ($this->has($parameter->getName())) {
+                $parameters[] = $this->get($parameter->getName());
+            } else {
+                $parameters[] = null;
+            }
+        }
+
+        return $parameters;
     }
 }

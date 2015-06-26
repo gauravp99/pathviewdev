@@ -40,29 +40,19 @@ class TemplateRenderer
     }
 
     /**
+     * @param array $locations
+     */
+    public function setLocations(array $locations)
+    {
+        $this->locations = array_map(array($this, 'normalizeLocation'), $locations);
+    }
+
+    /**
      * @param string $location
      */
     public function prependLocation($location)
     {
         array_unshift($this->locations, $this->normalizeLocation($location));
-    }
-
-    /**
-     * @param string $location
-     * @param bool $trimLeft
-     *
-     * @return string
-     */
-    private function normalizeLocation($location, $trimLeft = false)
-    {
-        $location = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $location);
-        $location = rtrim($location, DIRECTORY_SEPARATOR);
-
-        if ($trimLeft) {
-            $location = ltrim($location, DIRECTORY_SEPARATOR);
-        }
-
-        return $location;
     }
 
     /**
@@ -82,23 +72,15 @@ class TemplateRenderer
     }
 
     /**
-     * @param array $locations
-     */
-    public function setLocations(array $locations)
-    {
-        $this->locations = array_map(array($this, 'normalizeLocation'), $locations);
-    }
-
-    /**
      * @param string $name
-     * @param array $values
+     * @param array  $values
      *
      * @return string
      */
     public function render($name, array $values = array())
     {
         foreach ($this->locations as $location) {
-            $path = $location . DIRECTORY_SEPARATOR . $this->normalizeLocation($name, true) . '.tpl';
+            $path = $location.DIRECTORY_SEPARATOR.$this->normalizeLocation($name, true).'.tpl';
 
             if ($this->filesystem->pathExists($path)) {
                 return $this->renderString($this->filesystem->getFileContents($path), $values);
@@ -108,12 +90,30 @@ class TemplateRenderer
 
     /**
      * @param string $template
-     * @param array $values
+     * @param array  $values
      *
      * @return string
      */
     public function renderString($template, array $values = array())
     {
         return strtr($template, $values);
+    }
+
+    /**
+     * @param string $location
+     * @param bool   $trimLeft
+     *
+     * @return string
+     */
+    private function normalizeLocation($location, $trimLeft = false)
+    {
+        $location = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $location);
+        $location = rtrim($location, DIRECTORY_SEPARATOR);
+
+        if ($trimLeft) {
+            $location = ltrim($location, DIRECTORY_SEPARATOR);
+        }
+
+        return $location;
     }
 }

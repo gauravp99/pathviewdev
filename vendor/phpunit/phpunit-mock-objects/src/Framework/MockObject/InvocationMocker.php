@@ -50,15 +50,15 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     {
         foreach ($this->matchers as $matcher) {
             if ($matcher->hasMatchers()) {
-                return TRUE;
+                return true;
             }
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
-     * @param  mixed $id
+     * @param  mixed        $id
      * @return boolean|null
      */
     public function lookupId($id)
@@ -67,11 +67,11 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
             return $this->builderMap[$id];
         }
 
-        return NULL;
+        return null;
     }
 
     /**
-     * @param  mixed $id
+     * @param  mixed                                      $id
      * @param  PHPUnit_Framework_MockObject_Builder_Match $builder
      * @throws PHPUnit_Framework_Exception
      */
@@ -87,13 +87,14 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     }
 
     /**
-     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation $matcher
+     * @param  PHPUnit_Framework_MockObject_Matcher_Invocation       $matcher
      * @return PHPUnit_Framework_MockObject_Builder_InvocationMocker
      */
     public function expects(PHPUnit_Framework_MockObject_Matcher_Invocation $matcher)
     {
         return new PHPUnit_Framework_MockObject_Builder_InvocationMocker(
-            $this, $matcher
+            $this,
+            $matcher
         );
     }
 
@@ -103,13 +104,13 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
      */
     public function invoke(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
-        $exception = NULL;
-        $hasReturnValue = FALSE;
+        $exception      = null;
+        $hasReturnValue = false;
 
         if (strtolower($invocation->methodName) == '__tostring') {
             $returnValue = '';
         } else {
-            $returnValue = NULL;
+            $returnValue = null;
         }
 
         foreach ($this->matchers as $match) {
@@ -118,8 +119,8 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
                     $value = $match->invoked($invocation);
 
                     if (!$hasReturnValue) {
-                        $returnValue = $value;
-                        $hasReturnValue = TRUE;
+                        $returnValue    = $value;
+                        $hasReturnValue = true;
                     }
                 }
             } catch (Exception $e) {
@@ -127,7 +128,7 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
             }
         }
 
-        if ($exception !== NULL) {
+        if ($exception !== null) {
             throw $exception;
         }
 
@@ -142,11 +143,11 @@ class PHPUnit_Framework_MockObject_InvocationMocker implements PHPUnit_Framework
     {
         foreach ($this->matchers as $matcher) {
             if (!$matcher->matches($invocation)) {
-                return FALSE;
+                return false;
             }
         }
 
-        return TRUE;
+        return true;
     }
 
     /**

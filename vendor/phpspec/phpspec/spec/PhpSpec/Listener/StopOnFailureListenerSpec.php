@@ -2,10 +2,11 @@
 
 namespace spec\PhpSpec\Listener;
 
-use PhpSpec\Console\IO;
-use PhpSpec\Event\ExampleEvent;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
+
+use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Console\IO;
 
 class StopOnFailureListenerSpec extends ObjectBehavior
 {

@@ -5,7 +5,7 @@ Feature: Developer specifies exception behaviour
 
   Scenario: Throwing an exception during construction when beConstructedWith specifies valid parameters
     Given the spec file "spec/Runner/ExceptionExample3/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\ExceptionExample3;
@@ -28,7 +28,7 @@ Feature: Developer specifies exception behaviour
 
       """
     And the class file "src/Runner/ExceptionExample3/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\ExceptionExample3;

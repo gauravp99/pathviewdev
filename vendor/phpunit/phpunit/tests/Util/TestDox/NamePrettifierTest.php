@@ -9,18 +9,16 @@
  */
 
 /**
- *
- *
- * @package    PHPUnit
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.1.0
  */
 class Util_TestDox_NamePrettifierTest extends PHPUnit_Framework_TestCase
 {
     protected $namePrettifier;
+
+    protected function setUp()
+    {
+        $this->namePrettifier = new PHPUnit_Util_TestDox_NamePrettifier;
+    }
 
     /**
      * @covers PHPUnit_Util_TestDox_NamePrettifier::prettifyTestClass
@@ -79,10 +77,5 @@ class Util_TestDox_NamePrettifierTest extends PHPUnit_Framework_TestCase
     {
         $this->assertEquals('Sets redirect header on 301', $this->namePrettifier->prettifyTestMethod('testSetsRedirectHeaderOn301'));
         $this->assertEquals('Sets redirect header on 302', $this->namePrettifier->prettifyTestMethod('testSetsRedirectHeaderOn302'));
-    }
-
-    protected function setUp()
-    {
-        $this->namePrettifier = new PHPUnit_Util_TestDox_NamePrettifier;
     }
 }

@@ -53,18 +53,6 @@ class FileBag extends ParameterBag
      *
      * @api
      */
-    public function add(array $files = array())
-    {
-        foreach ($files as $key => $file) {
-            $this->set($key, $file);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @api
-     */
     public function set($key, $value)
     {
         if (!is_array($value) && !$value instanceof UploadedFile) {
@@ -72,6 +60,18 @@ class FileBag extends ParameterBag
         }
 
         parent::set($key, $this->convertFileInformation($value));
+    }
+
+    /**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function add(array $files = array())
+    {
+        foreach ($files as $key => $file) {
+            $this->set($key, $file);
+        }
     }
 
     /**

@@ -25,23 +25,22 @@
  * @version    Release: @package_version@
  * @link       http://github.com/sebastianbergmann/phpunit-mock-objects
  */
-class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters
-    extends PHPUnit_Framework_MockObject_Matcher_StatelessInvocation
+class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters extends PHPUnit_Framework_MockObject_Matcher_StatelessInvocation
 {
 
-    /**
-     * @var array
-     */
+  /**
+   * @var array
+   */
     private $_parameterGroups = array();
 
-    /**
-     * @var array
-     */
+  /**
+   * @var array
+   */
     private $_invocations = array();
 
-    /**
-     * @param array $parameterGroups
-     */
+  /**
+   * @param array $parameterGroups
+   */
     public function __construct(array $parameterGroups)
     {
         foreach ($parameterGroups as $index => $parameters) {
@@ -64,36 +63,43 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters
         return $text;
     }
 
-    /**
-     * @param PHPUnit_Framework_MockObject_Invocation $invocation
-     * @return bool
-     */
+  /**
+   * @param PHPUnit_Framework_MockObject_Invocation $invocation
+   * @return bool
+   */
     public function matches(PHPUnit_Framework_MockObject_Invocation $invocation)
     {
         $this->_invocations[] = $invocation;
         $callIndex = count($this->_invocations) - 1;
         $this->verifyInvocation($invocation, $callIndex);
-        return FALSE;
+        return false;
     }
 
-    /**
-     * Verify a single invocation
-     *
-     * @param PHPUnit_Framework_MockObject_Invocation $invocation
-     * @param int $callIndex
-     * @throws PHPUnit_Framework_ExpectationFailedException
-     */
+    public function verify()
+    {
+        foreach ($this->_invocations as $callIndex => $invocation) {
+            $this->verifyInvocation($invocation, $callIndex);
+        }
+    }
+
+  /**
+   * Verify a single invocation
+   *
+   * @param PHPUnit_Framework_MockObject_Invocation $invocation
+   * @param int $callIndex
+   * @throws PHPUnit_Framework_ExpectationFailedException
+   */
     private function verifyInvocation(PHPUnit_Framework_MockObject_Invocation $invocation, $callIndex)
     {
 
         if (isset($this->_parameterGroups[$callIndex])) {
             $parameters = $this->_parameterGroups[$callIndex];
         } else {
-            // no parameter assertion for this call index
+          // no parameter assertion for this call index
             return;
         }
 
-        if ($invocation === NULL) {
+        if ($invocation === null) {
             throw new PHPUnit_Framework_ExpectationFailedException(
                 'Mocked method does not exist.'
             );
@@ -119,13 +125,6 @@ class PHPUnit_Framework_MockObject_Matcher_ConsecutiveParameters
                     $invocation->toString()
                 )
             );
-        }
-    }
-
-    public function verify()
-    {
-        foreach ($this->_invocations as $callIndex => $invocation) {
-            $this->verifyInvocation($invocation, $callIndex);
         }
     }
 }

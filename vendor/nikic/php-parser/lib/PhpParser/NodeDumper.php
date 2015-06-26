@@ -11,8 +11,7 @@ class NodeDumper
      *
      * @return string Dumped value
      */
-    public function dump($node)
-    {
+    public function dump($node) {
         if ($node instanceof Node) {
             $r = $node->getType() . '(';
 

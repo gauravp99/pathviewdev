@@ -5,7 +5,7 @@ Feature: Use the JUnit formatter
 
   Scenario: Successfully export phpspec results in JUnit format
     Given the spec file "spec/Formatter/SpecExample/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Formatter\SpecExample;
@@ -47,7 +47,7 @@ Feature: Use the JUnit formatter
 
       """
     And the class file "src/Formatter/SpecExample/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace Formatter\SpecExample;

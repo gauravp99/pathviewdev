@@ -13,10 +13,10 @@
 
 namespace PhpSpec\Locator\PSR0;
 
-use InvalidArgumentException;
 use PhpSpec\Locator\ResourceInterface;
 use PhpSpec\Locator\ResourceLocatorInterface;
 use PhpSpec\Util\Filesystem;
+use InvalidArgumentException;
 
 class PSR0Locator implements ResourceLocatorInterface
 {
@@ -55,31 +55,38 @@ class PSR0Locator implements ResourceLocatorInterface
     private $psr4Prefix;
 
     /**
-     * @param string $srcNamespace
-     * @param string $specNamespacePrefix
-     * @param string $srcPath
-     * @param string $specPath
+     * @param string     $srcNamespace
+     * @param string     $specNamespacePrefix
+     * @param string     $srcPath
+     * @param string     $specPath
      * @param Filesystem $filesystem
      */
-    public function __construct($srcNamespace = '', $specNamespacePrefix = 'spec',
-                                $srcPath = 'src', $specPath = '.', Filesystem $filesystem = null, $psr4Prefix = null)
-    {
+    public function __construct(
+        $srcNamespace = '',
+        $specNamespacePrefix = 'spec',
+        $srcPath = 'src',
+        $specPath = '.',
+        Filesystem $filesystem = null,
+        $psr4Prefix = null
+    ) {
         $this->filesystem = $filesystem ?: new Filesystem();
         $sepr = DIRECTORY_SEPARATOR;
 
-        $this->srcPath = rtrim(realpath($srcPath), '/\\') . $sepr;
-        $this->specPath = rtrim(realpath($specPath), '/\\') . $sepr;
-        $this->srcNamespace = ltrim(trim($srcNamespace, ' \\') . '\\', '\\');
-        $this->psr4Prefix = (null === $psr4Prefix) ? null : ltrim(trim($psr4Prefix, ' \\') . '\\', '\\');
-        if (null !== $this->psr4Prefix && substr($this->srcNamespace, 0, strlen($psr4Prefix)) !== $psr4Prefix) {
-            throw new InvalidArgumentException('PSR4 prefix doesn\'t match given class namespace.' . PHP_EOL);
+        $this->srcPath       = rtrim(realpath($srcPath), '/\\').$sepr;
+        $this->specPath      = rtrim(realpath($specPath), '/\\').$sepr;
+        $this->srcNamespace  = ltrim(trim($srcNamespace, ' \\').'\\', '\\');
+        $this->psr4Prefix    = (null === $psr4Prefix) ? null : ltrim(trim($psr4Prefix, ' \\').'\\', '\\');
+        if (null !== $this->psr4Prefix  && substr($this->srcNamespace, 0, strlen($psr4Prefix)) !== $psr4Prefix) {
+            throw new InvalidArgumentException('PSR4 prefix doesn\'t match given class namespace.'.PHP_EOL);
         }
-        $srcNamespacePath = null === $this->psr4Prefix ? $this->srcNamespace : substr($this->srcNamespace, strlen($this->psr4Prefix));
-        $this->specNamespace = trim($specNamespacePrefix, ' \\') . '\\' . $this->srcNamespace;
-        $specNamespacePath = trim($specNamespacePrefix, ' \\') . '\\' . $srcNamespacePath;
+        $srcNamespacePath = null === $this->psr4Prefix ?
+            $this->srcNamespace :
+            substr($this->srcNamespace, strlen($this->psr4Prefix));
+        $this->specNamespace = trim($specNamespacePrefix, ' \\').'\\'.$this->srcNamespace;
+        $specNamespacePath = trim($specNamespacePrefix, ' \\').'\\'.$srcNamespacePath;
 
-        $this->fullSrcPath = $this->srcPath . str_replace('\\', $sepr, $srcNamespacePath);
-        $this->fullSpecPath = $this->specPath . str_replace('\\', $sepr, $specNamespacePath);
+        $this->fullSrcPath   = $this->srcPath.str_replace('\\', $sepr, $srcNamespacePath);
+        $this->fullSpecPath  = $this->specPath.str_replace('\\', $sepr, $specNamespacePath);
 
         if ($sepr === $this->srcPath) {
             throw new InvalidArgumentException(sprintf(
@@ -121,106 +128,19 @@ class PSR0Locator implements ResourceLocatorInterface
     }
 
     /**
-     * @return ResourceInterface[]
-     */
-    public function getAllResources()
-    {
-        return $this->findSpecResources($this->fullSpecPath);
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return PSR0Resource[]
-     */
-    protected function findSpecResources($path)
-    {
-        if (!$this->filesystem->pathExists($path)) {
-            return array();
-        }
-
-        if ('.php' === substr($path, -4)) {
-            return array($this->createResourceFromSpecFile(realpath($path)));
-        }
-
-        $resources = array();
-        foreach ($this->filesystem->findSpecFilesIn($path) as $file) {
-            $resources[] = $this->createResourceFromSpecFile($file->getRealPath());
-        }
-
-        return $resources;
-    }
-
-    /**
-     * @param string $path
-     *
-     * @return PSR0Resource
-     */
-    private function createResourceFromSpecFile($path)
-    {
-        $classname = $this->findSpecClassname($path);
-
-        if (null === $classname) {
-            throw new \RuntimeException('Spec file does not contains any class definition.');
-        }
-
-        // Remove spec namespace from the begining of the classname.
-        $specNamespace = trim($this->getSpecNamespace(), '\\') . '\\';
-
-        if (0 !== strpos($classname, $specNamespace)) {
-            throw new \RuntimeException(sprintf(
-                'Spec class must be in the base spec namespace `%s`.',
-                $this->getSpecNamespace()
-            ));
-        }
-
-        $classname = substr($classname, strlen($specNamespace));
-
-        // cut "Spec" from the end
-        $classname = preg_replace('/Spec$/', '', $classname);
-
-        // Create the resource
-        return new PSR0Resource(explode('\\', $classname), $this);
-    }
-
-    private function findSpecClassname($path)
-    {
-        // Find namespace and class name
-        $namespace = '';
-        $content = $this->filesystem->getFileContents($path);
-        $tokens = token_get_all($content);
-        $count = count($tokens);
-
-        for ($i = 0; $i < $count; $i++) {
-            if ($tokens[$i][0] === T_NAMESPACE) {
-                for ($j = $i + 1; $j < $count; $j++) {
-                    if ($tokens[$j][0] === T_STRING) {
-                        $namespace .= $tokens[$j][1] . '\\';
-                    } elseif ($tokens[$j] === '{' || $tokens[$j] === ';') {
-                        break;
-                    }
-                }
-            }
-
-            if ($tokens[$i][0] === T_CLASS) {
-                for ($j = $i + 1; $j < $count; $j++) {
-                    if ($tokens[$j] === '{') {
-                        return $namespace . $tokens[$i + 2][1];
-                    }
-                }
-            }
-        }
-
-        // No class found
-        return null;
-    }
-
-    /**
      * @return string
      */
     public function getSpecNamespace()
     {
         return $this->specNamespace;
+    }
+
+    /**
+     * @return ResourceInterface[]
+     */
+    public function getAllResources()
+    {
+        return $this->findSpecResources($this->fullSpecPath);
     }
 
     /**
@@ -238,7 +158,8 @@ class PSR0Locator implements ResourceLocatorInterface
         }
 
         return 0 === strpos($path, $this->srcPath)
-        || 0 === strpos($path, $this->specPath);
+            || 0 === strpos($path, $this->specPath)
+        ;
     }
 
     /**
@@ -256,14 +177,14 @@ class PSR0Locator implements ResourceLocatorInterface
         }
 
         if ($path && 0 === strpos($path, $this->fullSrcPath)) {
-            $path = $this->fullSpecPath . substr($path, strlen($this->fullSrcPath));
+            $path = $this->fullSpecPath.substr($path, strlen($this->fullSrcPath));
             $path = preg_replace('/\.php/', 'Spec.php', $path);
 
             return $this->findSpecResources($path);
         }
 
         if ($path && 0 === strpos($path, $this->srcPath)) {
-            $path = $this->fullSpecPath . substr($path, strlen($this->srcPath));
+            $path = $this->fullSpecPath.substr($path, strlen($this->srcPath));
             $path = preg_replace('/\.php/', 'Spec.php', $path);
 
             return $this->findSpecResources($path);
@@ -286,8 +207,9 @@ class PSR0Locator implements ResourceLocatorInterface
         $classname = str_replace('/', '\\', $classname);
 
         return '' === $this->srcNamespace
-        || 0 === strpos($classname, $this->srcNamespace)
-        || 0 === strpos($classname, $this->specNamespace);
+            || 0  === strpos($classname, $this->srcNamespace)
+            || 0  === strpos($classname, $this->specNamespace)
+        ;
     }
 
     /**
@@ -316,24 +238,112 @@ class PSR0Locator implements ResourceLocatorInterface
         return null;
     }
 
-    private function validatePsr0Classname($classname)
-    {
-        $classnamePattern = '/^([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*[\/\\\\]?)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/';
-
-        if (!preg_match($classnamePattern, $classname)) {
-            throw new InvalidArgumentException(
-                sprintf('String "%s" is not a valid class name.', $classname) . PHP_EOL .
-                'Please see reference document: ' .
-                'https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md'
-            );
-        }
-    }
-
     /**
      * @return int
      */
     public function getPriority()
     {
         return 0;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return PSR0Resource[]
+     */
+    protected function findSpecResources($path)
+    {
+        if (!$this->filesystem->pathExists($path)) {
+            return array();
+        }
+
+        if ('.php' === substr($path, -4)) {
+            return array($this->createResourceFromSpecFile(realpath($path)));
+        }
+
+        $resources = array();
+        foreach ($this->filesystem->findSpecFilesIn($path) as $file) {
+            $resources[] = $this->createResourceFromSpecFile($file->getRealPath());
+        }
+
+        return $resources;
+    }
+
+    private function findSpecClassname($path)
+    {
+        // Find namespace and class name
+        $namespace = '';
+        $content   = $this->filesystem->getFileContents($path);
+        $tokens    = token_get_all($content);
+        $count     = count($tokens);
+
+        for ($i = 0; $i < $count; $i++) {
+            if ($tokens[$i][0] === T_NAMESPACE) {
+                for ($j = $i + 1; $j < $count; $j++) {
+                    if ($tokens[$j][0] === T_STRING) {
+                        $namespace .= $tokens[$j][1].'\\';
+                    } elseif ($tokens[$j] === '{' || $tokens[$j] === ';') {
+                        break;
+                    }
+                }
+            }
+
+            if ($tokens[$i][0] === T_CLASS) {
+                for ($j = $i+1; $j < $count; $j++) {
+                    if ($tokens[$j] === '{') {
+                        return $namespace.$tokens[$i+2][1];
+                    }
+                }
+            }
+        }
+
+        // No class found
+        return null;
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return PSR0Resource
+     */
+    private function createResourceFromSpecFile($path)
+    {
+        $classname = $this->findSpecClassname($path);
+
+        if (null === $classname) {
+            throw new \RuntimeException('Spec file does not contains any class definition.');
+        }
+
+        // Remove spec namespace from the begining of the classname.
+        $specNamespace = trim($this->getSpecNamespace(), '\\').'\\';
+
+        if (0 !== strpos($classname, $specNamespace)) {
+            throw new \RuntimeException(sprintf(
+                'Spec class `%s` must be in the base spec namespace `%s`.',
+                $classname,
+                $this->getSpecNamespace()
+            ));
+        }
+
+        $classname = substr($classname, strlen($specNamespace));
+
+        // cut "Spec" from the end
+        $classname = preg_replace('/Spec$/', '', $classname);
+
+        // Create the resource
+        return new PSR0Resource(explode('\\', $classname), $this);
+    }
+
+    private function validatePsr0Classname($classname)
+    {
+        $pattern = '/^([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*[\/\\\\]?)*[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*$/';
+
+        if (!preg_match($pattern, $classname)) {
+            throw new InvalidArgumentException(
+                sprintf('String "%s" is not a valid class name.', $classname).PHP_EOL.
+                'Please see reference document: '.
+                'https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md'
+            );
+        }
     }
 }

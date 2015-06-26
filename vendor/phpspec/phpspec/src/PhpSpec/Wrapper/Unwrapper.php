@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Wrapper;
 
-use Prophecy\Prophecy\ProphecyInterface;
 use Prophecy\Prophecy\RevealerInterface;
+use Prophecy\Prophecy\ProphecyInterface;
 
 class Unwrapper implements RevealerInterface
 {
@@ -30,16 +30,6 @@ class Unwrapper implements RevealerInterface
         }
 
         return array_map(array($this, 'unwrapOne'), $arguments);
-    }
-
-    /**
-     * @param mixed $value
-     *
-     * @return mixed
-     */
-    public function reveal($value)
-    {
-        return $this->unwrapOne($value);
     }
 
     /**
@@ -66,5 +56,15 @@ class Unwrapper implements RevealerInterface
         }
 
         return $argument;
+    }
+
+    /**
+     * @param mixed $value
+     *
+     * @return mixed
+     */
+    public function reveal($value)
+    {
+        return $this->unwrapOne($value);
     }
 }

@@ -5,6 +5,11 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
 {
     protected $ba;
 
+    protected function setUp()
+    {
+        $this->ba = new BankAccount;
+    }
+
     /**
      * @covers BankAccount::getBalance
      */
@@ -57,10 +62,5 @@ class BankAccountTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(1, $this->ba->getBalance());
         $this->ba->withdrawMoney(1);
         $this->assertEquals(0, $this->ba->getBalance());
-    }
-
-    protected function setUp()
-    {
-        $this->ba = new BankAccount;
     }
 }

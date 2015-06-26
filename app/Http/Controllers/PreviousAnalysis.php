@@ -19,7 +19,7 @@ class PreviousAnalysis extends Controller
         if(Auth::user()->id==$username) {
             if ($user->count()) {
                 $user = $user->first();
-                return view('profile.home')->with('user', $user)->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(6));
+                return view('profile.home')->with('user', $user)->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20));
             }
         }
         return App::abort(404);

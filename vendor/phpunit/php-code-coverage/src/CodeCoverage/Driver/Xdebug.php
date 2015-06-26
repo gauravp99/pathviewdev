@@ -11,13 +11,7 @@
 /**
  * Driver for Xdebug's code coverage functionality.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.0.0
+ * @since Class available since Release 1.0.0
  * @codeCoverageIgnore
  */
 class PHP_CodeCoverage_Driver_Xdebug implements PHP_CodeCoverage_Driver
@@ -32,8 +26,7 @@ class PHP_CodeCoverage_Driver_Xdebug implements PHP_CodeCoverage_Driver
         }
 
         if (version_compare(phpversion('xdebug'), '2.2.0-dev', '>=') &&
-            !ini_get('xdebug.coverage_enable')
-        ) {
+            !ini_get('xdebug.coverage_enable')) {
             throw new PHP_CodeCoverage_Exception(
                 'xdebug.coverage_enable=On has to be set in php.ini'
             );
@@ -73,7 +66,7 @@ class PHP_CodeCoverage_Driver_Xdebug implements PHP_CodeCoverage_Driver
                 unset($data[$file][0]);
             }
 
-            if (file_exists($file)) {
+            if ($file != "xdebug://debug-eval" && file_exists($file)) {
                 $numLines = $this->getNumberOfLinesInFile($file);
 
                 foreach (array_keys($data[$file]) as $line) {
@@ -95,7 +88,7 @@ class PHP_CodeCoverage_Driver_Xdebug implements PHP_CodeCoverage_Driver
     private function getNumberOfLinesInFile($file)
     {
         $buffer = file_get_contents($file);
-        $lines = substr_count($buffer, "\n");
+        $lines  = substr_count($buffer, "\n");
 
         if (substr($buffer, -1) !== "\n") {
             $lines++;

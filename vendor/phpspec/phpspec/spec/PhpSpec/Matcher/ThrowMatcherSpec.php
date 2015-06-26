@@ -2,11 +2,13 @@
 
 namespace spec\PhpSpec\Matcher;
 
-use ArrayObject;
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\ObjectBehavior;
-use PhpSpec\Wrapper\Unwrapper;
 use Prophecy\Argument;
+
+use PhpSpec\Wrapper\Unwrapper;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
+
+use ArrayObject;
 
 class ThrowMatcherSpec extends ObjectBehavior
 {

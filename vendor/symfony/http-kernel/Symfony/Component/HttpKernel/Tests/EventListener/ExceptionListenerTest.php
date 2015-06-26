@@ -11,12 +11,12 @@
 
 namespace Symfony\Component\HttpKernel\Tests\EventListener;
 
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
+use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 use Symfony\Component\HttpKernel\Tests\Logger;
 
 /**
@@ -57,6 +57,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
             $this->fail('RuntimeException expected');
         } catch (\RuntimeException $e) {
             $this->assertSame('bar', $e->getMessage());
+            $this->assertSame('foo', $e->getPrevious()->getMessage());
         }
     }
 
@@ -77,6 +78,7 @@ class ExceptionListenerTest extends \PHPUnit_Framework_TestCase
             $this->fail('RuntimeException expected');
         } catch (\RuntimeException $e) {
             $this->assertSame('bar', $e->getMessage());
+            $this->assertSame('foo', $e->getPrevious()->getMessage());
         }
 
         $this->assertEquals(3, $logger->countErrors());

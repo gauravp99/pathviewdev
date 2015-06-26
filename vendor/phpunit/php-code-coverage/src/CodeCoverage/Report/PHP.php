@@ -11,20 +11,13 @@
 /**
  * Uses var_export() to write a PHP_CodeCoverage object to a file.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     uyga <iamuyga@gmail.com>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.1.0
+ * @since Class available since Release 1.1.0
  */
 class PHP_CodeCoverage_Report_PHP
 {
     /**
      * @param  PHP_CodeCoverage $coverage
-     * @param  string $target
+     * @param  string           $target
      * @return string
      */
     public function process(PHP_CodeCoverage $coverage, $target = null)

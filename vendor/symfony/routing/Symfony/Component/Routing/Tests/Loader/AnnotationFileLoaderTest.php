@@ -11,31 +11,13 @@
 
 namespace Symfony\Component\Routing\Tests\Loader;
 
-use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\AnnotationFileLoader;
+use Symfony\Component\Config\FileLocator;
 
 class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
 {
     protected $loader;
     protected $reader;
-
-    public function testLoad()
-    {
-        $this->reader->expects($this->once())->method('getClassAnnotation');
-
-        $this->loader->load(__DIR__ . '/../Fixtures/AnnotatedClasses/FooClass.php');
-    }
-
-    public function testSupports()
-    {
-        $fixture = __DIR__ . '/../Fixtures/annotated.php';
-
-        $this->assertTrue($this->loader->supports($fixture), '->supports() returns true if the resource is loadable');
-        $this->assertFalse($this->loader->supports('foo.foo'), '->supports() returns true if the resource is loadable');
-
-        $this->assertTrue($this->loader->supports($fixture, 'annotation'), '->supports() checks the resource type if specified');
-        $this->assertFalse($this->loader->supports($fixture, 'foo'), '->supports() checks the resource type if specified');
-    }
 
     protected function setUp()
     {
@@ -43,5 +25,23 @@ class AnnotationFileLoaderTest extends AbstractAnnotationLoaderTest
 
         $this->reader = $this->getReader();
         $this->loader = new AnnotationFileLoader(new FileLocator(), $this->getClassLoader($this->reader));
+    }
+
+    public function testLoad()
+    {
+        $this->reader->expects($this->once())->method('getClassAnnotation');
+
+        $this->loader->load(__DIR__.'/../Fixtures/AnnotatedClasses/FooClass.php');
+    }
+
+    public function testSupports()
+    {
+        $fixture = __DIR__.'/../Fixtures/annotated.php';
+
+        $this->assertTrue($this->loader->supports($fixture), '->supports() returns true if the resource is loadable');
+        $this->assertFalse($this->loader->supports('foo.foo'), '->supports() returns true if the resource is loadable');
+
+        $this->assertTrue($this->loader->supports($fixture, 'annotation'), '->supports() checks the resource type if specified');
+        $this->assertFalse($this->loader->supports($fixture, 'foo'), '->supports() checks the resource type if specified');
     }
 }

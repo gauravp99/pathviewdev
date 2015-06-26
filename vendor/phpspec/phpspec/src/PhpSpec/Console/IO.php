@@ -13,11 +13,13 @@
 
 namespace PhpSpec\Console;
 
-use PhpSpec\Config\OptionsConfig;
 use PhpSpec\IO\IOInterface;
 use Symfony\Component\Console\Helper\DialogHelper;
+use Symfony\Component\Console\Helper\QuestionHelper;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use PhpSpec\Config\OptionsConfig;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 /**
  * Class IO deals with input and output from command line interaction
@@ -39,11 +41,6 @@ class IO implements IOInterface
     private $output;
 
     /**
-     * @var \Symfony\Component\Console\Helper\DialogHelper
-     */
-    private $dialogHelper;
-
-    /**
      * @var string
      */
     private $lastMessage;
@@ -54,8 +51,8 @@ class IO implements IOInterface
     private $hasTempString = false;
 
     /**
-     * @var OptionsConfig
-     */
+      * @var OptionsConfig
+      */
     private $config;
 
     /**
@@ -64,17 +61,34 @@ class IO implements IOInterface
     private $consoleWidth;
 
     /**
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @param DialogHelper $dialogHelper
-     * @param OptionsConfig $config
+     * @var Prompter
      */
-    public function __construct(InputInterface $input, OutputInterface $output, DialogHelper $dialogHelper, OptionsConfig $config)
+    private $prompter;
+
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     * @param OptionsConfig   $config
+     * @param Prompter        $prompter
+     */
+    public function __construct(
+        InputInterface $input,
+        OutputInterface $output,
+        OptionsConfig $config,
+        Prompter $prompter
+    ) {
+        $this->input   = $input;
+        $this->output  = $output;
+        $this->config  = $config;
+        $this->prompter = $prompter;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isInteractive()
     {
-        $this->input = $input;
-        $this->output = $output;
-        $this->dialogHelper = $dialogHelper;
-        $this->config = $config;
+        return $this->input->isInteractive();
     }
 
     /**
@@ -95,15 +109,7 @@ class IO implements IOInterface
         }
 
         return $this->config->isCodeGenerationEnabled()
-        && !$this->input->getOption('no-code-generation');
-    }
-
-    /**
-     * @return bool
-     */
-    public function isInteractive()
-    {
-        return $this->input->isInteractive();
+            && !$this->input->getOption('no-code-generation');
     }
 
     /**
@@ -112,7 +118,7 @@ class IO implements IOInterface
     public function isStopOnFailureEnabled()
     {
         return $this->config->isStopOnFailureEnabled()
-        || $this->input->getOption('stop-on-failure');
+            || $this->input->getOption('stop-on-failure');
     }
 
     /**
@@ -132,7 +138,7 @@ class IO implements IOInterface
     }
 
     /**
-     * @param string $message
+     * @param string       $message
      * @param integer|null $indent
      */
     public function writeln($message = '', $indent = null)
@@ -141,99 +147,7 @@ class IO implements IOInterface
     }
 
     /**
-     * @param string $message
-     * @param integer|null $indent
-     * @param bool $newline
-     */
-    public function write($message, $indent = null, $newline = false)
-    {
-        if ($this->hasTempString) {
-            $this->hasTempString = false;
-            $this->overwrite($message, $indent, $newline);
-
-            return;
-        }
-
-        if (null !== $indent) {
-            $message = $this->indentText($message, $indent);
-        }
-
-        $this->output->write($message, $newline);
-        $this->lastMessage = $message . ($newline ? "\n" : '');
-    }
-
-    /**
-     * @param string $message
-     * @param integer|null $indent
-     * @param bool $newline
-     */
-    public function overwrite($message, $indent = null, $newline = false)
-    {
-        if (null !== $indent) {
-            $message = $this->indentText($message, $indent);
-        }
-
-        if ($message === $this->lastMessage) {
-            return;
-        }
-
-        $commonPrefix = $this->getCommonPrefix($message, $this->lastMessage);
-        $newSuffix = substr($message, strlen($commonPrefix));
-        $oldSuffix = substr($this->lastMessage, strlen($commonPrefix));
-
-        $overwriteLength = strlen(strip_tags($oldSuffix));
-
-        $this->write(str_repeat("\x08", $overwriteLength));
-        $this->write($newSuffix);
-
-        $fill = $overwriteLength - strlen(strip_tags($newSuffix));
-        if ($fill > 0) {
-            $this->write(str_repeat(' ', $fill));
-            $this->write(str_repeat("\x08", $fill));
-        }
-
-        if ($newline) {
-            $this->writeln();
-        }
-
-        $this->lastMessage = $message . ($newline ? "\n" : '');
-    }
-
-    /**
-     * @param string $text
-     * @param integer $indent
-     *
-     * @return string
-     */
-    private function indentText($text, $indent)
-    {
-        return implode("\n", array_map(
-            function ($line) use ($indent) {
-                return str_repeat(' ', $indent) . $line;
-            },
-            explode("\n", $text)
-        ));
-    }
-
-    private function getCommonPrefix($stringA, $stringB)
-    {
-        for ($i = 0; $i < min(strlen($stringA), strlen($stringB)); $i++) {
-            if ($stringA[$i] != $stringB[$i]) {
-                break;
-            }
-        }
-
-        $common = substr($stringA, 0, $i);
-
-        if (preg_match('/(^.*)<[a-z-]*>?[^<]*$/', $common, $matches)) {
-            $common = $matches[1];
-        }
-
-        return $common;
-    }
-
-    /**
-     * @param string $message
+     * @param string       $message
      * @param integer|null $indent
      */
     public function writeTemp($message, $indent = null)
@@ -266,7 +180,29 @@ class IO implements IOInterface
     }
 
     /**
-     * @param string $message
+     * @param string       $message
+     * @param integer|null $indent
+     * @param bool         $newline
+     */
+    public function write($message, $indent = null, $newline = false)
+    {
+        if ($this->hasTempString) {
+            $this->hasTempString = false;
+            $this->overwrite($message, $indent, $newline);
+
+            return;
+        }
+
+        if (null !== $indent) {
+            $message = $this->indentText($message, $indent);
+        }
+
+        $this->output->write($message, $newline);
+        $this->lastMessage = $message.($newline ? "\n" : '');
+    }
+
+    /**
+     * @param string       $message
      * @param integer|null $indent
      */
     public function overwriteln($message = '', $indent = null)
@@ -275,63 +211,94 @@ class IO implements IOInterface
     }
 
     /**
-     * @param string $question
-     * @param string|null $default
-     *
-     * @return string
+     * @param string       $message
+     * @param integer|null $indent
+     * @param bool         $newline
      */
-    public function ask($question, $default = null)
+    public function overwrite($message, $indent = null, $newline = false)
     {
-        return $this->dialogHelper->ask($this->output, $question, $default);
+        if (null !== $indent) {
+            $message = $this->indentText($message, $indent);
+        }
+
+        if ($message === $this->lastMessage) {
+            return;
+        }
+
+        $commonPrefix = $this->getCommonPrefix($message, $this->lastMessage);
+        $newSuffix = substr($message, strlen($commonPrefix));
+        $oldSuffix = substr($this->lastMessage, strlen($commonPrefix));
+
+        $overwriteLength = strlen(strip_tags($oldSuffix));
+
+        $this->write(str_repeat("\x08", $overwriteLength));
+        $this->write($newSuffix);
+
+        $fill = $overwriteLength - strlen(strip_tags($newSuffix));
+        if ($fill > 0) {
+            $this->write(str_repeat(' ', $fill));
+            $this->write(str_repeat("\x08", $fill));
+        }
+
+        if ($newline) {
+            $this->writeln();
+        }
+
+        $this->lastMessage = $message.($newline ? "\n" : '');
+    }
+
+    private function getCommonPrefix($stringA, $stringB)
+    {
+        for ($i = 0, $len = min(strlen($stringA), strlen($stringB)); $i<$len; $i++) {
+            if ($stringA[$i] != $stringB[$i]) {
+                break;
+            }
+        }
+
+        $common = substr($stringA, 0, $i);
+
+        if (preg_match('/(^.*)<[a-z-]*>?[^<]*$/', $common, $matches)) {
+            $common = $matches[1];
+        }
+
+        return $common;
     }
 
     /**
      * @param string $question
-     * @param bool $default
+     * @param bool   $default
      *
      * @return Boolean
      */
     public function askConfirmation($question, $default = true)
     {
-        $lines = array();
-        $lines[] = '<question>' . str_repeat(' ', $this->getBlockWidth()) . "</question>";
+        $lines   = array();
+        $lines[] = '<question>'.str_repeat(' ', $this->getBlockWidth())."</question>";
         foreach (explode("\n", wordwrap($question, $this->getBlockWidth() - 4, "\n", true)) as $line) {
-            $lines[] = '<question>  ' . str_pad($line, $this->getBlockWidth() - 2) . '</question>';
+            $lines[] = '<question>  '.str_pad($line, $this->getBlockWidth() - 2).'</question>';
         }
-        $lines[] = '<question>' . str_repeat(' ', $this->getBlockWidth() - 8) . '</question> <value>' .
-            ($default ? '[Y/n]' : '[y/N]') . '</value> ';
+        $lines[] = '<question>'.str_repeat(' ', $this->getBlockWidth() - 8).'</question> <value>'.
+            ($default ? '[Y/n]' : '[y/N]').'</value> ';
 
-        return $this->dialogHelper->askConfirmation(
-            $this->output, implode("\n", $lines) . "\n", $default
-        );
+        $formattedQuestion = implode("\n", $lines) . "\n";
+
+        return $this->prompter->askConfirmation($formattedQuestion, $default);
     }
 
     /**
-     * @return integer
-     */
-    public function getBlockWidth()
-    {
-        $width = self::COL_DEFAULT_WIDTH;
-        if ($this->consoleWidth && ($this->consoleWidth - 10) > self::COL_MIN_WIDTH) {
-            $width = $this->consoleWidth - 10;
-        }
-        if ($width > self::COL_MAX_WIDTH) {
-            $width = self::COL_MAX_WIDTH;
-        }
-        return $width;
-    }
-
-    /**
-     * @param string $question
-     * @param callable $validator
-     * @param int|false $attempts
-     * @param string|null $default
+     * @param string  $text
+     * @param integer $indent
      *
      * @return string
      */
-    public function askAndValidate($question, $validator, $attempts = false, $default = null)
+    private function indentText($text, $indent)
     {
-        return $this->dialogHelper->askAndValidate($this->output, $question, $validator, $attempts, $default);
+        return implode("\n", array_map(
+            function ($line) use ($indent) {
+                return str_repeat(' ', $indent).$line;
+            },
+            explode("\n", $text)
+        ));
     }
 
     public function isRerunEnabled()
@@ -362,5 +329,20 @@ class IO implements IOInterface
     public function setConsoleWidth($width)
     {
         $this->consoleWidth = $width;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getBlockWidth()
+    {
+        $width = self::COL_DEFAULT_WIDTH;
+        if ($this->consoleWidth && ($this->consoleWidth - 10) > self::COL_MIN_WIDTH) {
+            $width = $this->consoleWidth - 10;
+        }
+        if ($width > self::COL_MAX_WIDTH) {
+            $width = self::COL_MAX_WIDTH;
+        }
+        return $width;
     }
 }

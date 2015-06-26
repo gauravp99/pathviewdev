@@ -31,19 +31,6 @@ abstract class Decorator implements ExpectationInterface
     /**
      * @return ExpectationInterface
      */
-    public function getNestedExpectation()
-    {
-        $expectation = $this->getExpectation();
-        while ($expectation instanceof Decorator) {
-            $expectation = $expectation->getExpectation();
-        }
-
-        return $expectation;
-    }
-
-    /**
-     * @return ExpectationInterface
-     */
     public function getExpectation()
     {
         return $this->expectation;
@@ -55,5 +42,18 @@ abstract class Decorator implements ExpectationInterface
     protected function setExpectation(ExpectationInterface $expectation)
     {
         $this->expectation = $expectation;
+    }
+
+    /**
+     * @return ExpectationInterface
+     */
+    public function getNestedExpectation()
+    {
+        $expectation = $this->getExpectation();
+        while ($expectation instanceof Decorator) {
+            $expectation = $expectation->getExpectation();
+        }
+
+        return $expectation;
     }
 }

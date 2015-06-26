@@ -11,34 +11,30 @@
 /**
  * A TestFailure collects a failed test together with the caught exception.
  *
- * @package    PHPUnit
- * @subpackage Framework
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
 class PHPUnit_Framework_TestFailure
 {
-    /**
-     * @var PHPUnit_Framework_Test|null
-     */
-    protected $failedTest;
-    /**
-     * @var    Exception
-     */
-    protected $thrownException;
     /**
      * @var string
      */
     private $testName;
 
     /**
+     * @var PHPUnit_Framework_Test|null
+     */
+    protected $failedTest;
+
+    /**
+     * @var Exception
+     */
+    protected $thrownException;
+
+    /**
      * Constructs a TestFailure with the given test and exception.
      *
      * @param PHPUnit_Framework_Test $failedTest
-     * @param Exception $thrownException
+     * @param Exception              $thrownException
      */
     public function __construct(PHPUnit_Framework_Test $failedTest, Exception $thrownException)
     {
@@ -135,16 +131,6 @@ class PHPUnit_Framework_TestFailure
     }
 
     /**
-     * Returns the exception's message.
-     *
-     * @return string
-     */
-    public function exceptionMessage()
-    {
-        return $this->thrownException()->getMessage();
-    }
-
-    /**
      * Gets the thrown exception.
      *
      * @return Exception
@@ -155,10 +141,20 @@ class PHPUnit_Framework_TestFailure
     }
 
     /**
+     * Returns the exception's message.
+     *
+     * @return string
+     */
+    public function exceptionMessage()
+    {
+        return $this->thrownException()->getMessage();
+    }
+
+    /**
      * Returns true if the thrown exception
      * is of type AssertionFailedError.
      *
-     * @return boolean
+     * @return bool
      */
     public function isFailure()
     {

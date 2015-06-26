@@ -11,9 +11,9 @@
 
 namespace Monolog\Handler;
 
+use Monolog\Logger;
 use Monolog\Formatter\FormatterInterface;
 use Monolog\Formatter\LineFormatter;
-use Monolog\Logger;
 
 /**
  * Base Handler class providing the Handler structure
@@ -32,7 +32,7 @@ abstract class AbstractHandler implements HandlerInterface
     protected $processors = array();
 
     /**
-     * @param integer $level The minimum logging level at which this handler will be triggered
+     * @param integer $level  The minimum logging level at which this handler will be triggered
      * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($level = Logger::DEBUG, $bubble = true)
@@ -60,12 +60,21 @@ abstract class AbstractHandler implements HandlerInterface
     }
 
     /**
+     * Closes the handler.
+     *
+     * This will be called automatically when the object is destroyed
+     */
+    public function close()
+    {
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function pushProcessor($callback)
     {
         if (!is_callable($callback)) {
-            throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), ' . var_export($callback, true) . ' given');
+            throw new \InvalidArgumentException('Processors must be valid callables (callback or object with an __invoke method), '.var_export($callback, true).' given');
         }
         array_unshift($this->processors, $callback);
 
@@ -87,18 +96,6 @@ abstract class AbstractHandler implements HandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function getFormatter()
-    {
-        if (!$this->formatter) {
-            $this->formatter = $this->getDefaultFormatter();
-        }
-
-        return $this->formatter;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setFormatter(FormatterInterface $formatter)
     {
         $this->formatter = $formatter;
@@ -107,23 +104,15 @@ abstract class AbstractHandler implements HandlerInterface
     }
 
     /**
-     * Gets the default formatter.
-     *
-     * @return FormatterInterface
+     * {@inheritdoc}
      */
-    protected function getDefaultFormatter()
+    public function getFormatter()
     {
-        return new LineFormatter();
-    }
+        if (!$this->formatter) {
+            $this->formatter = $this->getDefaultFormatter();
+        }
 
-    /**
-     * Gets minimum logging level at which this handler will be triggered.
-     *
-     * @return integer
-     */
-    public function getLevel()
-    {
-        return $this->level;
+        return $this->formatter;
     }
 
     /**
@@ -140,14 +129,13 @@ abstract class AbstractHandler implements HandlerInterface
     }
 
     /**
-     * Gets the bubbling behavior.
+     * Gets minimum logging level at which this handler will be triggered.
      *
-     * @return Boolean true means that this handler allows bubbling.
-     *                 false means that bubbling is not permitted.
+     * @return integer
      */
-    public function getBubble()
+    public function getLevel()
     {
-        return $this->bubble;
+        return $this->level;
     }
 
     /**
@@ -164,6 +152,17 @@ abstract class AbstractHandler implements HandlerInterface
         return $this;
     }
 
+    /**
+     * Gets the bubbling behavior.
+     *
+     * @return Boolean true means that this handler allows bubbling.
+     *                 false means that bubbling is not permitted.
+     */
+    public function getBubble()
+    {
+        return $this->bubble;
+    }
+
     public function __destruct()
     {
         try {
@@ -174,11 +173,12 @@ abstract class AbstractHandler implements HandlerInterface
     }
 
     /**
-     * Closes the handler.
+     * Gets the default formatter.
      *
-     * This will be called automatically when the object is destroyed
+     * @return FormatterInterface
      */
-    public function close()
+    protected function getDefaultFormatter()
     {
+        return new LineFormatter();
     }
 }

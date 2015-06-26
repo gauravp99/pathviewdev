@@ -23,21 +23,6 @@ class AnonymousAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($provider->supports($this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface')));
     }
 
-    protected function getProvider($key)
-    {
-        return new AnonymousAuthenticationProvider($key);
-    }
-
-    protected function getSupportedToken($key)
-    {
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', array('getKey'), array(), '', false);
-        $token->expects($this->any())
-            ->method('getKey')
-            ->will($this->returnValue($key));
-
-        return $token;
-    }
-
     public function testAuthenticateWhenTokenIsNotSupported()
     {
         $provider = $this->getProvider('foo');
@@ -61,5 +46,21 @@ class AnonymousAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
         $token = $this->getSupportedToken('foo');
 
         $this->assertSame($token, $provider->authenticate($token));
+    }
+
+    protected function getSupportedToken($key)
+    {
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\AnonymousToken', array('getKey'), array(), '', false);
+        $token->expects($this->any())
+              ->method('getKey')
+              ->will($this->returnValue($key))
+        ;
+
+        return $token;
+    }
+
+    protected function getProvider($key)
+    {
+        return new AnonymousAuthenticationProvider($key);
     }
 }

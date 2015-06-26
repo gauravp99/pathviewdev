@@ -44,6 +44,117 @@ class MethodAnalyser
     }
 
     /**
+     * @param string $class
+     * @param string $method
+     *
+     * @return string
+     */
+    public function getMethodOwnerName($class, $method)
+    {
+        $reflectionMethod = new \ReflectionMethod($class, $method);
+        $startLine = $reflectionMethod->getStartLine();
+        $endLine = $reflectionMethod->getEndLine();
+        $reflectionClass  = $this->getMethodOwner($reflectionMethod, $startLine, $endLine);
+
+        return $reflectionClass->getName();
+    }
+
+    /**
+     * @param \ReflectionMethod $reflectionMethod
+     *
+     * @return string
+     */
+    private function getCodeBody(\ReflectionMethod $reflectionMethod)
+    {
+        $endLine = $reflectionMethod->getEndLine();
+        $startLine = $reflectionMethod->getStartLine();
+        $reflectionClass = $this->getMethodOwner($reflectionMethod, $startLine, $endLine);
+
+        $length = $endLine - $startLine;
+        $lines = file($reflectionClass->getFileName());
+        $code = join(PHP_EOL, array_slice($lines, $startLine - 1, $length + 1));
+
+        return preg_replace('/.*function[^{]+{/s', '', $code);
+    }
+
+    /**
+     * @param  \ReflectionMethod $reflectionMethod
+     * @param  int $methodStartLine
+     * @param  int $methodEndLine
+     *
+     * @return \ReflectionClass
+     */
+    private function getMethodOwner(\ReflectionMethod $reflectionMethod, $methodStartLine, $methodEndLine)
+    {
+        $reflectionClass = $reflectionMethod->getDeclaringClass();
+
+        // PHP <=5.3 does not handle traits
+        if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+            return $reflectionClass;
+        }
+
+        $fileName = $reflectionMethod->getFileName();
+        $trait = $this->getDeclaringTrait($reflectionClass->getTraits(), $fileName, $methodStartLine, $methodEndLine);
+
+        return $trait === null ? $reflectionClass : $trait;
+    }
+
+    /**
+     * @param  \ReflectionClass[] $traits
+     * @param  string  $file
+     * @param  int $start
+     * @param  int $end
+     *
+     * @return null|\ReflectionClass
+     */
+    private function getDeclaringTrait(array $traits, $file, $start, $end)
+    {
+        foreach ($traits as $trait) {
+            if ($trait->getFileName() == $file && $trait->getStartLine() <= $start && $trait->getEndLine() >= $end) {
+                return $trait;
+            }
+            if (null !== ( $trait = $this->getDeclaringTrait($trait->getTraits(), $file, $start, $end) )) {
+                return $trait;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param  string $code
+     * @return string
+     */
+    private function stripComments($code)
+    {
+        $tokens = token_get_all('<?php ' . $code);
+
+        $comments = array_map(
+            function ($token) {
+                return $token[1];
+            },
+            array_filter(
+                $tokens,
+                function ($token) {
+                    return is_array($token) && in_array($token[0], array(T_COMMENT, T_DOC_COMMENT));
+                })
+        );
+
+        $commentless = str_replace($comments, '', $code);
+
+        return $commentless;
+    }
+
+    /**
+     * @param  string $codeWithoutComments
+     * @return bool
+     */
+    private function codeIsOnlyBlocksAndWhitespace($codeWithoutComments)
+    {
+        return (bool) preg_match('/^[\s{}]*$/s', $codeWithoutComments);
+    }
+
+    /**
      * @param  \ReflectionMethod $method
      * @return bool
      */
@@ -61,54 +172,5 @@ class MethodAnalyser
         }
 
         return false;
-    }
-
-    /**
-     * @param \ReflectionMethod $reflectionMethod
-     *
-     * @return string
-     */
-    private function getCodeBody(\ReflectionMethod $reflectionMethod)
-    {
-        $reflectionClass = $reflectionMethod->getDeclaringClass();
-
-        $length = $reflectionMethod->getEndLine() - $reflectionMethod->getStartLine();
-        $lines = file($reflectionClass->getFileName());
-        $code = join(PHP_EOL, array_slice($lines, $reflectionMethod->getStartLine() - 1, $length + 1));
-
-        return preg_replace('/.*function[^{]+{/s', '', $code);
-    }
-
-    /**
-     * @param  string $code
-     * @return string
-     */
-    private function stripComments($code)
-    {
-        $tokens = token_get_all('<?php ' . $code);
-
-        $comments = array_map(
-            function ($token) {
-                return $token[1];
-            },
-            array_filter($tokens,
-                function ($token) {
-                    return is_array($token)
-                    && in_array($token[0], array(T_COMMENT, T_DOC_COMMENT));
-                })
-        );
-
-        $commentless = str_replace($comments, '', $code);
-
-        return $commentless;
-    }
-
-    /**
-     * @param  string $codeWithoutComments
-     * @return bool
-     */
-    private function codeIsOnlyBlocksAndWhitespace($codeWithoutComments)
-    {
-        return (bool)preg_match('/^[\s{}]*$/s', $codeWithoutComments);
     }
 }

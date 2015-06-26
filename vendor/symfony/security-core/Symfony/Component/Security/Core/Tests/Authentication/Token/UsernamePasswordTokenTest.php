@@ -53,6 +53,6 @@ class UsernamePasswordTokenTest extends \PHPUnit_Framework_TestCase
     public function testToString()
     {
         $token = new UsernamePasswordToken('foo', '', 'foo', array('A', 'B'));
-        $this->assertEquals('UsernamePasswordToken(user="foo", authenticated=true, roles="A, B")', (string)$token);
+        $this->assertEquals('UsernamePasswordToken(user="foo", authenticated=true, roles="A, B")', (string) $token);
     }
 }

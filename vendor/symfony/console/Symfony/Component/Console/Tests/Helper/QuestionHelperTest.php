@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Console\Tests\Helper;
 
-use Symfony\Component\Console\Helper\FormatterHelper;
-use Symfony\Component\Console\Helper\HelperSet;
 use Symfony\Component\Console\Helper\QuestionHelper;
+use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Helper\FormatterHelper;
 use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
@@ -78,30 +78,6 @@ class QuestionHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(array('Superman', 'Batman'), $questionHelper->ask($this->createInputInterfaceMock(), $this->createOutputInterface(), $question));
     }
 
-    protected function getInputStream($input)
-    {
-        $stream = fopen('php://memory', 'r+', false);
-        fwrite($stream, $input);
-        rewind($stream);
-
-        return $stream;
-    }
-
-    protected function createInputInterfaceMock($interactive = true)
-    {
-        $mock = $this->getMock('Symfony\Component\Console\Input\InputInterface');
-        $mock->expects($this->any())
-            ->method('isInteractive')
-            ->will($this->returnValue($interactive));
-
-        return $mock;
-    }
-
-    protected function createOutputInterface()
-    {
-        return new StreamOutput(fopen('php://memory', 'r+', false));
-    }
-
     public function testAsk()
     {
         $dialog = new QuestionHelper();
@@ -150,13 +126,6 @@ class QuestionHelperTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('AcmeDemoBundle', $dialog->ask($this->createInputInterfaceMock(), $this->createOutputInterface(), $question));
         $this->assertEquals('AsseticBundle', $dialog->ask($this->createInputInterfaceMock(), $this->createOutputInterface(), $question));
         $this->assertEquals('FooBundle', $dialog->ask($this->createInputInterfaceMock(), $this->createOutputInterface(), $question));
-    }
-
-    private function hasSttyAvailable()
-    {
-        exec('stty 2>&1', $output, $exitcode);
-
-        return $exitcode === 0;
     }
 
     public function testAskHiddenResponse()
@@ -222,7 +191,7 @@ class QuestionHelperTest extends \PHPUnit_Framework_TestCase
 
         $dialog->setInputStream($this->getInputStream("green\nyellow\norange\n"));
         try {
-            $this->assertEquals('white', $dialog->ask($this->createInputInterfaceMock(), $this->createOutputInterface(), $question));
+            $dialog->ask($this->createInputInterfaceMock(), $this->createOutputInterface(), $question);
             $this->fail();
         } catch (\InvalidArgumentException $e) {
             $this->assertEquals($error, $e->getMessage());
@@ -234,5 +203,36 @@ class QuestionHelperTest extends \PHPUnit_Framework_TestCase
         $dialog = new QuestionHelper();
         $question = new Question('Do you have a job?', 'not yet');
         $this->assertEquals('not yet', $dialog->ask($this->createInputInterfaceMock(false), $this->createOutputInterface(), $question));
+    }
+
+    protected function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fwrite($stream, $input);
+        rewind($stream);
+
+        return $stream;
+    }
+
+    protected function createOutputInterface()
+    {
+        return new StreamOutput(fopen('php://memory', 'r+', false));
+    }
+
+    protected function createInputInterfaceMock($interactive = true)
+    {
+        $mock = $this->getMock('Symfony\Component\Console\Input\InputInterface');
+        $mock->expects($this->any())
+            ->method('isInteractive')
+            ->will($this->returnValue($interactive));
+
+        return $mock;
+    }
+
+    private function hasSttyAvailable()
+    {
+        exec('stty 2>&1', $output, $exitcode);
+
+        return $exitcode === 0;
     }
 }

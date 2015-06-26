@@ -9,9 +9,9 @@
  */
 
 /**
- * An OpenDKIM Specific Header using only raw header datas without encoding
+ * An OpenDKIM Specific Header using only raw header datas without encoding.
  *
- * @author     De Cock Xavier <xdecock@gmail.com>
+ * @author De Cock Xavier <xdecock@gmail.com>
  */
 class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
 {
@@ -23,7 +23,8 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
     private $_value;
 
     /**
-     * The name of this Header
+     * The name of this Header.
+     *
      * @var string
      */
     private $_fieldName;
@@ -31,9 +32,9 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
     /**
      * Creates a new SimpleHeader with $name.
      *
-     * @param string $name
+     * @param string                   $name
      * @param Swift_Mime_HeaderEncoder $encoder
-     * @param Swift_Mime_Grammar $grammar
+     * @param Swift_Mime_Grammar       $grammar
      */
     public function __construct($name)
     {
@@ -114,11 +115,12 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
      */
     public function toString()
     {
-        return $this->_fieldName . ': ' . $this->_value;
+        return $this->_fieldName.': '.$this->_value;
     }
 
     /**
-     * Set the Header FieldName
+     * Set the Header FieldName.
+     *
      * @see Swift_Mime_Header::getFieldName()
      */
     public function getFieldName()
@@ -127,7 +129,7 @@ class Swift_Mime_Headers_OpenDKIMHeader implements Swift_Mime_Header
     }
 
     /**
-     * Ignored
+     * Ignored.
      */
     public function setCharset($charset)
     {

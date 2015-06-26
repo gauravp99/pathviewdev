@@ -8,7 +8,8 @@ class Framework_MockObject_Invocation_ObjectTest extends PHPUnit_Framework_TestC
             'FooClass',
             'FooMethod',
             array('an_argument'),
-            new StdClass);
+        new StdClass
+        );
     }
 
     public function testAllowToGetClassNameSetInConstructor()
@@ -17,7 +18,8 @@ class Framework_MockObject_Invocation_ObjectTest extends PHPUnit_Framework_TestC
             'FooClass',
             'FooMethod',
             array('an_argument'),
-            new StdClass);
+            new StdClass
+        );
 
         $this->assertSame('FooClass', $invocation->className);
     }
@@ -28,7 +30,8 @@ class Framework_MockObject_Invocation_ObjectTest extends PHPUnit_Framework_TestC
             'FooClass',
             'FooMethod',
             array('an_argument'),
-            new StdClass);
+            new StdClass
+        );
 
         $this->assertSame('FooMethod', $invocation->methodName);
     }
@@ -41,7 +44,8 @@ class Framework_MockObject_Invocation_ObjectTest extends PHPUnit_Framework_TestC
             'FooClass',
             'FooMethod',
             array('an_argument'),
-            $expectedObject);
+            $expectedObject
+        );
 
         $this->assertSame($expectedObject, $invocation->object);
     }
@@ -49,7 +53,7 @@ class Framework_MockObject_Invocation_ObjectTest extends PHPUnit_Framework_TestC
     public function testAllowToGetMethodParametersSetInConstructor()
     {
         $expectedParameters = array(
-            'foo', 5, array('a', 'b'), new StdClass, NULL, FALSE
+          'foo', 5, array('a', 'b'), new StdClass, null, false
         );
 
         $invocation = new PHPUnit_Framework_MockObject_Invocation_Object(
@@ -64,8 +68,8 @@ class Framework_MockObject_Invocation_ObjectTest extends PHPUnit_Framework_TestC
 
     public function testConstructorAllowToSetFlagCloneObjectsInParameters()
     {
-        $parameters = array(new StdClass);
-        $cloneObjects = TRUE;
+        $parameters   = array(new StdClass);
+        $cloneObjects = true;
 
         $invocation = new PHPUnit_Framework_MockObject_Invocation_Object(
             'FooClass',

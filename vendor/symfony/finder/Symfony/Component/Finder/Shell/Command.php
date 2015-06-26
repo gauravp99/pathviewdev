@@ -57,20 +57,39 @@ class Command
     }
 
     /**
-     * Joins bits.
+     * Creates a new Command instance.
      *
-     * @return string
+     * @param Command|null $parent Parent command
+     *
+     * @return Command New Command instance
      */
-    public function join()
+    public static function create(Command $parent = null)
     {
-        return implode(' ', array_filter(
-            array_map(function ($bit) {
-                return $bit instanceof Command ? $bit->join() : ($bit ?: null);
-            }, $this->bits),
-            function ($bit) {
-                return null !== $bit;
-            }
-        ));
+        return new self($parent);
+    }
+
+    /**
+     * Escapes special chars from input.
+     *
+     * @param string $input A string to escape
+     *
+     * @return string The escaped string
+     */
+    public static function escape($input)
+    {
+        return escapeshellcmd($input);
+    }
+
+    /**
+     * Quotes input.
+     *
+     * @param string $input An argument string
+     *
+     * @return string The quoted string
+     */
+    public static function quote($input)
+    {
+        return escapeshellarg($input);
     }
 
     /**
@@ -120,18 +139,6 @@ class Command
     }
 
     /**
-     * Quotes input.
-     *
-     * @param string $input An argument string
-     *
-     * @return string The quoted string
-     */
-    public static function quote($input)
-    {
-        return escapeshellarg($input);
-    }
-
-    /**
      * Appends escaped special command chars.
      *
      * @param string $esc
@@ -143,18 +150,6 @@ class Command
         $this->bits[] = self::escape($esc);
 
         return $this;
-    }
-
-    /**
-     * Escapes special chars from input.
-     *
-     * @param string $input A string to escape
-     *
-     * @return string The escaped string
-     */
-    public static function escape($input)
-    {
-        return escapeshellcmd($input);
     }
 
     /**
@@ -176,18 +171,6 @@ class Command
         $this->labels[$label] = count($this->bits) - 1;
 
         return $this->bits[$this->labels[$label]];
-    }
-
-    /**
-     * Creates a new Command instance.
-     *
-     * @param Command|null $parent Parent command
-     *
-     * @return Command New Command instance
-     */
-    public static function create(Command $parent = null)
-    {
-        return new self($parent);
     }
 
     /**
@@ -235,14 +218,6 @@ class Command
     }
 
     /**
-     * @return \Closure|null
-     */
-    public function getErrorHandler()
-    {
-        return $this->errorHandler;
-    }
-
-    /**
      * @param \Closure $errorHandler
      *
      * @return Command
@@ -252,6 +227,14 @@ class Command
         $this->errorHandler = $errorHandler;
 
         return $this;
+    }
+
+    /**
+     * @return \Closure|null
+     */
+    public function getErrorHandler()
+    {
+        return $this->errorHandler;
     }
 
     /**
@@ -280,10 +263,25 @@ class Command
     }
 
     /**
+     * Joins bits.
+     *
+     * @return string
+     */
+    public function join()
+    {
+        return implode(' ', array_filter(
+            array_map(function ($bit) {
+                return $bit instanceof Command ? $bit->join() : ($bit ?: null);
+            }, $this->bits),
+            function ($bit) { return null !== $bit; }
+        ));
+    }
+
+    /**
      * Insert a string or a Command instance before the bit at given position $index (index starts from 0).
      *
      * @param string|Command $bit
-     * @param int $index
+     * @param int            $index
      *
      * @return Command The current Command instance
      */

@@ -85,17 +85,6 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
-    {
-        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
-        $process->setEnhanceSigchildCompatibility(true);
-
-        return $process;
-    }
-
-    /**
      * @expectedException \Symfony\Component\Process\Exception\RuntimeException
      * @expectedExceptionMessage This PHP has been compiled with --enable-sigchild. The process can not be signaled.
      */
@@ -144,5 +133,16 @@ class SigchildEnabledProcessTest extends AbstractProcessTest
     public function testCheckTimeoutOnStartedProcess()
     {
         $this->markTestSkipped('Signal (required for timeout) is not supported in sigchild environment');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function getProcess($commandline, $cwd = null, array $env = null, $input = null, $timeout = 60, array $options = array())
+    {
+        $process = new ProcessInSigchildEnvironment($commandline, $cwd, $env, $input, $timeout, $options);
+        $process->setEnhanceSigchildCompatibility(true);
+
+        return $process;
     }
 }

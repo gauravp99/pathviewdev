@@ -12,24 +12,17 @@
  * Constraint that asserts that the Traversable it is applied to contains
  * a given value.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.0.0
  */
 class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework_Constraint
 {
     /**
-     * @var boolean
+     * @var bool
      */
     protected $checkForObjectIdentity;
 
     /**
-     * @var boolean
+     * @var bool
      */
     protected $checkForNonObjectIdentity;
 
@@ -39,9 +32,9 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
     protected $value;
 
     /**
-     * @param  mixed $value
-     * @param  boolean $checkForObjectIdentity
-     * @param  boolean $checkForNonObjectIdentity
+     * @param  mixed                       $value
+     * @param  bool                        $checkForObjectIdentity
+     * @param  bool                        $checkForNonObjectIdentity
      * @throws PHPUnit_Framework_Exception
      */
     public function __construct($value, $checkForObjectIdentity = true, $checkForNonObjectIdentity = false)
@@ -56,9 +49,9 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
             throw PHPUnit_Util_InvalidArgumentHelper::factory(3, 'boolean');
         }
 
-        $this->checkForObjectIdentity = $checkForObjectIdentity;
+        $this->checkForObjectIdentity    = $checkForObjectIdentity;
         $this->checkForNonObjectIdentity = $checkForNonObjectIdentity;
-        $this->value = $value;
+        $this->value                     = $value;
     }
 
     /**
@@ -77,44 +70,24 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
         if (is_object($this->value)) {
             foreach ($other as $element) {
                 if (($this->checkForObjectIdentity &&
-                        $element === $this->value) ||
+                     $element === $this->value) ||
                     (!$this->checkForObjectIdentity &&
-                        $element == $this->value)
-                ) {
+                     $element == $this->value)) {
                     return true;
                 }
             }
         } else {
             foreach ($other as $element) {
                 if (($this->checkForNonObjectIdentity &&
-                        $element === $this->value) ||
+                     $element === $this->value) ||
                     (!$this->checkForNonObjectIdentity &&
-                        $element == $this->value)
-                ) {
+                     $element == $this->value)) {
                     return true;
                 }
             }
         }
 
         return false;
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed $other Evaluated value or object.
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        return sprintf(
-            '%s %s',
-            is_array($other) ? 'an array' : 'a traversable',
-            $this->toString()
-        );
     }
 
     /**
@@ -129,5 +102,23 @@ class PHPUnit_Framework_Constraint_TraversableContains extends PHPUnit_Framework
         } else {
             return 'contains ' . $this->exporter->export($this->value);
         }
+    }
+
+    /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed  $other Evaluated value or object.
+     * @return string
+     */
+    protected function failureDescription($other)
+    {
+        return sprintf(
+            '%s %s',
+            is_array($other) ? 'an array' : 'a traversable',
+            $this->toString()
+        );
     }
 }

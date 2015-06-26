@@ -11,45 +11,41 @@
 /**
  * Renders the dashboard for a PHP_CodeCoverage_Report_Node_Directory node.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.1.0
+ * @since Class available since Release 1.1.0
  */
 class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_Report_HTML_Renderer
 {
     /**
      * @param PHP_CodeCoverage_Report_Node_Directory $node
-     * @param string $file
+     * @param string                                 $file
      */
     public function render(PHP_CodeCoverage_Report_Node_Directory $node, $file)
     {
-        $classes = $node->getClassesAndTraits();
+        $classes  = $node->getClassesAndTraits();
         $template = new Text_Template(
-            $this->templatePath . 'dashboard.html', '{{', '}}'
+            $this->templatePath . 'dashboard.html',
+            '{{',
+            '}}'
         );
 
         $this->setCommonTemplateVariables($template, $node);
 
-        $baseLink = $node->getId() . '/';
-        $complexity = $this->complexity($classes, $baseLink);
+        $baseLink             = $node->getId() . '/';
+        $complexity           = $this->complexity($classes, $baseLink);
         $coverageDistribution = $this->coverageDistribution($classes);
         $insufficientCoverage = $this->insufficientCoverage($classes, $baseLink);
-        $projectRisks = $this->projectRisks($classes, $baseLink);
+        $projectRisks         = $this->projectRisks($classes, $baseLink);
 
         $template->setVar(
             array(
                 'insufficient_coverage_classes' => $insufficientCoverage['class'],
                 'insufficient_coverage_methods' => $insufficientCoverage['method'],
-                'project_risks_classes' => $projectRisks['class'],
-                'project_risks_methods' => $projectRisks['method'],
-                'complexity_class' => $complexity['class'],
-                'complexity_method' => $complexity['method'],
-                'class_coverage_distribution' => $coverageDistribution['class'],
-                'method_coverage_distribution' => $coverageDistribution['method']
+                'project_risks_classes'         => $projectRisks['class'],
+                'project_risks_methods'         => $projectRisks['method'],
+                'complexity_class'              => $complexity['class'],
+                'complexity_method'             => $complexity['method'],
+                'class_coverage_distribution'   => $coverageDistribution['class'],
+                'method_coverage_distribution'  => $coverageDistribution['method']
             )
         );
 
@@ -59,7 +55,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
     /**
      * Returns the data for the Class/Method Complexity charts.
      *
-     * @param  array $classes
+     * @param  array  $classes
      * @param  string $baseLink
      * @return array
      */
@@ -111,32 +107,32 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
     {
         $result = array(
             'class' => array(
-                '0%' => 0,
-                '0-10%' => 0,
-                '10-20%' => 0,
-                '20-30%' => 0,
-                '30-40%' => 0,
-                '40-50%' => 0,
-                '50-60%' => 0,
-                '60-70%' => 0,
-                '70-80%' => 0,
-                '80-90%' => 0,
+                '0%'      => 0,
+                '0-10%'   => 0,
+                '10-20%'  => 0,
+                '20-30%'  => 0,
+                '30-40%'  => 0,
+                '40-50%'  => 0,
+                '50-60%'  => 0,
+                '60-70%'  => 0,
+                '70-80%'  => 0,
+                '80-90%'  => 0,
                 '90-100%' => 0,
-                '100%' => 0
+                '100%'    => 0
             ),
             'method' => array(
-                '0%' => 0,
-                '0-10%' => 0,
-                '10-20%' => 0,
-                '20-30%' => 0,
-                '30-40%' => 0,
-                '40-50%' => 0,
-                '50-60%' => 0,
-                '60-70%' => 0,
-                '70-80%' => 0,
-                '80-90%' => 0,
+                '0%'      => 0,
+                '0-10%'   => 0,
+                '10-20%'  => 0,
+                '20-30%'  => 0,
+                '30-40%'  => 0,
+                '40-50%'  => 0,
+                '50-60%'  => 0,
+                '60-70%'  => 0,
+                '70-80%'  => 0,
+                '80-90%'  => 0,
                 '90-100%' => 0,
-                '100%' => 0
+                '100%'    => 0
             )
         );
 
@@ -173,7 +169,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
     /**
      * Returns the classes / methods with insufficient coverage.
      *
-     * @param  array $classes
+     * @param  array  $classes
      * @param  string $baseLink
      * @return array
      */
@@ -181,7 +177,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
     {
         $leastTestedClasses = array();
         $leastTestedMethods = array();
-        $result = array('class' => '', 'method' => '');
+        $result             = array('class' => '', 'method' => '');
 
         foreach ($classes as $className => $class) {
             foreach ($class['methods'] as $methodName => $method) {
@@ -231,21 +227,20 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
     /**
      * Returns the project risks according to the CRAP index.
      *
-     * @param  array $classes
+     * @param  array  $classes
      * @param  string $baseLink
      * @return array
      */
     protected function projectRisks(array $classes, $baseLink)
     {
-        $classRisks = array();
+        $classRisks  = array();
         $methodRisks = array();
-        $result = array('class' => '', 'method' => '');
+        $result      = array('class' => '', 'method' => '');
 
         foreach ($classes as $className => $class) {
             foreach ($class['methods'] as $methodName => $method) {
                 if ($method['coverage'] < $this->highLowerBound &&
-                    $method['ccn'] > 1
-                ) {
+                    $method['ccn'] > 1) {
                     if ($className != '*') {
                         $key = $className . '::' . $methodName;
                     } else {
@@ -257,8 +252,7 @@ class PHP_CodeCoverage_Report_HTML_Renderer_Dashboard extends PHP_CodeCoverage_R
             }
 
             if ($class['coverage'] < $this->highLowerBound &&
-                $class['ccn'] > count($class['methods'])
-            ) {
+                $class['ccn'] > count($class['methods'])) {
                 $classRisks[$className] = $class['crap'];
             }
         }

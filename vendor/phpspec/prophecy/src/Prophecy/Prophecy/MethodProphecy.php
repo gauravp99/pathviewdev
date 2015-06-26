@@ -12,11 +12,11 @@
 namespace Prophecy\Prophecy;
 
 use Prophecy\Argument;
+use Prophecy\Promise;
+use Prophecy\Prediction;
 use Prophecy\Exception\Doubler\MethodNotFoundException;
 use Prophecy\Exception\InvalidArgumentException;
 use Prophecy\Exception\Prophecy\MethodProphecyException;
-use Prophecy\Prediction;
-use Prophecy\Promise;
 
 /**
  * Method prophecy.
@@ -36,8 +36,8 @@ class MethodProphecy
     /**
      * Initializes method prophecy.
      *
-     * @param ObjectProphecy $objectProphecy
-     * @param string $methodName
+     * @param ObjectProphecy                        $objectProphecy
+     * @param string                                $methodName
      * @param null|Argument\ArgumentsWildcard|array $arguments
      *
      * @throws \Prophecy\Exception\Doubler\MethodNotFoundException If method not found
@@ -52,12 +52,12 @@ class MethodProphecy
         }
 
         $this->objectProphecy = $objectProphecy;
-        $this->methodName = $methodName;
+        $this->methodName     = $methodName;
 
         $reflectedMethod = new \ReflectionMethod($double, $methodName);
         if ($reflectedMethod->isFinal()) {
             throw new MethodProphecyException(sprintf(
-                "Can not add prophecy for a method `%s::%s()`\n" .
+                "Can not add prophecy for a method `%s::%s()`\n".
                 "as it is a final method.",
                 get_class($double),
                 $methodName
@@ -86,7 +86,7 @@ class MethodProphecy
 
         if (!$arguments instanceof Argument\ArgumentsWildcard) {
             throw new InvalidArgumentException(sprintf(
-                "Either an array or an instance of ArgumentsWildcard expected as\n" .
+                "Either an array or an instance of ArgumentsWildcard expected as\n".
                 'a `MethodProphecy::withArguments()` argument, but got %s.',
                 gettype($arguments)
             ));
@@ -95,20 +95,6 @@ class MethodProphecy
         $this->argumentsWildcard = $arguments;
 
         return $this;
-    }
-
-    /**
-     * Sets return argument promise to the prophecy.
-     *
-     * @param int $index The zero-indexed number of the argument to return
-     *
-     * @see Prophecy\Promise\ReturnArgumentPromise
-     *
-     * @return $this
-     */
-    public function willReturnArgument($index = 0)
-    {
-        return $this->will(new Promise\ReturnArgumentPromise($index));
     }
 
     /**
@@ -139,24 +125,30 @@ class MethodProphecy
         return $this;
     }
 
-    private function bindToObjectProphecy()
+    /**
+     * Sets return promise to the prophecy.
+     *
+     * @see Prophecy\Promise\ReturnPromise
+     *
+     * @return $this
+     */
+    public function willReturn()
     {
-        if ($this->bound) {
-            return;
-        }
-
-        $this->getObjectProphecy()->addMethodProphecy($this);
-        $this->bound = true;
+        return $this->will(new Promise\ReturnPromise(func_get_args()));
     }
 
     /**
-     * Returns object prophecy this method prophecy is tied to.
+     * Sets return argument promise to the prophecy.
      *
-     * @return ObjectProphecy
+     * @param int $index The zero-indexed number of the argument to return
+     *
+     * @see Prophecy\Promise\ReturnArgumentPromise
+     *
+     * @return $this
      */
-    public function getObjectProphecy()
+    public function willReturnArgument($index = 0)
     {
-        return $this->objectProphecy;
+        return $this->will(new Promise\ReturnArgumentPromise($index));
     }
 
     /**
@@ -171,18 +163,6 @@ class MethodProphecy
     public function willThrow($exception)
     {
         return $this->will(new Promise\ThrowPromise($exception));
-    }
-
-    /**
-     * Sets call prediction to the prophecy.
-     *
-     * @see Prophecy\Prediction\CallPrediction
-     *
-     * @return $this
-     */
-    public function shouldBeCalled()
-    {
-        return $this->should(new Prediction\CallPrediction);
     }
 
     /**
@@ -214,6 +194,18 @@ class MethodProphecy
     }
 
     /**
+     * Sets call prediction to the prophecy.
+     *
+     * @see Prophecy\Prediction\CallPrediction
+     *
+     * @return $this
+     */
+    public function shouldBeCalled()
+    {
+        return $this->should(new Prediction\CallPrediction);
+    }
+
+    /**
      * Sets no calls prediction to the prophecy.
      *
      * @see Prophecy\Prediction\NoCallsPrediction
@@ -237,18 +229,6 @@ class MethodProphecy
     public function shouldBeCalledTimes($count)
     {
         return $this->should(new Prediction\CallTimesPrediction($count));
-    }
-
-    /**
-     * Checks call prediction.
-     *
-     * @see Prophecy\Prediction\CallPrediction
-     *
-     * @return $this
-     */
-    public function shouldHaveBeenCalled()
-    {
-        return $this->shouldHave(new Prediction\CallPrediction);
     }
 
     /**
@@ -295,35 +275,27 @@ class MethodProphecy
     }
 
     /**
-     * Sets return promise to the prophecy.
+     * Checks call prediction.
      *
-     * @see Prophecy\Promise\ReturnPromise
+     * @see Prophecy\Prediction\CallPrediction
      *
      * @return $this
      */
-    public function willReturn()
+    public function shouldHaveBeenCalled()
     {
-        return $this->will(new Promise\ReturnPromise(func_get_args()));
+        return $this->shouldHave(new Prediction\CallPrediction);
     }
 
     /**
-     * Returns method name.
+     * Checks no calls prediction.
      *
-     * @return string
-     */
-    public function getMethodName()
-    {
-        return $this->methodName;
-    }
-
-    /**
-     * Returns arguments wildcard.
+     * @see Prophecy\Prediction\NoCallsPrediction
      *
-     * @return Argument\ArgumentsWildcard
+     * @return $this
      */
-    public function getArgumentsWildcard()
+    public function shouldNotHaveBeenCalled()
     {
-        return $this->argumentsWildcard;
+        return $this->shouldHave(new Prediction\NoCallsPrediction);
     }
 
     /**
@@ -337,18 +309,6 @@ class MethodProphecy
     public function shouldNotBeenCalled()
     {
         return $this->shouldNotHaveBeenCalled();
-    }
-
-    /**
-     * Checks no calls prediction.
-     *
-     * @see Prophecy\Prediction\NoCallsPrediction
-     *
-     * @return $this
-     */
-    public function shouldNotHaveBeenCalled()
-    {
-        return $this->shouldHave(new Prediction\NoCallsPrediction);
     }
 
     /**
@@ -405,5 +365,45 @@ class MethodProphecy
     public function getCheckedPredictions()
     {
         return $this->checkedPredictions;
+    }
+
+    /**
+     * Returns object prophecy this method prophecy is tied to.
+     *
+     * @return ObjectProphecy
+     */
+    public function getObjectProphecy()
+    {
+        return $this->objectProphecy;
+    }
+
+    /**
+     * Returns method name.
+     *
+     * @return string
+     */
+    public function getMethodName()
+    {
+        return $this->methodName;
+    }
+
+    /**
+     * Returns arguments wildcard.
+     *
+     * @return Argument\ArgumentsWildcard
+     */
+    public function getArgumentsWildcard()
+    {
+        return $this->argumentsWildcard;
+    }
+
+    private function bindToObjectProphecy()
+    {
+        if ($this->bound) {
+            return;
+        }
+
+        $this->getObjectProphecy()->addMethodProphecy($this);
+        $this->bound = true;
     }
 }

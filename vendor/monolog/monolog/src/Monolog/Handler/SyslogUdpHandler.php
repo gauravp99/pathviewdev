@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Handler\SyslogUdp\UdpSocket;
 use Monolog\Logger;
+use Monolog\Handler\SyslogUdp\UdpSocket;
 
 /**
  * A Handler for logging to a remote syslogd server.
@@ -22,30 +22,17 @@ use Monolog\Logger;
 class SyslogUdpHandler extends AbstractSyslogHandler
 {
     /**
-     * @param string $host
-     * @param int $port
-     * @param mixed $facility
-     * @param integer $level The minimum logging level at which this handler will be triggered
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
+     * @param string  $host
+     * @param int     $port
+     * @param mixed   $facility
+     * @param integer $level    The minimum logging level at which this handler will be triggered
+     * @param Boolean $bubble   Whether the messages that are handled can bubble up the stack or not
      */
     public function __construct($host, $port = 514, $facility = LOG_USER, $level = Logger::DEBUG, $bubble = true)
     {
         parent::__construct($facility, $level, $bubble);
 
         $this->socket = new UdpSocket($host, $port ?: 514);
-    }
-
-    public function close()
-    {
-        $this->socket->close();
-    }
-
-    /**
-     * Inject your own socket, mainly used for testing
-     */
-    public function setSocket($socket)
-    {
-        $this->socket = $socket;
     }
 
     protected function write(array $record)
@@ -57,6 +44,11 @@ class SyslogUdpHandler extends AbstractSyslogHandler
         foreach ($lines as $line) {
             $this->socket->write($line, $header);
         }
+    }
+
+    public function close()
+    {
+        $this->socket->close();
     }
 
     private function splitMessageIntoLines($message)
@@ -76,5 +68,13 @@ class SyslogUdpHandler extends AbstractSyslogHandler
         $priority = $severity + $this->facility;
 
         return "<$priority>1 ";
+    }
+
+    /**
+     * Inject your own socket, mainly used for testing
+     */
+    public function setSocket($socket)
+    {
+        $this->socket = $socket;
     }
 }

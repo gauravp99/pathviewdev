@@ -13,9 +13,9 @@
 
 namespace PhpSpec\Runner;
 
+use PhpSpec\Matcher\MatcherInterface;
 use PhpSpec\Exception\Wrapper\MatcherNotFoundException;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Matcher\MatcherInterface;
 
 class MatcherManager
 {
@@ -59,8 +59,8 @@ class MatcherManager
 
     /**
      * @param string $keyword
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return MatcherInterface
      *
@@ -75,12 +75,15 @@ class MatcherManager
         }
 
         throw new MatcherNotFoundException(
-            sprintf('No %s(%s) matcher found for %s.',
+            sprintf(
+                'No %s(%s) matcher found for %s.',
                 $this->presenter->presentString($keyword),
                 $this->presenter->presentValue($arguments),
                 $this->presenter->presentValue($subject)
             ),
-            $keyword, $subject, $arguments
+            $keyword,
+            $subject,
+            $arguments
         );
     }
 }

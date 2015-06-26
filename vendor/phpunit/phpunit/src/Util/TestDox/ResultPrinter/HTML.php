@@ -11,24 +11,17 @@
 /**
  * Prints TestDox documentation in HTML format.
  *
- * @package    PHPUnit
- * @subpackage Util_TestDox
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.1.0
  */
 class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_ResultPrinter
 {
     /**
-     * @var    boolean
+     * @var bool
      */
     protected $printsHTML = true;
 
     /**
      * Handler for 'start run' event.
-     *
      */
     protected function startRun()
     {
@@ -52,15 +45,15 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
      * Handler for 'on test' event.
      *
      * @param string $name
-     * @param boolean $success
+     * @param bool   $success
      */
     protected function onTest($name, $success = true)
     {
         if (!$success) {
-            $strikeOpen = '<span style="text-decoration:line-through;">';
+            $strikeOpen  = '<span style="text-decoration:line-through;">';
             $strikeClose = '</span>';
         } else {
-            $strikeOpen = '';
+            $strikeOpen  = '';
             $strikeClose = '';
         }
 
@@ -79,7 +72,6 @@ class PHPUnit_Util_TestDox_ResultPrinter_HTML extends PHPUnit_Util_TestDox_Resul
 
     /**
      * Handler for 'end run' event.
-     *
      */
     protected function endRun()
     {

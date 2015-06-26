@@ -13,13 +13,13 @@ namespace Symfony\Component\HttpKernel\EventListener;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Debug\Exception\FlattenException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * ExceptionListener.
@@ -37,23 +37,8 @@ class ExceptionListener implements EventSubscriberInterface
         $this->logger = $logger;
     }
 
-    public static function getSubscribedEvents()
-    {
-        return array(
-            KernelEvents::EXCEPTION => array('onKernelException', -128),
-        );
-    }
-
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
-        static $handling;
-
-        if (true === $handling) {
-            return false;
-        }
-
-        $handling = true;
-
         $exception = $event->getException();
         $request = $event->getRequest();
 
@@ -62,28 +47,41 @@ class ExceptionListener implements EventSubscriberInterface
         $request = $this->duplicateRequest($exception, $request);
 
         try {
-            $response = $event->getKernel()->handle($request, HttpKernelInterface::SUB_REQUEST, true);
+            $response = $event->getKernel()->handle($request, HttpKernelInterface::SUB_REQUEST, false);
         } catch (\Exception $e) {
             $this->logException($e, sprintf('Exception thrown when handling an exception (%s: %s at %s line %s)', get_class($e), $e->getMessage(), $e->getFile(), $e->getLine()), false);
 
-            // set handling to false otherwise it wont be able to handle further more
-            $handling = false;
+            $wrapper = $e;
 
-            // throwing $e, not $exception, is on purpose: fixing error handling code paths is the most important
+            while ($prev = $wrapper->getPrevious()) {
+                if ($exception === $wrapper = $prev) {
+                    throw $e;
+                }
+            }
+
+            $prev = new \ReflectionProperty('Exception', 'previous');
+            $prev->setAccessible(true);
+            $prev->setValue($wrapper, $exception);
+
             throw $e;
         }
 
         $event->setResponse($response);
+    }
 
-        $handling = false;
+    public static function getSubscribedEvents()
+    {
+        return array(
+            KernelEvents::EXCEPTION => array('onKernelException', -128),
+        );
     }
 
     /**
      * Logs an exception.
      *
      * @param \Exception $exception The \Exception instance
-     * @param string $message The error message to log
-     * @param bool $original False when the handling of the exception thrown another exception
+     * @param string     $message   The error message to log
+     * @param bool       $original  False when the handling of the exception thrown another exception
      */
     protected function logException(\Exception $exception, $message, $original = true)
     {
@@ -104,7 +102,7 @@ class ExceptionListener implements EventSubscriberInterface
      * Clones the request for the exception.
      *
      * @param \Exception $exception The thrown exception.
-     * @param Request $request The original request.
+     * @param Request    $request   The original request.
      *
      * @return Request $request The cloned request.
      */

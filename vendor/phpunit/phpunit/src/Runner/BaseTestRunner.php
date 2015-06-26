@@ -11,41 +11,44 @@
 /**
  * Base class for all test runners.
  *
- * @package    PHPUnit
- * @subpackage Runner
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.0.0
  */
 abstract class PHPUnit_Runner_BaseTestRunner
 {
-    const STATUS_PASSED = 0;
-    const STATUS_SKIPPED = 1;
+    const STATUS_PASSED     = 0;
+    const STATUS_SKIPPED    = 1;
     const STATUS_INCOMPLETE = 2;
-    const STATUS_FAILURE = 3;
-    const STATUS_ERROR = 4;
-    const STATUS_RISKY = 5;
-    const SUITE_METHODNAME = 'suite';
+    const STATUS_FAILURE    = 3;
+    const STATUS_ERROR      = 4;
+    const STATUS_RISKY      = 5;
+    const SUITE_METHODNAME  = 'suite';
+
+    /**
+     * Returns the loader to be used.
+     *
+     * @return PHPUnit_Runner_TestSuiteLoader
+     */
+    public function getLoader()
+    {
+        return new PHPUnit_Runner_StandardTestSuiteLoader;
+    }
 
     /**
      * Returns the Test corresponding to the given suite.
      * This is a template method, subclasses override
      * the runFailed() and clearStatus() methods.
      *
-     * @param  string $suiteClassName
-     * @param  string $suiteClassFile
-     * @param  mixed $suffixes
+     * @param  string                 $suiteClassName
+     * @param  string                 $suiteClassFile
+     * @param  mixed                  $suffixes
      * @return PHPUnit_Framework_Test
      */
     public function getTest($suiteClassName, $suiteClassFile = '', $suffixes = '')
     {
         if (is_dir($suiteClassName) &&
-            !is_file($suiteClassName . '.php') && empty($suiteClassFile)
-        ) {
+            !is_file($suiteClassName . '.php') && empty($suiteClassFile)) {
             $facade = new File_Iterator_Facade;
-            $files = $facade->getFilesAsArray(
+            $files  = $facade->getFilesAsArray(
                 $suiteClassName,
                 $suffixes
             );
@@ -107,8 +110,8 @@ abstract class PHPUnit_Runner_BaseTestRunner
     /**
      * Returns the loaded ReflectionClass for a suite name.
      *
-     * @param  string $suiteClassName
-     * @param  string $suiteClassFile
+     * @param  string          $suiteClassName
+     * @param  string          $suiteClassFile
      * @return ReflectionClass
      */
     protected function loadSuiteClass($suiteClassName, $suiteClassFile = '')
@@ -119,13 +122,10 @@ abstract class PHPUnit_Runner_BaseTestRunner
     }
 
     /**
-     * Returns the loader to be used.
-     *
-     * @return PHPUnit_Runner_TestSuiteLoader
+     * Clears the status message.
      */
-    public function getLoader()
+    protected function clearStatus()
     {
-        return new PHPUnit_Runner_StandardTestSuiteLoader;
     }
 
     /**
@@ -135,12 +135,4 @@ abstract class PHPUnit_Runner_BaseTestRunner
      * @param string $message
      */
     abstract protected function runFailed($message);
-
-    /**
-     * Clears the status message.
-     *
-     */
-    protected function clearStatus()
-    {
-    }
 }

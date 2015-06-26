@@ -11,12 +11,6 @@
 /**
  * Utility methods to load PHP sourcefiles.
  *
- * @package    PHPUnit
- * @subpackage Util
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 2.3.0
  */
 class PHPUnit_Util_Fileloader
@@ -25,7 +19,7 @@ class PHPUnit_Util_Fileloader
      * Checks if a PHP sourcefile is readable.
      * The sourcefile is loaded through the load() method.
      *
-     * @param  string $filename
+     * @param  string                      $filename
      * @return string
      * @throws PHPUnit_Framework_Exception
      */
@@ -57,7 +51,7 @@ class PHPUnit_Util_Fileloader
 
         include_once $filename;
 
-        $newVariables = get_defined_vars();
+        $newVariables     = get_defined_vars();
         $newVariableNames = array_diff(
             array_keys($newVariables),
             $oldVariableNames

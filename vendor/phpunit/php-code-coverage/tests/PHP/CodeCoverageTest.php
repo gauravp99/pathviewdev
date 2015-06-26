@@ -10,7 +10,7 @@
 
 if (!defined('TEST_FILES_PATH')) {
     define(
-    'TEST_FILES_PATH',
+        'TEST_FILES_PATH',
         dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR .
         '_files' . DIRECTORY_SEPARATOR
     );
@@ -23,18 +23,16 @@ require_once TEST_FILES_PATH . 'BankAccountTest.php';
 /**
  * Tests for the PHP_CodeCoverage class.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @subpackage Tests
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.0.0
+ * @since Class available since Release 1.0.0
  */
 class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
 {
     private $coverage;
+
+    protected function setUp()
+    {
+        $this->coverage = new PHP_CodeCoverage;
+    }
 
     /**
      * @covers PHP_CodeCoverage::__construct
@@ -43,11 +41,15 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     public function testConstructor()
     {
         $this->assertAttributeInstanceOf(
-            'PHP_CodeCoverage_Driver_Xdebug', 'driver', $this->coverage
+            'PHP_CodeCoverage_Driver_Xdebug',
+            'driver',
+            $this->coverage
         );
 
         $this->assertAttributeInstanceOf(
-            'PHP_CodeCoverage_Filter', 'filter', $this->coverage
+            'PHP_CodeCoverage_Filter',
+            'filter',
+            $this->coverage
         );
     }
 
@@ -57,11 +59,13 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
      */
     public function testConstructor2()
     {
-        $filter = new PHP_CodeCoverage_Filter;
+        $filter   = new PHP_CodeCoverage_Filter;
         $coverage = new PHP_CodeCoverage(null, $filter);
 
         $this->assertAttributeInstanceOf(
-            'PHP_CodeCoverage_Driver_Xdebug', 'driver', $coverage
+            'PHP_CodeCoverage_Driver_Xdebug',
+            'driver',
+            $coverage
         );
 
         $this->assertSame($filter, $coverage->filter());
@@ -137,7 +141,9 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     {
         $this->coverage->setCheckForUnintentionallyCoveredCode(true);
         $this->assertAttributeEquals(
-            true, 'checkForUnintentionallyCoveredCode', $this->coverage
+            true,
+            'checkForUnintentionallyCoveredCode',
+            $this->coverage
         );
     }
 
@@ -157,7 +163,9 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     {
         $this->coverage->setForceCoversAnnotation(true);
         $this->assertAttributeEquals(
-            true, 'forceCoversAnnotation', $this->coverage
+            true,
+            'forceCoversAnnotation',
+            $this->coverage
         );
     }
 
@@ -177,7 +185,9 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     {
         $this->coverage->setAddUncoveredFilesFromWhitelist(true);
         $this->assertAttributeEquals(
-            true, 'addUncoveredFilesFromWhitelist', $this->coverage
+            true,
+            'addUncoveredFilesFromWhitelist',
+            $this->coverage
         );
     }
 
@@ -197,7 +207,9 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     {
         $this->coverage->setProcessUncoveredFilesFromWhitelist(true);
         $this->assertAttributeEquals(
-            true, 'processUncoveredFilesFromWhitelist', $this->coverage
+            true,
+            'processUncoveredFilesFromWhitelist',
+            $this->coverage
         );
     }
 
@@ -208,7 +220,9 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
     {
         $this->coverage->setMapTestClassNameToCoveredClassName(true);
         $this->assertAttributeEquals(
-            true, 'mapTestClassNameToCoveredClassName', $this->coverage
+            true,
+            'mapTestClassNameToCoveredClassName',
+            $this->coverage
         );
     }
 
@@ -247,15 +261,22 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
         $coverage = $this->getCoverageForBankAccount();
 
         $this->assertEquals(
-            $this->getExpectedDataArrayForBankAccount(), $coverage->getData()
+            $this->getExpectedDataArrayForBankAccount(),
+            $coverage->getData()
         );
+
+        if (version_compare(PHPUnit_Runner_Version::id(), '4.7', '>=')) {
+            $size = 'unknown';
+        } else {
+            $size = 'small';
+        }
 
         $this->assertEquals(
             array(
-                'BankAccountTest::testBalanceIsInitiallyZero' => null,
-                'BankAccountTest::testBalanceCannotBecomeNegative' => null,
-                'BankAccountTest::testBalanceCannotBecomeNegative2' => null,
-                'BankAccountTest::testDepositWithdrawMoney' => null
+                'BankAccountTest::testBalanceIsInitiallyZero' => array('size' => $size, 'status' => null),
+                'BankAccountTest::testBalanceCannotBecomeNegative' => array('size' => $size, 'status' => null),
+                'BankAccountTest::testBalanceCannotBecomeNegative2' => array('size' => $size, 'status' => null),
+                'BankAccountTest::testDepositWithdrawMoney' => array('size' => $size, 'status' => null)
             ),
             $coverage->getTests()
         );
@@ -271,7 +292,8 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
         $coverage->merge($this->getCoverageForBankAccountForLastTwoTests());
 
         $this->assertEquals(
-            $this->getExpectedDataArrayForBankAccount(), $coverage->getData()
+            $this->getExpectedDataArrayForBankAccount(),
+            $coverage->getData()
         );
     }
 
@@ -289,7 +311,8 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
         $coverage->merge($this->getCoverageForBankAccount());
 
         $this->assertEquals(
-            $this->getExpectedDataArrayForBankAccount(), $coverage->getData()
+            $this->getExpectedDataArrayForBankAccount(),
+            $coverage->getData()
         );
     }
 
@@ -340,20 +363,6 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
                 TEST_FILES_PATH . 'source_with_ignore.php'
             )
         );
-    }
-
-    /**
-     * @return ReflectionMethod
-     */
-    private function getLinesToBeIgnored()
-    {
-        $getLinesToBeIgnored = new ReflectionMethod(
-            'PHP_CodeCoverage', 'getLinesToBeIgnored'
-        );
-
-        $getLinesToBeIgnored->setAccessible(true);
-
-        return $getLinesToBeIgnored;
     }
 
     /**
@@ -442,8 +451,18 @@ class PHP_CodeCoverageTest extends PHP_CodeCoverage_TestCase
         );
     }
 
-    protected function setUp()
+    /**
+     * @return ReflectionMethod
+     */
+    private function getLinesToBeIgnored()
     {
-        $this->coverage = new PHP_CodeCoverage;
+        $getLinesToBeIgnored = new ReflectionMethod(
+            'PHP_CodeCoverage',
+            'getLinesToBeIgnored'
+        );
+
+        $getLinesToBeIgnored->setAccessible(true);
+
+        return $getLinesToBeIgnored;
     }
 }

@@ -11,12 +11,12 @@
 
 namespace Symfony\Component\Debug\FatalErrorHandler;
 
+use Symfony\Component\Debug\Exception\ClassNotFoundException;
+use Symfony\Component\Debug\Exception\FatalErrorException;
+use Symfony\Component\Debug\DebugClassLoader;
 use Composer\Autoload\ClassLoader as ComposerClassLoader;
 use Symfony\Component\ClassLoader\ClassLoader as SymfonyClassLoader;
 use Symfony\Component\ClassLoader\UniversalClassLoader as SymfonyUniversalClassLoader;
-use Symfony\Component\Debug\DebugClassLoader;
-use Symfony\Component\Debug\Exception\ClassNotFoundException;
-use Symfony\Component\Debug\Exception\FatalErrorException;
 
 /**
  * ErrorHandler for classes that do not exist.
@@ -42,7 +42,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
         }
 
         foreach (array('class', 'interface', 'trait') as $typeName) {
-            $prefix = ucfirst($typeName) . ' \'';
+            $prefix = ucfirst($typeName).' \'';
             $prefixLen = strlen($prefix);
             if (0 !== strpos($error['message'], $prefix)) {
                 continue;
@@ -61,14 +61,14 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
             }
 
             if ($candidates = $this->getClassCandidates($className)) {
-                $tail = array_pop($candidates) . '"?';
+                $tail = array_pop($candidates).'"?';
                 if ($candidates) {
-                    $tail = ' for e.g. "' . implode('", "', $candidates) . '" or "' . $tail;
+                    $tail = ' for e.g. "'.implode('", "', $candidates).'" or "'.$tail;
                 } else {
-                    $tail = ' for "' . $tail;
+                    $tail = ' for "'.$tail;
                 }
             }
-            $message .= "\nDid you forget a \"use\" statement" . $tail;
+            $message .= "\nDid you forget a \"use\" statement".$tail;
 
             return new ClassNotFoundException($message, $exception);
         }
@@ -77,7 +77,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
     /**
      * Tries to guess the full namespace for a given class name.
      *
-     * By default, it looks for PSR-0 classes registered via a Symfony or a Composer
+     * By default, it looks for PSR-0 and PSR-4 classes registered via a Symfony or a Composer
      * autoloader (that should cover all common cases).
      *
      * @param string $class A class name (without its namespace)
@@ -101,7 +101,7 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
             if ($function[0] instanceof DebugClassLoader) {
                 $function = $function[0]->getClassLoader();
 
-                // Since 2.5, returning an object from DebugClassLoader::getClassLoader() is @deprecated
+                // @deprecated since version 2.5. Returning an object from DebugClassLoader::getClassLoader() is deprecated.
                 if (is_object($function)) {
                     $function = array($function);
                 }
@@ -113,6 +113,13 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
 
             if ($function[0] instanceof ComposerClassLoader || $function[0] instanceof SymfonyClassLoader || $function[0] instanceof SymfonyUniversalClassLoader) {
                 foreach ($function[0]->getPrefixes() as $prefix => $paths) {
+                    foreach ($paths as $path) {
+                        $classes = array_merge($classes, $this->findClassInPath($path, $class, $prefix));
+                    }
+                }
+            }
+            if ($function[0] instanceof ComposerClassLoader) {
+                foreach ($function[0]->getPrefixesPsr4() as $prefix => $paths) {
                     foreach ($paths as $path) {
                         $classes = array_merge($classes, $this->findClassInPath($path, $class, $prefix));
                     }
@@ -132,13 +139,13 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
      */
     private function findClassInPath($path, $class, $prefix)
     {
-        if (!$path = realpath($path)) {
+        if (!$path = realpath($path.'/'.strtr($prefix, '\\_', '//')) ?: realpath($path.'/'.dirname(strtr($prefix, '\\_', '//'))) ?: realpath($path)) {
             return array();
         }
 
         $classes = array();
-        $filename = $class . '.php';
-        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path), \RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
+        $filename = $class.'.php';
+        foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::LEAVES_ONLY) as $file) {
             if ($filename == $file->getFileName() && $class = $this->convertFileToClass($path, $file->getPathName(), $prefix)) {
                 $classes[] = $class;
             }
@@ -158,14 +165,22 @@ class ClassNotFoundFatalErrorHandler implements FatalErrorHandlerInterface
     {
         $candidates = array(
             // namespaced class
-            $namespacedClass = str_replace(array($path . DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
+            $namespacedClass = str_replace(array($path.DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
             // namespaced class (with target dir)
-            $namespacedClassTargetDir = $prefix . str_replace(array($path . DIRECTORY_SEPARATOR, '.php', '/'), array('', '', '\\'), $file),
+            $prefix.$namespacedClass,
+            // namespaced class (with target dir and separator)
+            $prefix.'\\'.$namespacedClass,
             // PEAR class
             str_replace('\\', '_', $namespacedClass),
             // PEAR class (with target dir)
-            str_replace('\\', '_', $namespacedClassTargetDir),
+            str_replace('\\', '_', $prefix.$namespacedClass),
+            // PEAR class (with target dir and separator)
+            str_replace('\\', '_', $prefix.'\\'.$namespacedClass),
         );
+
+        if ($prefix) {
+            $candidates = array_filter($candidates, function ($candidate) use ($prefix) {return 0 === strpos($candidate, $prefix);});
+        }
 
         // We cannot use the autoloader here as most of them use require; but if the class
         // is not found, the new autoloader call will require the file again leading to a

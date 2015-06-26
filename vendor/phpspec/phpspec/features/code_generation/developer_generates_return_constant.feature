@@ -5,7 +5,7 @@ Feature: Developer generates a method returning a constant
 
   Scenario: Generating a scalar return type when method exists
     Given the spec file "spec/CodeGeneration/ConstantExample1/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\CodeGeneration\ConstantExample1;
@@ -23,7 +23,7 @@ Feature: Developer generates a method returning a constant
 
       """
     And the class file "src/CodeGeneration/ConstantExample1/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample1;
@@ -37,7 +37,7 @@ Feature: Developer generates a method returning a constant
       """
     When I run phpspec with the option "fake" and answer "y" when asked if I want to generate the code
     Then the class in "src/CodeGeneration/ConstantExample1/Markdown.php" should contain:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample1;
@@ -54,7 +54,7 @@ Feature: Developer generates a method returning a constant
 
   Scenario: Generating a scalar return type when method contains comments
     Given the spec file "spec/CodeGeneration/ConstantExample2/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\CodeGeneration\ConstantExample2;
@@ -72,7 +72,7 @@ Feature: Developer generates a method returning a constant
 
       """
     And the class file "src/CodeGeneration/ConstantExample2/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample2;
@@ -91,7 +91,7 @@ Feature: Developer generates a method returning a constant
       """
     When I run phpspec with the option "fake" and answer "y" when asked if I want to generate the code
     Then the class in "src/CodeGeneration/ConstantExample2/Markdown.php" should contain:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample2;
@@ -108,7 +108,7 @@ Feature: Developer generates a method returning a constant
 
   Scenario: No prompt when method contains code
     Given the spec file "spec/CodeGeneration/ConstantExample3/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\CodeGeneration\ConstantExample3;
@@ -126,7 +126,7 @@ Feature: Developer generates a method returning a constant
 
       """
     And the class file "src/CodeGeneration/ConstantExample3/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample3;
@@ -145,7 +145,7 @@ Feature: Developer generates a method returning a constant
 
   Scenario: No prompt when examples contradict code
     Given the spec file "spec/CodeGeneration/ConstantExample4/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\CodeGeneration\ConstantExample4;
@@ -168,7 +168,7 @@ Feature: Developer generates a method returning a constant
 
       """
     And the class file "src/CodeGeneration/ConstantExample4/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample4;
@@ -186,7 +186,7 @@ Feature: Developer generates a method returning a constant
 
   Scenario: No prompt when CLI option is not used
     Given the spec file "spec/CodeGeneration/ConstantExample5/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\CodeGeneration\ConstantExample5;
@@ -204,7 +204,7 @@ Feature: Developer generates a method returning a constant
 
       """
     And the class file "src/CodeGeneration/ConstantExample5/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample5;
@@ -222,7 +222,7 @@ Feature: Developer generates a method returning a constant
 
   Scenario: Prompted when CLI option is not used but config flag is set
     Given the spec file "spec/CodeGeneration/ConstantExample6/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\CodeGeneration\ConstantExample6;
@@ -240,7 +240,7 @@ Feature: Developer generates a method returning a constant
 
       """
     And the class file "src/CodeGeneration/ConstantExample6/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace CodeGeneration\ConstantExample6;
@@ -254,8 +254,71 @@ Feature: Developer generates a method returning a constant
 
       """
     And the config file contains:
-    """
+      """
       fake: true
       """
     When I run phpspec interactively
     Then I should be prompted for code generation
+
+  @php-version @php5.4
+  Scenario: Generating a scalar return type when method is in trait
+    Given the spec file "spec/CodeGeneration/ConstantExample7/MarkdownSpec.php" contains:
+      """
+      <?php
+
+      namespace spec\CodeGeneration\ConstantExample7;
+
+      use PhpSpec\ObjectBehavior;
+      use Prophecy\Argument;
+
+      class MarkdownSpec extends ObjectBehavior
+      {
+          function it_converts_plain_text_to_html_paragraphs()
+          {
+              $this->toHtml('Hi, there')->shouldReturn('<p>Hi, there</p>');
+          }
+      }
+
+      """
+    And the trait file "src/CodeGeneration/ConstantExample7/MarkdownTrait.php" contains:
+      """
+      <?php
+
+      namespace CodeGeneration\ConstantExample7;
+
+      trait MarkdownTrait
+      {
+          public function toHtml($argument1)
+          {
+          }
+      }
+
+      """
+    And the class file "src/CodeGeneration/ConstantExample7/Markdown.php" contains:
+      """
+      <?php
+
+      namespace CodeGeneration\ConstantExample7;
+
+      class Markdown
+      {
+          use MarkdownTrait;
+      }
+
+      """
+    When I run phpspec with the option "fake" and answer "y" when asked if I want to generate the code
+    Then the class in "src/CodeGeneration/ConstantExample7/MarkdownTrait.php" should contain:
+      """
+      <?php
+
+      namespace CodeGeneration\ConstantExample7;
+
+      trait MarkdownTrait
+      {
+          public function toHtml($argument1)
+          {
+              return '<p>Hi, there</p>';
+          }
+      }
+
+      """

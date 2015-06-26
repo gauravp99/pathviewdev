@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @group bar
  */

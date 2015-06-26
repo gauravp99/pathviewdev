@@ -19,8 +19,8 @@ interface MatcherInterface
      * Checks if matcher supports provided subject and matcher name.
      *
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return Boolean
      */
@@ -30,8 +30,8 @@ interface MatcherInterface
      * Evaluates positive match.
      *
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      */
     public function positiveMatch($name, $subject, array $arguments);
 
@@ -39,8 +39,8 @@ interface MatcherInterface
      * Evaluates negative match.
      *
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      */
     public function negativeMatch($name, $subject, array $arguments);
 

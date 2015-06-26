@@ -40,17 +40,17 @@ class Data
     /**
      * Returns a depth limited clone of $this.
      *
-     * @param int $maxDepth The max dumped depth level.
-     * @param int $maxItemsPerDepth The max number of items dumped per depth level.
-     * @param bool $useRefHandles False to hide ref. handles.
+     * @param int  $maxDepth         The max dumped depth level.
+     * @param int  $maxItemsPerDepth The max number of items dumped per depth level.
+     * @param bool $useRefHandles    False to hide ref. handles.
      *
      * @return self A depth limited clone of $this.
      */
     public function getLimitedClone($maxDepth, $maxItemsPerDepth, $useRefHandles = true)
     {
         $data = clone $this;
-        $data->maxDepth = (int)$maxDepth;
-        $data->maxItemsPerDepth = (int)$maxItemsPerDepth;
+        $data->maxDepth = (int) $maxDepth;
+        $data->maxItemsPerDepth = (int) $maxItemsPerDepth;
         $data->useRefHandles = $useRefHandles ? -1 : 0;
 
         return $data;
@@ -69,9 +69,9 @@ class Data
      * Depth-first dumping of items.
      *
      * @param DumperInterface $dumper The dumper being used for dumping.
-     * @param Cursor $cursor A cursor used for tracking dumper state position.
-     * @param array &$refs A map of all references discovered while dumping.
-     * @param mixed $item A Stub object or the original value being dumped.
+     * @param Cursor          $cursor A cursor used for tracking dumper state position.
+     * @param array           &$refs  A map of all references discovered while dumping.
+     * @param mixed           $item   A Stub object or the original value being dumped.
      */
     private function dumpItem($dumper, $cursor, &$refs, $item)
     {
@@ -127,16 +127,16 @@ class Data
                     break;
 
                 case Stub::TYPE_ARRAY:
-                    $dumper->enterHash($cursor, $item->class, $item->value, (bool)$children);
+                    $dumper->enterHash($cursor, $item->class, $item->value, (bool) $children);
                     $cut = $this->dumpChildren($dumper, $cursor, $refs, $children, $cut, $item->class);
-                    $dumper->leaveHash($cursor, $item->class, $item->value, (bool)$children, $cut);
+                    $dumper->leaveHash($cursor, $item->class, $item->value, (bool) $children, $cut);
                     break;
 
                 case Stub::TYPE_OBJECT:
                 case Stub::TYPE_RESOURCE:
-                $dumper->enterHash($cursor, $item->type, $item->class, (bool)$children);
+                    $dumper->enterHash($cursor, $item->type, $item->class, (bool) $children);
                     $cut = $this->dumpChildren($dumper, $cursor, $refs, $children, $cut, $item->type);
-                $dumper->leaveHash($cursor, $item->type, $item->class, (bool)$children, $cut);
+                    $dumper->leaveHash($cursor, $item->type, $item->class, (bool) $children, $cut);
                     break;
 
                 default:
@@ -156,11 +156,11 @@ class Data
      * Dumps children of hash structures.
      *
      * @param DumperInterface $dumper
-     * @param Cursor $parentCursor The cursor of the parent hash.
-     * @param array &$refs A map of all references discovered while dumping.
-     * @param array $children The children to dump.
-     * @param int $hashCut The number of items removed from the original hash.
-     * @param string $hashType A Cursor::HASH_* const.
+     * @param Cursor          $parentCursor The cursor of the parent hash.
+     * @param array           &$refs        A map of all references discovered while dumping.
+     * @param array           $children     The children to dump.
+     * @param int             $hashCut      The number of items removed from the original hash.
+     * @param string          $hashType     A Cursor::HASH_* const.
      *
      * @return int The final number of removed items.
      */

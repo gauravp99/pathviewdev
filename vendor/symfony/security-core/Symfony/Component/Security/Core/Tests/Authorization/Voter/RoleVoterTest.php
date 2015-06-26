@@ -34,19 +34,6 @@ class RoleVoterTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $voter->vote($this->getToken($roles), null, $attributes));
     }
 
-    protected function getToken(array $roles)
-    {
-        foreach ($roles as $i => $role) {
-            $roles[$i] = new Role($role);
-        }
-        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
-        $token->expects($this->once())
-            ->method('getRoles')
-            ->will($this->returnValue($roles));
-
-        return $token;
-    }
-
     public function getVoteTests()
     {
         return array(
@@ -57,5 +44,18 @@ class RoleVoterTest extends \PHPUnit_Framework_TestCase
             array(array('ROLE_FOO'), array('FOO', 'ROLE_FOO'), VoterInterface::ACCESS_GRANTED),
             array(array('ROLE_BAR', 'ROLE_FOO'), array('ROLE_FOO'), VoterInterface::ACCESS_GRANTED),
         );
+    }
+
+    protected function getToken(array $roles)
+    {
+        foreach ($roles as $i => $role) {
+            $roles[$i] = new Role($role);
+        }
+        $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
+        $token->expects($this->once())
+              ->method('getRoles')
+              ->will($this->returnValue($roles));
+
+        return $token;
     }
 }

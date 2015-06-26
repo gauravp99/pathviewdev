@@ -11,7 +11,7 @@
 /**
  * Provides quick access to each encoding type.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Encoding
 {
@@ -23,11 +23,6 @@ class Swift_Encoding
     public static function get7BitEncoding()
     {
         return self::_lookup('mime.7bitcontentencoder');
-    }
-
-    private static function _lookup($key)
-    {
-        return Swift_DependencyContainer::getInstance()->lookup($key);
     }
 
     /**
@@ -50,8 +45,6 @@ class Swift_Encoding
         return self::_lookup('mime.qpcontentencoder');
     }
 
-    // -- Private Static Methods
-
     /**
      * Get the Encoder that provides Base64 encoding.
      *
@@ -60,5 +53,12 @@ class Swift_Encoding
     public static function getBase64Encoding()
     {
         return self::_lookup('mime.base64contentencoder');
+    }
+
+    // -- Private Static Methods
+
+    private static function _lookup($key)
+    {
+        return Swift_DependencyContainer::getInstance()->lookup($key);
     }
 }

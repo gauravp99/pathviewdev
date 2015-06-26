@@ -13,12 +13,12 @@
 
 namespace PhpSpec\Formatter;
 
-use PhpSpec\Event\ExampleEvent;
-use PhpSpec\Event\SpecificationEvent;
-use PhpSpec\Event\SuiteEvent;
-use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\IO\IOInterface as IO;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
 use PhpSpec\Listener\StatisticsCollector;
+use PhpSpec\Event\ExampleEvent;
+use PhpSpec\Event\SuiteEvent;
+use PhpSpec\Event\SpecificationEvent;
 
 /**
  * The JUnit Formatter
@@ -38,17 +38,17 @@ class JUnitFormatter extends BasicFormatter
 
     /** @var array */
     protected $jUnitStatuses = array(
-        ExampleEvent::PASSED => 'passed',
+        ExampleEvent::PASSED  => 'passed',
         ExampleEvent::PENDING => 'pending',
         ExampleEvent::SKIPPED => 'skipped',
-        ExampleEvent::FAILED => 'failed',
-        ExampleEvent::BROKEN => 'broken',
+        ExampleEvent::FAILED  => 'failed',
+        ExampleEvent::BROKEN  => 'broken',
     );
 
     /** @var array */
     protected $resultTags = array(
-        ExampleEvent::FAILED => 'failure',
-        ExampleEvent::BROKEN => 'error',
+        ExampleEvent::FAILED  => 'failure',
+        ExampleEvent::BROKEN  => 'error',
         ExampleEvent::SKIPPED => 'skipped',
     );
 
@@ -57,31 +57,6 @@ class JUnitFormatter extends BasicFormatter
         parent::__construct($presenter, $io, $stats);
 
         $this->initTestCaseNodes();
-    }
-
-    /**
-     * Initialize test case nodes and example status counts
-     */
-    protected function initTestCaseNodes()
-    {
-        $this->testCaseNodes = array();
-        $this->exampleStatusCounts = array(
-            ExampleEvent::PASSED => 0,
-            ExampleEvent::PENDING => 0,
-            ExampleEvent::SKIPPED => 0,
-            ExampleEvent::FAILED => 0,
-            ExampleEvent::BROKEN => 0,
-        );
-    }
-
-    /**
-     * Get testcase nodes
-     *
-     * @return array
-     */
-    public function getTestCaseNodes()
-    {
-        return $this->testCaseNodes;
     }
 
     /**
@@ -95,13 +70,13 @@ class JUnitFormatter extends BasicFormatter
     }
 
     /**
-     * Get testsuite nodes
+     * Get testcase nodes
      *
      * @return array
      */
-    public function getTestSuiteNodes()
+    public function getTestCaseNodes()
     {
-        return $this->testSuiteNodes;
+        return $this->testCaseNodes;
     }
 
     /**
@@ -115,13 +90,13 @@ class JUnitFormatter extends BasicFormatter
     }
 
     /**
-     * Get example status counts
+     * Get testsuite nodes
      *
      * @return array
      */
-    public function getExampleStatusCounts()
+    public function getTestSuiteNodes()
     {
-        return $this->exampleStatusCounts;
+        return $this->testSuiteNodes;
     }
 
     /**
@@ -132,6 +107,16 @@ class JUnitFormatter extends BasicFormatter
     public function setExampleStatusCounts(array $exampleStatusCounts)
     {
         $this->exampleStatusCounts = $exampleStatusCounts;
+    }
+
+    /**
+     * Get example status counts
+     *
+     * @return array
+     */
+    public function getExampleStatusCounts()
+    {
+        return $this->exampleStatusCounts;
     }
 
     /**
@@ -152,13 +137,13 @@ class JUnitFormatter extends BasicFormatter
         if (in_array($event->getResult(), array(ExampleEvent::BROKEN, ExampleEvent::FAILED))) {
             $exception = $event->getException();
             $testCaseNode .= sprintf(
-                '>' . "\n" .
-                '<%s type="%s" message="%s" />' . "\n" .
-                '<system-err>' . "\n" .
-                '<![CDATA[' . "\n" .
-                '%s' . "\n" .
-                ']]>' . "\n" .
-                '</system-err>' . "\n" .
+                '>'."\n".
+                '<%s type="%s" message="%s" />'."\n".
+                '<system-err>'."\n".
+                '<![CDATA['."\n".
+                '%s'."\n".
+                ']]>'."\n".
+                '</system-err>'."\n".
                 '</testcase>',
                 $this->resultTags[$event->getResult()],
                 get_class($exception),
@@ -167,8 +152,8 @@ class JUnitFormatter extends BasicFormatter
             );
         } elseif (ExampleEvent::SKIPPED === $event->getResult()) {
             $testCaseNode .= sprintf(
-                '>' . "\n" .
-                '\<skipped><![CDATA[ %s ]]>\</skipped>' . "\n" .
+                '>'."\n".
+                '\<skipped><![CDATA[ %s ]]>\</skipped>'."\n".
                 '</testcase>',
                 htmlspecialchars($event->getException()->getMessage())
             );
@@ -185,8 +170,8 @@ class JUnitFormatter extends BasicFormatter
     public function afterSpecification(SpecificationEvent $event)
     {
         $this->testSuiteNodes[] = sprintf(
-            '<testsuite name="%s" time="%s" tests="%s" failures="%s" errors="%s" skipped="%s">' . "\n" .
-            '%s' . "\n" .
+            '<testsuite name="%s" time="%s" tests="%s" failures="%s" errors="%s" skipped="%s">'."\n".
+            '%s'."\n".
             '</testsuite>',
             $event->getTitle(),
             $event->getTime(),
@@ -208,9 +193,9 @@ class JUnitFormatter extends BasicFormatter
         $stats = $this->getStatisticsCollector();
 
         $this->getIo()->write(sprintf(
-            '<?xml version="1.0" encoding="UTF-8" ?>' . "\n" .
-            '<testsuites time="%s" tests="%s" failures="%s" errors="%s">' . "\n" .
-            '%s' . "\n" .
+            '<?xml version="1.0" encoding="UTF-8" ?>'."\n".
+            '<testsuites time="%s" tests="%s" failures="%s" errors="%s">'."\n".
+            '%s'."\n".
             '</testsuites>',
             $event->getTime(),
             $stats->getEventsCount(),
@@ -218,5 +203,20 @@ class JUnitFormatter extends BasicFormatter
             count($stats->getBrokenEvents()),
             implode("\n", $this->testSuiteNodes)
         ));
+    }
+
+    /**
+     * Initialize test case nodes and example status counts
+     */
+    protected function initTestCaseNodes()
+    {
+        $this->testCaseNodes       = array();
+        $this->exampleStatusCounts = array(
+            ExampleEvent::PASSED  => 0,
+            ExampleEvent::PENDING => 0,
+            ExampleEvent::SKIPPED => 0,
+            ExampleEvent::FAILED  => 0,
+            ExampleEvent::BROKEN  => 0,
+        );
     }
 }

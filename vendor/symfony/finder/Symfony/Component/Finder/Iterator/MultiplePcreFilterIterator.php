@@ -26,9 +26,9 @@ abstract class MultiplePcreFilterIterator extends FilterIterator
     /**
      * Constructor.
      *
-     * @param \Iterator $iterator The Iterator to filter
-     * @param array $matchPatterns An array of patterns that need to match
-     * @param array $noMatchPatterns An array of patterns that need to not match
+     * @param \Iterator $iterator        The Iterator to filter
+     * @param array     $matchPatterns   An array of patterns that need to match
+     * @param array     $noMatchPatterns An array of patterns that need to not match
      */
     public function __construct(\Iterator $iterator, array $matchPatterns, array $noMatchPatterns)
     {
@@ -44,15 +44,6 @@ abstract class MultiplePcreFilterIterator extends FilterIterator
     }
 
     /**
-     * Converts string into regexp.
-     *
-     * @param string $str Pattern
-     *
-     * @return string regexp corresponding to a given string
-     */
-    abstract protected function toRegex($str);
-
-    /**
      * Checks whether the string is a regex.
      *
      * @param string $str
@@ -63,4 +54,13 @@ abstract class MultiplePcreFilterIterator extends FilterIterator
     {
         return Expression::create($str)->isRegex();
     }
+
+    /**
+     * Converts string into regexp.
+     *
+     * @param string $str Pattern
+     *
+     * @return string regexp corresponding to a given string
+     */
+    abstract protected function toRegex($str);
 }

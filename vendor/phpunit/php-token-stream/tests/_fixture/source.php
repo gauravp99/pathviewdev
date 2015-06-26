@@ -1,11 +1,13 @@
 <?php
-
 /**
  * Some comment
  */
-class Foo
-{
-    function foo()
+class Foo{function foo(){}
+
+    /**
+     * @param Baz $baz
+     */
+    public function bar(Baz $baz)
     {
     }
 
@@ -13,13 +15,6 @@ class Foo
      * @param Foobar $foobar
      */
     static public function foobar(Foobar $foobar)
-    {
-    }
-
-    /**
-     * @param Baz $baz
-     */
-    public function bar(Baz $baz)
     {
     }
 

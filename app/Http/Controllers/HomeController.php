@@ -33,7 +33,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        return view('profile.home')->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(6));
+        return view('profile.home')->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20));
     }
 
 }

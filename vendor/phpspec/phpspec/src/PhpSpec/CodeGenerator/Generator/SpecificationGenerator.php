@@ -23,8 +23,8 @@ class SpecificationGenerator extends PromptingGenerator
 {
     /**
      * @param ResourceInterface $resource
-     * @param string $generation
-     * @param array $data
+     * @param string            $generation
+     * @param array             $data
      *
      * @return bool
      */
@@ -43,17 +43,17 @@ class SpecificationGenerator extends PromptingGenerator
 
     /**
      * @param ResourceInterface $resource
-     * @param string $filepath
+     * @param string            $filepath
      *
      * @return string
      */
     protected function renderTemplate(ResourceInterface $resource, $filepath)
     {
         $values = array(
-            '%filepath%' => $filepath,
-            '%name%' => $resource->getSpecName(),
+            '%filepath%'  => $filepath,
+            '%name%'      => $resource->getSpecName(),
             '%namespace%' => $resource->getSpecNamespace(),
-            '%subject%' => $resource->getSrcClassname()
+            '%subject%'   => $resource->getSrcClassname()
         );
 
         if (!$content = $this->getTemplateRenderer()->render('specification', $values)) {
@@ -68,7 +68,7 @@ class SpecificationGenerator extends PromptingGenerator
      */
     protected function getTemplate()
     {
-        return file_get_contents(__DIR__ . '/templates/specification.template');
+        return file_get_contents(__DIR__.'/templates/specification.template');
     }
 
     /**
@@ -82,7 +82,7 @@ class SpecificationGenerator extends PromptingGenerator
 
     /**
      * @param ResourceInterface $resource
-     * @param string $filepath
+     * @param string            $filepath
      *
      * @return string
      */
@@ -90,7 +90,8 @@ class SpecificationGenerator extends PromptingGenerator
     {
         return sprintf(
             "<info>Specification for <value>%s</value> created in <value>%s</value>.</info>\n",
-            $resource->getSrcClassname(), $filepath
+            $resource->getSrcClassname(),
+            $filepath
         );
     }
 }

@@ -34,9 +34,9 @@ class ReturnConstantGenerator implements GeneratorInterface
     private $filesystem;
 
     /**
-     * @param IO $io
+     * @param IO               $io
      * @param TemplateRenderer $templates
-     * @param Filesystem $filesystem
+     * @param Filesystem       $filesystem
      */
     public function __construct(IO $io, TemplateRenderer $templates, Filesystem $filesystem = null)
     {
@@ -47,8 +47,8 @@ class ReturnConstantGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param string $generation
-     * @param array $data
+     * @param string            $generation
+     * @param array             $data
      *
      * @return bool
      */
@@ -59,7 +59,7 @@ class ReturnConstantGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param array $data
+     * @param array             $data
      */
     public function generate(ResourceInterface $resource, array $data)
     {
@@ -71,12 +71,13 @@ class ReturnConstantGenerator implements GeneratorInterface
         $values = array('%constant%' => var_export($expected, true));
         if (!$content = $this->templates->render('method', $values)) {
             $content = $this->templates->renderString(
-                $this->getTemplate(), $values
+                $this->getTemplate(),
+                $values
             );
         }
 
-        $pattern = '/' . '(function\s+' . preg_quote($method, '/') . '\s*\([^\)]*\))\s+{[^}]*?}/';
-        $replacement = '$1' . $content;
+        $pattern = '/'.'(function\s+'.preg_quote($method, '/').'\s*\([^\)]*\))\s+{[^}]*?}/';
+        $replacement = '$1'.$content;
 
         $modifiedCode = preg_replace($pattern, $replacement, $code);
 
@@ -84,16 +85,9 @@ class ReturnConstantGenerator implements GeneratorInterface
 
         $this->io->writeln(sprintf(
             "<info>Method <value>%s::%s()</value> has been modified.</info>\n",
-            $resource->getSrcClassname(), $method
+            $resource->getSrcClassname(),
+            $method
         ), 2);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTemplate()
-    {
-        return file_get_contents(__DIR__ . '/templates/returnconstant.template');
     }
 
     /**
@@ -102,5 +96,13 @@ class ReturnConstantGenerator implements GeneratorInterface
     public function getPriority()
     {
         return 0;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTemplate()
+    {
+        return file_get_contents(__DIR__.'/templates/returnconstant.template');
     }
 }

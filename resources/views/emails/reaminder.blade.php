@@ -1,0 +1,1 @@
+From a queue handler mail

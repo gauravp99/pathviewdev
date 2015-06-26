@@ -30,7 +30,7 @@ class DelayedCall
 
     /**
      * @param string $method
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return mixed
      */

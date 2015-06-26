@@ -2,255 +2,262 @@
 
 use Illuminate\Support\Collection as BaseCollection;
 
-class Collection extends BaseCollection
-{
+class Collection extends BaseCollection {
 
-    /**
-     * Find a model in the collection by key.
-     *
-     * @param  mixed $key
-     * @param  mixed $default
-     * @return \Illuminate\Database\Eloquent\Model
-     */
-    public function find($key, $default = null)
-    {
-        if ($key instanceof Model) {
-            $key = $key->getKey();
-        }
+	/**
+	 * Find a model in the collection by key.
+	 *
+	 * @param  mixed  $key
+	 * @param  mixed  $default
+	 * @return \Illuminate\Database\Eloquent\Model
+	 */
+	public function find($key, $default = null)
+	{
+		if ($key instanceof Model)
+		{
+			$key = $key->getKey();
+		}
 
-        return array_first($this->items, function ($itemKey, $model) use ($key) {
-            return $model->getKey() == $key;
+		return array_first($this->items, function($itemKey, $model) use ($key)
+		{
+			return $model->getKey() == $key;
 
-        }, $default);
-    }
+		}, $default);
+	}
 
-    /**
-     * Load a set of relationships onto the collection.
-     *
-     * @param  mixed $relations
-     * @return $this
-     */
-    public function load($relations)
-    {
-        if (count($this->items) > 0) {
-            if (is_string($relations)) $relations = func_get_args();
+	/**
+	 * Load a set of relationships onto the collection.
+	 *
+	 * @param  mixed  $relations
+	 * @return $this
+	 */
+	public function load($relations)
+	{
+		if (count($this->items) > 0)
+		{
+			if (is_string($relations)) $relations = func_get_args();
 
-            $query = $this->first()->newQuery()->with($relations);
+			$query = $this->first()->newQuery()->with($relations);
 
-            $this->items = $query->eagerLoadRelations($this->items);
-        }
+			$this->items = $query->eagerLoadRelations($this->items);
+		}
 
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Determine if a key exists in the collection.
-     *
-     * @param  mixed $key
-     * @param  mixed $value
-     * @return bool
-     */
-    public function contains($key, $value = null)
-    {
-        if (func_num_args() == 2) return parent::contains($key, $value);
+	/**
+	 * Add an item to the collection.
+	 *
+	 * @param  mixed  $item
+	 * @return $this
+	 */
+	public function add($item)
+	{
+		$this->items[] = $item;
 
-        if (!$this->useAsCallable($key)) {
-            $key = $key instanceof Model ? $key->getKey() : $key;
+		return $this;
+	}
 
-            return parent::contains(function ($k, $m) use ($key) {
-                return $m->getKey() == $key;
-            });
-        }
+	/**
+	 * Determine if a key exists in the collection.
+	 *
+	 * @param  mixed  $key
+	 * @param  mixed  $value
+	 * @return bool
+	 */
+	public function contains($key, $value = null)
+	{
+		if (func_num_args() == 2) return parent::contains($key, $value);
 
-        return parent::contains($key);
-    }
+		if ($this->useAsCallable($key)) return parent::contains($key);
 
-    /**
-     * Fetch a nested element of the collection.
-     *
-     * @param  string $key
-     * @return static
-     */
-    public function fetch($key)
-    {
-        return new static(array_fetch($this->toArray(), $key));
-    }
+		$key = $key instanceof Model ? $key->getKey() : $key;
 
-    /**
-     * Get the max value of a given key.
-     *
-     * @param  string $key
-     * @return mixed
-     */
-    public function max($key)
-    {
-        return $this->reduce(function ($result, $item) use ($key) {
-            return is_null($result) || $item->{$key} > $result ? $item->{$key} : $result;
-        });
-    }
+		return parent::contains(function($k, $m) use ($key)
+		{
+			return $m->getKey() == $key;
+		});
+	}
 
-    /**
-     * Get the min value of a given key.
-     *
-     * @param  string $key
-     * @return mixed
-     */
-    public function min($key)
-    {
-        return $this->reduce(function ($result, $item) use ($key) {
-            return is_null($result) || $item->{$key} < $result ? $item->{$key} : $result;
-        });
-    }
+	/**
+	 * Fetch a nested element of the collection.
+	 *
+	 * @param  string  $key
+	 * @return static
+	 */
+	public function fetch($key)
+	{
+		return new static(array_fetch($this->toArray(), $key));
+	}
 
-    /**
-     * Get the array of primary keys.
-     *
-     * @return array
-     */
-    public function modelKeys()
-    {
-        return array_map(function ($m) {
-            return $m->getKey();
-        }, $this->items);
-    }
+	/**
+	 * Get the max value of a given key.
+	 *
+	 * @param  string  $key
+	 * @return mixed
+	 */
+	public function max($key)
+	{
+		return $this->reduce(function($result, $item) use ($key)
+		{
+			return is_null($result) || $item->{$key} > $result ? $item->{$key} : $result;
+		});
+	}
 
-    /**
-     * Merge the collection with the given items.
-     *
-     * @param  \ArrayAccess|array $items
-     * @return static
-     */
-    public function merge($items)
-    {
-        $dictionary = $this->getDictionary();
+	/**
+	 * Get the min value of a given key.
+	 *
+	 * @param  string  $key
+	 * @return mixed
+	 */
+	public function min($key)
+	{
+		return $this->reduce(function($result, $item) use ($key)
+		{
+			return is_null($result) || $item->{$key} < $result ? $item->{$key} : $result;
+		});
+	}
 
-        foreach ($items as $item) {
-            $dictionary[$item->getKey()] = $item;
-        }
+	/**
+	 * Get the array of primary keys.
+	 *
+	 * @return array
+	 */
+	public function modelKeys()
+	{
+		return array_map(function($m) { return $m->getKey(); }, $this->items);
+	}
 
-        return new static(array_values($dictionary));
-    }
+	/**
+	 * Merge the collection with the given items.
+	 *
+	 * @param  \ArrayAccess|array  $items
+	 * @return static
+	 */
+	public function merge($items)
+	{
+		$dictionary = $this->getDictionary();
 
-    /**
-     * Get a dictionary keyed by primary keys.
-     *
-     * @param  \ArrayAccess|array $items
-     * @return array
-     */
-    public function getDictionary($items = null)
-    {
-        $items = is_null($items) ? $this->items : $items;
+		foreach ($items as $item)
+		{
+			$dictionary[$item->getKey()] = $item;
+		}
 
-        $dictionary = array();
+		return new static(array_values($dictionary));
+	}
 
-        foreach ($items as $value) {
-            $dictionary[$value->getKey()] = $value;
-        }
+	/**
+	 * Diff the collection with the given items.
+	 *
+	 * @param  \ArrayAccess|array  $items
+	 * @return static
+	 */
+	public function diff($items)
+	{
+		$diff = new static;
 
-        return $dictionary;
-    }
+		$dictionary = $this->getDictionary($items);
 
-    /**
-     * Diff the collection with the given items.
-     *
-     * @param  \ArrayAccess|array $items
-     * @return static
-     */
-    public function diff($items)
-    {
-        $diff = new static;
+		foreach ($this->items as $item)
+		{
+			if ( ! isset($dictionary[$item->getKey()]))
+			{
+				$diff->add($item);
+			}
+		}
 
-        $dictionary = $this->getDictionary($items);
+		return $diff;
+	}
 
-        foreach ($this->items as $item) {
-            if (!isset($dictionary[$item->getKey()])) {
-                $diff->add($item);
-            }
-        }
+	/**
+	 * Intersect the collection with the given items.
+	 *
+ 	 * @param  \ArrayAccess|array  $items
+	 * @return static
+	 */
+	public function intersect($items)
+	{
+		$intersect = new static;
 
-        return $diff;
-    }
+		$dictionary = $this->getDictionary($items);
 
-    /**
-     * Add an item to the collection.
-     *
-     * @param  mixed $item
-     * @return $this
-     */
-    public function add($item)
-    {
-        $this->items[] = $item;
+		foreach ($this->items as $item)
+		{
+			if (isset($dictionary[$item->getKey()]))
+			{
+				$intersect->add($item);
+			}
+		}
 
-        return $this;
-    }
+		return $intersect;
+	}
 
-    /**
-     * Intersect the collection with the given items.
-     *
-     * @param  \ArrayAccess|array $items
-     * @return static
-     */
-    public function intersect($items)
-    {
-        $intersect = new static;
+	/**
+	 * Return only unique items from the collection.
+	 *
+	 * @return static
+	 */
+	public function unique()
+	{
+		$dictionary = $this->getDictionary();
 
-        $dictionary = $this->getDictionary($items);
+		return new static(array_values($dictionary));
+	}
 
-        foreach ($this->items as $item) {
-            if (isset($dictionary[$item->getKey()])) {
-                $intersect->add($item);
-            }
-        }
+	/**
+	 * Returns only the models from the collection with the specified keys.
+	 *
+	 * @param  mixed  $keys
+	 * @return static
+	 */
+	public function only($keys)
+	{
+		$dictionary = array_only($this->getDictionary(), $keys);
 
-        return $intersect;
-    }
+		return new static(array_values($dictionary));
+	}
 
-    /**
-     * Return only unique items from the collection.
-     *
-     * @return static
-     */
-    public function unique()
-    {
-        $dictionary = $this->getDictionary();
+	/**
+	 * Returns all models in the collection except the models with specified keys.
+	 *
+	 * @param  mixed  $keys
+	 * @return static
+	 */
+	public function except($keys)
+	{
+		$dictionary = array_except($this->getDictionary(), $keys);
 
-        return new static(array_values($dictionary));
-    }
+		return new static(array_values($dictionary));
+	}
 
-    /**
-     * Returns only the models from the collection with the specified keys.
-     *
-     * @param  mixed $keys
-     * @return static
-     */
-    public function only($keys)
-    {
-        $dictionary = array_only($this->getDictionary(), $keys);
+	/**
+	 * Get a dictionary keyed by primary keys.
+	 *
+	 * @param  \ArrayAccess|array  $items
+	 * @return array
+	 */
+	public function getDictionary($items = null)
+	{
+		$items = is_null($items) ? $this->items : $items;
 
-        return new static(array_values($dictionary));
-    }
+		$dictionary = array();
 
-    /**
-     * Returns all models in the collection except the models with specified keys.
-     *
-     * @param  mixed $keys
-     * @return static
-     */
-    public function except($keys)
-    {
-        $dictionary = array_except($this->getDictionary(), $keys);
+		foreach ($items as $value)
+		{
+			$dictionary[$value->getKey()] = $value;
+		}
 
-        return new static(array_values($dictionary));
-    }
+		return $dictionary;
+	}
 
-    /**
-     * Get a base Support collection instance from this collection.
-     *
-     * @return \Illuminate\Support\Collection
-     */
-    public function toBase()
-    {
-        return new BaseCollection($this->items);
-    }
+	/**
+	 * Get a base Support collection instance from this collection.
+	 *
+	 * @return \Illuminate\Support\Collection
+	 */
+	public function toBase()
+	{
+		return new BaseCollection($this->items);
+	}
 
 }

@@ -13,14 +13,14 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Exception\Example\FailureException;
+use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Wrapper\Unwrapper;
+use PhpSpec\Wrapper\DelayedCall;
+use PhpSpec\Factory\ReflectionFactory;
 use PhpSpec\Exception\Example\MatcherException;
+use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Exception\Example\NotEqualException;
 use PhpSpec\Exception\Fracture\MethodNotFoundException;
-use PhpSpec\Factory\ReflectionFactory;
-use PhpSpec\Formatter\Presenter\PresenterInterface;
-use PhpSpec\Wrapper\DelayedCall;
-use PhpSpec\Wrapper\Unwrapper;
 
 class ThrowMatcher implements MatcherInterface
 {
@@ -43,21 +43,21 @@ class ThrowMatcher implements MatcherInterface
     private $factory;
 
     /**
-     * @param Unwrapper $unwrapper
+     * @param Unwrapper          $unwrapper
      * @param PresenterInterface $presenter
-     * @param ReflectionFactory $factory
+     * @param ReflectionFactory  $factory
      */
     public function __construct(Unwrapper $unwrapper, PresenterInterface $presenter, ReflectionFactory $factory = null)
     {
         $this->unwrapper = $unwrapper;
         $this->presenter = $presenter;
-        $this->factory = $factory ?: new ReflectionFactory();
+        $this->factory   = $factory ?: new ReflectionFactory();
     }
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return bool
      */
@@ -68,8 +68,8 @@ class ThrowMatcher implements MatcherInterface
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return DelayedCall
      */
@@ -79,70 +79,9 @@ class ThrowMatcher implements MatcherInterface
     }
 
     /**
-     * @param callable $check
-     * @param mixed $subject
-     * @param array $arguments
-     *
-     * @return DelayedCall
-     */
-    private function getDelayedCall($check, $subject, array $arguments)
-    {
-        $exception = $this->getException($arguments);
-        $unwrapper = $this->unwrapper;
-
-        return new DelayedCall(
-            function ($method, $arguments) use ($check, $subject, $exception, $unwrapper) {
-                $arguments = $unwrapper->unwrapAll($arguments);
-
-                $methodName = $arguments[0];
-                $arguments = isset($arguments[1]) ? $arguments[1] : array();
-                $callable = array($subject, $methodName);
-
-                list($class, $methodName) = array($subject, $methodName);
-                if (!method_exists($class, $methodName) && !method_exists($class, '__call')) {
-                    throw new MethodNotFoundException(
-                        sprintf('Method %s::%s not found.', get_class($class), $methodName),
-                        $class, $methodName, $arguments
-                    );
-                }
-
-                return call_user_func($check, $callable, $arguments, $exception);
-            }
-        );
-    }
-
-    /**
-     * @param array $arguments
-     *
-     * @return null|string
-     * @throws \PhpSpec\Exception\Example\MatcherException
-     */
-    private function getException(array $arguments)
-    {
-        if (0 == count($arguments)) {
-            return null;
-        }
-
-        if (is_string($arguments[0])) {
-            return $arguments[0];
-        }
-
-        if (is_object($arguments[0]) && $arguments[0] instanceof \Exception) {
-            return $arguments[0];
-        }
-
-        throw new MatcherException(sprintf(
-            "Wrong argument provided in throw matcher.\n" .
-            "Fully qualified classname or exception instance expected,\n" .
-            "Got %s.",
-            $this->presenter->presentValue($arguments[0])
-        ));
-    }
-
-    /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return DelayedCall
      */
@@ -153,8 +92,8 @@ class ThrowMatcher implements MatcherInterface
 
     /**
      * @param callable $callable
-     * @param array $arguments
-     * @param null $exception
+     * @param array    $arguments
+     * @param null     $exception
      *
      * @throws \PhpSpec\Exception\Example\FailureException
      * @throws \PhpSpec\Exception\Example\NotEqualException
@@ -185,7 +124,7 @@ class ThrowMatcher implements MatcherInterface
 
                     $property->setAccessible(true);
                     $expected = $property->getValue($exception);
-                    $actual = $property->getValue($e);
+                    $actual   = $property->getValue($e);
 
                     if (null !== $expected && $actual !== $expected) {
                         throw new NotEqualException(sprintf(
@@ -205,8 +144,8 @@ class ThrowMatcher implements MatcherInterface
     }
 
     /**
-     * @param callable $callable
-     * @param array $arguments
+     * @param callable    $callable
+     * @param array       $arguments
      * @param string|null $exception
      *
      * @throws \PhpSpec\Exception\Example\FailureException
@@ -234,10 +173,11 @@ class ThrowMatcher implements MatcherInterface
 
                         $property->setAccessible(true);
                         $expected = $property->getValue($exception);
-                        $actual = $property->getValue($e);
+                        $actual   = $property->getValue($e);
 
                         if (null !== $expected && $actual === $expected) {
-                            $invalidProperties[] = sprintf('  `%s`=%s',
+                            $invalidProperties[] = sprintf(
+                                '  `%s`=%s',
                                 $property->getName(),
                                 $this->presenter->presentValue($expected)
                             );
@@ -247,7 +187,8 @@ class ThrowMatcher implements MatcherInterface
 
                 $withProperties = '';
                 if (count($invalidProperties) > 0) {
-                    $withProperties = sprintf(' with' . PHP_EOL . '%s,' . PHP_EOL,
+                    $withProperties = sprintf(
+                        ' with'.PHP_EOL.'%s,'.PHP_EOL,
                         implode(",\n", $invalidProperties)
                     );
                 }
@@ -267,5 +208,68 @@ class ThrowMatcher implements MatcherInterface
     public function getPriority()
     {
         return 1;
+    }
+
+    /**
+     * @param callable $check
+     * @param mixed    $subject
+     * @param array    $arguments
+     *
+     * @return DelayedCall
+     */
+    private function getDelayedCall($check, $subject, array $arguments)
+    {
+        $exception = $this->getException($arguments);
+        $unwrapper = $this->unwrapper;
+
+        return new DelayedCall(
+            function ($method, $arguments) use ($check, $subject, $exception, $unwrapper) {
+                $arguments = $unwrapper->unwrapAll($arguments);
+
+                $methodName  = $arguments[0];
+                $arguments = isset($arguments[1]) ? $arguments[1] : array();
+                $callable = array($subject, $methodName);
+
+                list($class, $methodName) = array($subject, $methodName);
+                if (!method_exists($class, $methodName) && !method_exists($class, '__call')) {
+                    throw new MethodNotFoundException(
+                        sprintf('Method %s::%s not found.', get_class($class), $methodName),
+                        $class,
+                        $methodName,
+                        $arguments
+                    );
+                }
+
+                return call_user_func($check, $callable, $arguments, $exception);
+            }
+        );
+    }
+
+    /**
+     * @param array $arguments
+     *
+     * @return null|string
+     * @throws \PhpSpec\Exception\Example\MatcherException
+     */
+    private function getException(array $arguments)
+    {
+        if (0 == count($arguments)) {
+            return null;
+        }
+
+        if (is_string($arguments[0])) {
+            return $arguments[0];
+        }
+
+        if (is_object($arguments[0]) && $arguments[0] instanceof \Exception) {
+            return $arguments[0];
+        }
+
+        throw new MatcherException(sprintf(
+            "Wrong argument provided in throw matcher.\n".
+            "Fully qualified classname or exception instance expected,\n".
+            "Got %s.",
+            $this->presenter->presentValue($arguments[0])
+        ));
     }
 }

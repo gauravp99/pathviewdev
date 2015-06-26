@@ -10,7 +10,7 @@ Feature: Developer runs the specs
 
   Scenario: Reporting success when running a spec with correctly implemented class
     Given the spec file "spec/Runner/SpecExample2/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\SpecExample2;
@@ -28,7 +28,7 @@ Feature: Developer runs the specs
 
       """
     And the class file "src/Runner/SpecExample2/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\SpecExample2;
@@ -45,10 +45,10 @@ Feature: Developer runs the specs
     When I run phpspec
     Then the suite should pass
 
-  @issue214
+    @issue214
   Scenario: Letgo is executed after successful spec
     Given the spec file "spec/Runner/SpecExample3/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\SpecExample3;
@@ -71,7 +71,7 @@ Feature: Developer runs the specs
 
       """
     And the class file "src/Runner/SpecExample3/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\SpecExample3;
@@ -88,10 +88,10 @@ Feature: Developer runs the specs
     When I run phpspec
     Then I should see "Letgo is called"
 
-  @issue214
+    @issue214
   Scenario: Letgo is executed after exception is thrown
     Given the spec file "spec/Runner/SpecExample4/MarkdownSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\SpecExample4;
@@ -114,7 +114,7 @@ Feature: Developer runs the specs
 
       """
     And the class file "src/Runner/SpecExample4/Markdown.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\SpecExample4;

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * This file is part of SwiftMailer.
  *
@@ -14,7 +15,7 @@
 class Swift_Validate
 {
     /**
-     * Grammar Object
+     * Grammar Object.
      *
      * @var Swift_Mime_Grammar
      */
@@ -34,9 +35,9 @@ class Swift_Validate
                 ->lookup('mime.grammar');
         }
 
-        return (bool)preg_match(
-            '/^' . self::$grammar->getDefinition('addr-spec') . '$/D',
-            $email
-        );
+        return (bool) preg_match(
+                '/^'.self::$grammar->getDefinition('addr-spec').'$/D',
+                $email
+            );
     }
 }

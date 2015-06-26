@@ -13,8 +13,8 @@ namespace Symfony\Component\Console;
 
 use Symfony\Component\Console\Input\StringInput;
 use Symfony\Component\Console\Output\ConsoleOutput;
-use Symfony\Component\Process\PhpExecutableFinder;
 use Symfony\Component\Process\ProcessBuilder;
+use Symfony\Component\Process\PhpExecutableFinder;
 
 /**
  * A Shell wraps an Application to add shell capabilities to it.
@@ -45,7 +45,7 @@ class Shell
     {
         $this->hasReadline = function_exists('readline');
         $this->application = $application;
-        $this->history = getenv('HOME') . '/.history_' . $application->getName();
+        $this->history = getenv('HOME').'/.history_'.$application->getName();
         $this->output = new ConsoleOutput();
     }
 
@@ -99,7 +99,8 @@ EOF
                     ->add($_SERVER['argv'][0])
                     ->add($command)
                     ->inheritEnvironmentVariables(true)
-                    ->getProcess();
+                    ->getProcess()
+                ;
 
                 $output = $this->output;
                 $process->run(function ($type, $data) use ($output) {
@@ -137,24 +138,6 @@ EOF;
     }
 
     /**
-     * Reads a single line from standard input.
-     *
-     * @return string The single line from standard input
-     */
-    private function readline()
-    {
-        if ($this->hasReadline) {
-            $line = readline($this->getPrompt());
-        } else {
-            $this->output->write($this->getPrompt());
-            $line = fgets(STDIN, 1024);
-            $line = (!$line && strlen($line) == 0) ? false : rtrim($line);
-        }
-
-        return $line;
-    }
-
-    /**
      * Renders a prompt.
      *
      * @return string The prompt
@@ -162,21 +145,7 @@ EOF;
     protected function getPrompt()
     {
         // using the formatter here is required when using readline
-        return $this->output->getFormatter()->format($this->application->getName() . ' > ');
-    }
-
-    public function getProcessIsolation()
-    {
-        return $this->processIsolation;
-    }
-
-    public function setProcessIsolation($processIsolation)
-    {
-        $this->processIsolation = (bool)$processIsolation;
-
-        if ($this->processIsolation && !class_exists('Symfony\\Component\\Process\\Process')) {
-            throw new \RuntimeException('Unable to isolate processes as the Symfony Process Component is not installed.');
-        }
+        return $this->output->getFormatter()->format($this->application->getName().' > ');
     }
 
     protected function getOutput()
@@ -219,9 +188,41 @@ EOF;
 
         $list = array('--help');
         foreach ($command->getDefinition()->getOptions() as $option) {
-            $list[] = '--' . $option->getName();
+            $list[] = '--'.$option->getName();
         }
 
         return $list;
+    }
+
+    /**
+     * Reads a single line from standard input.
+     *
+     * @return string The single line from standard input
+     */
+    private function readline()
+    {
+        if ($this->hasReadline) {
+            $line = readline($this->getPrompt());
+        } else {
+            $this->output->write($this->getPrompt());
+            $line = fgets(STDIN, 1024);
+            $line = (!$line && strlen($line) == 0) ? false : rtrim($line);
+        }
+
+        return $line;
+    }
+
+    public function getProcessIsolation()
+    {
+        return $this->processIsolation;
+    }
+
+    public function setProcessIsolation($processIsolation)
+    {
+        $this->processIsolation = (bool) $processIsolation;
+
+        if ($this->processIsolation && !class_exists('Symfony\\Component\\Process\\Process')) {
+            throw new \RuntimeException('Unable to isolate processes as the Symfony Process Component is not installed.');
+        }
     }
 }

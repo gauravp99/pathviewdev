@@ -34,7 +34,7 @@ final class SecureRandom implements SecureRandomInterface
      * Be aware that a guessable seed will severely compromise the PRNG
      * algorithm that is employed.
      *
-     * @param string $seedFile
+     * @param string          $seedFile
      * @param LoggerInterface $logger
      */
     public function __construct($seedFile = null, LoggerInterface $logger = null)
@@ -90,8 +90,8 @@ final class SecureRandom implements SecureRandomInterface
         $bytes = '';
         while (strlen($bytes) < $nbBytes) {
             static $incr = 1;
-            $bytes .= hash('sha512', $incr++ . $this->seed . uniqid(mt_rand(), true) . $nbBytes, true);
-            $this->seed = base64_encode(hash('sha512', $this->seed . $bytes . $nbBytes, true));
+            $bytes .= hash('sha512', $incr++.$this->seed.uniqid(mt_rand(), true).$nbBytes, true);
+            $this->seed = base64_encode(hash('sha512', $this->seed.$bytes.$nbBytes, true));
             $this->updateSeed();
         }
 

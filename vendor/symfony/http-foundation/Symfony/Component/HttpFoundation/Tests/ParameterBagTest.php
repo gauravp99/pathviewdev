@@ -197,7 +197,7 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
             'dec' => '256',
             'hex' => '0x100',
             'array' => array('bang'),
-        ));
+            ));
 
         $this->assertEmpty($bag->filter('nokey'), '->filter() should return empty by default if no key is found');
 
@@ -233,7 +233,7 @@ class ParameterBagTest extends \PHPUnit_Framework_TestCase
 
         $i = 0;
         foreach ($bag as $key => $val) {
-            $i++;
+            ++$i;
             $this->assertEquals($parameters[$key], $val);
         }
 

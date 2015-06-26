@@ -39,6 +39,14 @@ class InstantiatorTest extends PHPUnit_Framework_TestCase
     private $instantiator;
 
     /**
+     * {@inheritDoc}
+     */
+    protected function setUp()
+    {
+        $this->instantiator = new Instantiator();
+    }
+
+    /**
      * @param string $className
      *
      * @dataProvider getInstantiableClasses
@@ -100,12 +108,12 @@ class InstantiatorTest extends PHPUnit_Framework_TestCase
             $this->fail('No exception was raised');
         } catch (UnexpectedValueException $exception) {
             $wakeUpNoticesReflection = new ReflectionClass('DoctrineTest\\InstantiatorTestAsset\\WakeUpNoticesAsset');
-            $previous = $exception->getPrevious();
+            $previous                = $exception->getPrevious();
 
             $this->assertInstanceOf('Exception', $previous);
 
             // in PHP 5.4.29 and PHP 5.5.13, this case is not a notice, but an exception being thrown
-            if (!(\PHP_VERSION_ID === 50429 || \PHP_VERSION_ID === 50513)) {
+            if (! (\PHP_VERSION_ID === 50429 || \PHP_VERSION_ID === 50513)) {
                 $this->assertSame(
                     'Could not produce an instance of "DoctrineTest\\InstantiatorTestAsset\WakeUpNoticesAsset" '
                     . 'via un-serialization, since an error was triggered in file "'
@@ -157,8 +165,11 @@ class InstantiatorTest extends PHPUnit_Framework_TestCase
             array('stdClass'),
             array(__CLASS__),
             array('Doctrine\\Instantiator\\Instantiator'),
+            array('Exception'),
             array('PharException'),
             array('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset'),
+            array('DoctrineTest\\InstantiatorTestAsset\\ExceptionAsset'),
+            array('DoctrineTest\\InstantiatorTestAsset\\FinalExceptionAsset'),
             array('DoctrineTest\\InstantiatorTestAsset\\PharExceptionAsset'),
             array('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset'),
             array('DoctrineTest\\InstantiatorTestAsset\\XMLReaderAsset'),
@@ -204,13 +215,5 @@ class InstantiatorTest extends PHPUnit_Framework_TestCase
         }
 
         return $classNames;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    protected function setUp()
-    {
-        $this->instantiator = new Instantiator();
     }
 }

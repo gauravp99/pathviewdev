@@ -32,7 +32,8 @@ class ServerBag extends ParameterBag
         foreach ($this->parameters as $key => $value) {
             if (0 === strpos($key, 'HTTP_')) {
                 $headers[substr($key, 5)] = $value;
-            } // CONTENT_* are not prefixed with HTTP_
+            }
+            // CONTENT_* are not prefixed with HTTP_
             elseif (isset($contentHeaders[$key])) {
                 $headers[$key] = $value;
             }
@@ -74,13 +75,20 @@ class ServerBag extends ParameterBag
                     // In some circumstances PHP_AUTH_DIGEST needs to be set
                     $headers['PHP_AUTH_DIGEST'] = $authorizationHeader;
                     $this->parameters['PHP_AUTH_DIGEST'] = $authorizationHeader;
+                } elseif (0 === stripos($authorizationHeader, 'bearer ')) {
+                    /*
+                     * XXX: Since there is no PHP_AUTH_BEARER in PHP predefined variables,
+                     *      I'll just set $headers['AUTHORIZATION'] here.
+                     *      http://php.net/manual/en/reserved.variables.server.php
+                     */
+                    $headers['AUTHORIZATION'] = $authorizationHeader;
                 }
             }
         }
 
         // PHP_AUTH_USER/PHP_AUTH_PW
         if (isset($headers['PHP_AUTH_USER'])) {
-            $headers['AUTHORIZATION'] = 'Basic ' . base64_encode($headers['PHP_AUTH_USER'] . ':' . $headers['PHP_AUTH_PW']);
+            $headers['AUTHORIZATION'] = 'Basic '.base64_encode($headers['PHP_AUTH_USER'].':'.$headers['PHP_AUTH_PW']);
         } elseif (isset($headers['PHP_AUTH_DIGEST'])) {
             $headers['AUTHORIZATION'] = $headers['PHP_AUTH_DIGEST'];
         }

@@ -5,7 +5,7 @@ Feature: Developer specifies object construction
 
   Scenario: Class is initialised using a constructor
     Given the spec file "spec/Runner/ConstructorExample1/ClassWithConstructorSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\ConstructorExample1;
@@ -28,7 +28,7 @@ Feature: Developer specifies object construction
 
       """
     And the class file "src/Runner/ConstructorExample1/ClassWithConstructor.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\ConstructorExample1;
@@ -49,7 +49,7 @@ Feature: Developer specifies object construction
 
   Scenario: Class is initialized using a static factory method and a collaborator as argument
     Given the spec file "spec/Runner/ConstructorExample2/ClassWithStaticFactoryMethodSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\ConstructorExample2;
@@ -72,7 +72,7 @@ Feature: Developer specifies object construction
 
       """
     And the class file "src/Runner/ConstructorExample2/ClassWithStaticFactoryMethod.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\ConstructorExample2;
@@ -98,7 +98,7 @@ Feature: Developer specifies object construction
 
   Scenario: Default static constructor parameter is overridden in example
     Given the spec file "spec/Runner/ConstructorExample3/ClassWithConstructorSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\ConstructorExample3;
@@ -122,7 +122,7 @@ Feature: Developer specifies object construction
 
       """
     And the class file "src/Runner/ConstructorExample3/ClassWithConstructor.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\ConstructorExample3;
@@ -149,7 +149,7 @@ Feature: Developer specifies object construction
 
   Scenario: Static constructor is overridden in example
     Given the spec file "spec/Runner/ConstructorExample4/ClassWithStaticFactoryMethodSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\Runner\ConstructorExample4;
@@ -173,7 +173,7 @@ Feature: Developer specifies object construction
 
       """
     And the class file "src/Runner/ConstructorExample4/ClassWithStaticFactoryMethod.php" contains:
-    """
+      """
       <?php
 
       namespace Runner\ConstructorExample4;
@@ -333,7 +333,7 @@ Feature: Developer specifies object construction
     When I run phpspec
     Then the suite should pass
 
-  Scenario: Developer cannot redefine constructor parameters if object is already instantiated
+    Scenario: Developer cannot redefine constructor parameters if object is already instantiated
     Given the spec file "spec/Runner/ConstructorExample9/ClassWithConstructorSpec.php" contains:
     """
     <?php

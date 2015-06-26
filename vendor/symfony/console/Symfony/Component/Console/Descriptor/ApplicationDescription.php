@@ -72,6 +72,34 @@ class ApplicationDescription
         return $this->namespaces;
     }
 
+    /**
+     * @return Command[]
+     */
+    public function getCommands()
+    {
+        if (null === $this->commands) {
+            $this->inspectApplication();
+        }
+
+        return $this->commands;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return Command
+     *
+     * @throws \InvalidArgumentException
+     */
+    public function getCommand($name)
+    {
+        if (!isset($this->commands[$name]) && !isset($this->aliases[$name])) {
+            throw new \InvalidArgumentException(sprintf('Command %s does not exist.', $name));
+        }
+
+        return isset($this->commands[$name]) ? $this->commands[$name] : $this->aliases[$name];
+    }
+
     private function inspectApplication()
     {
         $this->commands = array();
@@ -118,38 +146,12 @@ class ApplicationDescription
         }
         ksort($namespacedCommands);
 
-        foreach ($namespacedCommands as &$commands) {
-            ksort($commands);
+        foreach ($namespacedCommands as &$commandsSet) {
+            ksort($commandsSet);
         }
+        // unset reference to keep scope clear
+        unset($commandsSet);
 
         return $namespacedCommands;
-    }
-
-    /**
-     * @return Command[]
-     */
-    public function getCommands()
-    {
-        if (null === $this->commands) {
-            $this->inspectApplication();
-        }
-
-        return $this->commands;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return Command
-     *
-     * @throws \InvalidArgumentException
-     */
-    public function getCommand($name)
-    {
-        if (!isset($this->commands[$name]) && !isset($this->aliases[$name])) {
-            throw new \InvalidArgumentException(sprintf('Command %s does not exist.', $name));
-        }
-
-        return isset($this->commands[$name]) ? $this->commands[$name] : $this->aliases[$name];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace spec\PhpSpec\Exception\Example;
 
+use PhpSpec\Event\ExampleEvent;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

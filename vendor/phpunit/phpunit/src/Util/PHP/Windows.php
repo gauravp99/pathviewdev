@@ -13,12 +13,6 @@ use SebastianBergmann\Environment\Runtime;
 /**
  * Windows utility for PHP sub-processes.
  *
- * @package    PHPUnit
- * @subpackage Util
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.5.12
  */
 class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
@@ -49,9 +43,9 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
         $process = proc_open(
             $runtime->getBinary() . $this->settingsToParameters($settings),
             array(
-                0 => array('pipe', 'r'),
-                1 => $stdout_handle,
-                2 => array('pipe', 'w')
+            0 => array('pipe', 'r'),
+            1 => $stdout_handle,
+            2 => array('pipe', 'w')
             ),
             $pipes
         );
@@ -80,16 +74,15 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
     }
 
     /**
-     * @param  resource $pipe
-     * @param  string $job
+     * @param  resource                    $pipe
+     * @param  string                      $job
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.5.12
      */
     protected function process($pipe, $job)
     {
         if (!($this->tempFile = tempnam(sys_get_temp_dir(), 'PHPUnit')) ||
-            file_put_contents($this->tempFile, $job) === false
-        ) {
+            file_put_contents($this->tempFile, $job) === false) {
             throw new PHPUnit_Framework_Exception(
                 'Unable to write temporary file'
             );
@@ -97,7 +90,7 @@ class PHPUnit_Util_PHP_Windows extends PHPUnit_Util_PHP_Default
 
         fwrite(
             $pipe,
-            "<?php require_once " . var_export($this->tempFile, true) . "; ?>"
+            '<?php require_once ' . var_export($this->tempFile, true) .  '; ?>'
         );
     }
 

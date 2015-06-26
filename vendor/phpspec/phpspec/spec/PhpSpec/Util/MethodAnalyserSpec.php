@@ -2,6 +2,7 @@
 
 namespace spec\PhpSpec\Util;
 
+use PhpSpec\Exception\Example\SkippingException;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
@@ -35,17 +36,34 @@ class MethodAnalyserSpec extends ObjectBehavior
     {
         $this->methodIsEmpty('DateTimeZone', 'getOffset')->shouldReturn(false);
     }
+
+    function it_identifies_methods_from_traits()
+    {
+        if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+            throw new SkippingException('Traits implemented since PHP 5.4');
+        }
+
+        $this->methodIsEmpty('spec\PhpSpec\Util\ExampleObjectUsingTrait', 'emptyMethodInTrait')->shouldReturn(true);
+        $this->methodIsEmpty('spec\PhpSpec\Util\ExampleObjectUsingTrait', 'nonEmptyMethodInTrait')->shouldReturn(false);
+    }
+    
+    function it_finds_the_real_declaring_class_of_a_method()
+    {
+        if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+            throw new SkippingException('Traits implemented since PHP 5.4');
+        }
+
+        $this->getMethodOwnerName('spec\PhpSpec\Util\ExampleObjectUsingTrait', 'emptyMethodInTrait')
+            ->shouldReturn('spec\PhpSpec\Util\ExampleTrait');
+    }
 }
 
 class ExampleObject
 {
-    public function emptyMethod()
-    {
-    }
+    public function emptyMethod() {}
 
     public function emptyMethod2()
-    {
-    }
+    {}
 
     public function commentedMethod()
     {
@@ -67,23 +85,15 @@ class ExampleObject
         // another comment
     }
 
-    public function nonEmptyMethod2()
-    {
-        return 'foo';
+    public function nonEmptyMethod2() { return 'foo';
     }
 
-    public function nonEmptyOneLineMethod()
-    {
-        return 'foo';
-    }
+    public function nonEmptyOneLineMethod() { return 'foo'; }
 
     public function nonEmptyOneLineMethod2()
-    {
-        return 'foo';
-    }
+    { return 'foo'; }
 
-    public function nonEmptyOneLineMethod3()
-    {
+    public function nonEmptyOneLineMethod3() {
         return 'foo';
     }
 }

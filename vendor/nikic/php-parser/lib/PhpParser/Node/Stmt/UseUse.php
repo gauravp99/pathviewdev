@@ -2,8 +2,8 @@
 
 namespace PhpParser\Node\Stmt;
 
-use PhpParser\Error;
 use PhpParser\Node;
+use PhpParser\Error;
 
 class UseUse extends Node\Stmt
 {
@@ -15,17 +15,16 @@ class UseUse extends Node\Stmt
     /**
      * Constructs an alias (use) node.
      *
-     * @param Node\Name $name Namespace/Class to alias
-     * @param null|string $alias Alias
-     * @param array $attributes Additional attributes
+     * @param Node\Name   $name       Namespace/Class to alias
+     * @param null|string $alias      Alias
+     * @param array       $attributes Additional attributes
      */
-    public function __construct(Node\Name $name, $alias = null, array $attributes = array())
-    {
+    public function __construct(Node\Name $name, $alias = null, array $attributes = array()) {
         if (null === $alias) {
             $alias = $name->getLast();
         }
 
-        if ('self' == $alias || 'parent' == $alias) {
+        if ('self' == strtolower($alias) || 'parent' == strtolower($alias)) {
             throw new Error(sprintf(
                 'Cannot use %s as %s because \'%2$s\' is a special class name',
                 $name, $alias
@@ -37,8 +36,7 @@ class UseUse extends Node\Stmt
         $this->alias = $alias;
     }
 
-    public function getSubNodeNames()
-    {
+    public function getSubNodeNames() {
         return array('name', 'alias');
     }
 }

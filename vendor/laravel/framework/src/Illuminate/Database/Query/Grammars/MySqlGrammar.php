@@ -2,136 +2,143 @@
 
 use Illuminate\Database\Query\Builder;
 
-class MySqlGrammar extends Grammar
-{
+class MySqlGrammar extends Grammar {
 
-    /**
-     * The components that make up a select clause.
-     *
-     * @var array
-     */
-    protected $selectComponents = array(
-        'aggregate',
-        'columns',
-        'from',
-        'joins',
-        'wheres',
-        'groups',
-        'havings',
-        'orders',
-        'limit',
-        'offset',
-        'lock',
-    );
+	/**
+	 * The components that make up a select clause.
+	 *
+	 * @var array
+	 */
+	protected $selectComponents = array(
+		'aggregate',
+		'columns',
+		'from',
+		'joins',
+		'wheres',
+		'groups',
+		'havings',
+		'orders',
+		'limit',
+		'offset',
+		'lock',
+	);
 
-    /**
-     * Compile a select query into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder
-     * @return string
-     */
-    public function compileSelect(Builder $query)
-    {
-        $sql = parent::compileSelect($query);
+	/**
+	 * Compile a select query into SQL.
+	 *
+	 * @param  \Illuminate\Database\Query\Builder
+	 * @return string
+	 */
+	public function compileSelect(Builder $query)
+	{
+		$sql = parent::compileSelect($query);
 
-        if ($query->unions) {
-            $sql = '(' . $sql . ') ' . $this->compileUnions($query);
-        }
+		if ($query->unions)
+		{
+			$sql = '('.$sql.') '.$this->compileUnions($query);
+		}
 
-        return $sql;
-    }
+		return $sql;
+	}
 
-    /**
-     * Compile an update statement into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  array $values
-     * @return string
-     */
-    public function compileUpdate(Builder $query, $values)
-    {
-        $sql = parent::compileUpdate($query, $values);
+	/**
+	 * Compile a single union statement.
+	 *
+	 * @param  array  $union
+	 * @return string
+	 */
+	protected function compileUnion(array $union)
+	{
+		$joiner = $union['all'] ? ' union all ' : ' union ';
 
-        if (isset($query->orders)) {
-            $sql .= ' ' . $this->compileOrders($query, $query->orders);
-        }
+		return $joiner.'('.$union['query']->toSql().')';
+	}
 
-        if (isset($query->limit)) {
-            $sql .= ' ' . $this->compileLimit($query, $query->limit);
-        }
+	/**
+	 * Compile the lock into SQL.
+	 *
+	 * @param  \Illuminate\Database\Query\Builder  $query
+	 * @param  bool|string  $value
+	 * @return string
+	 */
+	protected function compileLock(Builder $query, $value)
+	{
+		if (is_string($value)) return $value;
 
-        return rtrim($sql);
-    }
+		return $value ? 'for update' : 'lock in share mode';
+	}
 
-    /**
-     * Compile a delete statement into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @return string
-     */
-    public function compileDelete(Builder $query)
-    {
-        $table = $this->wrapTable($query->from);
+	/**
+	 * Compile an update statement into SQL.
+	 *
+	 * @param  \Illuminate\Database\Query\Builder  $query
+	 * @param  array  $values
+	 * @return string
+	 */
+	public function compileUpdate(Builder $query, $values)
+	{
+		$sql = parent::compileUpdate($query, $values);
 
-        $where = is_array($query->wheres) ? $this->compileWheres($query) : '';
+		if (isset($query->orders))
+		{
+			$sql .= ' '.$this->compileOrders($query, $query->orders);
+		}
 
-        if (isset($query->joins)) {
-            $joins = ' ' . $this->compileJoins($query, $query->joins);
+		if (isset($query->limit))
+		{
+			$sql .= ' '.$this->compileLimit($query, $query->limit);
+		}
 
-            $sql = trim("delete $table from {$table}{$joins} $where");
-        } else {
-            $sql = trim("delete from $table $where");
-        }
+		return rtrim($sql);
+	}
 
-        if (isset($query->orders)) {
-            $sql .= ' ' . $this->compileOrders($query, $query->orders);
-        }
+	/**
+	 * Compile a delete statement into SQL.
+	 *
+	 * @param  \Illuminate\Database\Query\Builder  $query
+	 * @return string
+	 */
+	public function compileDelete(Builder $query)
+	{
+		$table = $this->wrapTable($query->from);
 
-        if (isset($query->limit)) {
-            $sql .= ' ' . $this->compileLimit($query, $query->limit);
-        }
+		$where = is_array($query->wheres) ? $this->compileWheres($query) : '';
 
-        return $sql;
-    }
+		if (isset($query->joins))
+		{
+			$joins = ' '.$this->compileJoins($query, $query->joins);
 
-    /**
-     * Compile a single union statement.
-     *
-     * @param  array $union
-     * @return string
-     */
-    protected function compileUnion(array $union)
-    {
-        $joiner = $union['all'] ? ' union all ' : ' union ';
+			$sql = trim("delete $table from {$table}{$joins} $where");
+		}
+		else
+		{
+			$sql = trim("delete from $table $where");
+		}
 
-        return $joiner . '(' . $union['query']->toSql() . ')';
-    }
+		if (isset($query->orders))
+		{
+			$sql .= ' '.$this->compileOrders($query, $query->orders);
+		}
 
-    /**
-     * Compile the lock into SQL.
-     *
-     * @param  \Illuminate\Database\Query\Builder $query
-     * @param  bool|string $value
-     * @return string
-     */
-    protected function compileLock(Builder $query, $value)
-    {
-        if (is_string($value)) return $value;
+		if (isset($query->limit))
+		{
+			$sql .= ' '.$this->compileLimit($query, $query->limit);
+		}
 
-        return $value ? 'for update' : 'lock in share mode';
-    }
+		return $sql;
+	}
 
-    /**
-     * Wrap a single string in keyword identifiers.
-     *
-     * @param  string $value
-     * @return string
-     */
-    protected function wrapValue($value)
-    {
-        if ($value === '*') return $value;
+	/**
+	 * Wrap a single string in keyword identifiers.
+	 *
+	 * @param  string  $value
+	 * @return string
+	 */
+	protected function wrapValue($value)
+	{
+		if ($value === '*') return $value;
 
-        return '`' . str_replace('`', '``', $value) . '`';
-    }
+		return '`'.str_replace('`', '``', $value).'`';
+	}
 
 }

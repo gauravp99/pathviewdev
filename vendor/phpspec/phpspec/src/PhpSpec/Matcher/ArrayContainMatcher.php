@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Exception\Example\FailureException;
 
 class ArrayContainMatcher extends BasicMatcher
 {
@@ -33,16 +33,17 @@ class ArrayContainMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return bool
      */
     public function supports($name, $subject, array $arguments)
     {
         return 'contain' === $name
-        && 1 == count($arguments)
-        && is_array($subject);
+            && 1 == count($arguments)
+            && is_array($subject)
+        ;
     }
 
     /**
@@ -58,8 +59,8 @@ class ArrayContainMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return FailureException
      */
@@ -74,8 +75,8 @@ class ArrayContainMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return FailureException
      */

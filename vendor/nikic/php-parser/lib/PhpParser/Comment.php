@@ -11,10 +11,9 @@ class Comment
      * Constructs a comment node.
      *
      * @param string $text Comment text (including comment delimiters like /*)
-     * @param int $line Line number the comment started on
+     * @param int    $line Line number the comment started on
      */
-    public function __construct($text, $line = -1)
-    {
+    public function __construct($text, $line = -1) {
         $this->text = $text;
         $this->line = $line;
     }
@@ -24,8 +23,7 @@ class Comment
      *
      * @return string The comment text (including comment delimiters like /*)
      */
-    public function getText()
-    {
+    public function getText() {
         return $this->text;
     }
 
@@ -34,8 +32,7 @@ class Comment
      *
      * @param string $text The comment text (including comment delimiters like /*)
      */
-    public function setText($text)
-    {
+    public function setText($text) {
         $this->text = $text;
     }
 
@@ -44,8 +41,7 @@ class Comment
      *
      * @return int Line number
      */
-    public function getLine()
-    {
+    public function getLine() {
         return $this->line;
     }
 
@@ -54,8 +50,7 @@ class Comment
      *
      * @param int $line Line number
      */
-    public function setLine($line)
-    {
+    public function setLine($line) {
         $this->line = $line;
     }
 
@@ -64,8 +59,7 @@ class Comment
      *
      * @return string The comment text (including comment delimiters like /*)
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->text;
     }
 
@@ -79,8 +73,7 @@ class Comment
      *
      * @return mixed|string
      */
-    public function getReformattedText()
-    {
+    public function getReformattedText() {
         $text = trim($this->text);
         if (false === strpos($text, "\n")) {
             // Single line comments don't need further processing

@@ -10,7 +10,7 @@
 
 if (!defined('TEST_FILES_PATH')) {
     define(
-    'TEST_FILES_PATH',
+        'TEST_FILES_PATH',
         dirname(dirname(dirname(dirname(__FILE__)))) . DIRECTORY_SEPARATOR .
         '_files' . DIRECTORY_SEPARATOR
     );
@@ -21,18 +21,16 @@ require_once TEST_FILES_PATH . '../TestCase.php';
 /**
  * Tests for the PHP_CodeCoverage_Report_Factory class.
  *
- * @category   PHP
- * @package    CodeCoverage
- * @subpackage Tests
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://github.com/sebastianbergmann/php-code-coverage
- * @since      Class available since Release 1.1.0
+ * @since Class available since Release 1.1.0
  */
 class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
 {
     protected $factory;
+
+    protected function setUp()
+    {
+        $this->factory = new PHP_CodeCoverage_Report_Factory;
+    }
 
     public function testSomething()
     {
@@ -139,7 +137,8 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
     public function testBuildDirectoryStructure()
     {
         $method = new ReflectionMethod(
-            'PHP_CodeCoverage_Report_Factory', 'buildDirectoryStructure'
+            'PHP_CodeCoverage_Report_Factory',
+            'buildDirectoryStructure'
         );
 
         $method->setAccessible(true);
@@ -165,7 +164,8 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
     public function testReducePaths($reducedPaths, $commonPath, $paths)
     {
         $method = new ReflectionMethod(
-            'PHP_CodeCoverage_Report_Factory', 'reducePaths'
+            'PHP_CodeCoverage_Report_Factory',
+            'reducePaths'
         );
 
         $method->setAccessible(true);
@@ -218,10 +218,5 @@ class PHP_CodeCoverage_Report_FactoryTest extends PHP_CodeCoverage_TestCase
                 ),
             ),
         );
-    }
-
-    protected function setUp()
-    {
-        $this->factory = new PHP_CodeCoverage_Report_Factory;
     }
 }

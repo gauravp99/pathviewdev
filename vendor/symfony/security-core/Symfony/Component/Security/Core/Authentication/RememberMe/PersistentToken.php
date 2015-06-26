@@ -27,10 +27,10 @@ final class PersistentToken implements PersistentTokenInterface
     /**
      * Constructor.
      *
-     * @param string $class
-     * @param string $username
-     * @param string $series
-     * @param string $tokenValue
+     * @param string    $class
+     * @param string    $username
+     * @param string    $series
+     * @param string    $tokenValue
      * @param \DateTime $lastUsed
      *
      * @throws \InvalidArgumentException

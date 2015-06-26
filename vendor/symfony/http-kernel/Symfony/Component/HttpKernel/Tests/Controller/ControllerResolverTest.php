@@ -12,15 +12,11 @@
 namespace Symfony\Component\HttpKernel\Tests\Controller;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\HttpFoundation\Request;
 
 class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 {
-    protected static function controllerMethod4()
-    {
-    }
-
     public function testGetControllerWithoutControllerParameter()
     {
         $logger = $this->getMock('Psr\Log\LoggerInterface');
@@ -31,18 +27,12 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($resolver->getController($request), '->getController() returns false when the request has no _controller attribute');
     }
 
-    protected function createControllerResolver(LoggerInterface $logger = null)
-    {
-        return new ControllerResolver($logger);
-    }
-
     public function testGetControllerWithLambda()
     {
         $resolver = $this->createControllerResolver();
 
         $request = Request::create('/');
-        $request->attributes->set('_controller', $lambda = function () {
-        });
+        $request->attributes->set('_controller', $lambda = function () {});
         $controller = $resolver->getController($request);
         $this->assertSame($lambda, $controller);
     }
@@ -165,14 +155,12 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
 
         $request = Request::create('/');
         $request->attributes->set('foo', 'foo');
-        $controller = function ($foo) {
-        };
+        $controller = function ($foo) {};
         $this->assertEquals(array('foo'), $resolver->getArguments($request, $controller));
 
         $request = Request::create('/');
         $request->attributes->set('foo', 'foo');
-        $controller = function ($foo, $bar = 'bar') {
-        };
+        $controller = function ($foo, $bar = 'bar') {};
         $this->assertEquals(array('foo', 'bar'), $resolver->getArguments($request, $controller));
 
         $request = Request::create('/');
@@ -219,6 +207,11 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
         $mock->getController($request);
     }
 
+    protected function createControllerResolver(LoggerInterface $logger = null)
+    {
+        return new ControllerResolver($logger);
+    }
+
     public function __invoke($foo, $bar = null)
     {
     }
@@ -232,6 +225,10 @@ class ControllerResolverTest extends \PHPUnit_Framework_TestCase
     }
 
     protected function controllerMethod3($foo, $bar = null, $foobar)
+    {
+    }
+
+    protected static function controllerMethod4()
     {
     }
 

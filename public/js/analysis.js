@@ -198,8 +198,8 @@ function in_cmpd_array(cpd, id) {
 /*checking the pathway is in the list or not */
 function in_pathway_array(pathway, id) {
     for (var i = 0; i < pathway.length; i++) {
-        //console.log(gene[i]['geneid']);
-        if (pathway[i].toLowerCase() === id.toLowerCase()) {
+
+        if (pathway[i] === id) {
             return true;
         }
     }
@@ -581,11 +581,12 @@ function fileCheck() {
 
     //If error occurs then error div on analysis page is shown and
     if (error) {
-        error = true;
+
         errors.removeAttribute("hidden");
         return false;
     }
     else {
+        console.log("everything is fine");
         $("#errors").hide();
         document.getElementById('submit-button').setAttribute("data-toggle", "modal");
         document.getElementById('submit-button').setAttribute("data-target", "#myModal");

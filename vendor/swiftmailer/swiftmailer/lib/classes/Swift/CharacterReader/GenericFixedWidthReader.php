@@ -11,8 +11,8 @@
 /**
  * Provides fixed-width byte sizes for reading fixed-width character sets.
  *
- * @author     Chris Corbyn
- * @author     Xavier De Cock <xdecock@gmail.com>
+ * @author Chris Corbyn
+ * @author Xavier De Cock <xdecock@gmail.com>
  */
 class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterReader
 {
@@ -37,9 +37,9 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      * Returns the complete character map.
      *
      * @param string $string
-     * @param int $startOffset
-     * @param array $currentMap
-     * @param mixed $ignoredChars
+     * @param int    $startOffset
+     * @param array  $currentMap
+     * @param mixed  $ignoredChars
      *
      * @return int
      */
@@ -74,7 +74,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
      * A value of -1 means this cannot possibly be a valid character.
      *
      * @param string $bytes
-     * @param int $size
+     * @param int    $size
      *
      * @return int
      */

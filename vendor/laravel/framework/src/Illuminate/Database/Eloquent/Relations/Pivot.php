@@ -1,172 +1,173 @@
 <?php namespace Illuminate\Database\Eloquent\Relations;
 
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
-class Pivot extends Model
-{
+class Pivot extends Model {
 
-    /**
-     * The parent model of the relationship.
-     *
-     * @var \Illuminate\Database\Eloquent\Model
-     */
-    protected $parent;
+	/**
+	 * The parent model of the relationship.
+	 *
+	 * @var \Illuminate\Database\Eloquent\Model
+	 */
+	protected $parent;
 
-    /**
-     * The name of the foreign key column.
-     *
-     * @var string
-     */
-    protected $foreignKey;
+	/**
+	 * The name of the foreign key column.
+	 *
+	 * @var string
+	 */
+	protected $foreignKey;
 
-    /**
-     * The name of the "other key" column.
-     *
-     * @var string
-     */
-    protected $otherKey;
+	/**
+	 * The name of the "other key" column.
+	 *
+	 * @var string
+	 */
+	protected $otherKey;
 
-    /**
-     * The attributes that aren't mass assignable.
-     *
-     * @var array
-     */
-    protected $guarded = array();
+	/**
+	 * The attributes that aren't mass assignable.
+	 *
+	 * @var array
+	 */
+	protected $guarded = array();
 
-    /**
-     * Create a new pivot model instance.
-     *
-     * @param  \Illuminate\Database\Eloquent\Model $parent
-     * @param  array $attributes
-     * @param  string $table
-     * @param  bool $exists
-     * @return void
-     */
-    public function __construct(Model $parent, $attributes, $table, $exists = false)
-    {
-        parent::__construct();
+	/**
+	 * Create a new pivot model instance.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Model  $parent
+	 * @param  array   $attributes
+	 * @param  string  $table
+	 * @param  bool    $exists
+	 * @return void
+	 */
+	public function __construct(Model $parent, $attributes, $table, $exists = false)
+	{
+		parent::__construct();
 
-        // The pivot model is a "dynamic" model since we will set the tables dynamically
-        // for the instance. This allows it work for any intermediate tables for the
-        // many to many relationship that are defined by this developer's classes.
-        $this->setRawAttributes($attributes, true);
+		// The pivot model is a "dynamic" model since we will set the tables dynamically
+		// for the instance. This allows it work for any intermediate tables for the
+		// many to many relationship that are defined by this developer's classes.
+		$this->forceFill($attributes);
 
-        $this->setTable($table);
+		$this->syncOriginal();
 
-        $this->setConnection($parent->getConnectionName());
+		$this->setTable($table);
 
-        // We store off the parent instance so we will access the timestamp column names
-        // for the model, since the pivot model timestamps aren't easily configurable
-        // from the developer's point of view. We can use the parents to get these.
-        $this->parent = $parent;
+		$this->setConnection($parent->getConnectionName());
 
-        $this->exists = $exists;
+		// We store off the parent instance so we will access the timestamp column names
+		// for the model, since the pivot model timestamps aren't easily configurable
+		// from the developer's point of view. We can use the parents to get these.
+		$this->parent = $parent;
 
-        $this->timestamps = $this->hasTimestampAttributes();
-    }
+		$this->exists = $exists;
 
-    /**
-     * Determine if the pivot model has timestamp attributes.
-     *
-     * @return bool
-     */
-    public function hasTimestampAttributes()
-    {
-        return array_key_exists($this->getCreatedAtColumn(), $this->attributes);
-    }
+		$this->timestamps = $this->hasTimestampAttributes();
+	}
 
-    /**
-     * Get the name of the "created at" column.
-     *
-     * @return string
-     */
-    public function getCreatedAtColumn()
-    {
-        return $this->parent->getCreatedAtColumn();
-    }
+	/**
+	 * Set the keys for a save update query.
+	 *
+	 * @param  \Illuminate\Database\Eloquent\Builder
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	protected function setKeysForSaveQuery(Builder $query)
+	{
+		$query->where($this->foreignKey, $this->getAttribute($this->foreignKey));
 
-    /**
-     * Delete the pivot model record from the database.
-     *
-     * @return int
-     */
-    public function delete()
-    {
-        return $this->getDeleteQuery()->delete();
-    }
+		return $query->where($this->otherKey, $this->getAttribute($this->otherKey));
+	}
 
-    /**
-     * Get the query builder for a delete operation on the pivot.
-     *
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function getDeleteQuery()
-    {
-        $foreign = $this->getAttribute($this->foreignKey);
+	/**
+	 * Delete the pivot model record from the database.
+	 *
+	 * @return int
+	 */
+	public function delete()
+	{
+		return $this->getDeleteQuery()->delete();
+	}
 
-        $query = $this->newQuery()->where($this->foreignKey, $foreign);
+	/**
+	 * Get the query builder for a delete operation on the pivot.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Builder
+	 */
+	protected function getDeleteQuery()
+	{
+		$foreign = $this->getAttribute($this->foreignKey);
 
-        return $query->where($this->otherKey, $this->getAttribute($this->otherKey));
-    }
+		$query = $this->newQuery()->where($this->foreignKey, $foreign);
 
-    /**
-     * Get the foreign key column name.
-     *
-     * @return string
-     */
-    public function getForeignKey()
-    {
-        return $this->foreignKey;
-    }
+		return $query->where($this->otherKey, $this->getAttribute($this->otherKey));
+	}
 
-    /**
-     * Get the "other key" column name.
-     *
-     * @return string
-     */
-    public function getOtherKey()
-    {
-        return $this->otherKey;
-    }
+	/**
+	 * Get the foreign key column name.
+	 *
+	 * @return string
+	 */
+	public function getForeignKey()
+	{
+		return $this->foreignKey;
+	}
 
-    /**
-     * Set the key names for the pivot model instance.
-     *
-     * @param  string $foreignKey
-     * @param  string $otherKey
-     * @return $this
-     */
-    public function setPivotKeys($foreignKey, $otherKey)
-    {
-        $this->foreignKey = $foreignKey;
+	/**
+	 * Get the "other key" column name.
+	 *
+	 * @return string
+	 */
+	public function getOtherKey()
+	{
+		return $this->otherKey;
+	}
 
-        $this->otherKey = $otherKey;
+	/**
+	 * Set the key names for the pivot model instance.
+	 *
+	 * @param  string  $foreignKey
+	 * @param  string  $otherKey
+	 * @return $this
+	 */
+	public function setPivotKeys($foreignKey, $otherKey)
+	{
+		$this->foreignKey = $foreignKey;
 
-        return $this;
-    }
+		$this->otherKey = $otherKey;
 
-    /**
-     * Get the name of the "updated at" column.
-     *
-     * @return string
-     */
-    public function getUpdatedAtColumn()
-    {
-        return $this->parent->getUpdatedAtColumn();
-    }
+		return $this;
+	}
 
-    /**
-     * Set the keys for a save update query.
-     *
-     * @param  \Illuminate\Database\Eloquent\Builder
-     * @return \Illuminate\Database\Eloquent\Builder
-     */
-    protected function setKeysForSaveQuery(Builder $query)
-    {
-        $query->where($this->foreignKey, $this->getAttribute($this->foreignKey));
+	/**
+	 * Determine if the pivot model has timestamp attributes.
+	 *
+	 * @return bool
+	 */
+	public function hasTimestampAttributes()
+	{
+		return array_key_exists($this->getCreatedAtColumn(), $this->attributes);
+	}
 
-        return $query->where($this->otherKey, $this->getAttribute($this->otherKey));
-    }
+	/**
+	 * Get the name of the "created at" column.
+	 *
+	 * @return string
+	 */
+	public function getCreatedAtColumn()
+	{
+		return $this->parent->getCreatedAtColumn();
+	}
+
+	/**
+	 * Get the name of the "updated at" column.
+	 *
+	 * @return string
+	 */
+	public function getUpdatedAtColumn()
+	{
+		return $this->parent->getUpdatedAtColumn();
+	}
 
 }

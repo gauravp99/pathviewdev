@@ -26,7 +26,7 @@
 class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_MockObject_Matcher_StatelessInvocation
 {
     /**
-     * @var array
+     * @var PHPUnit_Framework_Constraint[]
      */
     protected $parameters = array();
 
@@ -84,7 +84,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
      * does the matcher will get the invoked() method called which should check
      * if an expectation is met.
      *
-     * @param  PHPUnit_Framework_MockObject_Invocation $invocation
+     * @param  PHPUnit_Framework_MockObject_Invocation      $invocation
      *                                                                  Object containing information on a mocked or stubbed method which
      *                                                                  was invoked.
      * @return bool
@@ -92,7 +92,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
      */
     public function verify()
     {
-        if ($this->invocation === NULL) {
+        if ($this->invocation === null) {
             throw new PHPUnit_Framework_ExpectationFailedException(
                 'Mocked method does not exist.'
             );
@@ -106,8 +106,7 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
             //
             // @see https://github.com/sebastianbergmann/phpunit-mock-objects/issues/199
             if (count($this->parameters) === 1 &&
-                get_class($this->parameters[0]) === 'PHPUnit_Framework_Constraint_IsAnything'
-            ) {
+                get_class($this->parameters[0]) === 'PHPUnit_Framework_Constraint_IsAnything') {
                 $message .= "\nTo allow 0 or more parameters with any value, omit ->with() or use ->withAnyParameters() instead.";
             }
 
@@ -122,7 +121,6 @@ class PHPUnit_Framework_MockObject_Matcher_Parameters extends PHPUnit_Framework_
                 sprintf(
                     'Parameter %s for invocation %s does not match expected ' .
                     'value.',
-
                     $i,
                     $this->invocation->toString()
                 )

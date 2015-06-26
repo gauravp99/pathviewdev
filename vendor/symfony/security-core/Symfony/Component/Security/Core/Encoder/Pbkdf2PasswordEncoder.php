@@ -36,10 +36,10 @@ class Pbkdf2PasswordEncoder extends BasePasswordEncoder
     /**
      * Constructor.
      *
-     * @param string $algorithm The digest algorithm to use
-     * @param bool $encodeHashAsBase64 Whether to base64 encode the password hash
-     * @param int $iterations The number of iterations to use to stretch the password hash
-     * @param int $length Length of derived key to create
+     * @param string $algorithm          The digest algorithm to use
+     * @param bool   $encodeHashAsBase64 Whether to base64 encode the password hash
+     * @param int    $iterations         The number of iterations to use to stretch the password hash
+     * @param int    $length             Length of derived key to create
      */
     public function __construct($algorithm = 'sha512', $encodeHashAsBase64 = true, $iterations = 1000, $length = 40)
     {
@@ -47,14 +47,6 @@ class Pbkdf2PasswordEncoder extends BasePasswordEncoder
         $this->encodeHashAsBase64 = $encodeHashAsBase64;
         $this->iterations = $iterations;
         $this->length = $length;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isPasswordValid($encoded, $raw, $salt)
-    {
-        return !$this->isPasswordTooLong($raw) && $this->comparePasswords($encoded, $this->encodePassword($raw, $salt));
     }
 
     /**
@@ -81,17 +73,25 @@ class Pbkdf2PasswordEncoder extends BasePasswordEncoder
         return $this->encodeHashAsBase64 ? base64_encode($digest) : bin2hex($digest);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function isPasswordValid($encoded, $raw, $salt)
+    {
+        return !$this->isPasswordTooLong($raw) && $this->comparePasswords($encoded, $this->encodePassword($raw, $salt));
+    }
+
     private function hashPbkdf2($algorithm, $password, $salt, $iterations, $length = 0)
     {
         // Number of blocks needed to create the derived key
         $blocks = ceil($length / strlen(hash($algorithm, null, true)));
         $digest = '';
 
-        for ($i = 1; $i <= $blocks; $i++) {
-            $ib = $block = hash_hmac($algorithm, $salt . pack('N', $i), $password, true);
+        for ($i = 1; $i <= $blocks; ++$i) {
+            $ib = $block = hash_hmac($algorithm, $salt.pack('N', $i), $password, true);
 
             // Iterations
-            for ($j = 1; $j < $iterations; $j++) {
+            for ($j = 1; $j < $iterations; ++$j) {
                 $ib ^= ($block = hash_hmac($algorithm, $block, $password, true));
             }
 

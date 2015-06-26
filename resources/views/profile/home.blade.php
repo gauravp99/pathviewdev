@@ -10,7 +10,7 @@
         <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile</h1>
         <?php
         function xcopy($source, $dest, $permissions = 0755)
-        {
+        { try{
             // Check for symlinks
             if (is_link($source)) {
                 return symlink(readlink($source), $dest);
@@ -23,7 +23,10 @@
 
             // Make destination directory
             if (!is_dir($dest)) {
+
                 mkdir($dest, $permissions);
+
+
             }
 
             // Loop through the folder
@@ -40,6 +43,11 @@
 
             // Clean up
             $dir->close();
+            }
+        catch (Exception $e) {
+            echo "<h1 style='font-size: 10px' class='alert alert-danger'>Note : oops Sorry Not able to save your guest analyses made. Mail us will make sure to add it to your profile </h1>";
+
+        }
             return true;
         }
         ?>
@@ -74,12 +82,12 @@
         <p>User Created at: {{Auth::user()->created_at }}</p>
         <?php
         $f = './all/' . Auth::user()->email;
-        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+        $io = popen('/usr/bin/du -sk ' . $f, 'r');
         $size = fgets($io, 4096);
         $size = substr($size, 0, strpos($size, "\t"));
 
         pclose($io);
-        $size = 100 - intval($size);
+        $size = (100000 - intval($size))/1024;
         if($size < 10)
         {
         ?>
@@ -122,7 +130,7 @@
             $len = strpos($string, $end, $ini) - $ini;
             return substr($string, $ini, $len);
         }
-        if (empty($analyses)) {
+        if (is_null($analyses)) {
             echo "No recenet Activity's";
         } else { ?>
         <table class="table table-bordered">

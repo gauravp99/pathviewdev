@@ -11,13 +11,6 @@
 /**
  * Logical NOT.
  *
- * @package    PHPUnit
- * @subpackage Framework_Constraint
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.0.0
  */
 class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
@@ -42,6 +35,41 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
     }
 
     /**
+     * @param  string $string
+     * @return string
+     */
+    public static function negate($string)
+    {
+        return str_replace(
+            array(
+            'contains ',
+            'exists',
+            'has ',
+            'is ',
+            'are ',
+            'matches ',
+            'starts with ',
+            'ends with ',
+            'reference ',
+            'not not '
+            ),
+            array(
+            'does not contain ',
+            'does not exist',
+            'does not have ',
+            'is not ',
+            'are not ',
+            'does not match ',
+            'starts not with ',
+            'ends not with ',
+            'don\'t reference ',
+            'not '
+            ),
+            $string
+        );
+    }
+
+    /**
      * Evaluates the constraint for parameter $other
      *
      * If $returnResult is set to false (the default), an exception is thrown
@@ -51,9 +79,9 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
      * a boolean value instead: true in case of success, false in case of a
      * failure.
      *
-     * @param  mixed $other Value or object to evaluate.
-     * @param  string $description Additional information about the test
-     * @param  bool $returnResult Whether to return a result or throw an exception
+     * @param  mixed                                        $other        Value or object to evaluate.
+     * @param  string                                       $description  Additional information about the test
+     * @param  bool                                         $returnResult Whether to return a result or throw an exception
      * @return mixed
      * @throws PHPUnit_Framework_ExpectationFailedException
      */
@@ -71,6 +99,30 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
     }
 
     /**
+     * Returns the description of the failure
+     *
+     * The beginning of failure messages is "Failed asserting that" in most
+     * cases. This method should return the second part of that sentence.
+     *
+     * @param  mixed  $other Evaluated value or object.
+     * @return string
+     */
+    protected function failureDescription($other)
+    {
+        switch (get_class($this->constraint)) {
+            case 'PHPUnit_Framework_Constraint_And':
+            case 'PHPUnit_Framework_Constraint_Not':
+            case 'PHPUnit_Framework_Constraint_Or':
+                return 'not( ' . $this->constraint->failureDescription($other) . ' )';
+
+            default:
+                return self::negate(
+                    $this->constraint->failureDescription($other)
+                );
+        }
+    }
+
+    /**
      * Returns a string representation of the constraint.
      *
      * @return string
@@ -80,89 +132,24 @@ class PHPUnit_Framework_Constraint_Not extends PHPUnit_Framework_Constraint
         switch (get_class($this->constraint)) {
             case 'PHPUnit_Framework_Constraint_And':
             case 'PHPUnit_Framework_Constraint_Not':
-            case 'PHPUnit_Framework_Constraint_Or': {
-            return 'not( ' . $this->constraint->toString() . ' )';
-        }
-            break;
+            case 'PHPUnit_Framework_Constraint_Or':
+                return 'not( ' . $this->constraint->toString() . ' )';
 
-            default: {
+            default:
                 return self::negate(
                     $this->constraint->toString()
                 );
-            }
         }
-    }
-
-    /**
-     * @param  string $string
-     * @return string
-     */
-    public static function negate($string)
-    {
-        return str_replace(
-            array(
-                'contains ',
-                'exists',
-                'has ',
-                'is ',
-                'are ',
-                'matches ',
-                'starts with ',
-                'ends with ',
-                'reference ',
-                'not not '
-            ),
-            array(
-                'does not contain ',
-                'does not exist',
-                'does not have ',
-                'is not ',
-                'are not ',
-                'does not match ',
-                'starts not with ',
-                'ends not with ',
-                'don\'t reference ',
-                'not '
-            ),
-            $string
-        );
     }
 
     /**
      * Counts the number of constraint elements.
      *
-     * @return integer
+     * @return int
      * @since  Method available since Release 3.4.0
      */
     public function count()
     {
         return count($this->constraint);
-    }
-
-    /**
-     * Returns the description of the failure
-     *
-     * The beginning of failure messages is "Failed asserting that" in most
-     * cases. This method should return the second part of that sentence.
-     *
-     * @param  mixed $other Evaluated value or object.
-     * @return string
-     */
-    protected function failureDescription($other)
-    {
-        switch (get_class($this->constraint)) {
-            case 'PHPUnit_Framework_Constraint_And':
-            case 'PHPUnit_Framework_Constraint_Not':
-            case 'PHPUnit_Framework_Constraint_Or': {
-                return 'not( ' . $this->constraint->failureDescription($other) . ' )';
-            }
-                break;
-
-            default: {
-                return self::negate(
-                    $this->constraint->failureDescription($other)
-                );
-            }
-        }
     }
 }

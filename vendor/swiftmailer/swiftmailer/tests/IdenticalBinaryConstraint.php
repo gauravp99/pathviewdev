@@ -2,6 +2,7 @@
 
 /**
  * A binary safe string comparison.
+ *
  * @author Chris Corbyn
  */
 class IdenticalBinaryConstraint extends \PHPUnit_Framework_Constraint
@@ -18,6 +19,7 @@ class IdenticalBinaryConstraint extends \PHPUnit_Framework_Constraint
      * constraint is met, FALSE otherwise.
      *
      * @param mixed $other Value or object to evaluate.
+     *
      * @return bool
      */
     public function matches($other)
@@ -29,9 +31,19 @@ class IdenticalBinaryConstraint extends \PHPUnit_Framework_Constraint
     }
 
     /**
+     * Returns a string representation of the constraint.
+     *
+     * @return string
+     */
+    public function toString()
+    {
+        return 'indentical binary';
+    }
+
+    /**
      * Get the given string of bytes as a stirng of Hexadecimal sequences.
      *
-     * @param  string $binary
+     * @param string $binary
      *
      * @return string
      */
@@ -46,15 +58,5 @@ class IdenticalBinaryConstraint extends \PHPUnit_Framework_Constraint
         }
 
         return implode('', $bytes);
-    }
-
-    /**
-     * Returns a string representation of the constraint.
-     *
-     * @return string
-     */
-    public function toString()
-    {
-        return 'indentical binary';
     }
 }

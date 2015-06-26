@@ -24,7 +24,7 @@ interface ExtractorInterface
     /**
      * Extracts translation messages from a template directory to the catalogue.
      *
-     * @param string $directory The path to look into
+     * @param string           $directory The path to look into
      * @param MessageCatalogue $catalogue The catalogue
      */
     public function extract($directory, MessageCatalogue $catalogue);

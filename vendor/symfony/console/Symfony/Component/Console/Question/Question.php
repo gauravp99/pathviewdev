@@ -31,7 +31,7 @@ class Question
      * Constructor.
      *
      * @param string $question The question to ask to the user
-     * @param mixed $default The default answer to return if the user enters nothing
+     * @param mixed  $default  The default answer to return if the user enters nothing
      */
     public function __construct($question, $default = null)
     {
@@ -84,7 +84,7 @@ class Question
             throw new \LogicException('A hidden question cannot use the autocompleter.');
         }
 
-        $this->hidden = (bool)$hidden;
+        $this->hidden = (bool) $hidden;
 
         return $this;
     }
@@ -108,7 +108,7 @@ class Question
      */
     public function setHiddenFallback($fallback)
     {
-        $this->hiddenFallback = (bool)$fallback;
+        $this->hiddenFallback = (bool) $fallback;
 
         return $this;
     }
@@ -151,16 +151,6 @@ class Question
     }
 
     /**
-     * Gets the validator for the question.
-     *
-     * @return null|callable
-     */
-    public function getValidator()
-    {
-        return $this->validator;
-    }
-
-    /**
      * Sets a validator for the question.
      *
      * @param null|callable $validator
@@ -172,6 +162,16 @@ class Question
         $this->validator = $validator;
 
         return $this;
+    }
+
+    /**
+     * Gets the validator for the question.
+     *
+     * @return null|callable
+     */
+    public function getValidator()
+    {
+        return $this->validator;
     }
 
     /**
@@ -209,18 +209,6 @@ class Question
     }
 
     /**
-     * Gets the normalizer for the response.
-     *
-     * The normalizer can ba a callable (a string), a closure or a class implementing __invoke.
-     *
-     * @return string|\Closure
-     */
-    public function getNormalizer()
-    {
-        return $this->normalizer;
-    }
-
-    /**
      * Sets a normalizer for the response.
      *
      * The normalizer can be a callable (a string), a closure or a class implementing __invoke.
@@ -234,5 +222,17 @@ class Question
         $this->normalizer = $normalizer;
 
         return $this;
+    }
+
+    /**
+     * Gets the normalizer for the response.
+     *
+     * The normalizer can ba a callable (a string), a closure or a class implementing __invoke.
+     *
+     * @return string|\Closure
+     */
+    public function getNormalizer()
+    {
+        return $this->normalizer;
     }
 }

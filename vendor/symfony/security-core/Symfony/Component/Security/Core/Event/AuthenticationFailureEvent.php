@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Security\Core\Event;
 
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * This event is dispatched on authentication failure.

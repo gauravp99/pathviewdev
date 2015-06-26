@@ -11,8 +11,8 @@
 
 namespace Monolog\Handler;
 
-use Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
 use Monolog\Handler\FingersCrossed\ErrorLevelActivationStrategy;
+use Monolog\Handler\FingersCrossed\ActivationStrategyInterface;
 use Monolog\Logger;
 
 /**
@@ -38,12 +38,12 @@ class FingersCrossedHandler extends AbstractHandler
     protected $passthruLevel;
 
     /**
-     * @param callable|HandlerInterface $handler Handler or factory callable($record, $fingersCrossedHandler).
+     * @param callable|HandlerInterface       $handler            Handler or factory callable($record, $fingersCrossedHandler).
      * @param int|ActivationStrategyInterface $activationStrategy Strategy which determines when this handler takes action
-     * @param int $bufferSize How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
-     * @param Boolean $bubble Whether the messages that are handled can bubble up the stack or not
-     * @param Boolean $stopBuffering Whether the handler should stop buffering after being triggered (default true)
-     * @param int $passthruLevel Minimum level to always flush to handler on close, even if strategy not triggered
+     * @param int                             $bufferSize         How many entries should be buffered at most, beyond that the oldest items are removed from the buffer.
+     * @param Boolean                         $bubble             Whether the messages that are handled can bubble up the stack or not
+     * @param Boolean                         $stopBuffering      Whether the handler should stop buffering after being triggered (default true)
+     * @param int                             $passthruLevel      Minimum level to always flush to handler on close, even if strategy not triggered
      */
     public function __construct($handler, $activationStrategy = null, $bufferSize = 0, $bubble = true, $stopBuffering = true, $passthruLevel = null)
     {
@@ -61,10 +61,13 @@ class FingersCrossedHandler extends AbstractHandler
         $this->bufferSize = $bufferSize;
         $this->bubble = $bubble;
         $this->stopBuffering = $stopBuffering;
-        $this->passthruLevel = $passthruLevel;
+
+        if ($passthruLevel !== null) {
+            $this->passthruLevel = Logger::toMonologLevel($passthruLevel);
+        }
 
         if (!$this->handler instanceof HandlerInterface && !is_callable($this->handler)) {
-            throw new \RuntimeException("The given handler (" . json_encode($this->handler) . ") is not a callable nor a Monolog\Handler\HandlerInterface object");
+            throw new \RuntimeException("The given handler (".json_encode($this->handler).") is not a callable nor a Monolog\Handler\HandlerInterface object");
         }
     }
 
@@ -130,6 +133,14 @@ class FingersCrossedHandler extends AbstractHandler
     }
 
     /**
+     * Resets the state of the handler. Stops forwarding records to the wrapped handler.
+     */
+    public function reset()
+    {
+        $this->buffering = true;
+    }
+
+    /**
      * Clears the buffer without flushing any messages down to the wrapped handler.
      *
      * It also resets the handler to its initial buffering state.
@@ -138,13 +149,5 @@ class FingersCrossedHandler extends AbstractHandler
     {
         $this->buffer = array();
         $this->reset();
-    }
-
-    /**
-     * Resets the state of the handler. Stops forwarding records to the wrapped handler.
-     */
-    public function reset()
-    {
-        $this->buffering = true;
     }
 }

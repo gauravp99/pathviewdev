@@ -11,9 +11,9 @@
 
 namespace Symfony\Component\Translation\Loader;
 
-use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
+use Symfony\Component\Config\Resource\FileResource;
 
 /**
  * JsonFileLoader loads translations from an json file.
@@ -35,10 +35,13 @@ class JsonFileLoader extends ArrayLoader implements LoaderInterface
             throw new NotFoundResourceException(sprintf('File "%s" not found.', $resource));
         }
 
-        $messages = json_decode(file_get_contents($resource), true);
+        $messages = array();
+        if ($data = file_get_contents($resource)) {
+            $messages = json_decode($data, true);
 
-        if (0 < $errorCode = json_last_error()) {
-            throw new InvalidResourceException(sprintf('Error parsing JSON - %s', $this->getJSONErrorMessage($errorCode)));
+            if (0 < $errorCode = json_last_error()) {
+                throw new InvalidResourceException(sprintf('Error parsing JSON - %s', $this->getJSONErrorMessage($errorCode)));
+            }
         }
 
         if (null === $messages) {

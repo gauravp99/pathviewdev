@@ -35,6 +35,14 @@ class RoleVoter implements VoterInterface
     /**
      * {@inheritdoc}
      */
+    public function supportsAttribute($attribute)
+    {
+        return 0 === strpos($attribute, $this->prefix);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function supportsClass($class)
     {
         return true;
@@ -67,13 +75,5 @@ class RoleVoter implements VoterInterface
     protected function extractRoles(TokenInterface $token)
     {
         return $token->getRoles();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function supportsAttribute($attribute)
-    {
-        return 0 === strpos($attribute, $this->prefix);
     }
 }

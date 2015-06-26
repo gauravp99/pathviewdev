@@ -11,7 +11,7 @@
 /**
  * Sends Messages using the mail() function.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_MailTransport extends Swift_Transport_MailTransport
 {
@@ -26,7 +26,7 @@ class Swift_MailTransport extends Swift_Transport_MailTransport
             array($this, 'Swift_Transport_MailTransport::__construct'),
             Swift_DependencyContainer::getInstance()
                 ->createDependenciesFor('transport.mail')
-        );
+            );
 
         $this->setExtraParams($extraParams);
     }

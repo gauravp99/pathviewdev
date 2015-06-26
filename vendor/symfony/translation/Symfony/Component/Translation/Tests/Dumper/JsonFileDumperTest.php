@@ -11,8 +11,8 @@
 
 namespace Symfony\Component\Translation\Tests\Dumper;
 
-use Symfony\Component\Translation\Dumper\JsonFileDumper;
 use Symfony\Component\Translation\MessageCatalogue;
+use Symfony\Component\Translation\Dumper\JsonFileDumper;
 
 class JsonFileDumperTest extends \PHPUnit_Framework_TestCase
 {
@@ -29,8 +29,8 @@ class JsonFileDumperTest extends \PHPUnit_Framework_TestCase
         $dumper = new JsonFileDumper();
         $dumper->dump($catalogue, array('path' => $tempDir));
 
-        $this->assertEquals(file_get_contents(__DIR__ . '/../fixtures/resources.json'), file_get_contents($tempDir . '/messages.en.json'));
+        $this->assertEquals(file_get_contents(__DIR__.'/../fixtures/resources.json'), file_get_contents($tempDir.'/messages.en.json'));
 
-        unlink($tempDir . '/messages.en.json');
+        unlink($tempDir.'/messages.en.json');
     }
 }

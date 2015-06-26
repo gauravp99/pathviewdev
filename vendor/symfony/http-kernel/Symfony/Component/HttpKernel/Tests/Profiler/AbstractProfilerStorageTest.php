@@ -17,8 +17,8 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
 {
     public function testStore()
     {
-        for ($i = 0; $i < 10; $i++) {
-            $profile = new Profile('token_' . $i);
+        for ($i = 0; $i < 10; ++$i) {
+            $profile = new Profile('token_'.$i);
             $profile->setIp('127.0.0.1');
             $profile->setUrl('http://foo.bar');
             $profile->setMethod('GET');
@@ -26,11 +26,6 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
         }
         $this->assertCount(10, $this->getStorage()->find('127.0.0.1', 'http://foo.bar', 20, 'GET'), '->write() stores data in the storage');
     }
-
-    /**
-     * @return \Symfony\Component\HttpKernel\Profiler\ProfilerStorageInterface
-     */
-    abstract protected function getStorage();
 
     public function testChildren()
     {
@@ -164,9 +159,9 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
         $dt = new \DateTime('now');
         $start = $dt->getTimestamp();
 
-        for ($i = 0; $i < 3; $i++) {
+        for ($i = 0; $i < 3; ++$i) {
             $dt->modify('+1 minute');
-            $profile = new Profile('time_' . $i);
+            $profile = new Profile('time_'.$i);
             $profile->setIp('127.0.0.1');
             $profile->setUrl('http://foo.bar');
             $profile->setTime($dt->getTimestamp());
@@ -186,8 +181,8 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testRetrieveByEmptyUrlAndIp()
     {
-        for ($i = 0; $i < 5; $i++) {
-            $profile = new Profile('token_' . $i);
+        for ($i = 0; $i < 5; ++$i) {
+            $profile = new Profile('token_'.$i);
             $profile->setMethod('GET');
             $this->getStorage()->write($profile);
         }
@@ -198,8 +193,8 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
     public function testRetrieveByMethodAndLimit()
     {
         foreach (array('POST', 'GET') as $method) {
-            for ($i = 0; $i < 5; $i++) {
-                $profile = new Profile('token_' . $i . $method);
+            for ($i = 0; $i < 5; ++$i) {
+                $profile = new Profile('token_'.$i.$method);
                 $profile->setMethod($method);
                 $this->getStorage()->write($profile);
             }
@@ -238,8 +233,8 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testDuplicates()
     {
-        for ($i = 1; $i <= 5; $i++) {
-            $profile = new Profile('foo' . $i);
+        for ($i = 1; $i <= 5; ++$i) {
+            $profile = new Profile('foo'.$i);
             $profile->setIp('127.0.0.1');
             $profile->setUrl('http://example.net/');
             $profile->setMethod('GET');
@@ -251,4 +246,9 @@ abstract class AbstractProfilerStorageTest extends \PHPUnit_Framework_TestCase
         }
         $this->assertCount(3, $this->getStorage()->find('127.0.0.1', 'http://example.net/', 3, 'GET'), '->find() method returns incorrect number of entries');
     }
+
+    /**
+     * @return \Symfony\Component\HttpKernel\Profiler\ProfilerStorageInterface
+     */
+    abstract protected function getStorage();
 }

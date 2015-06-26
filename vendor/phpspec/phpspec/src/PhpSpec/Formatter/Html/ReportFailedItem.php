@@ -20,10 +20,6 @@ use PhpSpec\Formatter\Template as TemplateInterface;
 class ReportFailedItem
 {
     /**
-     * @var int
-     */
-    private static $failingExamplesCount = 1;
-    /**
      * @var \PhpSpec\Formatter\Template
      */
     private $template;
@@ -32,14 +28,18 @@ class ReportFailedItem
      */
     private $event;
     /**
+     * @var int
+     */
+    private static $failingExamplesCount = 1;
+    /**
      * @var \PhpSpec\Formatter\Presenter\PresenterInterface
      */
     private $presenter;
 
     /**
      * @param TemplateInterface $template
-     * @param ExampleEvent $event
-     * @param Presenter $presenter
+     * @param ExampleEvent      $event
+     * @param Presenter         $presenter
      */
     public function __construct(TemplateInterface $template, ExampleEvent $event, Presenter $presenter)
     {
@@ -54,7 +54,8 @@ class ReportFailedItem
     public function write($index)
     {
         $code = $this->presenter->presentException($this->event->getException(), true);
-        $this->template->render(Template::DIR . '/Template/ReportFailed.html',
+        $this->template->render(
+            Template::DIR.'/Template/ReportFailed.html',
             array(
                 'title' => htmlentities(strip_tags($this->event->getTitle())),
                 'message' => htmlentities(strip_tags($this->event->getMessage())),
@@ -80,6 +81,6 @@ class ReportFailedItem
             }
         }
 
-        return rtrim($backtrace, "<br />" . PHP_EOL);
+        return rtrim($backtrace, "<br />".PHP_EOL);
     }
 }

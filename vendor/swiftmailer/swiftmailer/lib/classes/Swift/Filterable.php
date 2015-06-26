@@ -11,7 +11,7 @@
 /**
  * Allows StreamFilters to operate on a stream.
  *
- * @author  Chris Corbyn
+ * @author Chris Corbyn
  */
 interface Swift_Filterable
 {
@@ -19,7 +19,7 @@ interface Swift_Filterable
      * Add a new StreamFilter, referenced by $key.
      *
      * @param Swift_StreamFilter $filter
-     * @param string $key
+     * @param string             $key
      */
     public function addFilter(Swift_StreamFilter $filter, $key);
 

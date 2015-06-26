@@ -33,7 +33,7 @@ class ReportItemFactory
     }
 
     /**
-     * @param ExampleEvent $event
+     * @param ExampleEvent       $event
      * @param PresenterInterface $presenter
      *
      * @return ReportFailedItem|ReportPassedItem|ReportPendingItem

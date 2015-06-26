@@ -6,7 +6,7 @@ Feature: Developer chooses stop on failure
   @issue352
   Scenario: stop-on-failure defaults to off
     Given the spec file "spec/SkipOnFailure/SpecExample1/FirstFailSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\SkipOnFailure\SpecExample1;
@@ -29,7 +29,7 @@ Feature: Developer chooses stop on failure
 
       """
     And the class file "src/SkipOnFailure/SpecExample1/FirstFail.php" contains:
-    """
+      """
       <?php
 
       namespace SkipOnFailure\SpecExample1;
@@ -49,11 +49,11 @@ Feature: Developer chooses stop on failure
   @issue352
   Scenario: stop-on-failure is specified in the config
     Given the config file contains:
-    """
+      """
       stop_on_failure: true
       """
     And the spec file "spec/SkipOnFailure/SpecExample2/FirstFailSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\SkipOnFailure\SpecExample2;
@@ -76,7 +76,7 @@ Feature: Developer chooses stop on failure
 
       """
     And the class file "src/SkipOnFailure/SpecExample2/FirstFail.php" contains:
-    """
+      """
       <?php
 
       namespace SkipOnFailure\SpecExample2;
@@ -97,11 +97,11 @@ Feature: Developer chooses stop on failure
   @issue352
   Scenario: stop-on-failure at command line overrides config
     Given the config file contains:
-    """
+      """
       stop_on_failure: false
       """
     And the spec file "spec/SkipOnFailure/SpecExample3/FirstFailSpec.php" contains:
-    """
+      """
       <?php
 
       namespace spec\SkipOnFailure\SpecExample3;
@@ -124,7 +124,7 @@ Feature: Developer chooses stop on failure
 
       """
     And the class file "src/SkipOnFailure/SpecExample3/FirstFail.php" contains:
-    """
+      """
       <?php
 
       namespace SkipOnFailure\SpecExample3;

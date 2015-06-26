@@ -45,7 +45,9 @@ class WithConstructor
 
 class WithProperties
 {
-    public $baz;
-    protected $bar;
     private $foo;
+
+    protected $bar;
+
+    public $baz;
 }

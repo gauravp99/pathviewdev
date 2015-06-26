@@ -11,8 +11,8 @@
 
 namespace Prophecy\Doubler\Generator;
 
-use Prophecy\Exception\Doubler\ClassMirrorException;
 use Prophecy\Exception\InvalidArgumentException;
+use Prophecy\Exception\Doubler\ClassMirrorException;
 use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
@@ -37,7 +37,7 @@ class ClassMirror
     /**
      * Reflects provided arguments into class node.
      *
-     * @param ReflectionClass $class
+     * @param ReflectionClass   $class
      * @param ReflectionClass[] $interfaces
      *
      * @return Node\ClassNode
@@ -51,7 +51,7 @@ class ClassMirror
         if (null !== $class) {
             if (true === $class->isInterface()) {
                 throw new InvalidArgumentException(sprintf(
-                    "Could not reflect %s as a class, because it\n" .
+                    "Could not reflect %s as a class, because it\n".
                     "is interface - use the second argument instead.",
                     $class->getName()
                 ));
@@ -63,14 +63,14 @@ class ClassMirror
         foreach ($interfaces as $interface) {
             if (!$interface instanceof ReflectionClass) {
                 throw new InvalidArgumentException(sprintf(
-                    "[ReflectionClass \$interface1 [, ReflectionClass \$interface2]] array expected as\n" .
+                    "[ReflectionClass \$interface1 [, ReflectionClass \$interface2]] array expected as\n".
                     "a second argument to `ClassMirror::reflect(...)`, but got %s.",
-                    is_object($interface) ? get_class($interface) . ' class' : gettype($interface)
+                    is_object($interface) ? get_class($interface).' class' : gettype($interface)
                 ));
             }
             if (false === $interface->isInterface()) {
                 throw new InvalidArgumentException(sprintf(
-                    "Could not reflect %s as an interface, because it\n" .
+                    "Could not reflect %s as an interface, because it\n".
                     "is class - use the first argument instead.",
                     $interface->getName()
                 ));
@@ -104,8 +104,7 @@ class ClassMirror
 
         foreach ($class->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
             if (0 === strpos($method->getName(), '_')
-                && !in_array($method->getName(), self::$reflectableMethods)
-            ) {
+                && !in_array($method->getName(), self::$reflectableMethods)) {
                 continue;
             }
 
@@ -113,6 +112,15 @@ class ClassMirror
                 continue;
             }
 
+            $this->reflectMethodToNode($method, $node);
+        }
+    }
+
+    private function reflectInterfaceToNode(ReflectionClass $interface, Node\ClassNode $node)
+    {
+        $node->addInterface($interface->getName());
+
+        foreach ($interface->getMethods() as $method) {
             $this->reflectMethodToNode($method, $node);
         }
     }
@@ -153,8 +161,7 @@ class ClassMirror
         if (true === $parameter->isDefaultValueAvailable()) {
             $node->setDefault($parameter->getDefaultValue());
         } elseif (true === $parameter->isOptional()
-            || (true === $parameter->allowsNull() && $typeHint)
-        ) {
+              || (true === $parameter->allowsNull() && $typeHint)) {
             $node->setDefault(null);
         }
 
@@ -190,15 +197,6 @@ class ClassMirror
             preg_match('/\[\s\<\w+?>\s([\w,\\\]+)/s', $parameter, $matches);
 
             return isset($matches[1]) ? $matches[1] : null;
-        }
-    }
-
-    private function reflectInterfaceToNode(ReflectionClass $interface, Node\ClassNode $node)
-    {
-        $node->addInterface($interface->getName());
-
-        foreach ($interface->getMethods() as $method) {
-            $this->reflectMethodToNode($method, $node);
         }
     }
 }

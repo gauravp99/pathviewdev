@@ -22,8 +22,8 @@ class StringEngine implements EngineInterface
 
     public function compare($expected, $actual)
     {
-        $expected = explode(PHP_EOL, (string)$expected);
-        $actual = explode(PHP_EOL, (string)$actual);
+        $expected = explode(PHP_EOL, (string) $expected);
+        $actual   = explode(PHP_EOL, (string) $actual);
 
         $diff = new \Diff($expected, $actual, array());
 

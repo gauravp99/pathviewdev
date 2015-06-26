@@ -25,13 +25,13 @@ class HtmlFormatter extends NormalizerFormatter
      * Translates Monolog log levels to html color priorities.
      */
     private $logLevels = array(
-        Logger::DEBUG => '#cccccc',
-        Logger::INFO => '#468847',
-        Logger::NOTICE => '#3a87ad',
-        Logger::WARNING => '#c09853',
-        Logger::ERROR => '#f0ad4e',
-        Logger::CRITICAL => '#FF7708',
-        Logger::ALERT => '#C12A19',
+        Logger::DEBUG     => '#cccccc',
+        Logger::INFO      => '#468847',
+        Logger::NOTICE    => '#3a87ad',
+        Logger::WARNING   => '#c09853',
+        Logger::ERROR     => '#f0ad4e',
+        Logger::CRITICAL  => '#FF7708',
+        Logger::ALERT     => '#C12A19',
         Logger::EMERGENCY => '#000000',
     );
 
@@ -44,21 +44,36 @@ class HtmlFormatter extends NormalizerFormatter
     }
 
     /**
-     * Formats a set of log records.
+     * Creates an HTML table row
      *
-     * @param  array $records A set of records to format
-     * @return mixed The formatted set of records
+     * @param  string $th       Row header content
+     * @param  string $td       Row standard cell content
+     * @param  bool   $escapeTd false if td content must not be html escaped
+     * @return string
      */
-    public function formatBatch(array $records)
+    private function addRow($th, $td = ' ', $escapeTd = true)
     {
-        $message = '';
-        foreach ($records as $record) {
-            $message .= $this->format($record);
+        $th = htmlspecialchars($th, ENT_NOQUOTES, 'UTF-8');
+        if ($escapeTd) {
+            $td = '<pre>'.htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8').'</pre>';
         }
 
-        return $message;
+        return "<tr style=\"padding: 4px;spacing: 0;text-align: left;\">\n<th style=\"background: #cccccc\" width=\"100px\">$th:</th>\n<td style=\"padding: 4px;spacing: 0;text-align: left;background: #eeeeee\">".$td."</td>\n</tr>";
     }
 
+    /**
+     * Create a HTML h1 tag
+     *
+     * @param  string  $title Text to be in the h1
+     * @param  integer $level Error level
+     * @return string
+     */
+    private function addTitle($title, $level)
+    {
+        $title = htmlspecialchars($title, ENT_NOQUOTES, 'UTF-8');
+
+        return '<h1 style="background: '.$this->logLevels[$level].';color: #ffffff;padding: 5px;" class="monolog-output">'.$title.'</h1>';
+    }
     /**
      * Formats a log record.
      *
@@ -70,7 +85,7 @@ class HtmlFormatter extends NormalizerFormatter
         $output = $this->addTitle($record['level_name'], $record['level']);
         $output .= '<table cellspacing="1" width="100%" class="monolog-output">';
 
-        $output .= $this->addRow('Message', (string)$record['message']);
+        $output .= $this->addRow('Message', (string) $record['message']);
         $output .= $this->addRow('Time', $record['datetime']->format($this->dateFormat));
         $output .= $this->addRow('Channel', $record['channel']);
         if ($record['context']) {
@@ -90,45 +105,29 @@ class HtmlFormatter extends NormalizerFormatter
             $output .= $this->addRow('Extra', $embeddedTable, false);
         }
 
-        return $output . '</table>';
+        return $output.'</table>';
     }
 
     /**
-     * Create a HTML h1 tag
+     * Formats a set of log records.
      *
-     * @param  string $title Text to be in the h1
-     * @param  integer $level Error level
-     * @return string
+     * @param  array $records A set of records to format
+     * @return mixed The formatted set of records
      */
-    private function addTitle($title, $level)
+    public function formatBatch(array $records)
     {
-        $title = htmlspecialchars($title, ENT_NOQUOTES, 'UTF-8');
-
-        return '<h1 style="background: ' . $this->logLevels[$level] . ';color: #ffffff;padding: 5px;" class="monolog-output">' . $title . '</h1>';
-    }
-
-    /**
-     * Creates an HTML table row
-     *
-     * @param  string $th Row header content
-     * @param  string $td Row standard cell content
-     * @param  bool $escapeTd false if td content must not be html escaped
-     * @return string
-     */
-    private function addRow($th, $td = ' ', $escapeTd = true)
-    {
-        $th = htmlspecialchars($th, ENT_NOQUOTES, 'UTF-8');
-        if ($escapeTd) {
-            $td = '<pre>' . htmlspecialchars($td, ENT_NOQUOTES, 'UTF-8') . '</pre>';
+        $message = '';
+        foreach ($records as $record) {
+            $message .= $this->format($record);
         }
 
-        return "<tr style=\"padding: 4px;spacing: 0;text-align: left;\">\n<th style=\"background: #cccccc\" width=\"100px\">$th:</th>\n<td style=\"padding: 4px;spacing: 0;text-align: left;background: #eeeeee\">" . $td . "</td>\n</tr>";
+        return $message;
     }
 
     protected function convertToString($data)
     {
         if (null === $data || is_scalar($data)) {
-            return (string)$data;
+            return (string) $data;
         }
 
         $data = $this->normalize($data);

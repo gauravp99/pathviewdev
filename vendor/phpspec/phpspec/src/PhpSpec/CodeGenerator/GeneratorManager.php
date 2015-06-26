@@ -13,8 +13,8 @@
 
 namespace PhpSpec\CodeGenerator;
 
-use InvalidArgumentException;
 use PhpSpec\Locator\ResourceInterface;
+use InvalidArgumentException;
 
 /**
  * Uses registered generators to generate code honoring priority order
@@ -39,8 +39,8 @@ class GeneratorManager
 
     /**
      * @param ResourceInterface $resource
-     * @param string $name
-     * @param array $data
+     * @param string            $name
+     * @param array             $data
      *
      * @return mixed
      * @throws \InvalidArgumentException
@@ -54,7 +54,8 @@ class GeneratorManager
         }
 
         throw new InvalidArgumentException(sprintf(
-            '"%s" code generator is not registered.', $name
+            '"%s" code generator is not registered.',
+            $name
         ));
     }
 }

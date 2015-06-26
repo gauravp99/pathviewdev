@@ -53,33 +53,13 @@ class Profile
     }
 
     /**
-     * Returns the parent profile.
+     * Sets the token.
      *
-     * @return Profile The parent profile
+     * @param string $token The token
      */
-    public function getParent()
+    public function setToken($token)
     {
-        return $this->parent;
-    }
-
-    /**
-     * Sets the parent token.
-     *
-     * @param Profile $parent The parent Profile
-     */
-    public function setParent(Profile $parent)
-    {
-        $this->parent = $parent;
-    }
-
-    /**
-     * Returns the parent token.
-     *
-     * @return null|string The parent token
-     */
-    public function getParentToken()
-    {
-        return $this->parent ? $this->parent->getToken() : null;
+        $this->token = $token;
     }
 
     /**
@@ -93,13 +73,33 @@ class Profile
     }
 
     /**
-     * Sets the token.
+     * Sets the parent token.
      *
-     * @param string $token The token
+     * @param Profile $parent The parent Profile
      */
-    public function setToken($token)
+    public function setParent(Profile $parent)
     {
-        $this->token = $token;
+        $this->parent = $parent;
+    }
+
+    /**
+     * Returns the parent profile.
+     *
+     * @return Profile The parent profile
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Returns the parent token.
+     *
+     * @return null|string The parent token
+     */
+    public function getParentToken()
+    {
+        return $this->parent ? $this->parent->getToken() : null;
     }
 
     /**

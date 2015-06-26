@@ -11,7 +11,7 @@
 /**
  * Contains a list of redundant Transports so when one fails, the next is used.
  *
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_FailoverTransport extends Swift_Transport_FailoverTransport
 {
@@ -26,7 +26,7 @@ class Swift_FailoverTransport extends Swift_Transport_FailoverTransport
             array($this, 'Swift_Transport_FailoverTransport::__construct'),
             Swift_DependencyContainer::getInstance()
                 ->createDependenciesFor('transport.failover')
-        );
+            );
 
         $this->setTransports($transports);
     }

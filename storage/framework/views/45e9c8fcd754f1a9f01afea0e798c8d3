@@ -42,7 +42,7 @@
             if (strpos($val, 'png')) {
                 if(Auth::user())
                     {
-$email = Auth::user()->email;
+                    $email = Auth::user()->email;
                 echo "<li  style='font-size: 24px; list-style-type: none;'>  <a target=\"_blank\" href=\"viewer?analyses=$analysis&id=$id&image=$val&email=$email\" > " . $val . "</a></li>";
                         }
                 else

@@ -12,9 +12,9 @@
 namespace Monolog\Handler;
 
 use Gelf\Message;
-use Monolog\Formatter\GelfMessageFormatter;
-use Monolog\Logger;
 use Monolog\TestCase;
+use Monolog\Logger;
+use Monolog\Formatter\GelfMessageFormatter;
 
 class GelfHandlerTest extends TestCase
 {
@@ -34,6 +34,13 @@ class GelfHandlerTest extends TestCase
         $this->assertInstanceOf('Monolog\Handler\GelfHandler', $handler);
     }
 
+    protected function getHandler($messagePublisher)
+    {
+        $handler = new GelfHandler($messagePublisher);
+
+        return $handler;
+    }
+
     protected function getMessagePublisher()
     {
         return $this->getMock('Gelf\Publisher', array('publish'), array(), '', false);
@@ -47,7 +54,8 @@ class GelfHandlerTest extends TestCase
             ->setLevel(7)
             ->setFacility("test")
             ->setShortMessage($record['message'])
-            ->setTimestamp($record['datetime']);
+            ->setTimestamp($record['datetime'])
+        ;
 
         $messagePublisher = $this->getMessagePublisher();
         $messagePublisher->expects($this->once())
@@ -59,13 +67,6 @@ class GelfHandlerTest extends TestCase
         $handler->handle($record);
     }
 
-    protected function getHandler($messagePublisher)
-    {
-        $handler = new GelfHandler($messagePublisher);
-
-        return $handler;
-    }
-
     public function testWarning()
     {
         $record = $this->getRecord(Logger::WARNING, "A test warning message");
@@ -74,7 +75,8 @@ class GelfHandlerTest extends TestCase
             ->setLevel(4)
             ->setFacility("test")
             ->setShortMessage($record['message'])
-            ->setTimestamp($record['datetime']);
+            ->setTimestamp($record['datetime'])
+        ;
 
         $messagePublisher = $this->getMessagePublisher();
         $messagePublisher->expects($this->once())
@@ -100,7 +102,8 @@ class GelfHandlerTest extends TestCase
             ->setShortMessage($record['message'])
             ->setTimestamp($record['datetime'])
             ->setAdditional("EXTblarg", 'yep')
-            ->setAdditional("CTXfrom", 'logger');
+            ->setAdditional("CTXfrom", 'logger')
+        ;
 
         $messagePublisher = $this->getMessagePublisher();
         $messagePublisher->expects($this->once())

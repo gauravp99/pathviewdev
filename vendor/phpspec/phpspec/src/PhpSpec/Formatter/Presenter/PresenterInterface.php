@@ -24,7 +24,7 @@ interface PresenterInterface
 
     /**
      * @param \Exception $exception
-     * @param bool $verbose
+     * @param bool       $verbose
      *
      * @return string
      */

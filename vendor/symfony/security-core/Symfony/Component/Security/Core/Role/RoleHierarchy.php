@@ -18,8 +18,8 @@ namespace Symfony\Component\Security\Core\Role;
  */
 class RoleHierarchy implements RoleHierarchyInterface
 {
-    protected $map;
     private $hierarchy;
+    protected $map;
 
     /**
      * Constructor.
@@ -31,25 +31,6 @@ class RoleHierarchy implements RoleHierarchyInterface
         $this->hierarchy = $hierarchy;
 
         $this->buildRoleMap();
-    }
-
-    protected function buildRoleMap()
-    {
-        $this->map = array();
-        foreach ($this->hierarchy as $main => $roles) {
-            $this->map[$main] = $roles;
-            $visited = array();
-            $additionalRoles = $roles;
-            while ($role = array_shift($additionalRoles)) {
-                if (!isset($this->hierarchy[$role])) {
-                    continue;
-                }
-
-                $visited[] = $role;
-                $this->map[$main] = array_unique(array_merge($this->map[$main], $this->hierarchy[$role]));
-                $additionalRoles = array_merge($additionalRoles, array_diff($this->hierarchy[$role], $visited));
-            }
-        }
     }
 
     /**
@@ -69,5 +50,24 @@ class RoleHierarchy implements RoleHierarchyInterface
         }
 
         return $reachableRoles;
+    }
+
+    protected function buildRoleMap()
+    {
+        $this->map = array();
+        foreach ($this->hierarchy as $main => $roles) {
+            $this->map[$main] = $roles;
+            $visited = array();
+            $additionalRoles = $roles;
+            while ($role = array_shift($additionalRoles)) {
+                if (!isset($this->hierarchy[$role])) {
+                    continue;
+                }
+
+                $visited[] = $role;
+                $this->map[$main] = array_unique(array_merge($this->map[$main], $this->hierarchy[$role]));
+                $additionalRoles = array_merge($additionalRoles, array_diff($this->hierarchy[$role], $visited));
+            }
+        }
     }
 }

@@ -31,28 +31,15 @@ class UnixPipes extends AbstractPipes
 
     public function __construct($ttyMode, $ptyMode, $input, $disableOutput)
     {
-        $this->ttyMode = (bool)$ttyMode;
-        $this->ptyMode = (bool)$ptyMode;
-        $this->disableOutput = (bool)$disableOutput;
+        $this->ttyMode = (bool) $ttyMode;
+        $this->ptyMode = (bool) $ptyMode;
+        $this->disableOutput = (bool) $disableOutput;
 
         if (is_resource($input)) {
             $this->input = $input;
         } else {
-            $this->inputBuffer = (string)$input;
+            $this->inputBuffer = (string) $input;
         }
-    }
-
-    /**
-     * Creates a new UnixPipes instance
-     *
-     * @param Process $process
-     * @param string|resource $input
-     *
-     * @return UnixPipes
-     */
-    public static function create(Process $process, $input)
-    {
-        return new static($process->isTty(), $process->isPty(), $input, $process->isOutputDisabled());
     }
 
     public function __destruct()
@@ -160,7 +147,7 @@ class UnixPipes extends AbstractPipes
             // lose key association, we have to find back the key
             $type = (false !== $found = array_search($pipe, $this->pipes)) ? $found : 'input';
             $data = '';
-            while ('' !== $dataread = (string)fread($pipe, self::CHUNK_SIZE)) {
+            while ('' !== $dataread = (string) fread($pipe, self::CHUNK_SIZE)) {
                 $data .= $dataread;
             }
 
@@ -188,7 +175,7 @@ class UnixPipes extends AbstractPipes
             while (strlen($this->inputBuffer)) {
                 $written = fwrite($w[0], $this->inputBuffer, 2 << 18); // write 512k
                 if ($written > 0) {
-                    $this->inputBuffer = (string)substr($this->inputBuffer, $written);
+                    $this->inputBuffer = (string) substr($this->inputBuffer, $written);
                 } else {
                     break;
                 }
@@ -209,6 +196,19 @@ class UnixPipes extends AbstractPipes
      */
     public function areOpen()
     {
-        return (bool)$this->pipes;
+        return (bool) $this->pipes;
+    }
+
+    /**
+     * Creates a new UnixPipes instance
+     *
+     * @param Process         $process
+     * @param string|resource $input
+     *
+     * @return UnixPipes
+     */
+    public static function create(Process $process, $input)
+    {
+        return new static($process->isTty(), $process->isPty(), $input, $process->isOutputDisabled());
     }
 }

@@ -2,9 +2,10 @@
 
 namespace spec\PhpSpec\Locator;
 
-use PhpSpec\Locator\ResourceInterface;
-use PhpSpec\Locator\ResourceLocatorInterface;
 use PhpSpec\ObjectBehavior;
+
+use PhpSpec\Locator\ResourceLocatorInterface;
+use PhpSpec\Locator\ResourceInterface;
 
 class ResourceManagerSpec extends ObjectBehavior
 {
@@ -15,9 +16,8 @@ class ResourceManagerSpec extends ObjectBehavior
     }
 
     function it_locates_resources_using_all_registered_locators($locator1, $locator2,
-                                                                ResourceInterface $resource1, ResourceInterface $resource2, ResourceInterface $resource3
-    )
-    {
+        ResourceInterface $resource1, ResourceInterface $resource2, ResourceInterface $resource3
+    ) {
         $this->registerLocator($locator1);
         $this->registerLocator($locator2);
 
@@ -34,9 +34,8 @@ class ResourceManagerSpec extends ObjectBehavior
     }
 
     function it_locates_all_locators_resources_if_query_string_is_empty($locator1, $locator2,
-                                                                        ResourceInterface $resource1, ResourceInterface $resource2, ResourceInterface $resource3
-    )
-    {
+        ResourceInterface $resource1, ResourceInterface $resource2, ResourceInterface $resource3
+    ) {
         $this->registerLocator($locator1);
         $this->registerLocator($locator2);
 
@@ -62,8 +61,7 @@ class ResourceManagerSpec extends ObjectBehavior
 
     function it_creates_resource_from_classname_using_locator_with_highest_priority(
         $locator1, $locator2, ResourceInterface $resource1, ResourceInterface $resource2
-    )
-    {
+    ) {
         $this->registerLocator($locator1);
         $this->registerLocator($locator2);
 
@@ -86,8 +84,7 @@ class ResourceManagerSpec extends ObjectBehavior
 
     function it_does_not_allow_two_resources_for_the_same_spec(
         $locator1, $locator2, ResourceInterface $resource1, ResourceInterface $resource2
-    )
-    {
+    ) {
         $this->registerLocator($locator1);
         $this->registerLocator($locator2);
 
@@ -102,8 +99,7 @@ class ResourceManagerSpec extends ObjectBehavior
 
     function it_uses_the_resource_from_the_highest_priority_locator_when_duplicates_occur(
         $locator1, $locator2, ResourceInterface $resource1, ResourceInterface $resource2
-    )
-    {
+    ) {
         $locator1->getPriority()->willReturn(2);
         $locator2->getPriority()->willReturn(1);
 

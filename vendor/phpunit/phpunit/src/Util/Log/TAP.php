@@ -12,35 +12,29 @@
  * A TestListener that generates a logfile of the
  * test execution using the Test Anything Protocol (TAP).
  *
- * @package    PHPUnit
- * @subpackage Util_Log
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.phpunit.de/
  * @since      Class available since Release 3.0.0
  */
 class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Framework_TestListener
 {
     /**
-     * @var    integer
+     * @var int
      */
     protected $testNumber = 0;
 
     /**
-     * @var    integer
+     * @var int
      */
     protected $testSuiteLevel = 0;
 
     /**
-     * @var    boolean
+     * @var bool
      */
     protected $testSuccessful = true;
 
     /**
      * Constructor.
      *
-     * @param  mixed $out
+     * @param  mixed                       $out
      * @throws PHPUnit_Framework_Exception
      * @since  Method available since Release 3.3.4
      */
@@ -54,8 +48,8 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * An error occurred.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception $e
-     * @param float $time
+     * @param Exception              $e
+     * @param float                  $time
      */
     public function addError(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
@@ -63,31 +57,11 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
     }
 
     /**
-     * @param PHPUnit_Framework_Test $test
-     * @param string $prefix
-     * @param string $directive
-     */
-    protected function writeNotOk(PHPUnit_Framework_Test $test, $prefix = '', $directive = '')
-    {
-        $this->write(
-            sprintf(
-                "not ok %d - %s%s%s\n",
-                $this->testNumber,
-                $prefix != '' ? $prefix . ': ' : '',
-                PHPUnit_Util_Test::describe($test),
-                $directive != '' ? ' # ' . $directive : ''
-            )
-        );
-
-        $this->testSuccessful = false;
-    }
-
-    /**
      * A failure occurred.
      *
-     * @param PHPUnit_Framework_Test $test
+     * @param PHPUnit_Framework_Test                 $test
      * @param PHPUnit_Framework_AssertionFailedError $e
-     * @param float $time
+     * @param float                                  $time
      */
     public function addFailure(PHPUnit_Framework_Test $test, PHPUnit_Framework_AssertionFailedError $e, $time)
     {
@@ -99,8 +73,8 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
         );
 
         $diagnostic = array(
-            'message' => $message[0],
-            'severity' => 'fail'
+          'message'  => $message[0],
+          'severity' => 'fail'
         );
 
         if ($e instanceof PHPUnit_Framework_ExpectationFailedException) {
@@ -108,8 +82,8 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
 
             if ($cf !== null) {
                 $diagnostic['data'] = array(
-                    'got' => $cf->getActual(),
-                    'expected' => $cf->getExpected()
+                  'got'      => $cf->getActual(),
+                  'expected' => $cf->getExpected()
                 );
             }
         }
@@ -128,8 +102,8 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * Incomplete test.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception $e
-     * @param float $time
+     * @param Exception              $e
+     * @param float                  $time
      */
     public function addIncompleteTest(PHPUnit_Framework_Test $test, Exception $e, $time)
     {
@@ -140,8 +114,8 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * Risky test.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception $e
-     * @param float $time
+     * @param Exception              $e
+     * @param float                  $time
      * @since  Method available since Release 4.0.0
      */
     public function addRiskyTest(PHPUnit_Framework_Test $test, Exception $e, $time)
@@ -161,8 +135,8 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * Skipped test.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param Exception $e
-     * @param float $time
+     * @param Exception              $e
+     * @param float                  $time
      * @since  Method available since Release 3.0.0
      */
     public function addSkippedTest(PHPUnit_Framework_Test $test, Exception $e, $time)
@@ -217,7 +191,7 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
      * A test ended.
      *
      * @param PHPUnit_Framework_Test $test
-     * @param float $time
+     * @param float                  $time
      */
     public function endTest(PHPUnit_Framework_Test $test, $time)
     {
@@ -227,6 +201,51 @@ class PHPUnit_Util_Log_TAP extends PHPUnit_Util_Printer implements PHPUnit_Frame
                     "ok %d - %s\n",
                     $this->testNumber,
                     PHPUnit_Util_Test::describe($test)
+                )
+            );
+        }
+
+        $this->writeDiagnostics($test);
+    }
+
+    /**
+     * @param PHPUnit_Framework_Test $test
+     * @param string                 $prefix
+     * @param string                 $directive
+     */
+    protected function writeNotOk(PHPUnit_Framework_Test $test, $prefix = '', $directive = '')
+    {
+        $this->write(
+            sprintf(
+                "not ok %d - %s%s%s\n",
+                $this->testNumber,
+                $prefix != '' ? $prefix . ': ' : '',
+                PHPUnit_Util_Test::describe($test),
+                $directive != '' ? ' # ' . $directive : ''
+            )
+        );
+
+        $this->testSuccessful = false;
+    }
+
+    /**
+     * @param PHPUnit_Framework_Test $test
+     */
+    private function writeDiagnostics(PHPUnit_Framework_Test $test)
+    {
+        if (!$test instanceof PHPUnit_Framework_TestCase) {
+            return;
+        }
+
+        if (!$test->hasOutput()) {
+            return;
+        }
+
+        foreach (explode("\n", trim($test->getActualOutput())) as $line) {
+            $this->write(
+                sprintf(
+                    "# %s\n",
+                    $line
                 )
             );
         }

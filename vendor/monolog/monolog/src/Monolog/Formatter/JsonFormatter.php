@@ -62,6 +62,14 @@ class JsonFormatter implements FormatterInterface
     /**
      * {@inheritdoc}
      */
+    public function format(array $record)
+    {
+        return json_encode($record) . ($this->appendNewline ? "\n" : '');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function formatBatch(array $records)
     {
         switch ($this->batchMode) {
@@ -75,10 +83,21 @@ class JsonFormatter implements FormatterInterface
     }
 
     /**
+     * Return a JSON-encoded array of records.
+     *
+     * @param  array  $records
+     * @return string
+     */
+    protected function formatBatchJson(array $records)
+    {
+        return json_encode($records);
+    }
+
+    /**
      * Use new lines to separate records instead of a
      * JSON-encoded array.
      *
-     * @param  array $records
+     * @param  array  $records
      * @return string
      */
     protected function formatBatchNewlines(array $records)
@@ -93,24 +112,5 @@ class JsonFormatter implements FormatterInterface
         $this->appendNewline = $oldNewline;
 
         return implode("\n", $records);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function format(array $record)
-    {
-        return json_encode($record) . ($this->appendNewline ? "\n" : '');
-    }
-
-    /**
-     * Return a JSON-encoded array of records.
-     *
-     * @param  array $records
-     * @return string
-     */
-    protected function formatBatchJson(array $records)
-    {
-        return json_encode($records);
     }
 }

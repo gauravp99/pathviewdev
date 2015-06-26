@@ -19,10 +19,6 @@ use PhpSpec\Formatter\Template as TemplateInterface;
 class ReportPendingItem
 {
     /**
-     * @var int
-     */
-    private static $pendingExamplesCount = 1;
-    /**
      * @var \PhpSpec\Formatter\Template
      */
     private $template;
@@ -30,10 +26,14 @@ class ReportPendingItem
      * @var \PhpSpec\Event\ExampleEvent
      */
     private $event;
+    /**
+     * @var int
+     */
+    private static $pendingExamplesCount = 1;
 
     /**
      * @param TemplateInterface $template
-     * @param ExampleEvent $event
+     * @param ExampleEvent      $event
      */
     public function __construct(TemplateInterface $template, ExampleEvent $event)
     {
@@ -46,7 +46,7 @@ class ReportPendingItem
      */
     public function write()
     {
-        $this->template->render(Template::DIR . '/Template/ReportPending.html', array(
+        $this->template->render(Template::DIR.'/Template/ReportPending.html', array(
             'title' => $this->event->getTitle(),
             'pendingExamplesCount' => self::$pendingExamplesCount
         ));

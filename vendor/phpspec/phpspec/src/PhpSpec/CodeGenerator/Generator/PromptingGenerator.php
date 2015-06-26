@@ -13,10 +13,10 @@
 
 namespace PhpSpec\CodeGenerator\Generator;
 
-use PhpSpec\CodeGenerator\TemplateRenderer;
 use PhpSpec\Console\IO;
-use PhpSpec\Locator\ResourceInterface;
+use PhpSpec\CodeGenerator\TemplateRenderer;
 use PhpSpec\Util\Filesystem;
+use PhpSpec\Locator\ResourceInterface;
 
 /**
  * Base class with common behaviour for generating class and spec class
@@ -39,20 +39,20 @@ abstract class PromptingGenerator implements GeneratorInterface
     private $filesystem;
 
     /**
-     * @param IO $io
+     * @param IO               $io
      * @param TemplateRenderer $templates
-     * @param Filesystem $filesystem
+     * @param Filesystem       $filesystem
      */
     public function __construct(IO $io, TemplateRenderer $templates, Filesystem $filesystem = null)
     {
-        $this->io = $io;
-        $this->templates = $templates;
+        $this->io         = $io;
+        $this->templates  = $templates;
         $this->filesystem = $filesystem ?: new Filesystem();
     }
 
     /**
      * @param ResourceInterface $resource
-     * @param array $data
+     * @param array             $data
      */
     public function generate(ResourceInterface $resource, array $data = array())
     {
@@ -71,11 +71,35 @@ abstract class PromptingGenerator implements GeneratorInterface
     }
 
     /**
+     * @return TemplateRenderer
+     */
+    protected function getTemplateRenderer()
+    {
+        return $this->templates;
+    }
+
+    /**
      * @param ResourceInterface $resource
      *
      * @return string
      */
     abstract protected function getFilePath(ResourceInterface $resource);
+
+    /**
+     * @param ResourceInterface $resource
+     * @param string            $filepath
+     *
+     * @return string
+     */
+    abstract protected function renderTemplate(ResourceInterface $resource, $filepath);
+
+    /**
+     * @param ResourceInterface $resource
+     * @param string            $filepath
+     *
+     * @return string
+     */
+    abstract protected function getGeneratedMessage(ResourceInterface $resource, $filepath);
 
     /**
      * @param string $filepath
@@ -112,7 +136,7 @@ abstract class PromptingGenerator implements GeneratorInterface
 
     /**
      * @param ResourceInterface $resource
-     * @param string $filepath
+     * @param string            $filepath
      */
     private function generateFileAndRenderTemplate(ResourceInterface $resource, $filepath)
     {
@@ -120,29 +144,5 @@ abstract class PromptingGenerator implements GeneratorInterface
 
         $this->filesystem->putFileContents($filepath, $content);
         $this->io->writeln($this->getGeneratedMessage($resource, $filepath));
-    }
-
-    /**
-     * @param ResourceInterface $resource
-     * @param string $filepath
-     *
-     * @return string
-     */
-    abstract protected function renderTemplate(ResourceInterface $resource, $filepath);
-
-    /**
-     * @param ResourceInterface $resource
-     * @param string $filepath
-     *
-     * @return string
-     */
-    abstract protected function getGeneratedMessage(ResourceInterface $resource, $filepath);
-
-    /**
-     * @return TemplateRenderer
-     */
-    protected function getTemplateRenderer()
-    {
-        return $this->templates;
     }
 }

@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Event;
 
-use PhpSpec\Loader\Node\SpecificationNode;
 use Symfony\Component\EventDispatcher\Event;
+use PhpSpec\Loader\Node\SpecificationNode;
 
 /**
  * Class SpecificationEvent holds information about the specification event
@@ -38,14 +38,14 @@ class SpecificationEvent extends Event implements EventInterface
 
     /**
      * @param SpecificationNode $specification
-     * @param float $time
-     * @param integer $result
+     * @param float             $time
+     * @param integer           $result
      */
     public function __construct(SpecificationNode $specification, $time = null, $result = null)
     {
         $this->specification = $specification;
-        $this->time = $time;
-        $this->result = $result;
+        $this->time          = $time;
+        $this->result        = $result;
     }
 
     /**

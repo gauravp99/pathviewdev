@@ -11,15 +11,15 @@
 
 namespace Symfony\Component\Security\Core\Authentication;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
-use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\AuthenticationEvents;
-use Symfony\Component\Security\Core\Event\AuthenticationEvent;
 use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent;
+use Symfony\Component\Security\Core\Event\AuthenticationEvent;
+use Symfony\Component\Security\Core\AuthenticationEvents;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\Exception\AccountStatusException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\ProviderNotFoundException;
+use Symfony\Component\Security\Core\Authentication\Provider\AuthenticationProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * AuthenticationProviderManager uses a list of AuthenticationProviderInterface
@@ -37,8 +37,8 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
     /**
      * Constructor.
      *
-     * @param AuthenticationProviderInterface[] $providers An array of AuthenticationProviderInterface instances
-     * @param bool $eraseCredentials Whether to erase credentials after authentication or not
+     * @param AuthenticationProviderInterface[] $providers        An array of AuthenticationProviderInterface instances
+     * @param bool                              $eraseCredentials Whether to erase credentials after authentication or not
      *
      * @throws \InvalidArgumentException
      */
@@ -49,7 +49,7 @@ class AuthenticationProviderManager implements AuthenticationManagerInterface
         }
 
         $this->providers = $providers;
-        $this->eraseCredentials = (bool)$eraseCredentials;
+        $this->eraseCredentials = (bool) $eraseCredentials;
     }
 
     public function setEventDispatcher(EventDispatcherInterface $dispatcher)

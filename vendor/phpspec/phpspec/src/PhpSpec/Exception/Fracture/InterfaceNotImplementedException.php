@@ -31,14 +31,14 @@ class InterfaceNotImplementedException extends FractureException
 
     /**
      * @param string $message
-     * @param mixed $subject
+     * @param mixed  $subject
      * @param string $interface
      */
     public function __construct($message, $subject, $interface)
     {
         parent::__construct($message);
 
-        $this->subject = $subject;
+        $this->subject   = $subject;
         $this->interface = $interface;
     }
 

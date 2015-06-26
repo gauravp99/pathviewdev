@@ -21,6 +21,19 @@ class AuthorizationCheckerTest extends \PHPUnit_Framework_TestCase
     private $authorizationChecker;
     private $tokenStorage;
 
+    protected function setUp()
+    {
+        $this->authenticationManager = $this->getMock('Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface');
+        $this->accessDecisionManager = $this->getMock('Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface');
+        $this->tokenStorage = new TokenStorage();
+
+        $this->authorizationChecker = new AuthorizationChecker(
+            $this->tokenStorage,
+            $this->authenticationManager,
+            $this->accessDecisionManager
+        );
+    }
+
     public function testVoteAuthenticatesTokenIfNecessary()
     {
         $token = $this->getMock('Symfony\Component\Security\Core\Authentication\Token\TokenInterface');
@@ -82,18 +95,5 @@ class AuthorizationCheckerTest extends \PHPUnit_Framework_TestCase
     public function isGrantedProvider()
     {
         return array(array(true), array(false));
-    }
-
-    protected function setUp()
-    {
-        $this->authenticationManager = $this->getMock('Symfony\Component\Security\Core\Authentication\AuthenticationManagerInterface');
-        $this->accessDecisionManager = $this->getMock('Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface');
-        $this->tokenStorage = new TokenStorage();
-
-        $this->authorizationChecker = new AuthorizationChecker(
-            $this->tokenStorage,
-            $this->authenticationManager,
-            $this->accessDecisionManager
-        );
     }
 }

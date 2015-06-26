@@ -13,8 +13,8 @@
 
 namespace PhpSpec\Matcher;
 
-use PhpSpec\Exception\Example\FailureException;
 use PhpSpec\Formatter\Presenter\PresenterInterface;
+use PhpSpec\Exception\Example\FailureException;
 
 class CallbackMatcher extends BasicMatcher
 {
@@ -32,21 +32,21 @@ class CallbackMatcher extends BasicMatcher
     private $presenter;
 
     /**
-     * @param string $name
-     * @param callable $callback
+     * @param string             $name
+     * @param callable           $callback
      * @param PresenterInterface $presenter
      */
     public function __construct($name, $callback, PresenterInterface $presenter)
     {
-        $this->name = $name;
-        $this->callback = $callback;
+        $this->name      = $name;
+        $this->callback  = $callback;
         $this->presenter = $presenter;
     }
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return bool
      */
@@ -57,7 +57,7 @@ class CallbackMatcher extends BasicMatcher
 
     /**
      * @param string $subject
-     * @param array $arguments
+     * @param array  $arguments
      *
      * @return bool
      */
@@ -65,13 +65,13 @@ class CallbackMatcher extends BasicMatcher
     {
         array_unshift($arguments, $subject);
 
-        return (Boolean)call_user_func_array($this->callback, $arguments);
+        return (Boolean) call_user_func_array($this->callback, $arguments);
     }
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return FailureException
      */
@@ -87,8 +87,8 @@ class CallbackMatcher extends BasicMatcher
 
     /**
      * @param string $name
-     * @param mixed $subject
-     * @param array $arguments
+     * @param mixed  $subject
+     * @param array  $arguments
      *
      * @return FailureException
      */
