@@ -176,7 +176,9 @@ __Command:__
 
 #14. try accessing the url/ip address
 
-
+#15. Install Redis 
+download from the official website and follow the installation procedure
+check database.conf file for port and host settings of the redis
 ##References:
 
 1. Laravel Installation:
