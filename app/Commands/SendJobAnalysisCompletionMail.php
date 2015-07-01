@@ -75,19 +75,29 @@ class SendJobAnalysisCompletionMail extends Command implements SelfHandling, Sho
         echo $outFile;
         echo $errorfile;
 
-        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript /home/ybhavnasi/Desktop/Pathway/public/my_Rscript.R \"$argument\" >$outFile  2> $errorfile ");
+        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript /var/www/Pathway/public/my_Rscript.R \"$argument\" >$outFile  2> $errorfile ");
 
         $date = new \DateTime;
+        $record = DB::table('analyses')->where('analysis_id',$time)->get();
+if(strcmp($anal_type,"Analysis History regenerated")==0 || sizeof($record)>0) {
 
-        if ($user != 0)
-            DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => $user . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'ipadd' => $this->get_client_ip())
-            );
-        else
-            DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'ipadd' => $this->get_client_ip())
-            );
+        DB::table('analyses')
+            ->where('analysis_id', $time)
+            ->update(['analysis_type' => 'Analysis History regenerated']);
+}
+else
+{
+            if ($user != 0)
+                DB::table('analyses')->insert(
+                    array('analysis_id' => $time . "", 'id' => $user . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'ipadd' => $this->get_client_ip())
+                );
+            else
+                DB::table('analyses')->insert(
+                    array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'ipadd' => $this->get_client_ip())
 
+                );
+        }
+        Redis::set($time.":Status","true");
         Redis::set('users_count',Redis::get('users_count')-1 );
 
 

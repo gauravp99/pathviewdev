@@ -13,6 +13,7 @@
 
 /* Ajax controller for species and pathway match retrievel */
 Route::post('/ajax/specPathMatch','AjaxSpeciesPathwayMatch@index');
+Route::post('/ajax/analysisStatus','AjaxAnalysisQueueStatusCheck@index');
 
 /* URL route for Controller for welcome page */
 Route::get('/', array(
@@ -45,7 +46,7 @@ Route::get('/edit_user/{username}', array(
 /* URL route for Password Reset Home  */
 Route::get('passwordReset', array(
     'as' => 'passwordReset ',
-    'users' => function () {
+    'uses' => function () {
         return view('auth.password_edit');
     }));
 /* URL rout for user password reset from insdie the profile*/
@@ -57,7 +58,7 @@ Route::get('guest', 'GuestController@index');
 /* URL route for Guest Home  */
 Route::get('guest-home', array(
     'as' => 'guest-home ',
-    'users' => function () {
+    'uses' => function () {
         return view('guest.guest-home');
     }));
 
@@ -67,14 +68,20 @@ Route::get('analysis', 'AnalysisController@new_analysis');
 /* URL route for Analysis Result Viewing page user page */
 Route::get('viewer', array(
     'as' => 'viewer',
-    'users' => function () {
+    'uses' => function () {
         return view('analysis.viewer');
+    }));
+
+Route::get('resultview', array(
+    'as' => 'resultview',
+    'uses' => function () {
+        return view('analysis.ResultView');
     }));
 
 /* URL route for Analysis Result history Viewing page user page */
 Route::get('anal_hist', array(
     'as' => 'anal_hist',
-    'users' => function () {
+    'uses' => function () {
         return view('profile.anal_hist');
     }));
 

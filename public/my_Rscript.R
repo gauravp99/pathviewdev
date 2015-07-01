@@ -3,7 +3,7 @@
 args <- commandArgs(TRUE)
 
                                         # @arguments are split on comma as they are passed to Rscript with comma separated
-
+library(pathview)
 arg.v = strsplit(args[1],split=",|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
@@ -60,8 +60,8 @@ if(!is.null(args2$cpdextension)){
         if(is.null(names(cpd.d))) cpd.d=as.character(cpd.d)
     } else stop("Empty compound data file!")
 } else cpd.d=NULL
-
-kegg.dir=paste(substr(getwd(),1,nchar(getwd())-20),paste("/Kegg/", args2$species, sep=""),sep="")
+# code removed for static folder location 23 indicates the file name /public/a;;/uniq identification number
+kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species, sep=""),sep="")
 #if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
 system(paste("mkdir -p", kegg.dir))
                                         #path.ids=args1[grep("^pathway", names(args1))]

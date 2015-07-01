@@ -129,7 +129,7 @@ $(document).ready(function () {
         }
 
     });
-
+console.log("done at analysis page");
 
 });
 
@@ -220,7 +220,6 @@ function fileCheck() {
     document.getElementById('submit-button').setAttribute("data-target", "");
 
     //get the all the fields into variables
-    var selectBox = document.getElementById("select-to");
     var geneid = document.getElementById("geneid");
     var cpdid = document.getElementById("cpdid");
     var offset = document.getElementById("offset");
@@ -591,32 +590,7 @@ function fileCheck() {
         document.getElementById('submit-button').setAttribute("data-toggle", "modal");
         document.getElementById('submit-button').setAttribute("data-target", "#myModal");
 
-        for (var i = 0; i < selectBox.options.length; i++) {
-            selectBox.options[i].selected = true;
-        }
 
-        var i = selectBox.options.length;
-
-        if (i > 0) {
-            createCookie("pathidx", selectBox.options.length, 1);
-            for (var j = 0; j <= i; j++) {
-                createCookie("pathway" + j, "" + selectBox.options[j].value);
-            }
-
-        }
-        else {
-            i = parseInt(readCookie("pathidx"));
-            if (i === null) {
-
-            }
-            else {
-                for (var j = 1; j < parseInt(readCookie("pathidx")); j++) {
-                    eraseCookie("pathway" + j);
-                    eraseCookie("pathidx");
-                }
-            }
-
-        }
     }
 }
 //Cookie functions are used to handle creating and reading and erase cookies

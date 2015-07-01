@@ -7,7 +7,7 @@
 
 
     <div class='col-md-2-result sidebar col-md-offset-2'>
-        <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile</h1>
+        <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile </h1>
         <?php
         function xcopy($source, $dest, $permissions = 0755)
         { try{

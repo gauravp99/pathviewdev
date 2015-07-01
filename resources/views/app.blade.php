@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" style="height:60px" id="pathview" >
             <ul class="nav navbar-nav navbar-right">
                 <li <?php
-                        if (basename($_SERVER['PHP_SELF']) == "tutorial") {
+                        if (basename(Request::url()) == "tutorial") {
                             echo "class=\"active\"";
                         }
                         ?> class="dropdown">
@@ -75,20 +75,20 @@
                     </ul>
                 </li>
 
-                <li <?php if (basename($_SERVER['PHP_SELF']) == "about") {
+                <li <?php if (basename(Request::url()) == "about") {
                     echo "class=\"active\"";
                     }?>>
                     <a href="/about">About</a>
                 </li>
 
-                <li <?php if (basename($_SERVER['PHP_SELF']) == "related") {
+                <li <?php if (basename(Request::url()) == "related") {
                     echo "class=\"active\"";
                     }?>>
                     <a href="#">Related</a>
                 </li>
 
                 @if (Auth::guest())
-                    <?php if(basename($_SERVER['PHP_SELF']) == "login")
+                    <?php if(basename(Request::url()) == "login")
                     {
                     ?>
                     <li class="dropdown active" >
@@ -97,13 +97,13 @@
                             Login <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "register") {
+                            <li <?php if (basename(Request::url()) == "register") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/auth/register') }}">Register</a>
                             </li>
                             <li <?php
-                                    if (basename($_SERVER['PHP_SELF']) == "guest") {
+                                    if (basename(Request::url()) == "guest") {
                                         echo "class=\"active\"";
                                     }
                                     ?>>
@@ -114,7 +114,7 @@
                     </li>
                     <?php
                     }
-                    else if(basename($_SERVER['PHP_SELF']) == "register")
+                    else if(basename(Request::url()) == "register")
                     {
                     ?>
                     <li class="dropdown active">
@@ -122,12 +122,12 @@
                             Register <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "register") {
+                            <li <?php if (basename(Request::url()) == "register") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/auth/login') }}">Login</a>
                             </li>
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "guest") {
+                            <li <?php if (basename(Request::url()) == "guest") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/guest') }}">Guest</a>
@@ -136,18 +136,18 @@
                     </li>
                     <?php
                     }
-                    else if((basename($_SERVER['PHP_SELF']) == "guest")
-                        ||(basename($_SERVER['PHP_SELF']) == "guest-home")
-                        ||(basename($_SERVER['PHP_SELF']) == "analysis")
-                        ||(basename($_SERVER['PHP_SELF']) == "example1")
-                        ||(basename($_SERVER['PHP_SELF']) == "example2")
-                        ||(basename($_SERVER['PHP_SELF']) == "example3")
-                        ||(basename($_SERVER['PHP_SELF']) == "viewer")
-                        ||(basename($_SERVER['PHP_SELF']) == "results")
-                        ||(basename($_SERVER['PHP_SELF']) == "postAnalysis")
-                        ||(basename($_SERVER['PHP_SELF']) == "post_exampleAnalysis1")
-                        ||(basename($_SERVER['PHP_SELF']) == "post_exampleAnalysis2")
-                        ||(basename($_SERVER['PHP_SELF']) == "post_exampleAnalysis3")
+                    else if((basename(Request::url()) == "guest")
+                        ||(basename(Request::url()) == "guest-home")
+                        ||(basename(Request::url()) == "analysis")
+                        ||(basename(Request::url()) == "example1")
+                        ||(basename(Request::url()) == "example2")
+                        ||(basename(Request::url()) == "example3")
+                        ||(basename(Request::url()) == "viewer")
+                        ||(basename(Request::url()) == "results")
+                        ||(basename(Request::url()) == "postAnalysis")
+                        ||(basename(Request::url()) == "post_exampleAnalysis1")
+                        ||(basename(Request::url()) == "post_exampleAnalysis2")
+                        ||(basename(Request::url()) == "post_exampleAnalysis3")
 
                         )
                     {
@@ -158,12 +158,12 @@
                             Guest <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "register") {
+                            <li <?php if (basename(Request::url()) == "register") {
                                 echo "class=\"active\"";
                             }?>>
                                 <a href="{{ url('/auth/login') }}">Login</a>
                             </li>
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "guest") {
+                            <li <?php if (basename(Request::url()) == "guest") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/auth/register') }}">Register</a>
@@ -182,19 +182,19 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "login") {
+                            <li <?php if (basename(Request::url()) == "login") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/auth/login') }}">
                                     Login
                                 </a>
                             </li>
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "register") {
+                            <li <?php if (basename(Request::url()) == "register") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/auth/register') }}">Register</a>
                             </li>
-                            <li <?php if ((basename($_SERVER['PHP_SELF']) == "guest")) {
+                            <li <?php if ((basename(Request::url()) == "guest")) {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/guest') }}">Guest</a>
@@ -213,12 +213,12 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "prev_anal") {
+                            <li <?php if (basename(Request::url()) == "prev_anal") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/prev_anal/'.Auth::user()->id) }}">Status & History</a>
                             </li>
-                            <li <?php if (basename($_SERVER['PHP_SELF']) == "user") {
+                            <li <?php if (basename(Request::url()) == "user") {
                                 echo "class=\"active\"";
                                 }?>>
                                 <a href="{{ url('/edit_user/'.Auth::user()->id) }}">Edit Profile</a>
@@ -236,14 +236,10 @@
         </div>
     </div>
 </nav>
-
 <input id="csrf" type="text" hidden value="{{ csrf_token() }}">
         @yield('content')
 
         @include('footer')
-
-
-
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="{{ asset('/js/sliding.form.js') }}"></script>
 <script src="{{asset('/js/ChartNew.js')}}"></script>
@@ -260,7 +256,7 @@
         }
     });
 </script>
-<?php if ((basename($_SERVER['PHP_SELF']) == "index.php")||basename($_SERVER['PHP_SELF']) == "about") {
+<?php if ( basename(Request::url())=="10.38.138.17" || basename(Request::url()) == "about") {
 ?>
 <script>
     var ctx = $("#myChart").get(0).getContext("2d");
