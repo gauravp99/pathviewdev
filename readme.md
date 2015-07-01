@@ -176,6 +176,37 @@ __Command:__
 
 #14. try accessing the url/ip address
 
+#15. Install Redis 
+download from the official website and follow the installation procedure
+check database.conf file for port and host settings of the redis
+
+#16 Install Supervisored
+to make sure queue listeners are working and are restarted every time they are failed. It make sure the commands are restarted by the given time fram
+install supervisored using the following
+__Command:__
+sudo apt-get install supervisor
+
+go to directory /etc/supervisor/conf.d
+
+this is the sample configuration file present:
+create a configuration file Laravel-worker.conf
+
+[program:myqueue]
+command=sudo php artisan queue:work --sleep=0.5 --tries=3 --daemon --env="local"
+directory=/var/www/Pathway
+autostart=true
+autorestart=true
+redirect_stderr=true
+stdout_logfile=/var/www/Pathway/storage/logs/worker.log
+
+and following commands:
+
+sudo supervisorctl reread
+
+sudo supervisorctl update
+
+sudo supervisorctl start laravel-worker:*
+
 
 ##References:
 
