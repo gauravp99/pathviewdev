@@ -35,10 +35,6 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
-
-
-
-
         try {
 
             $errors = array();
@@ -397,7 +393,7 @@ class AnalysisController extends Controller
                     pclose($io);
                     $size = 100 - intval($size);
                     if ($size < 0) {
-                        return view('profile.home');
+                        return view('errors.SpaceExceeded');
                     }
                 }
 
@@ -472,7 +468,7 @@ class AnalysisController extends Controller
                         pclose($io);
                         $size = 100000 - intval($size);
                         if ($size < 0) {
-                            return view('profile.home');
+                            return view('errors.SpaceExceeded');
                         }
                     }
 
@@ -535,15 +531,16 @@ class AnalysisController extends Controller
                         $email = Auth::user()->email;
                         if (!file_exists("all/$email"))
                             mkdir("all/$email");
+
                         $f = './all/' . Auth::user()->email;
-                        $io = popen('/usr/bin/du -sh ' . $f, 'r');
+                        $io = popen('/usr/bin/du -sk ' . $f, 'r');
                         $size = fgets($io, 4096);
                         $size = substr($size, 0, strpos($size, "\t"));
 
                         pclose($io);
-                        $size = 100 - intval($size);
+                        $size = 100000 - intval($size);
                         if ($size < 0) {
-                            return view('/home')->with('error', 'No space avaialable please delete some previous analysis');
+                            return view('errors.SpaceExceeded');
                         }
                     }
                     $time = uniqid();
@@ -655,12 +652,14 @@ class AnalysisController extends Controller
                 Redis::set('users_count',Redis::get('users_count')-1 );
             }*/
 
+            //return view('analysis.Result')->with(array('exception' => null, 'directory' => $destFile, 'directory1' => $destFile1));
+
         }
         catch(Exception $e)
         {
             Redis::set('users_count', Redis::get('users_count') - 1);
             $_SESSION['error'] = $e->getMessage();
-            Return view(errors.customError);
+            return view(errors.customError);
 
         }
 
@@ -669,7 +668,7 @@ class AnalysisController extends Controller
 
     public function runAnalysis($time,$argument,$destFile,$anal_type)
     {
-        exec("/home/ybhavnasi/R-3.1.2/bin/R --slave --no--restore --file=my_Rscript.R --args \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript my_Rscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
 
         $date = new \DateTime;

@@ -4,9 +4,11 @@
 
 
 $(document).ready(function () {
-
+    document.getElementById('submit-button').setAttribute("data-toggle", "");
+    document.getElementById('submit-button').setAttribute("data-target", "");
     //start check for the species when page loaded hide and show the pathway id list associated with it
     $(document).ready(function () {
+
         species = $('#species').val();
         $.ajax({
             url: "/ajax/specPathMatch",

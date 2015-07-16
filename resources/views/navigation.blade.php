@@ -8,22 +8,22 @@
 ?>
 <div class="col-md-2"  >
     <ul class="navigation nav" style="margin-right: 4%">
-        <li <?php if (basename($_SERVER['PHP_SELF']) == "home"||basename($_SERVER['PHP_SELF']) == "guest-home"||basename($_SERVER['PHP_SELF']) == "guest") {
+        <li <?php if (basename(Request::url()) == "home"||basename(Request::url()) == "guest-home"||basename(Request::url()) == "guest") {
             echo "class=\"active\"";
         }?>>
             @if (Auth::guest()) <a href="/guest-home">
                 @else <a href="{{ URL::route('home') }}"> @endif <b>Overview </b><span class="sr-only">(current)</span></a>
         </li>
-        <li <?php if (basename($_SERVER['PHP_SELF']) == "analysis") {
+        <li <?php if (basename(Request::url()) == "analysis") {
             echo "class=\"active\"";
         }?>><a href="/analysis"><b>New Analysis</b></a></li>
-        <li <?php if (basename($_SERVER['PHP_SELF']) == "example1") {
+        <li <?php if (basename(Request::url()) == "example1") {
             echo "class=\"active\"";
         }?>><a href="/example1"><b>Example 1</b></a></li>
-        <li <?php if (basename($_SERVER['PHP_SELF']) == "example2") {
+        <li <?php if (basename(Request::url()) == "example2") {
             echo "class=\"active\"";
         }?>><a href="/example2"><b>Example 2</b></a></li>
-        <li <?php if (basename($_SERVER['PHP_SELF']) == "example3") {
+        <li <?php if (basename(Request::url()) == "example3") {
             echo "class=\"active\"";
         }?>><a href="/example3"><b>Example 3</b></a></li>
         <li><a href="#" onclick="openWindow()">

@@ -111,6 +111,9 @@ Route::get('test', function () {
 Route::get('error', function () {
     return view("errors.customError");
 });
+Route::get('Spaceerror', function () {
+    return view("errors.SpaceExceeded");
+});
 
 /*URL route for tutrial/Help page */
 Route::get('tutorial', function () {
@@ -243,3 +246,16 @@ Route::controllers([
     'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController',
 ]);
+
+
+//gage application
+
+Route::get('gage', function () {
+    return view("Gage.GageAnalysis");
+});
+
+Route::get('gageResult', function () {
+    return view("Gage.GageResult");
+});
+
+Route::post('gageAnalysis','GageAnalysis@index');

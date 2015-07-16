@@ -86,9 +86,9 @@
 
         <div class="col-sm-5">
 
-            <input class="ex8" style="width:100%;" list="pathwaylist" name="pathway" id="pathway1" style="float:none;width: 110%;" value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : $pathway ?>" autocomplete="on">
+            <input class="ex8" style="width:100%;font-size: 15px;" list="pathwaylist" placeholder="Type in here or select below"  name="pathway" id="pathway1"  value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : '' ?>" autocomplete="on">
             <br/>
-            <select name="selectfrom" style="float:none;width:100%;height:236px;font-size: 17px;" id="select-from" multiple="" size="10" class="multiple-select">
+            <select name="selectfrom" style="float:none;width:100%;height:236px;font-size: 17px;" id="select-from" multiple="" size="10"  class="multiple-select">
                 <?php
                 $pathway = DB::table('Pathway')->get();
 
@@ -117,6 +117,7 @@
         </div>
 
         <div class="col-sm-5" style="margin-left: -20px;">
+            <h6 style="font-family: Verdana;font-size=5px;color:blue;margin-top: -20px;margin-left:10px;">Note:To clear select text and delete</h6>
             <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:100%;height:110%;font-size:16px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
         </div>
     </div>
@@ -422,13 +423,13 @@
 </div>
 
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+{{--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
      aria-hidden="true">
     <div style="opacity:0.3; background: #006980;width: 100%;height:100%">
         <img class="first-slide" style="margin-top: 10%;width:20%"
              src="images/loading.gif">
     </div>
 
-</div>
+</div>--}}
 
 

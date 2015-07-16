@@ -84,7 +84,7 @@
                 <li <?php if (basename(Request::url()) == "related") {
                     echo "class=\"active\"";
                     }?>>
-                    <a href="#">Related</a>
+                    <a href="/gage">Related</a>
                 </li>
 
                 @if (Auth::guest())

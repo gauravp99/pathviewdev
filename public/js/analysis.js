@@ -4,7 +4,8 @@
 
 
 $(document).ready(function () {
-
+    document.getElementById('submit-button').removeAttribute("data-toggle");
+    document.getElementById('submit-button').removeAttribute("data-target");
     //start check for the species when page loaded hide and show the pathway id list associated with it
     $(document).ready(function () {
         species = $('#species').val();
@@ -216,8 +217,7 @@ function fileCheck() {
     $("#errors").show();
 
     //Making the submit button to have the loading image included
-    document.getElementById('submit-button').setAttribute("data-toggle", "");
-    document.getElementById('submit-button').setAttribute("data-target", "");
+
 
     //get the all the fields into variables
     var geneid = document.getElementById("geneid");
