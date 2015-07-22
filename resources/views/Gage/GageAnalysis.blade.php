@@ -9,13 +9,15 @@
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
-    <div class="col-sm-9">
+    <div class="col-sm-12">
+        @include('GageNavigation')
         <div class="conetent-header ">
             <p><b>Gage Analysis</b></p>
 
             <div id="error-message"></div>
         </div>
         {!! form::open(array('url' => 'gageAnalysis','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
+
     <div id="wrapper" class="col-md-8" ng-app="GageApp" ng-controller="analysisController">
         <div id="navigation" style="">
             <ul>

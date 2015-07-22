@@ -32,7 +32,10 @@
 
         <div class="collapse navbar-collapse" style="height:60px" id="pathview" >
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/gageTutorial">Help</a></li>
+                <li><a href="/" >Home</a></li>
+                <li  <?php if (basename(Request::url()) == "gageTutorial") {
+                    echo "class=\"active\"";
+                }?>><a href="/gageTutorial">Help</a></li>
                 <li class="dropdown">
                     <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
                         GAGE <span class="caret"></span>
@@ -60,9 +63,20 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="/gageAbout">About</a></li>
-                <li><a href="/gage">Guest</a></li>
-                <li><a href="/" target="_blank">Related</a></li>
+                <li <?php if (basename(Request::url()) == "gageAbout") {
+                    echo "class=\"active\"";
+                }?>><a href="/gageAbout">About</a></li>
+
+                @if (Auth::guest())
+                    <li <?php if (basename(Request::url()) == "gage") {
+                        echo "class=\"active\"";
+                    }?>><a href="/gage-guest-home">Guest</a></li>
+                    @else
+                    <li <?php if (basename(Request::url()) == "gage") {
+                        echo "class=\"active\"";
+                    }?>><a href="/gage-home">Gage</a></li>
+                    @endif
+
                 </ul>
             </div>
             </div>
@@ -87,7 +101,7 @@
     });
 </script>
 <?php
-if ( basename(Request::url())== "gageIndex" || basename(Request::url()) == "gageAbout" )
+if ( basename(Request::url())== "gageIndex" && !Auth::user() || basename(Request::url()) == "gageAbout" )
         {
 
        ?>

@@ -2,7 +2,18 @@
 
 @section('content')
 
-    @include('navigation')
+    <?php
+    if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-guest-home")
+    {
+
+    ?>
+    @include('GageNavigation')
+    <?php
+    }
+    else {
+    ?>@include('navigation')<?php
+    }
+    ?>
     <div class="col-sm-9">
     <div class="panel panel-default">
         <div class="panel-heading">Guest Login</div>

@@ -1,10 +1,19 @@
+
 @extends('app')
 
 @section('content')
+    <?php
+    if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-guest-home")
+    {
 
-    @include('navigation')
-
-
+    ?>
+    @include('GageNavigation')
+<?php
+}
+        else {
+            ?>@include('navigation')<?php
+        }
+    ?>
 
     <div class='col-md-2-result sidebar col-md-offset-2'>
         <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile </h1>
@@ -157,7 +166,15 @@
                 $id = get_string_between($analyses1->arguments, "species:", ",") . get_string_between($analyses1->arguments, "pathway:", ",");
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ",");
                 echo "</td>";
+                if(strcmp($analyses1->analysis_origin,'pathview')==0)
+                    {
                 echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td></tr>";
+                        }
+                else if(strcmp($analyses1->analysis_origin,'gage')==0)
+                    {
+                        echo "<td><p>  <a href=/gage_hist?analyses=$analyses1->analysis_id>Analysis $analyses1->analysis_id</a> </p></td></tr>";
+
+                    }
 
             }}?>
 
