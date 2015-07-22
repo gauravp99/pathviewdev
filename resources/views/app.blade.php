@@ -13,6 +13,7 @@
     <title>Pathview</title>
 </head>
 <body >
+
 <nav class="navbar navbar-default navbar-change">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -84,7 +85,7 @@
                 <li <?php if (basename(Request::url()) == "related") {
                     echo "class=\"active\"";
                     }?>>
-                    <a href="/gage">Related</a>
+                    <a href="/gageIndex" target="_blank">Related</a>
                 </li>
 
                 @if (Auth::guest())
@@ -256,7 +257,11 @@
         }
     });
 </script>
-<?php if ( basename(Request::url())=="10.38.138.17" || basename(Request::url()) == "about") {
+
+<?php
+
+if ( basename(Request::url())==$_SERVER['SERVER_NAME'] || basename(Request::url()) == "about") {
+
 ?>
 <script>
     var ctx = $("#myChart").get(0).getContext("2d");

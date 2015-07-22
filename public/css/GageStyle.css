@@ -1,0 +1,28 @@
+#error-message {
+
+    padding: 5px;
+    color: #a94442;
+    display: none;
+    margin-bottom: 10px;
+}
+
+ .error
+ {
+     color: #a94442;
+     background-color: #f2dede;
+     border-color: #ebccd1;
+     font-size: 15px;
+ }
+ .pdf
+ {
+     margin-bottom: 30px;
+
+ }
+
+ .noteHint
+ {
+     font-family: Verdana;
+     color: blue;
+     font-size: 10px;
+     display: inline;
+ }

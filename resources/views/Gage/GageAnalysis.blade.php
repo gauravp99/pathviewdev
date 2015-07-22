@@ -1,4 +1,4 @@
-@extends('app')
+@extends('GageApp')
 @section('content')
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
@@ -7,17 +7,15 @@
     <script src="js/app.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
+    <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
     <div class="col-sm-9">
         <div class="conetent-header ">
-            {{-- @if(is_null(Auth::user()))
-                 <h2> Welcome Guest </h2>
-             @else
-             <p> Welcome: <b>@if(Auth::user()->name=="") {!! Auth::user()->email !!} @else {!! Auth::user()->name!!}, @endif </b></p>
-             @endif--}}
             <p><b>Gage Analysis</b></p>
 
+            <div id="error-message"></div>
         </div>
-        {!! form::open(array('url' => 'gageAnalysis','method'=>'POST','files'=>true,'id' => 'gage_anal_form')) !!}
+        {!! form::open(array('url' => 'gageAnalysis','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
     <div id="wrapper" class="col-md-8" ng-app="GageApp" ng-controller="analysisController">
         <div id="navigation" style="">
             <ul>
@@ -32,7 +30,23 @@
             </ul>
         </div>
         <div id="steps">
-
+        <?php
+                //specifying default values for all the variables;
+                $geneIdType = "entrez";
+                $species = "hsa-Homo sapiens";
+                $reference = "";
+                $sample = "";
+                $cutoff = "0.1";
+                $setSizeMin = "10";
+                $setSizeMax = "inf";
+                $compare = "paired";
+                $test2d = false;
+                $rankTest = false;
+                $useFold = true;
+                $test = "gs.tTest";
+                $dopathview = false;
+                $dataType = "gene";
+                ?>
 
 
 
@@ -61,9 +75,12 @@
                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                             </a>
                             <label for="GeneSet">Gene Set:</label>
+                            <div class="col-sm-12">
+                                <input name="geneIdFile" type="file"  id="geneIdFile" hidden=""   style="margin-top: 20px;font-size: 14px;">
+                            </div>
                         </div>
                         <div class="col-sm-7">
-                            <select  name="geneSet" id="geneSet"    multiple="" size="10" style="width:100%;">
+                            <select  name="geneSet[]" id="geneSet"    multiple="" size="10" style="width:100%;">
                                 <optgroup label="KEGG">
                                     <option value="sigmet.idx">signalling</option>
                                     <option value="met.idx">metabolic</option>
@@ -79,6 +96,7 @@
                                 </optgroup>
                                 <option value="custom">Custom</option>
                             </select>
+
                         </div>
                     </div>
 
@@ -92,12 +110,11 @@
                             <label for="geneIdType">Gene ID Type:</label>
                         </div>
                         <div class="col-sm-7" id="geneid">
-                            <select  name="geneIdType" id="geneIdType"   class="KEGG">
-                                <option value="entrez">entrez</option>
-                                <option value="kegg">kegg</option>
-                                <option value="custom">Custom</option>
+                            <select  name="geneIdType" id="geneIdType" class="KEGG">
+                                <option value="entrez" @if (strcmp($geneIdType,'entrez') == 0 ) selected @endif >entrez</option>
+                                <option value="kegg"   @if (strcmp($geneIdType,'kegg') == 0 ) selected @endif >kegg</option>
                             </select>
-                            <input name="geneIdFile" type="file"  id="geneIdFile" hidden=""   >
+
                         </div>
                     </div>
 
@@ -111,7 +128,7 @@
                             {!!form::label('species','Species:') !!}
                         </div>
                         <div class="col-sm-7" id="spciesList">
-                            <input class="ex8" list="specieslist" name="species" id="species" value="hsa-Homo sapiens"  autocomplete="on">
+                            <input class="ex8" list="specieslist" name="species" id="species" value={{$species}}  autocomplete="on">
                         </div>
                     </div>
                     <datalist id="specieslist">
@@ -136,7 +153,7 @@
                         </div>
 
                         <div class="col-sm-7">
-                            <input class="ex8"  name="reference"  id="reference"  placeholder="1,2,3"  >
+                            <input class="ex8"  name="reference"  id="reference"  value={{$reference}}> <h6 class="noteHint" >eg: 1,3,5 or NULL</h6>
                             <!-- To get the number of column fields in a file -->
                             <input type="text"  name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns"   >
                                 <select name="ref[]" id="refselect" multiple="" size="5" style="width:100%;" ng-show="columns.length > 0">
@@ -159,7 +176,7 @@
                         </div>
 
                         <div class="col-sm-7">
-                            <input class="ex8"  name="samples"  id="sample" value="" placeholder="4,5,6" >
+                            <input class="ex8"  name="samples"  id="sample" value={{$sample}}  > <h6 class="noteHint">eg: 2,4,6 or NULL</h6>
                             <select name="sample[]" id="sampleselect" multiple="" size="5" style="width:100%;" ng-show="columns.length > 0">
                                 <option ng-repeat="column in columns track by $index"
                                         value="<% $index+1 %>">
@@ -182,7 +199,7 @@
                         </div>
                         <div class="col-sm-7">
 
-                                <input class="ex8"   name="cutoff"  id="cutoff" value="0.1"  placeholder="0.1">
+                                <input class="ex8"   name="cutoff"  id="cutoff" value={{$cutoff}}  placeholder="0.1">
                         </div>
                     </div>
                 </div>
@@ -196,12 +213,12 @@
                         </div>
                         <div class="col-sm-7">
                             <div class="col-sm-6">
-                                Minimum: <input class="ex8" style="width:60px;"  name="setSizeMin"  id="setSizeMin" value="5"  placeholder="5">
-                                <label id="setSizeMinError" hidden>SetSizeMin Should be neumeric</label>
+                                Minimum: <input class="ex8" style="width:60px;"  name="setSizeMin"  id="setSizeMin" value={{$setSizeMin}}  placeholder="5">
+
 
                             </div>
                             <div class="col-sm-6">
-                                Maximum:     <input class="ex8" style="width:60px;"  name="setSizeMax"  id="setSizeMax" value="100" placeholder="100">
+                                Maximum:     <input class="ex8" style="width:60px;"  name="setSizeMax"  id="setSizeMax" value={{$setSizeMax}} placeholder="100">
                             </div>
                         </div>
                     </div>
@@ -216,10 +233,10 @@
                         </div>
                         <div class="col-sm-7">
                             <select  name="compare"  id="compare" class="compare">
-                                <option value="paired">paired</option>
-                                <option value="unpaired">unpaired</option>
-                                <option value="1on group">1on group</option>
-                                <option value="as.group">as.group</option>
+                                <option value="paired" @if (strcmp($compare,'paired') == 0 ) selected @endif >paired</option>
+                                <option value="unpaired" @if (strcmp($compare,'unpaired') == 0 ) selected @endif >unpaired</option>
+                                <option value="1ongroup" @if (strcmp($compare,'1ongroup') == 0 ) selected @endif>1ongroup</option>
+                                <option value="as.group" @if (strcmp($compare,'as.group') == 0 ) selected @endif >as.group</option>
                             </select>
                         </div>
                     </div>
@@ -234,7 +251,7 @@
                         </div>
                         <div class="col-sm-7">
 
-                            <input type="checkbox" id="sameDir" value="true" name="sameDir" checked>
+                            <input type="checkbox" id="sameDir" style="width: 44px;" value="true" name="test2d" @if ($test2d) checked @endif  >
                         </div>
                     </div>
 
@@ -249,7 +266,7 @@
                             <label for="rankTest">Rank Test:</label>
                         </div>
                         <div class="col-sm-7">
-                            <input type="checkbox" id="rankTest" value="true" name="rankTest" checked>
+                            <input type="checkbox" id="rankTest" style="width: 44px;" value="true" name="rankTest" @if ($rankTest) checked @endif  >
 
                         </div>
                     </div>
@@ -264,7 +281,7 @@
                             <label for="useFold">Use Fold:</label>
                         </div>
                         <div class="col-sm-7">
-                            <input type="checkbox"  id="useFold" value="true" name="useFold" checked>
+                            <input type="checkbox"  id="useFold" value="true" style="width: 44px;" name="useFold" @if ($useFold) checked @endif>
 
                         </div>
                     </div>
@@ -279,15 +296,14 @@
                         </div>
                         <div class="col-sm-7">
                             <select name="test" id="test" class="compare">
-                                <option value="gs.tTest">t-test</option>
-                                <option value="gs.zTest">z-test</option>
-                                <option value="gs.KSTest">KS-test</option>
+                                <option value="gs.tTest" @if (strcmp($test,'gs.tTest') == 0 ) selected @endif >t-test</option>
+                                <option value="gs.zTest" @if (strcmp($test,'gs.zTest') == 0 ) selected @endif >z-test</option>
+                                <option value="gs.KSTest" @if (strcmp($test,'gs.KSTest') == 0 ) selected @endif  >KS-test</option>
                             </select>
                         </div>
                     </div>
-
-
                 </div>
+
                 <div class="stepsdiv" id="UsePathview-div">
                     <div class="col-sm-12">
                         <div class="col-sm-5">
@@ -297,12 +313,29 @@
                             <label for="usePathview">Use Pathview:</label>
                         </div>
                         <div class="col-sm-7">
-
-                            <input type="checkbox" id="usePathview" value="true" name="usePathview" checked>
+                            <input type="checkbox" id="usePathview" value="true" style="width: 44px;" name="dopathview" @if ($dopathview) checked @endif >
                         </div>
                     </div>
 
                 </div>
+                <div class="stepsdiv" id="dataType-div" >
+                    <div class="col-sm-12">
+                        <div class="col-sm-5">
+                            <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                            </a>
+                            <label for="usePathview">Data Type:</label>
+                        </div>
+                        <div class="col-sm-7" >
+                            <select name="dataType" id="dataType" class="compare"  >
+                                <option value="gene">gene</option>
+                                <option value="compound">compound</option>
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+
             </fieldset>
 
 <script>
@@ -330,18 +363,26 @@
 //saved species to be used in javascript
         var speciesArray = <?php echo JSON_encode($species);?> ;
 $('#gage_anal_form').validate({
+    invalidHandler: function(form, validator) {
+        var errors = validator.numberOfInvalids();
+
+        if (errors > 0) {
+            $("#error-message").show().text("** You missed " + errors + " field(s) or errors check and fill it to proceed.");
+        } else {
+            console.log("no errors");
+            $("#error-message").hide();
+        }
+    },
     rules: {
         assayData: {
             required:true,
             extension: "txt|csv"
         },
-        geneSet: "required",
+        'geneSet[]': "required",
         reference: {
-            required: true,
             refSampleFieldValidate:true
         },
         samples:{
-            required: true,
             refSampleFieldValidate:true
         },
         setSizeMin:{
@@ -349,8 +390,7 @@ $('#gage_anal_form').validate({
             digits: true
         },
         setSizeMax:{
-            required: true,
-            digits: true
+            setSize: true
         },
         cutoff:{
             required: true,
@@ -374,22 +414,21 @@ $('#gage_anal_form').validate({
             required:"* Select the Gene ID file csv/txt file",
             extension:"* only txt and csv extensions are allowed"
         },
-        geneSet: "* Atleast one GeneSet Field option should be selected",
+        'geneSet[]': "* Atleast one GeneSet Field option should be selected",
         reference:{
             required: "* Reference columns should be specified",
-            refSampleFieldValidate: "Input field should be Column numbers of input file separated by comma"
+            refSampleFieldValidate: "Input field should be Column numbers of input file separated by comma or NULL"
         },
         samples: {
             required: "* Sample columns should be specified",
-            refSampleFieldValidate: "Input field should be Column numbers of input file separated by comma"
+            refSampleFieldValidate: "Input field should be Column numbers of input file separated by comma or NULL"
         },
         setSizeMin: {
             required: "* Set Size Min field is required",
             digits: "* Set Size Min field must be numeric"
         },
         setSizeMax: {
-            required: "* Set Size Max field is required",
-            digits: "* Set Size Max field must be numeric"
+            setSize: "* Set Size Max field must be numeric or INF"
         },
         cutoff: {
             required: "* Cutoff field value is required",
@@ -403,11 +442,27 @@ $('#gage_anal_form').validate({
 });
 
     jQuery.validator.addMethod('refSampleFieldValidate',function(value, element){
-        return /^\d(\d?\,?\d+)*/.test(value);
+        if(value.toLowerCase() === "null" || value.toLowerCase() === "")
+        {
+            return true;
+        }
+        else {
+            return /^\d(\d?\,?\d+)*/.test(value);
+        }
     },"Input field should be Column numbers of input file separated by comma");
     jQuery.validator.addMethod('decimal',function(value, element){
     return /^\d(\d?\.?\d+)*/.test(value);
         },"Cut off value should be a decimal value");
+    jQuery.validator.addMethod('setSize',function(value, element){
+        if(value.toLowerCase() === 'inf' || $.isNumeric(value) )
+        {
+return true;
+        }
+        else
+        {
+            return false;
+        }
+    },"setSize Value should be neumeric or INF");
     jQuery.validator.addMethod('speciesValid',function(value, element){
         var validSpeciesFlag = false;
 
@@ -422,7 +477,7 @@ $('#gage_anal_form').validate({
         else{
             $.each(speciesArray, function (speciesIter, specieValue) {
 
-                if (specieValue['species_id'] + "-" + specieValue['species_desc'] === value || (value.length == 3 && specieValue['species_id'] === value )) {
+                if (specieValue['species_id']  === value.split('-')[0] || (value.length == 3 && specieValue['species_id'] === value )) {
                     validSpeciesFlag = true;
                 }
             });
@@ -432,15 +487,7 @@ $('#gage_anal_form').validate({
     },"Entered Speceis is not a valid speceis");
 
 </script>
-            <style>
-                .error
-                {
-                    color: #a94442;
-                    background-color: #f2dede;
-                    border-color: #ebccd1;
-                    font-size: 15px;
-                }
-            </style>
+
     </div>
         <div class="steps" style="margin-left:-2%">
             <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return validation()"  />

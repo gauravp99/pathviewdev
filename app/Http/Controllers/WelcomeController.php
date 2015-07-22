@@ -36,7 +36,7 @@ class WelcomeController extends Controller
          * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
          * @Analyses(Number of analyses generated)
          */
-        $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
+        $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'pathview\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
         foreach ($val as $month) {
             array_push($usage, $month->count);
             array_push($ip, $month->ipadd_count);
@@ -64,8 +64,8 @@ class WelcomeController extends Controller
          */
         $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocstatistics'));
         $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocstatistics'));
-        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses'));
-        $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses'));
+        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'pathview\' '));
+        $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'pathview\' '));
 
         /**
          * To make sure that the data is not empty from the database

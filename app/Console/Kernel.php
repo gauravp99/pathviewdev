@@ -25,6 +25,11 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('inspire')
             ->hourly();
+        $filePath = "/var/www/Pathway/public/data/output.txt";
+        $schedule->exec('sh /var/www/Pathway/public/scripts/biocStatsimport.sh')->hourly()->sendOutputTo($filePath);
+        $schedule->exec('sh /var/www/Pathway/public/scripts/biocGageStatsimport.sh')->hourly()->sendOutputTo($filePath);
+        $schedule->exec('sh /var/www/Pathway/public/scripts/FileMaintain_new.sh')->twiceDaily()->sendOutputTo($filePath);
+        $schedule->exec('sh /var/www/Pathway/public/scripts/KeggDownload.sh')->monthly()->sundays()->at('02:00')->sendOutputTo($filePath);
     }
 
 }

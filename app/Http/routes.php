@@ -157,8 +157,8 @@ Route::get('about', function () {
      */
     $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocstatistics'));
     $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocstatistics'));
-    $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses'));
-    $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses'));
+    $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'pathview\' '));
+    $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'pathview\' '));
 
     /**
      * To make sure that you are having data from sql query and they are not null
@@ -259,3 +259,7 @@ Route::get('gageResult', function () {
 });
 
 Route::post('gageAnalysis','GageAnalysis@index');
+
+Route::get('gageIndex','gageController@index');
+Route::get('gageAbout','gageController@about');
+Route::get('gageTutorial','gageController@Tutorial');
