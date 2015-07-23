@@ -18,6 +18,13 @@
      margin-bottom: 30px;
 
  }
+.pdf-info
+{
+    text-align: center;
+    font-size: 18px;
+    text-decoration: underline;
+    font-weight: bold;
+}
 
  .noteHint
  {

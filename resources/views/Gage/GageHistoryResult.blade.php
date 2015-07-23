@@ -67,7 +67,7 @@
                     {
                         echo "<h3> Selected pathways/gene sets:</h3>";
                         $sigLines = file($destDir .$v);
-                        echo "<button type='button' id='expand' style='alignment: right;' > Expand </button>";
+                        echo "<button type='button' id='expand' style='alignment: right;' > <span class='glyphicon glyphicon-triangle-bottom'></span> </button>";
                         echo "<table style='font-size: 14px;margin-bottom: 30px;width=100%' border=1>";
                         echo "<tbody>";
                         $lineNumer = 0;
@@ -122,7 +122,7 @@
 
                     }
                 }
-                echo "<h3>Example graphs for top gene sets</h3>";
+                echo "<h3 >Example graphs for top gene sets</h3>";
                 ?>
                 <div class = 'col-md-12'>
                     <div class = 'col-md-6 pdf' >

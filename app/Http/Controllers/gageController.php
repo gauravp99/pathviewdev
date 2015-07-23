@@ -51,8 +51,8 @@ class gageController extends Controller {
          * Pathway Package downloads and web usage counts you can see that we are adding 15000 and 7500 to the sql query's since
          * we didnt had any statistics count of the initial 1 year we manually added approximation value
          */
-        $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocGagestatistic'));
-        $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocGagestatistic'));
+        $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+40000 as "downloads" from biocGagestatistic'));
+        $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+20000 as "ip" from biocGagestatistic'));
         $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'gage\' '));
         $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'gage\' '));
 
