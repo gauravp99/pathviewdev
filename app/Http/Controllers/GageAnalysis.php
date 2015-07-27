@@ -5,7 +5,7 @@ use App\Http\Controllers\Controller;
 use Input;
 use Auth;
 use Session;
-
+use File;
 use DB;
 use Illuminate\Http\Request;
 
@@ -16,16 +16,29 @@ class GageAnalysis extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function index()
+	public function index($analysis)
 	{
 
 
+
+        if(Auth::user()) {
+            $f = './all/' . Auth::user()->email;
+            $io = popen('/usr/bin/du -sk ' . $f, 'r');
+            $size = fgets($io, 4096);
+            $size = substr($size, 0, strpos($size, "\t"));
+
+            pclose($io);
+            $size = 100000 - intval($size);
+            if ($size < 0) {
+                return view('errors.SpaceExceeded');
+            }
+
+        }
         $argument ="";
         $destFile = "";
         $email ="";
         $filename = "";
         $time = "";
-
 
             if(isset($_POST['reference'])) {
                 if(strcmp(strtolower($_POST['reference']),'null')==0 || strcmp(strtolower($_POST['reference']),'')==0)
@@ -61,22 +74,31 @@ class GageAnalysis extends Controller {
 
         mkdir("all/$email/$time", 0755, false);
 
-        if (Input::hasFile('assayData')) {
+        $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
+        if(strcmp($analysis,'newAnalysis')==0) {
+            if (Input::hasFile('assayData')) {
 
-            $file = Input::file('assayData');
+                $file = Input::file('assayData');
+                $filename = Input::file('assayData')->getClientOriginalName();
+                $file->move($destFile, $filename);
+            } else {
+                $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
+                return view('Gage.GageAnalysis');
+            }
             $filename = Input::file('assayData')->getClientOriginalName();
-            $destFile = public_path()."/"."all/".$email."/".$time."/";
-            $file->move($destFile, $filename);
         }
-        else
+        else if(strcmp($analysis,'exampleGageAnalysis1')==0)
         {
-            $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-            return view('Gage.GageAnalysis');
+            $filename = "gagedata.txt";
+            $file = public_path() . "/" . "all/data/gagedata.txt";
+
+            if ( ! File::copy($file,$destFile.$filename))
+            {
+                $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
+                return view('Gage.GageAnalysis');
+            }
+
         }
-
-
-
-        $filename = Input::file('assayData')->getClientOriginalName();
         $argument .="filename:".$filename.";";
         $argument .="destFile:".$destFile.$filename.";";
         $argument .="destDir:".$destFile.";";
@@ -238,6 +260,18 @@ class GageAnalysis extends Controller {
        return view('Gage.GageResult');
 
 	}
+
+    public function newGageAnalysis()
+    {
+        $d = new GageAnalysis();
+        return $d->index("newAnalysis");
+    }
+    public function ExampleGageAnalysis1()
+    {
+        $d = new GageAnalysis();
+        return $d->index("exampleGageAnalysis1");
+
+    }
 
 
 

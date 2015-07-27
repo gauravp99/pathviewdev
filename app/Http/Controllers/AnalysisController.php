@@ -15,6 +15,8 @@ use Request;
 use Response;
 use Redis;
 use Queue;
+use File;
+use Storage;
 use App\Commands\SendJobAnalysisCompletionMail;
 require "Rserv_Connection.php";
 
@@ -25,7 +27,35 @@ class AnalysisController extends Controller
     {
         return view('analysis.NewAnalysis');
     }
+    public function delete()
+    {
+        $analysis_id = $_POST["analysisID"];
 
+        //checking if the analysis is in your profile or not
+
+
+        $result = DB::table('analyses')
+            ->where('analysis_id','=',$analysis_id)
+            ->where('id','=',Auth::user()->id)->first();
+       if(sizeof($result) > 0)
+        {
+            //analysis belong this user deleting using storage
+            $directory = public_path().'/all/'.Auth::user()->email.'/'.$analysis_id;
+            DB::table('analyses')
+                ->where('analysis_id','=',$analysis_id)
+                ->update(array('id' => "0"));
+            $success = File::deleteDirectory($directory);
+            return Redirect::back()->with('success', 'succes message');
+        }
+        else{
+            return Redirect::back()->with('success', 'Error');
+
+
+        }
+
+
+
+    }
     public function postAnalysis(CraeteAnalysisRequest $resqest)
     {
         $d = new AnalysisController();

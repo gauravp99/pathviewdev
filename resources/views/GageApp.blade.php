@@ -12,7 +12,7 @@
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <title>GageWeb</title>
+    <title>GAGE Web</title>
 </head>
 <body ng-app="GageApp" >
 <nav class="navbar navbar-default navbar-change">

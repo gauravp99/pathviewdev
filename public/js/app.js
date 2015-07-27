@@ -14,8 +14,7 @@ app.controller('analysisController',function($scope) {
 
     $scope.showContent = function($fileContent)
     {
-        console.log("data uploader");
-        console.log($scope.uploader);
+
 
         if($scope.filename)
             $scope.content = $fileContent;
@@ -26,7 +25,7 @@ app.controller('analysisController',function($scope) {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.columns = $fileContent.split("\n")[0].replace(" ", "").split(",");
             $scope.columns.splice($scope.columns[0], 1);
-            console.log($scope.filetype+" csv detected");
+
         }
         else if($scope.filetype === 'text/plain')
         {
@@ -36,22 +35,23 @@ app.controller('analysisController',function($scope) {
              $scope.content = $fileContent.split("\n")[0].countWords();*/
             $scope.columns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
             $scope.columns.splice($scope.columns[0], 1);
-            console.log($scope.columns.length);
+
             $scope.sample=[];
             $scope.ref=[];
 
-
-            console.log($scope);
-            console.log($scope.filetype+" text detected");
         }
         else
         {
-            console.log("not in specified format");
+            alert("File uploded is not in specified format");
+
         }
         $scope.content = $fileContent.split("\n")[0];
 
     };
     console.log("In analysis Page");
+});
+app.controller('ExampleAnalysisController1',function($scope) {
+    $scope.columns = ['HN_1','DCIS_1','HN_2','DCIS_2','HN_3','DCIS_3','HN_4','DCIS_4','HN_5','DCIS_5','HN_6','DCIS_6'];
 });
 
 app.directive('onReadFile', function($parse){

@@ -142,7 +142,8 @@ Route::get('gageResult', function () {
     return view("Gage.GageResult");
 });
 
-Route::post('gageAnalysis', 'GageAnalysis@index');
+Route::post('gageAnalysis', 'GageAnalysis@newGageAnalysis');
+Route::post('exampleGageAnalysis1', 'GageAnalysis@ExampleGageAnalysis1');
 
 Route::get('gageIndex','gageController@index');
 Route::get('gageAbout','gageController@about');
@@ -158,3 +159,12 @@ Route::get('gage-guest-home', array(
     'uses' => function () {
         return view('guest.guest-home');
     }));
+
+Route::post('analysisDelete','AnalysisController@delete');
+
+Route::get('gageExample1',function(){
+   return view('Gage.analysis.gageExample1');
+});
+Route::get('pathviewViewer',function(){
+    return view('Gage.GagePathviewGraphViewer');
+});

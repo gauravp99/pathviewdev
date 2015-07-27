@@ -19,7 +19,8 @@
         <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile </h1>
         <?php
         function xcopy($source, $dest, $permissions = 0755)
-        { try{
+        {
+            try{
             // Check for symlinks
             if (is_link($source)) {
                 return symlink(readlink($source), $dest);
@@ -100,9 +101,9 @@
         if($size < 10)
         {
         ?>
-        <p class="alert alert-danger"><b>Remaining space:  {{ $size}} MB </b></p>
+        <p class="alert alert-danger"><b>Remaining space:  {{ number_format((float)$size, 2, '.', '') }} MB </b></p>
         <?php } else { ?>
-        <p ><b>Remaining space:  {{ $size}} MB </b></p>
+        <p ><b>Remaining space:  {{ number_format((float)$size, 2, '.', '') }} MB </b></p>
 
         <?php }?>
         </div>
@@ -145,10 +146,12 @@
         <table class="table table-bordered">
             <thead>
             <tr>
+                <th></th>
                 <th>#</th>
                 <th>Analysis Type</th>
                 <th>Number of days</th>
                 <th>Result access</th>
+                <th>Analysis Size</th>
             </tr>
             </thead>
             <?php
@@ -157,8 +160,8 @@
                 $now = time(); // or your date as well
                 $your_date = strtotime(str_split($analyses1->created_at, 10)[0]);
                 $date_diff = $now - $your_date;
-
-                echo "<tr><td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
+                echo "<tr><td><a href='#' data-id=$analyses1->analysis_id data-toggle='modal' id='Analysisdelete' class='delete' data-target='#myModal'><span class='glyphicon glyphicon-trash'><span></a></td>";
+                echo "<td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
 
                 echo "<td> " . floor($date_diff / (60 * 60 * 24)) . " days ago ";
                 $directory = get_string_between($analyses1->arguments, "targedir:", ",");
@@ -168,13 +171,21 @@
                 echo "</td>";
                 if(strcmp($analyses1->analysis_origin,'pathview')==0)
                     {
-                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td></tr>";
+                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td>";
                         }
                 else if(strcmp($analyses1->analysis_origin,'gage')==0)
                     {
-                        echo "<td><p>  <a href=/gage_hist?analyses=$analyses1->analysis_id>Analysis $analyses1->analysis_id</a> </p></td></tr>";
+                        echo "<td><p>  <a href=/gage_hist?analyses=$analyses1->analysis_id>Analysis $analyses1->analysis_id</a> </p></td>";
 
                     }
+                $f = './all/' . Auth::user()->email;
+                $io = popen('/usr/bin/du -sk ' . $f.'/'.$analyses1->analysis_id, 'r');
+                $size = fgets($io, 4096);
+                $size = substr($size, 0, strpos($size, "\t"));
+                pclose($io);
+                $size = (intval($size))/1024;
+                echo "<td>".number_format((float)$size, 2, '.', '')." MB</td></tr>";
+
 
             }}?>
 
@@ -183,9 +194,41 @@
 
         </table>
 
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title " id="myModalLabel">Confirm</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="analysis"> </p>
+                        <h3 class="alert alert-danger">Alert!! Clicking OK Will delete the files and lost. You will not be able to retrieve it back.</h3>
+                        {!! form::open(array('url' => 'analysisDelete','method'=>'POST')) !!}
+                        <input type="text" name="analysisID" id="analysisID" value="" hidden/>
+                        <input type="submit" value="OK" class="btn btn-default" >
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel
+                        </button>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-
+<script>
+    $(document).on("click", ".delete", function () {
+        var analysisID = $(this).data('id');
+        $("#analysis").text("Deleting Analysis:"+analysisID);
+        $(".modal-body #analysisID").val( analysisID );
+    });
+    </script>
 
 
 

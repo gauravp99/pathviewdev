@@ -79,6 +79,7 @@
                     $relativePath = substr($filePath, strlen($rootPath) + 1);
 
                     // Add current file to archive
+                    if(!strpos($filePath,'RData')&& !strpos($filePath,'Rout'))
                     $zip->addFile($filePath, $relativePath);
 
                 }
@@ -110,11 +111,15 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
             {
                 $sigLines = file($destDir .$v);
                         $significant_flag = true;
-                echo "<h3> Selected pathways/gene sets:</h3>";
+                echo "<h2 class='section'> Selected pathways/gene sets:</h2>";
 
-                echo "<span  class = 'glyphicon glyphicon-plus' id='expand' style='alignment: right;' ></span>";
-                echo "<span type='button' id='sideexpand' style='alignment: right;' class='glyphicon glyphicon-menu-right' ></span>";
-                echo "<table style='font-size: 14px;margin-bottom: 30px;width=100%;text-align: left;' border=1>";
+                echo "<a href='#'><span type='button' id='sideexpand' style='alignment: left;margin-left: 1.5%;font-size: 30px;' class='glyphicon glyphicon-forward' ></span></a>";
+                echo "<div class='col-md-12'>";
+                echo "<div style='width:0.1%'>";
+                echo "<a href='#'><span  class = 'glyphicon glyphicon-triangle-bottom' id='expand' style='margin-left:-40px;alignment: right;font-size: 30px;' ></span></a>";
+                echo "</div >";
+                echo "<div style='width:99%'>";
+                echo "<table style='font-size: 14px;margin-bottom: 30px;margin-top:-30px;width=100%;text-align: left;' border=1>";
                 echo "<tbody>";
                 $lineNumer = 0;
                 $pathwaySet =array();
@@ -134,7 +139,7 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                         foreach ($array_string as $string)
                         {
                             $i++;
-
+                            $float = (double)$string;
                             if($i == 1 && $lineNumer < 4)
                                 {
                                     $pathway_string = explode(" ", $string);
@@ -148,10 +153,26 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                                     }
                                 }
 
-                            if($i>5)
-                                echo "<td class='side-expand'>".$string."</td>";
+                            if($i>6)
+                                {
+                                    $float = (double)$string;
+                                    echo "<td class='side-expand'>".number_format((float)$float, 2, '.', '')."</td>";
+                                }
+
                             else{
-                                echo "<td>".$string."</td>";
+                                if($i==1 || $i ==6)
+                                    echo "<td>".$string."</td>";
+                                else if($i==2 || $i ==4 || $i==5)
+                                {
+
+                                    echo "<td>".sprintf('%.2E', $float)."</td>";
+                                }
+                                else
+                                {
+
+                                    echo "<td>".number_format((float)$float, 2, '.', '')."</td>";
+                                }
+
                             }
 
                         }
@@ -169,7 +190,7 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                             $i++;
 
 
-                            if($i>4)
+                            if($i>5)
                                 echo "<th class='side-expand'>".$string."</th>";
                             else {
                                 echo "<th>".$string."</th>";
@@ -183,7 +204,8 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                 }
                 echo "</tbody>";
                 echo "</table>";
-
+                echo "</div>";
+echo "</div>";
             }
             }
                 if(!$significant_flag && $gageresFileExist_flag)
@@ -194,9 +216,9 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                         if(strcmp($v1,"gage.res.txt") == 0)
                         {
                             $Lines = file($destDir ."gage.res.txt");
-                            echo "<h3 > Complete pathways/gene sets:</h3>";
-                            echo "<button type='button' id='expand' style='alignment: right;' > Expand </button>";
-                            echo "<button type='button' id='sideexpand' style='alignment: right;' > More Experiments </button>";
+                            echo "<h2 class='section'> Complete pathways/gene sets:</h2>";
+
+                            echo "<a href='#'><span type='button' id='sideexpand' style='alignment: left;' class='glyphicon glyphicon-menu-right' ></span></a>";
                             echo "<table style='font-size: 14px;margin-bottom: 30px;width=100%;text-align: left;' border=1>";
                             echo "<tbody>";
                             $lineNumer = 0;
@@ -217,11 +239,29 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                                         $i++;
 
 
+                                        $float = (double)$string;
+                                        if($i>6 )
+                                            {
 
-                                        if($i>5)
-                                            echo "<td class='side-expand'>".$string."</td>";
+                                                    $float = (double)$string;
+                                                    echo "<td class='side-expand'>".number_format((float)$float, 2, '.', '')."</td>";
+
+
+                                                }
                                         else{
-                                            echo "<td>".$string."</td>";
+
+                                            if($i==1 || $i ==6)
+                                                echo "<td>".$string."</td>";
+                                            else if($i==2 || $i ==4 || $i==5)
+                                            {
+
+                                                echo "<td>".sprintf('%.2E', $float)."</td>";
+                                            }
+                                            else
+                                            {
+
+                                                echo "<td>".number_format((float)$float, 2, '.', '')."</td>";
+                                            }
                                         }
 
                                     }
@@ -239,7 +279,7 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                                         $i++;
 
 
-                                        if($i>4)
+                                        if($i>5 )
                                             echo "<th class='side-expand'>".$string."</th>";
                                         else {
                                             echo "<th>".$string."</th>";
@@ -253,7 +293,7 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                             }
                             echo "</tbody>";
                             echo "</table>";
-
+                            echo "<a href='#'><span  class = 'glyphicon glyphicon-plus' id='expand' style='alignment: right;margin-top: -20px;' ></span></a>";
                         }
                     }
                 }
@@ -263,10 +303,11 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                 if(sizeof($pathwaySet)>0)
                 {
                 $i =0;
+            echo "<h2 class='section'>Example graphs for top gene sets:</h2>";
                 foreach($pathwaySet as $pathway)
                     {
                     $i++;
-            echo "<h3>Example graphs for top gene sets</h3>";
+
 
 
 
@@ -283,29 +324,38 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                         if($pathview_flag)
                         {
                             ?>
-                        <h3>Pathview('s)</h3>
+                        <h3 class="section-header">Pathview graphs</h3>
                         <?php
                         }else{
                     ?>
-                    <h3>Heatmaps</h3>
+                    <h3 class="section-header">Heatmaps</h3>
                 <?php
                         }}
 
             foreach($contents as $k => $v)
             {
 
-                if($pathview_flag && strcmp($v,$pathway.'.pathview.multi.png')==0  )
+                if($pathview_flag && (strcmp($v,$pathway.'.pathview.multi.png')==0 || strcmp($v,$pathway.'.pathview.png') ==0 ) )
                     {
 
                         echo "<div class = 'col-md-12  pdf' >";
-                        echo "<img width='100%' height='600px' src=".$dir .$v.">";
+                        if(Auth::user())
+                            {
+                        $id = substr($dir,strlen('all/'.Auth::user()->email.'/'));
+                                }
+                        else
+                            {
+
+                                $id = substr($dir,strlen('all/demo/'));
+                            }
+                        echo "<a href='/pathviewViewer?id=$id&image=$v' target='_blank'><img class='pdf-info' width='500px' height='500px' src=".$dir .$v."></a>";
                         echo "<p class='pdf-info' style='align:center;'>".$pathwaySetName[$i-1]."</p>";
                         echo "</div>";
-                    }else if(!$pathview_flag && strcmp($v,$pathway.'.geneData.heatmap.pdf')==0  )
+                    }else if(!$pathview_flag && strcmp($v,$pathway.'.geneData.heatmap.pdf')==0 )
                     {
 
                     echo "<div class = 'col-md-12  pdf' >";
-                    echo "<embed width='100%' height='600px' src=".$dir .$v.">";
+                    echo "<embed width='500px' height='500px' src=".$dir .$v.">";
                         echo "<p class='pdf-info'>".$pathwaySetName[$i-1]."</p>";
                     echo "</div>";
                     }
@@ -319,7 +369,7 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                     if($i==1)
                     {
                     ?>
-                    <h3>Scatter Plots</h3>
+                    <h3 class="section-header">Scatter Plots</h3>
                     <?php
                     }
                             if($refSampleNull_flag && $i==1)
@@ -336,7 +386,7 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
                         if(strcmp($v,$pathway.'.geneData.pdf')==0 )
                         {
                             echo "<div class = 'col-md-12 pdf'>";
-                            echo "<embed width='100%' height='600px' src=".$dir .$v.">";
+                            echo "<embed width='500px' height='500px' src=".$dir .$v.">";
                             echo "<p class='pdf-info'>".$pathwaySetName[$i-1]."</p>";
                             echo "</div>";
                         }
@@ -430,22 +480,22 @@ echo "<h2 class='alert alert-info'> Click here to download the zipped output fil
             $('.side-expand').toggle();
             $("#expand").click(function () {
                 $('.expandable').toggle();
-                if ( $( "#expand" ).hasClass( "glyphicon-plus" ) ) {
-                    $("#expand").addClass('glyphicon-minus').removeClass('glyphicon-plus');
+                if ( $( "#expand" ).hasClass( "glyphicon-triangle-bottom" ) ) {
+                    $("#expand").addClass('glyphicon-triangle-top').removeClass('glyphicon-triangle-bottom');
                 }
                 else
                 {
-                    $("#expand").addClass('glyphicon-plus').removeClass('glyphicon-minus');
+                    $("#expand").addClass('glyphicon-triangle-bottom').removeClass('glyphicon-triangle-top');
                 }
             });
             $("#sideexpand").click(function () {
                 $('.side-expand').toggle();
-                if ( $( "#sideexpand" ).hasClass( "glyphicon-menu-right" ) ) {
-                    $("#sideexpand").addClass('glyphicon-menu-left').removeClass('glyphicon-menu-right');
+                if ( $( "#sideexpand" ).hasClass( "glyphicon-forward" ) ) {
+                    $("#sideexpand").addClass('glyphicon-backward').removeClass('glyphicon-forward');
                 }
                 else
                 {
-                    $("#sideexpand").addClass('glyphicon-menu-right').removeClass('glyphicon-menu-left');
+                    $("#sideexpand").addClass('glyphicon-forward').removeClass('glyphicon-backward');
                 }
             });
         });

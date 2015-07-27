@@ -86,8 +86,22 @@
                                 foreach ($array_string as $string)
                                 {
                                     $i++;
+                                    $float = (double)$string;
+                                    if($i==1)
+                                        {
                                     echo "<td>".$string."</td>";
 
+                                            }
+                                    else if($i==2 || $i ==4 || $i==5)
+                                        {
+
+                                                echo "<td>".sprintf('%.2E', $float)."</td>";
+                                        }
+                                        else
+                                        {
+
+                                            echo "<td>".number_format((float)$float, 2, '.', '')."</td>";
+                                        }
                                     if($i==5)
                                         break;
 
