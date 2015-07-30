@@ -9,13 +9,11 @@ var app = angular.module('GageApp',[], function($interpolateProvider) {
 app.controller('analysisController',function($scope) {
 
 
-
-
-
     $scope.showContent = function($fileContent)
     {
-
-
+        console.log("displaying the sample and reference columns");
+        console.log($scope.sampleselect);
+        console.log($scope.refselect);
         if($scope.filename)
             $scope.content = $fileContent;
 
@@ -33,9 +31,9 @@ app.controller('analysisController',function($scope) {
              return this.split(/\s+/).length;
              }
              $scope.content = $fileContent.split("\n")[0].countWords();*/
+
             $scope.columns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
             $scope.columns.splice($scope.columns[0], 1);
-
             $scope.sample=[];
             $scope.ref=[];
 

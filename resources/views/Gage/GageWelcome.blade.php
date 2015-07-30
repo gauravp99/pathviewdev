@@ -69,7 +69,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading leftpanel" >Usage Statistics</div>
                         <div class="panel-body">
-                            <p >Gage web</p>
+                            <p >GAGE web</p>
 
                             <div id="graph1" class="col-md-12">
 
@@ -82,7 +82,7 @@
                                                 &nbsp
                                             </div>
                                         </td>
-                                        <td class="tdContent">Gage Analysis:</td>
+                                        <td class="tdContent">GAGE Analysis:</td>
                                         <td><?php echo $web_dnld_cnt ?></td>
                                         <td>
                                             <div class="bar11" >

@@ -7,8 +7,10 @@ use Auth;
 use Session;
 use File;
 use DB;
+use Redis;
 use Illuminate\Http\Request;
-
+use Queue;
+use App\Commands\sendGageAnalysisCompletionMail;
 class GageAnalysis extends Controller {
 
 	/**
@@ -224,6 +226,18 @@ class GageAnalysis extends Controller {
 
         $_SESSION['argument'] = $argument;
 
+        /*$runHashdata = array();
+        $runHashdata['argument'] = $argument;
+        $runHashdata['destFile'] = $destFile;
+        if (Auth::user())
+            $runHashdata['user'] = Auth::user()->id;
+        else
+            $runHashdata['user'] = "demo";
+        Redis::set($time, json_encode($runHashdata));
+        Redis::set($time.":Status","false");
+        $process_queue_id = Queue::push(new sendGageAnalysisCompletionMail($time));
+        $_SESSION['argument'] = $argument;
+        return  view('Gage.GageResultView');*/
        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         function get_client_ip()
         {
@@ -257,7 +271,8 @@ class GageAnalysis extends Controller {
             DB::table('analyses')->insert(
                 array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => 'gage', 'created_at' => $date, 'ipadd' => get_client_ip(),'analysis_origin' => 'gage')
             );
-       return view('Gage.GageResult');
+        //echo $time;
+        return view('Gage.GageResult');
 
 	}
 

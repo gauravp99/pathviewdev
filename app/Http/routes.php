@@ -168,3 +168,8 @@ Route::get('gageExample1',function(){
 Route::get('pathviewViewer',function(){
     return view('Gage.GagePathviewGraphViewer');
 });
+
+Route::get('resultView',function(){
+    return view('Gage.GageResultView');
+});
+Route::post('/ajax/GageanalysisStatus','AjaxGageAnalysisStatusCheck@index');

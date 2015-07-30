@@ -86,7 +86,7 @@
             <input class="ex8"  name="reference"  id="reference"  value={{$reference}}> <h6 class="noteHint" >eg: 1,3,5 or NULL</h6>
             <!-- To get the number of column fields in a file -->
             <input type="text"  name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns"   >
-            <select name="ref[]" id="refselect"   multiple="" size="5" style="width:100%;" ng-show="columns.length > 0">
+            <select name="ref[]" id="refselect"   multiple="" size="5" style="width:100%;" ng-model='refselect' ng-show="columns.length > 0">
                 <option ng-repeat="column in columns track by $index"
                         value="<% $index+1 %>">
                     <% column %>
@@ -107,7 +107,7 @@
 
         <div class="col-sm-7">
             <input class="ex8"  name="samples"  id="sample" value={{$sample}}  > <h6 class="noteHint">eg: 2,4,6 or NULL</h6>
-            <select name="sample[]" id="sampleselect"  multiple="" size="5" style="width:100%;" ng-show="columns.length > 0">
+            <select name="sample[]" id="sampleselect"  multiple="" size="5" style="width:100%;" ng-model='sampleselect' ng-show="columns.length > 0">
                 <option ng-repeat="column in columns track by $index"
                         value="<% $index+1 %>">
                     <% column %>
@@ -125,7 +125,7 @@
                 <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
-                <label for="cutoff">q-value cutoff:</label>
+                <label for="cutoff">q-value Cutoff:</label>
             </div>
             <div class="col-sm-7">
 
@@ -211,7 +211,7 @@
                 <label for="useFold">Per Gene Score:</label>
             </div>
             <div class="col-sm-7">
-                <input type="checkbox"  id="useFold" value="true" style="width: 44px;" data-off-text="t-stats" data-on-text="fold" name="useFold" @if ($useFold) checked @endif>
+                <input type="checkbox"  id="useFold" value="true" style="width: 44px;" data-off-text="t-test" data-on-text="fold" name="useFold" @if ($useFold) checked @endif>
 
             </div>
         </div>
@@ -222,7 +222,7 @@
                 <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
-                <label for="test">Test:</label>
+                <label for="test">Gene Set Test:</label>
             </div>
             <div class="col-sm-7">
                 <select name="test" id="test" class="styled-select" class="compare">
@@ -267,9 +267,24 @@
     </div>
 
 </fieldset>
+</div>
+<div  class="steps" style="margin-left:-2%">
+    <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return validation()"  />
+    <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" />
+</div>
+
+</div>
+
+</div>
+
 
 <script>
 
+
+$('#submit-button').click(function(){
+        //$('#progress').show();
+    $('#completed').hide();
+});
     $('#geneIdFile').hide();
     $(document).on('change', '.btn-file :file', function() {
         var input = $(this),
@@ -315,14 +330,15 @@
     //saved species to be used in javascript
     var speciesArray = <?php echo JSON_encode($species);?> ;
     $('#gage_anal_form').validate({
+
         invalidHandler: function(form, validator) {
             var errors = validator.numberOfInvalids();
 
             if (errors > 0) {
+                $('#progress').hide();
                 $("#error-message").show().text("** You missed " + errors + " field(s) or errors check and fill it to proceed.");
                 $("");
             } else {
-
                 $("#error-message").hide();
             }
         },
@@ -415,9 +431,37 @@
             compare:{
                 refSapleColumnLengthCheck: "* Since Reference and Sample columns lengths are not equal select value to be unpaired "
             }
-        }
+        }/*,
+        submitHandler: function(form) {
+            var fd = new FormData(document.querySelector("form"));
+            $.ajax({
+                url:$('#gage_anal_form').attr('action'),
+                type:$('#gage_anal_form').attr('method'),
+                data: fd,
+                success: function(data){
+                    $("#resultLink").attr("href", "/gageResult?analysis_id="+data);
+
+                    hideProgress();
+                    showDoneResultMessage();
+                },
+
+                contentType: false,
+                processData: false
+
+            });
+        }*/
 
     });
+function showDoneResultMessage() {
+    console.log("in show done result message");
+   $('#completed').show();
+}
+function hideProgress() {
+    console.log("in show done progress hide");
+    $('#progress').hide();
+
+}
+
 
     jQuery.validator.addMethod('refSampleFieldValidate',function(value, element){
         if(value.toLowerCase() === "null" || value.toLowerCase() === "")
@@ -534,15 +578,6 @@
     }, "Max size should only contains digits or inf");
 
 </script>
-
-</div>
-<div class="steps" style="margin-left:-2%">
-    <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return validation()"  />
-    <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" />
-</div>
-</div>
-
-</div>
 
 
 

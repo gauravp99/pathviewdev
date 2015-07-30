@@ -10,7 +10,21 @@
 
                 </div>
 <?php
-            $argument = $_SESSION['argument'];
+
+                $argument = $_SESSION['argument'];
+          /*  $analysis_id = $_GET['analysis_id'];
+                $email ="";
+                if(Auth::user())
+                    {
+                        $id = Auth::user()->id;
+                    }
+                else{
+                    $id = 0;
+                }
+                $analysis = DB::table('analyses')->where('analysis_id',$analysis_id)->first();
+                if(sizeof($analysis) > 0 )
+                    {
+                $argument = $analysis->arguments;*/
             $significant_flag = false;
             $gageresFileExist_flag = false;
             $pathview_flag = false;
@@ -28,7 +42,7 @@
                             if($keyAndValue[0] =='destDir' || $keyAndValue[0] == 'destFile' )
                                 {
                                     if($keyAndValue[0] =='destDir')
-                                        {
+                                            {
                                     $destDir = $keyAndValue[1];
                                             break;
                                             }
@@ -406,7 +420,6 @@ echo "</div>";
         <div class="col-md-12" style="font-size: 14px;">
             <div class="col-md-4">
         <?php
-        $argument = $_SESSION['argument'];
 
         //split
         $args = array();
@@ -469,6 +482,7 @@ echo "</div>";
             </ul>
                 <?php
                 echo "</div>";
+               /* }*/
             ?>
         </div>
         </div>

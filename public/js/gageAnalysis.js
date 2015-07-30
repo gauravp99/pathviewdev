@@ -36,7 +36,8 @@ function validation(){
         $("[name='test2d']").bootstrapSwitch();
         $("[name='rankTest']").bootstrapSwitch();
         $("[name='useFold']").bootstrapSwitch();
-
+            $("[name='useFold']").setOnLabel = "setOnLabel" ;
+            $("[name='useFold']").bootstrapSwitch.defaults.setOffLabel = "setOnLabel" ;
         $('input[name="dopathview"]').on('switchChange.bootstrapSwitch', function(event, state) {
             $('#dataType-div').toggle();
         });
@@ -110,7 +111,7 @@ var GogetSetChange = false;
 
         $('#refselect').change(function () {
 
-            var ref_selected_text;
+            var ref_selected_text="";
             var noOfColumns = $('#NoOfColumns').val();
             for (var j = 1; j <= noOfColumns; j++) {
                 ref_selected_text = "";
@@ -119,6 +120,7 @@ var GogetSetChange = false;
             for (var i = 0; i < $(this).val().length; i++) {
 
                 var selected = $(this).val()[i];
+                console.log(selected);
                 ref_selected_text = ref_selected_text + (selected) + ",";
                 $("#sampleselect option[value=\"" + selected + "\"]")[0].setAttribute('disabled', 'disabled');
             }
@@ -128,7 +130,7 @@ var GogetSetChange = false;
         $('#sampleselect').change(function () {
 
             var noOfColumns = $('#NoOfColumns').val();
-            var sample_selected_text;
+            var sample_selected_text="";
             for (var j = 1; j <= noOfColumns; j++) {
                 sample_selected_text = "";
                 $("#refselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
@@ -136,7 +138,8 @@ var GogetSetChange = false;
             for (var i = 0; i < $(this).val().length; i++) {
 
                 var selected = $(this).val()[i];
-                sample_selected_text = sample_selected_text + (selected) + ",";
+                console.log(selected);
+                sample_selected_text = sample_selected_text + selected + ",";
                 $("#refselect option[value=\"" + selected + "\"]")[0].setAttribute('disabled', 'disabled');
             }
 

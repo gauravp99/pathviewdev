@@ -15,6 +15,7 @@
     <title>GAGE Web</title>
 </head>
 <body ng-app="GageApp" >
+
 <nav class="navbar navbar-default navbar-change">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -74,7 +75,7 @@
                     @else
                     <li <?php if (basename(Request::url()) == "gage") {
                         echo "class=\"active\"";
-                    }?>><a href="/gage-home">Gage</a></li>
+                    }?>><a href="/gage-home">GAGE</a></li>
                     @endif
 
                 </ul>

@@ -1,9 +1,10 @@
---2015-07-27 17:00:05--  http://bioconductor.org/packages/stats/bioc/gage.html
-ResoResolving bioconductor.org (bioconductor.org)54.192.195.142, 54.154.192.19, 54.154.192.19, ..,
-Connecting to bioconductor.org (bioconductor.org)|54.192.195.142|:80... connected.
-HTTP request sent, awaiting response... 200 200 OK
-Length: 3544 (3.5K) [text/htSaviSaving to: `pathview.html'
+--2015-07-30 11:00:04--  http://bioconductor.org/packages/stats/bioc/gage.html
+Resolving bioconductor.org (bioconductor.org)... 54.254.230.204, 54.254.239.172, 54.154.192.206, ..,
+Connecting to bioconductor.org (bioconductor.org)|54.230.204.191|:80... connconnectHTTPHTTP request sent, awaiting response200 200 OK
+Length: 3544 (3.5K) [text/htSaviSaving to: `pathvie
+     0K
+ ..                                                   100%  250M=0s
 
-     0K ...                                                   100%  32015-07-27 17:00:05 (256 MB/s) - `gage.html' saved [3511/3511]
+2015-07-30 11:00:05 (250 MB/s) - `gage.html' saved [3511/3511]
 
-insert into insert into biocstatistics values('July','2015',485,788);
+insert into insert into biocstatistics values('July','2015',549,883);

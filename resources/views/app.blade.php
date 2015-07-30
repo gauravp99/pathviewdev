@@ -4,8 +4,6 @@
 if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-guest-home")
         {
 ?>
-
-<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -18,6 +16,7 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
     <title>GageWeb</title>
 </head>
 <body ng-app="GageApp" >
@@ -80,7 +79,7 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                 @else
                     <li <?php if (basename(Request::url()) == "gage") {
                         echo "class=\"active\"";
-                    }?>><a href="/gage-home">Gage</a></li>
+                    }?>><a href="/gage-home">GAGE</a></li>
                 @endif
 
             </ul>
@@ -197,8 +196,6 @@ if ( basename(Request::url())== "gageIndex" && !Auth::user() || basename(Request
         }else {
     ?>
 
-
-<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -209,6 +206,7 @@ if ( basename(Request::url())== "gageIndex" && !Auth::user() || basename(Request
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
     <title>Pathview</title>
 </head>
 <body >

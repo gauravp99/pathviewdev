@@ -104,7 +104,7 @@
         <div class="col-sm-2" style="margin-left: 20px;">
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1" style="font-size:24px;">
 
-                <span id="plus" style="margin-top: -7px;padding: 4px;padding-left: 50px;padding-right: 50px;box-shadow: 0px 0px 3px #AAA;border: 1px solid #FEF7F7;margin-left: -52px;margin: -51px;" class="glyphicon glyphicon-plus"></span>
+                <span id="plus" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px 57px 6px 59px;margin: 0px -57px -17px;" class="glyphicon glyphicon-plus"></span>
             </a>
 
             <div class="pathwayiconsep" style="margin-top: 60px">
@@ -113,13 +113,13 @@
 
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add" style="font-size:24px;">
 
-                <span id="forward" class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid rgb(254, 247, 247);padding: 6px;padding-left: 59px;margin: -57px;padding-right: 57px;margin-top: 30px;"></span>
+                <span id="forward" class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px;padding-left: 59px;margin: -57px;padding-right: 57px;margin-top: 30px;"></span>
             </a>
 
         </div>
 
         <div class="col-sm-5" style="margin-left: -20px;">
-            <h6 style="font-family: Verdana;font-size=5px;color:black;margin-top: -27px;margin-left:10px;">Note:Remove items by deleting</h6>
+            <h6 style="font-family: Verdana;font-size=5px;color:black;margin-top: -24px;margin-left:10px;">Note: Remove items by deleting</h6>
             <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
         </div>
     </div>

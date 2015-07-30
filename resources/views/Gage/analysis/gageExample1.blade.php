@@ -17,7 +17,17 @@
             <div id="error-message"></div>
         </div>
         {!! form::open(array('url' => 'exampleGageAnalysis1','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
-
+        <div class="col-md-2">
+            <div id="progress" class="col-md-12" hidden>
+                <h2 class="alert alert-info"> Executing, Please wait. </h2>
+                <img width="200px" hieght="200px" src="/images/load.gif">
+            </div>
+            <div id="completed" class="list-group col-md-12" hidden>
+                <p> Completed Gage Analysis</p>
+                <a id ='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
+                <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
+            </div>
+        </div>
         <div id="wrapper" class="col-md-8" ng-app="GageApp" ng-controller="ExampleAnalysisController1">
             <div id="navigation" style="">
                 <ul>
