@@ -211,7 +211,7 @@
                 <label for="useFold">Per Gene Score:</label>
             </div>
             <div class="col-sm-7">
-                <input type="checkbox"  id="useFold" value="true" style="width: 44px;" data-off-text="t-test" data-on-text="fold" name="useFold" @if ($useFold) checked @endif>
+                <input type="checkbox"  id="useFold" value="true"  data-off-text="t-test" data-on-text="fold" name="useFold" @if ($useFold) checked @endif>
 
             </div>
         </div>

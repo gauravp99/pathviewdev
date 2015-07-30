@@ -6,11 +6,18 @@ var app = angular.module('GageApp',[], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
-app.controller('analysisController',function($scope) {
-
+app.controller('analysisController',function($scope,$timeout) {
+    var outScope = $scope;
+    $scope.delete = function(){
+        console.log("in delete function");
+        console.log(sampleselect);
+        $('.tempColumn').remove();
+        console.log(sampleselect);
+    };
 
     $scope.showContent = function($fileContent)
     {
+
         console.log("displaying the sample and reference columns");
         console.log($scope.sampleselect);
         console.log($scope.refselect);
@@ -27,11 +34,6 @@ app.controller('analysisController',function($scope) {
         }
         else if($scope.filetype === 'text/plain')
         {
-            /* String.prototype.countWords = function(){
-             return this.split(/\s+/).length;
-             }
-             $scope.content = $fileContent.split("\n")[0].countWords();*/
-
             $scope.columns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
             $scope.columns.splice($scope.columns[0], 1);
             $scope.sample=[];
@@ -45,9 +47,12 @@ app.controller('analysisController',function($scope) {
         }
         $scope.content = $fileContent.split("\n")[0];
 
+
     };
     console.log("In analysis Page");
 });
+
+
 app.controller('ExampleAnalysisController1',function($scope) {
     $scope.columns = ['HN_1','DCIS_1','HN_2','DCIS_2','HN_3','DCIS_3','HN_4','DCIS_4','HN_5','DCIS_5','HN_6','DCIS_6'];
 });
@@ -57,13 +62,16 @@ app.directive('onReadFile', function($parse){
         restrict: 'A',
         scope: false,
         link: function(scope, element, attrs) {
+
+
+
             var fn = $parse(attrs.onReadFile);
             element.on('change',function(onChangeEvent){
                 var reader = new FileReader();
-
-
                 reader.onload = function(onLoadEvent) {
+
                     scope.$apply(function(){
+
                         fn(scope,{$fileContent:onLoadEvent.target.result});
                     });
                 };

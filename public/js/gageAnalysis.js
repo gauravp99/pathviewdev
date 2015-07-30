@@ -26,11 +26,12 @@ function validation(){
 
 
 }
+//select box allowing to select multiple option without pressing control
+
+
 
 
     $(document).ready(function () {
-
-
         $('#dataType-div').toggle();
         $("[name='dopathview']").bootstrapSwitch();
         $("[name='test2d']").bootstrapSwitch();

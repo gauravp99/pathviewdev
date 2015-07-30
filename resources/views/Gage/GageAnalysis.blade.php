@@ -80,7 +80,7 @@
                                 <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
                 <span class="input-group-btn">
                     <span class="btn btn-primary btn-file">
-                        Browse&hellip; <input type="file" name="assayData" type="file"  id="assayData"  on-read-file="showContent($fileContent)" >
+                        Browse&hellip; <input type="file" name="assayData" type="file"  id="assayData"  on-read-file="showContent($fileContent)" ng-click="delete()" >
                     </span>
                 </span>
                                 <input type="text" class="form-control" readonly>
@@ -225,8 +225,16 @@
                                 $.each($colum, function (index, value) {
                                     $('#sampleselect').append($("<option></option>")
                                             .attr("value", index + 1).text(value));
+
                                     $('#refselect').append($("<option></option>")
                                             .attr("value", index + 1).text(value));
+
+                                });
+                                $.each($colum,function (index,value) {
+                                    $('#refselect option[value='+(index + 1)+']').attr('class','tempColumn');
+
+                                    $('#sampleselect option[value='+(index + 1)+']').attr('class','tempColumn');
+
                                 });
                                 var refArray = reference.split(',').splice(0);
                                 refArray.splice((refArray).length,1);
@@ -250,18 +258,12 @@
                                         $('#geneIdFile').show();
                                     }
                                 }
-
                                 if(usePathview=='true')
                                 {
                                     $('#dataType-div').show();
 
                                 }
-
-
                             }
-
-
-
 
                         }
 
