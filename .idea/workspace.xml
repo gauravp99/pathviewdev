@@ -674,26 +674,66 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GageAbout.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAbout.blade.php">
+      <file leaf-file-name="GagePathviewGraphViewer.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GagePathviewGraphViewer.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="1476">
+            <state vertical-scroll-proportion="24.0" vertical-offset="648" max-vertical-offset="1980">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding>
+                <marker date="1438011141572" expanded="true" signature="445:526" placeholder="select analy..analyses..." />
+                <marker date="1438011141572" expanded="true" signature="596:670" placeholder="select analy..analyses..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GageResult.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.333334" vertical-offset="0" max-vertical-offset="9396">
+              <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
+              <folding>
+                <marker date="1438194618118" expanded="true" signature="4515:4565" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="4700:4710" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="4821:4872" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="4955:4964" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="5005:5086" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="9145:9161" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="9265:9329" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="12697:12732" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="14540:14553" placeholder="..." />
+                <marker date="1438194618118" expanded="true" signature="18426:18437" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GageResultView.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResultView.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-11.222222" vertical-offset="507" max-vertical-offset="1962">
+              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="63" selection-end-column="6" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GageAnalysis.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php">
+      <file leaf-file-name="GageTutorial.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.25740552" vertical-offset="0" max-vertical-offset="4968">
-              <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-              <folding>
-                <element signature="e#3179#3215#0#HTML" expanded="true" />
-                <element signature="e#3297#3324#0#HTML" expanded="true" />
-                <element signature="e#3634#3651#0#HTML" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-21.407408" vertical-offset="2770" max-vertical-offset="5004">
+              <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GageWelcome.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.771261" vertical-offset="255" max-vertical-offset="3816">
+              <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -854,72 +894,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="profile" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1440,11 +1414,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="60" y="24" width="1860" height="1176" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20837927" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4425926" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.4425926" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07075732" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972437" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1571,13 +1545,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/GageNavigation.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="234" max-vertical-offset="7524">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/analysis.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="1096" max-vertical-offset="8136">
@@ -1633,57 +1600,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-42.074074" vertical-offset="7576" max-vertical-offset="9396">
-          <caret line="484" column="21" selection-start-line="484" selection-start-column="21" selection-end-line="484" selection-end-column="21" />
-          <folding>
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageHistoryResult.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="73.92593" vertical-offset="3778" max-vertical-offset="4896">
-          <caret line="99" column="44" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="44" />
-          <folding>
-            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/bootstrap.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13986">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-29.222221" vertical-offset="255" max-vertical-offset="3816">
-          <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResultView.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.222222" vertical-offset="507" max-vertical-offset="1962">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="63" selection-end-column="6" />
           <folding />
         </state>
       </provider>
@@ -1725,40 +1645,6 @@
         <state vertical-scroll-proportion="-0.32079208" vertical-offset="324" max-vertical-offset="15984">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.57227725" vertical-offset="2770" max-vertical-offset="5004">
-          <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
-          <folding>
-            <element signature="e#78#105#0#HTML" expanded="false" />
-            <element signature="e#1030#1048#0#HTML" expanded="false" />
-            <element signature="e#1095#1134#0#HTML" expanded="false" />
-            <element signature="e#1445#1463#0#HTML" expanded="false" />
-            <element signature="e#1502#1522#0#HTML" expanded="false" />
-            <element signature="e#1659#1679#0#HTML" expanded="false" />
-            <element signature="e#1812#1832#0#HTML" expanded="false" />
-            <element signature="e#1973#1993#0#HTML" expanded="false" />
-            <element signature="e#2124#2144#0#HTML" expanded="false" />
-            <element signature="e#2295#2315#0#HTML" expanded="false" />
-            <element signature="e#2616#2634#0#HTML" expanded="false" />
-            <element signature="e#2681#2720#0#HTML" expanded="false" />
-            <element signature="e#3031#3049#0#HTML" expanded="false" />
-            <element signature="e#3088#3108#0#HTML" expanded="false" />
-            <element signature="e#3253#3273#0#HTML" expanded="false" />
-            <element signature="e#3406#3426#0#HTML" expanded="false" />
-            <element signature="e#3557#3577#0#HTML" expanded="false" />
-            <element signature="e#3730#3750#0#HTML" expanded="false" />
-            <element signature="e#3886#3906#0#HTML" expanded="false" />
-            <element signature="e#4051#4071#0#HTML" expanded="false" />
-            <element signature="e#4214#4234#0#HTML" expanded="false" />
-            <element signature="e#4375#4395#0#HTML" expanded="false" />
-            <element signature="e#4734#4753#0#HTML" expanded="false" />
-            <element signature="e#4985#5004#0#HTML" expanded="false" />
-            <element signature="e#5236#5255#0#HTML" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2063,14 +1949,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAbout.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1476">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.25740552" vertical-offset="0" max-vertical-offset="4968">
@@ -2080,6 +1958,80 @@
             <element signature="e#3297#3324#0#HTML" expanded="true" />
             <element signature="e#3634#3651#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAbout.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1476">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageHistoryResult.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0673268" vertical-offset="2860" max-vertical-offset="4896">
+          <caret line="99" column="44" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="44" />
+          <folding>
+            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GagePathviewGraphViewer.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="24.0" vertical-offset="648" max-vertical-offset="1980">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1438011141572" expanded="true" signature="445:526" placeholder="select analy..analyses..." />
+            <marker date="1438011141572" expanded="true" signature="596:670" placeholder="select analy..analyses..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.333334" vertical-offset="0" max-vertical-offset="9396">
+          <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
+          <folding>
+            <marker date="1438194618118" expanded="true" signature="4515:4565" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="4700:4710" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="4821:4872" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="4955:4964" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="5005:5086" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="9145:9161" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="9265:9329" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="12697:12732" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="14540:14553" placeholder="..." />
+            <marker date="1438194618118" expanded="true" signature="18426:18437" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResultView.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.222222" vertical-offset="507" max-vertical-offset="1962">
+          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="63" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-21.407408" vertical-offset="2770" max-vertical-offset="5004">
+          <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.771261" vertical-offset="255" max-vertical-offset="3816">
+          <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
