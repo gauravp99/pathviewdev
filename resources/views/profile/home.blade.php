@@ -146,7 +146,7 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th></th>
+                <th><a href="#" id='deleteAll' data-toggle='modal'   data-target='#myModal'>Delete </a></th>
                 <th></th>
                 <th>#</th>
                 <th>Analysis Type</th>
@@ -161,7 +161,7 @@
                 $now = time(); // or your date as well
                 $your_date = strtotime(str_split($analyses1->created_at, 10)[0]);
                 $date_diff = $now - $your_date;
-                echo "<tr><td><input type='checkbox' name=$analyses1->analysis_id ></td><td><a href='#' data-id=$analyses1->analysis_id data-toggle='modal' id='Analysisdelete' class='delete' data-target='#myModal'><span class='glyphicon glyphicon-trash'><span></a></td>";
+                echo "<tr><td><input type='checkbox' value=$analyses1->analysis_id name=$analyses1->analysis_id ></td><td><a href='#' data-id=$analyses1->analysis_id data-toggle='modal' id='Analysisdelete' class='delete' data-target='#myModal'><span class='glyphicon glyphicon-trash'><span></a></td>";
                 echo "<td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
 
                 echo "<td> " . floor($date_diff / (60 * 60 * 24)) . " days ago ";
@@ -194,7 +194,7 @@
 
 
         </table>
-            <input type="submit" id="delete" value="Delete Selected" style="padding:5px;" hidden="">
+            <input type="submit" id="delete" data-toggle='modal'  data-target='#myModal' value="Delete Selected" style="padding:5px;" hidden="">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -224,15 +224,39 @@
 
 
 <script>
-    $('input[type="checkbox"]').click(function() {
-        console.log("hello");
-        $('#delete').removeAttribute('hidden');
+    $(function(){
+        var analy_ids="";
+        $('input[type="checkbox"]').change(function() {
+            if(this.checked) {
+                analy_ids += $(this).val();
+                analy_ids +=",";
+                console.log(analy_ids);
+            }
+            $('#delete').show();
+        });
+        $(document).on("click", ".delete", function () {
+            var analysisID = $(this).data('id');
+            $("#analysis").text("Deleting all");
+            $(".modal-body #analysisID").val( "" );
+        });
+        $(document).on("click", "#deleteAll", function () {
+            $('input[type=checkbox]').each(function() {
+
+                analy_ids+= $(this).val();
+                analy_ids +=",";
+                console.log(analy_ids);
+                $("#analysis").text("Deleting Analysis:deleting all");
+                $(".modal-body #analysisID").val( analy_ids );
+            });
+        });
+        $(document).on("click", "#delete", function () {
+            console.log('delete selected button clicked');
+            $("#analysis").text("Deleting Analysis:"+analy_ids);
+            $(".modal-body #analysisID").val( analy_ids );
+        });
+
     });
-    $(document).on("click", ".delete", function () {
-        var analysisID = $(this).data('id');
-        $("#analysis").text("Deleting Analysis:"+analysisID);
-        $(".modal-body #analysisID").val( analysisID );
-    });
+
 
 
     </script>

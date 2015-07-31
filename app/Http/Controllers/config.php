@@ -1,6 +1,6 @@
 
 <?php
-//configuration fro Rserve code
+//configuration for Rserve code
 
 define('RSERVE_HOST', 'localhost');
 define('RSERVE_PORT', 6312);

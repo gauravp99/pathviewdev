@@ -16,6 +16,7 @@
 
             <div id="error-message"></div>
         </div>
+        <input type="text" id="rememberTxt" hidden="" >
         {!! form::open(array('url' => 'exampleGageAnalysis1','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
         <div class="col-md-2">
             <div id="progress" class="col-md-12" hidden>
@@ -67,7 +68,7 @@
                         <div class="col-sm-12">
 
                             <div class="col-sm-5">
-                                <a>
+                                <a href="gageTutorial#assay_data" onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
                                 <label for="assayData">Assay Data:</label>
@@ -105,6 +106,186 @@
             $("#refselect option[value='3']")[0].setAttribute("selected", "selected");
             $("#refselect option[value='2']")[0].setAttribute("disabled", "disabled");
             $("#refselect option[value='4']")[0].setAttribute("disabled", "disabled");
+        });
+
+        $(window).bind('beforeunload', function() {
+
+
+            var geneIdSelected = $( "#geneIdType").val();
+            var geneSetSelected = $('#geneSet').val();
+            var referenceSelected = $('#refselect').val();
+            var sampleSelected = $('#sampleselect').val();
+            var dataTypeSelected = $('#dataType').val();
+            var usePathview = $('#usePathview').is(":checked");
+            var columns=[];
+            $("#refselect option").each(function()
+            {
+                columns.push($(this).text()); // Add $(this).val() to your list
+            });
+            console.log('Columns:'+columns);
+            console.log('referenceSelected:'+referenceSelected);
+            console.log('sampleSelected:'+sampleSelected);
+            console.log('geneSetSelected:'+geneSetSelected);
+            console.log('dataTypeSelected:'+dataTypeSelected);
+            console.log('geneIdSelected:'+geneIdSelected);
+            console.log('usePathview:'+usePathview);
+
+            //adding the dynamically added text hidden input variable
+
+            $val = 'col:';
+            if(columns != null || columns != undefined) {
+                $.each(columns, function (index, value) {
+                    value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
+                    $val += value;
+                    $val += ',';
+                });
+            }
+            $val += ';';
+            $val += 'ref:';
+            if(referenceSelected != null || referenceSelected != undefined  ) {
+                $.each(referenceSelected, function (index, value) {
+                    value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
+                    $val += value;
+                    $val += ',';
+                });
+            }
+            $val += ';';
+
+            $val += 'sam:';
+
+            if(sampleSelected != null || sampleSelected != undefined ) {
+                $.each(sampleSelected, function (index, value) {
+                    value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
+                    $val += value;
+                    $val += ',';
+                });
+            }
+            $val += ';';
+
+            $val += 'gen:';
+            if(geneSetSelected != null || geneSetSelected != undefined ) {
+                $.each(geneSetSelected, function (index, value) {
+                    value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
+                    $val += value;
+                    $val += ',';
+                });
+            }
+            $val += ';';
+
+            $val += 'gid:'+geneIdSelected+';';
+            if(usePathview)
+                $val += 'pat:true;';
+            else
+                $val += 'pat:false;';
+            $val += 'dat:'+dataTypeSelected+';';
+
+            console.log($val);
+            $('#rememberTxt').val($val);
+
+
+        });
+
+
+        $(function() {
+            var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+            // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
+            var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
+            var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+            // At least Safari 3+: "[object HTMLElementConstructor]"
+            var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
+            var isIE = /*@cc_on!@*/false || !!document.documentMode;   // At least IE6
+
+            if(isChrome||isIE||isSafari||isFirefox) {
+                var each = $('#rememberTxt').val().split(';').slice(0);
+                console.log(each);
+                $.each(each, function (index, value) {
+                    if(value.substr(0,3)==='col')
+                    {
+                        columns =  value.substr(4);
+                    }
+                    else if(value.substr(0,3)==='ref'){
+                        reference = value.substr(4);
+                    }
+
+                    else if(value.substr(0,3)==='sam'){
+                        sample = value.substr(4);
+                    }
+
+                    else if(value.substr(0,3)==='gen'){
+                        geneSet = value.substr(4);
+                    }
+                    else if(value.substr(0,3)==='gid'){
+                        geneid = value.substr(4);
+                    }
+
+                    else if(value.substr(0,3)==='pat'){
+                        usePathview = value.substr(4);
+                    }
+
+                    else if(value.substr(0,3)==='dat'){
+                        dataTypeSelected = value.substr(4);
+                    }
+
+                });
+
+                if ($('#rememberTxt').val() === '' ) {
+
+                }
+                else {
+                    $('#sampleselect').attr('class', 'dynamicshow');
+                    $('#refselect').attr('class', 'dynamicshow');
+                    $('#sampleselect').show();
+                    $('#refselect').show();
+                    $colum = columns.split(',').slice(0);
+                    $colum.splice(($colum).length,1);
+                    $colum.splice(($colum).length-1,1);
+
+                    $.each($colum, function (index, value) {
+                        $('#sampleselect').append($("<option></option>")
+                                .attr("value", index + 1).text(value));
+
+                        $('#refselect').append($("<option></option>")
+                                .attr("value", index + 1).text(value));
+
+                    });
+                    $.each($colum,function (index,value) {
+                        $('#refselect option[value='+(index + 1)+']').attr('class','tempColumn');
+
+                        $('#sampleselect option[value='+(index + 1)+']').attr('class','tempColumn');
+
+                    });
+                    var refArray = reference.split(',').splice(0);
+                    refArray.splice((refArray).length,1);
+                    refArray.splice((refArray).length-1,1);
+                    $.each(refArray, function (index,value){
+                        $('#refselect option[value='+value+']').attr('selected','selected');
+                    });
+                    var sampleArray = sample.split(',').splice(0);
+                    sampleArray.splice((sampleArray).length,1);
+                    sampleArray.splice((sampleArray).length-1,1);
+                    $.each(sampleArray, function (index,value){
+                        $('#sampleselect option[value='+value+']').attr('selected','selected');
+                    });
+                    $('#NoOfColumns').val(($colum).length-1);
+                    if(geneid !== 'entrez' && geneid !== 'kegg' )
+                    {
+                        $('#geneIdType').empty();
+                        $('#geneIdType').append($("<option></option>").attr("value",geneid).text(geneid));
+                        if(geneid === 'custom')
+                        {
+                            $('#geneIdFile').show();
+                        }
+                    }
+                    if(usePathview=='true')
+                    {
+                        $('#dataType-div').show();
+
+                    }
+                }
+
+            }
+
+
         });
 
     </script>

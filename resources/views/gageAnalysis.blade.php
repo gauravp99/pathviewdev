@@ -1,7 +1,7 @@
 <div class="stepsdiv" id="gset-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#gene_set" onclick="window.open('gageTutorial#gene_set', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="GeneSet">Gene Set:</label>
@@ -34,7 +34,7 @@
 <div class="stepsdiv" id="geneIdType-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#gene_id_type" onclick="window.open('gageTutorial#gene_id_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="geneIdType">Gene ID Type:</label>
@@ -52,7 +52,7 @@
 <div class="stepsdiv" id="species-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#species" onclick="window.open('tutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#species" onclick="window.open('gageTutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('species','Species:') !!}
@@ -76,7 +76,7 @@
 <div class="stepsdiv" id="ref-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#contorl_reference" onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="ref">Control / Reference:</label>
@@ -99,7 +99,7 @@
 <div class="stepsdiv" id="sample-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#case_sample" onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="sample">Case / Sample:</label>
@@ -122,7 +122,7 @@
     <div class="stepsdiv" id="cutoff-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#q_value_cutoff" onclick="window.open('gageTutorial#q_value_cutoff', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="cutoff">q-value Cutoff:</label>
@@ -136,7 +136,7 @@
     <div class="stepsdiv" id="setSize-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#set_size" onclick="window.open('gageTutorial#set_size', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="setSize">Set Size:</label>
@@ -156,7 +156,7 @@
     <div class="stepsdiv" id="compare-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="compare">Compare:</label>
@@ -174,7 +174,7 @@
     <div class="stepsdiv" id="sameDir-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#two_direction_test" onclick="window.open('gageTutorial#two_direction_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="sameDir">Two-direction Test:</label>
@@ -190,7 +190,7 @@
 
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#rank_test" onclick="window.open('gageTutorial#rank_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="rankTest">Rank Test:</label>
@@ -205,7 +205,7 @@
 
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#per_gene_score" onclick="window.open('gageTutorial#per_gene_score', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="useFold">Per Gene Score:</label>
@@ -219,7 +219,7 @@
     <div class="stepsdiv" id="test-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#gene_set_test" onclick="window.open('gageTutorial#gene_set_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="test">Gene Set Test:</label>
@@ -237,7 +237,7 @@
     <div class="stepsdiv" id="UsePathview-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#use_pathview" onclick="window.open('gageTutorial#use_pathview', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="usePathview">Use Pathview:</label>
@@ -251,7 +251,7 @@
     <div class="stepsdiv" id="dataType-div" >
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#data_type" onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="usePathview">Data Type:</label>

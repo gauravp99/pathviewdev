@@ -5,11 +5,19 @@ use DateTime;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 use Auth;
+
+/**
+ * Class gageController
+ * @package App\Http\Controllers
+ *
+ *
+ * This controller is used for the details pages such as index page, about page and tutorial page
+ */
 class gageController extends Controller {
 
 	/**
 	 * Display a listing of the resource.
-	 *
+	 *  For about page Graph sorting the months and pass the data and show it on graph
 	 * @return Response
 	 */
 	public function about()
@@ -266,6 +274,7 @@ class gageController extends Controller {
 
         }
     }
+
     public function tutorial()
     {
 

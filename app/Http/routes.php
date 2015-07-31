@@ -142,8 +142,8 @@ Route::get('gageResult', function () {
     return view("Gage.GageResult");
 });
 
-Route::post('gageAnalysis', 'GageAnalysis@newGageAnalysis');
-Route::post('exampleGageAnalysis1', 'GageAnalysis@ExampleGageAnalysis1');
+Route::post('gageAnalysis', 'GageAnalysisController@newGageAnalysis');
+Route::post('exampleGageAnalysis1', 'GageAnalysisController@ExampleGageAnalysis1');
 
 Route::get('gageIndex','gageController@index');
 Route::get('gageAbout','gageController@about');

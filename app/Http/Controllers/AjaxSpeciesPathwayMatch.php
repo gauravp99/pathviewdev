@@ -1,13 +1,19 @@
 <?php namespace App\Http\Controllers;
 
-/*
- * This program is used for ajax request to find out the pathways mapped to a particular species
- * stored at table speciesPathwayMatch Table
- */
+
 use App\Http\Requests;
 
 use \Illuminate\Support\Facades\Input;
 use DB;
+
+/**
+ * Class AjaxSpeciesPathwayMatch
+ * @package App\Http\Controllers
+ *
+ * This program is used for ajax request to find out the pathways mapped to a particular species
+ * stored at table speciesPathwayMatch Table
+ *
+ */
 class AjaxSpeciesPathwayMatch extends Controller {
 
 	public function index()

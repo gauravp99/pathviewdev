@@ -18,6 +18,7 @@ use Queue;
 use File;
 use Storage;
 use App\Commands\SendJobAnalysisCompletionMail;
+
 require "Rserv_Connection.php";
 
 class AnalysisController extends Controller
@@ -27,35 +28,54 @@ class AnalysisController extends Controller
     {
         return view('analysis.NewAnalysis');
     }
+
     public function delete()
     {
         $analysis_id = $_POST["analysisID"];
 
-        //checking if the analysis is in your profile or not
+        if (strlen($analysis_id) > 13) {
 
+            $analyis_array = explode(',', $analysis_id);
 
-        $result = DB::table('analyses')
-            ->where('analysis_id','=',$analysis_id)
-            ->where('id','=',Auth::user()->id)->first();
-       if(sizeof($result) > 0)
-        {
-            //analysis belong this user deleting using storage
-            $directory = public_path().'/all/'.Auth::user()->email.'/'.$analysis_id;
-            DB::table('analyses')
-                ->where('analysis_id','=',$analysis_id)
-                ->update(array('id' => "0"));
-            $success = File::deleteDirectory($directory);
-            return Redirect::back()->with('success', 'succes message');
-        }
-        else{
+            foreach ($analyis_array as $analysis_id) {
+
+                $result = DB::table('analyses')
+                    ->where('analysis_id', '=', $analysis_id)
+                    ->where('id', '=', Auth::user()->id)->first();
+                if (sizeof($result) > 0) {
+                    //analysis belong this user deleting using storage
+                    $directory = public_path() . '/all/' . Auth::user()->email . '/' . $analysis_id;
+                    DB::table('analyses')
+                        ->where('analysis_id', '=', $analysis_id)
+                        ->update(array('id' => "0"));
+                    $success = File::deleteDirectory($directory);
+                }
+            }
             return Redirect::back()->with('success', 'Error');
 
+        } else {
+
+            $result = DB::table('analyses')
+                ->where('analysis_id', '=', $analysis_id)
+                ->where('id', '=', Auth::user()->id)->first();
+            if (sizeof($result) > 0) {
+                //analysis belong this user deleting using storage
+                $directory = public_path() . '/all/' . Auth::user()->email . '/' . $analysis_id;
+                DB::table('analyses')
+                    ->where('analysis_id', '=', $analysis_id)
+                    ->update(array('id' => "0"));
+                $success = File::deleteDirectory($directory);
+                return Redirect::back()->with('success', 'succes message');
+            } else {
+                return Redirect::back()->with('success', 'Error');
+
+
+            }
+
 
         }
-
-
-
     }
+
     public function postAnalysis(CraeteAnalysisRequest $resqest)
     {
         $d = new AnalysisController();
@@ -645,58 +665,54 @@ class AnalysisController extends Controller
 
             Redis::set('users_count', 0);
             //maintaining a counter on redis number of concurrent users
-            if(is_null(Redis::get('users_count')))
-            {
+            if (is_null(Redis::get('users_count'))) {
                 Redis::set('users_count', 1);
-            }
-            else{
+            } else {
 
-                Redis::set('users_count',Redis::get('users_count')+1 );
+                Redis::set('users_count', Redis::get('users_count') + 1);
 
             }
             $destFile1 = "/all/$email/$time/";
 
             /*if(Redis::get('users_count') > 5) {*/
-                $runHashdata = array();
-                $runHashdata['argument'] = $argument;
-                $runHashdata['destFile'] = $destFile;
-                $runHashdata['anal_type'] = $anal_type;
-                if (Auth::user())
-                    $runHashdata['user'] = Auth::user()->id;
-                else
-                    $runHashdata['user'] = "demo";
-                Redis::set($time, json_encode($runHashdata));
-                Redis::set($time.":Status","false");
-                $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($time));
-                return view('analysis.Result')->with(array('exception' => null,
-                    'directory' => $destFile,
-                    'directory1' => $destFile1,
-                    'queueid' =>$process_queue_id,
-                    'analysisid' =>$time ));
-                /* return "pushed into queue will be sent an email shortly with all analysis done=" . $process_queue_id;*/
-           /* }
-            else{
+            $runHashdata = array();
+            $runHashdata['argument'] = $argument;
+            $runHashdata['destFile'] = $destFile;
+            $runHashdata['anal_type'] = $anal_type;
+            if (Auth::user())
+                $runHashdata['user'] = Auth::user()->id;
+            else
+                $runHashdata['user'] = "demo";
+            Redis::set($time, json_encode($runHashdata));
+            Redis::set($time . ":Status", "false");
+            $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($time));
+            return view('analysis.Result')->with(array('exception' => null,
+                'directory' => $destFile,
+                'directory1' => $destFile1,
+                'queueid' => $process_queue_id,
+                'analysisid' => $time));
+            /* return "pushed into queue will be sent an email shortly with all analysis done=" . $process_queue_id;*/
+            /* }
+             else{
 
-                $this->runAnalysis($time,$argument,$destFile,$anal_type);
-                return view('analysis.Result')->with(array('exception' => null, 'directory' => $destFile, 'directory1' => $destFile1));
-                Redis::set('users_count',Redis::get('users_count')-1 );
-            }*/
+                 $this->runAnalysis($time,$argument,$destFile,$anal_type);
+                 return view('analysis.Result')->with(array('exception' => null, 'directory' => $destFile, 'directory1' => $destFile1));
+                 Redis::set('users_count',Redis::get('users_count')-1 );
+             }*/
 
             //return view('analysis.Result')->with(array('exception' => null, 'directory' => $destFile, 'directory1' => $destFile1));
 
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             Redis::set('users_count', Redis::get('users_count') - 1);
             $_SESSION['error'] = $e->getMessage();
-            return view(errors.customError);
+            return view(errors . customError);
 
         }
 
     }
 
 
-    public function runAnalysis($time,$argument,$destFile,$anal_type)
+    public function runAnalysis($time, $argument, $destFile, $anal_type)
     {
         exec("/home/ybhavnasi/R-3.1.2/bin/Rscript my_Rscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
