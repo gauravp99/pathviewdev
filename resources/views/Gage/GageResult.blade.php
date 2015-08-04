@@ -224,6 +224,21 @@ echo "</div>";
             }
                 if(!$significant_flag && $gageresFileExist_flag)
                 {
+                    $errorFlag = false;
+                    $lines = file($destDir . "/errorFile.Rout");
+                    foreach($lines as $temp)
+                        {
+                            $temp = strtolower($temp);
+                            $pos = strpos($temp,'error');
+                            if($pos !== false)
+                                {
+
+                                    $errorFlag = true;
+                                    echo "<h3 class='alert alert-danger'>$temp</h3>";
+
+                                }
+                        }
+                    if(!$errorFlag)
                     echo "<h3 class='alert alert-danger'> No gene sets are significant, you may relax your selection criteria (Cutoff value).</h3>";
                     foreach($contents as $k1 => $v1)
                     {
@@ -475,6 +490,7 @@ echo "</div>";
 
                     echo "<div style='width:100%;'>" . $temp . "</div>";
                 }
+
             }
                             ?>
                     </ul>

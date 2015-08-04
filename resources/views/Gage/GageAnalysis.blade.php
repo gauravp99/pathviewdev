@@ -70,7 +70,7 @@
                             <div class="col-sm-5">
                                 <a href="gageTutorial#assay_data"
                                    onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;"
-                                   title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                   title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
                                 <label for="assayData">Assay Data:</label>

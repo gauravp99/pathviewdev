@@ -1,7 +1,7 @@
 <div class="stepsdiv" id="gset-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="gageTutorial#gene_set" onclick="window.open('gageTutorial#gene_set', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#gene_set" onclick="window.open('gageTutorial#gene_set', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Multiple select option for Gene set which can be taken from 3 categories kegg, Go and Custom gene set uploaded using a txt or csv file." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="GeneSet">Gene Set:</label>
@@ -10,11 +10,11 @@
             </div>
         </div>
         <div class="col-sm-7">
-            <select  name="geneSet[]" id="geneSet" class="styled-multiple-select"  multiple="" size="10" style="width:100%;">
+            <select  name="geneSet[]" id="geneSet" class="geneSet"  multiple="" size="10" style="width:100%;">
                 <optgroup label="KEGG">
-                    <option value="sigmet.idx">signalling</option>
+                    <option value="sig.idx">signaling</option>
                     <option value="met.idx">metabolic</option>
-                    <option value="sig.idx">sigmet</option>
+                    <option value="sigmet.idx">sigmet</option>
                     <option value="dise.idx">disease</option>
                     <option value="sigmet.idx,dise.idx">all</option>
                 </optgroup>
@@ -24,7 +24,8 @@
                     <option value="MF">mf</option>
                     <option value="BP,CC,MF">all</option>
                 </optgroup>
-                <option value="custom">Custom</option>
+                <option value="custom" style="background-color: whitesmoke;"
+>Custom</option>
             </select>
 
         </div>
@@ -34,7 +35,7 @@
 <div class="stepsdiv" id="geneIdType-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="gageTutorial#gene_id_type" onclick="window.open('gageTutorial#gene_id_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#gene_id_type" onclick="window.open('gageTutorial#gene_id_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="ID type used for the Gene Data. This can be selected from the drop down list. for GO Gene sets the list is restricted to the Gene ID paired with species." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="geneIdType">Gene ID Type:</label>
@@ -52,7 +53,7 @@
 <div class="stepsdiv" id="species-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="gageTutorial#species" onclick="window.open('gageTutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#species" onclick="window.open('gageTutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways. Auto suggestions are provided."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('species','Species:') !!}
@@ -73,10 +74,15 @@
 
     </datalist>
 </div>
-<div class="stepsdiv" id="ref-div">
+<div class="stepsdiv" style="background-color: rgba(32, 80, 129, 0.16);height:30px;">
+<p style="font-family: Verdana;
+      color: black;
+      margin-left: 10px;margin-top:-10px;font-size:12px">*<u>NOTE: Enter Comma separated column numbers or select columns from select box after uploading the file.</u></p></div>
+<div class="stepsdiv" id="ref-div" >
     <div class="col-sm-12">
+
         <div class="col-sm-5">
-            <a href="gageTutorial#contorl_reference" onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#contorl_reference" onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Column numbers for the reference condition or phenotype i.e. control group if you specify null than all the columns are considered as target experiments. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="ref">Control / Reference:</label>
@@ -98,8 +104,9 @@
 </div>
 <div class="stepsdiv" id="sample-div">
     <div class="col-sm-12">
+
         <div class="col-sm-5">
-            <a href="gageTutorial#case_sample" onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="gageTutorial#case_sample" onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Column numbers for the target condition or phenotype i.e. experiment group in the exprs data matrix. if you specify null than all the columns other than ref are considered as target experiments." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="sample">Case / Sample:</label>
@@ -117,12 +124,13 @@
         </div>
     </div>
 </div>
+
 </fieldset >
 <fieldset class="step analysis-step">
     <div class="stepsdiv" id="cutoff-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#q_value_cutoff" onclick="window.open('gageTutorial#q_value_cutoff', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#q_value_cutoff" onclick="window.open('gageTutorial#q_value_cutoff', 'newwindow', 'width=300, height=250').focus() ;return false;" title="numeric, q-value cutoff between 0 and 1 for signficant gene sets selection." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="cutoff">q-value Cutoff:</label>
@@ -136,7 +144,7 @@
     <div class="stepsdiv" id="setSize-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#set_size" onclick="window.open('gageTutorial#set_size', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#set_size" onclick="window.open('gageTutorial#set_size', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Gene set size (number of genes) range to be considered for enrichment test. Tests for too small or too big gene sets are not robust statistically or informative bio-logically. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="setSize">Set Size:</label>
@@ -156,7 +164,7 @@
     <div class="stepsdiv" id="compare-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="compare">Compare:</label>
@@ -174,7 +182,7 @@
     <div class="stepsdiv" id="sameDir-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#two_direction_test" onclick="window.open('gageTutorial#two_direction_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#two_direction_test" onclick="window.open('gageTutorial#two_direction_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="To test for changes changes towards both directions simultaneously." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="sameDir">Two-direction Test:</label>
@@ -190,7 +198,7 @@
 
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#rank_test" onclick="window.open('gageTutorial#rank_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#rank_test" onclick="window.open('gageTutorial#rank_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="whether do the optional rank based two-sample t-test." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="rankTest">Rank Test:</label>
@@ -205,7 +213,7 @@
 
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#per_gene_score" onclick="window.open('gageTutorial#per_gene_score', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#per_gene_score" onclick="window.open('gageTutorial#per_gene_score', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Whether to use fold changes or t-test statistics as per gene statistics." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="useFold">Per Gene Score:</label>
@@ -219,7 +227,7 @@
     <div class="stepsdiv" id="test-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#gene_set_test" onclick="window.open('gageTutorial#gene_set_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#gene_set_test" onclick="window.open('gageTutorial#gene_set_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Function used for gene set tests for single array based analysis." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="test">Gene Set Test:</label>
@@ -237,7 +245,7 @@
     <div class="stepsdiv" id="UsePathview-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#use_pathview" onclick="window.open('gageTutorial#use_pathview', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#use_pathview" onclick="window.open('gageTutorial#use_pathview', 'newwindow', 'width=300, height=250').focus() ;return false;" title="To perform pathview generation or not" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="usePathview">Use Pathview:</label>
@@ -251,7 +259,7 @@
     <div class="stepsdiv" id="dataType-div" >
         <div class="col-sm-12">
             <div class="col-sm-5">
-                <a href="gageTutorial#data_type" onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="gageTutorial#data_type" onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Data type Gene,Compound while generating the pathviews." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <label for="usePathview">Data Type:</label>
@@ -329,6 +337,8 @@ $('#submit-button').click(function(){
     };
     //saved species to be used in javascript
     var speciesArray = <?php echo JSON_encode($species);?> ;
+<?php $species_disesae = DB::table('Species')->where('disease_index_exist','Y')->get();?>
+var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
     $('#gage_anal_form').validate({
 
         invalidHandler: function(form, validator) {
@@ -489,12 +499,23 @@ function hideProgress() {
         var validSpeciesFlag = false;
 
         if($('#geneIdType > option').length == 1  ) {
-            $.each(goSpecIdBind, function (key1, value1) {
-                if( key1 === value )
-                {
-                    validSpeciesFlag = true;
-                }
-            });
+            if($('#geneIdType > option')[0].text === 'custom')
+            {
+             if(value.toLowerCase() === 'custom')
+             {
+                 return true;
+             }
+             else{
+                 return false;
+             }
+            }
+            else {
+                $.each(goSpecIdBind, function (key1, value1) {
+                    if (key1 === value) {
+                        validSpeciesFlag = true;
+                    }
+                });
+            }
         }
         else{
             $.each(speciesArray, function (speciesIter, specieValue) {

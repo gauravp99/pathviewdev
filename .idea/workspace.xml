@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="925ff104-9ab6-4512-bc64-29f946b5eaae" name="Default" comment="ui changes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Controllers/GageAnalysisController.php" />
       <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/resources/views/analysis/ResultView.blade.php" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/GageAnalysis.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/public/FileMaintain.sh" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/public/KeggDownload.sh" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/public/all/1234@gmail.com/1434397046/cpddata.hsa00640.txt" afterPath="" />
@@ -590,26 +588,22 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/nested.env" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/quoted.env" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/specialchars.env" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/images/analysis.png" afterPath="$PROJECT_DIR$/public/images/analysis.png" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis" afterPath="$PROJECT_DIR$/resources/views/analysis" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AjaxAnalysisQueueStatusCheck.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AjaxAnalysisQueueStatusCheck.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AjaxGageAnalysisStatusCheck.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AjaxGageAnalysisStatusCheck.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AjaxSpeciesPathwayMatch.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AjaxSpeciesPathwayMatch.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/AnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/AnalysisController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Controller.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php" afterPath="$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/GageStyle.css" afterPath="$PROJECT_DIR$/public/css/GageStyle.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php" afterPath="$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis/NewAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis/NewAnalysis.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/config.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/config.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/bootstrap1.css" afterPath="$PROJECT_DIR$/public/css/bootstrap1.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis/example_one.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis/example_one.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis/example_three.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis/example_three.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis/example_two.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis/example_two.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/gageController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/gageController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/gageAnalysis.js" afterPath="$PROJECT_DIR$/public/js/gageAnalysis.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/Gage/analysis/gageExample1.blade.php" afterPath="$PROJECT_DIR$/resources/views/Gage/analysis/gageExample1.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profile/home.blade.php" afterPath="$PROJECT_DIR$/resources/views/profile/home.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/data/output.txt" afterPath="$PROJECT_DIR$/public/data/output.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/workenv.RData" afterPath="$PROJECT_DIR$/workenv.RData" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -674,45 +668,46 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="GagePathviewGraphViewer.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GagePathviewGraphViewer.blade.php">
+      <file leaf-file-name="AjaxAnalysisQueueStatusCheck.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AjaxAnalysisQueueStatusCheck.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="24.0" vertical-offset="648" max-vertical-offset="1980">
-              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="1278">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="70" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gageAnalysis.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/gageAnalysis.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.935484" vertical-offset="1424" max-vertical-offset="6192">
+              <caret line="110" column="42" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="gageAnalysis.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/gageAnalysis.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.64356434" vertical-offset="5452" max-vertical-offset="10998">
+              <caret line="339" column="74" selection-start-line="339" selection-start-column="74" selection-end-line="339" selection-end-column="74" />
               <folding>
-                <marker date="1438011141572" expanded="true" signature="445:526" placeholder="select analy..analyses..." />
-                <marker date="1438011141572" expanded="true" signature="596:670" placeholder="select analy..analyses..." />
+                <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#p#0;n#div#3;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#5;n#!!top" expanded="true" />
+                <marker date="1438695185486" expanded="true" signature="3820:3832" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GageResult.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php">
+      <file leaf-file-name="tutorial.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/tutorial.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.333334" vertical-offset="0" max-vertical-offset="9396">
-              <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
-              <folding>
-                <marker date="1438194618118" expanded="true" signature="4515:4565" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="4700:4710" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="4821:4872" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="4955:4964" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="5005:5086" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="9145:9161" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="9265:9329" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="12697:12732" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="14540:14553" placeholder="..." />
-                <marker date="1438194618118" expanded="true" signature="18426:18437" placeholder="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GageResultView.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResultView.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.222222" vertical-offset="507" max-vertical-offset="1962">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="63" selection-end-column="6" />
+            <state vertical-scroll-proportion="-30.407408" vertical-offset="8143" max-vertical-offset="12492">
+              <caret line="498" column="22" selection-start-line="495" selection-start-column="16" selection-end-line="498" selection-end-column="22" />
               <folding />
             </state>
           </provider>
@@ -721,18 +716,28 @@
       <file leaf-file-name="GageTutorial.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-21.407408" vertical-offset="2770" max-vertical-offset="5004">
-              <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
+            <state vertical-scroll-proportion="-21.407408" vertical-offset="5614" max-vertical-offset="7056">
+              <caret line="344" column="63" selection-start-line="344" selection-start-column="63" selection-end-line="344" selection-end-column="63" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GageWelcome.blade.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php">
+      <file leaf-file-name="GageStyle.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/css/GageStyle.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.771261" vertical-offset="255" max-vertical-offset="3816">
-              <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2088">
+              <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bootstrap1.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/css/bootstrap1.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1095" max-vertical-offset="118818">
+              <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -779,18 +784,11 @@
         <option value="$PROJECT_DIR$/resources/views/GageNavigation.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/analysis.blade.php" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/public/css/GageStyle.css" />
-        <option value="$PROJECT_DIR$/public/css/bootstrap1.css" />
         <option value="$PROJECT_DIR$/resources/views/GageApp.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php" />
         <option value="$PROJECT_DIR$/public/js/app.js" />
-        <option value="$PROJECT_DIR$/public/js/gageAnalysis.js" />
         <option value="$PROJECT_DIR$/resources/views/tutorial.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/Gage/analysis/gageExample1.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AnalysisController.php" />
         <option value="$PROJECT_DIR$/resources/views/profile/home.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/AjaxAnalysisQueueStatusCheck.php" />
@@ -805,6 +803,13 @@
         <option value="$PROJECT_DIR$/resources/views/analysis/Result.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/GageAnalysisController.php" />
         <option value="$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/Gage/analysis/gageExample1.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php" />
+        <option value="$PROJECT_DIR$/public/css/bootstrap1.css" />
+        <option value="$PROJECT_DIR$/public/css/GageStyle.css" />
+        <option value="$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/gageAnalysis.js" />
+        <option value="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" />
       </list>
     </option>
   </component>
@@ -875,20 +880,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="storage" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -910,18 +901,12 @@
               <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
+              <option name="myItemId" value="views" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="redis-3.0.2" />
+              <option name="myItemId" value="Gage" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -935,7 +920,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -949,11 +934,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -967,15 +948,29 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
+              <option name="myItemId" value="public" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1046,20 +1041,17 @@
     <configuration default="true" type="PhpLocalRunConfigurationType" factoryName="PHP Console">
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
-      <method />
-    </configuration>
     <configuration default="true" type="com.intellij.database.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
       <option name="VM_PARAMETERS" value="" />
       <option name="USER_CFG_CLASS" />
       <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
-    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
-      <BehatRunner />
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug">
       <method />
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+    <configuration default="true" type="PhpBehatConfigurationType" factoryName="Behat">
+      <BehatRunner />
       <method />
     </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
@@ -1069,6 +1061,9 @@
       <arguments />
       <pass-parent-envs>true</pass-parent-envs>
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="3">
@@ -1414,29 +1409,29 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="60" y="24" width="1860" height="1176" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20837927" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="true" weight="0.4425926" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4425926" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.07075732" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972437" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24879228" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25689086" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23980154" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962587" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32777777" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7546296" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
     <layout-to-restore>
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1450,16 +1445,16 @@
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962587" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7546296" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20837927" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7546296" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24972437" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2590959" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
     </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1552,27 +1547,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/GageStyle.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="126" max-vertical-offset="1386">
-          <caret line="7" column="0" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/bootstrap1.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="117030" max-vertical-offset="118854">
-          <caret line="6597" column="1" selection-start-line="6597" selection-start-column="1" selection-end-line="6597" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/GageApp.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="21.333334" vertical-offset="810" max-vertical-offset="3492">
           <caret line="13" column="70" selection-start-line="13" selection-start-column="70" selection-end-line="13" selection-end-column="70" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1580,7 +1558,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13464">
           <caret line="3" column="0" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1588,7 +1565,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1050">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1596,7 +1572,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-9.413794" vertical-offset="1218" max-vertical-offset="9954">
           <caret line="98" column="18" selection-start-line="98" selection-start-column="12" selection-end-line="98" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1604,7 +1579,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="13986">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1616,19 +1590,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/gageAnalysis.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="2.16297" vertical-offset="3607" max-vertical-offset="5958">
-          <caret line="325" column="2" selection-start-line="325" selection-start-column="2" selection-end-line="325" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/phpunit.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.22285715" vertical-offset="0" max-vertical-offset="1050">
           <caret line="13" column="4" selection-start-line="13" selection-start-column="4" selection-end-line="13" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1644,37 +1609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.32079208" vertical-offset="324" max-vertical-offset="15984">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/tutorial.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.053465348" vertical-offset="3312" max-vertical-offset="12492">
-          <caret line="187" column="14" selection-start-line="187" selection-start-column="14" selection-end-line="251" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/gageAnalysis.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-46.24138" vertical-offset="1296" max-vertical-offset="10620">
-          <caret line="221" column="101" selection-start-line="221" selection-start-column="101" selection-end-line="221" selection-end-column="101" />
-          <folding>
-            <marker date="1438288247278" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/analysis/gageExample1.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.83960396" vertical-offset="1150" max-vertical-offset="5364">
-          <caret line="111" column="0" selection-start-line="111" selection-start-column="0" selection-end-line="111" selection-end-column="0" />
-          <folding>
-            <element signature="e#3101#3137#0#HTML" expanded="true" />
-            <element signature="e#3219#3246#0#HTML" expanded="true" />
-            <element signature="e#3556#3573#0#HTML" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1683,11 +1617,7 @@
         <state vertical-scroll-proportion="0.650664" vertical-offset="47" max-vertical-offset="14328">
           <caret line="38" column="0" selection-start-line="38" selection-start-column="0" selection-end-line="38" selection-end-column="0" />
           <folding>
-            <element signature="e#223#245#0#PHP" expanded="true" />
-            <marker date="1438292186658" expanded="true" signature="-1:-1" placeholder="select pathw..Pathway..." />
-            <marker date="1438292186658" expanded="true" signature="-1:-1" placeholder="select genei..gene..." />
-            <marker date="1438292186658" expanded="true" signature="-1:-1" placeholder="select cmpdi..compound..." />
-            <marker date="1438292186658" expanded="true" signature="-1:-1" placeholder="select speci..Species..." />
+            <element signature="e#223#245#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1696,10 +1626,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.721144" vertical-offset="0" max-vertical-offset="4878">
           <caret line="148" column="99" selection-start-line="148" selection-start-column="99" selection-end-line="148" selection-end-column="99" />
-          <folding>
-            <element signature="e#3468#3503#0#HTML" expanded="true" />
-            <marker date="1438293439422" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1707,17 +1633,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.28152493" vertical-offset="0" max-vertical-offset="1023">
           <caret line="23" column="31" selection-start-line="23" selection-start-column="31" selection-end-line="23" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AjaxAnalysisQueueStatusCheck.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24257426" vertical-offset="25" max-vertical-offset="1404">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="70" />
-          <folding>
-            <element signature="e#39#61#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1725,10 +1640,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.19354838" vertical-offset="0" max-vertical-offset="1023">
           <caret line="11" column="2" selection-start-line="11" selection-start-column="2" selection-end-line="11" selection-end-column="2" />
-          <folding>
-            <element signature="e#40#62#0#PHP" expanded="true" />
-            <marker date="1438349419207" expanded="true" signature="-1:-1" placeholder="select pathw..speciesPathwayMatch..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1736,7 +1647,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.035190616" vertical-offset="0" max-vertical-offset="1023">
           <caret line="2" column="19" selection-start-line="2" selection-start-column="19" selection-end-line="2" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1744,7 +1654,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.08797654" vertical-offset="0" max-vertical-offset="1023">
           <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1752,21 +1661,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="4.918812" vertical-offset="0" max-vertical-offset="5256">
           <caret line="276" column="4" selection-start-line="276" selection-start-column="4" selection-end-line="276" selection-end-column="4" />
-          <folding>
-            <element signature="e#39#61#0#PHP" expanded="true" />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select conca..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select sum(n..biocGagestatistic..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select sum(n..biocGagestatistic..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select count..analyses..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select count..analyses..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select conca..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select sum(n..biocGagestatistic..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select sum(n..biocGagestatistic..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select count..analyses..." />
-            <marker date="1438351020767" expanded="true" signature="-1:-1" placeholder="select count..analyses..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1774,7 +1668,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2639296" vertical-offset="0" max-vertical-offset="1023">
           <caret line="15" column="27" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1782,7 +1675,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2718">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1790,7 +1682,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6158358" vertical-offset="0" max-vertical-offset="1023">
           <caret line="36" column="5" selection-start-line="36" selection-start-column="5" selection-end-line="36" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1798,14 +1689,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.5128713" vertical-offset="1528" max-vertical-offset="2538">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1437575360723" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..." />
-            <marker date="1437575360723" expanded="true" signature="-1:-1" placeholder="select conca..." />
-            <marker date="1437575360723" expanded="true" signature="-1:-1" placeholder="select sum(n..biocstatistics..." />
-            <marker date="1437575360723" expanded="true" signature="-1:-1" placeholder="select sum(n..biocstatistics..." />
-            <marker date="1437575360723" expanded="true" signature="-1:-1" placeholder="select count..analyses..." />
-            <marker date="1437575360723" expanded="true" signature="-1:-1" placeholder="select count..analyses..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1821,7 +1704,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="11358">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1829,7 +1711,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.106930695" vertical-offset="0" max-vertical-offset="2970">
           <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="8" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1837,9 +1718,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.40762463" vertical-offset="417" max-vertical-offset="1440">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#316#324#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1847,7 +1725,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.3753667" vertical-offset="0" max-vertical-offset="3096">
           <caret line="144" column="51" selection-start-line="144" selection-start-column="51" selection-end-line="144" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1855,7 +1732,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1050">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1863,7 +1739,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.3020528" vertical-offset="309" max-vertical-offset="1332">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1871,7 +1746,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.0158416" vertical-offset="1026" max-vertical-offset="3060">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1879,7 +1753,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.7782178" vertical-offset="2806" max-vertical-offset="3816">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1887,7 +1760,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.087128714" vertical-offset="88" max-vertical-offset="3798">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1895,7 +1767,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.0831683" vertical-offset="2302" max-vertical-offset="3312">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1903,14 +1774,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.57227725" vertical-offset="8062" max-vertical-offset="9072">
           <caret line="480" column="69" selection-start-line="480" selection-start-column="69" selection-end-line="480" selection-end-column="69" />
-          <folding>
-            <marker date="1438351259831" expanded="true" signature="-1:-1" placeholder="select conca..Species..." />
-            <marker date="1438351259831" expanded="true" signature="-1:-1" placeholder="select conca..Pathway..." />
-            <marker date="1438351259831" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438351259831" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438351259831" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438351259831" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1918,13 +1781,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-2.5108912" vertical-offset="2536" max-vertical-offset="3546">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1435756986049" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1435756986049" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1435756986049" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1435756986049" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1435756986049" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1932,10 +1788,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1944">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1435532122509" expanded="true" signature="-1:-1" placeholder="select analy..analyses..." />
-            <marker date="1435532122509" expanded="true" signature="-1:-1" placeholder="select analy..analyses..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1944,19 +1796,7 @@
         <state vertical-scroll-proportion="-1.9233912" vertical-offset="3611" max-vertical-offset="5508">
           <caret line="96" column="46" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
           <folding>
-            <element signature="e#39#61#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.25740552" vertical-offset="0" max-vertical-offset="4968">
-          <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-          <folding>
-            <element signature="e#3179#3215#0#HTML" expanded="true" />
-            <element signature="e#3297#3324#0#HTML" expanded="true" />
-            <element signature="e#3634#3651#0#HTML" expanded="true" />
+            <element signature="e#39#61#0#PHP" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1965,7 +1805,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1476">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1973,11 +1812,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-1.0673268" vertical-offset="2860" max-vertical-offset="4896">
           <caret line="99" column="44" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="44" />
-          <folding>
-            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1438033160185" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1985,29 +1819,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="24.0" vertical-offset="648" max-vertical-offset="1980">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1438011141572" expanded="true" signature="445:526" placeholder="select analy..analyses..." />
-            <marker date="1438011141572" expanded="true" signature="596:670" placeholder="select analy..analyses..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.333334" vertical-offset="0" max-vertical-offset="9396">
-          <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
-          <folding>
-            <marker date="1438194618118" expanded="true" signature="4515:4565" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="4700:4710" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="4821:4872" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="4955:4964" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="5005:5086" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="9145:9161" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="9265:9329" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="12697:12732" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="14540:14553" placeholder="..." />
-            <marker date="1438194618118" expanded="true" signature="18426:18437" placeholder="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2015,23 +1826,102 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-11.222222" vertical-offset="507" max-vertical-offset="1962">
           <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="63" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36950147" vertical-offset="0" max-vertical-offset="3816">
+          <caret line="21" column="73" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageAnalysis.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5881188" vertical-offset="702" max-vertical-offset="4968">
+          <caret line="72" column="197" selection-start-line="72" selection-start-column="197" selection-end-line="72" selection-end-column="197" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/analysis/gageExample1.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3049505" vertical-offset="952" max-vertical-offset="5364">
+          <caret line="70" column="338" selection-start-line="70" selection-start-column="338" selection-end-line="70" selection-end-column="338" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageResult.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3544555" vertical-offset="2808" max-vertical-offset="9684">
+          <caret line="232" column="37" selection-start-line="232" selection-start-column="37" selection-end-line="232" selection-end-column="37" />
+          <folding>
+            <marker date="1438612682752" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438612682752" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438612682752" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438612682752" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1438612682752" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/tutorial.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-30.407408" vertical-offset="8143" max-vertical-offset="12492">
+          <caret line="498" column="22" selection-start-line="495" selection-start-column="16" selection-end-line="498" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/bootstrap1.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1095" max-vertical-offset="118818">
+          <caret line="86" column="0" selection-start-line="86" selection-start-column="0" selection-end-line="86" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/css/GageStyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2088">
+          <caret line="31" column="17" selection-start-line="31" selection-start-column="17" selection-end-line="31" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageTutorial.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-21.407408" vertical-offset="2770" max-vertical-offset="5004">
-          <caret line="186" column="19" selection-start-line="186" selection-start-column="19" selection-end-line="186" selection-end-column="19" />
+        <state vertical-scroll-proportion="-21.407408" vertical-offset="5614" max-vertical-offset="7056">
+          <caret line="344" column="63" selection-start-line="344" selection-start-column="63" selection-end-line="344" selection-end-column="63" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/Gage/GageWelcome.blade.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/AjaxAnalysisQueueStatusCheck.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.771261" vertical-offset="255" max-vertical-offset="3816">
-          <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+        <state vertical-scroll-proportion="-5.3333335" vertical-offset="0" max-vertical-offset="1278">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="19" selection-end-column="70" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/js/gageAnalysis.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.935484" vertical-offset="1424" max-vertical-offset="6192">
+          <caret line="110" column="42" selection-start-line="110" selection-start-column="23" selection-end-line="110" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/gageAnalysis.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.64356434" vertical-offset="5452" max-vertical-offset="10998">
+          <caret line="339" column="74" selection-start-line="339" selection-start-column="74" selection-end-line="339" selection-end-column="74" />
+          <folding>
+            <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#p#0;n#div#3;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#div#5;n#!!top" expanded="true" />
+            <marker date="1438695185486" expanded="true" signature="3820:3832" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>

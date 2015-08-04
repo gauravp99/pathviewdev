@@ -6,8 +6,47 @@
     margin-bottom: 10px;
 }
 
+select[multiple].geneSet {
+  width: 100%;
+  border-radius: 10px;
+  font-family:monospace;
+ padding: 10px;
+}
 
- .error
+select[multiple] {
+font-family:monospace;
+padding:10px;
+}
+optgroup[label="KEGG"]
+{
+border:2px;
+border-color:black;
+background-color: whitesmoke;
+color: brown;
+}
+img.gageExampleImg {
+    border-style: solid;
+    border-color: black;
+    width: 90%;
+    margin: 10px;
+    padding:10px;
+
+}
+optgroup[label="GO"]
+{
+background-color: whitesmoke;
+color: blue;
+}
+
+select[multiple].geneSet option {
+    margin:10px;
+    text-shadow:0 1px 0 rgba(0,0,0,0.4);
+}
+select optgroup>label {
+background-color:blue;
+}
+ 
+.error
  {
      color: #a94442;
      background-color: #f2dede;
