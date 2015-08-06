@@ -1,9 +1,11 @@
-/var/www/Pathway/public/scripts/FileMaintain_new.sh: 4: cd: can't cd to ../all
-Resolving bioconductor.org (bioconductor.org)... 54.154.192.193, 54, 54.192.194.158, 54.192.195.74, ConnConnecting to bioconductor.org (bioconductor.org)|54.192.193.152|:80connected.
+--2015-08-06 16:00:02--  http://bioconductor.org/packages/stats/bioc/gage.html
+Resolving bioconductor.org (bioconductor.org)... 54.192.195.9, 54.192.194.158, 54.192.194.65, ...
+Connecting to bioconductor.org (bioconductor.org)|54.192.195.9|:80... connected.
 HTTP request sent, awaiting response... 200 OK
-Length: 3511 (3.4K) [text/html]
+Length: 3509 (3.4K) [text/html]
 Saving to: `gage.html'
 
-     0K ...                                                   100%  432M=0s
+     0K ...                                                   100%  498M=0s
 
-2015-08-2015-08-04 09:00:01 (352 MB/s) - `pathview.html' saved [insert into insert into biocstatistics values('August','2015',629,929);
+2015-08-2015-08-06 16:00:03 (152 MB/s) - `pathview.html' saved [insert into biocGagestatistic values('August','2015',42,49);
+,55,94);

@@ -9,21 +9,13 @@ var app = angular.module('GageApp',[], function($interpolateProvider) {
 app.controller('analysisController',function($scope,$timeout) {
     var outScope = $scope;
     $scope.delete = function(){
-        console.log("in delete function");
-        console.log(sampleselect);
         $('.tempColumn').remove();
-        console.log(sampleselect);
     };
 
     $scope.showContent = function($fileContent)
     {
-
-        console.log("displaying the sample and reference columns");
-        console.log($scope.sampleselect);
-        console.log($scope.refselect);
         if($scope.filename)
             $scope.content = $fileContent;
-
 
         if($scope.filetype === 'text/csv')
         {
@@ -45,11 +37,24 @@ app.controller('analysisController',function($scope,$timeout) {
             alert("File uploded is not in specified format");
 
         }
+        var geneIDArray = [];
+        $.each($fileContent.split("\n"),function($index,$line){
+            geneIDArray.push($line.split("\t")[0]);
+
+        });
+
+       /* var duplication = _.chain(geneIDArray).countBy().pairs().max(_.last).value();
+        console.log(duplication);
+        if(duplication[1] > 2)
+        {
+            alert("File Contains duplication rows most duplicated column is a \"" + duplication[0]+"\"" );
+        }*/
         $scope.content = $fileContent.split("\n")[0];
 
 
+
     };
-    console.log("In analysis Page");
+
 });
 
 

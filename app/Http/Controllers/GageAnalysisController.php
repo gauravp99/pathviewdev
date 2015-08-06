@@ -121,6 +121,16 @@ class GageAnalysisController extends Controller
             }
 
         }
+        else if (strcmp($analysis, 'exampleGageAnalysis2') == 0) {
+            $filename = "gse16873.symb.txt";
+            $file = public_path() . "/" . "all/demo/example/gse16873.symb.txt";
+
+            if (!File::copy($file, $destFile . $filename)) {
+                $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
+                return view('Gage.GageAnalysis');
+            }
+
+        }
 
         $argument .= "filename:" . $filename . ";";
         $argument .= "destFile:" . $destFile . $filename . ";";
@@ -132,8 +142,13 @@ class GageAnalysisController extends Controller
 
             if (strcmp($_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
                 $argument .= "geneSetCategory:kegg;";
-            } else {
+            }
+            else if (strcmp($_POST['geneSet'][0], 'BP') == 0 || strcmp($_POST['geneSet'][0], 'CC') == 0 || strcmp($_POST['geneSet'][0], 'MF') == 0 || strcmp($_POST['geneSet'][0], 'BP,CC,MF') == 0 ) {
                 $argument .= "geneSetCategory:go;";
+            }
+            else if(strcmp($_POST['geneSet'][0], 'custom') == 0)
+            {
+                $argument .= "geneSetCategory:custom;";
             }
             $argument .= "geneSet:";
             foreach ($_POST['geneSet'] as $geneSet) {
@@ -163,13 +178,27 @@ class GageAnalysisController extends Controller
 
             $argument .= "geneIdType:" . $_POST['geneIdType'] . ";";
             if (strcmp($_POST['geneIdType'], 'custom') == 0) {
+                if(Input::hasFile('geneIdFile'))
+                {
                 $file = Input::file('geneIdFile');
                 $filename1 = Input::file('geneIdFile')->getClientOriginalName();
                 $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
                 $file->move($destFile, $filename1);
                 $argument .= "gsfn:" . $filename1 . ";";
+                }
+                else{
+                    $filename1= "c1_all_v3_0_symbols.gmt";
+                    $file1 = public_path() . "/" . "all/demo/example/c1_all_v3_0_symbols.gmt";
+
+                    if (!File::copy($file1, $destFile . $filename1)) {
+                        $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
+                        return view('Gage.GageAnalysis');
+                    }
+                    $argument .= "gsfn:" . $filename1 . ";";
+                }
+                }
             }
-        }
+
 
 
         if (isset($_POST['setSizeMin'])) {
@@ -177,7 +206,7 @@ class GageAnalysisController extends Controller
         }
 
         if (isset($_POST['setSizeMax'])) {
-            if (strcmp(strtolower($_POST['setSizeMax']), 'inf') == 0) {
+            if (strcmp(strtolower($_POST['setSizeMax']), 'infinite') == 0) {
                 $argument .= "setSizeMax:INF;";
             } else {
                 $argument .= "setSizeMax:" . $_POST['setSizeMax'] . ";";
@@ -293,6 +322,12 @@ class GageAnalysisController extends Controller
     {
         $d = new GageAnalysisController();
         return $d->index("exampleGageAnalysis1");
+
+    }
+    public function ExampleGageAnalysis2()
+    {
+        $d = new GageAnalysisController();
+        return $d->index("exampleGageAnalysis2");
 
     }
 

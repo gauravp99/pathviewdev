@@ -18,13 +18,14 @@ args2=as.list(args1)
 args2[logic.idx]=as.list(as.logical(args1[logic.idx]))
 args2[num.idx]=as.list(as.numeric(args1[num.idx]))
 
+setwd(args2$targedir)
 save.image("workenv.RData")
 path.ids = strsplit(args2$pathway,split=";")[[1]]
 args2$glmt = as.numeric(strsplit(args2$glmt,split=";")[[1]])
 args2$clmt = as.numeric(strsplit(args2$clmt,split=";")[[1]])
 args2$cpdid=tolower(args2$cpdid)
 
-setwd(args2$targedir)
+#setwd(args2$targedir)
 zz <- file("errorFile.Rout", open = "wt")
 sink(zz,type = "message")
 if(!is.null(args2$geneextension)){

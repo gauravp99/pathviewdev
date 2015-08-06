@@ -55,7 +55,7 @@
             {!!form::label('species','Species:') !!}
         </div>
         <div class="col-sm-7">
-            <input class="ex8" list="specieslist" name="species" id="species" value="<?php echo isset(Session::get('Sess')['species']) ? Session::get('Sess')['species'] : $species ?>"  autocomplete="on">
+            <input class="ex8" list="specieslist" name="species" id="species" value="<?php echo isset(Session::get('Sess')['species']) ? Session::get('Sess')['species'] : $species?>"  autocomplete="on">
         </div>
     </div>
     <datalist id="specieslist">
@@ -281,7 +281,7 @@
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 <div class="col-sm-6" style="margin-left: -20px;">
-                    {!!form::label('kpos','Key Position:') !!}
+                    {!!form::label('kpos','Key &nbsp;Position:') !!}
                 </div>
                 <div class="col-sm-6" style="margin-left: -40px;">
                     {!! form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom

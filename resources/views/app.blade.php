@@ -16,7 +16,6 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
     <title>GageWeb</title>
 </head>
 <body ng-app="GageApp" >
@@ -38,9 +37,21 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
         <div class="collapse navbar-collapse" style="height:60px" id="pathview" >
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/" >Home</a></li>
-                <li  <?php if (basename(Request::url()) == "gageTutorial") {
+
+                <li class="dropdown" <?php if (basename(Request::url()) == "gageTutorial") {
                     echo "class=\"active\"";
-                }?>><a href="/gageTutorial">Help</a></li>
+                }?>>
+                    <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+                        Help <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="/gageTutorial#input">Attributes Help</a></li>
+                        <li><a href="/gageTutorial">Custom Analysis</a></li>
+                        <li><a href="/gageTutorial#example1">Example Analysis</a></li>
+                        <li><a href="/gageTutorial#refrence">References</a></li>
+                        <li><a href="/gageTutorial#contact">Contact</a></li>
+                    </ul>
+                </li>
                 <li class="dropdown">
                     <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
                         GAGE <span class="caret"></span>
@@ -54,11 +65,6 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                         <li>
                             <a target="_blank" href="http://www.bioconductor.org/packages/release/bioc/vignettes/Gage/inst/doc/gage.pdf">
                                 Tutorial
-                            </a>
-                        </li>
-                        <li>
-                            <a target="_blank" href="http://pathview.r-forge.r-project.org/">
-                                R-Forge
                             </a>
                         </li>
                         <li>
@@ -81,7 +87,151 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                         echo "class=\"active\"";
                     }?>><a href="/gage-home">GAGE</a></li>
                 @endif
+                @if (Auth::guest())
+                    <?php if(basename(Request::url()) == "login")
+                    {
+                    ?>
+                    <li class="dropdown active" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            Login <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li <?php if (basename(Request::url()) == "register") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/auth/register') }}">Register</a>
+                            </li>
+                            <li <?php
+                                    if (basename(Request::url()) == "guest") {
+                                        echo "class=\"active\"";
+                                    }
+                                    ?>>
+                                <a href="{{ url('/guest') }}">
+                                    Guest</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php
+                    }
+                    else if(basename(Request::url()) == "register")
+                    {
+                    ?>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Register <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li <?php if (basename(Request::url()) == "register") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/auth/login') }}">Login</a>
+                            </li>
+                            <li <?php if (basename(Request::url()) == "guest") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/guest') }}">Guest</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php
+                    }
+                    else if((basename(Request::url()) == "guest")
+                    ||(basename(Request::url()) == "guest-home")
+                    ||(basename(Request::url()) == "analysis")
+                    ||(basename(Request::url()) == "example1")
+                    ||(basename(Request::url()) == "example2")
+                    ||(basename(Request::url()) == "example3")
+                    ||(basename(Request::url()) == "viewer")
+                    ||(basename(Request::url()) == "results")
+                    ||(basename(Request::url()) == "postAnalysis")
+                    ||(basename(Request::url()) == "post_exampleAnalysis1")
+                    ||(basename(Request::url()) == "post_exampleAnalysis2")
+                    ||(basename(Request::url()) == "post_exampleAnalysis3")
 
+                    )
+                    {
+                    ?>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px">
+                            Guest <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li <?php if (basename(Request::url()) == "register") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/auth/login') }}">Login</a>
+                            </li>
+                            <li <?php if (basename(Request::url()) == "guest") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/auth/register') }}">Register</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <?php
+                    }
+                    else {
+                    ?>
+                    <li class="dropdown" >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <img src="{{asset('/images/user.png')}}" alt="Login as Guest" height="20px">
+                            Account
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li <?php if (basename(Request::url()) == "login") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/auth/login') }}">
+                                    Login
+                                </a>
+                            </li>
+                            <li <?php if (basename(Request::url()) == "register") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/auth/register') }}">Register</a>
+                            </li>
+                            <li <?php if ((basename(Request::url()) == "guest")) {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/guest') }}">Guest</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <?php
+                    }
+                    ?>
+                @else
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                           aria-expanded="false">
+                            <img src="{{asset('/images/user.png')}}" alt="login user" height="20px">
+                            {{ " ".Auth::user()->name }}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li <?php if (basename(Request::url()) == "prev_anal") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/prev_anal/'.Auth::user()->id) }}">Status & History</a>
+                            </li>
+                            <li <?php if (basename(Request::url()) == "user") {
+                                echo "class=\"active\"";
+                            }?>>
+                                <a href="{{ url('/edit_user/'.Auth::user()->id) }}">Edit Profile</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/passwordReset') }}">Reset Password</a>
+                            </li>
+                            <li>
+                                <a href="{{ url('/auth/logout') }}">Logout</a>
+                            </li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
         </div>
     </div>

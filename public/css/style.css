@@ -624,10 +624,10 @@ span.error {
 .stepsdiv {
     float: left;
     clear: both;
-    margin: 5px 0px 5px 70px;
+    margin: 5px 0px 5px 33px;
     background-color: #F4F4F4;
     border: 1px solid #FFF;
-    width: 660px;
+    width: 700px;
     padding: 10px;
     border-radius: 5px;
     box-shadow: 0px 0px 3px #AAA;

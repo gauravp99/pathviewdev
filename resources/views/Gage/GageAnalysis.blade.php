@@ -10,17 +10,18 @@
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
 
-    <div class="col-sm-12">
+
         @include('GageNavigation')
-        <div class="conetent-header ">
-            <p><b>GAGE Analysis</b></p>
+
+            <div class="col-md-9"><div class="conetent-header "><p><b>GAGE Analysis</b></p></div></div>
 
             <div id="error-message"></div>
-        </div>
+
         <input type="text" id="rememberTxt" hidden="">
+        <div class="col-md-7">
         {!! form::open(array('url' => 'gageAnalysis','enctype' =>
         'multipart/form-data','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
-        <div class="col-md-2">
+       <!-- <div class="col-md-2">
             <div id="progress" class="col-md-12" hidden>
                 <h2 class="alert alert-info"> Executing, Please wait. </h2>
                 <img width="200px" hieght="200px" src="/images/load.gif">
@@ -30,8 +31,9 @@
                 <a id='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
                 <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
             </div>
-        </div>
-        <div id="wrapper" class="col-md-8" ng-app="GageApp" ng-controller="analysisController">
+        </div>-->
+
+        <div id="wrapper"  ng-app="GageApp" ng-controller="analysisController" style="position:relative;float:right;">
             <div id="navigation" style="">
                 <ul>
                     <li class="selected">
@@ -48,12 +50,13 @@
                 <?php
                 //specifying default values for all the variables;
                 $geneIdType = "entrez";
-                $species = "hsa-Homo sapiens";
+                $species = "hsa-Homosapiens-human";
+
                 $reference = "";
                 $sample = "";
                 $cutoff = "0.1";
                 $setSizeMin = "10";
-                $setSizeMax = "inf";
+                $setSizeMax = "infinite";
                 $compare = "paired";
                 $test2d = false;
                 $rankTest = false;
@@ -99,6 +102,7 @@
 
 
                             var geneIdSelected = $("#geneIdType").val();
+                            var species = $("#species").val();
                             var geneSetSelected = $('#geneSet').val();
                             var referenceSelected = $('#refselect').val();
                             var sampleSelected = $('#sampleselect').val();
@@ -159,6 +163,7 @@
                                 $val += 'pat:false;';
                             $val += 'dat:' + dataTypeSelected + ';';
 
+                            $val += 'spe:' + species + ';';
 
                             $('#rememberTxt').val($val);
 
@@ -204,7 +209,10 @@
                                     else if (value.substr(0, 3) === 'dat') {
                                         dataTypeSelected = value.substr(4);
                                     }
-
+                                    else if (value.substr(0, 3) === 'spe') {
+                                        species = value.substr(4);
+                                        $('#species').val(species);
+                                    }
                                 });
 
                                 if ($('#rememberTxt').val() === '') {

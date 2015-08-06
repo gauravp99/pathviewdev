@@ -6,25 +6,28 @@
             </a>
             <label for="GeneSet">Gene Set:</label>
             <div class="col-sm-12">
+                <?php if ( basename(Request::url())== "gageExample2"){   ?>
+                <a id='geneIdFileResult' href="/all/demo/example/c1_all_v3_0_symbols.gmt" target="_blank" >c1_all_v3_0_symbols.gmt</a>
+                    <?php }?>
                 <input name="geneIdFile" type="file"  id="geneIdFile" hidden=""   style="margin-top: 20px;font-size: 14px;">
             </div>
         </div>
         <div class="col-sm-7">
             <select  name="geneSet[]" id="geneSet" class="geneSet"  multiple="" size="10" style="width:100%;">
                 <optgroup label="KEGG">
-                    <option value="sig.idx">signaling</option>
-                    <option value="met.idx">metabolic</option>
-                    <option value="sigmet.idx">sigmet</option>
-                    <option value="dise.idx">disease</option>
-                    <option value="sigmet.idx,dise.idx">all</option>
+                    <option value="sigmet.idx" >Signaling & Metabolic</option>
+                    <option value="sig.idx">Signaling</option>
+                    <option value="met.idx">Metabolic</option>
+                    <option value="dise.idx">Disease</option>
+                    <option value="sigmet.idx,dise.idx">All</option>
                 </optgroup>
                 <optgroup label="GO">
-                    <option value="BP">bp</option>
-                    <option value="CC">cc</option>
-                    <option value="MF">mf</option>
-                    <option value="BP,CC,MF">all</option>
+                    <option value="BP">Biological Process</option>
+                    <option value="CC">Cellular Component</option>
+                    <option value="MF">Molecular Function</option>
+                    <option value="BP,CC,MF">All</option>
                 </optgroup>
-                <option value="custom" style="background-color: whitesmoke;"
+                <option value="custom" style="background-color: whitesmoke;font-weight: bold;margin-left:-1px;width:101%;"
 >Custom</option>
             </select>
 
@@ -42,8 +45,12 @@
         </div>
         <div class="col-sm-7" id="geneid">
             <select   class="styled-select" name="geneIdType" id="geneIdType" >
-                <option value="entrez" @if (strcmp($geneIdType,'entrez') == 0 ) selected @endif >entrez</option>
-                <option value="kegg"   @if (strcmp($geneIdType,'kegg') == 0 ) selected @endif >kegg</option>
+                <?php if ( basename(Request::url())== "gageExample2"){   ?>
+                    <option value="custom"   @if (strcmp($geneIdType,'kegg') == 0 ) selected @endif >custom</option>
+                <?php }else { ?>
+                <option value="entrez" @if (strcmp($geneIdType,'entrez') == 0 ) selected @endif >Entrez</option>
+                <option value="kegg"   @if (strcmp($geneIdType,'kegg') == 0 ) selected @endif >KEGG</option>
+                    <?php }?>
             </select>
 
         </div>
@@ -59,7 +66,7 @@
             {!!form::label('species','Species:') !!}
         </div>
         <div class="col-sm-7" id="spciesList">
-            <input class="ex8" list="specieslist" name="species" id="species" value={{$species}}  autocomplete="on">
+            <input class="ex8" style="width:100%" list="specieslist" name="species" id="species" value={{$species}}  autocomplete="off">
         </div>
     </div>
     <datalist id="specieslist">
@@ -67,17 +74,14 @@
         <?php
         $species = DB::table('Species')->get();
         foreach ($species as $species1) {
-            echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
+            echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
         }
         ?>
         <!--[if (lt IE 10)]></select><![endif]-->
 
     </datalist>
 </div>
-<div class="stepsdiv" style="background-color: rgba(32, 80, 129, 0.16);height:30px;">
-<p style="font-family: Verdana;
-      color: black;
-      margin-left: 10px;margin-top:-10px;font-size:12px">*<u>NOTE: Enter Comma separated column numbers or select columns from select box after uploading the file.</u></p></div>
+
 <div class="stepsdiv" id="ref-div" >
     <div class="col-sm-12">
 
@@ -147,17 +151,15 @@
                 <a href="gageTutorial#set_size" onclick="window.open('gageTutorial#set_size', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Gene set size (number of genes) range to be considered for enrichment test. Tests for too small or too big gene sets are not robust statistically or informative bio-logically. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
-                <label for="setSize">Set Size:</label>
+                <label for="setSize" >Set Size</label>
+                <label for="setSize" >Minimum:</label>
+                <p for="setSize" style="max-width: 100%;margin-top:20px;font-weight: bold;margin-left: 116px;">Maximum:</p>
             </div>
             <div class="col-sm-7">
-                <div class="col-sm-6">
-                    Minimum: <input class="ex8" style="width:60px;"  name="setSizeMin"  id="setSizeMin" value={{$setSizeMin}}  placeholder="5">
 
+                     <input class="ex8" style=""  name="setSizeMin"  id="setSizeMin" value={{$setSizeMin}}  placeholder="5">
+                         <input class="ex8" style="margin-top:20px;"  name="setSizeMax"  class="MaxGreaterThanMinCheck" data-min="setSizeMin"  id="setSizeMax" value={{$setSizeMax}} placeholder="100">
 
-                </div>
-                <div class="col-sm-6">
-                    Maximum:     <input class="ex8" style="width:60px;"  name="setSizeMax"  class="MaxGreaterThanMinCheck" data-min="setSizeMin"  id="setSizeMax" value={{$setSizeMax}} placeholder="100">
-                </div>
             </div>
         </div>
     </div>
@@ -337,7 +339,7 @@ $('#submit-button').click(function(){
     };
     //saved species to be used in javascript
     var speciesArray = <?php echo JSON_encode($species);?> ;
-<?php $species_disesae = DB::table('Species')->where('disease_index_exist','Y')->get();?>
+<?php $species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
 var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
     $('#gage_anal_form').validate({
 
@@ -389,9 +391,8 @@ var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
                 required: true,
                 decimal:true
             },
-            geneIdFile:{
-                required:true,
-                extension: "txt|csv"
+           geneIdFile:{
+                required:true
             },
             species: {
                 required:true,
@@ -406,9 +407,8 @@ var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
                 required: "* Select the Input file csv/txt file",
                 extension: "* only txt and csv extensions are allowed"
             },
-            geneIdFile: {
-                required: "* Select the Gene ID file csv/txt file",
-                extension: "* only txt and csv extensions are allowed"
+           geneIdFile: {
+                required: "* Select the Gene ID file csv/txt file"
             },
             'geneSet[]': "* At least one GeneSet Field option should be selected",
             reference: {
@@ -426,7 +426,7 @@ var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
                 digits: "* Set Size Min field must be numeric"
             },
             setSizeMax: {
-                setSize: "* Set Size Max field must be numeric or INF",
+                setSize: "* Set Size Max field must be numeric or INFINITE",
                 MaxGreaterThanMinCheck: "* SetSizeMax value should be greater than Min",
                 setSizeMaxDigitCheck: "* Max size should only contains digits or inf to indicate infinity "
             },
@@ -486,7 +486,7 @@ function hideProgress() {
         return /^\d(\d?\.?\d+)*/.test(value);
     },"Cut off value should be a decimal value");
     jQuery.validator.addMethod('setSize',function(value, element){
-        if(value.toLowerCase() === 'inf' || $.isNumeric(value) )
+        if(value.toLowerCase() === 'infinite' || $.isNumeric(value) )
         {
             return true;
         }
@@ -577,7 +577,7 @@ function hideProgress() {
     },"Column numbers should not intersect with each other");
 
     jQuery.validator.addMethod('MaxGreaterThanMinCheck', function(value, element) {
-        if(value.toLowerCase() === 'inf')
+        if(value.toLowerCase() === 'infinite')
         {
             return true;
         }
@@ -587,7 +587,7 @@ function hideProgress() {
 
     }, "Max must be greater than min");
     jQuery.validator.addMethod('setSizeMaxDigitCheck', function(value, element) {
-        if(value.toLowerCase() === 'inf')
+        if(value.toLowerCase() === 'infinite')
         {
             return true;
         }

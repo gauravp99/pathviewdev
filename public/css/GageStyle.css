@@ -69,7 +69,6 @@ background-color:blue;
  .noteHint
  {
      font-family: Verdana;
-
      font-size: 13px;
      display: inline;
  }
@@ -83,7 +82,7 @@ background-color:blue;
 
 
 .styled-select {
-    width: 100%;
+    width: 65%;
     height: 35px;
     overflow: hidden;
     background:  no-repeat right #fff;

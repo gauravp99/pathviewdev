@@ -20,6 +20,9 @@
         <li <?php if (basename(Request::url()) == "gageExample1") {
             echo "class=\"active\"";
         }?>><a href="/gageExample1"><b>Example Analysis 1</b></a></li>
+        <li <?php if (basename(Request::url()) == "gageExample2") {
+            echo "class=\"active\"";
+        }?>><a href="/gageExample2"><b>Example Analysis 2</b></a></li>
         <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
         <script>

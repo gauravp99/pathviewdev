@@ -144,7 +144,7 @@ Route::get('gageResult', function () {
 
 Route::post('gageAnalysis', 'GageAnalysisController@newGageAnalysis');
 Route::post('exampleGageAnalysis1', 'GageAnalysisController@ExampleGageAnalysis1');
-
+Route::post('exampleGageAnalysis2', 'GageAnalysisController@ExampleGageAnalysis2');
 Route::get('gageIndex','gageController@index');
 Route::get('gageAbout','gageController@about');
 Route::get('gageTutorial','gageController@Tutorial');
@@ -164,6 +164,9 @@ Route::post('analysisDelete','AnalysisController@delete');
 
 Route::get('gageExample1',function(){
    return view('Gage.analysis.gageExample1');
+});
+Route::get('gageExample2',function(){
+    return view('Gage.analysis.gageExample2');
 });
 Route::get('pathviewViewer',function(){
     return view('Gage.GagePathviewGraphViewer');

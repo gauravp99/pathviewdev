@@ -9,7 +9,7 @@
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
-    <div class="col-sm-12">
+
         @include('GageNavigation')
         <div class="conetent-header ">
             <p><b>Example GAGE Analysis 1</b></p>
@@ -46,12 +46,12 @@
                 <?php
                 //specifying default values for all the variables;
                 $geneIdType = "entrez";
-                $species = "hsa-Homo sapiens";
+                $species = "hsa-Homosapiens-human";
                 $reference = "1,3";
                 $sample = "2,4";
                 $cutoff = "0.1";
                 $setSizeMin = "10";
-                $setSizeMax = "inf";
+                $setSizeMax = "infinite";
                 $compare = "paired";
                 $test2d = false;
                 $rankTest = false;

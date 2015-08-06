@@ -36,59 +36,67 @@ args2$sample = as.numeric(args2$sample)
 
 setwd(args2$destDir)
 save.image("workenv.RData")
-require(gage)
-library(gage)
+    require(gage)
+    library(gage)
 
-###gene set data
-species=args2$species
-gs.type=args2$geneSetCategory 
-gid.type=args2$geneIdType
-gsets.dir="/var/www/Pathway/public/genesets/"
-if(gs.type=="kegg"){
-  gsets.dir=paste(gsets.dir, "kegg/", sep="")
-  gsfn=paste(gsets.dir, species, ".", gid.type, ".kset.RData", sep="")
-  fnames=list.files(gsets.dir, full.names=F)
-  if(basename(gsfn) %in% fnames)
-   {load(gsfn)
-   sub.idx=unique(unlist(kset.data[args2$geneSet]))
+    ###gene set data
+    species=args2$species
+    gs.type=args2$geneSetCategory
+    gid.type=args2$geneIdType
+    gsets.dir="/var/www/Pathway/public/genesets/"
+    if(gs.type=="kegg"){
+      gsets.dir=paste(gsets.dir, "kegg/", sep="")
+      gsfn=paste(gsets.dir, species, ".", gid.type, ".kset.RData", sep="")
+      fnames=list.files(gsets.dir, full.names=F)
+      if(basename(gsfn) %in% fnames)
+       {
+       load(gsfn)
+       sub.idx=unique(unlist(kset.data[args2$geneSet]))
        gsets=kset.data$kg.sets[sub.idx]
-   }
-  else {
-    kset.data=kegg.gsets(species=species, id.type =gid.type)
-    save(kset.data, file=gsfn)
-    sub.idx=unique(unlist(kset.data[args2$geneSet]))
-    gsets=kset.data$kg.sets[sub.idx]
-  }
-} else if(gs.type=="go"){
-  gsets.dir=paste(gsets.dir, "go/", sep="")
-  gsfn=paste(gsets.dir, species, ".goset.RData", sep="")
-  fnames=list.files(gsets.dir, full.names=F)
-  if(basename(gsfn) %in% fnames){
-  load(gsfn)
-  sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
-      gsets=goset.data$go.sets[sub.idx]
-  }
-  else {
-    goset.data=go.gsets(species=species)
-    save(goset.data, file=gsfn)
-    sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
-    gsets=goset.data$go.sets[sub.idx]
-  }
-} else {
-  gsets=readList(args2$gsfn)
-#  save(gsets, file=paste(args2$user.dir, basename(gsfn))
-}
+       }
+      else {
+        kset.data=kegg.gsets(species=species, id.type =gid.type)
+        save(kset.data, file=gsfn)
+        sub.idx=unique(unlist(kset.data[args2$geneSet]))
+        gsets=kset.data$kg.sets[sub.idx]
+      }
+    } else if(gs.type=="go"){
+      gsets.dir=paste(gsets.dir, "go/", sep="")
+      gsfn=paste(gsets.dir, species, ".goset.RData", sep="")
+      fnames=list.files(gsets.dir, full.names=F)
+      if(basename(gsfn) %in% fnames){
+      load(gsfn)
+      sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
+          gsets=goset.data$go.sets[sub.idx]
+      }else {
+        goset.data=go.gsets(species=species)
+        save(goset.data, file=gsfn)
+        sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
+        gsets=goset.data$go.sets[sub.idx]
+      }
+    } else {
+      gsets=readList(args2$gsfn)
+      gsets=lapply(gsets, function(x) x[x>""])
+    #  save(gsets, file=paste(args2$user.dir, basename(gsfn))
+    }
 
 ###molecular data
+
     if(args2$geneextension == "txt"){
-        a=read.delim(args2$filename, sep="\t", row.names=1)
+        a=read.delim(args2$filename, sep="\t")
     } else if(args2$geneextension == "csv"){
-        a=read.delim(args2$filename, sep=",", row.names=1)
+        a=read.delim(args2$filename, sep=",")
     } else stop(paste(args2$geneextension, ": unsupported gene data file type!"), sep="")
 
-    exprs=as.matrix(a)
-    if(!is.numeric(a[,1])) stop("Input data has to be numeric!")
-
+    if(ncol(a)>1){
+        exprs=as.matrix(a[,-1])
+        rownames(exprs)=make.unique(as.character(a[,1]))
+        if(!is.numeric(exprs[,1])) stop("Data matrix has to be numeric!")
+    } else if(ncol(a)==1) {
+        a=as.matrix(a)
+        exprs=a[,1]
+        if(is.null(names(exprs))) exprs=as.character(exprs)
+    } else stop("Empty gene data file!")
 
 print(0)
 ### gage 1-d #implement weights later

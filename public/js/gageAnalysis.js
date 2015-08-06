@@ -51,28 +51,28 @@ function validation(){
         //hide the input type file
 
 
-        var keggGeneIdType = {"entrez":"entrez",
-            "kegg":"kegg"
+        var keggGeneIdType = {"entrez":"Entrez",
+            "kegg":"KEGG"
         }
-        var goSpecIdBind = {"Anopheles":"eg",
-            "Arabidopsis":"tair",
-            "Bovine":"eg",
-            "Worm":"eg",
-            "Canine":"eg",
-            "Fly":"eg",
-            "Zebrafish":"eg",
-            "E coli strain K12":"eg",
-            "E coli strain Sakai":"eg",
-            "Chicken":"eg",
-            "Human":"eg",
-            "Mouse":"eg",
-            "Rhesus":"eg",
-            "Malaria":"orf",
-            "Chimp":"eg",
-            "Rat":"eg",
-            "Yeast":"orf",
-            "Pig":"eg",
-            "Xenopus":"eg"
+        var goSpecIdBind = {"Anopheles":"Entrez GENE",
+            "Arabidopsis":"TAIR",
+            "Bovine":"Entrez GENE",
+            "Worm":"Entrez GENE",
+            "Canine":"Entrez GENE",
+            "Fly":"Entrez GENE",
+            "Zebrafish":"Entrez GENE",
+            "E coli strain K12":"Entrez GENE",
+            "E coli strain Sakai":"Entrez GENE",
+            "Chicken":"Entrez GENE",
+            "Human":"Entrez GENE",
+            "Mouse":"Entrez GENE",
+            "Rhesus":"Entrez GENE",
+            "Malaria":"ORF",
+            "Chimp":"Entrez GENE",
+            "Rat":"Entrez GENE",
+            "Yeast":"ORF",
+            "Pig":"Entrez GENE",
+            "Xenopus":"Entrez GENE"
         };
 
         var goSpecies = {'Anopheles':'Anopheles',
@@ -101,20 +101,22 @@ var GogetSetChange = false;
 
 
         $('#species').change(function () {
-                speciesChange = true;
+
+                /*speciesChange = true;*/
                 if ($('#geneIdType > option').length == 1) {
                     $('#geneIdType').empty();
                     $('#geneIdType').append($("<option></option>")
                         .attr("value", goSpecIdBind[$('#species').val()]).text(goSpecIdBind[$('#species').val()]));
                 }
-
-                $.each(speciesdiseaseArray, function (speciesIter, specieValue) {
-                    if(specieValue['species_id'] === $('#species').val().split('-')[0])
-                    {
-                        $("#geneSet option[value='dise.idx']")[0].setAttribute('disabled','disabled');
-                    }
-                });
-
+            else {
+                    $("#geneSet option[value='dise.idx']")[0].removeAttribute('disabled');
+                    $.each(speciesdiseaseArray, function (speciesIter, specieValue) {
+                        if (specieValue['species_id'] === $('#species').val().split('-')[0]) {
+                            $("#geneSet option[value='dise.idx']")[0].setAttribute('disabled', 'disabled');
+                            return false;
+                        }
+                    });
+                }
             }
         );
 
@@ -254,8 +256,8 @@ var GogetSetChange = false;
 
 
                         $('#specieslist').empty();
-                        if(!speciesChange)
-                        $('#species').val('hsa-Homo sapiens');
+
+                        $('#species').val('hsa-Homo sapiens-human');
 
                     }
                     $('#geneIdType').empty();
@@ -287,14 +289,14 @@ var GogetSetChange = false;
                         GogetSetChange = true;
                         KegggetSetChange = false;
 
-                        if(!speciesChange)
+
                         $('#species').val('Human');
 
 
                     }
                     $('#geneIdType').empty();
                     $('#geneIdType').append($("<option></option>")
-                        .attr("value", "eg").text("eg"));
+                        .attr("value", "Entrez Gene").text("Entrez Gene"));
 
 
                     $('#specieslist').empty();
@@ -312,6 +314,7 @@ var GogetSetChange = false;
                     $("#geneSet option[value='custom']")[0].setAttribute('disabled', 'disabled');
                 }
                 else {
+                    $('#geneIdFileResult').hide();
                     $('#geneIdType').empty();
 
                     $('#geneIdType').append($("<option></option>")
