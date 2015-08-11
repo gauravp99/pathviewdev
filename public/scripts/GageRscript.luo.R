@@ -36,15 +36,44 @@ args2$sample = as.numeric(args2$sample)
 
 setwd(args2$destDir)
 save.image("workenv.RData")
-    require(gage)
+
+###molecular data
+
+    if(args2$geneextension == "txt"){
+        a=read.delim(args2$filename, sep="\t")
+    } else if(args2$geneextension == "csv"){
+        a=read.delim(args2$filename, sep=",")
+    } else stop(paste(args2$geneextension, ": unsupported gene data file type!"), sep="")
+
+    if(ncol(a)>1){
+        exprs=as.matrix(a[,-1])
+        mol.ids=as.character(a[,1])
+        rownames(exprs)=make.unique(mol.ids)
+        if(!is.numeric(exprs[,1])) stop("Data matrix has to be numeric!")
+    } else if(ncol(a)==1) {
+        a=as.matrix(a)
+        exprs=a[,1]
+        if(is.null(names(exprs))) mol.ids=exprs=as.character(exprs)
+    } else stop("Empty gene data file!")
+
+require(gage)
     library(gage)
 
     ###gene set data
-    species=args2$species
-    gs.type=args2$geneSetCategory
-    gid.type=args2$geneIdType
-    gsets.dir="/var/www/Pathway/public/genesets/"
-    if(gs.type=="kegg"){
+species=args2$species
+gs.type=args2$geneSetCategory
+gid.type=tolower(args2$geneIdType)
+map.data=F
+data(bods, package="gage")
+gsets.dir="/var/www/Pathway/public/genesets/"
+
+if(gs.type=="kegg"){
+    if(!gid.type %in% c("entrez", "kegg")) {
+        gid.type0=gid.type
+        gid.type="entrez"
+        map.data=T
+##        idx=which(bods[,"kegg code"] == species)
+##        if(length(idx)!=1) stop("bad species value")
       gsets.dir=paste(gsets.dir, "kegg/", sep="")
       gsfn=paste(gsets.dir, species, ".", gid.type, ".kset.RData", sep="")
       fnames=list.files(gsets.dir, full.names=F)
@@ -60,14 +89,22 @@ save.image("workenv.RData")
         sub.idx=unique(unlist(kset.data[args2$geneSet]))
         gsets=kset.data$kg.sets[sub.idx]
       }
-    } else if(gs.type=="go"){
-      gsets.dir=paste(gsets.dir, "go/", sep="")
+    }
+} else if(gs.type=="go"){
+    idx=which(bods == species) %% nrow(bods)
+    species=bods[idx, "species"]
+    if(gid.type != bods[idx,"id.type"]) {
+           gid.type0=gid.type
+           gid.type= bods[idx,"id.type"]
+           map.data=T
+       }
+     gsets.dir=paste(gsets.dir, "go/", sep="")
       gsfn=paste(gsets.dir, species, ".goset.RData", sep="")
       fnames=list.files(gsets.dir, full.names=F)
       if(basename(gsfn) %in% fnames){
       load(gsfn)
       sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
-          gsets=goset.data$go.sets[sub.idx]
+      gsets=goset.data$go.sets[sub.idx]
       }else {
         goset.data=go.gsets(species=species)
         save(goset.data, file=gsfn)
@@ -75,28 +112,29 @@ save.image("workenv.RData")
         gsets=goset.data$go.sets[sub.idx]
       }
     } else {
-      gsets=readList(args2$gsfn)
+      if(args2$gsetextension == "gmt") gsets=readList(args2$gsfn)
       gsets=lapply(gsets, function(x) x[x>""])
-    #  save(gsets, file=paste(args2$user.dir, basename(gsfn))
+      else {
+      gsets=read.delim(args2$gsfn, sep="\t")
+  gsets=split(as.character(gsets[,1]), gsets[,2])
+  }
+        # #  save(gsets, file=paste(args2$user.dir, basename(gsfn))
+  }
+    
+ 
+    if(map.data){
+        pkg.name = bods[idx, "package"]
+        require(pkg.name,character.only = T) #may install if needed
+        gene.idmap=pathview::id2eg(mol.ids, category=gid.type0, pkg.name=pkg.name)
+        if(gs.type=="go" & gid.type!="eg"){
+        gene.idmap1=eg2id(gene.idmap[,2], category=gid.type, pkg.name=pkg.name)
+        gene.idmap1=cbind(gene.idmap,gene.idmap1)[,-2]
+        gene.idmap=gene.idmap1[,c(1,3)]
     }
-
-###molecular data
-
-    if(args2$geneextension == "txt"){
-        a=read.delim(args2$filename, sep="\t")
-    } else if(args2$geneextension == "csv"){
-        a=read.delim(args2$filename, sep=",")
-    } else stop(paste(args2$geneextension, ": unsupported gene data file type!"), sep="")
-
-    if(ncol(a)>1){
-        exprs=as.matrix(a[,-1])
-        rownames(exprs)=make.unique(as.character(a[,1]))
-        if(!is.numeric(exprs[,1])) stop("Data matrix has to be numeric!")
-    } else if(ncol(a)==1) {
-        a=as.matrix(a)
-        exprs=a[,1]
-        if(is.null(names(exprs))) exprs=as.character(exprs)
-    } else stop("Empty gene data file!")
+        write.table(gene.idmap, file = "gene.idmap.txt", sep = "\t", row.names=F, quote=F)
+        exprs0=exprs
+        exprs=pathview::mol.sum(exprs, gene.idmap)
+    }
 
 print(0)
 ### gage 1-d #implement weights later

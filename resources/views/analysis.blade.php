@@ -104,7 +104,7 @@
         <div class="col-sm-2" style="margin-left: 20px;">
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1" style="font-size:24px;">
 
-                <span id="plus" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px 57px 6px 59px;margin: 0px -57px -17px;" class="glyphicon glyphicon-plus"></span>
+                <span id="plus" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px 57px 6px 59px;margin: 0px -50px -17px;" class="glyphicon glyphicon-plus"></span>
             </a>
 
             <div class="pathwayiconsep" style="margin-top: 60px">
@@ -113,7 +113,7 @@
 
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add" style="font-size:24px;">
 
-                <span id="forward" class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px;padding-left: 59px;margin: -57px;padding-right: 57px;margin-top: 30px;"></span>
+                <span id="forward" class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px;padding-left: 59px;margin: -50px;padding-right: 57px;margin-top: 30px;"></span>
             </a>
 
         </div>
@@ -280,8 +280,14 @@
                 <a href="tutorial#kpos" onclick="window.open('tutorial#kpos', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls the position of color key(s)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
-                <div class="col-sm-6" style="margin-left: -20px;">
-                    {!!form::label('kpos','Key &nbsp;Position:') !!}
+                <div class="col-sm-6" style="margin-left: -30px;">
+
+                    <h4 style="
+                    margin-top: 1px;
+  max-width: 100%;
+  font-weight: bold;">Key </h4><h4 style="
+  max-width: 100%;
+  font-weight: bold;">Position:</h4>
                 </div>
                 <div class="col-sm-6" style="margin-left: -40px;">
                     {!! form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom

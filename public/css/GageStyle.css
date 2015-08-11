@@ -6,6 +6,12 @@
     margin-bottom: 10px;
 }
 
+.expandable{
+display: none;
+}
+.side-expand{
+    display: none;
+}
 select[multiple].geneSet {
   width: 100%;
   border-radius: 10px;
@@ -106,4 +112,14 @@ img.pdf-info{
 
 .section{
 
+}
+.argumentVar{
+    width:30%;  display: inline-block;text-align: right;
+}
+.argumentColon{
+    width:5%;  display: inline-block;text-align: left;margin-left:10px;margin-right:10px;
+}
+
+.argumentVal{
+    width:30%;  display: inline-block;text-align: left;
 }

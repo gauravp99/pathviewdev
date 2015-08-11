@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="AUTHOR" content="Weijun Luo,Yeshvant Kumar Bhavnasi Venkat Satya">
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
+    <link rel="icon" href="/images/plogo.png"  sizes="32x32">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
-    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="{{ asset('/css/GageStyle.css') }}" type="text/css" media="screen"/>
-    <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <title>GAGE Web</title>

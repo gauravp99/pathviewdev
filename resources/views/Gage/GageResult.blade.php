@@ -506,8 +506,7 @@ echo "</div>";
     <script>
         $(document).ready(function () {
 
-            $('.expandable').toggle();
-            $('.side-expand').toggle();
+
             $("#expand").click(function () {
                 $('.expandable').toggle();
                 if ( $( "#expand" ).hasClass( "glyphicon-triangle-bottom" ) ) {

@@ -1,3 +1,5 @@
+
+
 <div class="stepsdiv" id="gset-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -76,7 +78,10 @@
         foreach ($species as $species1) {
             echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
         }
+
+
         ?>
+
         <!--[if (lt IE 10)]></select><![endif]-->
 
     </datalist>
@@ -151,9 +156,9 @@
                 <a href="gageTutorial#set_size" onclick="window.open('gageTutorial#set_size', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Gene set size (number of genes) range to be considered for enrichment test. Tests for too small or too big gene sets are not robust statistically or informative bio-logically. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
-                <label for="setSize" >Set Size</label>
+                <label for="setSize" >Set Size,</label>
                 <label for="setSize" >Minimum:</label>
-                <p for="setSize" style="max-width: 100%;margin-top:20px;font-weight: bold;margin-left: 116px;">Maximum:</p>
+                <h4 for="setSize" style="max-width: 100%;margin-top:20px;font-weight: bold;margin-left: 116px;">Maximum:</h4>
             </div>
             <div class="col-sm-7">
 
@@ -278,7 +283,7 @@
 
 </fieldset>
 </div>
-<div  class="steps" style="margin-left:-2%">
+<div  class="steps" >
     <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return validation()"  />
     <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" />
 </div>
@@ -337,9 +342,18 @@ $('#submit-button').click(function(){
         "Pig":"eg",
         "Xenopus":"eg"
     };
+
     //saved species to be used in javascript
     var speciesArray = <?php echo JSON_encode($species);?> ;
-<?php $species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
+<?php
+$goSpecies = DB::table('Species')
+        ->join('GoSpecies', 'Species.species_id', '=', 'GoSpecies.species_id')
+        ->select('GoSpecies.species_id','Species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
+?>
+var goSpeciesArray = <?php echo JSON_encode($goSpecies);?>;
+
+<?php
+$species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
 var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
     $('#gage_anal_form').validate({
 
@@ -515,6 +529,13 @@ function hideProgress() {
                         validSpeciesFlag = true;
                     }
                 });
+
+                $.each(goSpeciesArray, function (index, xyz) {
+                    if (goSpeciesArray[index]['species_id'] === value.substr(0,3)) {
+                        validSpeciesFlag = true;
+                    }
+                });
+
             }
         }
         else{

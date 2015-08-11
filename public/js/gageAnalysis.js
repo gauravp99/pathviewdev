@@ -44,6 +44,7 @@ function validation(){
         });
 
 
+//making go species and id type binding
 
 
 
@@ -54,26 +55,33 @@ function validation(){
         var keggGeneIdType = {"entrez":"Entrez",
             "kegg":"KEGG"
         }
-        var goSpecIdBind = {"Anopheles":"Entrez GENE",
+        var goSpecIdBind = {"Anopheles":"Entrez",
             "Arabidopsis":"TAIR",
-            "Bovine":"Entrez GENE",
-            "Worm":"Entrez GENE",
-            "Canine":"Entrez GENE",
-            "Fly":"Entrez GENE",
-            "Zebrafish":"Entrez GENE",
-            "E coli strain K12":"Entrez GENE",
-            "E coli strain Sakai":"Entrez GENE",
-            "Chicken":"Entrez GENE",
-            "Human":"Entrez GENE",
-            "Mouse":"Entrez GENE",
-            "Rhesus":"Entrez GENE",
+            "Bovine":"Entrez",
+            "Worm":"Entrez",
+            "Canine":"Entrez",
+            "Fly":"Entrez",
+            "Zebrafish":"Entrez",
+            "E coli strain K12":"Entrez",
+            "E coli strain Sakai":"Entrez",
+            "Chicken":"Entrez",
+            "Human":"Entrez",
+            "Mouse":"Entrez",
+            "Rhesus":"Entrez",
             "Malaria":"ORF",
-            "Chimp":"Entrez GENE",
-            "Rat":"Entrez GENE",
+            "Chimp":"Entrez",
+            "Rat":"Entrez",
             "Yeast":"ORF",
-            "Pig":"Entrez GENE",
-            "Xenopus":"Entrez GENE"
+            "Pig":"Entrez",
+            "Xenopus":"Entrez"
         };
+            $.each(goSpeciesArray, function (index, value) {
+                //goSpeciesArray[index]['species_id']+'-'+goSpeciesArray[index]['species_desc']+'-'+goSpeciesArray[index]['Go_name']).text(goSpeciesArray[index]['species_id']+'-'+goSpeciesArray[index]['species_desc']+'-'+goSpeciesArray[index]['Go_name']));
+                if((goSpeciesArray[index]['id_type']).toLowerCase() === 'eg')
+                goSpecIdBind[goSpeciesArray[index]['species_id']] = "Entrez";
+                else
+                    goSpecIdBind[goSpeciesArray[index]['species_id']]  = (goSpeciesArray[index]['id_type']).toUpperCase();
+            });
 
         var goSpecies = {'Anopheles':'Anopheles',
             'Arabidopsis':'Arabidopsis',
@@ -103,10 +111,22 @@ var GogetSetChange = false;
         $('#species').change(function () {
 
                 /*speciesChange = true;*/
+
                 if ($('#geneIdType > option').length == 1) {
-                    $('#geneIdType').empty();
-                    $('#geneIdType').append($("<option></option>")
-                        .attr("value", goSpecIdBind[$('#species').val()]).text(goSpecIdBind[$('#species').val()]));
+                    if( goSpecIdBind[$('#species').val()] != null ) {
+                        $('#geneIdType').empty();
+                        $('#geneIdType').append($("<option></option>")
+                            .attr("value", goSpecIdBind[$('#species').val()]).text(goSpecIdBind[$('#species').val()]));
+                    }
+                    else if( goSpecIdBind[$('#species').substr(0,3).val()] != null  )
+                    {
+                        $('#geneIdType').empty();
+                        $('#geneIdType').append($("<option></option>")
+                            .attr("value", goSpecIdBind[$('#species').val()]).text(goSpecIdBind[$('#species').val()]));
+
+                    }
+
+
                 }
             else {
                     $("#geneSet option[value='dise.idx']")[0].removeAttribute('disabled');
@@ -296,7 +316,7 @@ var GogetSetChange = false;
                     }
                     $('#geneIdType').empty();
                     $('#geneIdType').append($("<option></option>")
-                        .attr("value", "Entrez Gene").text("Entrez Gene"));
+                        .attr("value", "Entrez").text("Entrez"));
 
 
                     $('#specieslist').empty();
@@ -305,6 +325,11 @@ var GogetSetChange = false;
                         $('#specieslist').append($("<option></option>")
                             .attr("value", value).text(key));
                     });
+                    $.each(goSpeciesArray, function (index, value) {
+                        $('#specieslist').append($("<option></option>")
+                            .attr("value", goSpeciesArray[index]['species_id']+'-'+goSpeciesArray[index]['species_desc']+'-'+goSpeciesArray[index]['Go_name']).text(goSpeciesArray[index]['species_id']+'-'+goSpeciesArray[index]['species_desc']+'-'+goSpeciesArray[index]['Go_name']));
+                    });
+
 
                     $("#geneSet option[value='sig.idx']")[0].setAttribute('disabled', 'disabled');
                     $("#geneSet option[value='met.idx']")[0].setAttribute('disabled', 'disabled');

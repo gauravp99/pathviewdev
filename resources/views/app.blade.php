@@ -356,10 +356,9 @@ if ( basename(Request::url())== "gageIndex" && !Auth::user() || basename(Request
     <link href="{{ asset('/css/bootstrap1.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
     <title>Pathview</title>
 </head>
-<body >
+<body>
 
 <nav class="navbar navbar-default navbar-change">
     <div class="container-fluid">

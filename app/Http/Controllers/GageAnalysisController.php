@@ -163,7 +163,26 @@ class GageAnalysisController extends Controller
             $argument .= "species:";
             if (strcmp($_POST['geneIdType'], 'entrez') == 0 || strcmp($_POST['geneIdType'], 'kegg') == 0) {
                 $argument .= explode('-', $_POST['species'])[0] . ";";
-            } else {
+            } else if(strcmp($_POST['geneIdType'], 'Entrez Gene') == 0 || strcmp($_POST['geneIdType'], 'ORF') == 0 || strcmp($_POST['geneIdType'], 'TAIR') == 0) {
+                $goSpecies = DB::table('GoSpecies')->where('species_id',substr($_POST['species'],0,3))->first();
+
+                if(sizeof($goSpecies) > 0)
+                {
+                    $argument .= $goSpecies->Go_name . ";";
+                }
+                else{
+                    $goSpecies1 = DB::table('GoSpecies')->where('Go_name',$_POST['species'])->first();
+                    if(sizeof($goSpecies1) > 0)
+                    {
+                        $argument .= $goSpecies1->Go_name . ";";
+                    }
+                    else{
+                        $argument .= "Human;";
+                    }
+                }
+
+            }
+            else{
                 $argument .= $_POST['species'] . ";";
             }
         }

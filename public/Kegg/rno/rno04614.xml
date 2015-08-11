@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE pathway SYSTEM "http://www.kegg.jp/kegg/xml/KGML_v0.7.1_.dtd">
+<!-- Creation date: Jan 15, 2010 16:15:43 +0900 (JST) -->
+<pathway name="path:rno04614" org="rno" number="04614"
+         title="Renin-angiotensin system"
+         image="http://www.kegg.jp/kegg/pathway/rno/rno04614.png"
+         link="http://www.kegg.jp/kegg-bin/show_pathway?rno04614">
+    <entry id="1" name="rno:302668" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:302668">
+        <graphics name="Ace2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="481" y="247" width="46" height="17"/>
+    </entry>
+    <entry id="2" name="rno:302668" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:302668">
+        <graphics name="Ace2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="268" y="212" width="46" height="17"/>
+    </entry>
+    <entry id="3" name="rno:24310 rno:498012" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24310+rno:498012">
+        <graphics name="Ace, Dcp1, StsRR92..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="481" y="142" width="46" height="17"/>
+    </entry>
+    <entry id="4" name="rno:24310 rno:498012" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24310+rno:498012">
+        <graphics name="Ace, Dcp1, StsRR92..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="389" y="147" width="46" height="17"/>
+    </entry>
+    <entry id="5" name="rno:24310 rno:498012" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24310+rno:498012">
+        <graphics name="Ace, Dcp1, StsRR92..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="327" y="365" width="46" height="17"/>
+    </entry>
+    <entry id="6" name="cpd:C02135" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C02135">
+        <graphics name="C02135" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="455" y="307" width="8" height="8"/>
+    </entry>
+    <entry id="7" name="cpd:C15849" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C15849">
+        <graphics name="C15849" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="455" y="473" width="8" height="8"/>
+    </entry>
+    <entry id="8" name="cpd:C15848" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C15848">
+        <graphics name="C15848" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="455" y="390" width="8" height="8"/>
+    </entry>
+    <entry id="9" name="cpd:C15850" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C15850">
+        <graphics name="C15850" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="455" y="178" width="8" height="8"/>
+    </entry>
+    <entry id="10" name="cpd:C15852" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C15852">
+        <graphics name="C15852" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="455" y="95" width="8" height="8"/>
+    </entry>
+    <entry id="11" name="cpd:C15851" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C15851">
+        <graphics name="C15851" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="332" y="178" width="8" height="8"/>
+    </entry>
+    <entry id="12" name="cpd:C00873" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C00873">
+        <graphics name="C00873" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="230" y="307" width="8" height="8"/>
+    </entry>
+    <entry id="13" name="rno:24180 rno:81638" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24180+rno:81638">
+        <graphics name="Agtr1a, AT1, AT1A, AT1R, Agtr1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="599" y="331" width="46" height="17"/>
+    </entry>
+    <entry id="14" name="rno:24182" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24182">
+        <graphics name="Agtr2, AT2-R, AT2R, AT&lt;sub&gt;2&lt;/sub&gt;R" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="599" y="284" width="46" height="17"/>
+    </entry>
+    <entry id="15" name="rno:117041" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:117041">
+        <graphics name="Nln" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="366" y="245" width="46" height="17"/>
+    </entry>
+    <entry id="16" name="rno:64517" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:64517">
+        <graphics name="Thop1, EP24.15" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="366" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="17" name="rno:24590" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24590">
+        <graphics name="Mme, CD10, Nep, SFE" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="366" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="18" name="rno:81641" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:81641">
+        <graphics name="Anpep, AP-M, AP-N, Apm, Apn, KZP, Lap1, rAPN" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="430" y="428" width="46" height="17"/>
+    </entry>
+    <entry id="19" name="rno:64017" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:64017">
+        <graphics name="Enpep" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="430" y="346" width="46" height="17"/>
+    </entry>
+    <entry id="20" name="rno:296370" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:296370">
+        <graphics name="Ctsa, Ppgb" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="268" y="232" width="46" height="17"/>
+    </entry>
+    <entry id="21" name="rno:54242" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:54242">
+        <graphics name="Cpa3" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="268" y="252" width="46" height="17"/>
+    </entry>
+    <entry id="22" name="rno:25153" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:25153">
+        <graphics name="Mas1, Mgra, c-mas" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="599" y="178" width="46" height="17"/>
+    </entry>
+    <entry id="23" name="rno:24590" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24590">
+        <graphics name="Mme, CD10, Nep, SFE" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="389" y="167" width="46" height="17"/>
+    </entry>
+    <entry id="24" name="rno:100912445 rno:171105" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:100912445+rno:171105">
+        <graphics name="100912445..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="599" y="473" width="46" height="17"/>
+    </entry>
+    <entry id="25" name="rno:25627" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:25627">
+        <graphics name="Cma1, MCP3P, Mcpt5" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="328" y="319" width="46" height="17"/>
+    </entry>
+    <entry id="26" name="rno:290257 rno:408207 rno:408240" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:290257+rno:408207+rno:408240">
+        <graphics name="Ctsg..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="328" y="339" width="46" height="17"/>
+    </entry>
+    <entry id="27" name="rno:24179" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24179">
+        <graphics name="Agt, ANRT, Ang, AngII, PAT" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="93" y="307" width="46" height="17"/>
+    </entry>
+    <entry id="28" name="rno:24715" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno:24715">
+        <graphics name="Ren, RATRENAA, RENAA, Ren1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="168" y="319" width="46" height="17"/>
+    </entry>
+    <entry id="29" name="path:rno04614" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno04614">
+        <graphics name="TITLE:Renin-angiotensin system" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="159" y="58" width="237" height="25"/>
+    </entry>
+    <entry id="30" name="path:rno04610" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?rno04610">
+        <graphics name="Complement and coagulation cascades" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="172" y="441" width="109" height="35"/>
+    </entry>
+</pathway>

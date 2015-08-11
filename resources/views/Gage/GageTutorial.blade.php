@@ -1,7 +1,219 @@
 @extends('GageApp')
 
 @section('content')
+<style>
 
+    @media (min-width: 1040px) {
+        .col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+            float: left;
+        }
+
+        .col-md-12 {
+            width: 100%;
+        }
+
+        .col-md-11 {
+            width: 91.66666667%;
+        }
+
+        .col-md-10 {
+            width: 83.33333333%;
+        }
+
+        .col-md-9 {
+            width: 75%;
+        }
+
+        .col-md-8 {
+            width: 66.66666667%;
+        }
+
+        .col-md-7 {
+            width: 58.33333333%;
+        }
+
+        .col-md-6 {
+            width: 50%;
+        }
+
+        .col-md-5 {
+            width: 41.66666667%;
+        }
+
+        .col-md-4 {
+            width: 33.33333333%;
+        }
+
+        .col-md-3 {
+            width: 25%;
+        }
+
+        .col-md-2 {
+            width: 16.66666667%;
+        }
+
+        .col-md-1 {
+            width: 8.33333333%;
+        }
+
+        .col-md-pull-12 {
+            right: 100%;
+        }
+
+        .col-md-pull-11 {
+            right: 91.66666667%;
+        }
+
+        .col-md-pull-10 {
+            right: 83.33333333%;
+        }
+
+        .col-md-pull-9 {
+            right: 75%;
+        }
+
+        .col-md-pull-8 {
+            right: 66.66666667%;
+        }
+
+        .col-md-pull-7 {
+            right: 58.33333333%;
+        }
+
+        .col-md-pull-6 {
+            right: 50%;
+        }
+
+        .col-md-pull-5 {
+            right: 41.66666667%;
+        }
+
+        .col-md-pull-4 {
+            right: 33.33333333%;
+        }
+
+        .col-md-pull-3 {
+            right: 25%;
+        }
+
+        .col-md-pull-2 {
+            right: 16.66666667%;
+        }
+
+        .col-md-pull-1 {
+            right: 8.33333333%;
+        }
+
+        .col-md-pull-0 {
+            right: auto;
+        }
+
+        .col-md-push-12 {
+            left: 100%;
+        }
+
+        .col-md-push-11 {
+            left: 91.66666667%;
+        }
+
+        .col-md-push-10 {
+            left: 83.33333333%;
+        }
+
+        .col-md-push-9 {
+            left: 75%;
+        }
+
+        .col-md-push-8 {
+            left: 66.66666667%;
+        }
+
+        .col-md-push-7 {
+            left: 58.33333333%;
+        }
+
+        .col-md-push-6 {
+            left: 50%;
+        }
+
+        .col-md-push-5 {
+            left: 41.66666667%;
+        }
+
+        .col-md-push-4 {
+            left: 33.33333333%;
+        }
+
+        .col-md-push-3 {
+            left: 25%;
+        }
+
+        .col-md-push-2 {
+            left: 16.66666667%;
+        }
+
+        .col-md-push-1 {
+            left: 8.33333333%;
+        }
+
+        .col-md-push-0 {
+            left: auto;
+        }
+
+        .col-md-offset-12 {
+            margin-left: 100%;
+        }
+
+        .col-md-offset-11 {
+            margin-left: 91.66666667%;
+        }
+
+        .col-md-offset-10 {
+            margin-left: 83.33333333%;
+        }
+
+        .col-md-offset-9 {
+            margin-left: 75%;
+        }
+
+        .col-md-offset-8 {
+            margin-left: 66.66666667%;
+        }
+
+        .col-md-offset-7 {
+            margin-left: 58.33333333%;
+        }
+
+        .col-md-offset-6 {
+            margin-left: 50%;
+        }
+
+        .col-md-offset-5 {
+            margin-left: 41.66666667%;
+        }
+
+        .col-md-offset-4 {
+            margin-left: 33.33333333%;
+        }
+
+        .col-md-offset-3 {
+            margin-left: 25%;
+        }
+
+        .col-md-offset-2 {
+            margin-left: 16.66666667%;
+        }
+
+        .col-md-offset-1 {
+            margin-left: 8.33333333%;
+        }
+
+        .col-md-offset-0 {
+            margin-left: 0;
+        }
+    }
+
+</style>
 
     <div class="col-md-12 content" style="text-align: center;">
 
@@ -336,33 +548,41 @@
 
 
 
-               <div class="col-sm-6">
-                <p>Output Plots and heatmap snapshots:</p>
-                        <img class="gageExampleImg" src="images/gage/gage.res.gs.heatmap-page-003.jpg" >
-                   <h3><b><u>Genet Set Combined Heat map</u></b></h3>
+               <div class="col-sm-9">
+                <h3><p>Output Plots and heatmap snapshots:</p></h3>
+                   <div class="col-sm-6">
+
+                       <img class="gageExampleImg" src="/images/gage/hsa03060.geneData.heatmap-page-001.jpg" >
+                       <h4><b><u>Individual Heat Map</u></b></h4>
+                   </div>
+                   <div class="col-sm-6">
+
+                       <img class="gageExampleImg" src="/images/gage/hsa03060.geneData-page-001.jpg" >
+                       <h4><b><u>Individual Scatter Plot</u></b></h4>
+                   </div>
                     </div>
-                    <div class="col-sm-6">
-                        <p> Arguments used in example analysis:</p>
+                    <div class="col-sm-3">
+                        <h3><p> Arguments used in example analysis:</p>  </h3>
                     <ul class="list-group">
                         <li class="list-group-item disabled">
                             Applied Options
                         </li>
-                        <li class="list-group-item">reference : 1,3</li>
-                        <li class="list-group-item">sample : 2,4</li>
-                        <li class="list-group-item">filename : gagedata.txt</li>
-                        <li class="list-group-item">geneSetCategory : kegg</li>
-                        <li class="list-group-item">geneSet : sig.idx</li>
-                        <li class="list-group-item">species : hsa</li>
-                        <li class="list-group-item">cutoff : 0.1</li>
-                        <li class="list-group-item">geneIdType : entrez</li>
-                        <li class="list-group-item">setSizeMin : 10</li>
-                        <li class="list-group-item">setSizeMax : INF</li>
-                        <li class="list-group-item">compare : paired</li>
-                        <li class="list-group-item">test.2d : False</li>
-                        <li class="list-group-item">rankTest : False</li>
-                        <li class="list-group-item">useFold : True</li>
-                        <li class="list-group-item">test : gs.tTest</li>
-                        <li class="list-group-item">do.pathview : F</li>
+                        <li class="list-group-item"><div class="argumentVar">reference</div> <div class="argumentColon">:</div> <div class="argumentVal">1,3</div></li>
+                        <li class="list-group-item"><div class="argumentVar">sample</div> <div class="argumentColon">:</div> <div class="argumentVal">2,4</div></li>
+                        <li class="list-group-item"><div class="argumentVar">filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="all/data/gagedata.txt" target="_blank">gagedata.txt</a></div></li>
+                        <li class="list-group-item"><div class="argumentVar">gene Set Category</div> <div class="argumentColon">:</div> <div class="argumentVal">kegg</div></li>
+                        <li class="list-group-item"><div class="argumentVar">geneSet</div> <div class="argumentColon">:</div> <div class="argumentVal">sig.idx</div></li>
+                        <li class="list-group-item"><div class="argumentVar">species</div> <div class="argumentColon">:</div> <div class="argumentVal">hsa</div></li>
+                        <li class="list-group-item"><div class="argumentVar">cutoff</div> <div class="argumentColon">:</div> <div class="argumentVal">0.1</div></li>
+                        <li class="list-group-item"><div class="argumentVar">geneIdType</div> <div class="argumentColon">:</div> <div class="argumentVal">entrez</div></li>
+                        <li class="list-group-item"><div class="argumentVar">setSizeMin</div> <div class="argumentColon">:</div> <div class="argumentVal">10</div></li>
+                        <li class="list-group-item"><div class="argumentVar">setSizeMax</div> <div class="argumentColon">:</div> <div class="argumentVal">INF</div></li>
+                        <li class="list-group-item"><div class="argumentVar">compare</div> <div class="argumentColon">:</div> <div class="argumentVal">paired</div></li>
+                        <li class="list-group-item"><div class="argumentVar">test.2d</div> <div class="argumentColon">:</div> <div class="argumentVal">False</div></li>
+                        <li class="list-group-item"><div class="argumentVar">rankTest</div> <div class="argumentColon">:</div> <div class="argumentVal">False</div></li>
+                        <li class="list-group-item"><div class="argumentVar">useFold</div> <div class="argumentColon">:</div> <div class="argumentVal">True</div></li>
+                        <li class="list-group-item"><div class="argumentVar">test</div> <div class="argumentColon">:</div> <div class="argumentVal">gs.tTest</div></li>
+                        <li class="list-group-item"><div class="argumentVar">do.pathview</div> <div class="argumentColon">:</div> <div class="argumentVal">False</div></li>
                     </ul>
                     <a href="/gageExample1">
                         <button type="button" class="btn btn-primary btn-lg GetStarted" data-toggle="modal">
@@ -370,18 +590,64 @@
                         </button>
                     </a>
                         </div>
+
+
+
+        </div>
+        <div class="col-md-12 content">
+
+            <h1 class="arg_content">Example 2: GAGE Analysis With Custom Gene Set ID's</h1>
+
+
+
+
+            <div class="col-sm-9">
+                <h3><p>Output Plots and heatmap snapshots:</p></h3>
                 <div class="col-sm-6">
 
-                    <img class="gageExampleImg" src="images/gage/hsa03060.geneData.heatmap-page-001.jpg" >
-                    <h3><b><u>Individual Heat Map</u></b></h3>
+                    <img class="gageExampleImg" src="/images/gage/chr16q22.geneData.heatmap-page-001.jpg" >
+                    <h4><b><u>Individual Heat Map</u></b></h4>
                 </div>
                 <div class="col-sm-6">
 
-                    <img class="gageExampleImg" src="images/gage/hsa03060.geneData-page-001.jpg" >
-                    <h3><b><u>Individual Scatter Plot</u></b></h3>
+                    <img class="gageExampleImg" src="images/gage/chr16q22.geneData-page-001.jpg" >
+                    <h4><b><u>Individual Scatter Plot</u></b></h4>
                 </div>
+            </div>
+            <div class="col-sm-3">
+                <h3><p> Arguments used in example analysis:</p>  </h3>
+                <ul class="list-group">
+                    <li class="list-group-item disabled">
+                        Applied Options
+                    </li>
+                    <li class="list-group-item"><div class="argumentVar">reference</div> <div class="argumentColon">:</div> <div class="argumentVal">1,3</div></li>
+                    <li class="list-group-item"><div class="argumentVar">sample</div><div class="argumentColon">:</div> <div class="argumentVal">2,4</div></li>
+                    <li class="list-group-item"><div class="argumentVar">filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="all/data/gse16873.symb.txt" target="_blank">gse16873.symb.txt</a></div></li>
+                    <li class="list-group-item"><div class="argumentVar">GeneSet filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="all/data/c1_all_v3_0_symbols.gmt" target="_blank">c1_all_v3_0_symbols</a></div></li>
+                    <li class="list-group-item"><div class="argumentVar">gene Set Category</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
+                    <li class="list-group-item"><div class="argumentVar">geneSet</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
+                    <li class="list-group-item"><div class="argumentVar">species</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
+                    <li class="list-group-item"><div class="argumentVar">cutoff</div> <div class="argumentColon">:</div> <div class="argumentVal">0.1</div></li>
+                    <li class="list-group-item"><div class="argumentVar">geneIdType</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
+                    <li class="list-group-item"><div class="argumentVar">setSizeMin</div> <div class="argumentColon">:</div> <div class="argumentVal">10</div></li>
+                    <li class="list-group-item"><div class="argumentVar">setSizeMax</div> <div class="argumentColon">:</div> <div class="argumentVal">INF</div></li>
+                    <li class="list-group-item"><div class="argumentVar">compare</div> <div class="argumentColon">:</div> <div class="argumentVal">paired</div></li>
+                    <li class="list-group-item"><div class="argumentVar">test.2d</div> <div class="argumentColon">:</div> <div class="argumentVal">False</div></li>
+                    <li class="list-group-item"><div class="argumentVar">rankTest</div> <div class="argumentColon">:</div> <div class="argumentVal">False</div></li>
+                    <li class="list-group-item"><div class="argumentVar">useFold</div> <div class="argumentColon">:</div> <div class="argumentVal">True</div></li>
+                    <li class="list-group-item"><div class="argumentVar">test</div> <div class="argumentColon">:</div> <div class="argumentVal">gs.tTest</div></li>
+                    <li class="list-group-item"><div class="argumentVar">do.pathview</div> <div class="argumentColon">:</div> <div class="argumentVal">False</div></li>
+                </ul>
+                <a href="/gageExample2">
+                    <button type="button" class="btn btn-primary btn-lg GetStarted" data-toggle="modal">
+                        Try It
+                    </button>
+                </a>
+            </div>
+
 
 
         </div>
     </div>
+
     @stop

@@ -1,0 +1,16 @@
+Info: Working in directory /var/www/Pathway/public/all/demo/5591afb35ed91
+Info: Writing image file hsa00640.multi.multi.pdf
+Info: Working in directory /var/www/Pathway/public/all/demo/5591afb35ed91
+Info: Writing image file hsa00051.multi.multi.pdf
+Info: Working in directory /var/www/Pathway/public/all/demo/5591afb35ed91
+Info: Writing image file hsa00053.multi.multi.pdf
+Info: Working in directory /var/www/Pathway/public/all/demo/5591afb35ed91
+Info: Writing image file hsa00250.multi.multi.pdf
+Warning messages:
+1: In .local(from, to, graph) :
+  edges replaced: ‘177|59’, ‘177|60’, ‘122|119’, ‘122|120’
+2: In .local(from, to, graph) :
+  edges replaced: ‘119|56’, ‘154|57’, ‘154|59’, ‘121|69’, ‘154|72’, ‘140|92’, ‘140|95’, ‘160|116’
+3: In .local(from, to, graph) : edges replaced: ‘39|35’
+4: In .local(from, to, graph) :
+  edges replaced: ‘21|28’, ‘21|37’, ‘21|40’, ‘21|42’, ‘17|42’, ‘20|54’, ‘20|56’, ‘53|56’, ‘21|63’, ‘18|84’, ‘147|149’

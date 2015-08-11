@@ -1,0 +1,277 @@
+<?xml version="1.0"?>
+<!DOCTYPE pathway SYSTEM "http://www.kegg.jp/kegg/xml/KGML_v0.7.1_.dtd">
+<!-- Creation date: Nov 18, 2013 14:13:46 +0900 (GMT+09:00) -->
+<pathway name="path:ssc05416" org="ssc" number="05416"
+         title="Viral myocarditis"
+         image="http://www.kegg.jp/kegg/pathway/ssc/ssc05416.png"
+         link="http://www.kegg.jp/kegg-bin/show_pathway?ssc05416">
+    <entry id="1" name="ssc:100240724" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100240724">
+        <graphics name="SGCD" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="609" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="3" name="path:ssc04260" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc04260">
+        <graphics name="Cardiac muscle contraction" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1052" y="423" width="118" height="34"/>
+    </entry>
+    <entry id="4" name="ssc:100623668" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100623668">
+        <graphics name="100623668" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="655" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="5" name="ssc:100135674" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100135674">
+        <graphics name="SGCB" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="746" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="6" name="ssc:100240723" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100240723">
+        <graphics name="SGCA" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="700" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="7" name="ssc:100620392" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100620392">
+        <graphics name="DAG1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="790" y="178" width="46" height="17"/>
+    </entry>
+    <entry id="8" name="ssc:100620392" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100620392">
+        <graphics name="DAG1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="791" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="10" name="path:ssc04512" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc04512">
+        <graphics name="ECM-receptor interaction" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="687" y="157" width="118" height="34"/>
+    </entry>
+    <entry id="11" name="ssc:497636" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:497636">
+        <graphics name="DMD" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="774" y="299" width="46" height="17"/>
+    </entry>
+    <entry id="13" name="ssc:100516495 ssc:100520826 ssc:449528" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100516495+ssc:100520826+ssc:449528">
+        <graphics name="EIF4G3..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="771" y="500" width="46" height="17"/>
+    </entry>
+    <entry id="14" name="ssc:397333" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:397333">
+        <graphics name="CAR, CXADR" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="413" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="15" name="ssc:396743" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:396743">
+        <graphics name="CD55, DAF" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="503" y="225" width="46" height="17"/>
+    </entry>
+    <entry id="16" name="path:ssc03050" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc03050">
+        <graphics name="Proteasome" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="704" y="592" width="118" height="25"/>
+    </entry>
+    <entry id="17" name="ssc:100738589" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100738589">
+        <graphics name="100738589" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="588" y="556" width="46" height="17"/>
+    </entry>
+    <entry id="18" name="path:ssc04612" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc04612">
+        <graphics name="Antigen processing and presentation" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="157" y="143" width="118" height="34"/>
+    </entry>
+    <entry id="19" name="ssc:397395" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:397395">
+        <graphics name="CD40, TNFRSF5" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="174" y="253" width="46" height="17"/>
+    </entry>
+    <entry id="20" name="ssc:100037921 ssc:100135040 ssc:100135049 ssc:100135050 ssc:100153386 ssc:100153387 ssc:100157996 ssc:445528" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100037921+ssc:100135040+ssc:100135049+ssc:100135050+ssc:100153386+ssc:100153387+ssc:100157996+ssc:445528">
+        <graphics name="SLA-DQB1, SLA-DQB, SLADQB..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="228" y="253" width="46" height="17"/>
+    </entry>
+    <entry id="21" name="ssc:397231" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:397231">
+        <graphics name="CD40LG, CD40L, TNFSF5" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="175" y="316" width="46" height="17"/>
+    </entry>
+    <entry id="22" name="ssc:100621559 ssc:100626606" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100621559+ssc:100626606">
+        <graphics name="100621559..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="231" y="316" width="46" height="17"/>
+    </entry>
+    <entry id="23" name="path:ssc04660" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc04660">
+        <graphics name="T cell receptor signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="179" y="380" width="118" height="34"/>
+    </entry>
+    <entry id="24" name="ssc:100621559 ssc:100626606" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100621559+ssc:100626606">
+        <graphics name="100621559..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="241" y="546" width="46" height="17"/>
+    </entry>
+    <entry id="25" name="ssc:100037288 ssc:100037293 ssc:100135029 ssc:100135031 ssc:100135036 ssc:100135037 ssc:100626428 ssc:396650" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100037288+ssc:100037293+ssc:100135029+ssc:100135031+ssc:100135036+ssc:100135037+ssc:100626428+ssc:396650">
+        <graphics name="SLA-3, SLA-1, SLA-7..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="353" y="547" width="46" height="17"/>
+    </entry>
+    <entry id="26" name="ssc:100515419 ssc:100738615" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100515419+ssc:100738615">
+        <graphics name="CD28..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="241" y="573" width="46" height="17"/>
+    </entry>
+    <entry id="27" name="ssc:397161 ssc:397441" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:397161+ssc:397441">
+        <graphics name="CD80, B7-1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="354" y="574" width="46" height="17"/>
+    </entry>
+    <entry id="28" name="ssc:595105" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:595105">
+        <graphics name="CASP8" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="530" y="648" width="46" height="17"/>
+    </entry>
+    <entry id="29" name="ssc:594852" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:594852">
+        <graphics name="BID" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="605" y="648" width="46" height="17"/>
+    </entry>
+    <entry id="30" name="ssc:100158196 ssc:100170131 ssc:100517742 ssc:100519295 ssc:100521823 ssc:100523020 ssc:100626234 ssc:100739590" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100158196+ssc:100170131+ssc:100517742+ssc:100519295+ssc:100521823+ssc:100523020+ssc:100626234+ssc:100739590">
+        <graphics name="100158196..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="814" y="647" width="46" height="17"/>
+    </entry>
+    <entry id="31" name="ssc:100518913" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100518913">
+        <graphics name="CASP9" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="895" y="647" width="46" height="17"/>
+    </entry>
+    <entry id="32" name="ssc:397244" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:397244">
+        <graphics name="CASP3" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="976" y="647" width="46" height="17"/>
+    </entry>
+    <entry id="33" name="ssc:396595" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:396595">
+        <graphics name="PRF1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="293" y="607" width="46" height="17"/>
+    </entry>
+    <entry id="34" name="ssc:396781" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:396781">
+        <graphics name="396781" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="291" y="762" width="46" height="17"/>
+    </entry>
+    <entry id="35" name="ssc:396781" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:396781">
+        <graphics name="396781" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="293" y="822" width="46" height="17"/>
+    </entry>
+    <entry id="36" name="ssc:396943 ssc:733681" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:396943+ssc:733681">
+        <graphics name="ITGB2, CD18..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="239" y="637" width="46" height="17"/>
+    </entry>
+    <entry id="37" name="ssc:396750" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:396750">
+        <graphics name="ICAM-1, ICAM1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="353" y="638" width="46" height="17"/>
+    </entry>
+    <entry id="38" name="path:ssc04210" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc04210">
+        <graphics name="Apoptosis" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="896" y="677" width="118" height="25"/>
+    </entry>
+    <entry id="39" name="path:ssc04110" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc04110">
+        <graphics name="Cell cycle" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="974" y="591" width="118" height="25"/>
+    </entry>
+    <entry id="40" name="ssc:397653 ssc:414396" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:397653+ssc:414396">
+        <graphics name="ACTB..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="763" y="345" width="46" height="17"/>
+    </entry>
+    <entry id="41" name="ssc:100736765 ssc:396860" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100736765+ssc:396860">
+        <graphics name="MYH6..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1171" y="281" width="46" height="17"/>
+    </entry>
+    <entry id="42" name="path:ssc05414" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc05414">
+        <graphics name="Dilated cardiomyopathy" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1255" y="568" width="118" height="34"/>
+    </entry>
+    <entry id="43" name="ssc:791125" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:791125">
+        <graphics name="FYN, PKC" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="513" y="283" width="46" height="17"/>
+    </entry>
+    <entry id="44" name="ssc:100524544 ssc:100627019" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100524544+ssc:100627019">
+        <graphics name="ABL1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="570" y="283" width="46" height="17"/>
+    </entry>
+    <entry id="45" name="ssc:404693" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:404693">
+        <graphics name="CAV1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="512" y="323" width="46" height="17"/>
+    </entry>
+    <entry id="46" name="ssc:100621675 ssc:100627149" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ssc:100621675+ssc:100627149">
+        <graphics name="RAC2..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="591" y="324" width="46" height="17"/>
+    </entry>
+    <relation entry1="7" entry2="8" type="PPrel">
+        <subtype name="binding/association" value="---"/>
+    </relation>
+    <relation entry1="8" entry2="11" type="PPrel">
+        <subtype name="binding/association" value="---"/>
+        <subtype name="missing interaction" value="-/-"/>
+    </relation>
+    <relation entry1="11" entry2="40" type="PPrel">
+        <subtype name="binding/association" value="---"/>
+        <subtype name="missing interaction" value="-/-"/>
+    </relation>
+    <relation entry1="21" entry2="19" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="20" entry2="22" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="25" entry2="24" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="27" entry2="26" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="28" entry2="29" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="30" entry2="31" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="31" entry2="32" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="29" entry2="30" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="indirect effect" value="..&gt;"/>
+    </relation>
+    <relation entry1="15" entry2="43" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="indirect effect" value="..&gt;"/>
+    </relation>
+    <relation entry1="15" entry2="44" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="indirect effect" value="..&gt;"/>
+    </relation>
+    <relation entry1="44" entry2="46" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="43" entry2="45" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="phosphorylation" value="+p"/>
+    </relation>
+    <relation entry1="37" entry2="36" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+</pathway>

@@ -1,0 +1,342 @@
+<?xml version="1.0"?>
+<!DOCTYPE pathway SYSTEM "http://www.kegg.jp/kegg/xml/KGML_v0.7.1_.dtd">
+<!-- Creation date: Mar 7, 2013 10:42:03 +0900 (GMT+09:00) -->
+<pathway name="path:pfa05144" org="pfa" number="05144"
+         title="Malaria"
+         image="http://www.kegg.jp/kegg/pathway/pfa/pfa05144.png"
+         link="http://www.kegg.jp/kegg-bin/show_pathway?pfa05144">
+    <entry id="1" name="ko:K06490" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06490">
+        <graphics name="K06490" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="913" width="46" height="17"/>
+    </entry>
+    <entry id="2" name="pfa:MAL13P1.1 pfa:MAL13P1.356 pfa:MAL7P1.187 pfa:MAL7P1.212 pfa:MAL7P1.50 pfa:MAL7P1.55 pfa:MAL7P1.56 pfa:MAL8P1.220 pfa:PF07_0048 pfa:PF07_0049 pfa:PF07_0050 pfa:PF07_0051 pfa:PF08_0103 pfa:PF08_0106 pfa:PF08_0107 pfa:PF08_0140 pfa:PF08_0141 pfa:PF08_0142 pfa:PF10_0001 pfa:PF10_0406 pfa:PF11_0007 pfa:PF11_0008 pfa:PF11_0521 pfa:PF13_0003 pfa:PFA_0005w pfa:PFA_0765c pfa:PFB0010w pfa:PFB1055c pfa:PFC0005w pfa:PFD0005w pfa:PFD0020c pfa:PFD0615c pfa:PFD0625c pfa:PFD0630c pfa:PFD0635c pfa:PFD0995c pfa:PFD1000c pfa:PFD1005c pfa:PFD1015c pfa:PFD1235w pfa:PFD1245c pfa:PFE0005w pfa:PFE1640w pfa:PFF0010w pfa:PFF0845c pfa:PFF1580c pfa:PFF1595c pfa:PFI0005w pfa:PFI1820w pfa:PFI1830c pfa:PFL0005w pfa:PFL0020w pfa:PFL0030c pfa:PFL0935c pfa:PFL1950w pfa:PFL1955w pfa:PFL1960w pfa:PFL1970w pfa:PFL2665c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.1+pfa:MAL13P1.356+pfa:MAL7P1.187+pfa:MAL7P1.212+pfa:MAL7P1.50+pfa:MAL7P1.55+pfa:MAL7P1.56+pfa:MAL8P1.220+pfa:PF07_0048+pfa:PF07_0049+pfa:PF07_0050+pfa:PF07_0051+pfa:PF08_0103+pfa:PF08_0106+pfa:PF08_0107+pfa:PF08_0140+pfa:PF08_0141+pfa:PF08_0142+pfa:PF10_0001+pfa:PF10_0406+pfa:PF11_0007+pfa:PF11_0008+pfa:PF11_0521+pfa:PF13_0003+pfa:PFA_0005w+pfa:PFA_0765c+pfa:PFB0010w+pfa:PFB1055c+pfa:PFC0005w+pfa:PFD0005w+pfa:PFD0020c+pfa:PFD0615c+pfa:PFD0625c+pfa:PFD0630c+pfa:PFD0635c+pfa:PFD0995c+pfa:PFD1000c+pfa:PFD1005c+pfa:PFD1015c+pfa:PFD1235w+pfa:PFD1245c+pfa:PFE0005w+pfa:PFE1640w+pfa:PFF0010w+pfa:PFF0845c+pfa:PFF1580c+pfa:PFF1595c+pfa:PFI0005w+pfa:PFI1820w+pfa:PFI1830c+pfa:PFL0005w+pfa:PFL0020w+pfa:PFL0030c+pfa:PFL0935c+pfa:PFL1950w+pfa:PFL1955w+pfa:PFL1960w+pfa:PFL1970w+pfa:PFL2665c">
+        <graphics name="VAR..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1205" y="709" width="46" height="17"/>
+    </entry>
+    <entry id="3" name="pfa:MAL13P1.212" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.212">
+        <graphics name="MAL13P1.212" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="250" y="281" width="46" height="17"/>
+    </entry>
+    <entry id="4" name="pfa:PFD0430c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PFD0430c">
+        <graphics name="PFD0430c" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="250" y="300" width="46" height="17"/>
+    </entry>
+    <entry id="5" name="pfa:PFL0800c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PFL0800c">
+        <graphics name="CelTOS" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="250" y="319" width="46" height="17"/>
+    </entry>
+    <entry id="6" name="pfa:PFC0210c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PFC0210c">
+        <graphics name="PFC0210c" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="442" y="376" width="46" height="17"/>
+    </entry>
+    <entry id="7" name="pfa:PF13_0201" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PF13_0201">
+        <graphics name="TRAP, SSP-2, SSP2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="442" y="395" width="46" height="17"/>
+    </entry>
+    <entry id="8" name="ko:K05460" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05460">
+        <graphics name="K05460" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="479" y="442" width="46" height="17"/>
+    </entry>
+    <entry id="9" name="ko:K06257 ko:K16336" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06257+K16336">
+        <graphics name="K06257..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="540" y="376" width="46" height="17"/>
+    </entry>
+    <entry id="10" name="ko:K04550" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K04550">
+        <graphics name="K04550" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="540" y="395" width="46" height="17"/>
+    </entry>
+    <entry id="11" name="ko:K06508" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06508">
+        <graphics name="K06508" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="540" y="414" width="46" height="17"/>
+    </entry>
+    <entry id="12" name="ko:K05099" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05099">
+        <graphics name="K05099" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="540" y="433" width="46" height="17"/>
+    </entry>
+    <entry id="13" name="pfa:PF10_0345 pfa:PF10_0346 pfa:PFB0300c pfa:PFB0305c pfa:PFB0310c pfa:PFE0120c pfa:PFI1475w" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PF10_0345+pfa:PF10_0346+pfa:PFB0300c+pfa:PFB0305c+pfa:PFB0310c+pfa:PFE0120c+pfa:PFI1475w">
+        <graphics name="SPAM, MSP-3..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="598" y="613" width="46" height="17"/>
+    </entry>
+    <entry id="14" name="pfa:PF11_0344" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PF11_0344">
+        <graphics name="AMA1, AMA-1, Pf83, RMA-1, RMA1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="598" y="632" width="46" height="17"/>
+    </entry>
+    <entry id="15" name="ko:K13846" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K13846">
+        <graphics name="K13846" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="598" y="651" width="46" height="17"/>
+    </entry>
+    <entry id="16" name="pfa:MAL7P1.176" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL7P1.176">
+        <graphics name="eba-175, eba_175, eba175" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="598" y="670" width="46" height="17"/>
+    </entry>
+    <entry id="17" name="pfa:MAL13P1.60" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.60">
+        <graphics name="eba-140, baebl, eba_140, eba140, ebp_2, ebp-2, ebp2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="598" y="689" width="46" height="17"/>
+    </entry>
+    <entry id="18" name="pfa:PF13_0198 pfa:PFD0110w pfa:PFD1150c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:PF13_0198+pfa:PFD0110w+pfa:PFD1150c">
+        <graphics name="PfRh2a..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="598" y="708" width="46" height="17"/>
+    </entry>
+    <entry id="19" name="ko:K06574" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06574">
+        <graphics name="K06574" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="721" y="651" width="46" height="17"/>
+    </entry>
+    <entry id="20" name="ko:K06575" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06575">
+        <graphics name="K06575" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="721" y="670" width="46" height="17"/>
+    </entry>
+    <entry id="21" name="ko:K06576" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06576">
+        <graphics name="K06576" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="721" y="689" width="46" height="17"/>
+    </entry>
+    <entry id="22" name="ko:K06527" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06527">
+        <graphics name="K06527" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="724" width="46" height="17"/>
+    </entry>
+    <entry id="23" name="ko:K06259" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06259">
+        <graphics name="K06259" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1230" y="933" width="46" height="17"/>
+    </entry>
+    <entry id="24" name="ko:K06471" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06471">
+        <graphics name="K06471" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="665" width="46" height="17"/>
+    </entry>
+    <entry id="25" name="ko:K13822 ko:K13823" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K13822+K13823">
+        <graphics name="K13822..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="825" y="262" width="46" height="17"/>
+    </entry>
+    <entry id="26" name="ko:K10161" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K10161">
+        <graphics name="K10161" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="956" y="262" width="46" height="17"/>
+    </entry>
+    <entry id="27" name="ko:K10159 ko:K10160" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K10159+K10160">
+        <graphics name="K10159..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="956" y="294" width="46" height="17"/>
+    </entry>
+    <entry id="28" name="ko:K04729" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K04729">
+        <graphics name="K04729" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1013" y="278" width="46" height="17"/>
+    </entry>
+    <entry id="29" name="ko:K05443" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05443">
+        <graphics name="K05443" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="217" width="46" height="17"/>
+    </entry>
+    <entry id="30" name="ko:K04687" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K04687">
+        <graphics name="K04687" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="416" width="46" height="17"/>
+    </entry>
+    <entry id="31" name="ko:K05405" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05405">
+        <graphics name="K05405" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="297" width="46" height="17"/>
+    </entry>
+    <entry id="32" name="ko:K14624" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K14624">
+        <graphics name="K14624" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="316" width="46" height="17"/>
+    </entry>
+    <entry id="33" name="ko:K03156" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K03156">
+        <graphics name="K03156" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="385" width="46" height="17"/>
+    </entry>
+    <entry id="34" name="ko:K05406" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05406">
+        <graphics name="K05406" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1031" y="349" width="46" height="17"/>
+    </entry>
+    <entry id="35" name="ko:K05482" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05482">
+        <graphics name="K05482" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1031" y="368" width="46" height="17"/>
+    </entry>
+    <entry id="36" name="cpd:C00533" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C00533">
+        <graphics name="C00533" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="1542" y="539" width="8" height="8"/>
+    </entry>
+    <entry id="37" name="pfa:MAL13P1.1 pfa:MAL13P1.356 pfa:MAL7P1.187 pfa:MAL7P1.212 pfa:MAL7P1.50 pfa:MAL7P1.55 pfa:MAL7P1.56 pfa:MAL8P1.220 pfa:PF07_0048 pfa:PF07_0049 pfa:PF07_0050 pfa:PF07_0051 pfa:PF08_0103 pfa:PF08_0106 pfa:PF08_0107 pfa:PF08_0140 pfa:PF08_0141 pfa:PF08_0142 pfa:PF10_0001 pfa:PF10_0406 pfa:PF11_0007 pfa:PF11_0008 pfa:PF11_0521 pfa:PF13_0003 pfa:PFA_0005w pfa:PFA_0765c pfa:PFB0010w pfa:PFB1055c pfa:PFC0005w pfa:PFD0005w pfa:PFD0020c pfa:PFD0615c pfa:PFD0625c pfa:PFD0630c pfa:PFD0635c pfa:PFD0995c pfa:PFD1000c pfa:PFD1005c pfa:PFD1015c pfa:PFD1235w pfa:PFD1245c pfa:PFE0005w pfa:PFE1640w pfa:PFF0010w pfa:PFF0845c pfa:PFF1580c pfa:PFF1595c pfa:PFI0005w pfa:PFI1820w pfa:PFI1830c pfa:PFL0005w pfa:PFL0020w pfa:PFL0030c pfa:PFL0935c pfa:PFL1950w pfa:PFL1955w pfa:PFL1960w pfa:PFL1970w pfa:PFL2665c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.1+pfa:MAL13P1.356+pfa:MAL7P1.187+pfa:MAL7P1.212+pfa:MAL7P1.50+pfa:MAL7P1.55+pfa:MAL7P1.56+pfa:MAL8P1.220+pfa:PF07_0048+pfa:PF07_0049+pfa:PF07_0050+pfa:PF07_0051+pfa:PF08_0103+pfa:PF08_0106+pfa:PF08_0107+pfa:PF08_0140+pfa:PF08_0141+pfa:PF08_0142+pfa:PF10_0001+pfa:PF10_0406+pfa:PF11_0007+pfa:PF11_0008+pfa:PF11_0521+pfa:PF13_0003+pfa:PFA_0005w+pfa:PFA_0765c+pfa:PFB0010w+pfa:PFB1055c+pfa:PFC0005w+pfa:PFD0005w+pfa:PFD0020c+pfa:PFD0615c+pfa:PFD0625c+pfa:PFD0630c+pfa:PFD0635c+pfa:PFD0995c+pfa:PFD1000c+pfa:PFD1005c+pfa:PFD1015c+pfa:PFD1235w+pfa:PFD1245c+pfa:PFE0005w+pfa:PFE1640w+pfa:PFF0010w+pfa:PFF0845c+pfa:PFF1580c+pfa:PFF1595c+pfa:PFI0005w+pfa:PFI1820w+pfa:PFI1830c+pfa:PFL0005w+pfa:PFL0020w+pfa:PFL0030c+pfa:PFL0935c+pfa:PFL1950w+pfa:PFL1955w+pfa:PFL1960w+pfa:PFL1970w+pfa:PFL2665c">
+        <graphics name="VAR..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="825" y="334" width="46" height="17"/>
+    </entry>
+    <entry id="38" name="pfa:MAL13P1.2 pfa:MAL13P1.4 pfa:MAL13P1.535 pfa:MAL7P1.184 pfa:MAL7P1.185 pfa:MAL7P1.217 pfa:MAL7P1.57 pfa:PF07_0003 pfa:PF07_0132 pfa:PF07_0134 pfa:PF07_0136 pfa:PF07_0138 pfa:PF08_0104 pfa:PF08_0105 pfa:PF08_0138 pfa:PF08_0139 pfa:PF10_0002 pfa:PF10_0003 pfa:PF10_0004 pfa:PF10_0005 pfa:PF10_0006 pfa:PF10_0393 pfa:PF10_0394 pfa:PF10_0396 pfa:PF10_0397 pfa:PF10_0398 pfa:PF10_0399 pfa:PF10_0400 pfa:PF10_0401 pfa:PF10_0402 pfa:PF10_0403 pfa:PF10_0404 pfa:PF10_0405 pfa:PF11_0009 pfa:PF11_0010 pfa:PF11_0011 pfa:PF11_0020 pfa:PF11_0021 pfa:PF11_0515 pfa:PF11_0517 pfa:PF11_0519 pfa:PF11_0520 pfa:PF11_0529 pfa:PF13_0004 pfa:PF13_0005 pfa:PF13_0006 pfa:PF14_0002 pfa:PF14_0003 pfa:PF14_0004 pfa:PF14_0005 pfa:PF14_0006 pfa:PF14_0008 pfa:PF14_0766 pfa:PF14_0768 pfa:PF14_0769 pfa:PF14_0770 pfa:PF14_0772 pfa:PFA_0040w pfa:PFB0015c pfa:PFB0030c pfa:PFB0035c pfa:PFB0040c pfa:PFB0055c pfa:PFB0060w pfa:PFB1005w pfa:PFB1010w pfa:PFB1015w pfa:PFB1035w pfa:PFB1040w pfa:PFB1050w pfa:PFC0010c pfa:PFD0015c pfa:PFD0025w pfa:PFD0030c pfa:PFD0040c pfa:PFD0045c pfa:PFD0055w pfa:PFD0060w pfa:PFD0070c pfa:PFD0640c pfa:PFD0645w pfa:PFD1010w pfa:PFD1020c pfa:PFD1230c pfa:PFD1240w pfa:PFE0020c pfa:PFE0025c pfa:PFE1630w pfa:PFF0015c pfa:PFF0025w pfa:PFF0035c pfa:PFF0855c pfa:PFF1545w pfa:PFF1555w pfa:PFF1560c pfa:PFF1565c pfa:PFF1570w pfa:PFF1575w pfa:PFF1590w pfa:PFI0010c pfa:PFI0015c pfa:PFI0020w pfa:PFI0025c pfa:PFI0030c pfa:PFI0035c pfa:PFI0050c pfa:PFI0055c pfa:PFI0065w pfa:PFI0070w pfa:PFI0075w pfa:PFI1805w pfa:PFI1810w pfa:PFI1815c pfa:PFI1825w pfa:PFL0010c pfa:PFL0015c pfa:PFL0025c pfa:PFL2585c pfa:PFL2605w pfa:PFL2615w pfa:PFL2625w pfa:PFL2630w pfa:PFL2640c pfa:PFL2645c pfa:PFL2655w pfa:PFL2660w" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.2+pfa:MAL13P1.4+pfa:MAL13P1.535+pfa:MAL7P1.184+pfa:MAL7P1.185+pfa:MAL7P1.217+pfa:MAL7P1.57+pfa:PF07_0003+pfa:PF07_0132+pfa:PF07_0134+pfa:PF07_0136+pfa:PF07_0138+pfa:PF08_0104+pfa:PF08_0105+pfa:PF08_0138+pfa:PF08_0139+pfa:PF10_0002+pfa:PF10_0003+pfa:PF10_0004+pfa:PF10_0005+pfa:PF10_0006+pfa:PF10_0393+pfa:PF10_0394+pfa:PF10_0396+pfa:PF10_0397+pfa:PF10_0398+pfa:PF10_0399+pfa:PF10_0400+pfa:PF10_0401+pfa:PF10_0402+pfa:PF10_0403+pfa:PF10_0404+pfa:PF10_0405+pfa:PF11_0009+pfa:PF11_0010+pfa:PF11_0011+pfa:PF11_0020+pfa:PF11_0021+pfa:PF11_0515+pfa:PF11_0517+pfa:PF11_0519+pfa:PF11_0520+pfa:PF11_0529+pfa:PF13_0004+pfa:PF13_0005+pfa:PF13_0006+pfa:PF14_0002+pfa:PF14_0003+pfa:PF14_0004+pfa:PF14_0005+pfa:PF14_0006+pfa:PF14_0008+pfa:PF14_0766+pfa:PF14_0768+pfa:PF14_0769+pfa:PF14_0770+pfa:PF14_0772+pfa:PFA_0040w+pfa:PFB0015c+pfa:PFB0030c+pfa:PFB0035c+pfa:PFB0040c+pfa:PFB0055c+pfa:PFB0060w+pfa:PFB1005w+pfa:PFB1010w+pfa:PFB1015w+pfa:PFB1035w+pfa:PFB1040w+pfa:PFB1050w+pfa:PFC0010c+pfa:PFD0015c+pfa:PFD0025w+pfa:PFD0030c+pfa:PFD0040c+pfa:PFD0045c+pfa:PFD0055w+pfa:PFD0060w+pfa:PFD0070c+pfa:PFD0640c+pfa:PFD0645w+pfa:PFD1010w+pfa:PFD1020c+pfa:PFD1230c+pfa:PFD1240w+pfa:PFE0020c+pfa:PFE0025c+pfa:PFE1630w+pfa:PFF0015c+pfa:PFF0025w+pfa:PFF0035c+pfa:PFF0855c+pfa:PFF1545w+pfa:PFF1555w+pfa:PFF1560c+pfa:PFF1565c+pfa:PFF1570w+pfa:PFF1575w+pfa:PFF1590w+pfa:PFI0010c+pfa:PFI0015c+pfa:PFI0020w+pfa:PFI0025c+pfa:PFI0030c+pfa:PFI0035c+pfa:PFI0050c+pfa:PFI0055c+pfa:PFI0065w+pfa:PFI0070w+pfa:PFI0075w+pfa:PFI1805w+pfa:PFI1810w+pfa:PFI1815c+pfa:PFI1825w+pfa:PFL0010c+pfa:PFL0015c+pfa:PFL0025c+pfa:PFL2585c+pfa:PFL2605w+pfa:PFL2615w+pfa:PFL2625w+pfa:PFL2630w+pfa:PFL2640c+pfa:PFL2645c+pfa:PFL2655w+pfa:PFL2660w">
+        <graphics name="RIF..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="825" y="353" width="46" height="17"/>
+    </entry>
+    <entry id="39" name="pfa:MAL13P1.505 pfa:MAL13P1.7 pfa:MAL7P1.218 pfa:PF07_0130 pfa:PF10_0395 pfa:PF11_0013 pfa:PF11_0516 pfa:PF14_0007 pfa:PF14_0767 pfa:PF14_0771 pfa:PFA_0750w pfa:PFB0025c pfa:PFB0065w pfa:PFB1020w pfa:PFC0025c pfa:PFC1105w pfa:PFD0035c pfa:PFD0125c pfa:PFD1220c pfa:PFF0850c pfa:PFF1550w pfa:PFI0045c pfa:PFI0080w pfa:PFL2610w pfa:PFL2620w pfa:PFL2635w" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.505+pfa:MAL13P1.7+pfa:MAL7P1.218+pfa:PF07_0130+pfa:PF10_0395+pfa:PF11_0013+pfa:PF11_0516+pfa:PF14_0007+pfa:PF14_0767+pfa:PF14_0771+pfa:PFA_0750w+pfa:PFB0025c+pfa:PFB0065w+pfa:PFB1020w+pfa:PFC0025c+pfa:PFC1105w+pfa:PFD0035c+pfa:PFD0125c+pfa:PFD1220c+pfa:PFF0850c+pfa:PFF1550w+pfa:PFI0045c+pfa:PFI0080w+pfa:PFL2610w+pfa:PFL2620w+pfa:PFL2635w">
+        <graphics name="stevor..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="825" y="372" width="46" height="17"/>
+    </entry>
+    <entry id="40" name="ko:K04011" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K04011">
+        <graphics name="K04011" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1073" y="874" width="46" height="17"/>
+    </entry>
+    <entry id="41" name="cpd:C00634" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C00634">
+        <graphics name="C00634" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="1437" y="810" width="8" height="8"/>
+    </entry>
+    <entry id="42" name="ko:K06259" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06259">
+        <graphics name="K06259" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1073" y="854" width="46" height="17"/>
+    </entry>
+    <entry id="43" name="ko:K06259" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06259">
+        <graphics name="K06259" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="684" width="46" height="17"/>
+    </entry>
+    <entry id="44" name="ko:K05718 ko:K06464" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05718+K06464">
+        <graphics name="K05718..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1307" y="942" width="46" height="17"/>
+    </entry>
+    <entry id="45" name="path:map04620" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?map04620">
+        <graphics name="Toll-like receptor signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="952" y="206" width="97" height="34"/>
+    </entry>
+    <entry id="46" name="ko:K03161" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K03161">
+        <graphics name="K03161" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1307" y="961" width="46" height="17"/>
+    </entry>
+    <entry id="47" name="ko:K03160" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K03160">
+        <graphics name="K03160" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="961" width="46" height="17"/>
+    </entry>
+    <entry id="48" name="ko:K05718 ko:K06464" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05718+K06464">
+        <graphics name="K05718..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1307" y="1048" width="46" height="17"/>
+    </entry>
+    <entry id="49" name="path:map04610" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?map04610">
+        <graphics name="Complement and coagulation cascades" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1153" y="861" width="80" height="34"/>
+    </entry>
+    <entry id="50" name="ko:K16857 ko:K04659" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K16857+K04659">
+        <graphics name="K16857..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="743" width="46" height="17"/>
+    </entry>
+    <entry id="51" name="ko:K06494" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06494">
+        <graphics name="K06494" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1423" y="762" width="46" height="17"/>
+    </entry>
+    <entry id="52" name="pfa:MAL13P1.1 pfa:MAL13P1.356 pfa:MAL7P1.187 pfa:MAL7P1.212 pfa:MAL7P1.50 pfa:MAL7P1.55 pfa:MAL7P1.56 pfa:MAL8P1.220 pfa:PF07_0048 pfa:PF07_0049 pfa:PF07_0050 pfa:PF07_0051 pfa:PF08_0103 pfa:PF08_0106 pfa:PF08_0107 pfa:PF08_0140 pfa:PF08_0141 pfa:PF08_0142 pfa:PF10_0001 pfa:PF10_0406 pfa:PF11_0007 pfa:PF11_0008 pfa:PF11_0521 pfa:PF13_0003 pfa:PFA_0005w pfa:PFA_0765c pfa:PFB0010w pfa:PFB1055c pfa:PFC0005w pfa:PFD0005w pfa:PFD0020c pfa:PFD0615c pfa:PFD0625c pfa:PFD0630c pfa:PFD0635c pfa:PFD0995c pfa:PFD1000c pfa:PFD1005c pfa:PFD1015c pfa:PFD1235w pfa:PFD1245c pfa:PFE0005w pfa:PFE1640w pfa:PFF0010w pfa:PFF0845c pfa:PFF1580c pfa:PFF1595c pfa:PFI0005w pfa:PFI1820w pfa:PFI1830c pfa:PFL0005w pfa:PFL0020w pfa:PFL0030c pfa:PFL0935c pfa:PFL1950w pfa:PFL1955w pfa:PFL1960w pfa:PFL1970w pfa:PFL2665c" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa:MAL13P1.1+pfa:MAL13P1.356+pfa:MAL7P1.187+pfa:MAL7P1.212+pfa:MAL7P1.50+pfa:MAL7P1.55+pfa:MAL7P1.56+pfa:MAL8P1.220+pfa:PF07_0048+pfa:PF07_0049+pfa:PF07_0050+pfa:PF07_0051+pfa:PF08_0103+pfa:PF08_0106+pfa:PF08_0107+pfa:PF08_0140+pfa:PF08_0141+pfa:PF08_0142+pfa:PF10_0001+pfa:PF10_0406+pfa:PF11_0007+pfa:PF11_0008+pfa:PF11_0521+pfa:PF13_0003+pfa:PFA_0005w+pfa:PFA_0765c+pfa:PFB0010w+pfa:PFB1055c+pfa:PFC0005w+pfa:PFD0005w+pfa:PFD0020c+pfa:PFD0615c+pfa:PFD0625c+pfa:PFD0630c+pfa:PFD0635c+pfa:PFD0995c+pfa:PFD1000c+pfa:PFD1005c+pfa:PFD1015c+pfa:PFD1235w+pfa:PFD1245c+pfa:PFE0005w+pfa:PFE1640w+pfa:PFF0010w+pfa:PFF0845c+pfa:PFF1580c+pfa:PFF1595c+pfa:PFI0005w+pfa:PFI1820w+pfa:PFI1830c+pfa:PFL0005w+pfa:PFL0020w+pfa:PFL0030c+pfa:PFL0935c+pfa:PFL1950w+pfa:PFL1955w+pfa:PFL1960w+pfa:PFL1970w+pfa:PFL2665c">
+        <graphics name="VAR..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1150" y="750" width="46" height="17"/>
+    </entry>
+    <entry id="53" name="gl:G10505" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?G10505">
+        <graphics name="G10505" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="1437" y="827" width="8" height="8"/>
+    </entry>
+    <entry id="54" name="ko:K13375 ko:K13376 ko:K13377" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K13375+K13376+K13377">
+        <graphics name="K13375..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="236" width="46" height="17"/>
+    </entry>
+    <entry id="55" name="ko:K04519" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K04519">
+        <graphics name="K04519" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="365" width="46" height="17"/>
+    </entry>
+    <entry id="56" name="ko:K05423" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K05423">
+        <graphics name="K05423" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="335" width="46" height="17"/>
+    </entry>
+    <entry id="57" name="ko:K10030" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K10030">
+        <graphics name="K10030" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1189" y="278" width="46" height="17"/>
+    </entry>
+    <entry id="58" name="ko:K06543 ko:K06728" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06543+K06728">
+        <graphics name="K06543..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1016" y="441" width="46" height="17"/>
+    </entry>
+    <entry id="59" name="ko:K10784 ko:K10785" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K10784+K10785">
+        <graphics name="K10784..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1016" y="588" width="46" height="17"/>
+    </entry>
+    <entry id="60" name="ko:K06543 ko:K06728" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06543+K06728">
+        <graphics name="K06543..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1016" y="568" width="46" height="17"/>
+    </entry>
+    <entry id="61" name="gl:G00054 gl:G00052" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?G00054+G00052">
+        <graphics name="G00054..." fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="1066" y="832" width="8" height="8"/>
+    </entry>
+    <entry id="62" name="ko:K06496" type="ortholog"
+        link="http://www.kegg.jp/dbget-bin/www_bget?K06496">
+        <graphics name="K06496" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="rectangle" x="1307" y="980" width="46" height="17"/>
+    </entry>
+    <entry id="63" name="path:map04210" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?map04210">
+        <graphics name="Apoptosis" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1536" y="900" width="80" height="25"/>
+    </entry>
+    <entry id="64" name="path:map04514" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?map04514">
+        <graphics name="Cell adhesion molecules (CAMs)" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1565" y="711" width="144" height="25"/>
+    </entry>
+    <entry id="65" name="path:pfa05144" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?pfa05144">
+        <graphics name="TITLE:Malaria" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="86" y="58" width="92" height="25"/>
+    </entry>
+    <relation entry1="52" entry2="61" type="PCrel">
+        <subtype name="binding/association" value="---"/>
+    </relation>
+    <relation entry1="2" entry2="41" type="PCrel">
+        <subtype name="binding/association" value="---"/>
+    </relation>
+    <relation entry1="2" entry2="53" type="PCrel">
+        <subtype name="binding/association" value="---"/>
+    </relation>
+</pathway>

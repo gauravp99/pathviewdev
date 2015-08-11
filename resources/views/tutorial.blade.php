@@ -499,15 +499,13 @@
                 </div>
                 <div class="col-sm-4">
                     <ul class="list-group">
-                        <li class="list-group-item disabled">
-                            Applied Options
-                        </li>
-                        <li class="list-group-item">Pathway ID : 00640-Propanoate metabolism</li>
-                        <li class="list-group-item">Species : hsa</li>
-                        <li class="list-group-item">Kegg Native : TRUE</li>
-                        <li class="list-group-item">Same Layer : TRUE</li>
-                        <li class="list-group-item">Multi State : TRUE</li>
-                        <li class="list-group-item">Match Data : FALSE</li>
+                        <li class="list-group-item disabled">Applied Options</li>
+                        <li class="list-group-item"><div class="pathviewargVar">Pathway ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal"> 00640-Propanoate metabolism</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Species</div><div class="pathviewargColon">:</div><div class="pathviewargVal">hsa</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Kegg Native</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Same Layer</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Multi State</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Match Data</div><div class="pathviewargColon">:</div><div class="pathviewargVal">FALSE</div></li>
                     </ul>
                     <a href="/example1">
                         <button type="button" class="btn btn-primary btn-lg GetStarted  " data-toggle="modal">
@@ -546,13 +544,13 @@
                         <a class="list-group-item disabled">
                             Applied Arguments
                         </a>
-                        <li class="list-group-item">Pathway ID: 00640-Propanoate metabolism</li>
-                        <li class="list-group-item">Species: hsa</li>
-                        <li class="list-group-item">Kegg Native: FALSE</li>
-                        <li class="list-group-item">Same Layer: TRUE</li>
-                        <li class="list-group-item">Multi State: TRUE</li>
-                        <li class="list-group-item">Match Data: FALSE</li>
-                        <li class="list-group-item">Gene Limit: -1(min),2(max)</li>
+                        <li class="list-group-item"><div class="pathviewargVar">Pathway ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">00640-Propanoate metabolism</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Species</div><div class="pathviewargColon">:</div><div class="pathviewargVal">hsa</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Kegg Native</div><div class="pathviewargColon">:</div><div class="pathviewargVal">FALSE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Same Layer</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Multi State</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Match Data</div><div class="pathviewargColon">:</div><div class="pathviewargVal">FALSE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Gene Limit</div><div class="pathviewargColon">:</div><div class="pathviewargVal">-1(min),2(max)</div></li>
 
                     </ul>
                     <a href="/example2">
@@ -587,14 +585,14 @@
                         <a class="list-group-item disabled">
                             Applied Arguments
                         </a>
-                        <li class="list-group-item">Pathway ID: 00640-Propanoate metabolism</li>
-                        <li class="list-group-item">Species: hsa</li>
-                        <li class="list-group-item">Gene ID: ENSEMBLPROT</li>
-                        <li class="list-group-item">Compound ID: CAS Registry Number</li>
-                        <li class="list-group-item">Kegg Native: TRUE</li>
-                        <li class="list-group-item">Same Layer: TRUE</li>
-                        <li class="list-group-item">Limit Gene: 3; Compound: 3</li>
-                        <li class="list-group-item">Bins Gene: 6; Compound: 6</li>
+                        <li class="list-group-item"><div class="pathviewargVar">Pathway ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">00640-Propanoate metabolism</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Species</div><div class="pathviewargColon">:</div><div class="pathviewargVal">hsa</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Gene ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">ENSEMBLPROT</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Compound ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">CAS Registry Number</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Kegg Native</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Same Layer</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Limit </div><div class="pathviewargColon">:</div><div class="pathviewargVal">Gene:3; Compound: 3</div></li>
+                        <li class="list-group-item"><div class="pathviewargVar">Bins </div><div class="pathviewargColon">:</div><div class="pathviewargVal">Gene:6; Compound: 6</div></li>
 
                     </ul>
                     <a href="/example3">
