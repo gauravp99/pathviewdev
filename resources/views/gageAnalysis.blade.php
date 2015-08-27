@@ -1,5 +1,26 @@
-
-
+<div class="stepsdiv" id="species-div">
+    <div class="col-sm-12">
+        <div class="col-sm-5">
+            <a href="gageTutorial#species" onclick="window.open('gageTutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways. Auto suggestions are provided."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+            </a>
+            {!!form::label('species','Species:') !!}
+        </div>
+        <div class="col-sm-7" id="spciesList">
+            <input class="ex8" style="width:100%" list="specieslist" name="species" id="species" value={{$species}}  autocomplete="off">
+        </div>
+    </div>
+    <datalist id="specieslist">
+        <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
+        <?php
+        $species = DB::table('Species')->get();
+        foreach ($species as $species1) {
+            echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
+        }
+        ?>
+        <!--[if (lt IE 10)]></select><![endif]-->
+    </datalist>
+</div>
 <div class="stepsdiv" id="gset-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -29,14 +50,14 @@
                     <option value="MF">Molecular Function</option>
                     <option value="BP,CC,MF">All</option>
                 </optgroup>
-                <option value="custom" style="background-color: whitesmoke;font-weight: bold;margin-left:-1px;width:101%;"
->Custom</option>
+                <option value="custom" style="background-color: whitesmoke;font-weight: bold;margin-left:-1px;width:101%;">Custom</option>
             </select>
 
         </div>
     </div>
 
 </div>
+
 <div class="stepsdiv" id="geneIdType-div">
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -50,56 +71,38 @@
                 <?php if ( basename(Request::url())== "gageExample2"){   ?>
                     <option value="custom"   @if (strcmp($geneIdType,'kegg') == 0 ) selected @endif >custom</option>
                 <?php }else { ?>
-                <option value="entrez" @if (strcmp($geneIdType,'entrez') == 0 ) selected @endif >Entrez</option>
-                <option value="kegg"   @if (strcmp($geneIdType,'kegg') == 0 ) selected @endif >KEGG</option>
+                    <option value="ACCNUM" @if (strcmp(strtoupper($geneIdType),'ACCNUM') == 0 ) selected @endif>ACCNUM</option>
+                    <option value="ENSEMBL" @if (strcmp(strtoupper($geneIdType),'ENSEMBL') == 0 ) selected @endif >ENSEMBL</option>
+                    <option value="ENSEMBLPROT" @if (strcmp(strtoupper($geneIdType),'ENSEMBLPROT') == 0 ) selected @endif >ENSEMBLPROT</option>
+                    <option value="ENSEMBLTRANS" @if (strcmp(strtoupper($geneIdType),'ENSEMBLTRANS') == 0 ) selected @endif >ENSEMBLTRANS</option>
+                    <option value="ENTREZ" @if (strcmp(strtoupper($geneIdType),'ENTREZ') == 0 ) selected @endif >ENTREZ</option>
+                    <option value="ENZYME" @if (strcmp(strtoupper($geneIdType),'ENZYME') == 0 ) selected @endif >ENZYME</option>
+                    <option value="GENENAME" @if (strcmp(strtoupper($geneIdType),'GENENAME') == 0 ) selected @endif >GENENAME</option>
+                    <option value="KEGG" @if (strcmp(strtoupper($geneIdType),'KEGG') == 0 ) selected @endif >KEGG</option>
+                    <option value="PROSITE" @if (strcmp(strtoupper($geneIdType),'PROSITE') == 0 ) selected @endif >PROSITE</option>
+                    <option value="REFSEQ" @if (strcmp(strtoupper($geneIdType),'REFSEQ') == 0 ) selected @endif >REFSEQ</option>
+                    <option value="SYMBOL" @if (strcmp(strtoupper($geneIdType),'SYMBOL') == 0 ) selected @endif >SYMBOL</option>
+                    <option value="UNIGENE" @if (strcmp(strtoupper($geneIdType),'UNIGENE') == 0 ) selected @endif >UNIGENE</option>
+                    <option value="UNIPROT" @if (strcmp(strtoupper($geneIdType),'UNIPROT') == 0 ) selected @endif >UNIPROT</option>
                     <?php }?>
             </select>
-
         </div>
     </div>
-
 </div>
-<div class="stepsdiv" id="species-div">
-    <div class="col-sm-12">
-        <div class="col-sm-5">
-            <a href="gageTutorial#species" onclick="window.open('gageTutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways. Auto suggestions are provided."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-            </a>
-            {!!form::label('species','Species:') !!}
-        </div>
-        <div class="col-sm-7" id="spciesList">
-            <input class="ex8" style="width:100%" list="specieslist" name="species" id="species" value={{$species}}  autocomplete="off">
-        </div>
-    </div>
-    <datalist id="specieslist">
-        <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
-        <?php
-        $species = DB::table('Species')->get();
-        foreach ($species as $species1) {
-            echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
-        }
 
 
-        ?>
-
-        <!--[if (lt IE 10)]></select><![endif]-->
-
-    </datalist>
-</div>
 
 <div class="stepsdiv" id="ref-div" >
     <div class="col-sm-12">
-
         <div class="col-sm-5">
             <a href="gageTutorial#contorl_reference" onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Column numbers for the reference condition or phenotype i.e. control group if you specify null than all the columns are considered as target experiments. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="ref">Control / Reference:</label>
         </div>
-
         <div class="col-sm-7">
             <input class="ex8"  name="reference"  id="reference"  value={{$reference}}> <h6 class="noteHint" >eg: 1,3,5 or NULL</h6>
-            <!-- To get the number of column fields in a file -->
+            <!-- To get the number of column fields in a file and render it on ref and sample columns -->
             <input type="text"  name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns"   >
             <select name="ref[]" id="refselect"   multiple="" size="5" style="width:100%;" ng-model='refselect' ng-show="columns.length > 0">
                 <option ng-repeat="column in columns track by $index"
@@ -109,18 +112,15 @@
             </select>
         </div>
     </div>
-
 </div>
 <div class="stepsdiv" id="sample-div">
     <div class="col-sm-12">
-
         <div class="col-sm-5">
             <a href="gageTutorial#case_sample" onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Column numbers for the target condition or phenotype i.e. experiment group in the exprs data matrix. if you specify null than all the columns other than ref are considered as target experiments." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="sample">Case / Sample:</label>
         </div>
-
         <div class="col-sm-7">
             <input class="ex8"  name="samples"  id="sample" value={{$sample}}  > <h6 class="noteHint">eg: 2,4,6 or NULL</h6>
             <select name="sample[]" id="sampleselect"  multiple="" size="5" style="width:100%;" ng-model='sampleselect' ng-show="columns.length > 0">
@@ -128,14 +128,14 @@
                         value="<% $index+1 %>">
                     <% column %>
                 </option>
-
             </select>
         </div>
     </div>
 </div>
-
 </fieldset >
+
 <fieldset class="step analysis-step">
+
     <div class="stepsdiv" id="cutoff-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -150,6 +150,7 @@
             </div>
         </div>
     </div>
+
     <div class="stepsdiv" id="setSize-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -168,6 +169,7 @@
             </div>
         </div>
     </div>
+
     <div class="stepsdiv" id="compare-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -186,6 +188,7 @@
             </div>
         </div>
     </div>
+
     <div class="stepsdiv" id="sameDir-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -199,10 +202,9 @@
                 <input type="checkbox" id="sameDir" style="width: 44px;" value="true" name="test2d" @if ($test2d) checked @endif  >
             </div>
         </div>
-
     </div>
-    <div class="stepsdiv" id="rankTest-div">
 
+    <div class="stepsdiv" id="rankTest-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
                 <a href="gageTutorial#rank_test" onclick="window.open('gageTutorial#rank_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="whether do the optional rank based two-sample t-test." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
@@ -216,8 +218,8 @@
             </div>
         </div>
     </div>
-    <div class="stepsdiv" id="useFold-div">
 
+    <div class="stepsdiv" id="useFold-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
                 <a href="gageTutorial#per_gene_score" onclick="window.open('gageTutorial#per_gene_score', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Whether to use fold changes or t-test statistics as per gene statistics." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
@@ -227,10 +229,10 @@
             </div>
             <div class="col-sm-7">
                 <input type="checkbox"  id="useFold" value="true"  data-off-text="t-test" data-on-text="fold" name="useFold" @if ($useFold) checked @endif>
-
             </div>
         </div>
     </div>
+
     <div class="stepsdiv" id="test-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -261,8 +263,8 @@
                 <input type="checkbox" id="usePathview" value="true" style="width: 44px;" name="dopathview" @if ($dopathview) checked @endif >
             </div>
         </div>
-
     </div>
+
     <div class="stepsdiv" id="dataType-div" >
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -278,21 +280,17 @@
                 </select>
             </div>
         </div>
-
     </div>
-
 </fieldset>
 </div>
+
 <div  class="steps" >
     <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return validation()"  />
     <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" />
 </div>
-
 </div>
-
 </div>
-
-
+</div>
 <script>
 
 
@@ -349,9 +347,11 @@ $('#submit-button').click(function(){
 $goSpecies = DB::table('Species')
         ->join('GoSpecies', 'Species.species_id', '=', 'GoSpecies.species_id')
         ->select('GoSpecies.species_id','Species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
+$GageSpeciesGeneIDMAtch = DB::table('GageSpeceisGeneIdMatch')
+                            ->select('species_id','geneid')->get();
 ?>
 var goSpeciesArray = <?php echo JSON_encode($goSpecies);?>;
-
+var GageSpeciesGeneIDMAtch = <?php echo JSON_encode($GageSpeciesGeneIDMAtch);?>;
 <?php
 $species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
 var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
@@ -473,8 +473,8 @@ var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
                 processData: false
 
             });
-        }*/
-
+        }
+*/
     });
 function showDoneResultMessage() {
     console.log("in show done result message");
@@ -513,41 +513,52 @@ function hideProgress() {
         var validSpeciesFlag = false;
 
         if($('#geneIdType > option').length == 1  ) {
-            if($('#geneIdType > option')[0].text === 'custom')
-            {
-             if(value.toLowerCase() === 'custom')
-             {
-                 return true;
-             }
-             else{
-                 return false;
-             }
-            }
-            else {
-                $.each(goSpecIdBind, function (key1, value1) {
-                    if (key1 === value) {
-                        validSpeciesFlag = true;
-                    }
-                });
-
-                $.each(goSpeciesArray, function (index, xyz) {
-                    if (goSpeciesArray[index]['species_id'] === value.substr(0,3)) {
-                        validSpeciesFlag = true;
-                    }
-                });
-
+            if ($('#geneIdType > option')[0].text === 'custom') {
+                if (value.split('-')[0].toLowerCase() === 'custom') {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
         }
-        else{
+        if($('#geneSet').val() !== null) {
+            if ($('#geneSet').val()[0] === 'BP' || $('#geneSet').val()[0] === 'CC' || $('#geneSet').val()[0] === 'MF' || $('#geneSet').val()[0] === 'BP,CC,MF') {
+                $.each(goSpecIdBind, function (key1, value1) {
+                    if (key1.toLowerCase() === value.toLowerCase()) {
+                        validSpeciesFlag = true;
+                        return false;
+                    }
+                });
+            }
+        }
+        if (value.split('-')[0].toLowerCase() == "custom")
+        {
+            validSpeciesFlag = true;
+        }
+        else {
             $.each(speciesArray, function (speciesIter, specieValue) {
 
-                if (specieValue['species_id']  === value.split('-')[0] || (value.length == 3 && specieValue['species_id'] === value )) {
+                if (specieValue['species_id'] === value.split('-')[0] || (value.length == 3 && specieValue['species_id'] === value )) {
                     validSpeciesFlag = true;
+                    return false;
                 }
             });
 
         }
-        return validSpeciesFlag;
+
+        $.each(goSpeciesArray, function (index, xyz) {
+                    if (goSpeciesArray[index]['species_id'].toLowerCase() === value.substr(0, 3).toLowerCase()) {
+                        validSpeciesFlag = true;
+                        return false;
+                    }
+                });
+
+
+
+
+            return validSpeciesFlag;
+
     },"Entered Speceis is not a valid speceis");
 
     //jquery validation method to check if number of columns specified in  reference is always

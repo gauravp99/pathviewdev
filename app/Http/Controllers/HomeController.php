@@ -35,5 +35,4 @@ class HomeController extends Controller
 
         return view('profile.home')->with('analyses',analyses::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20));
     }
-
 }

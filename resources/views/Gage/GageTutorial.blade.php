@@ -313,6 +313,7 @@
         <br/>
         <br/>
         <br/>
+
         <div class="col-md-12 content">
 
             <h1 class="arg_content">Example Analysis</h1>
@@ -337,6 +338,98 @@
 
                 <p><a class="btn btn-default" href="#example3" role="button">View details »</a></p>
             </div>
+        </div>
+        <div class="col-md-12 ">
+            <h1 class="arg_content">Analysis Output Description</h1>
+
+            <div class="col-md-12 content">
+                <div class="col-md-12">
+                    <div class="col-md-6" style="border:solid;padding: 3px;border-color:#204d74;margin-bottom: 10px;">
+                        <img data-src="" alt="" src="/images/gage/significant-table.png" data-holder-rendered="true" style="height: 500px; width: 550px; display: block;">
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Top List of Significant pathway id's</h3>
+                        <p>List of significant pathway id's of the analysis</p>
+                            <b>Column names:</b> Pathway ID,
+                            p.geomean,
+                            stat.mean,
+                            p.val,
+                            q.val,
+                            set.size,
+                            experiments list
+                        </ul>
+
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                <div class="col-md-6" style="border:solid;padding: 3px;border-color:#204d74;margin-bottom: 10px;">
+                        <img data-src="" alt="" src="/images/gage/chr16q22.geneData.heatmap-page-001.jpg" data-holder-rendered="true" style="height: 500px; width: 500px; display: block;">
+                </div>
+                <div class="col-md-6">
+                    <h3>Individual HeatMaps</h3>
+                    <p>Heat Map generated for all the significant pathway id's figure shows an example heatmap generated </p>
+                    <a href="#" class="list-group-item active">
+                        Typical File Name: hsa03050.geneData.heatmap.pdf
+                    </a>
+                </div>
+            </div>
+                <div class="col-md-12">
+                <div class="col-md-6" style="border:solid;padding: 3px;border-color:#204d74;margin-bottom: 10px;">
+                        <img data-src="" alt="" src="/images/thirdslide.png" data-holder-rendered="true" style="height: 500px; width: 500px; display: block;">
+                </div>
+                <div class="col-md-6">
+                    <h3>Pathview Graph</h3>
+                    <p> If Pathview required option is set then pathviews are generated for all the significant pathway id's figure shows an example heatmap generated </p>
+                    <a href="#" class="list-group-item active">
+                        Typical File Name: hsa03050.pathview.multi.png
+                    </a>
+                </div>
+                    </div>
+                    <div class="col-md-12">
+                <div class="col-md-6" style="border:solid;padding: 3px;border-color:#204d74;margin-bottom: 10px;">
+                        <img data-src="" alt="" src="/images/gage/chr16q22.geneData-page-001.jpg" data-holder-rendered="true" style="height: 500px; width: 500px; display: block;">
+                </div>
+                <div class="col-md-6">
+                    <h3>Scatter Plots</h3>
+                    <p>Heat Map generated for all the significant pathway id's figure shows an example heatmap generated </p>
+                    <a href="#" class="list-group-item active">
+                        Typical File Name: hsa03050.geneData.pdf
+                    </a>
+                </div>
+                        </div>
+                <div class="col-md-12">
+                <div class="col-md-6" style="border:solid;padding: 3px;border-color:#204d74;margin-bottom: 10px;">
+                        <img data-src="" alt="" src="/images/gage/gage.res.gs.heatmap-page-003.jpg" data-holder-rendered="true" style="height: 500px; width: 500px; display: block;">
+                </div>
+                <div class=" col-md-6">
+                    <h3>Combined Heatmaps</h3>
+                    <p>Output shows the heat map of the entire genesets.</p>
+                    <a href="#" class="list-group-item active">
+                        Typical File Name: gage.res.gs.heatmap.pdf
+                    </a>
+                </div>
+                </div>
+                <div class="col-md-12">
+
+                        <h2 style="text-align: left">Argument List</h2>
+                        <p>Output show the list of arguments specified by the user for the anlysis. you can make a note of it and reperform the analysis for better results.</p>
+
+
+                </div>
+                <div class="col-md-12">
+
+                    <h2 style="text-align: left">Files Generated</h2>
+                    <p>Output shows the list of files generated from the anlysis clicking on the file names you can download/view the file content, below is the sample list.</p>
+
+
+
+                </div>
+
+
+
+
+
         </div>
         <div class="col-md-12 content">
 
@@ -543,7 +636,7 @@
         </div>
         <div class="col-md-12 content">
 
-            <h1 class="arg_content">Example 1: GAGE Analysis</h1>
+            <h1 class="arg_content">Example 1: GAGE Analysis for Pathview</h1>
 
 
 
@@ -596,7 +689,7 @@
         </div>
         <div class="col-md-12 content">
 
-            <h1 class="arg_content">Example 2: GAGE Analysis With Custom Gene Set ID's</h1>
+            <h1 class="arg_content">Example 2: GAGE Analysis With Custom Gene Set ID's and Gene ID's</h1>
 
 
 

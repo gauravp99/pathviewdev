@@ -11,6 +11,8 @@ use App\Http\Requests;
 use App\User;
 use Auth;
 use DB;
+use Mail;
+use Input;
 
 class ProfileController extends Controller
 {
@@ -63,12 +65,53 @@ class ProfileController extends Controller
         $name = $_POST["name"];
         $email = $_POST["email"];
         $id = Auth::user()->id;
+        $users = DB::table('users')->select('email')->where('id','!=',$id)->where('email',$email)->orWhereNull('id')->get();
+        if(sizeof($users) > 0)
+        {
+            return view('profile.user')->with('error',"Duplicate Email");
+        }
         $date = new \DateTime;
         DB::table('users')
             ->where('id', $id)
             ->update(array('name' => $name, 'email' => $email, 'updated_at' => $date));
         return view('profile.user')->with('user', Auth::user());
 
+    }
+
+    public function post_message()
+    {
+        $name = $_POST['name'];
+        $me= $_POST['message'];
+
+        $email = $_POST['email'];
+        $data['name'] = $name;
+        $data['msg'] = htmlspecialchars($me);
+        $data['email'] = $email;
+        $data['path'] = public_path()."";
+
+
+
+        Mail::send('emails.message', $data, function ($message) use ($data) {
+            try {
+                if(Input::hasFile('uploadimg'))
+                {
+                    echo "got the image file";
+                    $file = Input::file('uploadimg');
+                    $filename = $file->getClientOriginalName();
+
+                    $destFile = public_path() . "/" . "all/temp";
+                    $file->move($destFile,$filename);
+                    $message->attach(public_path()."/all/temp/".$filename, array('as' => $filename));
+                }
+                $user = Auth::user();
+                $message->to("byeshvant@gmail.com", "admin")->subject('Message from:'.$data['email']);
+
+            } catch (Exception $e) {
+                return "exception in mail";
+            }
+        });
+
+        return "success";
     }
 
 }

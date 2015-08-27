@@ -11,6 +11,13 @@
 |
 */
 
+/* admin */
+Route::post('/adminLogin','AdminController@auth');
+Route::post('/adminEmailAll','AdminController@emailAll');
+Route::get('/admin','AdminController@index');
+Route::post('/adminBroadcastMessage','AdminController@adminBroadcastMessage');
+
+
 /* Ajax controller for species and pathway match retrievel */
 Route::post('/ajax/specPathMatch','AjaxSpeciesPathwayMatch@index');
 Route::post('/ajax/analysisStatus','AjaxAnalysisQueueStatusCheck@index');
@@ -21,6 +28,14 @@ Route::get('/', array(
     'uses' => 'WelcomeController@index')
 );
 
+Route::get('/contact', array(
+    'as' => 'contact',
+        'uses' => function () {
+            return view('MessageUs');
+        }
+));
+
+Route::post('/postMessage','ProfileController@post_message');
 /* URL route for Controller for user profile page */
 Route::get('/user/{username}', array(
     'as' => 'profile-user',
@@ -174,5 +189,8 @@ Route::get('pathviewViewer',function(){
 
 Route::get('resultView',function(){
     return view('Gage.GageResultView');
+});
+Route::get('fullList',function(){
+    return view('Gage.GageFileList');
 });
 Route::post('/ajax/GageanalysisStatus','AjaxGageAnalysisStatusCheck@index');

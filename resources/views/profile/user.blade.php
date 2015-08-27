@@ -2,6 +2,10 @@
 @section('content')
     @include('navigation')
 <div class="col-sm-7">
+    @if(strcmp($error,'Duplicate Email') == 0)
+        <h3 class="alert alert-danger">Email is already assigned to a different user</h3>
+        <?php $user = Auth::user(); ?>
+    @endif
     <div class="col-sm-7 col-md-5">
 
         <div class="avtar"><img src={{asset('/images/avtar.png')}} height="102" width="102"></div>
@@ -10,7 +14,8 @@
         </div>
     <div class="col-sm-12">
 
-        <p><b>User ID: {{ $user->id }}</b></p>
+
+    <p><b>User ID: {{ $user->id }}</b></p>
     @if(($user->name)=="")
         <p><b>User Name: {{ $user->email }}</b></p>
     @else

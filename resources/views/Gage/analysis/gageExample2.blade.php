@@ -1,6 +1,6 @@
 @extends('GageApp')
 @section('content')
-
+    @include('GageNavigation')
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
     <script src="js/app.js"></script>
     <script src="js/gageAnalysis.js"></script>
@@ -10,15 +10,13 @@
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
     <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
 
-        @include('GageNavigation')
-        <div class="conetent-header ">
-            <p><b>Example GAGE Analysis 1</b></p>
 
-            <div id="error-message"></div>
+    <div class="col-md-9">
+        <div class="conetent-header ">
+            <p><b>Example GAGE Analysis 2</b></p>
         </div>
-        <input type="text" id="rememberTxt" hidden="" >
-        {!! form::open(array('url' => 'exampleGageAnalysis2','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
-        <div class="col-md-2">
+        <div id="error-message"></div>
+        {{--<div class="col-md-2">
             <div id="progress" class="col-md-12" hidden>
                 <h2 class="alert alert-info"> Executing, Please wait. </h2>
                 <img width="200px" hieght="200px" src="/images/load.gif">
@@ -28,8 +26,42 @@
                 <a id ='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
                 <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
             </div>
-        </div>
-        <div id="wrapper" class="col-md-8" ng-app="GageApp" ng-controller="ExampleAnalysisController1">
+        </div>--}}
+    </div>
+    <?php
+    //specifying default values for all the variables;
+    $geneIdType = "entrez";
+    $species = "custom";
+    $reference = "1,3";
+    $sample = "2,4";
+    $cutoff = "0.1";
+    $setSizeMin = "10";
+    $setSizeMax = "infinite";
+    $compare = "paired";
+    $test2d = false;
+    $rankTest = false;
+    $useFold = true;
+    $test = "gs.tTest";
+    $dopathview = false;
+    $dataType = "gene";
+    ?>
+        <input type="text" id="rememberTxt" hidden="" >
+
+        <!-- <div class="col-md-2">
+            <div id="progress" class="col-md-12" hidden>
+                <h2 class="alert alert-info"> Executing, Please wait. </h2>
+                <img width="200px" hieght="200px" src="/images/load.gif">
+            </div>
+            <div id="completed" class="list-group col-md-12" hidden>
+                <p> Completed Gage Analysis</p>
+                <a id ='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
+                <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
+            </div>
+        </div> -->
+    <div class="col-md-7">
+
+        <div id="content">
+        <div id="wrapper"  ng-app="GageApp" ng-controller="ExampleAnalysisController1">
             <div id="navigation" style="">
                 <ul>
                     <li class="selected">
@@ -43,26 +75,7 @@
                 </ul>
             </div>
             <div id="steps">
-                <?php
-                //specifying default values for all the variables;
-                $geneIdType = "entrez";
-                $species = "custom";
-                $reference = "1,3";
-                $sample = "2,4";
-                $cutoff = "0.1";
-                $setSizeMin = "10";
-                $setSizeMax = "infinite";
-                $compare = "paired";
-                $test2d = false;
-                $rankTest = false;
-                $useFold = true;
-                $test = "gs.tTest";
-                $dopathview = false;
-                $dataType = "gene";
-                ?>
-
-
-
+                {!! form::open(array('url' => 'exampleGageAnalysis2','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
                 <fieldset class="step inputOutput-step">
                     <div class="stepsdiv" id="assayData-div">
                         <div class="col-sm-12">

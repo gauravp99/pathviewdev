@@ -34,7 +34,7 @@ print("in sample else");
 args2$sample = as.numeric(args2$sample)
 }
 
-setwd(args2$destDir)
+#setwd(args2$destDir)
 save.image("workenv.RData")
     require(gage)
     library(gage)

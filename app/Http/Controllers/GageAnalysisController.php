@@ -7,10 +7,12 @@ use Auth;
 use Session;
 use File;
 use DB;
+use Log;
 use Redis;
 use Illuminate\Http\Request;
 use Queue;
 use App\Commands\sendGageAnalysisCompletionMail;
+use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
 /**
  * Class GageAnalysis
@@ -41,30 +43,41 @@ class GageAnalysisController extends Controller
         $email = "";
         $filename = "";
         $time = "";
+
         /*
          * checks if the user is authorised or not if authorised check if he has the space enough for the analysis to be done
          * if the user exceed the min memory allocated to the user return a page to delete analysis and rerun it.
          */
         if (Auth::user()) {
+            //email variable is location of the analysis folder
             $email = Auth::user()->email;
             $f = './all/' . Auth::user()->email;
+            if (!file_exists( $f)) {
+                try {
+                    $result = File::makeDirectory($f);
+                } catch (FileNotFoundException $e) {
+                    Log::error('Not able to create the file: ' . $e);
+                }
+            }
+
             $io = popen('/usr/bin/du -sk ' . $f, 'r');
             $size = fgets($io, 4096);
             $size = substr($size, 0, strpos($size, "\t"));
             pclose($io);
             $size = 100000 - intval($size);
-            if ($size < 0) {
+            //checking if file size is less than 99 MB
+            if ($size < 1000) {
                 return view('errors.SpaceExceeded');
             }
-
         }
         else{
             $email = "demo";
         }
+
+
         /*
          * Start code to create an argument variable to set all the values on form to a single variable and send it to Rscript code
          */
-
 
         //reference columns from input type text element
         if (isset($_POST['reference'])) {
@@ -72,7 +85,6 @@ class GageAnalysisController extends Controller
                 $argument .= "reference:NULL;";
             else
                 $argument .= "reference:" . $_POST['reference'] . ";";
-
         } else {
             $argument .= "reference:NULL;";
         }
@@ -89,20 +101,23 @@ class GageAnalysisController extends Controller
 
         //check if the file exist if the folder doesnt exist create one
         if (!file_exists("all/$email")) {
-            $result = File::makeDirectory("all/$email");
+            try{
+                $result = File::makeDirectory("all/$email");
+            }
+            catch(FileNotFoundException $e)
+            {
+                Log::error('Not able to create the file: '.$e);
+            }
         }
-
         $time = uniqid();
-
         File::makeDirectory("all/$email/$time");
-
         $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
 
         //separate file copy for new analysis and example analysis. if the analysis is new analysis file is taken from
         // file upload where as it is from example analysis file is taken from the file in the public folder
         if (strcmp($analysis, 'newAnalysis') == 0) {
-            if (Input::hasFile('assayData')) {
 
+            if (Input::hasFile('assayData')) {
                 $file = Input::file('assayData');
                 $filename = Input::file('assayData')->getClientOriginalName();
                 $file->move($destFile, $filename);
@@ -112,6 +127,7 @@ class GageAnalysisController extends Controller
             }
             $filename = Input::file('assayData')->getClientOriginalName();
         } else if (strcmp($analysis, 'exampleGageAnalysis1') == 0) {
+            //copy files for example 1 to the destination user profile
             $filename = "gagedata.txt";
             $file = public_path() . "/" . "all/data/gagedata.txt";
 
@@ -119,9 +135,9 @@ class GageAnalysisController extends Controller
                 $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
                 return view('Gage.GageAnalysis');
             }
-
         }
         else if (strcmp($analysis, 'exampleGageAnalysis2') == 0) {
+            //copy files for example 2 to the destination user profile
             $filename = "gse16873.symb.txt";
             $file = public_path() . "/" . "all/demo/example/gse16873.symb.txt";
 
@@ -152,9 +168,7 @@ class GageAnalysisController extends Controller
             }
             $argument .= "geneSet:";
             foreach ($_POST['geneSet'] as $geneSet) {
-
                 $argument .= $geneSet . ",";
-
             }
             $argument .= ";";
         }
@@ -168,13 +182,13 @@ class GageAnalysisController extends Controller
 
                 if(sizeof($goSpecies) > 0)
                 {
-                    $argument .= $goSpecies->Go_name . ";";
+                    $argument .= explode('-',$goSpecies->Go_name )[0] . ";";
                 }
                 else{
                     $goSpecies1 = DB::table('GoSpecies')->where('Go_name',$_POST['species'])->first();
                     if(sizeof($goSpecies1) > 0)
                     {
-                        $argument .= $goSpecies1->Go_name . ";";
+                        $argument .= explode('-',$goSpecies1->Go_name )[0] . ";";
                     }
                     else{
                         $argument .= "Human;";
@@ -183,19 +197,20 @@ class GageAnalysisController extends Controller
 
             }
             else{
-                $argument .= $_POST['species'] . ";";
+                $argument .= explode('-', $_POST['species'])[0] . ";";
             }
         }
 
         if (isset($_POST['cutoff'])) {
             $argument .= "cutoff:";
-            $argument .= $_POST['cutoff'] . ";";
+            $argument .= $_POST['cutoff'].";";
         }
-
 
         if (isset($_POST['geneIdType'])) {
 
             $argument .= "geneIdType:" . $_POST['geneIdType'] . ";";
+
+            //if the example is 2nd example or geneIdType is geneIdType
             if (strcmp($_POST['geneIdType'], 'custom') == 0) {
                 if(Input::hasFile('geneIdFile'))
                 {
@@ -204,6 +219,7 @@ class GageAnalysisController extends Controller
                 $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
                 $file->move($destFile, $filename1);
                 $argument .= "gsfn:" . $filename1 . ";";
+                $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename) . ";";
                 }
                 else{
                     $filename1= "c1_all_v3_0_symbols.gmt";
@@ -214,6 +230,7 @@ class GageAnalysisController extends Controller
                         return view('Gage.GageAnalysis');
                     }
                     $argument .= "gsfn:" . $filename1 . ";";
+                    $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename1) . ";";
                 }
                 }
             }
@@ -264,12 +281,13 @@ class GageAnalysisController extends Controller
 
         if (isset($_POST['dopathview'])) {
             $argument .= "do.pathview:T;";
+            if (isset($_POST['dataType'])) {
+                $argument .= "data.type:" . $_POST['dataType'] . ";";
+            }
         } else {
             $argument .= "do.pathview:F;";
         }
-        if (isset($_POST['dataType'])) {
-            $argument .= "data.type:" . $_POST['dataType'] . ";";
-        }
+
 
         $_SESSION['argument'] = $argument;
 
@@ -349,6 +367,5 @@ class GageAnalysisController extends Controller
         return $d->index("exampleGageAnalysis2");
 
     }
-
 
 }

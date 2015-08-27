@@ -79,7 +79,7 @@
 
                                 <div class="input-group">
                                     <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                    <a href="/all/data/gagedata.txt" target="_blank">GageData.csv</a>
+                                    <a href="/all/data/gagedata.txt" target="_blank">gse16873.csv</a>
                                 </div>
                             </div>
                         </div>

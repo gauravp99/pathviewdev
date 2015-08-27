@@ -110,8 +110,6 @@
                         @include('gageAnalysis')
                         <script>
                             $(window).bind('beforeunload', function () {
-
-
                                 var geneIdSelected = $("#geneIdType").val();
                                 var species = $("#species").val();
                                 var geneSetSelected = $('#geneSet').val();
@@ -136,6 +134,14 @@
                                     });
                                 }
                                 $val += ';';
+
+                                $val += 'git:';
+                                $("#geneIdType > option").each(function() {
+
+                                    $val += this.value+",";
+                                });
+                                $val +=';';
+
                                 $val += 'ref:';
                                 if (referenceSelected != null || referenceSelected != undefined) {
                                     $.each(referenceSelected, function (index, value) {
@@ -188,12 +194,12 @@
                                 $val += 'spe:' + species + ';';
 
                                 $('#rememberTxt').val($val);
-
-
                             });
 
 
                             $(function () {
+                                referenceText = "";
+                                sampleText = "";
                                 var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
                                 // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
                                 var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
@@ -210,11 +216,11 @@
                                             columns = value.substr(4);
                                         }
                                         else if (value.substr(0, 3) === 'ref') {
-                                            reference = value.substr(4);
+                                            referenceText = value.substr(4);
                                         }
 
                                         else if (value.substr(0, 3) === 'sam') {
-                                            sample = value.substr(4);
+                                            sampleText = value.substr(4);
                                         }
 
                                         else if (value.substr(0, 3) === 'gen') {
@@ -223,7 +229,10 @@
                                         else if (value.substr(0, 3) === 'gid') {
                                             geneid = value.substr(4);
                                         }
+                                        else if(value.substr(0,3) === 'git')   {
 
+                                            gidTotal = value.substr(4).split(',');
+                                        }
                                         else if (value.substr(0, 3) === 'pat') {
                                             usePathview = value.substr(4);
                                         }
@@ -239,16 +248,17 @@
                                             geneIDType = value.substr(4);
                                             if (geneIDType !== 'kegg') {
                                                 $('#specieslist').empty();
+                                                $.each(goSpeciesArray, function (index, xyz) {
+                                                    $('#specieslist').append($("<option></option>")
+                                                            .attr("value", goSpeciesArray[index]['species_id'] + '-' + goSpeciesArray[index]['species_desc'] + '-' + goSpeciesArray[index]['Go_name']).text(goSpeciesArray[index]['species_id'] + '-' + goSpeciesArray[index]['species_desc'] + '-' + goSpeciesArray[index]['Go_name']));
+                                                });
                                                 if (geneIDType === 'go') {
                                                     $.each(goSpecIdBind, function (key1, value1) {
                                                         $('#specieslist').append($("<option></option>")
                                                                 .attr("value", key1).text(key1));
                                                     });
 
-                                                    $.each(goSpeciesArray, function (index, xyz) {
-                                                        $('#specieslist').append($("<option></option>")
-                                                                .attr("value", goSpeciesArray[index]['species_id'] + '-' + goSpeciesArray[index]['species_desc'] + '-' + goSpeciesArray[index]['Go_name']).text(goSpeciesArray[index]['species_id'] + '-' + goSpeciesArray[index]['species_desc'] + '-' + goSpeciesArray[index]['Go_name']));
-                                                    });
+
 
 
                                                 }
@@ -262,11 +272,7 @@
                                         }
                                     });
 
-                                    if ($('#rememberTxt').val() === '') {
-
-                                    }
-                                    else {
-
+                                    if ($('#rememberTxt').val() !== '') {
                                         $colum = columns.split(',').slice(0);
                                         $colum.splice(($colum).length, 1);
                                         $colum.splice(($colum).length - 1, 1);
@@ -291,36 +297,46 @@
                                             $('#sampleselect option[value=' + (index + 1) + ']').attr('class', 'tempColumn');
 
                                         });
-                                        var refArray = reference.split(',').splice(0);
-                                        refArray.splice((refArray).length, 1);
-                                        refArray.splice((refArray).length - 1, 1);
-                                        $.each(refArray, function (index, value) {
-                                            $('#refselect option[value=' + value + ']').attr('selected', 'selected');
-                                        });
-                                        var sampleArray = sample.split(',').splice(0);
-                                        sampleArray.splice((sampleArray).length, 1);
-                                        sampleArray.splice((sampleArray).length - 1, 1);
-                                        $.each(sampleArray, function (index, value) {
-                                            $('#sampleselect option[value=' + value + ']').attr('selected', 'selected');
-                                        });
-                                        $('#NoOfColumns').val(($colum).length - 1);
-                                        if (geneid !== 'entrez' && geneid !== 'kegg') {
-                                            $('#geneIdType').empty();
-                                            $('#geneIdType').append($("<option></option>").attr("value", geneid).text(geneid));
-                                            if (geneid === 'custom') {
-                                                $('#geneIdFile').show();
-                                            }
+
+                                        if(referenceText !== '') {
+                                            var refArray = referenceText.split(',').splice(0);
+                                            refArray.splice((refArray).length, 1);
+                                            refArray.splice((refArray).length - 1, 1);
+                                            $.each(refArray, function (index, value) {
+                                                $('#refselect option[value=' + value + ']').attr('selected', 'selected');
+                                            });
                                         }
+                                        if(sampleText !== '') {
+                                            var sampleArray = sampleText.split(',').splice(0);
+                                            sampleArray.splice((sampleArray).length, 1);
+                                            sampleArray.splice((sampleArray).length - 1, 1);
+                                            $.each(sampleArray, function (index, value) {
+                                                $('#sampleselect option[value=' + value + ']').attr('selected', 'selected');
+                                            });
+                                        }
+
+                                        $('#NoOfColumns').val(($colum).length - 1);
+
+                                        if (geneid === 'custom') {
+                                            $('#geneIdType').append($("<option></option>").attr("value", geneid).text(geneid));
+                                            $('#geneIdFile').show();
+                                        }
+                                        else if (geneid !== 'entrez' && geneid !== 'kegg') {
+                                            $('#geneIdType').empty();
+                                            $.each(gidTotal,function(index,value){
+                                                $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
+                                            });
+
+                                            $('#geneIdType option[value='+geneid+']')[0].setAttribute('selected','selected');
+                                        }
+
                                         if (usePathview == 'true') {
                                             $('#dataType-div').show();
-
                                         }
                                     }
-
                                 }
-
-
                             });
+
                         </script>
 
 @stop

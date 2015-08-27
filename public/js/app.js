@@ -21,13 +21,25 @@ app.controller('analysisController',function($scope,$timeout) {
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.columns = $fileContent.split("\n")[0].replace(" ", "").split(",");
-            $scope.columns.splice($scope.columns[0], 1);
+            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
+            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+            console.log(columns1.length+" "+columns2.length);
+            if(columns1.length === columns2.length)
+            {
+                $scope.columns.splice(0, 1);
+            }
 
         }
         else if($scope.filetype === 'text/plain')
         {
             $scope.columns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            $scope.columns.splice($scope.columns[0], 1);
+            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
+            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+
+            if(columns1.length === columns2.length)
+            {
+                $scope.columns.splice(0,1);
+            }
             $scope.sample=[];
             $scope.ref=[];
 
@@ -39,7 +51,9 @@ app.controller('analysisController',function($scope,$timeout) {
         }
         var geneIDArray = [];
         $.each($fileContent.split("\n"),function($index,$line){
-            geneIDArray.push($line.split("\t")[0]);
+
+                geneIDArray.push($line.split("\t")[0]);
+
 
         });
 
