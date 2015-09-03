@@ -1,0 +1,105 @@
+<script src="../js/ChartNew.js"></script>
+<div class="col-sm-12">
+    <h3>Pathviw and Gage users and analysis Trends Monthly search   </h3>
+    <ul class="nav nav-tabs">
+        <li role="presentation" ><a href="#/trends">Yearly</a></li>
+        <li role="presentation" class="active"><a href="#/trends-monthly">Monthly</a></li>
+        <li role="presentation" ><a href="#/trends-mannual">Mannual</a></li>
+    </ul>
+    <div class="col-sm-12">
+        <h3>Analysis</h3>
+        <div class="col-sm-6">
+            <canvas id="Pathview" ></canvas>
+        </div>
+
+        <div class="col-sm-6">
+            <canvas id="Gage" ></canvas>
+        </div>
+
+        <h3>Users</h3>
+        <div class="col-sm-6">
+            <canvas id="PathviewUsers" ></canvas>
+        </div>
+
+        <div class="col-sm-6">
+            <canvas id="GageUsers" ></canvas>
+        </div>
+
+    </div>
+</div>
+<script>
+    var ctx = $("#Pathview").get(0).getContext("2d");
+    var ctxUsers = $("#PathviewUsers").get(0).getContext("2d");
+    var opt2 = {
+
+        canvasBordersWidth: 3,
+        canvasBordersColor: "#205081",
+        legend: true,
+        graphTitleFontSize: 18,
+        logarithmic: true,
+        responsive: true
+    };
+
+    var data = {
+
+        labels: ['jan','feb','march','april'],
+        datasets: [
+            {
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                data: [10,20,50,100]
+                //title:"No of Graphs"
+            },
+            {
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                data:  [10,10,10,10]
+                // title:"Unique IP's"
+            }
+        ]
+    };
+
+    var myBarChart = new Chart(ctx).Bar(data, opt2);
+    var myBarChart2 = new Chart(ctxUsers).Line(data, opt2);
+
+
+    var ctx1 = $("#Gage").get(0).getContext("2d");
+    var ctxUsers1 = $("#GageUsers").get(0).getContext("2d");
+    var data1 = {
+        labels: ['jan','feb','march','april'],
+        datasets: [
+            {
+                fillColor: "rgba(220,220,220,0.5)",
+                strokeColor: "rgba(220,220,220,1)",
+                pointColor: "rgba(220,220,220,1)",
+                pointStrokeColor: "#fff",
+                data: [10,20,50,100]
+            },
+            {
+                fillColor: "rgba(151,187,205,0.5)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                data:  [10,10,10,10]
+            }
+        ]
+    };
+
+    var opt1 = {
+        canvasBordersWidth: 3,
+        canvasBordersColor: "#205081",
+        legend: true,
+        graphTitleFontSize: 18,
+        logarithmic: true,
+        responsive: true
+
+
+    };
+    var myBarChart1 = new Chart(ctx1).Bar(data1, opt1);
+    var myBarChart2 = new Chart(ctxUsers).Bar(data, opt2);
+    var myBarChart2 = new Chart(ctxUsers1).Line(data, opt2);
+</script>

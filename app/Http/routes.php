@@ -11,6 +11,27 @@
 |
 */
 
+/* start api for admin */
+Route::group(array('prefix' => 'api'), function() {
+    Route::get('yearly','api\GetAnal@getYears');
+    Route::get('monthly','api\GetAnal@getMonths');
+    Route::get('manual','api\GetAnal@getManual');
+    Route::post('addUser','api\AngularAdminController@createUser');
+    Route::get('broadCastMessage','AdminController@emailAll');
+    Route::resource('comments', 'CommentController',
+        array('only' => array('index', 'store', 'destroy')));
+
+
+});
+
+
+/*Route::post('/api/addUser','api\AngularAdminController@');*/
+
+
+
+
+/* end api for admin */
+
 /* admin */
 Route::post('/adminLogin','AdminController@auth');
 Route::post('/adminEmailAll','AdminController@emailAll');
@@ -160,6 +181,9 @@ Route::get('gageResult', function () {
 Route::post('gageAnalysis', 'GageAnalysisController@newGageAnalysis');
 Route::post('exampleGageAnalysis1', 'GageAnalysisController@ExampleGageAnalysis1');
 Route::post('exampleGageAnalysis2', 'GageAnalysisController@ExampleGageAnalysis2');
+Route::get('discreteGage',function(){
+return view('Gage.analysis.discreteAnalysis');
+});
 Route::get('gageIndex','gageController@index');
 Route::get('gageAbout','gageController@about');
 Route::get('gageTutorial','gageController@Tutorial');

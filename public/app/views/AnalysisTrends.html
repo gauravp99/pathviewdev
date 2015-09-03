@@ -1,0 +1,136 @@
+<script src="../js/ChartNew.js"></script>
+<script src="http://underscorejs.org/underscore-min.js"></script>
+<div class="col-sm-12">
+    <h3>Pathviw and Gage users and analysis Trends</h3>
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#/trends">Yearly</a></li>
+    <li role="presentation"><a href="#/trends-monthly">Monthly</a></li>
+    <li role="presentation"><a href="#/trends-mannual">Mannual</a></li>
+</ul>
+    <div class="col-sm-12">
+
+        <nav align="right">
+            <ul class="pagination" >
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+                <li ng-repeat="year in years"><a href="#">{{year}}</a></li>
+                <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&raquo;</span></a></li>
+            </ul>
+        </nav>
+        <h3>Analysis</h3>
+
+        <hr/>
+        <div class="col-sm-6">
+            <h3>Pathview:</h3>
+            <hr/>
+            <canvas id="Pathview" ></canvas>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Gage:</h3>
+            <hr/>
+            <canvas id="Gage" ></canvas>
+        </div>
+
+        <h3>Users</h3>
+        <hr/>
+
+        <div class="col-sm-12">
+            <canvas id="GageUsers" ></canvas>
+        </div>
+
+    </div>
+    <br/>
+    <div class="col-sm-6">
+        <h3>Pathview:</h3>
+        <hr/>
+    <div class="col-sm-12 table-responsive">
+        <canvas id="PathviewAnalysis" ></canvas>
+        <table class="table table-bordered table-striped">
+            <colgroup>
+                <col class="col-xs-1">
+                <col class="col-xs-7">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>Analysis Type</th>
+                <th>Count</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <th scope="row">
+                    <code>New Analysis</code>
+                </th>
+                <td>{{analysis['2015'].p_new_count}}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <code>Example 1</code>
+                </th>
+                <td>{{analysis['2015'].p_ex1_count}}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <code>Example 2</code>
+                </th>
+                <td>{{analysis['2015'].p_ex2_count}}</td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <code>Example 3</code>
+                </th>
+                <td>{{analysis['2015'].p_ex3_count}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+        </div>
+        </div>
+        <div class="col-sm-6">
+           
+            <h3>Gage:</h3>
+            <hr/>
+            <div class="col-sm-12 table-responsive">
+                <canvas id="gageAnalysis" ></canvas>
+                <table class="table table-bordered table-striped">
+                    <colgroup>
+                        <col class="col-xs-1">
+                        <col class="col-xs-7">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>Analysis Type</th>
+                        <th>Count</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row">
+                            <code>New Analysis</code>
+                        </th>
+                        <td>{{analysis['2015'].g_new_count}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <code>Example 1</code>
+                        </th>
+                        <td>{{analysis['2015'].g_ex1_count}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <code>Example 2</code>
+                        </th>
+                        <td>{{analysis['2015'].g_ex2_count}}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <code>Disc Example</code>
+                        </th>
+                        <td>{{analysis['2015'].g_disc_count}}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                </div>
+    </div>
+</div>

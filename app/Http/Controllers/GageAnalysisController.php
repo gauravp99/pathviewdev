@@ -338,11 +338,11 @@ class GageAnalysisController extends Controller
         //insert into the analysis table if the analysis is done event if the error occurred we insert into table
         if (Auth::user())
             DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => 'gage', 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $analysis, 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
             );
         else
             DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => 'gage', 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $analysis, 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
             );
 
         return view('Gage.GageResult');

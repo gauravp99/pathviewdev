@@ -1,0 +1,82 @@
+<!-- PAGE TITLE =============================================== -->
+<div ng-controller="mainController" >
+<div class="page-header">
+    <h2>Issues</h2>
+    <h4>Submit your issues here. before submitting find all the comments categorised with category</h4>
+</div>
+
+<!-- NEW COMMENT FORM =============================================== -->
+
+
+<!-- LOADING ICON =============================================== -->
+<!-- show loading icon if the loading variable is set to true -->
+<p class="text-center" ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
+
+<!-- THE COMMENTS =============================================== -->
+<!-- hide these comments if the loading variable is true -->
+<div class="comment" ng-hide="loading" ng-repeat="comment in comments">
+    <div class="col-md-12">
+    <h3>{{ comment.text_string }} <small>by {{ comment.author }}</h3>
+    <p id="comment">Comment #{{ comment.id }}</p>
+        <nav style="alignment: right"><p id="comment">{{ comment.created_at }}</p></nav>
+    <div cstyle="display: inline;"><a href="" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a>
+    <nav style="alignment: left;display: inline-block;"><a href="" ng-click="showReply(comment.id)" class="text-muted" >Reply</a></nav></div>
+    <div class="col-lg-offset-2 col-md-8 reply" hidden="" id="{{comment.id}}" style="display:inline-block;font-size:small;-ms-box-sizing:content-box;
+-moz-box-sizing:content-box;
+-webkit-box-sizing:content-box;
+box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
+        <form ng-submit="submitComment()"> <!-- ng-submit will disable the default form action and use our function -->
+
+            <!-- AUTHOR -->
+
+
+            <!-- COMMENT TEXT -->
+            <div class="form-group">
+                <input type="text" class="form-control input-sm" name="commentReply" ng-model="commentDataReply.text" placeholder="Comment" required>
+            </div>
+
+
+
+            <!-- SUBMIT BUTTON -->
+            <div class="form-group text-left">
+                <input type="text" class="form-control input-sm" name="replyAuthor" style="width:20%" ng-model="commentDataReply.author" placeholder="Name" required>
+
+            </div>
+            <div class="form-group text-left">
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button><a href="" ng-click="hideReply(comment.id)" class="text-muted" style="margin-left:5px;">cancel</a>
+            </div>
+
+        </form>
+    </div>
+    </div>
+</div>
+
+<hr/>
+
+<div class="col-sm-12" style="margin-top: 60px;">
+    <form ng-submit="submitComment()"> <!-- ng-submit will disable the default form action and use our function -->
+
+        <!-- AUTHOR -->
+        <div class="form-group">
+            <input type="text" class="form-control input-sm" name="author" ng-model="commentData.author" placeholder="Name" required>
+        </div>
+
+        <!-- COMMENT TEXT -->
+        <div class="form-group">
+            <input type="text" class="form-control input-lg" name="comment" ng-model="commentData.text" placeholder="Say what you have to say" required>
+
+        </div>
+
+
+        <!-- SUBMIT BUTTON -->
+        <div class="form-group text-right">
+            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+        </div>
+    </form>
+</div>
+</div>
+<script>
+    $('.reply').hide();
+
+
+</script>

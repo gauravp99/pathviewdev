@@ -1,0 +1,34 @@
+<script src="../js/ChartNew.js"></script>
+<div class="col-sm-12">
+    <h3>Pathviw and Gage users and analysis Trends mannual search</h3>
+    <ul class="nav nav-tabs">
+        <li role="presentation" ><a href="#/trends">Yearly</a></li>
+        <li role="presentation" ><a href="#/trends-monthly">Monthly</a></li>
+        <li role="presentation" class="active"><a href="#/trends-mannual">Mannual</a></li>
+    </ul>
+    <div class="col-sm-12">
+        <h3>Analysis</h3>
+        <h3>Search:</h3>
+        <div class="col-sm-8">
+
+        <div class="col-sm-8 input-append date" id="datepicker" data-date="dateValue: Customer.DateOfBirth" data-date-format="dd-mm-yyyy">
+            Start Date:
+            <input class="span2" size="16" type="text" width="100px" data-bind="value: Customer.DateOfBirth" readonly="readonly" />
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+
+        <div class="col-sm-8 input-append date" id="datepicker1" data-date="dateValue: Customer.DateOfBirth" data-date-format="dd-mm-yyyy">
+            End Date:
+            <input class="span2" size="16" type="text" data-bind="value: Customer.DateOfBirth" readonly="readonly" />
+            <span class="add-on"><i class="icon-calendar"></i></span>
+        </div>
+            </div>
+        <div class="col-sm-4">
+        <input type="submit" value="Search">
+            </div>
+    </div>
+</div>
+<script>
+    $('#datepicker').datepicker();
+    $('#datepicker1').datepicker();
+</script>

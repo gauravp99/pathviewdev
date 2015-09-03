@@ -1,6 +1,5 @@
 @extends('GageApp')
 @section('content')
-
     @include('GageNavigation')
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
@@ -13,21 +12,10 @@
     <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
     <div class="col-md-9">
         <div class="conetent-header ">
-            <p><b>Example GAGE Analysis 1</b></p>
+            <p><b>Discrete GAGE Analysis</b></p>
         </div>
         <div id="error-message"></div>
-        {{--<div class="col-md-2">
-            <div id="progress" class="col-md-12" hidden>
-                <h2 class="alert alert-info"> Executing, Please wait. </h2>
-                <img width="200px" hieght="200px" src="/images/load.gif">
-            </div>
-            <div id="completed" class="list-group col-md-12" hidden>
-                <p> Completed Gage Analysis</p>
-                <a id ='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
-                <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
-            </div>
-        </div>--}}
-    </div>
+  </div>
     <?php
     //specifying default values for all the variables;
     $geneIdType = "entrez";
@@ -64,14 +52,14 @@
                 <div id="steps">
                     {!! form::open(array('url' => 'exampleGageAnalysis1','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
                     <fieldset class="step inputOutput-step">
-                        <div class="stepsdiv" id="assayData-div">
+                        <div class="stepsdiv" id="SampleListData-div">
                             <div class="col-sm-12">
 
                                 <div class="col-sm-5">
-                                    <a href="gageTutorial#assay_data" onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                    <a href="gageTutorial#sampleList" onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                     </a>
-                                    <label for="assayData">Assay Data:</label>
+                                    <label for="assayData">Sample List:</label>
                                 </div>
 
                                 <div class="col-sm-7">
@@ -79,8 +67,30 @@
 
                                     <div class="input-group">
                                         <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                        <a href="/all/data/gagedata.txt" target="_blank">gse16873.csv</a>
-                                    </div>
+<textarea class="form-control valid" rows="4" name="sampleList" aria-invalid="false"></textarea>					
+<label for="sampleList">(Or)</label>
+<input type="file" name="sampleListInputFile">
+					</div>
+                                </div>
+                            </div>
+                        </div>
+   <div class="stepsdiv" id="BackgroundData-div">
+                            <div class="col-sm-12">
+
+                                <div class="col-sm-5">
+                                    <a href="gageTutorial#sampleList" onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    <label for="assayData">Background List:</label>
+                                </div>
+
+                                <div class="col-sm-7">
+
+
+                                    <div class="input-group">
+                                        <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
+                                        <input type="file" name="BackgroundListInputFile">
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -178,46 +188,6 @@
 
 
 
-                        <div class="stepsdiv" id="ref-div" >
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#contorl_reference" onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Column numbers for the reference condition or phenotype i.e. control group if you specify null than all the columns are considered as target experiments. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="ref">Control / Reference:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input class="ex8"  name="reference"  id="reference"  value={{$reference}}> <h6 class="noteHint" >eg: 1,3,5 or NULL</h6>
-                                    <!-- To get the number of column fields in a file and render it on ref and sample columns -->
-                                    <input type="text"  name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns"   >
-                                    <select name="ref[]" id="refselect"   multiple="" size="5" style="width:100%;" ng-model='refselect' ng-show="columns.length > 0">
-                                        <option ng-repeat="column in columns track by $index"
-                                                value="<% $index+1 %>">
-                                            <% column %>
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stepsdiv" id="sample-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#case_sample" onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Column numbers for the target condition or phenotype i.e. experiment group in the exprs data matrix. if you specify null than all the columns other than ref are considered as target experiments." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="sample">Case / Sample:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input class="ex8"  name="samples"  id="sample" value={{$sample}}  > <h6 class="noteHint">eg: 2,4,6 or NULL</h6>
-                                    <select name="sample[]" id="sampleselect"  multiple="" size="5" style="width:100%;" ng-model='sampleselect' ng-show="columns.length > 0">
-                                        <option ng-repeat="column in columns track by $index"
-                                                value="<% $index+1 %>">
-                                            <% column %>
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                     </fieldset >
 
                     <fieldset class="step analysis-step">
@@ -256,86 +226,6 @@
                             </div>
                         </div>
 
-                        <div class="stepsdiv" id="compare-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="compare">Compare:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <select  name="compare"  class="styled-select" id="compare" class="compare" >
-                                        <option value="paired" @if (strcmp($compare,'paired') == 0 ) selected @endif >paired</option>
-                                        <option value="unpaired" @if (strcmp($compare,'unpaired') == 0 ) selected @endif >unpaired</option>
-                                        <option value="1ongroup" @if (strcmp($compare,'1ongroup') == 0 ) selected @endif>1ongroup</option>
-                                        <option value="as.group" @if (strcmp($compare,'as.group') == 0 ) selected @endif >as.group</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stepsdiv" id="sameDir-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#two_direction_test" onclick="window.open('gageTutorial#two_direction_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="To test for changes changes towards both directions simultaneously." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="sameDir">Two-direction Test:</label>
-                                </div>
-                                <div class="col-sm-7">
-
-                                    <input type="checkbox" id="sameDir" style="width: 44px;" value="true" name="test2d" @if ($test2d) checked @endif  >
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stepsdiv" id="rankTest-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#rank_test" onclick="window.open('gageTutorial#rank_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="whether do the optional rank based two-sample t-test." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="rankTest">Rank Test:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="checkbox" id="rankTest" style="width: 44px;" value="true" name="rankTest" @if ($rankTest) checked @endif  >
-
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stepsdiv" id="useFold-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#per_gene_score" onclick="window.open('gageTutorial#per_gene_score', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Whether to use fold changes or t-test statistics as per gene statistics." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="useFold">Per Gene Score:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <input type="checkbox"  id="useFold" value="true"  data-off-text="t-test" data-on-text="fold" name="useFold" @if ($useFold) checked @endif>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="stepsdiv" id="test-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#gene_set_test" onclick="window.open('gageTutorial#gene_set_test', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Function used for gene set tests for single array based analysis." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="test">Gene Set Test:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <select name="test" id="test" class="styled-select" class="compare">
-                                        <option value="gs.tTest" @if (strcmp($test,'gs.tTest') == 0 ) selected @endif >t-test</option>
-                                        <option value="gs.zTest" @if (strcmp($test,'gs.zTest') == 0 ) selected @endif >z-test</option>
-                                        <option value="gs.KSTest" @if (strcmp($test,'gs.KSTest') == 0 ) selected @endif  >Kolmogorov–Smirnov test</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="stepsdiv" id="UsePathview-div">
                             <div class="col-sm-12">
@@ -351,8 +241,24 @@
                             </div>
                         </div>
 
-                        <div class="stepsdiv" id="dataType-div" >
-                            <div class="col-sm-12">
+                        <div class="stepsdiv" id="resultBasedOn-div" >
+           			<div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="gageTutorial#resultBasedOn" onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Data type Gene,Compound while generating the pathviews." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    <label for="ResultsBasedOn">Results Based On:</label>
+                                </div>
+                                <div class="col-sm-7" >
+                                    <select name="resultBasedOn" class="styled-select" id="dataType" class="compare"  >
+                                        <option value="number">number (selected)</option>
+                                        <option value="ratio">ratio (selected vs background)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+			<div class="stepsdiv" id="dataType-div" >
+                                <div class="col-sm-12">
                                 <div class="col-sm-5">
                                     <a href="gageTutorial#data_type" onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Data type Gene,Compound while generating the pathviews." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -367,6 +273,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </fieldset>
                 </div>
 
@@ -720,4 +627,4 @@
 
 
 
-
+@stop
