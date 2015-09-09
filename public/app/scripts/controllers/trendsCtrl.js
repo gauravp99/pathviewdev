@@ -4,7 +4,47 @@
 
 angular.module('mytodoApp')
     .controller('trendsCtrl', function ($scope,$rootScope,$http) {
-       console.log("yearly trends");
+
+        $scope.currentPage = 1;
+        $scope.pageSize = 10;
+        $scope.meals = [];
+
+        var dishes = [
+            'noodles',
+            'sausage',
+            'beans on toast',
+            'cheeseburger',
+            'battered mars bar',
+            'crisp butty',
+            'yorkshire pudding',
+            'wiener schnitzel',
+            'sauerkraut mit ei',
+            'salad',
+            'onion soup',
+            'bak choi',
+            'avacado maki'
+        ];
+        var sides = [
+            'with chips',
+            'a la king',
+            'drizzled with cheese sauce',
+            'with a side salad',
+            'on toast',
+            'with ketchup',
+            'on a bed of cabbage',
+            'wrapped in streaky bacon',
+            'on a stick with cheese',
+            'in pitta bread'
+        ];
+        for (var i = 1; i <= 100; i++) {
+            var dish = dishes[Math.floor(Math.random() * dishes.length)];
+            var side = sides[Math.floor(Math.random() * sides.length)];
+            $scope.meals.push('meal ' + i + ': ' + dish + ' ' + side);
+        }
+
+        $scope.pageChangeHandler = function(num) {
+            console.log('meals page changed to ' + num);
+        };
 
         $http.get('/api/yearly').
             then(function(response) {
@@ -34,8 +74,7 @@ angular.module('mytodoApp')
                     var users_count = [];
                     var k = 0;
                     $.each(response.data[years[i]], function(value, key) {
-                        console.log(key);
-                            console.log(key.date);
+
                         months[k] = key.month;
                         p_analysis_count[k]= key.pathwayAnalysisCount;
                         g_analysis_count[k] = key.GageAnalysisCount;
@@ -70,7 +109,7 @@ angular.module('mytodoApp')
                             {
                                 g_ex2_count += parseInt(value);
                             }
-                            if(key=="DiscAnalysis")
+                            if(key=="discreteGageAnalysis")
                             {
                                 g_disc_count += parseInt(value);
                             }
@@ -97,7 +136,7 @@ angular.module('mytodoApp')
                     var stepspathview = 10;
                     var stepsgage= 10;
                     var stepsUser= 10;
-                    console.log(p_analysis_count);
+
                     maxpathviewvalue = _.max(p_analysis_count,function (months) {return parseInt(months)});
 
                     minpathviewvalue = _.min(p_analysis_count,function (months) {return parseInt(months)});
@@ -251,7 +290,6 @@ angular.module('mytodoApp')
 
                 new Chart(gage_analysis).Bar(data1, opt_gage);
                 new Chart(gage_users).Line(data_users, opt2);
-                console.log($scope);
 
 
                 var pathviewpie = [
@@ -301,7 +339,7 @@ angular.module('mytodoApp')
                     },
                     {
                         value: $scope.analysis['2015'].g_disc_count,
-                        color: "#FDB45C",
+                        color: "#00B45C",
                         highlight: "#00C870",
                         label: "Discrete Analysis"
                     }
@@ -326,7 +364,9 @@ angular.module('mytodoApp')
             }, function(response) {
                 alert("Alert!! Unable to get details from server.")
             });
-
+        $scope.pageChangeHandler = function(num) {
+            console.log('meals page changed to ' + num);
+        };
 
     })
 .controller('MonthlyTrendsCtrl', function ($scope) {
@@ -334,4 +374,10 @@ angular.module('mytodoApp')
 })
 .controller('ManualTrendsCtrl', function ($scope) {
         console.log("manual trends");
+})
+.controller('OtherController', function ($scope) {
+        $scope.pageSize = 10;
+    $scope.pageChangeHandler = function(num) {
+        console.log('going to page ' + num);
+    };
 });

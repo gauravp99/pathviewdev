@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('mytodoApp', ['ngRoute','commentCtrl', 'commentService'])
+  .module('mytodoApp', ['ngRoute','commentCtrl', 'commentService','angularUtils.directives.dirPagination'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

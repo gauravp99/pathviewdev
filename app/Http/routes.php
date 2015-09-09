@@ -181,9 +181,12 @@ Route::get('gageResult', function () {
 Route::post('gageAnalysis', 'GageAnalysisController@newGageAnalysis');
 Route::post('exampleGageAnalysis1', 'GageAnalysisController@ExampleGageAnalysis1');
 Route::post('exampleGageAnalysis2', 'GageAnalysisController@ExampleGageAnalysis2');
+
 Route::get('discreteGage',function(){
 return view('Gage.analysis.discreteAnalysis');
 });
+
+Route::post('discreteGageAnalysis','GageAnalysisController@discreteGageAnalysis');
 Route::get('gageIndex','gageController@index');
 Route::get('gageAbout','gageController@about');
 Route::get('gageTutorial','gageController@Tutorial');

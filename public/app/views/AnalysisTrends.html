@@ -1,5 +1,6 @@
 <script src="../js/ChartNew.js"></script>
 <script src="http://underscorejs.org/underscore-min.js"></script>
+
 <div class="col-sm-12">
     <h3>Pathviw and Gage users and analysis Trends</h3>
 <ul class="nav nav-tabs">
@@ -8,8 +9,23 @@
     <li role="presentation"><a href="#/trends-mannual">Mannual</a></li>
 </ul>
     <div class="col-sm-12">
+        <div data-pagination="" data-num-pages="years.length"
+             data-current-page="currentPage" data-max-size="maxSize"
+             data-boundary-links="true"></div>
+        <ul>
+            <li ng-repeat="todo in filteredTodos">{{todo.text}}</li>
+        </ul>
+        <div data-pagination="" data-num-pages="numPages()"
+             data-current-page="currentPage" data-max-size="maxSize"
+             data-boundary-links="true"></div>
 
-        <nav align="right">
+     <nav align="right">
+         <div ng-controller="OtherController" class="other-controller">
+             <div class="text-center">
+                 <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="views/dirPagination.tpl.html"></dir-pagination-controls>
+             </div>
+         </div>
+
             <ul class="pagination" >
                 <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
                 <li ng-repeat="year in years"><a href="#">{{year}}</a></li>

@@ -50,7 +50,7 @@
                     </ul>
                 </div>
                 <div id="steps">
-                    {!! form::open(array('url' => 'exampleGageAnalysis1','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
+                    {!! form::open(array('url' => 'discreteGageAnalysis','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
                     <fieldset class="step inputOutput-step">
                         <div class="stepsdiv" id="SampleListData-div">
                             <div class="col-sm-12">
@@ -67,14 +67,14 @@
 
                                     <div class="input-group">
                                         <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-<textarea class="form-control valid" rows="4" name="sampleList" aria-invalid="false"></textarea>					
-<label for="sampleList">(Or)</label>
-<input type="file" name="sampleListInputFile">
-					</div>
+                                        <textarea class="form-control valid" rows="4" name="sampleList" aria-invalid="false"></textarea>
+                                        <label for="sampleList">(Or)</label>
+                                        <input type="file" name="sampleListInputFile">
+					                </div>
                                 </div>
                             </div>
                         </div>
-   <div class="stepsdiv" id="BackgroundData-div">
+                    <div class="stepsdiv" id="BackgroundData-div">
                             <div class="col-sm-12">
 
                                 <div class="col-sm-5">
@@ -86,10 +86,11 @@
 
                                 <div class="col-sm-7">
 
-
+                                    <textarea class="form-control valid" rows="4" name="backgroundList" aria-invalid="false"></textarea>
+                                    <label for="sampleList">(Or)</label>
                                     <div class="input-group">
                                         <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                        <input type="file" name="BackgroundListInputFile">
+                                        <input type="file" name="backgroundListInputFile">
                                         </div>
                                 </div>
                             </div>
@@ -362,8 +363,10 @@
                 }
             },
             rules: {
-                assayData: {
-                    required:true,
+                sampleListInputFile: {
+                    extension: "txt|csv"
+                },
+                backgroundListInputFile: {
                     extension: "txt|csv"
                 },
                 'geneSet[]': "required",

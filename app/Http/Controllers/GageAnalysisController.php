@@ -11,6 +11,7 @@ use Log;
 use Redis;
 use Illuminate\Http\Request;
 use Queue;
+use Storage;
 use App\Commands\sendGageAnalysisCompletionMail;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
 
@@ -291,7 +292,7 @@ class GageAnalysisController extends Controller
 
         $_SESSION['argument'] = $argument;
 
-        //Push job into queuue code with status flag insert int redis
+        //Push job into queue code with status flag insert int redis
 
         /*$runHashdata = array();
         $runHashdata['argument'] = $argument;
@@ -349,6 +350,236 @@ class GageAnalysisController extends Controller
 
     }
 
+
+    public function discreteGageAnalysis()
+    {
+        /**
+         * check if the user is authorised user if not creating a directory within user directory.
+         * if guest user a input folder is created under users folder
+         */
+        if (Auth::user()) {
+            //email variable is location of the analysis folder
+            $email = Auth::user()->email;
+            $f = './all/' . Auth::user()->email;
+            if (!file_exists( $f)) {
+                try {
+                    $result = File::makeDirectory($f);
+                } catch (FileNotFoundException $e) {
+                    Log::error('Not able to create the file: ' . $e);
+                }
+            }
+
+            $io = popen('/usr/bin/du -sk ' . $f, 'r');
+            $size = fgets($io, 4096);
+            $size = substr($size, 0, strpos($size, "\t"));
+            pclose($io);
+            $size = 100000 - intval($size);
+            //checking if file size is less than 99 MB
+            if ($size < 1000) {
+                return view('errors.SpaceExceeded');
+            }
+        }
+        else{
+            $email = "demo";
+        }
+
+        if (!file_exists("all/$email")) {
+            try{
+                $result = File::makeDirectory("all/$email");
+            }
+            catch(FileNotFoundException $e)
+            {
+                Log::error('Not able to create the file: '.$e);
+            }
+        }
+        $time = uniqid();
+        File::makeDirectory("all/$email/$time", 0777,true);
+        $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
+        /**
+         * create a list of arguments from the user input
+         */
+        $argument = "";
+        $argument .= "destDir:" . $destFile . ";";
+        if(Input::hasFile('sampleListInputFile'))
+        {
+            $argument .="sampleList:file". ";";
+            $file = Input::file('sampleListInputFile');
+            $filename1 = Input::file('sampleListInputFile')->getClientOriginalName();
+            $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
+            $file->move($destFile, $filename1);
+            $argument .="sampleListFile:".$filename1.";";
+        }else{
+            $argument .="sampleList:inputbox". ";";;
+            $sampleList = $_POST['sampleList'];
+            $file = public_path() . "/" . "all/" . $email . "/" . $time . "/sampleList.txt";
+            $bytes_written = File::put($file, $sampleList);
+            if ($bytes_written === false)
+            {
+                die("Error writing to file");
+            }
+
+        }
+        if(Input::hasFile('backgroundListInputFile'))
+        {
+            $argument .="baclgroundList:file". ";";;
+            $file = Input::file('backgroundListInputFile');
+            $filename1 = Input::file('backgroundListInputFile')->getClientOriginalName();
+            $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
+            $file->move($destFile, $filename1);
+            $argument .="baclgroundListFile:".$filename1.";";
+
+        }else{
+            $argument .="baclgroundList:inputbox". ";";
+            $BackgroundList = $_POST['backgroundList'];
+            $file = public_path() . "/" . "all/" . $email . "/" . $time . "/backgroundList.txt";
+            File::put($file, $BackgroundList);
+            if ($bytes_written === false)
+            {
+                die("Error writing to file");
+            }
+
+        }
+
+
+        if (isset($_POST['geneSet']) && is_array($_POST['geneSet'])) {
+
+            if (strcmp($_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
+                $argument .= "geneSetCategory:kegg;";
+            }
+            else if (strcmp($_POST['geneSet'][0], 'BP') == 0 || strcmp($_POST['geneSet'][0], 'CC') == 0 || strcmp($_POST['geneSet'][0], 'MF') == 0 || strcmp($_POST['geneSet'][0], 'BP,CC,MF') == 0 ) {
+                $argument .= "geneSetCategory:go;";
+            }
+            else if(strcmp($_POST['geneSet'][0], 'custom') == 0)
+            {
+                $argument .= "geneSetCategory:custom;";
+            }
+            $argument .= "geneSet:";
+            foreach ($_POST['geneSet'] as $geneSet) {
+                $argument .= $geneSet . ",";
+            }
+            $argument .= ";";
+        }
+
+        if (isset($_POST['species'])) {
+            $argument .= "species:";
+            if (strcmp($_POST['geneIdType'], 'entrez') == 0 || strcmp($_POST['geneIdType'], 'kegg') == 0) {
+                $argument .= explode('-', $_POST['species'])[0] . ";";
+            } else if(strcmp($_POST['geneIdType'], 'Entrez Gene') == 0 || strcmp($_POST['geneIdType'], 'ORF') == 0 || strcmp($_POST['geneIdType'], 'TAIR') == 0) {
+                $goSpecies = DB::table('GoSpecies')->where('species_id',substr($_POST['species'],0,3))->first();
+
+                if(sizeof($goSpecies) > 0)
+                {
+                    $argument .= explode('-',$goSpecies->Go_name )[0] . ";";
+                }
+                else{
+                    $goSpecies1 = DB::table('GoSpecies')->where('Go_name',$_POST['species'])->first();
+                    if(sizeof($goSpecies1) > 0)
+                    {
+                        $argument .= explode('-',$goSpecies1->Go_name )[0] . ";";
+                    }
+                    else{
+                        $argument .= "Human;";
+                    }
+                }
+
+            }
+            else{
+                $argument .= explode('-', $_POST['species'])[0] . ";";
+            }
+        }
+
+        if (isset($_POST['cutoff'])) {
+            $argument .= "cutoff:";
+            $argument .= $_POST['cutoff'].";";
+        }
+
+        if (isset($_POST['geneIdType'])) {
+
+            $argument .= "geneIdType:" . $_POST['geneIdType'] . ";";
+
+            //if the example is 2nd example or geneIdType is geneIdType
+            if (strcmp($_POST['geneIdType'], 'custom') == 0) {
+                if(Input::hasFile('geneIdFile'))
+                {
+                    $file = Input::file('geneIdFile');
+                    $filename1 = Input::file('geneIdFile')->getClientOriginalName();
+                    $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
+                    $file->move($destFile, $filename1);
+                    $argument .= "gsfn:" . $filename1 . ";";
+                    $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename1) . ";";
+                }
+                else{
+                    $filename1= "c1_all_v3_0_symbols.gmt";
+                    $file1 = public_path() . "/" . "all/demo/example/c1_all_v3_0_symbols.gmt";
+
+                    if (!File::copy($file1, $destFile . $filename1)) {
+                        $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
+                        return view('Gage.GageAnalysis');
+                    }
+                    $argument .= "gsfn:" . $filename1 . ";";
+                    $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename1) . ";";
+                }
+            }
+        }
+
+
+
+        if (isset($_POST['setSizeMin'])) {
+            $argument .= "setSizeMin:" . $_POST['setSizeMin'] . ";";
+        }
+
+        if (isset($_POST['setSizeMax'])) {
+            if (strcmp(strtolower($_POST['setSizeMax']), 'infinite') == 0) {
+                $argument .= "setSizeMax:INF;";
+            } else {
+                $argument .= "setSizeMax:" . $_POST['setSizeMax'] . ";";
+            }
+        } else {
+            $argument .= "setSizeMax:INF;";
+        }
+
+        if (isset($_POST['resultBasedOn'])) {
+            $argument .= "resultBasedOn:" . $_POST['resultBasedOn'] . ";";
+        }
+        $_SESSION['argument'] = $argument;
+        $_SESSION['destDir'] = $destFile;
+        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+
+        function get_client_ip()
+        {
+
+            if (getenv('HTTP_CLIENT_IP'))
+                $ipaddress = getenv('HTTP_CLIENT_IP');
+            else if (getenv('HTTP_X_FORWARDED_FOR'))
+                $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+            else if (getenv('HTTP_X_FORWARDED'))
+                $ipaddress = getenv('HTTP_X_FORWARDED');
+            else if (getenv('HTTP_FORWARDED_FOR'))
+                $ipaddress = getenv('HTTP_FORWARDED_FOR');
+            else if (getenv('HTTP_FORWARDED'))
+                $ipaddress = getenv('HTTP_FORWARDED');
+            else if (getenv('REMOTE_ADDR'))
+                $ipaddress = getenv('REMOTE_ADDR');
+            else if (isset($_SERVER['REMOTE_ADDR']))
+                $ipaddress = $_SERVER['REMOTE_ADDR'];
+            else
+                $ipaddress = 'UNKNOWN';
+            return $ipaddress;
+        }
+
+        $date = new \DateTime;
+
+        if (Auth::user())
+            DB::table('analyses')->insert(
+                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+            );
+        else
+            DB::table('analyses')->insert(
+                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+            );
+        return view('Gage.DiscreteGageResult');
+
+    }
     public function newGageAnalysis()
     {
         $d = new GageAnalysisController();
