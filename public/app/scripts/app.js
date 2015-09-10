@@ -20,6 +20,10 @@ angular
           templateUrl: 'views/comments.html',
           controller: 'mainController'
         })
+        .when('/faq', {
+          templateUrl: 'views/faq.html',
+          controller: 'faqController'
+        })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'aboutCtrl'

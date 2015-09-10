@@ -67,9 +67,9 @@
 
                                     <div class="input-group">
                                         <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                        <textarea class="form-control valid" rows="4" name="sampleList" aria-invalid="false"></textarea>
+                                        <textarea class="form-control valid" id="sampleList" rows="4" name="sampleList" aria-invalid="false"></textarea>
                                         <label for="sampleList">(Or)</label>
-                                        <input type="file" name="sampleListInputFile">
+                                        <input type="file" id="sampleListInputFile" name="sampleListInputFile">
 					                </div>
                                 </div>
                             </div>
@@ -86,11 +86,11 @@
 
                                 <div class="col-sm-7">
 
-                                    <textarea class="form-control valid" rows="4" name="backgroundList" aria-invalid="false"></textarea>
+                                    <textarea class="form-control valid" rows="4" id = "backgroundList" name="backgroundList" aria-invalid="false"></textarea>
                                     <label for="sampleList">(Or)</label>
                                     <div class="input-group">
                                         <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                        <input type="file" name="backgroundListInputFile">
+                                        <input type="file" id="backgroundListInputFile" name="backgroundListInputFile">
                                         </div>
                                 </div>
                             </div>
@@ -364,30 +364,40 @@
             },
             rules: {
                 sampleListInputFile: {
-                    extension: "txt|csv"
+                    extension: "txt|csv",
+                    required: {
+
+                        depends: function (element) {
+                            console.log("checking "+$("#sampleList").is(':empty'));
+                            return $("#sampleList").is(':empty');
+                        }
+                    }
+                },
+                sampleList: {
+                    required: {
+                        depends: function (element) {
+                            return $("#sampleListInputFile").is(':empty');
+                        }
+                    }
                 },
                 backgroundListInputFile: {
-                    extension: "txt|csv"
+                    extension: "txt|csv",
+                    required: {
+
+                        depends: function (element) {
+                            return $("#backgroundList").is(':empty');
+                        }
+                    }
+                },
+                backgroundList: {
+                    required: {
+                        depends: function (element) {
+                            return $("#backgroundListInputFile").is(':empty');
+                        }
+                    }
                 },
                 'geneSet[]': "required",
-                reference: {
-                    refSampleFieldValidate:true,
-                    refSampleSameColumnCheck:true,
-                    required: {
-                        depends: function(element){
-                            return $("#sample").val()!=""
-                        }
-                    }
-                },
-                samples:{
-                    refSampleFieldValidate:true,
-                    refSampleSameColumnCheck:true,
-                    required: {
-                        depends: function(element){
-                            return $("#reference").val()!=""
-                        }
-                    }
-                },
+
                 setSizeMin:{
                     required: true,
                     digits: true
@@ -413,9 +423,21 @@
                 }
             },
             messages: {
-                assayData: {
-                    required: "* Select the Input file csv/txt file",
+                sampleListInputFile: {
+                    required: "* Required Input sample list. Manually type it or upload a file",
                     extension: "* only txt and csv extensions are allowed"
+                },
+                backgroundListInputFile: {
+                    required: "* Required Input Background list. Manually type it or upload a file",
+                    extension: "* only txt and csv extensions are allowed"
+                },
+                sampleList: {
+                    required: "* Required Input sample list. Manually type it or upload a file",
+
+                },
+                backgroundList: {
+                    required: "* Required Input Background list. Manually type it or upload a file",
+
                 },
                 geneIdFile: {
                     required: "* Select the Gene ID file csv/txt file"

@@ -1,4 +1,5 @@
 
+
 <div class="stepsdiv" id="geneid-div" @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -14,7 +15,15 @@
     <datalist id="geneidlist">
         <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
-        $gene = DB::table('gene')->get();
+        $gene = Cache::remember('gene', 10, function()
+        {
+            return DB::table('gene')->get();
+        });
+        if (Cache::has('gene'))
+        {
+            $gene = Cache::get('gene');
+        }
+
         foreach ($gene as $gene1) {
             echo "<option value='$gene1->geneid'>$gene1->geneid</option>";
         }
@@ -40,7 +49,19 @@
 
     <datalist id="cpdidlist">
         <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
-        <?php $compound = DB::table('compound')->get(); foreach ($compound as $compound1) { echo "<option>$compound1->cmpdid</option>"; } ?>
+        <?php
+         $compound = Cache::remember('compound', 10, function()
+        {
+            return DB::table('compound')->get();
+        });
+        if (Cache::has('compound'))
+        {
+            $compound = Cache::get('compound');
+
+        }
+
+        foreach ($compound as $compound1) { echo "<option>$compound1->cmpdid</option>"; }
+          ?>
         <!--[if (lt IE 10)]></select><![endif]-->
     </datalist>
 </div>
@@ -61,7 +82,16 @@
     <datalist id="specieslist">
         <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
-        $species = DB::table('Species')->get();
+
+          $species = Cache::remember('Species', 10, function()
+        {
+            return DB::table('Species')->get();
+        });
+        if (Cache::has('Species'))
+        {
+            $species = Cache::get('Species');
+        }
+
         foreach ($species as $species1) {
             echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
         }
@@ -90,7 +120,15 @@
             <br/>
             <select name="selectfrom" style="float:none;width:100%;height:236px;font-size: 17px;" id="select-from" multiple="" size="10"  class="multiple-select">
                 <?php
-                $pathway = DB::table('Pathway')->get();
+                $pathway = Cache::remember('Pathway', 10, function()
+                {
+                    return DB::table('Pathway')->get();
+                });
+                if (Cache::has('Pathway'))
+                {
+                    $pathway = Cache::get('Pathway');
+                }
+
 
                 foreach ($pathway as $pathway1) {
                     echo "<option value=".$pathway1->pathway_id.">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
@@ -126,7 +164,10 @@
     <datalist id="pathwaylist">
         <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
-        $pathway = DB::table('Pathway')->get();
+        if (Cache::has('Pathway'))
+                {
+                    $pathway = Cache::get('Pathway');
+                }
         foreach ($pathway as $pathway1) {
             echo "<option value=".$pathway1->pathway_id.">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
         }

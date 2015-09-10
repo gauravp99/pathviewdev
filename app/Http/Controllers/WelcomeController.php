@@ -7,13 +7,14 @@
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use stdClass;
-
+use Cache;
 class WelcomeController extends Controller
 {
 
 
     public function __construct()
     {
+
         $this->middleware('guest');
     }
 
@@ -36,7 +37,14 @@ class WelcomeController extends Controller
          * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
          * @Analyses(Number of analyses generated)
          */
-        $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'pathview\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
+        $val = Cache::remember('analysis_details', 10, function()
+        {
+            return DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'pathview\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
+        });
+        if (Cache::has('analysis_details'))
+        {
+            $val = Cache::get('analysis_details');
+        }
         foreach ($val as $month) {
             array_push($usage, $month->count);
             array_push($ip, $month->ipadd_count);
@@ -47,7 +55,15 @@ class WelcomeController extends Controller
          * Pathway Package downloads. Script file biocstatistics.sh is used to get the details
          * of current month from bio website. This script is a cron job running each week on saturday 5:00 AM EST
          */
-        $bioc_val = DB::select(DB::raw('select concat(concat(month,\'-\'),year%100) as date,numberof_uniqueip as ipadd,numberof_downloads as downloads from biocstatistics'));
+        $bioc_val = Cache::remember('bioc_val', 10, function()
+        {
+            return DB::select(DB::raw('select concat(concat(month,\'-\'),year%100) as date,numberof_uniqueip as ipadd,numberof_downloads as downloads from biocstatistics'));
+        });
+        if (Cache::has('bioc_val'))
+        {
+            $bioc_val = Cache::get('bioc_val');
+        }
+       // $bioc_val = DB::select(DB::raw('select concat(concat(month,\'-\'),year%100) as date,numberof_uniqueip as ipadd,numberof_downloads as downloads from biocstatistics'));
         $bioc_downloads = array();
         $bioc_ip = array();
         $bioc_months = array();
@@ -62,10 +78,40 @@ class WelcomeController extends Controller
          * Pathway Package downloads and web usage counts you can see that we are adding 15000 and 7500 to the sql query's since
          * we didnt had any statistics count of the initial 1 year we manually added approximation value
          */
-        $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocstatistics'));
-        $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocstatistics'));
-        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'pathview\' '));
-        $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'pathview\' '));
+        $count_bioc_downlds = Cache::remember('count_bioc_downlds', 10, function()
+        {
+            return DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocstatistics'));
+        });
+        if (Cache::has('count_bioc_downlds'))
+        {
+            $count_bioc_downlds = Cache::get('count_bioc_downlds');
+        }
+        $count_bioc_ips = Cache::remember('count_bioc_ips', 10, function()
+        {
+            return DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocstatistics'));
+        });
+
+        if (Cache::has('count_bioc_ips'))
+        {
+            $count_bioc_ips = Cache::get('count_bioc_ips');
+        }
+
+        $count_web_downlds = Cache::remember('count_web_downlds', 10, function()
+        {
+            return DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'pathview\' '));
+        });
+        if (Cache::has('count_web_downlds'))
+        {
+            $count_web_downlds = Cache::get('count_bioc_downlds');
+        }
+        $count_web_ips = Cache::remember('count_web_ips', 10, function()
+        {
+            return DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'pathview\' '));
+        });
+        if (Cache::has('count_web_ips'))
+        {
+            $count_web_ips = Cache::get('count_web_ips');
+        }
 
         /**
          * To make sure that the data is not empty from the database

@@ -11,7 +11,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading leftpanel" >Usage Statistics</div>
                         <div class="panel-body">
-                            <p >Pathview web</p>
+                            <p >Gage web</p>
 
                             <div id="graph1" class="col-md-12">
 

@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <?php
+use DebugBar\StandardDebugBar;
+
+$debugbar = new StandardDebugBar();
+$debugbarRenderer = $debugbar->getJavascriptRenderer();
+
+$debugbar["messages"]->addMessage("hello world!");
 
 if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-guest-home")
         {

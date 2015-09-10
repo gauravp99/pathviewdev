@@ -146,6 +146,8 @@ return [
         'App\Providers\EventServiceProvider',
         'App\Providers\RouteServiceProvider',
         'Illuminate\Redis\RedisServiceProvider',
+        'Barryvdh\Debugbar\ServiceProvider',
+
     ],
 
     /*
@@ -195,6 +197,7 @@ return [
         'View' => 'Illuminate\Support\Facades\View',
         'form' => 'Illuminate\Html\FormFacade',
         'html' => 'Illuminate\Html\HtmlFacade',
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
 
     ],
 
