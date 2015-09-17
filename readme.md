@@ -207,6 +207,12 @@ sudo supervisorctl update
 
 sudo supervisorctl start laravel-worker:*
 
+#17 Install memcached:
+ sudo apt-get install -y memcached php5-memcached
+ sudo service apache2 restart
+chage config/cache.php default cache to memcache
+
+
 
 ##References:
 
