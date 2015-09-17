@@ -26,8 +26,12 @@
         <li <?php if (basename(Request::url()) == "gageExample2") {
             echo "class=\"active\"";
         }?>><a href="/gageExample2"><b>Example Analysis 2</b></a></li>
+        <li <?php if (basename(Request::url()) == "gagePathview") {
+            echo "class=\"active\"";
+        }?>><a href="/gagePathview"><b>Gage and Pathview Analysis</b></a></li>
         <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
+
         <script>
             function openWindow() {
                 window.open('/gageTutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");

@@ -148,6 +148,21 @@ class GageAnalysisController extends Controller
             }
 
         }
+        else if(strcmp($analysis, 'GagePathviewAnalysis') == 0)
+        {
+            //copy files for example 1 to the destination user profile
+            $filename = "gagedata.txt";
+            $file = public_path() . "/" . "all/data/gagedata.txt";
+
+            if (!File::copy($file, $destFile . $filename)) {
+                $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
+                return view('Gage.GageAnalysis');
+            }
+
+
+
+
+        }
 
         $argument .= "filename:" . $filename . ";";
         $argument .= "destFile:" . $destFile . $filename . ";";
@@ -285,9 +300,178 @@ class GageAnalysisController extends Controller
             if (isset($_POST['dataType'])) {
                 $argument .= "data.type:" . $_POST['dataType'] . ";";
             }
+            if(strcmp($analysis, 'GagePathviewAnalysis') == 0)
+            {
+                /*----------------------Kegg ID----------------------------------------------------------*/
+                if (isset($_POST["kegg"]))
+                    $argument .= "kegg:T;";
+                else
+                    $argument .= "kegg:F;";
+                /*----------------------Kegg ID----------------------------------------------------------*/
+
+
+                /*----------------------Layer----------------------------------------------------------*/
+                if (isset($_POST["layer"]))
+                    $argument .= "layer:T;";
+                else
+                    $argument .= "layer:F;";
+                /*----------------------Layer----------------------------------------------------------*/
+
+                /*----------------------Split node----------------------------------------------------------*/
+                if (isset($_POST["split"]))
+                    $argument .= "split:T;";
+                else
+                    $argument .= "split:F;";
+                /*----------------------Split node----------------------------------------------------------*/
+
+                /*----------------------expand node----------------------------------------------------------*/
+                if (isset($_POST["expand"]))
+                    $argument .= "expand:T;";
+                else
+                    $argument .= "expand:F;";
+                /*----------------------expand node----------------------------------------------------------*/
+
+                /*----------------------multi state----------------------------------------------------------*/
+                if (isset($_POST["multistate"]))
+                    $argument .= "multistate:T;";
+                else
+                    $argument .= "multistate:F;";
+                /*----------------------multi state----------------------------------------------------------*/
+
+                /*----------------------match data----------------------------------------------------------*/
+                if (isset($_POST["matchd"]))
+                    $argument .= "matchd:T;";
+                else
+                    $argument .= "matchd:F;";
+                /*----------------------match data----------------------------------------------------------*/
+
+                /*----------------------gene discrete----------------------------------------------------------*/
+                if (isset($_POST["gdisc"]))
+                    $argument .= "gdisc:T;";
+                else
+                    $argument .= "gdisc:F;";
+                /*----------------------gene discrete----------------------------------------------------------*/
+
+                /*----------------------compound discrete----------------------------------------------------------*/
+                if (isset($_POST["cdisc"]))
+                    $argument .= "cdisc:T;";
+                else
+                    $argument .= "cdisc:F;";
+                /*----------------------compound discrete----------------------------------------------------------*/
+
+                /*----------------------Key Position----------------------------------------------------------*/
+                $argument .= "kpos:" . $_POST["kpos"] . ";";
+                /*----------------------Key Position----------------------------------------------------------*/
+
+                /*----------------------Signature position----------------------------------------------------------*/
+                $argument .= "pos:" . $_POST["pos"] . ";";
+                /*----------------------Signature position----------------------------------------------------------*/
+
+                /*----------------------Compound Label Offset----------------------------------------------------------*/
+                if (isset($_POST["offset"])) {
+                    $argument .= "offset:" . $_POST["offset"] . ";";
+                }
+                /*----------------------Compound Label Offset----------------------------------------------------------*/
+
+                /*----------------------Key Align----------------------------------------------------------*/
+                $argument .= "align:" . $_POST["align"] . ";";
+                /*----------------------Key Align----------------------------------------------------------*/
+
+                /*----------------------Gene Limit----------------------------------------------------------*/
+                if (isset($_POST["glmt"])){
+                $glmtrange = str_replace(",", ";", $_POST["glmt"]);
+
+                $argument .= "glmt:" . $glmtrange . ";";
+                }
+                /*----------------------Gene Limit----------------------------------------------------------*/
+
+                /*----------------------Gene Bins----------------------------------------------------------*/
+                if (isset($_POST["gbins"])){
+                    $argument .= "gbins:" . $_POST["gbins"] . ";";
+                }
+
+                /*----------------------Gene Bins----------------------------------------------------------*/
+
+                /*----------------------Compound Limit----------------------------------------------------------*/
+                if (isset($_POST["clmt"])){
+                    $clmtrange = str_replace(",", ";", $_POST["clmt"]);
+                    $argument .= "clmt:" . $clmtrange . ";";
+                }
+
+                /*----------------------Compound Limit----------------------------------------------------------*/
+
+                /*----------------------Compound Bins----------------------------------------------------------*/
+                if (isset($_POST["cbins"])) {
+                    $argument .= "cbins:" . $_POST["cbins"] . ";";
+                }
+
+                /*----------------------Compound Bins----------------------------------------------------------*/
+
+
+                /*----------------------Gene Color Low,Mid,High----------------------------------------------------------*/
+                if (strpos($_POST["glow"], '#') !== false) {
+                    $argument .= "glow:" . $_POST["glow"] . ";";
+                } else {
+                    $argument .= "glow:" . '#' . $_POST["glow"] . ";";
+                }
+
+                if (strpos($_POST["gmid"], '#') !== false) {
+                    $argument .= "gmid:" . $_POST["gmid"] . ";";
+                } else {
+                    $argument .= "gmid:" . '#' . $_POST["gmid"] . ";";
+                }
+
+                if (strpos($_POST["ghigh"], '#') !== false) {
+                    $argument .= "ghigh:" . $_POST["ghigh"] . ";";
+                } else {
+                    $argument .= "ghigh:" . '#' . $_POST["ghigh"] . ";";
+                }
+
+
+                /*----------------------Gene Color Low,Mid,High----------------------------------------------------------*/
+
+
+                /*----------------------Compound Color Low,Mid,High----------------------------------------------------------*/
+                if (strpos($_POST["clow"], '#') !== false) {
+                    $argument .= "clow:" . $_POST["clow"] . ";";
+                } else {
+                    $argument .= "clow:" . '#' . $_POST["clow"] . ";";
+                }
+
+                if (strpos($_POST["cmid"], '#') !== false) {
+                    $argument .= "cmid:" . $_POST["cmid"] . ";";
+                } else {
+                    $argument .= "cmid:" . '#' . $_POST["cmid"] . ";";
+                }
+
+                if (strpos($_POST["chigh"], '#') !== false) {
+                    $argument .= "chigh:" . $_POST["chigh"] . ";";
+                } else {
+                    $argument .= "chigh:" . '#' . $_POST["chigh"] . ";";
+                }
+
+
+
+                /*----------------------Compound Color Low,Mid,High----------------------------------------------------------*/
+
+                /*----------------------Node Sum----------------------------------------------------------*/
+                $argument .= "nsum:" . $_POST["nodesun"] . ";";
+                /*----------------------Node Sum----------------------------------------------------------*/
+
+                /*----------------------Not Applicable Color----------------------------------------------------------*/
+                $argument .= "ncolor:" . $_POST["nacolor"] . ";";
+                /*----------------------Not Applicable Color----------------------------------------------------------*/
+
+
+
+
+
+            }
+
         } else {
             $argument .= "do.pathview:F;";
         }
+
 
 
         $_SESSION['argument'] = $argument;
@@ -308,8 +492,12 @@ class GageAnalysisController extends Controller
         return  view('Gage.GageResultView');*/
 
         //creates a process to run the R script
-        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-
+        if (isset($_POST['dopathview'])&& strcmp($analysis, 'GagePathviewAnalysis') == 0)
+            {
+                exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+            }else {
+            exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/PathviewGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        }
         //function to get the user using the application ip address
 
         function get_client_ip()
@@ -349,6 +537,7 @@ class GageAnalysisController extends Controller
         return view('Gage.GageResult');
 
     }
+
 
 
     public function discreteGageAnalysis()
@@ -597,6 +786,11 @@ class GageAnalysisController extends Controller
         $d = new GageAnalysisController();
         return $d->index("exampleGageAnalysis2");
 
+    }
+    public function GagePathviewAnalysis()
+    {
+        $d = new GageAnalysisController();
+        return $d->index("GagePathviewAnalysis");
     }
 
 }

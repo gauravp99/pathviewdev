@@ -25,9 +25,17 @@ function validation() {
 
 
 }
+
+
+
+
+
 //select box allowing to select multiple option without pressing control
 $(document).ready(function () {
+        $('#graphics').hide();
+        $('#coloration').hide();
         $('#dataType-div').toggle();
+        $('#pathviewSettings-div').toggle();
         $("[name='dopathview']").bootstrapSwitch();
         $("[name='test2d']").bootstrapSwitch();
         $("[name='rankTest']").bootstrapSwitch();
@@ -36,8 +44,26 @@ $(document).ready(function () {
         $("[name='useFold']").bootstrapSwitch.defaults.setOffLabel = "setOnLabel";
         $('input[name="dopathview"]').on('switchChange.bootstrapSwitch', function (event, state) {
             $('#dataType-div').toggle();
+            $('#pathviewSettings-div').toggle();
         });
 
+    $('#pathviewSettings').change(function () {
+        var pathviewSettingval = $('#pathviewSettings').val();
+        if(pathviewSettingval =="customize")
+        {
+            $( "#graphicsA" ).trigger( "click" );
+            $('#graphics').show();
+            $('#coloration').show();
+            $('#graphics').addClass('selected');
+            $('#analysis').removeClass('selected');
+
+        }
+        else
+        {
+            $('#graphics').hide();
+            $('#coloration').hide();
+        }
+    });
 
 //making go species and id type binding
 
