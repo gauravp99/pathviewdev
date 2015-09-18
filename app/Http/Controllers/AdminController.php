@@ -11,23 +11,15 @@ use Illuminate\Http\Request;
 
 class AdminController extends Controller {
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
+
+
 	public function emailAll()
 	{
-return "hello";
-
-
+		return "hello";
+		//to be developed
 	}
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
+	//auth function checking for credentails in user table.
 	public function auth()
 	{
 		if (Auth::attempt(['email' => $_POST['email'], 'password' => $_POST['password']]))
@@ -35,20 +27,22 @@ return "hello";
 			return view("admin.adminprofile");
 		}
 	}
+
+	//function called before performing any task in the admin page typically checks if logged user is admin or not.
 	public function index()
 	{
 
-			if(Auth::user())
+		if(Auth::user())
+		{
+			if(strcmp(Auth::user()->email,"pathwayadmin@gmail.com")==0)
 			{
-				if(strcmp(Auth::user()->email,"pathwayadmin@gmail.com")==0)
-				{
-					return view('admin.adminprofile');
-				}
-				else{
-					App::abort(404);
-				}
-
+				return view('admin.adminprofile');
 			}
+			else{
+				App::abort(404);
+			}
+
+		}
 		else{
 			return view('admin.adminLogin');
 		}
@@ -56,6 +50,8 @@ return "hello";
 
 
 	}
+
+	//function used for sending mail to all users registered in the application
 	public function adminBroadcastMessage()
 	{
 

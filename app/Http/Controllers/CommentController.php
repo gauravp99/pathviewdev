@@ -8,6 +8,15 @@ use Input;
 use Auth;
 use Illuminate\Http\Request;
 
+
+/***
+ * Class CommentController
+ * @package App\Http\Controllers
+ *
+ * This controller is used to handle all the tasks related to the comment adding page
+ * this page is used to work with angular js application
+ * works as an API to call the add delete operation
+ */
 class CommentController extends Controller {
 
     public function index()

@@ -230,12 +230,12 @@ class GageAnalysisController extends Controller
             if (strcmp($_POST['geneIdType'], 'custom') == 0) {
                 if(Input::hasFile('geneIdFile'))
                 {
-                $file = Input::file('geneIdFile');
-                $filename1 = Input::file('geneIdFile')->getClientOriginalName();
-                $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
-                $file->move($destFile, $filename1);
-                $argument .= "gsfn:" . $filename1 . ";";
-                $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename) . ";";
+                    $file = Input::file('geneIdFile');
+                    $filename1 = Input::file('geneIdFile')->getClientOriginalName();
+                    $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
+                    $file->move($destFile, $filename1);
+                    $argument .= "gsfn:" . $filename1 . ";";
+                    $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename) . ";";
                 }
                 else{
                     $filename1= "c1_all_v3_0_symbols.gmt";
@@ -248,8 +248,8 @@ class GageAnalysisController extends Controller
                     $argument .= "gsfn:" . $filename1 . ";";
                     $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename1) . ";";
                 }
-                }
             }
+        }
 
 
 
@@ -379,9 +379,9 @@ class GageAnalysisController extends Controller
 
                 /*----------------------Gene Limit----------------------------------------------------------*/
                 if (isset($_POST["glmt"])){
-                $glmtrange = str_replace(",", ";", $_POST["glmt"]);
+                    $glmtrange = str_replace(",", ";", $_POST["glmt"]);
 
-                $argument .= "glmt:" . $glmtrange . ";";
+                    $argument .= "glmt:" . $glmtrange . ";";
                 }
                 /*----------------------Gene Limit----------------------------------------------------------*/
 
@@ -493,9 +493,9 @@ class GageAnalysisController extends Controller
 
         //creates a process to run the R script
         if (isset($_POST['dopathview'])&& strcmp($analysis, 'GagePathviewAnalysis') == 0)
-            {
-                exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-            }else {
+        {
+            exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        }else {
             exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/PathviewGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }
         //function to get the user using the application ip address

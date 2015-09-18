@@ -89,10 +89,10 @@
                         </li>
 
                         <li id="graphics">
-                            <a id="graphicsA" href="#">Graphics</a>
+                            <a id="graphicsA" href="#" > <span style="font-size:13px;margin-top:-10px">Pathview</span >  Graphics</a>
                         </li>
                         <li id="coloration">
-                            <a  href="#">Coloration</a>
+                            <a  href="#" >  Coloration</a>
                         </li>
 
                     </ul>

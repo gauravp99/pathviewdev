@@ -1,7 +1,4 @@
-<?php
-
-
-?>
+<!-- Admin login page for admin profile-->
 @extends('app')
 
 @section('content')

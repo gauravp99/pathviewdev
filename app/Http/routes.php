@@ -19,16 +19,9 @@ Route::group(array('prefix' => 'api'), function() {
     Route::post('addUser','api\AngularAdminController@createUser');
     Route::get('broadCastMessage','AdminController@emailAll');
     Route::resource('comments', 'CommentController',
-        array('only' => array('index', 'store', 'destroy')));
-
-
+    array('only' => array('index', 'store', 'destroy')));
 });
-
-
 /*Route::post('/api/addUser','api\AngularAdminController@');*/
-
-
-
 
 /* end api for admin */
 
@@ -49,6 +42,7 @@ Route::get('/', array(
     'uses' => 'WelcomeController@index')
 );
 
+/* send an email from user without accessing their email address from the application */
 Route::get('/contact', array(
     'as' => 'contact',
         'uses' => function () {
@@ -56,8 +50,11 @@ Route::get('/contact', array(
         }
 ));
 
-Route::post('/postMessage','ProfileController@post_message');
 /* URL route for Controller for user profile page */
+Route::post('/postMessage','ProfileController@post_message');
+
+
+/* user details get page */
 Route::get('/user/{username}', array(
     'as' => 'profile-user',
     'uses' => 'ProfileController@user'
@@ -141,16 +138,8 @@ Route::get('example2', 'AnalysisController@example_two');
 Route::get('example3', 'AnalysisController@example_three');
 
 
-Route::get('test', function () {
-    return view("rserve.index");
-});
 
-Route::get('error', function () {
-    return view("errors.customError");
-});
-Route::get('Spaceerror', function () {
-    return view("errors.SpaceExceeded");
-});
+
 
 /*URL route for tutrial/Help page */
 Route::get('tutorial', function () {
@@ -167,7 +156,7 @@ Route::controllers([
 ]);
 
 
-//gage application
+/**************************gage application *********************************/
 
 Route::get('gage', function () {
 
@@ -225,3 +214,18 @@ Route::get('fullList',function(){
     return view('Gage.GageFileList');
 });
 Route::post('/ajax/GageanalysisStatus','AjaxGageAnalysisStatusCheck@index');
+
+/**************************gage application *********************************/
+
+
+/*test page*/
+Route::get('test', function () {
+    return view("rserve.index");
+});
+
+Route::get('error', function () {
+    return view("errors.customError");
+});
+Route::get('Spaceerror', function () {
+    return view("errors.SpaceExceeded");
+});
