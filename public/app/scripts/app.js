@@ -54,7 +54,7 @@ angular
       })
       .when('/profile', {
         templateUrl: 'views/profile.html',
-        controller: 'ProfileCtrl'
+        controller: 'UserCreationController'
       })
       .when('/settings', {
         templateUrl: 'views/settings.html',

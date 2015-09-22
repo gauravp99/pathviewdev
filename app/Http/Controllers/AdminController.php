@@ -19,6 +19,9 @@ class AdminController extends Controller {
 		//to be developed
 	}
 
+
+
+
 	//auth function checking for credentails in user table.
 	public function auth()
 	{

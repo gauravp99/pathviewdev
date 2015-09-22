@@ -21,6 +21,8 @@ Route::group(array('prefix' => 'api'), function() {
     Route::resource('comments', 'CommentController',
     array('only' => array('index', 'store', 'destroy')));
 });
+
+
 /*Route::post('/api/addUser','api\AngularAdminController@');*/
 
 /* end api for admin */

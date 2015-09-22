@@ -80,7 +80,7 @@
         <div id="content">
             <div id="wrapper"  ng-app="GageApp" ng-controller="ExampleAnalysisController1">
                 <div id="navigation" style="display:none;">
-                    <ul>
+                    <ul style="">
                         <li class="selected">
                             <a id="input" href="#">Input / Output</a>
                         </li>
@@ -89,10 +89,10 @@
                         </li>
 
                         <li id="graphics">
-                            <a id="graphicsA" href="#" > <span style="font-size:13px;margin-top:-10px">Pathview</span >  Graphics</a>
+                            <a id="graphicsA" href="#" style="display: block;margin: 0px 0;" > <span><p>Pathview</p> <p style="margin-top: -35px;">Graphics</p></span></a>
                         </li>
                         <li id="coloration">
-                            <a  href="#" >  Coloration</a>
+                            <a  href="#" style="display: block;margin: 0px 0;">  <span><p>Pathview</p> <p style="margin-top: -35px;">Coloration</p></span> </a>
                         </li>
 
                     </ul>

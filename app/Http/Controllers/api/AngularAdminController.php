@@ -10,9 +10,6 @@ class AngularAdminController extends Controller {
 	public function createUser()
 	{
 		return "createUser";
-
-
-
 	}
 
 	public function broadCastMessage()
