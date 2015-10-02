@@ -44,9 +44,7 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="/" >Home</a></li>
 
-                <li class="dropdown" <?php if (basename(Request::url()) == "gageTutorial") {
-                    echo "class=\"active\"";
-                }?>>
+                <li class="dropdown" @if (basename(Request::url()) == "gageTutorial") class="active" @endif>
                     <a  class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
                         Help <span class="caret"></span>
                     </a>
@@ -80,18 +78,12 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                         </li>
                     </ul>
                 </li>
-                <li <?php if (basename(Request::url()) == "gageAbout") {
-                    echo "class=\"active\"";
-                }?>><a href="/gageAbout">About</a></li>
+                <li @if (basename(Request::url()) == "gageAbout") class="active" @endif ><a href="/gageAbout">About</a></li>
 
                 @if (Auth::guest())
-                    <li <?php if (basename(Request::url()) == "gage") {
-                        echo "class=\"active\"";
-                    }?>><a href="/gage-guest-home">Guest</a></li>
+                    <li @if (basename(Request::url()) =="gage") class="active" @endif ><a href="/gage-guest-home">Guest</a></li>
                 @else
-                    <li <?php if (basename(Request::url()) == "gage") {
-                        echo "class=\"active\"";
-                    }?>><a href="/gage-home">GAGE</a></li>
+                    <li @if (basename(Request::url()) =="gage") class="active" @endif ><a href="/gage-home">GAGE</a></li>
                 @endif
                 @if (Auth::guest())
                     <?php if(basename(Request::url()) == "login")
@@ -103,18 +95,9 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                             Login <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename(Request::url()) == "register") {
-                                echo "class=\"active\"";
-                            }?>>
-                                <a href="{{ url('/auth/register') }}">Register</a>
+                            <li @if (basename(Request::url()) =="register") class="active" @endif ><a href="{{ url('/auth/register') }}">Register</a>
                             </li>
-                            <li <?php
-                                    if (basename(Request::url()) == "guest") {
-                                        echo "class=\"active\"";
-                                    }
-                                    ?>>
-                                <a href="{{ url('/guest') }}">
-                                    Guest</a>
+                            <li @if (basename(Request::url()) =="guest") class="active" @endif > <a href="{{ url('/guest') }}"> Guest</a>
                             </li>
                         </ul>
                     </li>
@@ -128,14 +111,10 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                             Register <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename(Request::url()) == "register") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="register") class="active" @endif>
                                 <a href="{{ url('/auth/login') }}">Login</a>
                             </li>
-                            <li <?php if (basename(Request::url()) == "guest") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="guest") class="active" @endif>
                                 <a href="{{ url('/guest') }}">Guest</a>
                             </li>
                         </ul>
@@ -164,14 +143,10 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                             Guest <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename(Request::url()) == "register") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="register") class="active" @endif>
                                 <a href="{{ url('/auth/login') }}">Login</a>
                             </li>
-                            <li <?php if (basename(Request::url()) == "guest") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="guest") class="active" @endif>
                                 <a href="{{ url('/auth/register') }}">Register</a>
                             </li>
                         </ul>
@@ -188,21 +163,15 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename(Request::url()) == "login") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="login") class="active" @endif>
                                 <a href="{{ url('/auth/login') }}">
                                     Login
                                 </a>
                             </li>
-                            <li <?php if (basename(Request::url()) == "register") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="register") class="active" @endif>
                                 <a href="{{ url('/auth/register') }}">Register</a>
                             </li>
-                            <li <?php if ((basename(Request::url()) == "guest")) {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="guest") class="active" @endif>
                                 <a href="{{ url('/guest') }}">Guest</a>
                             </li>
                         </ul>
@@ -219,14 +188,10 @@ if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-gu
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li <?php if (basename(Request::url()) == "prev_anal") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="prev_anal") class="active" @endif>
                                 <a href="{{ url('/prev_anal/'.Auth::user()->id) }}">Status & History</a>
                             </li>
-                            <li <?php if (basename(Request::url()) == "user") {
-                                echo "class=\"active\"";
-                            }?>>
+                            <li @if (basename(Request::url()) =="user") class="active" @endif>
                                 <a href="{{ url('/edit_user/'.Auth::user()->id) }}">Edit Profile</a>
                             </li>
                             <li>

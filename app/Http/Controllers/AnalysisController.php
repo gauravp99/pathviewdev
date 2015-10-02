@@ -85,6 +85,7 @@ class AnalysisController extends Controller
     public function analysis($anal_type)
     {
 
+
         try {
 
             $errors = array();
@@ -94,11 +95,12 @@ class AnalysisController extends Controller
             $argument = "";
             $time = uniqid();
             $email = "";
-
+//return print_r($_POST);
             /*copy all the post variables into session variables;*/
             foreach ($_POST as $key => $value) {
                 $_SESSION[$key] = $value;
-            }
+    
+        }
             $Session = $_SESSION;
 
             /*regular expression match for all pathway of neumeric value of length 5 and pushing into an array*/
@@ -420,14 +422,60 @@ class AnalysisController extends Controller
 
             if ($anal_type == "newAnalysis") {
 
+
+
+
                 if (Input::hasFile('gfile')) {
+
                     $file = Input::file('gfile');
                     $filename = Input::file('gfile')->getClientOriginalName();
                     $gene_extension = file_ext($filename);
                     if ($gene_extension == "txt" || $gene_extension == "csv" || $gene_extension == "rda") {
                         $argument .= "geneextension:" . $gene_extension . ",";
                         $argument .= "filename:" . $filename . ",";
+                        $argument .= "";
+
                     }
+
+                    if(!is_null($_POST['generef']))
+                    {
+                        if(strcmp(strtolower($_POST['generef']),"null")==0)
+                        {
+                            $argument .="generef:NULL";
+                        }
+                        else{
+                            $geneRef = str_replace(",",";",$_POST['generef']);
+                            $argument .="generef:".$geneRef;
+                        }
+                    }
+                    else{
+                        $argument .="generef:NULL";
+
+                    }
+                    if(!is_null($_POST['genesam']))
+                    {
+                        if(strcmp(strtolower($_POST['genesam']),"null")==0)
+                    {
+                        $argument .=",genesam:NULL";
+                    }else{
+                            $genesam = str_replace(",",";",$_POST['genesam']);
+                            $argument .=",genesam:".$genesam;
+                        }
+
+
+                    }else{
+                        $argument .=",genesam:NULL";
+                    }
+                    if(!is_null($_POST['genecompare']))
+                    {
+                        $geneCompare = $_POST['genecompare'];
+                        $argument .=",genecompare:".$geneCompare.",";
+                    }
+
+
+
+
+
                 }
 
                 if (is_null(Auth::user())) {
@@ -476,6 +524,43 @@ class AnalysisController extends Controller
                         $argument .= ",cfilename:" . $filename1;
 
                     }
+
+
+                    if(!is_null($_POST['cpdref']))
+                    {
+                        if(strcmp(strtolower($_POST['cpdref']),"null")==0)
+                        {
+                            $argument .=",cpdref:NULL";
+                        }else{
+                            $cpdRef = str_replace(",",";",$_POST['cpdref']);
+                            $argument .=",cpdref:".$cpdRef;
+                        }
+
+
+
+                    }else{
+                        $argument .=",cpdref:NULL";
+                    }
+                    if(!is_null($_POST['cpdsam']))
+                    {
+                        if(strcmp(strtolower($_POST['cpdref']),"null")==0)
+                        {$argument .=",cpdref:NULL";
+
+                        }else{
+                            $cpdsam = str_replace(",",";",$_POST['cpdsam']);
+                            $argument .=",cpdsam:".$cpdsam;
+                        }
+
+
+                    }else{
+                        $argument .=",cpdref:NULL";
+                    }
+                    if(!is_null($_POST['cpdcompare']))
+                    {
+                        $cpdCompare = $_POST['cpdcompare'];
+                        $argument .=",cpdcompare:".$cpdCompare.",";
+                    }
+
                 }
                 if ($_FILES['gfile']['size'] > 0) {
                     $file->move($destFile, $filename);

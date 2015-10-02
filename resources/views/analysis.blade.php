@@ -1,5 +1,3 @@
-
-
 <div class="stepsdiv" id="geneid-div" @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -469,7 +467,7 @@
     <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" onclick="return reset()"/>
 </div>
 {!! form::close() !!}
-</div>
+
 {{--<script>
     $('#select-from').change(function(){
         $('#forward').css({"backgroundColor":"#182963"});

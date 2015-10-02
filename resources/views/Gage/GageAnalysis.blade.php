@@ -7,7 +7,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
     <script src="js/app.js"></script>
     <script src="js/gageAnalysis.js"></script>
-    <script src="js/app.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="http://jqueryvalidation.org/files/dist/additional-methods.min.js"></script>
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">

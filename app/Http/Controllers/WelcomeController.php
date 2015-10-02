@@ -39,7 +39,7 @@ class WelcomeController extends Controller
          */
         $val = Cache::remember('analysis_details', 10, function()
         {
-            return DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'pathview\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
+                return DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'pathview\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
         });
         if (Cache::has('analysis_details'))
         {
