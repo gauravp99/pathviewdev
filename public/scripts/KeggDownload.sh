@@ -1,11 +1,11 @@
 #!/bin/bash
 while read line           
 do           
-mkdir "../Kegg/"$line
+mkdir "/home/ybhavnasi/Desktop/Kegg/"$line
 while read line1
 do 
     Rscript kegg.r $line1 $line 
-done <../data/pathway.txt
+done <pathway.txt
 
-done <../data/species.txt
+done <species.txt
  

@@ -6,15 +6,18 @@ var app = angular.module('PathviewApp',[], function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 });
+
+
 app.controller('analysisController',function($scope,$timeout) {
     var outScope = $scope;
-    $scope.GeneCompare = "paired";
-    $scope.CpdCompare = "paired";
+    $scope.GeneCompare = true;
+    $scope.CpdCompare = true;
     $scope.showGeneContent = function($fileContent)
     {
+
         if($scope.filename)
             $scope.content = $fileContent;
-
+        console.log("fileType: "+$scope.filetype);
         if($scope.filetype === 'text/csv')
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
@@ -30,16 +33,16 @@ app.controller('analysisController',function($scope,$timeout) {
         }
         else if($scope.filetype === 'text/plain')
         {
-            $scope.Genecolumns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+            $scope.Genecolumns = $fileContent.split("\n")[0].split("\t");
+            var columns1 = $fileContent.split("\n")[0].split("\t");
+            var columns2 = $fileContent.split("\n")[1].split("\t");
 
             if(columns1.length === columns2.length)
             {
                 $scope.Genecolumns.splice(0,1);
             }
-            $scope.sample=[];
-            $scope.ref=[];
+            $scope.geneColumns = columns1.length;
+
 
         }
         else
@@ -62,10 +65,12 @@ app.controller('analysisController',function($scope,$timeout) {
         }
 
 
-        $('#geneMenu').css("visibility", "");
+        $('#edit').css("visibility", "");
     };
     $scope.showCompoundContent = function($fileContent)
     {
+
+
         if($scope.filename)
             $scope.content = $fileContent;
 
@@ -84,16 +89,16 @@ app.controller('analysisController',function($scope,$timeout) {
         }
         else if($scope.filetype === 'text/plain')
         {
-            $scope.Compoundcolumns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+            $scope.Compoundcolumns = $fileContent.split("\n")[0].split("\t");
+            var columns1 = $fileContent.split("\n")[0].split("\t");
+            var columns2 = $fileContent.split("\n")[1].split("\t");
 
             if(columns1.length === columns2.length)
             {
                 $scope.Compoundcolumns.splice(0,1);
             }
-            $scope.sample=[];
-            $scope.ref=[];
+            $scope.cpdColumns = columns1.length;
+
 
         }
         else
@@ -114,9 +119,9 @@ app.controller('analysisController',function($scope,$timeout) {
         else{
             $('#gfilePopUp').trigger('click');
         }
+        $('#cpdedit').css("visibility", "");
+        $('option[disabled="false"]').removeAttr('disabled');
 
-
-        $('#compoundMenu').css("visibility", "");
     };
 
 
@@ -135,6 +140,12 @@ app.controller('analysisController',function($scope,$timeout) {
 
 
 });
+app.filter('hasIntersection', function() {
+    return function ( Compoundcolumns, array) {
+        return array.indexOf(Compoundcolumns) >= 0;
+    };
+});
+
 
 app.directive('onReadFile', function($parse){
     return {
@@ -155,6 +166,21 @@ app.directive('onReadFile', function($parse){
                     });
                 };
                 scope.filetype =( (onChangeEvent.srcElement || onChangeEvent.target).files[0].type);
+
+                if(attrs['onReadFile'].substring(0,10) === "showGeneCo")
+                {
+                    console.log("genes");
+                    scope.geneRefSelect = "";
+                    scope.geneSamSelect = "";
+
+                }
+                else{
+                    console.log("else compound");
+                    scope.cpdRefSelect = "";
+                    scope.cpdSamSelect = "";
+
+                }
+
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
 
             }) ;
@@ -162,4 +188,5 @@ app.directive('onReadFile', function($parse){
         }
     };
 });
+
 

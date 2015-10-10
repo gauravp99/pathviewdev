@@ -15,6 +15,10 @@ return [
 
     'debug' => env('APP_DEBUG', true),
 
+    'adminEmail' => 'pathwaywebs@gmail.com',
+    'publicPath' => '/home/ybhavnasi/Desktop/work/PathwayWeb/public/scripts/',
+    'RLoc' => '/home/ybhavnasi/R-3.1.2/bin/',
+
     /*
     |--------------------------------------------------------------------------
     | Application URL
@@ -39,7 +43,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'EST',
 
     /*
     |--------------------------------------------------------------------------
@@ -107,6 +111,12 @@ return [
     | this array to grant expanded functionality to your applications.
     |
     */
+
+    /*
+     * R file location
+
+     */
+
 
     'providers' => [
 

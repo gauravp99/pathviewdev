@@ -23,7 +23,7 @@
         }
 
         foreach ($gene as $gene1) {
-            echo "<option value='$gene1->geneid'>$gene1->geneid</option>";
+            echo "<option value='$gene1->gene_id'>$gene1->gene_id</option>";
         }
         ?>
         <!--[if (lt IE 10)]></select><![endif]-->
@@ -50,7 +50,7 @@
         <?php
          $compound = Cache::remember('compound', 10, function()
         {
-            return DB::table('compound')->get();
+            return DB::table('compoundID')->get();
         });
         if (Cache::has('compound'))
         {
@@ -58,7 +58,7 @@
 
         }
 
-        foreach ($compound as $compound1) { echo "<option>$compound1->cmpdid</option>"; }
+        foreach ($compound as $compound1) { echo "<option>$compound1->compound_id</option>"; }
           ?>
         <!--[if (lt IE 10)]></select><![endif]-->
     </datalist>
@@ -83,7 +83,7 @@
 
           $species = Cache::remember('Species', 10, function()
         {
-            return DB::table('Species')->get();
+            return DB::table('species')->get();
         });
         if (Cache::has('Species'))
         {
@@ -120,7 +120,7 @@
                 <?php
                 $pathway = Cache::remember('Pathway', 10, function()
                 {
-                    return DB::table('Pathway')->get();
+                    return DB::table('pathway')->get();
                 });
                 if (Cache::has('Pathway'))
                 {

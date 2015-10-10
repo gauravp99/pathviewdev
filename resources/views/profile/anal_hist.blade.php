@@ -30,14 +30,14 @@
             $analyses = array();
             if(Auth::user())
             {
-                $analyses = DB::table('analyses')->where(['id' => Auth::user()->id,'analysis_id'=>$analysis])->get();
+                $analyses = DB::table('analysis')->where(['id' => Auth::user()->id,'analysis_id'=>$analysis])->get();
             }
             else
             {
                 $user_id = DB::table('users')->where('email',$_GET['email'])->get();
                 if(sizeof($user_id) >0)
                 {
-                    $analyses = DB::table('analyses')->where(['id' => $user_id[0]->id,'analysis_id'=>$analysis])->get();
+                    $analyses = DB::table('analysis')->where(['id' => $user_id[0]->id,'analysis_id'=>$analysis])->get();
                 }
 
             }
@@ -180,7 +180,7 @@ console.log("error");
 
                     <?php
                     $arguments = array();
-                    $arguments = explode(",", $argument);
+                    $arguments = explode(";", $argument);
                     $arguments = array_unique($arguments);
                 $species="";
                 $suffix="";
@@ -220,7 +220,7 @@ console.log("error");
 
                 case "species":
                 $arg1[0] = "Species";
-                $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from Species where species_id like '$arg1[1]' LIMIT 1"));
+                $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from species where species_id like '$arg1[1]' LIMIT 1"));
 
                 if (sizeof($val) > 0) {
                     $arg1[1] = $val[0]->spe;
@@ -246,7 +246,7 @@ console.log("error");
                 break;
                 case "pathway":
                 $arg1[0] = "Pathway ID";
-                $val = DB::select(DB::raw("select concat(concat(pathway_id,\"-\"),pathway_desc) as path from Pathway where pathway_id like '$arg1[1]' LIMIT 1"));
+                $val = DB::select(DB::raw("select concat(concat(pathway_id,\"-\"),pathway_desc) as path from pathway where pathway_id like '$arg1[1]' LIMIT 1"));
                 if (sizeof($val) > 0) {
                     $arg1[1] = $val[0]->path;
                 }

@@ -30,11 +30,12 @@ app.controller('analysisController',function($scope,$timeout) {
             }
 
         }
+
         else if($scope.filetype === 'text/plain')
         {
-            $scope.columns = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+            $scope.columns = $fileContent.split("\n")[0].split("\t");
+            var columns1 = $fileContent.split("\n")[0].split("\t");
+            var columns2 = $fileContent.split("\n")[1].split("\t");
 
             if(columns1.length === columns2.length)
             {

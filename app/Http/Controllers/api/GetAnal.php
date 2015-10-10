@@ -15,8 +15,12 @@ class GetAnal extends Controller {
 	public function getMonths()
 	{
 
+		//this function returns the json formatted analysis details
+		// in map with key as map and list of analysis for that months as value
+
 		$year = date("Y");
 		$month = date("m");
+
 		$monthtemp  = $month;
 
 		$analysisarray= array();
@@ -33,13 +37,15 @@ class GetAnal extends Controller {
 
 			$month = $month - 1;
 		}
+
+
 		return $analysisarray;
 	}
 
 	public function getYears()
 	{
 		$year = date("Y");
-		$minYear = DB::select(DB::raw("select min(created_at) as \"min\" from analyses"));
+		$minYear = DB::select(DB::raw("select min(created_at) as \"min\" from analysis"));
 
 		$least_year_in_table = $minYear[0]->min;
 		//$least_year_in_table = explode($least_year_in_table,"-")[0];
@@ -62,7 +68,7 @@ class GetAnal extends Controller {
 				$analysis = new App\Analysis();
 
 				if ($month == $monthtemp || $month >= 10) {
-					$count = DB::select(DB::raw("select count(*) as \"count\" from analyses where  created_at >'".$least_year_in_table."-".$month."-01' and created_at < '".$least_year_in_table."-".$month."-31'"));
+					$count = DB::select(DB::raw("select count(*) as \"count\" from analysis where  created_at >'".$least_year_in_table."-".$month."-01' and created_at < '".$least_year_in_table."-".$month."-31'"));
 					if($count[0]->count == 0)
 					{
 						$month = $month - 1;
@@ -71,7 +77,7 @@ class GetAnal extends Controller {
 					$analysis->generateData($month, $least_year_in_table);
 				} else {
 
-					$count = DB::select(DB::raw("select count(*) as \"count\" from analyses where  created_at >'".$least_year_in_table."-".$month."-01' and created_at < '".$least_year_in_table."-".$month."-31'"));
+					$count = DB::select(DB::raw("select count(*) as \"count\" from analysis where  created_at >'".$least_year_in_table."-".$month."-01' and created_at < '".$least_year_in_table."-".$month."-31'"));
 					if($count[0]->count == 0)
 					{
 						$month = $month - 1;

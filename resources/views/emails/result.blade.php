@@ -45,7 +45,7 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
                     break;
                 case "species":
                     $arg1[0] = "Species";
-                    $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from Species where species_id like '$arg1[1]' LIMIT 1"));
+                    $val = DB::select(DB::raw("select concat(concat(species_id,\"-\"),species_desc) as spe from species where species_id like '$arg1[1]' LIMIT 1"));
 
                     if (sizeof($val) > 0) {
                         $arg1[1] = $val[0]->spe;
@@ -56,7 +56,7 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
                     break;
                 case "pathway":
                     $arg1[0] = "Pathway ID";
-                    $val = DB::select(DB::raw("select concat(concat(pathway_id,\"-\"),pathway_desc) as path from Pathway where pathway_id like '$arg1[1]' LIMIT 1"));
+                    $val = DB::select(DB::raw("select concat(concat(pathway_id,\"-\"),pathway_desc) as path from pathway where pathway_id like '$arg1[1]' LIMIT 1"));
                     if (sizeof($val) > 0) {
                         $arg1[1] = $val[0]->path;
                     }

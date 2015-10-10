@@ -69,7 +69,7 @@
                 }
 
             xcopy(public_path().'/all/demo/'.Session::get('anal_id'),public_path().'/all/'.Auth::user()->email.'/'.Session::get('anal_id'));
-            DB::table('analyses')
+            DB::table('analysis')
                     ->where('analysis_id', Session::get('anal_id'))
                     ->update(array('id' => Auth::user()->id));
             Session::forget('anal_id');
@@ -165,10 +165,10 @@
                 echo "<td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
 
                 echo "<td> " . floor($date_diff / (60 * 60 * 24)) . " days ago ";
-                $directory = get_string_between($analyses1->arguments, "targedir:", ",");
-                $dir = get_string_between($analyses1->arguments, public_path(), ",");
-                $id = get_string_between($analyses1->arguments, "species:", ",") . get_string_between($analyses1->arguments, "pathway:", ",");
-                $suffix = get_string_between($analyses1->arguments, "suffix:", ",");
+                $directory = get_string_between($analyses1->arguments, "targedir:", ";");
+                $dir = get_string_between($analyses1->arguments, public_path(), ";");
+                $id = get_string_between($analyses1->arguments, "species:", ";") . get_string_between($analyses1->arguments, "pathway:", ",");
+                $suffix = get_string_between($analyses1->arguments, "suffix:", ";");
                 echo "</td>";
                 if(strcmp($analyses1->analysis_origin,'pathview')==0)
                     {
