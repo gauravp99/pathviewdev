@@ -9,15 +9,17 @@
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/angular/angular.js"></script>
     <title>Pathview</title>
 </head>
 
 <body>
 
-<!-- Header of the web page -->
+
 <nav class="navbar navbar-default navbar-change">
     <div class="container-fluid">
-        <!-- Start Logo and toggle navigation bar -->
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pathview">
                 <span class="sr-only">Toggle Navigation</span>
@@ -48,7 +50,8 @@
                         <li><a href="/tutorial">Custom Analysis</a></li>
                         <li><a href="/tutorial#example1">Example Analysis</a></li>
                         <li><a href="/tutorial#refrence">References</a></li>
-                        <li><a href="/tutorial#contact">Contact</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="/faq">FAQ's</a></li>
                     </ul>
                 </li>
 
@@ -85,7 +88,22 @@
                 <li <?php if (basename(Request::url()) == "about") {
                     echo "class=\"active\"";
                 }?>>
-                    <a href="/about">About</a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">About <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a
+                               href="/about">
+                                About Us
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                               href="/contact">
+                                Contact Us
+                            </a>
+                        </li>
+                        </ul>
+
                 </li>
 
                <!-- <li <?php if (basename(Request::url()) == "related") {

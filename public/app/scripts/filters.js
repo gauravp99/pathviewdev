@@ -10,7 +10,6 @@ angular.module('authApp')
   },'signin');
   RouteFilter.register('guest', ['/signin'],function()
   {
-  return : Authentication.exists();
 
   },'/');
   RouteFilter.register('developer', ['/settings'],function()

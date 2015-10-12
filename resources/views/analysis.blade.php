@@ -700,7 +700,7 @@
     jQuery.validator.addMethod('ListPathwayMatch',function(value, element){
         //pathway_array
 
-        pathwayArray = $('#selecttextfield').text().split();
+        pathwayArray = $('#selecttextfield').text().split(',');
         newCreateArray = "";
         evenOneTrueFlag = false;
         $.each(pathwayArray,function(index,value) {

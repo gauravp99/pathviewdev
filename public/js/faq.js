@@ -1,9 +1,13 @@
+/**
+ * Created by ybhavnasi on 10/12/15.
+ */
 
+var module = angular.module('faqApp',[],function($interpolateProvider) {
+    $interpolateProvider.startSymbol('<%');
+    $interpolateProvider.endSymbol('%>');
 
-
-angular.module('commentCtrl',[])
-
-    .controller('faqController', function($scope, $http, Comment){
+});
+module.controller('faqController', function($scope, $http, Comment){
 
         $scope.commentData = {};
 
@@ -50,28 +54,28 @@ angular.module('commentCtrl',[])
             $('#'+id).hide();
         };
 
-    }).factory('Comment', function($http){
+    });
 
-        return {
-            get: function () {
-                return $http.get('/api/comments');
-            },
-            save: function (commentData) {
-                return $http({
-                    method: 'POST',
-                    url: '/api/comments',
-                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    data: $.param(commentData)
-                });
-            },
+module.factory('Comment', function($http){
 
-            destroy: function (id) {
-                return $http.delete('/api/comments/' + id);
-            }
+    return {
+        get: function () {
+            return $http.get('/api/comments');
+        },
+        save: function (commentData) {
+            return $http({
+                method: 'POST',
+                url: '/api/comments',
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                data: $.param(commentData)
+            });
+        },
 
+        destroy: function (id) {
+            return $http.delete('/api/comments/' + id);
         }
 
+    }
 
-    });/**
- * Created by ybhavnasi on 9/10/15.
- */
+
+});

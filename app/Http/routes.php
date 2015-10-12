@@ -95,6 +95,12 @@ Route::post('/reset','Auth\PasswordEditController@index');
 /* URL route for Controller for Guest page */
 Route::get('guest', 'profile\GuestController@index');
 
+Route::get('faq',array(
+    'uses' => function(){
+        return view('profile.faq');
+    }
+));
+
 /* URL route for Guest Home  */
 Route::get('guest-home', array(
     'as' => 'guest-home ',

@@ -17,7 +17,7 @@
 <div class="comment" ng-hide="loading" ng-repeat="comment in comments">
     <div class="col-md-12">
     <h3>{{ comment.text_string }} <small>by {{ comment.author }}</h3>
-    <p id="comment">Comment #{{ comment.id }}</p>
+    <p id="comment1">Comment #{{ comment.id }}</p>
         <nav style="alignment: right"><p id="comment">{{ comment.created_at }}</p></nav>
     <div cstyle="display: inline;"><a href="" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a>
     <nav style="alignment: left;display: inline-block;"><a href="" ng-click="showReply(comment.id)" class="text-muted" >Reply</a></nav></div>
