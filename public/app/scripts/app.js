@@ -53,7 +53,7 @@ angular
         controller: 'RoutefilterCtrl'
       })
       .when('/profile', {
-        templateUrl: 'views/profile.html',
+        templateUrl: 'views/addMultipleUsers.html',
         controller: 'UserCreationController'
       })
       .when('/settings', {

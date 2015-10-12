@@ -1,0 +1,5 @@
+Info: Working in directory /var/www/Pathway/public/all/demo/560abe16d7e41
+Info: Writing image file hsa00640.multi.multi.pdf
+Warning message:
+In .local(from, to, graph) :
+  edges replaced: ‘177|59’, ‘177|60’, ‘122|119’, ‘122|120’

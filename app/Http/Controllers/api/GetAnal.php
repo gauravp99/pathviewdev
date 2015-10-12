@@ -7,7 +7,7 @@ use User;
 use App;
 use DB;
 use Mail;
-
+use App\Http\Models\Analysis;
 use Illuminate\Http\Request;
 
 class GetAnal extends Controller {
@@ -65,7 +65,7 @@ class GetAnal extends Controller {
 				$month = 12;
 			}
 			while ($month > 0) {
-				$analysis = new App\Analysis();
+				$analysis = new Analysis();
 
 				if ($month == $monthtemp || $month >= 10) {
 					$count = DB::select(DB::raw("select count(*) as \"count\" from analysis where  created_at >'".$least_year_in_table."-".$month."-01' and created_at < '".$least_year_in_table."-".$month."-31'"));

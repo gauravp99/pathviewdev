@@ -12,14 +12,17 @@
 */
 
 /* start api for admin */
+/* start api for admin */
 Route::group(array('prefix' => 'api'), function() {
+    Route::get('getAllUsers','admin\AdminController@getAllUsers');
     Route::get('yearly','api\GetAnal@getYears');
     Route::get('monthly','api\GetAnal@getMonths');
     Route::get('manual','api\GetAnal@getManual');
     Route::post('addUser','api\AngularAdminController@createUser');
     Route::get('broadCastMessage','admin\AdminController@emailAll');
+    Route::post('sendMessage','admin\AdminController@ajaxAdminBroadCastMessage');
     Route::resource('comments', 'CommentController',
-    array('only' => array('index', 'store', 'destroy')));
+        array('only' => array('index', 'store', 'destroy')));
 });
 Route::post('analysisDelete','pathview\analysis\AnalysisController@delete');
 

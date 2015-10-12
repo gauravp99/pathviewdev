@@ -1,4 +1,4 @@
-<?php namespace App\Models;
+<?php namespace App\Http\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use DB;
@@ -60,25 +60,25 @@ class Analysis {
         $this->date = $date;
         $this->year = $year;
         $this->month = $month;
-        $gageCount = DB::select(DB::raw("select count(*) as \"count\" from analyses where analysis_origin = 'gage' and created_at > '".$date."' and created_at < '".$date_end."'" ));
+        $gageCount = DB::select(DB::raw("select count(*) as \"count\" from analysis where analysis_origin = 'gage' and created_at > '".$date."' and created_at < '".$date_end."'" ));
         $this->GageAnalysisCount = $gageCount[0]->count;;
-        $pathviewCount = DB::select(DB::raw("select count(*) as \"count\" from analyses where analysis_origin = 'pathview' and  created_at > '".$date."' and created_at < '".$date_end."'" ));
+        $pathviewCount = DB::select(DB::raw("select count(*) as \"count\" from analysis where analysis_origin = 'pathview' and  created_at > '".$date."' and created_at < '".$date_end."'" ));
         $this->pathwayAnalysisCount = $pathviewCount[0]->count;
         $usersCoutn = DB::select(DB::raw("select count(*) as \"count\" from users where created_at > '".$date."' and created_at < '".$date_end."'" ));
         $this->usersCount =$usersCoutn[0]->count;
-        $distinctPathwayTypes =  DB::select(DB::raw("select distinct(analysis_type) from analyses where analysis_origin = 'pathview' "));
-        $disitnctGageType =DB::select(DB::raw("select distinct(analysis_type) from analyses where analysis_origin = 'gage' "));
+        $distinctPathwayTypes =  DB::select(DB::raw("select distinct(analysis_type) from analysis where analysis_origin = 'pathview' "));
+        $disitnctGageType =DB::select(DB::raw("select distinct(analysis_type) from analysis where analysis_origin = 'gage' "));
 
         $this->pathwayDistribution = array();
         foreach($distinctPathwayTypes as $pathwayType)
         {
-            $count = DB::select(DB::raw("select count(*) as \"count\" from analyses where analysis_origin = 'pathview' and analysis_type = \"".$pathwayType->analysis_type."\" and   created_at > '".$date."' and created_at < '".$date_end."'" ));
+            $count = DB::select(DB::raw("select count(*) as \"count\" from analysis where analysis_origin = 'pathview' and analysis_type = \"".$pathwayType->analysis_type."\" and   created_at > '".$date."' and created_at < '".$date_end."'" ));
             $this->pathwayDistribution[$pathwayType->analysis_type] = $count[0]->count;
         }
         $this->GageDistribution=array();
         foreach($disitnctGageType as $gageType)
         {
-            $count = DB::select(DB::raw("select count(*) as \"count\" from analyses where analysis_origin = 'gage' and analysis_type = \"".$gageType->analysis_type."\" and   created_at > '".$date."' and created_at < '".$date_end."'" ));
+            $count = DB::select(DB::raw("select count(*) as \"count\" from analysis where analysis_origin = 'gage' and analysis_type = \"".$gageType->analysis_type."\" and   created_at > '".$date."' and created_at < '".$date_end."'" ));
             $this->GageDistribution[$gageType->analysis_type] = $count[0]->count;
         }
 

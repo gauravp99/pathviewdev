@@ -1,21 +1,39 @@
 
-<form ng-controller="MessageUsersController">
+<form ng-controller="contactCtrl">
   <div class="form-group">
     <label for="exampleInputName">Email List</label>
     <textarea ng-model="emailList" placeholder="Email List" class="form-control" rows="5"></textarea>
   </div>
   <div class="form-group">
-    <label for="exampleInputEmail1">Subject</label>
-    <input type="text" required="" name="subject" ng-model="subject" class="form-control" id="exampleInputEmail1" placeholder="Email">
+    <label for="subject">Subject</label>
+    <input type="text" required="" name="subject" ng-model="subject" class="form-control" id="exampleInputEmail1" placeholder="Subject:">
   </div>
    <div class="form-group">
-    <label for="exampleInputEmail1">Message</label>
+    <label for="body">Message</label>
     <textarea ng-model="message" class="form-control" rows="5" placeholder="Message">Hi..</textarea>
   </div>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox"> Check me for updates?
-    </label>
-  </div>
-  <button type="submit" class="btn btn-default" >Submit</button>
+  <button type="submit" ng-click="submit()" class="btn btn-default" >Submit</button>
 </form>
+
+<button type="submit" style="display:none" data-toggle='modal'  id="successful" data-target='#myModal' ></button>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span></button>
+
+            </div>
+            <div class="modal-body">
+                <h3 class="alert alert-success">Successfully Sent mail to specified users</h3>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

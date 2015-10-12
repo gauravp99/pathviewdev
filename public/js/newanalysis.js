@@ -170,7 +170,7 @@ else {
 /*checking the geneid is in the list or not */
 function in_gene_array(gene, id) {
     for (var i = 0; i < gene.length; i++) {
-        if (gene[i]['geneid'].toLowerCase() === id.toLowerCase()) {
+        if (gene[i]['gene_id'].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }
@@ -190,7 +190,8 @@ function in_species_array(species, id) {
 /*checking the species is in the list or not */
 function in_cmpd_array(cpd, id) {
     for (var i = 0; i < cpd.length; i++) {
-        if (cpd[i]['cmpdid'].toLowerCase() === id.toLowerCase()) {
+        console.log("compound ids "+cpd[i]['compound_id']);
+        if (cpd[i]['compound_id'].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }
@@ -660,7 +661,6 @@ function fileCheck() {
 
 
     }
-
 
 }
 

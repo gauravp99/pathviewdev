@@ -1,0 +1,4 @@
+Info: Working in directory /var/www/Pathway/public/all/demo/5617e3625fceb
+Info: Writing image file hsa00010.pathview.multi.pdf
+Warning message:
+In .local(from, to, graph) : edges replaced: ‘130|56’, ‘130|57’, ‘113|112’

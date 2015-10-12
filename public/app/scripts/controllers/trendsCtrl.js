@@ -7,6 +7,14 @@ angular.module('mytodoApp')
 
         $scope.currentPage = 1;
         $scope.pageSize = 10;
+        $scope.meals = [];
+
+
+
+
+        $scope.pageChangeHandler = function(num) {
+            console.log('meals page changed to ' + num);
+        };
 
         $http.get('/api/yearly').
             then(function(response) {
@@ -114,9 +122,16 @@ angular.module('mytodoApp')
                     stepsgage =  Math.round(maxgagevalue/10) - Math.round(maxgagevalue % 10);
                     if(stepsgage <= 0)
                     {
-                        stepsgage =  Math.round(maxgagevalue/10);
+
+                        stepsgage =  Math.round(maxgagevalue);
                     }
-                    stepsUser= Math.round(maxusersvalue/10) -  Math.round(maxusersvalue % 10);
+                    if(maxusersvalue > 10)
+                    {
+                        stepsUser= Math.round(maxusersvalue/10) -  Math.round(maxusersvalue % 10);
+                    }else{
+                        stepsUser= Math.round(maxusersvalue);
+                    }
+
                     if(stepsUser <= 0)
                     {
                         stepsUser =  Math.round(maxusersvalue/10);
@@ -149,6 +164,8 @@ angular.module('mytodoApp')
                 });
                 $scope.years = years;
                 $scope.analysis = analysis;
+                console.log($scope.analysis['2015'].users_count);
+                console.log($scope.analysis['2015'].stepsUser);
 
                 var pathview = $("#Pathview").get(0).getContext("2d");
 
@@ -235,7 +252,7 @@ angular.module('mytodoApp')
                new Chart(pathview).Bar(data, opt_pathview);
 
 
-                var gage_analysis = $("#gage_pages").get(0).getContext("2d");
+                var gage_analysis = $("#Gage").get(0).getContext("2d");
                 var gage_users = $("#GageUsers").get(0).getContext("2d");
                 var data1 = {
                     labels: $scope.analysis['2015'].months,

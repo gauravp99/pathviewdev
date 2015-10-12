@@ -1,7 +1,7 @@
  Hello {{$name}},
 
 <br/><br/>
-Message: {{$msg}}
+Message: {{$subject}}
 
 <br/>
 <br/>
@@ -9,7 +9,7 @@ Message: {{$msg}}
 <br/>
 Pathview Project
 <br/>
-
+ {{$body}}
 <a href={{url('/')}}><img src="/images/logo.png"></a>
 
 <br/>

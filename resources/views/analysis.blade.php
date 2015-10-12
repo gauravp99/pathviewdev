@@ -1,3 +1,4 @@
+<script src="js/jquery.validate.min.js"></script>
 <div class="stepsdiv" id="geneid-div" @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
@@ -387,8 +388,10 @@
                 {!!form::label('limit',' Limit:') !!}
             </div>
 
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 {!!form::text('glmt',isset(Session::get('Sess')['glmt']) ? Session::get('Sess')['glmt']:$glmt,array('class' => 'coloration', 'id' => 'glmt')) !!}
+               </div>
+            <div class="col-sm-4" style="align-content: left">
                 {!!form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt'] :$clmt,array('class' => 'coloration', 'id' => 'clmt','style'=>'margin-left:50px')) !!}
             </div>
         </div>
@@ -403,8 +406,10 @@
                 </a>
                 {!!form::label('Bins',' Bins:')!!}
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-4">
                 {!!form::text('gbins',isset(Session::get('Sess')['gbins']) ?Session::get('Sess')['gbins'] :$gbins,array('class' => 'coloration', 'id' => 'gbins')) !!}
+                </div>
+                <div class="col-sm-4">
                 {!!form::text('cbins',isset(Session::get('Sess')['cbins']) ? Session::get('Sess')['cbins'] :$cbins,array('class' => 'coloration', 'id' => 'cbins','style'=>'margin-left:50px')) !!}
             </div>
         </div>
@@ -463,10 +468,282 @@
 </fieldset>
 </div>
 <div class="steps">
-    <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return fileCheck()"/>
+    <!-- <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return fileCheck()"/> -->
+    <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" />
     <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" onclick="return reset()"/>
 </div>
 {!! form::close() !!}
+
+<script>
+
+
+    tab1_array = ["assayData","cpdassayData","geneid","cpdid","species","pathway","selecttextfield","suffix"];
+    tab2_array = ["offset"];
+    tab3_array = ["glmt","clmt","gbins","cbins"];
+    $('#anal_form').validate({
+
+        invalidHandler: function(form,validator) {
+            var errors = validator.numberOfInvalids();
+
+            $.each(validator.errorList,function(index,value){
+                if($.inArray(value.element.attributes.id.nodeValue+"",tab1_array) > 0)
+                {
+                    $('#inputOutput').css('background-color', '#f2dede')
+                } else if($.inArray(value.element.attributes.id.nodeValue+"",tab2_array) > 0 )
+                {
+                    $('#graphics').css('background-color', '#f2dede')
+                } else if($.inArray(value.element.attributes.id.nodeValue+"",tab3_array) > 0){
+                    $('#coloration').css('background-color', '#f2dede')
+                }
+
+            });
+
+
+
+        },
+        rules: {
+
+            gfile: {
+
+                extension: "txt|csv",
+
+                required: {
+
+                    depends: function(element) {
+
+                        return $("#cpdassayData").is(':empty');
+                    }
+
+                }
+
+            },
+
+            cpdfile: {
+
+                extension: "txt|csv",
+
+                required: {
+
+                    depends: function(element) {
+
+                        return $("#assayData").is(':empty');
+                    }
+
+                }
+
+            },
+
+            geneid: {
+
+                required: true,
+                geneIdDBMatch: true
+
+            },
+
+            cpdid: {
+                required: true,
+                cpdidDBMatch: true
+            },
+
+            species: {
+                required: true,
+                speciesDBMatch: true,
+                speciesGeneIdMatch:true
+            },
+
+            pathway: {
+                pathwayIdDBMatch: true
+            },
+            selecttextfield:{
+                required: true,
+                ListPathwayMatch: true
+            },
+
+            suffix: {
+                required: true
+            },
+
+            offset: {
+                required: true,
+                number: true
+            },
+
+            glmt: {
+                required: true,
+                lmtFormat: true
+
+            },
+
+            clmt: {
+                required: true,
+                lmtFormat: true
+
+            },
+
+            gbins: {
+                required: true,
+                digits: true
+            },
+
+            cbins: {
+                required: true,
+                digits: true
+            }
+
+
+        },
+        messages: {
+            gfile: {
+                required: "Upload the Gene Data or Compound Data file.",
+                extension: "Uploaded Gene Data file extension is not supported. Supports only txt/csv."
+            },
+            cpdfile: {
+                required: "Upload the Gene Data or Compound Data file.",
+                extension: "Uploaded Compound Data file extension is not supported. Supports only txt/csv."
+            },
+            geneid: {
+                required: "Gene ID Type is not valid.",
+                geneIdDBMatch: "Gene ID Type Cannot be empty."
+            },
+            cpdid: {
+                required: "Compound ID Type Cannot be empty",
+                cpdidDBMatch: "Entered Compound ID Type does not exist"
+            },
+            species: {
+                required: "Species Cannot be left empty",
+                speciesDBMatch: "Species is not valid",
+                speciesGeneIdMatch: "For this Species value Gene ID Type  should be either 'ENTREZ' or 'KEGG'."
+            },
+            pathway: {
+
+            },
+            selecttextfield: {
+                required: "At least one Pathway should be selected.",
+                ListPathwayMatch: "Entered Pathway ID is not a valid pathway."
+            },
+            suffix:{
+                required: "Output Suffix Cannot be left empty"
+
+            },
+            offset:{
+                required: "Compound Label Offset value cannot be left empty",
+                number: "Compound Label Offset  Value must be numeric"
+            },
+            glmt:{
+                required: "Gene Limit value cannot be left empty",
+                lmtFormat: "Gene Limit Value must be numeric values separated by comma",
+                //number: "Gene Limit Value must be numeric"
+            },
+            clmt:{
+                required: "Compound limit  Cannot be left empty",
+                lmtFormat: "Compound Limit Value must be numeric values separated by comma",
+                //number: "Compound Limit Value must be numeric"
+            },
+            gbins:{
+                required: "Gene Bins Cannot be left empty",
+                digits: "Gene bins Value must be numeric"
+            },
+            cbins:{
+                required: "Compound Bins Cannot be left empty",
+                digits: "Compound Bins values must be numeric"
+            }
+
+
+        }
+
+
+
+    });
+
+    jQuery.validator.addMethod('geneIdDBMatch',function(value, element){
+        console.log(gene_array);
+        return (in_gene_array(gene_array,value));
+
+    });
+    jQuery.validator.addMethod('cpdidDBMatch',function(value, element){
+        console.log(cmpd_array);
+        return (in_cmpd_array(cmpd_array,value));
+
+    });
+    jQuery.validator.addMethod('speciesDBMatch',function(value, element){
+        var species_value = value.split("-")[0];
+        return (in_species_array(species_array,species_value));
+    });
+
+    jQuery.validator.addMethod('speciesGeneIdMatch',function(value, element){
+
+        var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
+        var most_flag = false;
+
+        for (var i = 0; i < most_spec.length; i++) {
+            if (value.split("-")[0] == most_spec[i]) {
+                most_flag = true;
+                break;
+            }
+        }
+        if (!most_flag && ( $('#geneid').val().toUpperCase() != 'ENTREZ' && $('#geneid').val().toUpperCase() != 'KEGG' )) {
+         return false;
+        }
+        else{
+            return true;
+        }
+    });
+
+    jQuery.validator.addMethod('pathwayIdDBMatch',function(value, element){
+        if(value ==  null)
+        {
+            return true;
+        }
+
+        return true;
+    });
+    jQuery.validator.addMethod('ListPathwayMatch',function(value, element){
+        //pathway_array
+
+        pathwayArray = $('#selecttextfield').text().split();
+        newCreateArray = "";
+        evenOneTrueFlag = false;
+        $.each(pathwayArray,function(index,value) {
+            if(value != null )
+            {
+                pt_value = value.split("-")[0];
+                //check existence
+                if(in_pathway_array(pathway_array,pt_value))
+                {
+                    evenOneTrueFlag = true;
+                    newCreateArray = newCreateArray +(value)+",";
+                }
+            }
+        });
+        console.log(newCreateArray);
+        $('#selecttextfield').text(newCreateArray);
+        return evenOneTrueFlag;
+    });
+
+
+
+    jQuery.validator.addMethod('lmtFormat',function(value, element){
+
+        var lmtArray = value.split(",");
+        var flag = true;
+        if(lmtArray.length <= 2) {
+            $.each(lmtArray, function (index, value1) {
+                if (value1 != null && value1 != "") {
+                    var patt = new RegExp("^[1-9]\d*(\.\d+)?$");
+                    if (!patt.test(value1)) {
+                        console.log(value1);
+                        flag = false;
+                    }
+                }
+            });
+        }else{
+            flag = false;
+        }
+        return flag;
+
+    });
+</script>
+
 
 {{--<script>
     $('#select-from').change(function(){

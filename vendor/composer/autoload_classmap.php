@@ -8,7 +8,9 @@ $baseDir = dirname($vendorDir);
 return array(
     'CommentTableSeeder' => $baseDir . '/database/seeds/CommentTableSeeder.php',
     'CreateAnalysisErrorsTable' => $baseDir . '/database/migrations/2015_10_09_215010_create_analysis_errors_table.php',
+    'CreateAnalysisTable' => $baseDir . '/database/migrations/2015_10_09_215004_create_analyses_table.php',
     'CreateBiocStatisticsTable' => $baseDir . '/database/migrations/2015_10_09_215022_create_bioc_statistics_table.php',
+    'CreateCommentsTable' => $baseDir . '/database/migrations/2015_10_12_113258_create_comments_table.php',
     'CreateCompoundIdsTable' => $baseDir . '/database/migrations/2015_10_09_215032_create_compound_ids_table.php',
     'CreateGenesTable' => $baseDir . '/database/migrations/2015_10_09_215036_create_genes_table.php',
     'CreateJobsTable' => $baseDir . '/database/migrations/2015_10_10_034131_create_jobs_table.php',

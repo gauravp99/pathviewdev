@@ -1,0 +1,6 @@
+Warning messages:
+1: NAs introduced by coercion 
+2: NAs introduced by coercion 
+Warning: Parsing /var/www/Pathway/public/Kegg/hsa/hsa00010.xml file failed, please check the file!
+Warning message:
+In .local(from, to, graph) : edges replaced: ‘130|56’, ‘130|57’, ‘113|112’

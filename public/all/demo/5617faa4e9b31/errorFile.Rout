@@ -1,0 +1,2 @@
+Error in .testForValidKeys(x, keys, keytype) : 
+  None of the keys entered are valid keys for 'SYMBOL'. Please use the keys method to see a listing of valid arguments.
