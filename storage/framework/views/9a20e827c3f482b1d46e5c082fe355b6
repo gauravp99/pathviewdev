@@ -1,0 +1,216 @@
+<?php
+use Illuminate\Cache;
+?>
+
+
+<?php $__env->startSection('content'); ?>
+
+    <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="col-sm-9">
+        <div class="conetent-header">
+
+
+    <p><b>Example Analysis 3: ID Mapping</b></p>
+
+
+        </div>
+        <div class="col-sm-5">
+
+            <?php if($errors->any()): ?>
+                <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
+                    <?php foreach($errors->all() as $error): ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php endif; ?>
+
+
+            <?php if(Session::get('err')!=NULL): ?>
+
+                <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
+                    <?php
+                    for ($x = 0; $x < sizeof(Session::get('err')); $x++) {
+                        echo "<li>" . Session::get('err')[$x] . "</li>";
+                    }
+                    ?>
+                </ul>
+
+            <?php endif; ?>
+            <ul id="errors" hidden="true" class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
+
+            </ul>
+        </div>
+    </div>
+
+    <?php
+            /** Default values for all the fields of the pathview attributes **/
+    $gfile = "gene.ensprot.txt";
+    $cpdfile = "cpd.cas.csv";
+    $geneid = "ENSEMBLPROT";
+    $cpdid = "CAS Registry Number";
+    $species = "hsa-Homo sapiens";
+    $pathway = "00010-Glycolysis / Gluconeogenesis";
+    $selectpath = "00640-Propanoate metabolism";
+    $pathidx = 0;
+    $suffix = "IDMapping";
+    $kegg = true;
+    $layer = true;
+    $split = false;
+    $expand = false;
+    $multistate = true;
+    $matchd = true;
+    $gdisc = false;
+    $cdisc = false;
+    $kpos = "topright";
+    $pos = "bottomleft";
+    $offset = "1.0";
+    $align = "y";
+    $glmt = 3;
+    $gbins = 6;
+    $glow = "green";
+    $gmid = "grey";
+    $ghigh = "red";
+    $clmt = 3;
+    $cbins = 6;
+    $clow = "blue";
+    $cmid = "grey";
+    $chigh = "yellow";
+    $nsum = "sum";
+    $ncolor = "transparent";
+    ?>
+
+    <?php /*Div for Form for generating the analysis Form is devided into pages
+    1. Input and Output
+    2. Graphics
+    3. Coloration */ ?>
+    <div class="col-sm-7">
+        <div id="content">
+            <div id="wrapper">
+                <div id="navigation" style="display:none;">
+                    <ul>
+                        <li class="selected">
+                            <a href="#">Input & Output</a>
+                        </li>
+                        <li>
+                            <a href="#">Graphics</a>
+                        </li>
+                        <li>
+                            <a href="#">Coloration</a>
+                        </li>
+
+                    </ul>
+                </div>
+
+
+
+                <?php /*Input and Output slider */ ?>
+                <div id="steps">
+
+
+
+                    <?php echo form::open(array('url' => 'post_exampleAnalysis3','method'=>'POST','files'=>true,'id' =>
+                    'anal_form')); ?>
+
+
+                    <fieldset class="step">
+                        <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0"/>
+
+                        <div class="stepsdiv" id="gfile-div" <?php if(isset(Session::get('err_atr')['gfile'])): ?>
+                             style="background-color:#DA6666;" <?php endif; ?>>
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
+                                    </a>
+                                    <?php echo form::label('gcheck','Gene Data:'); ?>
+
+                                </div>
+                                <div class="col-sm-7">
+
+
+                                    <input name="gcheck" id="gcheck" value="T" type="checkbox"
+                                    <?php if (isset(Session::get('Sess')['gcheck'])) {
+                                        echo "checked";
+                                    } else {
+                                        if (Session::get('Sess') == NULL) {
+                                            echo "checked";
+                                        }
+                                    }?>>
+
+
+                                    <a href="/all/demo/example/<?php echo e($gfile); ?>" target="_blank"><?php echo e($gfile); ?></a>
+
+                                </div>
+                            </div>
+                        </div>
+                        <br/>
+                        <br/>
+
+                        <div class="stepsdiv" id="cfile-div" <?php if(isset(Session::get('err_atr')['cfile'])): ?>
+                             style="background-color:#DA6666;" <?php endif; ?>>
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="tutorial#cpd_data" onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus(); return false;"  title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+                                    <?php echo form::label('cpdcheck','Compound Data:'); ?>
+
+                                </div>
+                                <div class="col-sm-7">
+
+
+                                    <input name="cpdcheck" id="cpdcheck" value="T" type="checkbox"
+                                    <?php if (isset(Session::get('Sess')['cpdcheck'])) {
+                                        echo "checked";
+                                    } else {
+                                        if (Session::get('Sess') == NULL) {
+                                            echo "checked";
+                                        }
+                                    }?>>
+                                    <a href="/all/demo/example/<?php echo e($cpdfile); ?>" target="_blank"><?php echo e($cpdfile); ?></a>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <br/>
+                        <br/>
+
+
+                       <?php echo $__env->make('analysis', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </div>
+
+
+    </div>
+    </div>
+
+        <script type="text/javascript">
+            <?php
+                                   $pathway = DB::table('Pathway')->get(array('pathway_id'));?>
+            <?php
+            $species = DB::table('Species')->get(array('species_id'));?>
+            <?php
+    $species = DB::table('Species')->get(array('species_id'));?>
+            <?php
+    $gene = DB::table('gene')->get(array('geneid'));?>
+            <?php
+    $cmpd = DB::table('compound')->get(array('cmpdid'));?>
+
+            pathway_array = <?php echo JSON_encode($pathway);?>;
+            species_array = <?php echo JSON_encode($species);?>;
+            gene_array = <?php echo JSON_encode($gene);?>;
+            cmpd_array = <?php echo JSON_encode($cmpd);?>;
+
+
+
+        </script>
+        <script src="<?php echo e(asset('/js/analysis.js')); ?>"></script>
+
+
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

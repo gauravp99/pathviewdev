@@ -1,0 +1,50 @@
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
+
+
+
+    <div class="col-md-8 editDiv" >
+        <div class="col-md-12">
+        <h1>
+            <div class="avtar"><img src=<?php echo e(asset('/images/avtar.png')); ?> height="102" width="102"></div>
+        </h1>
+        <p><b>User ID: <?php echo e($user->id); ?></b></p>
+        <p><b>User Email: <?php echo e($user->email); ?></b></p>
+        <p><b>Member since: <?php echo e($user->created_at); ?></b></p>
+        <?php echo form::open(array('url' => 'edit_post','method'=>'POST','files'=>true)); ?>
+
+        <?php echo form::label('Name','Name:'); ?>
+
+        <?php if($user->name==""): ?>
+            <?php echo form::text('name',$user->email); ?>
+
+        <?php else: ?>
+            <?php echo form::text('name',$user->name); ?>
+
+        <?php endif; ?>
+        <?php echo form::label('email','Email:'); ?>
+
+        <?php echo form::text('email',$user->email); ?>
+
+        <br/>
+        <br/>
+            </div>
+        <div class="col-md-1 ">
+        <button type="submit" class="btn btn-primary" style="margin-left:17%;font-size: 18px;width:200px;">
+           Submit
+        </button>
+            </div>
+
+        <?php echo form::close(); ?>
+
+    </div>
+
+
+
+
+
+
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,10 @@
+<?php $__env->startSection('content'); ?>
+
+
+
+<h2 class="alert alert-info">You have reached the maximum space limit available to you. Delete the history analysis going to home page and try again. Thanks</h2>
+<a href="/">Home</a>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

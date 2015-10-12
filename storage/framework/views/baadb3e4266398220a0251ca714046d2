@@ -1,0 +1,123 @@
+<?php $__env->startSection('content'); ?>
+
+    <?php
+    if(basename(Request::url())== "gage-home" || basename(Request::url())== "gage-guest-home")
+    {
+
+    ?>
+    <?php echo $__env->make('GageNavigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <?php
+    }
+    else {
+    ?><?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?><?php
+    }
+    ?>
+    <div class="col-sm-9">
+    <div class="panel panel-default">
+        <div class="panel-heading">Guest Login</div>
+        <div class=' col-md-offset-2'>
+
+            <div class="panel-body">
+                Hello Guest You are ready to do Analysis!
+                <br/>
+                <br/>
+
+
+                <?php if(count($errors) > 0): ?>
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                            <?php foreach($errors->all() as $error): ?>
+                                <li><?php echo e($error); ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+
+                    <p class="alert alert-danger">Alert!! You are on Guest Login and your analysis is NOT saved..</p>
+
+                    <p class="alert alert-info" style="color:black;">To save your inputs, outputs and analysis, please <a
+                                href="#" style="border-radius: 1px; color:blue;"
+                                data-toggle="modal" data-target="#myModal">register</a> for free.</p>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title " id="myModalLabel">Register</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="POST"
+                          action="<?php echo e(url('/auth/register')); ?>">
+                        <input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Name</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="name"
+                                       value="<?php echo e(old('name')); ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Organisation</label>
+
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" name="organisation"
+                                       value="<?php echo e(old('organisation')); ?>">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">E-Mail</label>
+
+                            <div class="col-md-6">
+                                <input type="email" class="form-control" name="email"
+                                       value="<?php echo e(old('email')); ?>">
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Password</label>
+
+                            <div class="col-md-6">
+                                <input type="password" class="form-control" name="password">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Confirm Password</label>
+
+                            <div class="col-md-6">
+                                <input type="password" class="form-control"
+                                       name="password_confirmation">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button type="submit" class="btn btn-primary">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

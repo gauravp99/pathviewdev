@@ -1,0 +1,12 @@
+Hello Admin,
+
+<br/><br/>
+Message:
+<br/><br/>
+Name: <b><?php echo e($name); ?></b>
+<br/><br/>
+Email: <b><?php echo e($email); ?></b>
+<br/><br/>
+
+Message: <b><?php echo e($msg); ?></b>
+<br/>
