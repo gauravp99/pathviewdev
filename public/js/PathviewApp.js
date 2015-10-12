@@ -134,18 +134,7 @@ app.controller('analysisController',function($scope,$timeout) {
         $('#geneMenu').css("visibility", "");
     }
 
-
-
-
-
-
 });
-app.filter('hasIntersection', function() {
-    return function ( Compoundcolumns, array) {
-        return array.indexOf(Compoundcolumns) >= 0;
-    };
-});
-
 
 app.directive('onReadFile', function($parse){
     return {

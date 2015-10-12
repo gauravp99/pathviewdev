@@ -16,10 +16,10 @@
 
 <body>
 
-<!-- Header of the web page -->
+
 <nav class="navbar navbar-default navbar-change">
     <div class="container-fluid">
-        <!-- Start Logo and toggle navigation bar -->
+
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#pathview">
                 <span class="sr-only">Toggle Navigation</span>
