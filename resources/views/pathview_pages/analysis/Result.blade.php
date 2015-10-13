@@ -49,38 +49,43 @@
                     });
                 }, 3000);
             }
+            else if(queue_id > 0 ){
+               var myVar1 = setInterval(function () {
 
-            var myVar1 = setInterval(function () {
+                   $.ajax({
+                       url: "/ajax/analysisStatus",
+                       method: 'POST',
+                       data: {'analysisid': myvar,
+                           'id':id,
+                           'suffix':suffix,
+                           'argument':argument,
+                           'anal_type':anal_type
+                       },
+                       success: function (data) {
+                           if (data.length > 0) {
+                               console.log("success: data " +  data);
+                               $("#waiting").remove();
+                               $("#progress").show();
+                               $("#completed").hide();
+                               if (data === "true") {
 
-                $.ajax({
-                    url: "/ajax/analysisStatus",
-                    method: 'POST',
-                    data: {'analysisid': myvar,
-                            'id':id,
-                            'suffix':suffix,
-                            'argument':argument,
-                            'anal_type':anal_type
-                            },
-                    success: function (data) {
-                        if (data.length > 0) {
-                            console.log("success: data " +  data);
-                            $("#waiting").remove();
-                            $("#progress").show();
-                            $("#completed").hide();
-                            if (data === "true") {
+                                   $("#progress").remove();
+                                   $("#completed").show();
+                                   clearInterval(myVar1);
+                               }
+                           }
+                       },
+                       error: function (data) {
+                           console.log("error"+data);
+                       }
+                   });
+               }, 3000);
 
-                                $("#progress").remove();
-                                $("#completed").show();
-                                clearInterval(myVar1);
-                            }
-                        }
-                    },
-                    error: function (data) {
-                        console.log("error"+data);
-                    }
-                });
-            }, 3000);
+           }else{
+               $('#completed').show();
+           }
         });
+
 
     </script>
     @include('navigation')

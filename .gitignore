@@ -1,1 +1,3 @@
 /public/all/
+/app/config/
+.env

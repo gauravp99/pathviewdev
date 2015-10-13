@@ -18,6 +18,7 @@ class PathviewAnalysis
     private $compoundId;
     private $speciesID;
     private $pathwayID;
+    private $pathwayIDs = array();
     private $suffix;
     private $keggFlag;
     private $layerFlag;
@@ -33,6 +34,8 @@ class PathviewAnalysis
     private $keyAlign;
     private $geneLimit;
     private $geneBins;
+    private $compoundLimit;
+    private $compoundBins;
     private $geneLow;
     private $geneMid;
     private $geneHigh;
@@ -41,12 +44,214 @@ class PathviewAnalysis
     private $compoundHigh;
     private $nodeSum;
     private $naColor;
+    private $geneExtension;
+    private $compoundExtension;
+    private $targetDirectory;
+    private $geneReference;
+    private $geneSample;
+    private $compoundRefeence;
+    private $compoundSample;
+    private $geneCompare;
+    private $compoundCompare;
+
+    /**
+     * @return array
+     */
+    public function getPathwayIDs()
+    {
+        return $this->pathwayIDs;
+    }
+
+    /**
+     * @param array $pathwayIDs
+     */
+    public function setPathwayIDs($pathwayIDs)
+    {
+        $this->pathwayIDs = $pathwayIDs;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoundLimit()
+    {
+        return $this->compoundLimit;
+    }
+
+    /**
+     * @param mixed $compoundLimit
+     */
+    public function setCompoundLimit($compoundLimit)
+    {
+        $this->compoundLimit = $compoundLimit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoundBins()
+    {
+        return $this->compoundBins;
+    }
+
+    /**
+     * @param mixed $compoundBins
+     */
+    public function setCompoundBins($compoundBins)
+    {
+        $this->compoundBins = $compoundBins;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGeneExtension()
+    {
+        return $this->geneExtension;
+    }
+
+    /**
+     * @param mixed $geneExtension
+     */
+    public function setGeneExtension($geneExtension)
+    {
+        $this->geneExtension = $geneExtension;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoundExtension()
+    {
+        return $this->compoundExtension;
+    }
+
+    /**
+     * @param mixed $compoundExtension
+     */
+    public function setCompoundExtension($compoundExtension)
+    {
+        $this->compoundExtension = $compoundExtension;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTargetDirectory()
+    {
+        return $this->targetDirectory;
+    }
+
+    /**
+     * @param mixed $targetDirectory
+     */
+    public function setTargetDirectory($targetDirectory)
+    {
+        $this->targetDirectory = $targetDirectory;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGeneReference()
+    {
+        return $this->geneReference;
+    }
+
+    /**
+     * @param mixed $geneReference
+     */
+    public function setGeneReference($geneReference)
+    {
+        $this->geneReference = $geneReference;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGeneSample()
+    {
+        return $this->geneSample;
+    }
+
+    /**
+     * @param mixed $geneSample
+     */
+    public function setGeneSample($geneSample)
+    {
+        $this->geneSample = $geneSample;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoundRefeence()
+    {
+        return $this->compoundRefeence;
+    }
+
+    /**
+     * @param mixed $compoundRefeence
+     */
+    public function setCompoundRefeence($compoundRefeence)
+    {
+        $this->compoundRefeence = $compoundRefeence;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoundSample()
+    {
+        return $this->compoundSample;
+    }
+
+    /**
+     * @param mixed $compoundSample
+     */
+    public function setCompoundSample($compoundSample)
+    {
+        $this->compoundSample = $compoundSample;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getGeneCompare()
+    {
+        return $this->geneCompare;
+    }
+
+    /**
+     * @param mixed $geneCompare
+     */
+    public function setGeneCompare($geneCompare)
+    {
+        $this->geneCompare = $geneCompare;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCompoundCompare()
+    {
+        return $this->compoundCompare;
+    }
+
+    /**
+     * @param mixed $compoundCompare
+     */
+    public function setCompoundCompare($compoundCompare)
+    {
+        $this->compoundCompare = $compoundCompare;
+    }
+
 
     /**
      * PathviewAnalysis constructor.
      * @param mixed $string
      */
-    public function __construct($string)
+    public function __construct()
     {
         //split the string using ; and save it object attributes
 
@@ -64,6 +269,103 @@ class PathviewAnalysis
 
     }
 
+    function createArgument()
+    {
+
+        $argument ="";
+        $argument .="filename:".$this->geneFileName.";";
+        if(!is_null($this->CompoundFileName))
+        {
+            $argument .="cfilename:".$this->CompoundFileName.";";
+            $argument .="cpdextension:".$this->compoundExtension.";";
+            if(!is_null($this->compoundRefeence))
+                $argument .="cpdref:".$this->compoundRefeence.";";
+            else
+                $argument .="cpdref:NULL;";
+            if(!is_null($this->compoundSample))
+                $argument .="cpdsamp:".$this->compoundSample.";";
+            else
+                $argument .="cpdsamp:NULL;";
+
+            $argument .="cpdcompare:".$this->compoundCompare.";";
+        }
+
+        $argument .="geneid:".$this->geneId.";";
+        $argument .="cpdid:".$this->compoundId.";";
+        $argument .="species:".$this->speciesID.";";
+        $argument .="pathway:".join(",",$this->pathwayIDs).";";
+        $argument .="suffix:".$this->suffix.";";
+        if($this->keggFlag)
+            $argument .="kegg:T;";
+        else
+            $argument .="kegg:F;";
+        if($this->layerFlag)
+            $argument .="layer:T;";
+        else
+            $argument .="layer:F;";
+        if($this->splitFlag)
+            $argument .="split:T;";
+        else
+            $argument .="split:F;";
+        if($this->expandFlag)
+            $argument .="expand:T;";
+        else
+            $argument .="expand:F;";
+        if($this->multiStateFlag)
+            $argument .="multistate:T;";
+        else
+            $argument .="multistate:T;";
+        if($this->matchDataFlag)
+            $argument .="matchd:T;";
+        else
+            $argument .="matchd:F;";
+        if($this->geneDiscreteFlag)
+            $argument .="gdisc:T;";
+        else
+            $argument .="gdisc:F;";
+
+        if($this->compoundDiscreteFlag)
+            $argument .="cdisc:T;";
+        else
+            $argument .="cdisc:F;";
+        $argument .="kpos:".$this->keyPosition.";";
+        $argument .="pos:".$this->signaturePosition.";";
+        $argument .="offset:".$this->offset.";";
+        $argument .="align:".$this->keyAlign.";";
+        $argument .="glmt:".$this->geneLimit.";";
+        $argument .="gbins:".$this->geneBins.";";
+        $argument .="clmt:".$this->compoundLimit.";";
+        $argument .="cbins:".$this->compoundBins.";";
+        $argument .="glow:".$this->geneLow.";";
+        $argument .="gmid:".$this->geneMid.";";
+        $argument .="ghigh:".$this->geneHigh.";";
+        $argument .="clow:".$this->compoundLow.";";
+        $argument .="cmid:".$this->compoundMid.";";
+        $argument .="chigh:".$this->compoundHigh.";";
+        $argument .="nsum:".$this->nodeSum.";";
+        $argument .="ncolor:".$this->naColor.";";
+        $argument .="geneextension:".$this->geneExtension.";";
+
+        $argument .="targedir:".$this->targetDirectory.";";
+
+        if(!is_null($this->geneReference))
+            $argument .="generef:".$this->geneReference.";";
+        else
+            $argument .="generef:NULL;";
+        if(!is_null($this->geneSample))
+            $argument .="genesamp:".$this->geneSample.";";
+        else
+            $argument .="genesamp:NULL;";
+
+
+        $argument .="genecompare:".$this->geneCompare.";";
+
+
+
+        return $argument;
+
+
+    }
 
     /**
      * @return mixed

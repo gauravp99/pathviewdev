@@ -20,6 +20,7 @@ use Storage;
 use Illuminate\Support\Facades\Cookie;
 use App\Commands\SendJobAnalysisCompletionMail;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Config;
 class AnalysisController extends Controller
 {
 
@@ -783,6 +784,8 @@ class AnalysisController extends Controller
                 return $ipaddress;
             }
 
+
+
             Redis::set('users_count', 0);
             //maintaining a counter on redis number of concurrent users
             if (is_null(Redis::get('users_count'))) {
@@ -795,58 +798,76 @@ class AnalysisController extends Controller
             }
             $destFile1 = "/all/$email/$time/";
 
-            /*if(Redis::get('users_count') > 5) {*/
-            $runHashdata = array();
-            $runHashdata['argument'] = $argument;
-            $runHashdata['destFile'] = $destFile;
-            $runHashdata['anal_type'] = $anal_type;
-            if (Auth::user())
-                $runHashdata['user'] = Auth::user()->id;
-            else
-                $runHashdata['user'] = "demo";
-            Redis::set($time, json_encode($runHashdata));
-            Redis::set($time . ":Status", "false");
 
 
-            //code to handle users more than 2 jobs in queue
+            $Rloc = Config::get("app.RLoc");
+            $publicPath = Config::get("app.publicPath");
+            $queueEnabled = Config::get("app.enableQueue");
 
-            $curr_job1 = 0;
-            $curr_job2 = 0;
-            if(!is_null(Redis::get("id:".$uID)))
-            $curr_job1 = Redis::get("id:".$uID);
-            if(Auth::user())
-                if(!is_null(Redis::get("id:".Auth::user()->email)))
+            if(!$queueEnabled){
+                $this->runAnalysis($time,$argument,$destFile,$anal_type);
+                //return view('analysis.Result')->with(array('exception' => null, 'directory' => $destFile, 'directory1' => $destFile1));
+                Redis::set('users_count',Redis::get('users_count') -1 );
+                return view('pathview_pages.analysis.Result')->with(array('exception' => null, 'directory' => $destFile, 'analysisid' => $time,'queueid' => 0, 'directory1' => $destFile1));
+            }   else{
+
+                /*if(Redis::get('users_count') > 5) {*/
+                $runHashdata = array();
+                $runHashdata['argument'] = $argument;
+                $runHashdata['destFile'] = $destFile;
+                $runHashdata['anal_type'] = $anal_type;
+                if (Auth::user())
+                    $runHashdata['user'] = Auth::user()->id;
+                else
+                    $runHashdata['user'] = "demo";
+                Redis::set($time, json_encode($runHashdata));
+                Redis::set($time . ":Status", "false");
+
+
+                //code to handle users more than 2 jobs in queue
+
+                $curr_job1 = 0;
+                $curr_job2 = 0;
+                if(!is_null(Redis::get("id:".$uID)))
+                    $curr_job1 = Redis::get("id:".$uID);
+                if(Auth::user())
+                    if(!is_null(Redis::get("id:".Auth::user()->email)))
+                    {
+                        $curr_job2 = Redis::get("id:".Auth::user()->email);
+                    }
+
+
+                $total_jobs = $curr_job1 + $curr_job2;
+
+                if($total_jobs >=2)
                 {
-                    $curr_job2 = Redis::get("id:".Auth::user()->email);
-                }
-
-
-            $total_jobs = $curr_job1 + $curr_job2;
-
-            if($total_jobs >=2)
-            {
 
                     Redis::set("wait:".$time,true);
-                $process_queue_id = -1;
-            }
-            else{
-
-                $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($time));
-                if(Auth::user())
-                {
-                    Redis::set("id:".Auth::user()->email,$total_jobs+1);
-                    Redis::del("id:".$uID,0);
-                }else{
-                    Redis::set("id:".$uID,$total_jobs+1);
+                    $process_queue_id = -1;
                 }
+                else{
+
+                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($time));
+                    if(Auth::user())
+                    {
+                        Redis::set("id:".Auth::user()->email,$total_jobs+1);
+                        Redis::del("id:".$uID,0);
+                    }else{
+                        Redis::set("id:".$uID,$total_jobs+1);
+                    }
+                }
+
+
+                return view('pathview_pages.analysis.Result')->with(array('exception' => null,
+                    'directory' => $destFile,
+                    'directory1' => $destFile1,
+                    'queueid' => $process_queue_id,
+                    'analysisid' => $time));
             }
 
 
-            return view('pathview_pages.analysis.Result')->with(array('exception' => null,
-                'directory' => $destFile,
-                'directory1' => $destFile1,
-                'queueid' => $process_queue_id,
-                'analysisid' => $time));
+
+
             /* return "pushed into queue will be sent an email shortly with all analysis done=" . $process_queue_id;*/
             /* }
              else{
@@ -870,18 +891,21 @@ class AnalysisController extends Controller
 
     public function runAnalysis($time, $argument, $destFile, $anal_type)
     {
-        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript my_Rscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+
+        $Rloc = Config::get("app.RLoc");
+        $publicPath = Config::get("app.publicPath");
+        exec($Rloc."Rscript ".$publicPath."my_Rscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
 
         $date = new \DateTime;
 
         if (Auth::user())
             DB::table('analysis')->insert(
-                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date,'analysis_origin' => 'pathview', 'ipadd' => get_client_ip())
+                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date,'analysis_origin' => 'pathview', 'ip_add' => get_client_ip())
             );
         else
             DB::table('analysis')->insert(
-                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ipadd' => get_client_ip())
+                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => get_client_ip())
             );
         //start If there are error in the code analysis saving into database for reporting and solving by admin
         $lines = file($destFile . "errorFile.Rout");

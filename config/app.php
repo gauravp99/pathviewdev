@@ -14,7 +14,7 @@ return [
     */
 
     'debug' => env('APP_DEBUG', true),
-
+    'enableQueue' => true,
     'adminEmail' => 'pathwaywebs@gmail.com',
     'publicPath' => '/home/ybhavnasi/Desktop/work/PathwayWeb/public/scripts/',
     'RLoc' => '/home/ybhavnasi/R-3.1.2/bin/',

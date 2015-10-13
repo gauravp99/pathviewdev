@@ -133,7 +133,7 @@ Route::get('anal_hist', array(
 
 /* URL route for Analysis (New Analysis)  */
 Route::post('postAnalysis', 'pathview\analysis\AnalysisController@postAnalysis');
-
+#Route::post('postAnalysis', 'PathviewAnalysisController@postAnalysis');
 /* URL route for Analysis (example1)  */
 Route::post('post_exampleAnalysis1', 'pathview\analysis\AnalysisController@post_exampleAnalysis1');
 
