@@ -1,5 +1,0 @@
-Info: Working in directory /var/www/Pathway/public/all/demo/560ed464969d4
-Info: Writing image file hsa00640.multistatekegg.multi.png
-Error in is.data.frame(x) : object 'pvge' not found
-Calls: sapply ... sapply -> lapply -> FUN -> write.table -> is.data.frame
-Execution halted

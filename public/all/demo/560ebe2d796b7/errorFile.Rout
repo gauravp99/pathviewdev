@@ -1,7 +1,0 @@
-Note: None of the genes or compounds mapped to the pathway!
-Argument gene.idtype or cpd.idtype may be wrong.
-Info: Working in directory /var/www/Pathway/public/all/demo/560ebe2d796b7
-Info: Writing image file hsa00010.pathview.multi.png
-Warning message:
-In colnames(plot.data)[c(1, 3, 9:ncs)] = c("kegg.names", "all.mapped",  :
-  number of items to replace is not a multiple of replacement length
