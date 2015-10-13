@@ -1,9 +1,0 @@
-<?php $__env->startSection('content'); ?>
-    <?php echo $__env->make('navigation', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-
-    <h1><?php echo e($user->email); ?> profile</h1>
-    <p>User ID: <?php echo e($user->id); ?></p>
-    <p>User Email: <?php echo e($user->email); ?></p>
-    <p>User Created at: <?php echo e($user->created_at); ?></p>
-    <?php $__env->stopSection(); ?>
-<?php echo $__env->make('app', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
