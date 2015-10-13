@@ -132,23 +132,23 @@ Route::get('anal_hist', array(
     }));
 
 /* URL route for Analysis (New Analysis)  */
-Route::post('postAnalysis', 'pathview\analysis\AnalysisController@postAnalysis');
-#Route::post('postAnalysis', 'PathviewAnalysisController@postAnalysis');
+#Route::post('postAnalysis', 'pathview\analysis\AnalysisController@postAnalysis');
+Route::post('postAnalysis', 'PathviewAnalysisController@postAnalysis');
 /* URL route for Analysis (example1)  */
-Route::post('post_exampleAnalysis1', 'pathview\analysis\AnalysisController@post_exampleAnalysis1');
-
+#Route::post('post_exampleAnalysis1', 'pathview\analysis\AnalysisController@post_exampleAnalysis1');
+Route::post('post_exampleAnalysis1', 'PathviewAnalysisController@post_exampleAnalysis1');
 /* URL route for Analysis (example2)  */
-Route::post('post_exampleAnalysis2', 'pathview\analysis\AnalysisController@post_exampleAnalysis2');
-
+#Route::post('post_exampleAnalysis2', 'pathview\analysis\AnalysisController@post_exampleAnalysis2');
+Route::post('post_exampleAnalysis2','PathviewAnalysisController@post_exampleAnalysis1');
 /* URL route for Analysis (example3)  */
-Route::post('post_exampleAnalysis3', 'pathview\analysis\AnalysisController@post_exampleAnalysis3');
-
-Route::get('example1', 'pathview\analysis\AnalysisController@example_one');
-
-Route::get('example2', 'pathview\analysis\AnalysisController@example_two');
-
-Route::get('example3', 'pathview\analysis\AnalysisController@example_three');
-
+#Route::post('post_exampleAnalysis3', 'pathview\analysis\AnalysisController@post_exampleAnalysis3');
+Route::post('post_exampleAnalysis3', 'PathviewAnalysisController@post_exampleAnalysis3');
+#Route::get('example1', 'pathview\analysis\AnalysisController@example_one');
+Route::get('example1', 'PathviewAnalysisController@example_one');
+#Route::get('example2', 'pathview\analysis\AnalysisController@example_two');
+Route::get('example2', 'PathviewAnalysisController@example_two');
+#Route::get('example3', 'pathview\analysis\AnalysisController@example_three');
+Route::get('example3', 'PathviewAnalysisController@example_three');
 
 
 

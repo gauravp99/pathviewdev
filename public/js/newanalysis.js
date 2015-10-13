@@ -209,7 +209,7 @@ function in_pathway_array(pathway, id) {
     return false;
 }
 
-function fileCheck() {
+/*function fileCheck() {
     $("#errors").show();
     document.getElementById('submit-button').setAttribute("data-toggle", "");
     document.getElementById('submit-button').setAttribute("data-target", "");
@@ -236,9 +236,9 @@ function fileCheck() {
     var most_flag = false;
 
 
-    /**
+    /!**
      * Trim the text field for spaces in all input fields not required for suffix already handled
-     */
+     *!/
     document.getElementById("selecttextfield").value = document.getElementById("selecttextfield").value.trim();
     geneid.value = geneid.value.trim();
     cpdid.value = cpdid.value.trim();
@@ -291,7 +291,7 @@ function fileCheck() {
 
     }
 
-    /*------------------------Pathway ID check ------------------------------*/
+    /!*------------------------Pathway ID check ------------------------------*!/
     if (document.getElementById('selecttextfield').value.length < 5) {
 
         var myElement = document.getElementById("pat-select");
@@ -317,9 +317,9 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
-    /*------------------------Pathway ID check ------------------------------*/
+    /!*------------------------Pathway ID check ------------------------------*!/
 
-    /*------------------------Gene ID check ------------------------------*/
+    /!*------------------------Gene ID check ------------------------------*!/
     if (geneid.value == "") {
 
         var myElement = document.getElementById("geneid-div");
@@ -349,10 +349,10 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
-    /*------------------------Gene ID check ------------------------------*/
+    /!*------------------------Gene ID check ------------------------------*!/
 
 
-    /*------------------------Compound ID check ------------------------------*/
+    /!*------------------------Compound ID check ------------------------------*!/
     if (cpdid.value == "") {
         var myElement = document.getElementById("cpdid-div");
         myElement.style.backgroundColor = "#DA6666";
@@ -375,9 +375,9 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
-    /*------------------------Gene ID check ------------------------------*/
+    /!*------------------------Gene ID check ------------------------------*!/
 
-    /*------------------------Suffix check ------------------------------*/
+    /!*------------------------Suffix check ------------------------------*!/
     if (suffix.value == "") {
 
         var myElement = document.getElementById("suffix-div");
@@ -395,9 +395,9 @@ function fileCheck() {
 
         }
     }
-    /*------------------------Gene ID check ------------------------------*/
+    /!*------------------------Gene ID check ------------------------------*!/
 
-    /*------------------------Species check ------------------------------*/
+    /!*------------------------Species check ------------------------------*!/
     if (species.value == "") {
         var myElement = document.getElementById("species-div");
         myElement.style.backgroundColor = "#DA6666";
@@ -456,10 +456,10 @@ function fileCheck() {
         error = true;
 
     }
-    /*------------------------Species check ------------------------------*/
+    /!*------------------------Species check ------------------------------*!/
 
 
-    /*------------------------Compound Label offset check ------------------------------*/
+    /!*------------------------Compound Label offset check ------------------------------*!/
     if (offset.value == "") {
         var myElement = document.getElementById("offset-div");
         myElement.style.backgroundColor = "#DA6666";
@@ -484,10 +484,10 @@ function fileCheck() {
         myElement.style.backgroundColor = "#F4F4F4";
 
     }
-    /*------------------------Compound Label offset check------------------------------*/
+    /!*------------------------Compound Label offset check------------------------------*!/
 
 
-    /*------------------------Gene Limit check------------------------------*/
+    /!*------------------------Gene Limit check------------------------------*!/
     if (glmt.value == "") {
         glmt.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");
@@ -527,9 +527,9 @@ function fileCheck() {
 
         }
     }
-    /*------------------------Gene Limit check------------------------------*/
+    /!*------------------------Gene Limit check------------------------------*!/
 
-    /*------------------------Gene Bins check------------------------------*/
+    /!*------------------------Gene Bins check------------------------------*!/
     if (gbins.value == "") {
 
         gbins.style.backgroundColor = "#DA6666";
@@ -552,9 +552,9 @@ function fileCheck() {
         gbins.style.backgroundColor = "#FFF";
 
     }
-    /*------------------------Gene Bins check------------------------------*/
+    /!*------------------------Gene Bins check------------------------------*!/
 
-    /*------------------------Compound Limit check------------------------------*/
+    /!*------------------------Compound Limit check------------------------------*!/
     if (clmt.value == "") {
 
         clmt.style.backgroundColor = "#DA6666";
@@ -593,9 +593,9 @@ function fileCheck() {
             }
         }
     }
-    /*------------------------Compound Limit check------------------------------*/
+    /!*------------------------Compound Limit check------------------------------*!/
 
-    /*------------------------Compound Bins check------------------------------*/
+    /!*------------------------Compound Bins check------------------------------*!/
     if (cbins.value == "") {
 
         cbins.style.backgroundColor = "#DA6666";
@@ -616,7 +616,7 @@ function fileCheck() {
     else {
         cbins.style.backgroundColor = "#FFF";
     }
-    /*------------------------Compound Limit check------------------------------*/
+    /!*------------------------Compound Limit check------------------------------*!/
 
 
     //If error occurs then error div on analysis page is shown and
@@ -662,7 +662,7 @@ function fileCheck() {
 
     }
 
-}
+}*/
 
 //Cookie functions are used to handle creating and reading and erase cookies
 function createCookie(name, value, days) {

@@ -314,7 +314,7 @@ class PathviewAnalysis
         if($this->multiStateFlag)
             $argument .="multistate:T;";
         else
-            $argument .="multistate:T;";
+            $argument .="multistate:F;";
         if($this->matchDataFlag)
             $argument .="matchd:T;";
         else

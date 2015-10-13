@@ -107,7 +107,7 @@ else
                 );
         }
         Redis::set($time.":Status","true");
-        Redis::set('users_count',Redis::get('users_count')-1 );
+
 
     }
 }

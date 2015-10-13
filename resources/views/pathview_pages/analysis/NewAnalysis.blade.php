@@ -115,20 +115,20 @@ use Illuminate\Cacheche;
                          style="background-color:#DA6666;" @endif>
                         <div class="col-sm-12">
 
-                            <div class="col-sm-5">
+                            <div class="col-sm-4">
                                 <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
-                                {!!form::label('gfile','Gene Data:')!!}
+                                {!!form::label('gfile','Gene Data:',$attributes = array('style'=> 'margin-top:15px'))!!}
                             </div>
 
-                            <div class="col-sm-7" >
+                            <div class="col-sm-8" >
                                 <div class="col-sm-2" style="font-size: 18px;visibility:hidden;margin-top:10px;" id="edit">
                                 <a href=""><span class="glyphicon glyphicon-edit" id="geneMenu" data-toggle="modal" data-target="#GenemyModal" ></span></a>
                                 <a href=""><span class="glyphicon glyphicon-trash" id="clearFile" onclick="reset($('#assayData'))" ></span></a>
                                     </div>
                                 <div class="col-sm-10">
-                            {!! form::file('gfile',$attributes = array('id' => 'assayData','on-read-file' => 'showGeneContent($fileContent,"gene")', 'ng-click'=>'delete()','data-toggle'=>"modal",'data-target'=>"#GenemyModal")) !!}
+                            {!! form::file('gfile',$attributes = array('id' => 'assayData','on-read-file' => 'showGeneContent($fileContent,"gene")', 'ng-click'=>'delete()','data-toggle'=>"modal",'data-target'=>"#GenemyModal",'style'=>'margin-top:10px;')) !!}
 </div>
                                 </div>
                             <div class="modal fade" id="GenemyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
@@ -200,7 +200,7 @@ use Illuminate\Cacheche;
                                 <a href="tutorial#cpd_data"  onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus();return false;" id="cfile" title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
-                                {!!form::label('cpdfile','Compound Data:')!!}
+                                {!!form::label('cpdfile','Compound Data:',$attributes = array('style'=> 'margin-top:15px;align:left'))!!}
                             </div>
                             <div class="col-sm-7" style="display: inline-block;">
                                 <div class="col-sm-2" style="font-size: 18px;visibility:hidden;margin-top:10px;" id="cpdedit">
@@ -208,7 +208,7 @@ use Illuminate\Cacheche;
                                     <a href=""><span class="glyphicon glyphicon-trash" id="clearFile" onclick="reset($('#cpdassayData'))" ></span></a>
                                 </div>
                                 <div class="col-sm-10">
-                                {!!form::file('cpdfile', $attributes = array('id' => 'cpdassayData','on-read-file' => 'showCompoundContent($fileContent,"compound")', 'ng-click'=>'delete()','data-toggle'=>"modal",'data-target'=>"#myModal"))!!}
+                                {!!form::file('cpdfile', $attributes = array('id' => 'cpdassayData','on-read-file' => 'showCompoundContent($fileContent,"compound")', 'ng-click'=>'delete()','data-toggle'=>"modal",'data-target'=>"#myModal",'style'=> 'margin-top:10px'))!!}
                             </div>
                                 </div>
                         </div>
@@ -527,25 +527,25 @@ use Illuminate\Cacheche;
                 console.log("in generefselect function");
                 var ref_selected_text = "";
                 var noOfColumns = $('#geneColumns').val() ;
-                for (var j = 1; j <= noOfColumns; j++) {
-                    ref_selected_text = "";
+                console.log("noofcolumns: is working"+noOfColumns);
+                for (var j = 1; j < noOfColumns; j++) {
                     $("#Genesamselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                 }
+                console.log($(this).val());
                 for (var i = 0; i < $(this).val().length; i++) {
-
                     var selected = $(this).val()[i];
-                    console.log(selected);
-                    ref_selected_text = ref_selected_text + (selected) + ",";
+
                     $("#Genesamselect option[value=\"" + selected + "\"]")[0].setAttribute('disabled', 'disabled');
                 }
-                $('#generef').val(ref_selected_text);
+
             });
 
             $('#Genesamselect').change(function () {
 
                 var noOfColumns = $('#geneColumns').val();
                 var sample_selected_text = "";
-                for (var j = 1; j <= noOfColumns; j++) {
+                console.log("noofcolumns: is working"+noOfColumns);
+                for (var j = 1; j < noOfColumns; j++) {
                     sample_selected_text = "";
                     $("#Generefselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                 }
@@ -557,14 +557,15 @@ use Illuminate\Cacheche;
                     $("#Generefselect option[value=\"" + selected + "\"]")[0].setAttribute('disabled', 'disabled');
                 }
 
-                $('#genesam').val(sample_selected_text);
+
             });
 
             $('#Cpdrefselect').change(function () {
                 console.log("in generefselect function");
                 var ref_selected_text = "";
                 var noOfColumns = $('#cpdColumns').val() ;
-                for (var j = 1; j <= noOfColumns; j++) {
+                console.log("noofcolumns: is working"+noOfColumns);
+                for (var j = 1; j < noOfColumns; j++) {
                     ref_selected_text = "";
                     $("#Cpdsamselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                 }
@@ -581,8 +582,9 @@ use Illuminate\Cacheche;
             $('#Cpdsamselect').change(function () {
 
                 var noOfColumns = $('#cpdColumns').val();
+                console.log("noofcolumns: is working"+noOfColumns);
                 var sample_selected_text = "";
-                for (var j = 1; j <= noOfColumns; j++) {
+                for (var j = 1; j < noOfColumns; j++) {
                     sample_selected_text = "";
                     $("#Cpdrefselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                 }

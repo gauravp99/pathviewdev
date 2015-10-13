@@ -172,16 +172,17 @@ class PathviewAnalysisController extends Controller {
 			$compound_filename_path ="";
 			if ($analyType == 'exampleAnalysis1')
 			{
+
 				if (Input::get('gcheck') == 'T')
 				{
-					$gene_filename = Config::get('example1_genefilename');
-					$gene_filename_path = Config::get('example1_genefilename_path');
+					$gene_filename = Config::get('constants.example1_genefilename');
+					$gene_filename_path = Config::get('constants.example1_genefilename_path');
 				}
 
 				if (Input::get('cpdcheck') == 'T')
 				{
-					$compound_filename = Config::get('example1_compoundfilename');
-					$compound_filename_path = Config::get('example1_compoundfilename_path');
+					$compound_filename = Config::get('constants.example1_compoundfilename');
+					$compound_filename_path = Config::get('constants.example1_compoundfilename_path');
 				}
 
 				if(!(Input::get('gcheck') == 'T')&& !(Input::get('cpdcheck') == 'T'))
@@ -189,36 +190,40 @@ class PathviewAnalysisController extends Controller {
 					return view('pathview_pages.analysis.exampleAnalysis1');
 				}
 
-			} elseif ($analyType == 'exampleAnalysis2')
+
+
+			}
+			if ($analyType == 'exampleAnalysis2')
 			{
 				if (Input::get('gcheck') == 'T')
 				{
-					$gene_filename = Config::get('example2_genefilename');
-					$gene_filename_path = Config::get('example2_genefilename_path');
+					$gene_filename = Config::get('constants.example2_genefilename');
+					$gene_filename_path = Config::get('constants.example2_genefilename_path');
 				}
 
 				if (Input::get('cpdcheck') == 'T')
 				{
-					$compound_filename = Config::get('example2_compoundfilename');
-					$compound_filename_path = Config::get('example2_compoundfilename_path');
+					$compound_filename = Config::get('constants.example2_compoundfilename');
+					$compound_filename_path = Config::get('constants.example2_compoundfilename_path');
 				}
 				if(!(Input::get('gcheck') == 'T') && !(Input::get('cpdcheck') == 'T'))
 				{
 					return view('pathview_pages.analysis.exampleAnalysis2');
 				}
 
-			} elseif ($analyType == 'exampleAnalysis3')
+			}
+			if ($analyType == 'exampleAnalysis3')
 			{
 				if (Input::get('gcheck') == 'T')
 				{
-					$gene_filename = Config::get('example3_genefilename');
-					$gene_filename_path = Config::get('example3_genefilename_path');
+					$gene_filename = Config::get('constants.example3_genefilename');
+					$gene_filename_path = Config::get('constants.example3_genefilename_path');
 				}
 
 				if (Input::get('cpdcheck') == 'T')
 				{
-					$compound_filename = Config::get('example3_compoundfilename');
-					$compound_filename_path = Config::get('example3_compoundfilename_path');
+					$compound_filename = Config::get('constants.example3_compoundfilename');
+					$compound_filename_path = Config::get('constants.example3_compoundfilename_path');
 				}
 				if(!(Input::get('gcheck') == 'T')&& !(Input::get('cpdcheck') == 'T'))
 				{
@@ -560,14 +565,6 @@ class PathviewAnalysisController extends Controller {
 			'directory1' => $path,
 			'queueid' => $process_queue_id,
 			'analysisid' => $uniqid));
-
-
-
-
-
-
-
-
 
 	}
 
