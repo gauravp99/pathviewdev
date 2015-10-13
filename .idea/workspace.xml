@@ -722,8 +722,8 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.017142856">
-              <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.068571426">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -825,7 +825,6 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
         <option value="$PROJECT_DIR$/config/constants.php" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/app/Http/Models/PathviewAnalysis.php" />
         <option value="$PROJECT_DIR$/app/Commands/SendJobAnalysisCompletionMail.php" />
         <option value="$PROJECT_DIR$/app/Console/Commands/Inspire.php" />
@@ -834,6 +833,7 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" />
         <option value="$PROJECT_DIR$/public/js/newanalysis.js" />
         <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/NewAnalysis.blade.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1947,8 +1947,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.017142856">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.068571426">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
         </state>
       </provider>
