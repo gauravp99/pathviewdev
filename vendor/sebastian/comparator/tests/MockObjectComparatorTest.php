@@ -13,15 +13,16 @@ namespace SebastianBergmann\Comparator;
 /**
  * @coversDefaultClass SebastianBergmann\Comparator\MockObjectComparator
  *
- * @package    Comparator
- * @author     Jeff Welch <whatthejeff@gmail.com>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/comparator
  */
 class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
 {
     private $comparator;
+
+    protected function setUp()
+    {
+        $this->comparator = new MockObjectComparator;
+        $this->comparator->setFactory(new Factory);
+    }
 
     public function acceptsSucceedsProvider()
     {
@@ -29,9 +30,9 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
         $stdmock = $this->getMock('stdClass');
 
         return array(
-            array($testmock, $testmock),
-            array($stdmock, $stdmock),
-            array($stdmock, $testmock)
+          array($testmock, $testmock),
+          array($stdmock, $stdmock),
+          array($stdmock, $testmock)
         );
     }
 
@@ -40,9 +41,9 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
         $stdmock = $this->getMock('stdClass');
 
         return array(
-            array($stdmock, null),
-            array(null, $stdmock),
-            array(null, null)
+          array($stdmock, null),
+          array(null, $stdmock),
+          array(null, null)
         );
     }
 
@@ -60,15 +61,15 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
         $object2 = $this->getMock('SebastianBergmann\\Comparator\\SampleClass', null, array(4, 8, 15));
 
         return array(
-            array($object1, $object1),
-            array($object1, $object2),
-            array($book1, $book1),
-            array($book1, $book2),
-            array(
-                $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(2.3)),
-                $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(2.5)),
-                0.5
-            )
+          array($object1, $object1),
+          array($object1, $object2),
+          array($book1, $book1),
+          array($book1, $book2),
+          array(
+            $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(2.3)),
+            $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(2.5)),
+            0.5
+          )
         );
     }
 
@@ -94,20 +95,20 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
         $object2 = $this->getMock('SebastianBergmann\\Comparator\\SampleClass', null, array(16, 23, 42));
 
         return array(
-            array(
-                $this->getMock('SebastianBergmann\\Comparator\\SampleClass', null, array(4, 8, 15)),
-                $this->getMock('SebastianBergmann\\Comparator\\SampleClass', null, array(16, 23, 42)),
-                $equalMessage
-            ),
-            array($object1, $object2, $equalMessage),
-            array($book1, $book2, $equalMessage),
-            array($book3, $book4, $typeMessage),
-            array(
-                $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(2.3)),
-                $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(4.2)),
-                $equalMessage,
-                0.5
-            )
+          array(
+            $this->getMock('SebastianBergmann\\Comparator\\SampleClass', null, array(4, 8, 15)),
+            $this->getMock('SebastianBergmann\\Comparator\\SampleClass', null, array(16, 23, 42)),
+            $equalMessage
+          ),
+          array($object1, $object2, $equalMessage),
+          array($book1, $book2, $equalMessage),
+          array($book3, $book4, $typeMessage),
+          array(
+            $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(2.3)),
+            $this->getMock('SebastianBergmann\\Comparator\\Struct', null, array(4.2)),
+            $equalMessage,
+            0.5
+          )
         );
     }
 
@@ -118,7 +119,7 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
     public function testAcceptsSucceeds($expected, $actual)
     {
         $this->assertTrue(
-            $this->comparator->accepts($expected, $actual)
+          $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -129,7 +130,7 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
     public function testAcceptsFails($expected, $actual)
     {
         $this->assertFalse(
-            $this->comparator->accepts($expected, $actual)
+          $this->comparator->accepts($expected, $actual)
         );
     }
 
@@ -143,7 +144,9 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->comparator->assertEquals($expected, $actual, $delta);
-        } catch (ComparisonFailure $exception) {
+        }
+
+        catch (ComparisonFailure $exception) {
         }
 
         $this->assertNull($exception, 'Unexpected ComparisonFailure');
@@ -156,14 +159,8 @@ class MockObjectComparatorTest extends \PHPUnit_Framework_TestCase
     public function testAssertEqualsFails($expected, $actual, $message, $delta = 0.0)
     {
         $this->setExpectedException(
-            'SebastianBergmann\\Comparator\\ComparisonFailure', $message
+          'SebastianBergmann\\Comparator\\ComparisonFailure', $message
         );
         $this->comparator->assertEquals($expected, $actual, $delta);
-    }
-
-    protected function setUp()
-    {
-        $this->comparator = new MockObjectComparator;
-        $this->comparator->setFactory(new Factory);
     }
 }

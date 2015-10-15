@@ -104,7 +104,7 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                     Redis::del("wait:".Input::get('analysisid'));
                 }
 
-
+                Redis::set("users_count",Redis::get("users_count")-1);
                 return "pushedJob";
             }
             else{
@@ -122,10 +122,9 @@ class AjaxAnalysisQueueStatusCheck extends Controller
             if(!is_null(Redis::get("id:".$uID)))
             {
                 $count = Redis::get("id:".$uID);
-                Redis::set("id:".$uID,$count+1);
             }
             if($count <= 2){
-                Redis::set("id:".$uID,$count+1);
+
                 $jobflag = Redis::get("wait:".Input::get('analysisid'));
                 if(!is_null($jobflag))
                 {
@@ -135,7 +134,7 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                 return "pushedJob";
             }
             else{
-                return "stillWaiting";
+                return $uID+"stillWaiting"+$count;
             }
 
 

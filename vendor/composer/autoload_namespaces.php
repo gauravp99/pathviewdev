@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'phpDocumentor' => array($vendorDir . '/phpdocumentor/reflection-docblock/src'),
+    'System' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Symfony\\Component\\VarDumper\\' => array($vendorDir . '/symfony/var-dumper'),
     'Symfony\\Component\\Translation\\' => array($vendorDir . '/symfony/translation'),
     'Symfony\\Component\\Security\\Core\\' => array($vendorDir . '/symfony/security-core'),
@@ -22,12 +23,17 @@ return array(
     'Prophecy\\' => array($vendorDir . '/phpspec/prophecy/src'),
     'PhpSpec' => array($vendorDir . '/phpspec/phpspec/src'),
     'PhpConsole' => array($vendorDir . '/php-console/php-console/src'),
+    'Net' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
+    'Namshi\\JOSE' => array($vendorDir . '/namshi/jose/src'),
+    'Math' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'JakubOnderka\\PhpConsoleHighlighter' => array($vendorDir . '/jakub-onderka/php-console-highlighter/src'),
     'JakubOnderka\\PhpConsoleColor' => array($vendorDir . '/jakub-onderka/php-console-color/src'),
+    'File' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Dotenv' => array($vendorDir . '/vlucas/phpdotenv/src'),
     'Doctrine\\Common\\Inflector\\' => array($vendorDir . '/doctrine/inflector/lib'),
     'Diff' => array($vendorDir . '/phpspec/php-diff/lib'),
     'DebugBar' => array($vendorDir . '/maximebf/debugbar/src'),
+    'Crypt' => array($vendorDir . '/phpseclib/phpseclib/phpseclib'),
     'Cron' => array($vendorDir . '/mtdowling/cron-expression/src'),
     'Carbon' => array($vendorDir . '/nesbot/carbon/src'),
 );

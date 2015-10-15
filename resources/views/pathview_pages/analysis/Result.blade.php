@@ -4,86 +4,120 @@
 @section('content')
 
     <script>
+        $("#waiting").hide();
+        $("#completed").hide();
+        $("#progress").hide();
         //ajax call to check if the analysis is done by the queue listener check is done on every 3 seconds once return true checking is closed
-
+        var j =0;
+        var increment = 10;
+        var waitFlag = false;
         $(document).ready(function () {
-            $("#waiting").hide();
-            $("#completed").hide();
-            $("#progress").hide();
-            var myvar = "<?php echo $analysisid;?>";
-            var id ="<?php echo $_SESSION['id']; ?>";
-            var suffix ="<?php echo $_SESSION['suffix'];?>";
-            var argument ="<?php echo $_SESSION['argument'];?>";
-            var anal_type="<?php echo $_SESSION['anal_type'];?>";
-            var queue_id="<?php echo $queueid;?>";
-
-           if(queue_id == -1 )
+            if($('#status').val())
             {
-                $("#waiting").show();
-                console.log("watiting for other jobs to complete");
-                var myVar2 = setInterval(function () {
-                    $.ajax({
-                        url: "/ajax/waitingAnalysisStatus",
-                        method: 'POST',
-                        data: {'analysisid': myvar,
-                            'id':id,
-                            'suffix':suffix,
-                            'argument':argument,
-                            'anal_type':anal_type
-                        },
-                        success: function (data) {
-                            if (data.length > 0) {
-                                console.log("success: data " +  data);
+                $("#waiting").remove();
+                $("#progress").hide();
+                $("#completed").show();
+            }else {
+                $('#status').val("visited");
 
-                                if (data == "pushedJob") {
+                var myvar = "<?php echo $analysisid;?>";
+                var id = "<?php echo $_SESSION['id']; ?>";
+                var suffix = "<?php echo $_SESSION['suffix'];?>";
+                var argument = "<?php echo $_SESSION['argument'];?>";
+                var anal_type = "<?php echo $_SESSION['anal_type'];?>";
+                var queue_id = "<?php echo $queueid;?>";
 
+                //console.log("currentFactor:"+(factor));
+                console.log(queue_id);
+                if (queue_id == -1) {
+                    $("#progress").hide();
+                    console.log("in waiting method");
+                    $("#waiting").show();
+                    console.log("watiting for other jobs to complete");
+                    var myVar2 = setInterval(function () {
+                        $.ajax({
+                            url: "/ajax/waitingAnalysisStatus",
+                            method: 'POST',
+                            data: {
+                                'analysisid': myvar,
+                                'id': id,
+                                'suffix': suffix,
+                                'argument': argument,
+                                'anal_type': anal_type
+                            },
+                            success: function (data) {
+                                if (data.length > 0) {
+                                    console.log("success: data " + data);
+
+                                    if (data == "pushedJob") {
+
+                                        $("#waiting").remove();
+                                        $("#progress").show();
+                                        clearInterval(myVar2);
+                                        waitFlag = true;
+                                    }
+                                }
+                            },
+                            error: function (data) {
+                                console.log("error" + data);
+                            }
+                        });
+                    }, 1000);
+                }
+                if (queue_id > 0 || waitFlag) {
+
+                    console.log("in progress method");
+                    $("#completed").hide();
+                    $("#waiting").remove();
+                    $("#progress").show();
+                    var myVar1 = setInterval(function () {
+                        j = j + 1;
+                        $.ajax({
+                            url: "/ajax/analysisStatus",
+                            method: 'POST',
+                            data: {
+                                'analysisid': myvar,
+                                'id': id,
+                                'suffix': suffix,
+                                'argument': argument,
+                                'anal_type': anal_type
+                            },
+                            success: function (data) {
+                                if (data.length > 0) {
+                                    console.log("success: data " + data);
                                     $("#waiting").remove();
                                     $("#progress").show();
-                                    clearInterval(myVar2);
+                                    $("#completed").hide();
+                                    if (data === "true") {
+                                        $('#progressData').text("100%");
+                                        $('#progressData').attr('aria-valuenow', '100');
+                                        $("#progress").remove();
+                                        $("#completed").show();
+                                        clearInterval(myVar1);
+                                    } else {
+                                        if ((j * 10) > 100) {
+
+                                            $( "#progress" ).blur();
+
+                                        } else {
+                                            $('#progressData').text("" + (j * 10) + "%");
+                                            $('#progressData').attr('aria-valuenow', "" + (j * 10));
+                                            $('#progressData').css('width', (j * 10) + '%');
+                                        }
+
+                                    }
                                 }
+                            },
+                            error: function (data) {
+                                console.log("error" + data);
                             }
-                        },
-                        error: function (data) {
-                            console.log("error"+data);
-                        }
-                    });
-                }, 3000);
+                        });
+                    }, 1500);
+
+                } else {
+                    $('#completed').show();
+                }
             }
-            else if(queue_id > 0 ){
-               var myVar1 = setInterval(function () {
-
-                   $.ajax({
-                       url: "/ajax/analysisStatus",
-                       method: 'POST',
-                       data: {'analysisid': myvar,
-                           'id':id,
-                           'suffix':suffix,
-                           'argument':argument,
-                           'anal_type':anal_type
-                       },
-                       success: function (data) {
-                           if (data.length > 0) {
-                               console.log("success: data " +  data);
-                               $("#waiting").remove();
-                               $("#progress").show();
-                               $("#completed").hide();
-                               if (data === "true") {
-
-                                   $("#progress").remove();
-                                   $("#completed").show();
-                                   clearInterval(myVar1);
-                               }
-                           }
-                       },
-                       error: function (data) {
-                           console.log("error"+data);
-                       }
-                   });
-               }, 3000);
-
-           }else{
-               $('#completed').show();
-           }
         });
 
 
@@ -293,7 +327,7 @@
                             $arg1[1] = "False";
                         }
                         ?>
-                        <tr>
+                        <tr>id:561fb76cbb76f
                             <td><b>{{$arg1[0]}}</b></td>
                             <td>{{$arg1[1]}}</td>
                         </tr>
@@ -511,10 +545,15 @@
             </div>
 
         </div>
+        <input type="text" value="" id="status" hidden="">
         <div id="progress" class="col-md-4" >
 
             <h2 class="alert alert-info">  Executing, Please wait. </h2>
-            <img width="200px" hieght="200px" src="/images/load.gif">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" id="progressData" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    0%
+                </div>
+            </div>
         </div>
         <div id="waiting" class="col-md-4" >
 

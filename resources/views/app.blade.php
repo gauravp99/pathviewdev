@@ -50,8 +50,7 @@
                         <li><a href="/tutorial">Custom Analysis</a></li>
                         <li><a href="/tutorial#example1">Example Analysis</a></li>
                         <li><a href="/tutorial#refrence">References</a></li>
-                        <li><a href="/contact">Contact</a></li>
-                        <li><a href="/faq">FAQ's</a></li>
+                        <li><a href="/faq">Question?</a></li>
                     </ul>
                 </li>
 
@@ -98,7 +97,7 @@
                         </li>
                         <li>
                             <a
-                               href="/contact">
+                               href="/faq">
                                 Contact Us
                             </a>
                         </li>

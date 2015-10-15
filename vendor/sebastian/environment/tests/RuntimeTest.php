@@ -19,6 +19,11 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
      */
     private $env;
 
+    protected function setUp()
+    {
+        $this->env = new Runtime;
+    }
+
     /**
      * @covers \SebastianBergmann\Environment\Runtime::canCollectCodeCoverage
      * @uses   \SebastianBergmann\Environment\Runtime::hasXdebug
@@ -103,10 +108,5 @@ class RuntimeTest extends PHPUnit_Framework_TestCase
     public function testVendorUrlCanBeRetrieved()
     {
         $this->assertInternalType('string', $this->env->getVendorUrl());
-    }
-
-    protected function setUp()
-    {
-        $this->env = new Runtime;
     }
 }

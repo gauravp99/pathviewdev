@@ -30,7 +30,7 @@
                 <b>Instructions</b></a></li>
         <li <?php if (basename(Request::url()) == "contact") {
             echo "class=\"active\"";
-        }?>><a href="/contact"><b>Contact Us</b></a></li>
+        }?>><a href="/faq"><b>Questions?</b></a></li>
         <script>
             function openWindow() {
                 window.open('/tutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");

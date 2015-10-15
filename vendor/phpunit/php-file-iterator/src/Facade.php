@@ -14,11 +14,6 @@
  * RecursiveDirectoryIterator for each given path. The list of unique
  * files is returned as an array.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version   Release: @package_version@
- * @link      http://github.com/sebastianbergmann/php-file-iterator/tree
  * @since     Class available since Release 1.3.0
  */
 class File_Iterator_Facade
@@ -27,8 +22,8 @@ class File_Iterator_Facade
      * @param  array|string $paths
      * @param  array|string $suffixes
      * @param  array|string $prefixes
-     * @param  array $exclude
-     * @param  boolean $commonPath
+     * @param  array        $exclude
+     * @param  bool         $commonPath
      * @return array
      */
     public function getFilesAsArray($paths, $suffixes = '', $prefixes = '', array $exclude = array(), $commonPath = FALSE)
@@ -37,9 +32,9 @@ class File_Iterator_Facade
             $paths = array($paths);
         }
 
-        $factory = new File_Iterator_Factory;
+        $factory  = new File_Iterator_Factory;
         $iterator = $factory->getFileIterator(
-            $paths, $suffixes, $prefixes, $exclude
+          $paths, $suffixes, $prefixes, $exclude
         );
 
         $files = array();
@@ -63,8 +58,8 @@ class File_Iterator_Facade
 
         if ($commonPath) {
             return array(
-                'commonPath' => $this->getCommonPath($files),
-                'files' => $files
+              'commonPath' => $this->getCommonPath($files),
+              'files'      => $files
             );
         } else {
             return $files;
@@ -74,7 +69,7 @@ class File_Iterator_Facade
     /**
      * Returns the common path of a set of files.
      *
-     * @param  array $files
+     * @param  array  $files
      * @return string
      */
     protected function getCommonPath(array $files)
@@ -100,13 +95,13 @@ class File_Iterator_Facade
         }
 
         $common = '';
-        $done = FALSE;
-        $j = 0;
+        $done   = FALSE;
+        $j      = 0;
         $count--;
 
         while (!$done) {
             for ($i = 0; $i < $count; $i++) {
-                if ($_files[$i][$j] != $_files[$i + 1][$j]) {
+                if ($_files[$i][$j] != $_files[$i+1][$j]) {
                     $done = TRUE;
                     break;
                 }

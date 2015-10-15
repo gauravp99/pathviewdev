@@ -10,6 +10,7 @@ return array(
     $vendorDir . '/nikic/php-parser/lib/bootstrap.php',
     $vendorDir . '/ircmaxell/password-compat/lib/password.php',
     $vendorDir . '/swiftmailer/swiftmailer/lib/swift_required.php',
+    $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
     $vendorDir . '/psy/psysh/src/Psy/functions.php',
     $vendorDir . '/danielstjules/stringy/src/Create.php',
     $vendorDir . '/illuminate/html/helpers.php',

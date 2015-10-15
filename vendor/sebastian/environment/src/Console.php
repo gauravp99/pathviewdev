@@ -11,15 +11,10 @@
 namespace SebastianBergmann\Environment;
 
 /**
- * @package    Environment
- * @author     Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright  2014 Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/environment
  */
 class Console
 {
-    const STDIN = 0;
+    const STDIN  = 0;
     const STDOUT = 1;
     const STDERR = 2;
 
@@ -29,7 +24,7 @@ class Console
      * This code has been copied and adapted from
      * Symfony\Component\Console\Output\OutputStream.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasColorSupport()
     {
@@ -45,21 +40,9 @@ class Console
     }
 
     /**
-     * Returns if the file descriptor is an interactive terminal or not.
-     *
-     * @param  int|resource $fileDescriptor
-     *
-     * @return boolean
-     */
-    public function isInteractive($fileDescriptor = self::STDOUT)
-    {
-        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
-    }
-
-    /**
      * Returns the number of columns of the terminal.
      *
-     * @return integer
+     * @return int
      */
     public function getNumberOfColumns()
     {
@@ -74,13 +57,25 @@ class Console
         }
 
         if (preg_match('#\d+ (\d+)#', shell_exec('stty size'), $match) === 1) {
-            return (int)$match[1];
+            return (int) $match[1];
         }
 
         if (preg_match('#columns = (\d+);#', shell_exec('stty'), $match) === 1) {
-            return (int)$match[1];
+            return (int) $match[1];
         }
 
         return 80;
+    }
+
+    /**
+     * Returns if the file descriptor is an interactive terminal or not.
+     *
+     * @param int|resource $fileDescriptor
+     *
+     * @return bool
+     */
+    public function isInteractive($fileDescriptor = self::STDOUT)
+    {
+        return function_exists('posix_isatty') && @posix_isatty($fileDescriptor);
     }
 }

@@ -6,11 +6,12 @@
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/js/faq.js"></script>
     <script src="/js/commentService.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <div ng-app="faqApp"  class="col-sm-8" >
         <div ng-controller="faqController">
     <div class="page-header">
-        <h1>Frequently Asked Question</h1>
-        <h4>Submit your issues here. before submitting find all the comments categorised with category</h4>
+        <h1>Questions and Answers</h1>
+        <h4></h4>
     </div>
 
 
@@ -21,11 +22,12 @@
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <h3><% comment.text_string %> <small>by <% comment.author  %></h3>
+                    <h3><% comment.text_string %></h3>
                 </div>
-                <div class="panel-footer">
-                    <p id="comment1">Comment #<% comment.id  %></p>
-                    <nav style="alignment: right"><p id="comment"><% comment.created_at  %></p></nav>
+                <div class="panel-footer" style="dis">
+                    <small>by <% comment.author  %> </small>
+                    <p style="font-size: 10px;" id="comment1">Comment #<% comment.id  %></p>
+                    <nav style="font-size: 10px;alignment: right"><p id="comment"><% comment.created_at  %></p></nav>
                     <div cstyle="display: inline;">
                         <div class="col-lg-offset-2 col-md-8 reply" hidden="" id="<% comment.id %>" style="display:inline-block;font-size:small;-ms-box-sizing:content-box;
 -moz-box-sizing:content-box;
@@ -44,36 +46,100 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
 
 
         </div>
-            <div class="col-sm-12" style="margin-top: 60px;">
-                <form ng-submit="submitComment()"> <!-- ng-submit will disable the default form action and use our function -->
-                    <h2>Ask any issue with application ?</h2>
-                    <!-- AUTHOR -->
+            <div class="col-sm-12" style="margin-top: 60px;font-size: 14px;">
+                <h3>Ask ?</h3>
+                <form class="form-horizontal" id="form-contact" role="form" ng-submit="submitComment()" method="post"  accept-charset="UTF-8" enctype="multipart/form-data" action="/postMessage">
                     <div class="form-group">
-                        <input type="text" class="form-control input-sm" name="author" ng-model="commentData.author" placeholder="Name" required>
+                        <label for="name" class="col-sm-3 control-label">Name</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="name" name="name" ng-model="commentData.author" required="" placeholder="First & Last Name" value= @if(Auth::user())  {{Auth::user()->name}} @endif>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="col-sm-3 control-label">Email</label>
+                        <div class="col-sm-9">
+
+                            <input type="email" class="form-control" id="email" name="email" placeholder="example@domain.com" required="" value= @if(Auth::user())  {{Auth::user()->email}} @endif >
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="col-sm-3 control-label">Your Question</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" rows="4" ng-model="commentData.text" name="message" required="" ></textarea>
+                        </div>
                     </div>
 
-                    <!-- COMMENT TEXT -->
                     <div class="form-group">
-                        <input type="text" class="form-control input-lg" name="comment" ng-model="commentData.text" placeholder="Say what you have to say" required>
-
+                        <div class="col-sm-10 col-sm-offset-3" >
+                            <input id="submit" name="submit" style="width:220px;font-size: 20px;" type="submit" value="Send" class="btn btn-primary">
+                        </div>
                     </div>
-
-
-                    <!-- SUBMIT BUTTON -->
-                    <div class="form-group text-right">
-                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-2">
+                            <! Will be used to display an alert to the user>
+                        </div>
                     </div>
                 </form>
             </div>
 </div>
-<script>
-    $('.reply').hide();
+        <script>
+            $(document).on('click', '.browse', function(){
+                var file = $(this).parent().parent().parent().find('.file');
+                file.trigger('click');
+            });
+            $(document).on('change', '.file', function(){
+                $(this).parent().find('#form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+            });
+            $('#form-contact').validate({
 
+                invalidHandler: function (form, validator) {
+                    var errors = validator.numberOfInvalids();
 
-</script>
+                    if (errors > 0) {
+                        $('#progress').hide();
+                        $("#error-message").show().text("** You missed " + errors + " field(s) or errors check and fill it to proceed.");
+                        $("");
+                    } else {
+                        $("#error-message").hide();
+                    }
+                },
+                rules: {
+                    image: {
 
+                        extension: "jpg|jpeg|png"
+                    },
+                    message:{
 
+                    },
+                    name:{
 
+                    },
+                    email:{
+
+                        email:true
+                    }
+                },
+                messages: {},
+                submitHandler: function(form) {
+                    var fd = new FormData(document.querySelector("form"));
+                    $.ajax({
+                        url:$('#form-contact').attr('action'),
+                        type:$('#form-contact').attr('method'),
+                        data: fd,
+                        success: function(data){
+                            console.log(data);
+                            $('#form-contact').trigger("reset");
+                        },
+                        failure:function(data){
+                            console.log(data);
+                        },
+                        contentType: false,
+                        processData: false
+                    });
+                }
+            });
+            $('.reply').hide();
+        </script>
 
 
     @stop

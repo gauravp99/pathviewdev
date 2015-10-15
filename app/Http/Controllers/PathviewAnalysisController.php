@@ -22,6 +22,15 @@ class PathviewAnalysisController extends Controller {
 	public function analysis($analyType)
 	{
 
+		//to store the number of parallel users to the application
+
+		if(is_null(Redis::get("users_count"))){
+			Redis::set("users_count",0);
+		}
+
+		$user_count = Redis::get("users_count");
+		Redis::set("users_count",$user_count+1);
+
 		//check if cookie enabled on the browser by setting a key and getting the value if able to get it
 		//cookie is set otherwise work with ip address
 		$this->uID = Cookie::get('uID');
@@ -49,7 +58,8 @@ class PathviewAnalysisController extends Controller {
 		//variables needs declaration used in later part of the code
 		$err_atr = array(); // map saving the errors missed by javascript
 		$gene_cmpd_color = array(); // saving the color of gene and compound
-
+		$geneFileSize = 0;
+		$compoundFileSize = 0;
 
 
 
@@ -102,8 +112,11 @@ class PathviewAnalysisController extends Controller {
 
 				$filename = Input::file('gfile')->getClientOriginalName();
 				Input::file('gfile')->move($path,$filename);
+
 				$analsisObject->setGeneFileName($filename);
 				$gene_extension = File::extension($filename);
+				$geneFileSize = ($_FILES['gfile']['size'])/(1024*1024);
+
 				if ($gene_extension != "txt" && $gene_extension != "csv") {
 					array_push($errors,'Gene data file extension is not supported( use .txt,.csv)');
 					$err_atr["gfile"] = 1;
@@ -136,6 +149,8 @@ class PathviewAnalysisController extends Controller {
 				$analsisObject->setCompoundFileName($filename1);
 				Input::file('cpdfile')->move($path,$filename1);
 				$cpd_extension = File::extension($filename1);
+				$compoundFileSize = $_FILES['cpdfile']['size']/(1024*1024);
+
 				if ($cpd_extension != "txt" && $cpd_extension != "csv" ) {
 					array_push($errors, "compound data file extension is not supported( use .txt,.csv,.rda)");
 					$err_atr["cpdfile"] = 1;
@@ -175,12 +190,14 @@ class PathviewAnalysisController extends Controller {
 
 				if (Input::get('gcheck') == 'T')
 				{
+					$geneFileSize = 1;
 					$gene_filename = Config::get('constants.example1_genefilename');
 					$gene_filename_path = Config::get('constants.example1_genefilename_path');
 				}
 
 				if (Input::get('cpdcheck') == 'T')
 				{
+					$compoundFileSize = 1;
 					$compound_filename = Config::get('constants.example1_compoundfilename');
 					$compound_filename_path = Config::get('constants.example1_compoundfilename_path');
 				}
@@ -197,12 +214,14 @@ class PathviewAnalysisController extends Controller {
 			{
 				if (Input::get('gcheck') == 'T')
 				{
+					$geneFileSize = 1;
 					$gene_filename = Config::get('constants.example2_genefilename');
 					$gene_filename_path = Config::get('constants.example2_genefilename_path');
 				}
 
 				if (Input::get('cpdcheck') == 'T')
 				{
+					$compoundFileSize = 1;
 					$compound_filename = Config::get('constants.example2_compoundfilename');
 					$compound_filename_path = Config::get('constants.example2_compoundfilename_path');
 				}
@@ -216,12 +235,14 @@ class PathviewAnalysisController extends Controller {
 			{
 				if (Input::get('gcheck') == 'T')
 				{
+					$geneFileSize = 1;
 					$gene_filename = Config::get('constants.example3_genefilename');
 					$gene_filename_path = Config::get('constants.example3_genefilename_path');
 				}
 
 				if (Input::get('cpdcheck') == 'T')
 				{
+					$compoundFileSize = 2;
 					$compound_filename = Config::get('constants.example3_compoundfilename');
 					$compound_filename_path = Config::get('constants.example3_compoundfilename_path');
 				}
@@ -535,8 +556,27 @@ class PathviewAnalysisController extends Controller {
 		Redis::set($uniqid,json_encode($runHashdata));
 		Redis::set($uniqid.":Status","false");
 
-		//code to check if there are more than 2 current jobs for user executing
 
+		//$geneFileSize;
+		//$compoundFileSize;
+		//to calcular the approx time it will take to run the analysis
+		// factors number of pathview 1
+		// size of the file Number of MB's more seconds
+		// gene and compound both 1
+		// number of parallel users;
+
+		$factor = 0;
+		$noOfPathways = sizeof($pathway_array1);
+
+		$numberofUser = Redis::get("users_count");
+
+		$totalSize = $geneFileSize + $compoundFileSize;
+
+		$factor = ($noOfPathways*0.5 + $numberofUser*0.5 +  $totalSize*0.6)/3;
+
+
+
+		//code to check if there are more than 2 current jobs for user executing
 		$jobs = Redis::get("id:".$this->uID);
 		$process_queue_id = 0;
 		if(is_null($jobs))
@@ -548,23 +588,30 @@ class PathviewAnalysisController extends Controller {
 			{
 				Redis::set("wait:".$uniqid,true);
 				$process_queue_id = -1;
+
 				return view('pathview_pages.analysis.Result')->with(array('exception' => null,
 					'directory' => public_path()."/".$path,
 					'directory1' => $path,
 					'directory1' => $path,
 					'queueid' => $process_queue_id,
-					'analysisid' => $uniqid));
+					'analysisid' => $uniqid,
+					'factor',$factor));
 
 			}
 		}
 
+
+
 		$process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($uniqid));
+		$users_count = Redis::get("users_count");
+		Redis::set("users_count",$users_count-1);
 		Redis::set("id:".$this->uID,$jobs+1);
 		return view('pathview_pages.analysis.Result')->with(array('exception' => null,
 			'directory' => public_path()."/".$path,
 			'directory1' => $path,
 			'queueid' => $process_queue_id,
-			'analysisid' => $uniqid));
+			'analysisid' => $uniqid,
+			'factor' => $factor));
 
 	}
 

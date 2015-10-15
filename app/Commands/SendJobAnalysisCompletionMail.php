@@ -85,6 +85,7 @@ class SendJobAnalysisCompletionMail extends Command implements SelfHandling, Sho
         $publicPath = Config::get("app.publicPath");
 
         exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\" >$outFile  2> $errorfile ");
+        $userCount = Redis::get("users_count");
 
         $date = new DateTime;
         $record = DB::table('analysis')->where('analysis_id',$time)->get();
@@ -106,6 +107,7 @@ else
 
                 );
         }
+        Redis::del($time);
         Redis::set($time.":Status","true");
 
 

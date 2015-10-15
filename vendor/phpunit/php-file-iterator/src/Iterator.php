@@ -12,11 +12,6 @@
  * FilterIterator implementation that filters files based on prefix(es) and/or
  * suffix(es). Hidden files and files from hidden directories are also filtered.
  *
- * @author    Sebastian Bergmann <sebastian@phpunit.de>
- * @copyright Sebastian Bergmann <sebastian@phpunit.de>
- * @license   http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @version   Release: @package_version@
- * @link      http://github.com/sebastianbergmann/php-file-iterator/tree
  * @since     Class available since Release 1.0.0
  */
 class File_Iterator extends FilterIterator
@@ -45,11 +40,11 @@ class File_Iterator extends FilterIterator
     protected $basepath;
 
     /**
-     * @param  Iterator $iterator
-     * @param  array $suffixes
-     * @param  array $prefixes
-     * @param  array $exclude
-     * @param  string $basepath
+     * @param Iterator $iterator
+     * @param array    $suffixes
+     * @param array    $prefixes
+     * @param array    $exclude
+     * @param string   $basepath
      */
     public function __construct(Iterator $iterator, array $suffixes = array(), array $prefixes = array(), array $exclude = array(), $basepath = NULL)
     {
@@ -69,18 +64,18 @@ class File_Iterator extends FilterIterator
 
         $this->prefixes = $prefixes;
         $this->suffixes = $suffixes;
-        $this->exclude = $exclude;
+        $this->exclude  = $exclude;
         $this->basepath = $basepath;
 
         parent::__construct($iterator);
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function accept()
     {
-        $current = $this->getInnerIterator()->current();
+        $current  = $this->getInnerIterator()->current();
         $filename = $current->getFilename();
         $realpath = $current->getRealPath();
 
@@ -94,13 +89,13 @@ class File_Iterator extends FilterIterator
         }
 
         return $this->acceptPath($realpath) &&
-        $this->acceptPrefix($filename) &&
-        $this->acceptSuffix($filename);
+               $this->acceptPrefix($filename) &&
+               $this->acceptSuffix($filename);
     }
 
     /**
      * @param  string $path
-     * @return boolean
+     * @return bool
      * @since  Method available since Release 1.1.0
      */
     protected function acceptPath($path)
@@ -116,7 +111,7 @@ class File_Iterator extends FilterIterator
 
     /**
      * @param  string $filename
-     * @return boolean
+     * @return bool
      * @since  Method available since Release 1.1.0
      */
     protected function acceptPrefix($filename)
@@ -126,9 +121,19 @@ class File_Iterator extends FilterIterator
 
     /**
      * @param  string $filename
-     * @param  array $subString
-     * @param  integer $type
-     * @return boolean
+     * @return bool
+     * @since  Method available since Release 1.1.0
+     */
+    protected function acceptSuffix($filename)
+    {
+        return $this->acceptSubString($filename, $this->suffixes, self::SUFFIX);
+    }
+
+    /**
+     * @param  string $filename
+     * @param  array  $subString
+     * @param  int    $type
+     * @return bool
      * @since  Method available since Release 1.1.0
      */
     protected function acceptSubString($filename, array $subStrings, $type)
@@ -142,23 +147,12 @@ class File_Iterator extends FilterIterator
         foreach ($subStrings as $string) {
             if (($type == self::PREFIX && strpos($filename, $string) === 0) ||
                 ($type == self::SUFFIX &&
-                    substr($filename, -1 * strlen($string)) == $string)
-            ) {
+                 substr($filename, -1 * strlen($string)) == $string)) {
                 $matched = TRUE;
                 break;
             }
         }
 
         return $matched;
-    }
-
-    /**
-     * @param  string $filename
-     * @return boolean
-     * @since  Method available since Release 1.1.0
-     */
-    protected function acceptSuffix($filename)
-    {
-        return $this->acceptSubString($filename, $this->suffixes, self::SUFFIX);
     }
 }

@@ -19,6 +19,11 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
      */
     private $console;
 
+    protected function setUp()
+    {
+        $this->console = new Console;
+    }
+
     /**
      * @covers \SebastianBergmann\Environment\Console::isInteractive
      */
@@ -51,10 +56,5 @@ class ConsoleTest extends PHPUnit_Framework_TestCase
     public function testCanDetectNumberOfColumns()
     {
         $this->assertInternalType('integer', $this->console->getNumberOfColumns());
-    }
-
-    protected function setUp()
-    {
-        $this->console = new Console;
     }
 }

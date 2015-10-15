@@ -526,7 +526,7 @@
 
                     depends: function(element) {
 
-                        return $("#assayData").is(':empty');
+                            return $("#assayData").is(':empty');
                     }
 
                 }

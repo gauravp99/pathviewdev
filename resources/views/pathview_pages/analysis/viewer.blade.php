@@ -132,6 +132,7 @@
                             $gidString .= $species.":".$gid."+";
                             $i = $i + 1;
                         }
+                        $gidtitle = substr($gidtitle,0,sizeof($gidtitle)-3);
                         $gidString = substr($gidString,0,strlen($gidString)-1);
                         echo "<area shape=\"rect\" coords=\"".$x1.",".$y1.",".$x2.",".$y2."\"href=\"http://www.genome.jp/dbget-bin/www_bget?".$gidString."\" title =\"".$gidtitle."\">";
                         echo "\n";

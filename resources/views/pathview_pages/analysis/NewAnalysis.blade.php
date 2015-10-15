@@ -9,7 +9,7 @@ use Illuminate\Cacheche;
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.js"></script>
 <script src="js/PathviewApp.js"></script>
-
+<script src="js/sliding.form.js"></script>
 
     <div class="col-sm-9">
 
@@ -117,7 +117,7 @@ use Illuminate\Cacheche;
 
                             <div class="col-sm-4">
                                 <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;margin-top:15px;"></span>
                                 </a>
                                 {!!form::label('gfile','Gene Data:',$attributes = array('style'=> 'margin-top:15px'))!!}
                             </div>
@@ -128,7 +128,8 @@ use Illuminate\Cacheche;
                                 <a href=""><span class="glyphicon glyphicon-trash" id="clearFile" onclick="reset($('#assayData'))" ></span></a>
                                     </div>
                                 <div class="col-sm-10">
-                            {!! form::file('gfile',$attributes = array('id' => 'assayData','on-read-file' => 'showGeneContent($fileContent,"gene")', 'ng-click'=>'delete()','data-toggle'=>"modal",'data-target'=>"#GenemyModal",'style'=>'margin-top:10px;')) !!}
+                                    <!--//'data-toggle'=>"modal",'data-target'=>"#GenemyModal"-->
+                            {!! form::file('gfile',$attributes = array('id' => 'assayData','on-read-file' => 'showGeneContent($fileContent,"gene")', 'ng-click'=>'delete()','style'=>'margin-top:10px;')) !!}
 </div>
                                 </div>
                             <div class="modal fade" id="GenemyModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
@@ -196,19 +197,20 @@ use Illuminate\Cacheche;
 
                     <div class="stepsdiv" id="cfile-div" @if (isset(Session::get('err_atr')['cfile'])) style="background-color:#DA6666;" @endif>
                         <div class="col-sm-12">
-                            <div class="col-sm-5">
-                                <a href="tutorial#cpd_data"  onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus();return false;" id="cfile" title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                            <div class="col-sm-4">
+                                <a href="tutorial#cpd_data"  onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus();return false;" id="cfile" title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-top: 15px;">
+
                                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                 </a>
                                 {!!form::label('cpdfile','Compound Data:',$attributes = array('style'=> 'margin-top:15px;align:left'))!!}
                             </div>
-                            <div class="col-sm-7" style="display: inline-block;">
+                            <div class="col-sm-8" style="display: inline-block;">
                                 <div class="col-sm-2" style="font-size: 18px;visibility:hidden;margin-top:10px;" id="cpdedit">
                                     <a href=""><span class="glyphicon glyphicon-edit" id="compoundMenu" data-toggle="modal" data-target="#myModal" ></span></a>
                                     <a href=""><span class="glyphicon glyphicon-trash" id="clearFile" onclick="reset($('#cpdassayData'))" ></span></a>
                                 </div>
                                 <div class="col-sm-10">
-                                {!!form::file('cpdfile', $attributes = array('id' => 'cpdassayData','on-read-file' => 'showCompoundContent($fileContent,"compound")', 'ng-click'=>'delete()','data-toggle'=>"modal",'data-target'=>"#myModal",'style'=> 'margin-top:10px'))!!}
+                                {!!form::file('cpdfile', $attributes = array('id' => 'cpdassayData','on-read-file' => 'showCompoundContent($fileContent,"compound")', 'ng-click'=>'delete()','style'=> 'margin-top:10px'))!!}
                             </div>
                                 </div>
                         </div>
@@ -601,8 +603,35 @@ use Illuminate\Cacheche;
 
 
         });
+
+
+        $("#assayData").change(function(){
+            var fileName = $("#assayData").val();
+            if(fileName)
+            $('#geneMenu').trigger('click');
+        });
+        $("#cpdassayData").change(function(){
+            var fileName1 = $("#cpdassayData").val();
+            if(fileName1)
+                $('#compoundMenu').trigger('click');
+
+        });
+
+
+
+        document.getElementById('assayData').addEventListener('change', myMethod, false);
+
+        function myMethod(evt) {
+            var files = evt.target.files;
+            f= files[0];
+            if (f==undefined) {
+                document.getElementById('123').click();
+            }
+
+                };
+
     </script>
-        <script src="js/sliding.form.js"></script>
+
     <script src="{{asset('/js/newanalysis.js')}}"></script>
     <script>
 

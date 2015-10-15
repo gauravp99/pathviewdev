@@ -22,6 +22,11 @@ class ContextTest extends PHPUnit_Framework_TestCase
      */
     private $context;
 
+    protected function setUp()
+    {
+        $this->context = new Context();
+    }
+
     public function failsProvider()
     {
         return array(
@@ -40,7 +45,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $obj2 = new \stdClass();
         $obj2->foo = 'bar';
 
-        $obj3 = (object)array(1, 2, "Test\r\n", 4, 5, 6, 7, 8);
+        $obj3 = (object) array(1,2,"Test\r\n",4,5,6,7,8);
 
         $obj = new \stdClass();
         //@codingStandardsIgnoreStart
@@ -54,7 +59,7 @@ class ContextTest extends PHPUnit_Framework_TestCase
         $obj->object = $obj2;
         $obj->objectagain = $obj2;
         $obj->array = array('foo' => 'bar');
-        $obj->array2 = array(1, 2, 3, 4, 5, 6);
+        $obj->array2 = array(1,2,3,4,5,6);
         $obj->array3 = array($obj, $obj2, $obj3);
         $obj->self = $obj;
 
@@ -81,8 +86,8 @@ class ContextTest extends PHPUnit_Framework_TestCase
     public function testAddFails($value)
     {
         $this->setExpectedException(
-            'SebastianBergmann\\RecursionContext\\Exception',
-            'Only arrays and objects are supported'
+          'SebastianBergmann\\RecursionContext\\Exception',
+          'Only arrays and objects are supported'
         );
         $this->context->add($value);
     }
@@ -95,8 +100,8 @@ class ContextTest extends PHPUnit_Framework_TestCase
     public function testContainsFails($value)
     {
         $this->setExpectedException(
-            'SebastianBergmann\\RecursionContext\\Exception',
-            'Only arrays and objects are supported'
+          'SebastianBergmann\\RecursionContext\\Exception',
+          'Only arrays and objects are supported'
         );
         $this->context->contains($value);
     }
@@ -135,10 +140,5 @@ class ContextTest extends PHPUnit_Framework_TestCase
     public function testContainsNotFound($value)
     {
         $this->assertFalse($this->context->contains($value));
-    }
-
-    protected function setUp()
-    {
-        $this->context = new Context();
     }
 }

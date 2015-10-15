@@ -171,8 +171,9 @@
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ";");
                 echo "</td>";
                 if(strcmp($analyses1->analysis_origin,'pathview')==0)
-                    {
-                echo "<td><p>  <a href=/anal_hist?analyses=$analyses1->analysis_id&id=$id&suffix=$suffix>Analysis $analyses1->analysis_id</a> </p></td>";
+                    {?>
+               <td><p>  <a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>
+            <?php
                         }
                 else if(strcmp($analyses1->analysis_origin,'gage')==0)
                     {
@@ -224,6 +225,8 @@
 
 
 <script>
+
+    
     $(function(){
         var analy_ids="";
         $('input[type="checkbox"]').change(function() {

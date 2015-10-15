@@ -12,23 +12,18 @@ namespace SebastianBergmann\Comparator;
 
 /**
  * Factory for comparators which compare values for equality.
- *
- * @package    Comparator
- * @author     Bernhard Schussek <bschussek@2bepublished.at>
- * @copyright  Sebastian Bergmann <sebastian@phpunit.de>
- * @license    http://www.opensource.org/licenses/BSD-3-Clause  The BSD 3-Clause License
- * @link       http://www.github.com/sebastianbergmann/comparator
  */
 class Factory
 {
     /**
-     * @var Factory
-     */
-    private static $instance;
-    /**
      * @var Comparator[]
      */
     private $comparators = array();
+
+    /**
+     * @var Factory
+     */
+    private static $instance;
 
     /**
      * Constructs a new factory.
@@ -50,6 +45,34 @@ class Factory
     }
 
     /**
+     * @return Factory
+     */
+    public static function getInstance()
+    {
+        if (self::$instance === null) {
+            self::$instance = new self;
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Returns the correct comparator for comparing two values.
+     *
+     * @param  mixed      $expected The first value to compare
+     * @param  mixed      $actual   The second value to compare
+     * @return Comparator
+     */
+    public function getComparatorFor($expected, $actual)
+    {
+        foreach ($this->comparators as $comparator) {
+            if ($comparator->accepts($expected, $actual)) {
+                return $comparator;
+            }
+        }
+    }
+
+    /**
      * Registers a new comparator.
      *
      * This comparator will be returned by getInstance() if its accept() method
@@ -64,34 +87,6 @@ class Factory
         array_unshift($this->comparators, $comparator);
 
         $comparator->setFactory($this);
-    }
-
-    /**
-     * @return Factory
-     */
-    public static function getInstance()
-    {
-        if (self::$instance === null) {
-            self::$instance = new Factory;
-        }
-
-        return self::$instance;
-    }
-
-    /**
-     * Returns the correct comparator for comparing two values.
-     *
-     * @param  mixed $expected The first value to compare
-     * @param  mixed $actual The second value to compare
-     * @return Comparator
-     */
-    public function getComparatorFor($expected, $actual)
-    {
-        foreach ($this->comparators as $comparator) {
-            if ($comparator->accepts($expected, $actual)) {
-                return $comparator;
-            }
-        }
     }
 
     /**

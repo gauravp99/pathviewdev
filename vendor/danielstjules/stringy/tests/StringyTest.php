@@ -10,7 +10,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = new S('foo bar', 'UTF-8');
         $this->assertStringy($stringy);
-        $this->assertEquals('foo bar', (string)$stringy);
+        $this->assertEquals('foo bar', (string) $stringy);
         $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 
@@ -19,7 +19,7 @@ class StringyTestCase extends CommonTest
      */
     public function testConstructWithArray()
     {
-        (string)new S(array());
+        (string) new S(array());
         $this->fail('Expecting exception when the constructor is passed an array');
     }
 
@@ -28,9 +28,9 @@ class StringyTestCase extends CommonTest
      */
     public function testMissingToString()
     {
-        (string)new S(new stdClass());
+        (string) new S(new stdClass());
         $this->fail('Expecting exception when the constructor is passed an ' .
-            'object without a __toString method');
+                    'object without a __toString method');
     }
 
     /**
@@ -38,7 +38,7 @@ class StringyTestCase extends CommonTest
      */
     public function testToString($expected, $str)
     {
-        $this->assertEquals($expected, (string)new S($str));
+        $this->assertEquals($expected, (string) new S($str));
     }
 
     public function toStringProvider()
@@ -57,7 +57,7 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create('foo bar', 'UTF-8');
         $this->assertStringy($stringy);
-        $this->assertEquals('foo bar', (string)$stringy);
+        $this->assertEquals('foo bar', (string) $stringy);
         $this->assertEquals('UTF-8', $stringy->getEncoding());
     }
 
@@ -154,6 +154,24 @@ class StringyTestCase extends CommonTest
     }
 
     /**
+     * @dataProvider indexOfProvider()
+     */
+    public function testIndexOf($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->indexOf($subStr, $offset);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @dataProvider indexOfLastProvider()
+     */
+    public function testIndexOfLast($expected, $str, $subStr, $offset = 0, $encoding = null)
+    {
+        $result = S::create($str, $encoding)->indexOfLast($subStr, $offset);
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @dataProvider charsProvider()
      */
     public function testChars($expected, $str, $encoding = null)
@@ -231,6 +249,18 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->underscored();
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider delimitProvider()
+     */
+    public function testDelimit($expected, $str, $delimiter, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->delimit($delimiter);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
@@ -596,10 +626,36 @@ class StringyTestCase extends CommonTest
     /**
      * @dataProvider trimProvider()
      */
-    public function testTrim($expected, $str)
+    public function testTrim($expected, $str, $chars = null, $encoding = null)
     {
-        $stringy = S::create($str);
-        $result = $stringy->trim();
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->trim($chars);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider trimLeftProvider()
+     */
+    public function testTrimLeft($expected, $str, $chars = null,
+                                 $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->trimLeft($chars);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider trimRightProvider()
+     */
+    public function testTrimRight($expected, $str, $chars = null,
+                                  $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->trimRight($chars);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
@@ -907,6 +963,30 @@ class StringyTestCase extends CommonTest
     {
         $stringy = S::create($str, $encoding);
         $result = $stringy->regexReplace($pattern, $replacement, $options);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider htmlEncodeProvider()
+     */
+    public function testHtmlEncode($expected, $str, $flags = ENT_COMPAT, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->htmlEncode($flags);
+        $this->assertStringy($result);
+        $this->assertEquals($expected, $result);
+        $this->assertEquals($str, $stringy);
+    }
+
+    /**
+     * @dataProvider htmlDecodeProvider()
+     */
+    public function testHtmlDecode($expected, $str, $flags = ENT_COMPAT, $encoding = null)
+    {
+        $stringy = S::create($str, $encoding);
+        $result = $stringy->htmlDecode($flags);
         $this->assertStringy($result);
         $this->assertEquals($expected, $result);
         $this->assertEquals($str, $stringy);
