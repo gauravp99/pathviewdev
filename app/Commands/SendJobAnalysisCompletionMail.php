@@ -14,22 +14,23 @@ use DB;
 use Illuminate\Support\Facades\Config;
 use DateTime;
 use Illuminate\Support\Facades\Cookie;
-
+use App\Http\Controllers\pathview\analysis\AnalysisController;
 
 class SendJobAnalysisCompletionMail extends Command implements SelfHandling, ShouldBeQueued
 {
 
     use InteractsWithQueue, SerializesModels;
     protected $time;
-
+    public $uniqueID;
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct($time)
+    public function __construct($time,$uniqueID)
     {
         $this->time = $time;
+        $this->uniqueID = $uniqueID;
     }
 
     /**
@@ -62,6 +63,7 @@ class SendJobAnalysisCompletionMail extends Command implements SelfHandling, Sho
     public function handle()
     {
 
+        //reduce the number of parllel job of the user currently exist by 1
 
         $hashdata = json_decode(Redis::get($this->time),true);
         Redis::del("wait:".$this->time);
@@ -85,18 +87,22 @@ class SendJobAnalysisCompletionMail extends Command implements SelfHandling, Sho
         $publicPath = Config::get("app.publicPath");
 
         exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\" >$outFile  2> $errorfile ");
-        $userCount = Redis::get("users_count");
+        $count = Redis::get("id:".$this->uniqueID) -1 ;
+        Redis::set("test:".$count,$this->uniqueID);
+        if($count <0)
+            $count = 0;
+        Redis::set("id:".$this->uniqueID,$count);
 
         $date = new DateTime;
         $record = DB::table('analysis')->where('analysis_id',$time)->get();
-if(strcmp($anal_type,"Analysis History regenerated")==0 || sizeof($record)>0) {
+        if(strcmp($anal_type,"Analysis History regenerated")==0 || sizeof($record)>0) {
 
         DB::table('analysis')
             ->where('analysis_id', $time)
             ->update(['analysis_type' => 'Analysis History regenerated']);
-}
-else
-{
+        }
+        else
+        {
             if ($user != 0)
                 DB::table('analysis')->insert(
                     array('analysis_id' => $time . "", 'id' => $user . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => $this->get_client_ip())
@@ -109,6 +115,8 @@ else
         }
         Redis::del($time);
         Redis::set($time.":Status","true");
+
+
 
 
     }

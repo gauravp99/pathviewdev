@@ -52,8 +52,6 @@ class AdminController extends Controller {
 			return view('admin.adminLogin');
 		}
 
-
-
 	}
 
 	public function ajaxAdminBroadCastMessage()
@@ -139,6 +137,11 @@ class AdminController extends Controller {
 	public function getAllUsers()
 	{
 		return DB::table('users')->select('email')->get();
+
+	}
+	public function getAdmin()
+	{
+		return DB::table('admin')->get();
 
 	}
 

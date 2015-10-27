@@ -127,7 +127,7 @@
                         {
                             if(sizeof($geneid_names) >= $i)
                             {
-                                $gidtitle .= $gid." (".$geneid_names[$i]."),";
+                                $gidtitle .= $gid." (".$geneid_names[$i]."), ";
                             }
                             $gidString .= $species.":".$gid."+";
                             $i = $i + 1;

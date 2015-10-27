@@ -5,6 +5,7 @@
  */
 use App\Analysis;
 use Auth;
+use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
 class HomeController extends Controller
 {
@@ -33,6 +34,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
 
         return view('profile.home')->with('analyses',Analysis::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20));
     }

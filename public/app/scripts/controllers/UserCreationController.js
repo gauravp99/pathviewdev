@@ -8,7 +8,7 @@
  * Controller of the mytodoApp
  */
 angular.module('mytodoApp')
-  .controller('UserCreationController', function ($scope,$http) {
+  .controller('UserCreationController', function ($scope,$rootScope,$http) {
 
      $scope.addUser = function(){
        console.log("name: "+$scope.name);
@@ -21,23 +21,23 @@ angular.module('mytodoApp')
          organisation: $scope.organization
        };
        console.log(data);
-         $scope.created = false;
-         $scope.existed = false;
-       $http.post('api/addUser',data)
+         $rootScope.created = false;
+         $rootScope.existed = false;
+       $http.post('/api/addUser',data)
         .then(function(response){
                if(response.data == "createdUser")
                {
-                   $scope.created = true;
+                   $rootScope.created = true;
                }
 
                else if(response.data == "userAlreadyExist")
                {
-                   $scope.existed = true;
+                   $rootScope.existed = true;
                }
                $('#successful').trigger('click');
             console.log(response);
-               console.log($scope.created);
-               console.log($scope.existed);
+               console.log($rootScope.created);
+               console.log($rootScope.existed);
         },function(response){
              console.error("error");
         });

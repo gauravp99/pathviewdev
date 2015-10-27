@@ -11,6 +11,7 @@
         var j =0;
         var increment = 10;
         var waitFlag = false;
+        var waitFlag1 = false;
         $(document).ready(function () {
             if($('#status').val())
             {
@@ -26,11 +27,17 @@
                 var argument = "<?php echo $_SESSION['argument'];?>";
                 var anal_type = "<?php echo $_SESSION['anal_type'];?>";
                 var queue_id = "<?php echo $queueid;?>";
+                var factor = "<?php echo $factor;?>";
 
                 //console.log("currentFactor:"+(factor));
                 console.log(queue_id);
+
+                    waitFlag = true;
+
+
                 if (queue_id == -1) {
                     $("#progress").hide();
+                    $("#completed").hide();
                     console.log("in waiting method");
                     $("#waiting").show();
                     console.log("watiting for other jobs to complete");
@@ -53,8 +60,9 @@
 
                                         $("#waiting").remove();
                                         $("#progress").show();
+                                        waitFlag1 = true;
                                         clearInterval(myVar2);
-                                        waitFlag = true;
+
                                     }
                                 }
                             },
@@ -64,11 +72,16 @@
                         });
                     }, 1000);
                 }
+
+
                 if (queue_id > 0 || waitFlag) {
 
                     console.log("in progress method");
                     $("#completed").hide();
+                    if(queue_id > 0 )
                     $("#waiting").remove();
+
+                    if( waitFlag1 ||queue_id > 0)
                     $("#progress").show();
                     var myVar1 = setInterval(function () {
                         j = j + 1;
@@ -100,9 +113,9 @@
                                             $( "#progress" ).blur();
 
                                         } else {
-                                            $('#progressData').text("" + (j * 10) + "%");
-                                            $('#progressData').attr('aria-valuenow', "" + (j * 10));
-                                            $('#progressData').css('width', (j * 10) + '%');
+                                            $('#progressData').text("" + Math.round((j * 10)/factor) + "%");
+                                            $('#progressData').attr('aria-valuenow', "" + Math.round((j * 10)/factor));
+                                            $('#progressData').css('width', Math.round((j * 10)/factor) + '%');
                                         }
 
                                     }
@@ -115,6 +128,7 @@
                     }, 1500);
 
                 } else {
+
                     $('#completed').show();
                 }
             }
@@ -216,7 +230,7 @@
                         ?>
                         <tr>
                             <td><b>{{$arg1[0]}}</b></td>
-                            <td>{{$arg1[1]}}</td>
+                            <td><div style="width: 500px;white-space: normal;width: 560px;font-size: 14px;word-wrap: break-word;">{{$arg1[1]}}</div></td>
                         </tr>
                         <?php
                         break;

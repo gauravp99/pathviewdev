@@ -1,4 +1,4 @@
-
+<div ng-if="currentUser">
 <form ng-controller="contactCtrl">
   <div class="form-group">
     <label for="exampleInputName">Email List</label>
@@ -36,4 +36,5 @@
             </div>
         </div>
     </div>
-</div>
+</div></div>
+<div class="col-md-offset-12" ng-if="!currentUser"> <h1>Not Authorised to application</h1></div>

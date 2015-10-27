@@ -15,16 +15,16 @@
     </div>
 
 
-    <p class="text-center" ng-show="loading"><span class="fa fa-meh-o fa-5x fa-spin"></span></p>
-
-
+    <p class="text-center" ng-show="loading"></p>
+            <button type="button" class="btn btn-default navbar-btn" id="hideComments" >Frequently Asked Questions <span class="glyphicon glyphicon-resize-full"></span></button>
+            <div class="comment" id="hidebar" hidden="" >
     <div class="comment" ng-hide="loading" ng-repeat="comment in comments">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
                     <h3><% comment.text_string %></h3>
                 </div>
-                <div class="panel-footer" style="dis">
+                <div class="panel-footer" style="">
                     <small>by <% comment.author  %> </small>
                     <p style="font-size: 10px;" id="comment1">Comment #<% comment.id  %></p>
                     <nav style="font-size: 10px;alignment: right"><p id="comment"><% comment.created_at  %></p></nav>
@@ -46,6 +46,7 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
 
 
         </div>
+                </div>
             <div class="col-sm-12" style="margin-top: 60px;font-size: 14px;">
                 <h3>Ask ?</h3>
                 <form class="form-horizontal" id="form-contact" role="form" ng-submit="submitComment()" method="post"  accept-charset="UTF-8" enctype="multipart/form-data" action="/postMessage">
@@ -83,6 +84,19 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
             </div>
 </div>
         <script>
+            $( document ).ready(function() {
+                $('#hideComments').click(function(){
+                    if($('#hideComments').text() === "Hide Frequently Asked Questions")
+                    {
+                        $('#hidebar').hide();
+                        $('#hideComments').text("Show Frequently Asked Questions ");
+                    }else{
+                        $('#hidebar').show();
+                        $('#hideComments').text("Hide Frequently Asked Questions");
+                    }
+
+                });
+            });
             $(document).on('click', '.browse', function(){
                 var file = $(this).parent().parent().parent().find('.file');
                 file.trigger('click');

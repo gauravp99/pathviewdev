@@ -1,4 +1,4 @@
-
+<div ng-if="currentUser">
 <form ng-controller="UserCreationController" ng-submit="addUser()">
   <div class="form-group">
     <label for="name">Name</label>
@@ -45,8 +45,8 @@
 
       </div>
       <div class="modal-body">
-        <h3 class="alert alert-success" ng-show="created == true">User Created Sucessfully</h3>
-        <h3 class="alert alert-danger" ng-show="existed == true">User Already existed</h3>
+        <h3 class="alert alert-success" ng-if="created">User Created Sucessfully</h3>
+        <h3 class="alert alert-danger" ng-if="existed">User Already existed</h3>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close
@@ -55,4 +55,5 @@
     </div>
   </div>
 </div>
-
+</div>
+<div class="col-md-offset-12" ng-if="!currentUser"> <h1>Not Authorised to application</h1></div>

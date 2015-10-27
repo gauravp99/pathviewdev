@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="AUTHOR" content="Weijun Luo,Yeshvant Kumar Bhavnasi Venkat Satya">
-    <link href="{{ asset('bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
     <link rel="icon" href="/images/plogo.png"  sizes="32x32">
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <link rel="stylesheet" href="{{ asset('/css/GageStyle.css') }}" type="text/css" media="screen"/>

@@ -316,18 +316,21 @@ use Illuminate\Cacheche;
 
                 if(geneDataArray[1] != null)
                 {
-                    if(geneDataArray[1].split(":")[1] != null)
+                    if(geneDataArray[1].split(":")[1] != null  )
                     {
-                        geneRefSelected = geneDataArray[1].split(":")[1];
-                        geneRefSelectedArray = geneRefSelected.split(",");
-                        console.log(geneRefSelectedArray);
-                        $.each(geneRefSelectedArray, function(index, value){
-                                    console.log(value);
-                            $("#Generefselect option[value='" + $.trim(value) + "']").attr("selected", 1);
 
-                            $("#Genesamselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
-                        });
-                        $('#generef').val(geneRefSelected);
+                            geneRefSelected = geneDataArray[1].split(":")[1];
+                            geneRefSelectedArray = geneRefSelected.split(",");
+                            console.log(geneRefSelectedArray);
+                            $.each(geneRefSelectedArray, function(index, value){
+                                console.log(value);
+                                $("#Generefselect option[value='" + $.trim(value) + "']").attr("selected", 1);
+
+                                $("#Genesamselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
+                            });
+                            $('#generef').val(geneRefSelected);
+
+
                     }
 
                 }
@@ -337,16 +340,31 @@ use Illuminate\Cacheche;
                 {
                     if(geneDataArray[2].split(":")[1] != null)
                     {
-                        geneSamSelected = geneDataArray[2].split(":")[1];
-                        geneSamSelectedArray = geneSamSelected.split(",");
-                        console.log(geneSamSelectedArray);
-                        $.each(geneSamSelectedArray, function(index, value){
-                            $("#Genesamselect option[value='" + $.trim(value) + "']").attr("selected", 1);
-                            $("#Generefselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
-                        });
-                        $('#genesam').val(geneSamSelected);
+
+                            geneSamSelected = geneDataArray[2].split(":")[1];
+                            geneSamSelectedArray = geneSamSelected.split(",");
+                            console.log(geneSamSelectedArray);
+                            $.each(geneSamSelectedArray, function(index, value){
+                                $("#Genesamselect option[value='" + $.trim(value) + "']").attr("selected", 1);
+                                $("#Generefselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
+                            });
+                            $('#genesam').val(geneSamSelected);
+
                     }
 
+                }
+                console.log(geneDataArray[geneDataArray.length-1]);
+                if(geneDataArray[geneDataArray.length-1] != null)
+                {
+                    if(geneDataArray[geneDataArray.length-1] .split(":")[1] != null)
+                    {
+                        if(geneDataArray[geneDataArray.length-1].split(":")[1] == "true")
+                        {
+                                console.log("genecompare true");
+                        }else{
+                            $('#GeneCompare').removeAttr("checked");
+                        }
+                    }
                 }
 
             }
@@ -608,12 +626,28 @@ use Illuminate\Cacheche;
         $("#assayData").change(function(){
             var fileName = $("#assayData").val();
             if(fileName)
-            $('#geneMenu').trigger('click');
+            {
+                $("#Genesamselect option").prop("disabled", false);
+                $("#Generefselect option").prop("disabled", false);
+                $('#geneMenu').trigger('click');
+
+                console.log("in re file select here");
+
+            }
+
+
         });
         $("#cpdassayData").change(function(){
             var fileName1 = $("#cpdassayData").val();
-            if(fileName1)
+            if(fileName1){
+                $("#Cpdsamselect option").prop("disabled", false);
+                $("#Cpdrefselect option").prop("disabled", false);
                 $('#compoundMenu').trigger('click');
+            }
+
+
+
+
 
         });
 

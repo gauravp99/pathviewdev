@@ -1,4 +1,5 @@
 <!-- PAGE TITLE =============================================== -->
+<div ng-if="currentUser">
 <div ng-controller="mainController" >
 <div class="page-header">
     <h2>Issues</h2>
@@ -75,6 +76,8 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
     </form>
 </div>
 </div>
+    </div>
+<div class="col-md-offset-12" ng-if="!currentUser"> <h1>Not Authorised to application</h1></div>
 <script>
     $('.reply').hide();
 

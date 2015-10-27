@@ -61,7 +61,7 @@
             return true;
         }
         ?>
-        @if(Session::get('anal_id')!=NULL)
+        @if(Session::get('anal_id')!=null)
             <?php
                 if(!file_exists(public_path().'/all/'.Auth::user()->email))
                     {
@@ -161,23 +161,29 @@
                 $now = time(); // or your date as well
                 $your_date = strtotime(str_split($analyses1->created_at, 10)[0]);
                 $date_diff = $now - $your_date;
-                echo "<tr><td><input type='checkbox' value=$analyses1->analysis_id name=$analyses1->analysis_id ></td><td><a href='#' data-id=$analyses1->analysis_id data-toggle='modal' id='Analysisdelete' class='delete' data-target='#myModal'><span class='glyphicon glyphicon-trash'><span></a></td>";
+                echo "<tr><td><input type='checkbox' value=$analyses1->analysis_id name=$analyses1->analysis_id ></td>
+                <td>
+                <a href='#' data-id=$analyses1->analysis_id data-toggle='modal' id='Analysisdelete' class='delete' data-target='#myModal'>
+                <span class='glyphicon glyphicon-trash'><span>
+                </a>
+                </td>";
                 echo "<td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
 
-                echo "<td> " . floor($date_diff / (60 * 60 * 24)) . " days ago ";
+                echo "<td> ".floor($date_diff / (60 * 60 * 24))." days ago ";
                 $directory = get_string_between($analyses1->arguments, "targedir:", ";");
                 $dir = get_string_between($analyses1->arguments, public_path(), ";");
-                $id = get_string_between($analyses1->arguments, "species:", ";") . get_string_between($analyses1->arguments, "pathway:", ",");
+                $id = get_string_between($analyses1->arguments, "species:", ";");
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ";");
                 echo "</td>";
                 if(strcmp($analyses1->analysis_origin,'pathview')==0)
-                    {?>
+                    {
+            ?>
                <td><p>  <a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>
             <?php
                         }
                 else if(strcmp($analyses1->analysis_origin,'gage')==0)
                     {
-                        echo "<td><p>  <a href=/gage_hist?analyses=$analyses1->analysis_id>Analysis $analyses1->analysis_id</a> </p></td>";
+                        echo "<td><p><a href=/gage_hist?analyses=$analyses1->analysis_id>Analysis $analyses1->analysis_id</a> </p></td>";
 
                     }
                 $f = './all/' . Auth::user()->email;
@@ -207,7 +213,7 @@
                     </div>
                     <div class="modal-body">
                         <p id="analysis"> </p>
-                        <h3 class="alert alert-danger">Alert!! Clicking OK Will delete the files and lost. You will not be able to retrieve it back.</h3>
+                        <h3 class="alert alert-danger">Alert!! Clicking ok Will delete the files and lost. You will not be able to retrieve it back.</h3>
                         {!! form::open(array('url' => 'analysisDelete','method'=>'POST')) !!}
                         <input type="text" name="analysisID" id="analysisID" value="" hidden/>
                         <input type="submit" value="OK" class="btn btn-default" >
@@ -226,7 +232,7 @@
 
 <script>
 
-    
+
     $(function(){
         var analy_ids="";
         $('input[type="checkbox"]').change(function() {
@@ -239,17 +245,18 @@
         });
         $(document).on("click", ".delete", function () {
             var analysisID = $(this).data('id');
-            $("#analysis").text("Deleting all");
-            $(".modal-body #analysisID").val( "" );
+            $("#analysis").text("Deleting "+ analysisID);
+            $(".modal-body #analysisID").val( analysisID );
         });
         $(document).on("click", "#deleteAll", function () {
+            $(".modal-body #analysisID").val("");
             $('input[type=checkbox]').each(function() {
 
                 analy_ids+= $(this).val();
                 analy_ids +=",";
                 console.log(analy_ids);
                 $("#analysis").text("Deleting Analysis:deleting all");
-                $(".modal-body #analysisID").val( analy_ids );
+                $(".modal-body #analysisID").val( analysisID );
             });
         });
         $(document).on("click", "#delete", function () {

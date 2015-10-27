@@ -21,7 +21,7 @@ angular.module('mytodoApp')
          organisation: $scope.organization
        };
        console.log(data);
-       $http.post('api/addUser',data)
+       $http.post('/api/addUser',data)
         .then(function(response){
             console.log(response);
         },function(response){

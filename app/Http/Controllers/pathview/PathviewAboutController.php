@@ -31,7 +31,7 @@ class PathviewAboutController extends Controller {
         $web_ip = array();
         foreach($web_usage as $web)
         {
-            array_push($web_date,date("F, Y",strtotime($web->getDate())));
+            array_push($web_date,date("M, Y",strtotime($web->getDate())));
             array_push($web_count,$web->getUsage());
             array_push($web_ip,$web->getIp());
         }
@@ -41,7 +41,7 @@ class PathviewAboutController extends Controller {
         $lib_ip = array();
         foreach($lib_usage as $lib)
         {
-            array_push($lib_date,date("F, Y",strtotime($lib->getDate())));
+            array_push($lib_date,date("M, Y",strtotime($lib->getDate())));
             array_push($lib_count,$lib->getUsage());
             array_push($lib_ip,$lib->getIp());
         }

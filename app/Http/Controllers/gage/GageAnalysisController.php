@@ -1,4 +1,4 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\gage;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -124,7 +124,7 @@ class GageAnalysisController extends Controller
                 $file->move($destFile, $filename);
             } else {
                 $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-                return view('Gage.GageAnalysis');
+                return view('gage_pages.GageAnalysis');
             }
             $filename = Input::file('assayData')->getClientOriginalName();
         } else if (strcmp($analysis, 'exampleGageAnalysis1') == 0) {
@@ -134,7 +134,7 @@ class GageAnalysisController extends Controller
 
             if (!File::copy($file, $destFile . $filename)) {
                 $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-                return view('Gage.GageAnalysis');
+                return view('gagei_pages.GageAnalysis');
             }
         }
         else if (strcmp($analysis, 'exampleGageAnalysis2') == 0) {
@@ -144,7 +144,7 @@ class GageAnalysisController extends Controller
 
             if (!File::copy($file, $destFile . $filename)) {
                 $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-                return view('Gage.GageAnalysis');
+                return view('gage_pages.GageAnalysis');
             }
 
         }
@@ -156,7 +156,7 @@ class GageAnalysisController extends Controller
 
             if (!File::copy($file, $destFile . $filename)) {
                 $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-                return view('Gage.GageAnalysis');
+                return view('gage_pages.GageAnalysis');
             }
 
 
@@ -243,7 +243,7 @@ class GageAnalysisController extends Controller
 
                     if (!File::copy($file1, $destFile . $filename1)) {
                         $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-                        return view('Gage.GageAnalysis');
+                        return view('gage_pages.GageAnalysis');
                     }
                     $argument .= "gsfn:" . $filename1 . ";";
                     $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename1) . ";";
@@ -526,15 +526,15 @@ class GageAnalysisController extends Controller
 
         //insert into the analysis table if the analysis is done event if the error occurred we insert into table
         if (Auth::user())
-            DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $analysis, 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+            DB::table('analysis')->insert(
+                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $analysis, 'created_at' => $date, 'ip_add' => get_client_ip(), 'analysis_origin' => 'gage')
             );
         else
-            DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $analysis, 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+            DB::table('analysis')->insert(
+                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $analysis, 'created_at' => $date, 'ip_add' => get_client_ip(), 'analysis_origin' => 'gage')
             );
 
-        return view('Gage.GageResult');
+        return view('gage_pages.GageResult');
 
     }
 
@@ -703,7 +703,7 @@ class GageAnalysisController extends Controller
 
                     if (!File::copy($file1, $destFile . $filename1)) {
                         $_SESSION['error'] = 'Unfortunately file cannot be uploaded';
-                        return view('Gage.GageAnalysis');
+                        return view('gage_pages.GageAnalysis');
                     }
                     $argument .= "gsfn:" . $filename1 . ";";
                     $argument .= "gsetextension:" . preg_replace('/^.*\./', '', $filename1) . ";";
@@ -759,14 +759,14 @@ class GageAnalysisController extends Controller
         $date = new \DateTime;
 
         if (Auth::user())
-            DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+            DB::table('analysis')->insert(
+                array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ip_add' => get_client_ip(), 'analysis_origin' => 'gage')
             );
         else
-            DB::table('analyses')->insert(
-                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ipadd' => get_client_ip(), 'analysis_origin' => 'gage')
+            DB::table('analysis')->insert(
+                array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ip_add' => get_client_ip(), 'analysis_origin' => 'gage')
             );
-        return view('Gage.DiscreteGageResult');
+        return view('gege_pages.DiscreteGageResult');
 
     }
     public function newGageAnalysis()

@@ -1,6 +1,6 @@
 <script src="../js/ChartNew.js"></script>
 <script src="http://underscorejs.org/underscore-min.js"></script>
-
+<div ng-if="currentUser">
 <div class="col-sm-12">
     <h3>Pathviw and Gage users and analysis Trends</h3>
 <ul class="nav nav-tabs">
@@ -149,4 +149,5 @@
                 </table>
                 </div>
     </div>
-</div>
+</div></div>
+<div class="col-md-offset-12" ng-if="!currentUser"> <h1>Not Authorised to application</h1></div>

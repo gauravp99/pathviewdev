@@ -23,6 +23,7 @@
     $reference = "1,3";
     $sample = "2,4";
     $cutoff = "0.1";
+    $ncutoff = "0.1";
     $setSizeMin = "10";
     $setSizeMax = "infinite";
     $compare = "paired";
@@ -110,7 +111,7 @@
                             <datalist id="specieslist">
                                 <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
                                 <?php
-        $species = DB::table('Species')->get();
+        $species = DB::table('species')->get();
         foreach ($species as $species1) {
             echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
         }
@@ -207,6 +208,24 @@
                                 </div>
                             </div>
                         </div>
+
+
+<div class="stepsdiv" id="qcutoff-div">
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="gageTutorial#n_value_cutoff" onclick="window.open('gageTutorial#n_value_cutoff', 'newwindow', 'width=300, height=250').focus() ;return false;" title="numeric, n-value cutoff between 0 and 1 for signficant gene sets selection." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    <label for="cutoff">n-value Cutoff:</label>
+                                </div>
+                                <div class="col-sm-7">
+
+                                    <input class="ex8"   name="ncutoff"  id="ncutoff" value={{$ncutoff}}  placeholder="0.1">
+                                </div>
+                            </div>
+                        </div>
+
+
 
                         <div class="stepsdiv" id="setSize-div">
                             <div class="col-sm-12">
@@ -338,16 +357,16 @@
         //saved species to be used in javascript
         var speciesArray = <?php echo JSON_encode($species);?> ;
                 <?php
-                $goSpecies = DB::table('Species')
-                        ->join('GoSpecies', 'Species.species_id', '=', 'GoSpecies.species_id')
-                        ->select('GoSpecies.species_id','Species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
+                $goSpecies = DB::table('species')
+                        ->join('GoSpecies', 'species.species_id', '=', 'GoSpecies.species_id')
+                        ->select('GoSpecies.species_id','species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
                 $GageSpeciesGeneIDMAtch = DB::table('GageSpeceisGeneIdMatch')
                                             ->select('species_id','geneid')->get();
                 ?>
                 var goSpeciesArray = <?php echo JSON_encode($goSpecies);?>;
         var GageSpeciesGeneIDMAtch = <?php echo JSON_encode($GageSpeciesGeneIDMAtch);?>;
                 <?php
-                $species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
+                $species_disesae = DB::table('species')->where('disease_index_exist','N')->get();?>
                 var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
         $('#gage_anal_form').validate({
 

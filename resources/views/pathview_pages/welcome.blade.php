@@ -4,7 +4,7 @@
 
     <div class="content">
         <div class="rows">
-
+<script src="js/ChartNew.js"></script>
             <div class="col-sm-12">
                 <div class="col-sm-8">
                     <h2 class="marketing-hero-heading">
@@ -292,6 +292,7 @@
             canvasBordersWidth: 3,
             canvasBordersColor: "#205081",
             legend: true,
+            scaleStepWidth: 500,
             graphTitleFontSize: 18,
             logarithmic: true,
             responsive: true

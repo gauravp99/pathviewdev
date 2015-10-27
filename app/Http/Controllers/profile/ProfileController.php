@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Config;
 use Mail;
 use Input;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cache;
 class ProfileController extends Controller
 {
 
@@ -66,7 +67,15 @@ class ProfileController extends Controller
         $name = $_POST["name"];
         $email = $_POST["email"];
         $id = Auth::user()->id;
-        $users = DB::table('users')->select('email')->where('id','!=',$id)->where('email',$email)->orWhereNull('id')->get();
+        if(Cache::has('users'))
+        {
+            $users = Cache::get('users');
+        }
+        else{
+            $users = DB::table('users')->select('email')->where('id','!=',$id)->where('email',$email)->orWhereNull('id')->get();
+            Cache::put('$users',$users, 10);
+        }
+
         if(sizeof($users) > 0)
         {
             return view('profile.user')->with('error',"Duplicate Email");

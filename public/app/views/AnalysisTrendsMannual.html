@@ -1,4 +1,4 @@
-<script src="../js/ChartNew.js"></script>
+<div ng-if="currentUser"><script src="../js/ChartNew.js"></script>
 <div class="col-sm-12">
     <h3>Pathviw and Gage users and analysis Trends mannual search</h3>
     <ul class="nav nav-tabs">
@@ -27,7 +27,8 @@
         <input type="submit" value="Search">
             </div>
     </div>
-</div>
+</div></div>
+<div class="col-md-offset-12" ng-if="!currentUser"> <h1>Not Authorised to application</h1></div>
 <script>
     $('#datepicker').datepicker();
     $('#datepicker1').datepicker();

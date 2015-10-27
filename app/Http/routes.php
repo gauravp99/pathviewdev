@@ -13,7 +13,16 @@
 
 /* start api for admin */
 /* start api for admin */
+
+
+
+
+
 Route::group(array('prefix' => 'api'), function() {
+
+
+    Route::resource('authenticate', 'admin\AuthenticateController', ['only' => ['index']]);
+    Route::post('authenticate', 'admin\AuthenticateController@authenticate');
     Route::get('getAllUsers','admin\AdminController@getAllUsers');
     Route::get('yearly','api\GetAnal@getYears');
     Route::get('monthly','api\GetAnal@getMonths');
@@ -139,7 +148,7 @@ Route::post('postAnalysis', 'PathviewAnalysisController@postAnalysis');
 Route::post('post_exampleAnalysis1', 'PathviewAnalysisController@post_exampleAnalysis1');
 /* URL route for Analysis (example2)  */
 #Route::post('post_exampleAnalysis2', 'pathview\analysis\AnalysisController@post_exampleAnalysis2');
-Route::post('post_exampleAnalysis2','PathviewAnalysisController@post_exampleAnalysis1');
+Route::post('post_exampleAnalysis2','PathviewAnalysisController@post_exampleAnalysis2');
 /* URL route for Analysis (example3)  */
 #Route::post('post_exampleAnalysis3', 'pathview\analysis\AnalysisController@post_exampleAnalysis3');
 Route::post('post_exampleAnalysis3', 'PathviewAnalysisController@post_exampleAnalysis3');
@@ -177,3 +186,66 @@ Route::get('error', function () {
 Route::get('Spaceerror', function () {
     return view("errors.SpaceExceeded");
 });
+
+
+
+/**************************gage application *********************************/
+
+Route::get('gage', function () {
+
+    return view("gage_pages.GageAnalysis");
+});
+
+Route::get('gageResult', function () {
+    return view("gage_pages.GageResult");
+});
+
+Route::post('gageAnalysis', 'gage\GageAnalysisController@newGageAnalysis');
+Route::post('exampleGageAnalysis1', 'gage\GageAnalysisController@ExampleGageAnalysis1');
+Route::post('exampleGageAnalysis2', 'gage\GageAnalysisController@ExampleGageAnalysis2');
+
+Route::get('discreteGage',function(){
+    return view('gage_pages.analysis.discreteAnalysis');
+});
+Route::get('gagePathview',function(){
+    return view('gage_pages.analysis.gagePathview');
+});
+
+Route::post('discreteGageAnalysis','gage\GageAnalysisController@discreteGageAnalysis');
+Route::post('gagePathviewAnalysis','gage\GageAnalysisController@GagePathviewAnalysis');
+Route::get('gageIndex','gage\gageController@index');
+Route::get('gageAbout','gage\gageController@about');
+Route::get('gageTutorial','gage\gageController@Tutorial');
+Route::get('gage_hist',function(){
+    return view('gage_pages.GageHistoryResult');
+});
+
+Route::get('gage-home', 'profile\HomeController@index');
+
+Route::get('gage-guest-home', array(
+    'as' => 'gage-guest-home ',
+    'uses' => function () {
+        return view('profile.guest.guest-home');
+    }));
+
+
+
+Route::get('gageExample1',function(){
+    return view('gage_pages.analysis.gageExample1');
+});
+Route::get('gageExample2',function(){
+    return view('gage_pages.analysis.gageExample2');
+});
+Route::get('pathviewViewer',function(){
+    return view('gage_pages.GagePathviewGraphViewer');
+});
+
+Route::get('resultView',function(){
+    return view('gage_pages.GageResultView');
+});
+Route::get('fullList',function(){
+    return view('gage_pages.GageFileList');
+});
+Route::post('/ajax/GageanalysisStatus','gage.AjaxGageAnalysisStatusCheck@index');
+
+/**************************gage application *********************************/

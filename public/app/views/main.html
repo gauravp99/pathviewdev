@@ -1,4 +1,4 @@
-<div class="jumbotron">
+<div ng-if="currentUser"><div class="jumbotron" id="dashboard" >
   <h1>Admin Dashboard</h1>
   <p class="lead">
     <br>
@@ -10,3 +10,50 @@
 <div class="row marketing">
   
 </div>
+</div>
+
+<div  ng-if="!currentUser">
+<div class="container-fluid">
+  <div class="row">
+    <div class="panel panel-default">
+      <div class="panel-heading">Login</div>
+      <div class="panel-body">
+
+
+  <form class="form-horizontal" role="form" method="POST"  name="loginForm" ng-controller="MainCtrl"
+        ng-submit="login(credentials)" >
+<div class="form-group" >
+  <label class="col-md-4 control-label">E-Mail</label>
+
+  <div class="col-md-6">
+    <input type="email" class="form-control" required="" ng-model="credentials.email" name="email" value="">
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label">Password</label>
+
+  <div class="col-md-6">
+    <input type="password" ng-model="credentials.password" required="" class="form-control" name="password">
+  </div>
+</div>
+
+
+<div class="form-group">
+  <div class="col-md-6 col-md-offset-4">
+    <button type="submit" ng-click="login()" class=" col-md-6 btn btn-primary" style="font-size: 20px;">
+      Login
+    </button>
+  </div>
+</div>
+  </form>
+</div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<script>
+
+
+</script>

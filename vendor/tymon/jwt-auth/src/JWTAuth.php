@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Providers\Auth\AuthInterface;
 use Tymon\JWTAuth\Providers\User\UserInterface;
-
+use App\Http\Models\DbDataFetch;
 class JWTAuth
 {
     /**
@@ -96,11 +96,27 @@ class JWTAuth
      */
     public function attempt(array $credentials = [], array $customClaims = [])
     {
+
         if (! $this->auth->byCredentials($credentials)) {
             return false;
         }
 
         return $this->fromUser($this->auth->user(), $customClaims);
+
+
+/*        //return print_r($credentials);
+        $password = $credentials['password'];
+        $email = $credentials['email'];
+        $dbConnection = new DbDataFetch();
+        $results = $dbConnection->getAdmin($password,$email);
+
+        if(sizeof($results)>0){
+            return $this->fromUser($this->auth->user(), $customClaims);
+        }
+        else{
+            return false;
+        }
+        return $credentials['password'];*/
     }
 
     /**
@@ -119,6 +135,7 @@ class JWTAuth
         }
 
         return $this->auth->user();
+
     }
 
     /**

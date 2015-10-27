@@ -51,11 +51,19 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                     }
                 });
 
-                $count = Redis::get("id:".Auth::user()->email) -1 ;
-                Redis::set("id:".Auth::user()->email,$count);
+                if (Cookie::get('uID') == null)
+                {
+                    $analysis = new AnalysisController();
+                    $uID = $analysis->get_client_ip();
+                }
+                else{
+                    $uID = Cookie::get("uID");
+                }
+
                 Redis::del(Input::get('analysisid') . ":Status");
                 Redis::del(Input::get('analysisid'));
                 return "true";
+
             } else {
                 if (Cookie::get('uID') == null)
                 {
@@ -65,8 +73,7 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                 else{
                     $uID = Cookie::get("uID");
                 }
-                $count = Redis::get("id:".$uID) -1 ;
-                Redis::set("id:".$uID,$count);
+
                 Redis::del(Input::get('analysisid') . ":Status");
                 Redis::del(Input::get('analysisid'));
                 return "true";
@@ -100,7 +107,7 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                 $jobflag = Redis::get("wait:".Input::get('analysisid'));
                 if(!is_null($jobflag))
                 {
-                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail(Input::get('analysisid')));
+                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail(Input::get('analysisid'),Auth::user()->email));
                     Redis::del("wait:".Input::get('analysisid'));
                 }
 
@@ -110,7 +117,9 @@ class AjaxAnalysisQueueStatusCheck extends Controller
             else{
                 return "stillWaiting";
             }
+
         }else{
+
             if (Cookie::get('uID') == null) {
                 $analysis = new AnalysisController();
                 $uID = $analysis->get_client_ip();
@@ -128,7 +137,7 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                 $jobflag = Redis::get("wait:".Input::get('analysisid'));
                 if(!is_null($jobflag))
                 {
-                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail(Input::get('analysisid')));
+                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail(Input::get('analysisid'),$uID));
                     Redis::del("wait:".Input::get('analysisid'));
                 }
                 return "pushedJob";

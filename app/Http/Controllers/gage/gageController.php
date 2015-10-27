@@ -1,11 +1,11 @@
-<?php namespace App\Http\Controllers;
+<?php namespace App\Http\Controllers\gage;
 
 use App\Http\Requests;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use stdClass;
 use Auth;
-
+use App\Http\Controllers\Controller;
 /**
  * Class gageController
  * @package App\Http\Controllers
@@ -33,7 +33,7 @@ class gageController extends Controller {
          * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
          * @Analyses(Number of analyses generated)
          */
-        $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'gage\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
+        $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analysis where analysis_origin = \'gage\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
         foreach ($val as $month) {
             array_push($usage, $month->count);
             array_push($ip, $month->ipadd_count);
@@ -61,8 +61,8 @@ class gageController extends Controller {
          */
         $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+40000 as "downloads" from biocGagestatistic'));
         $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+20000 as "ip" from biocGagestatistic'));
-        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'gage\' '));
-        $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'gage\' '));
+        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analysis where analysis_origin = \'gage\' '));
+        $count_web_ips = DB::select(DB::raw('select count(distinct ip_add) as "ip" from analysis where analysis_origin = \'gage\' '));
 
         /**
          * To make sure that the data is not empty from the database
@@ -132,7 +132,7 @@ class gageController extends Controller {
          * End Sorting the date according the dates order
          */
 
-        return view('Gage.GageAbout')->with('usage', $usage)
+        return view('gage_pages.GageAbout')->with('usage', $usage)
             ->with('ip', $ip)
             ->with('months', $months)
             ->with('bioc_downloads', array_reverse($sorted_bioc_download_12))
@@ -151,7 +151,7 @@ class gageController extends Controller {
          * database and send it to the javascript library
          */
         if (Auth::user()) {
-            return view("Gage.GageAnalysis");
+            return view("gage_pages.GageAnalysis");
         } else {
             $usage = array();
             $ip = array();
@@ -161,7 +161,7 @@ class gageController extends Controller {
              * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
              * @Analyses(Number of analyses generated)
              */
-            $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ipadd) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analyses where analysis_origin = \'gage\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
+            $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analysis where analysis_origin = \'gage\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
             foreach ($val as $month) {
                 array_push($usage, $month->count);
                 array_push($ip, $month->ipadd_count);
@@ -189,8 +189,8 @@ class gageController extends Controller {
              */
             $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocGagestatistic'));
             $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocGagestatistic'));
-            $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analyses where analysis_origin = \'gage\' '));
-            $count_web_ips = DB::select(DB::raw('select count(distinct ipadd) as "ip" from analyses where analysis_origin = \'gage\' '));
+            $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analysis where analysis_origin = \'gage\' '));
+            $count_web_ips = DB::select(DB::raw('select count(distinct ip_add) as "ip" from analysis where analysis_origin = \'gage\' '));
 
             /**
              * To make sure that the data is not empty from the database
@@ -260,7 +260,7 @@ class gageController extends Controller {
              * End Sorting the date according the dates order
              */
 
-            return view('Gage.GageWelcome')->with('usage', $usage)
+            return view('gage_pages.GageWelcome')->with('usage', $usage)
                 ->with('ip', $ip)
                 ->with('months', $months)
                 ->with('bioc_downloads', array_reverse($sorted_bioc_download_12))
@@ -278,7 +278,7 @@ class gageController extends Controller {
     public function tutorial()
     {
 
-        return view('Gage.GageTutorial');
+        return view('gage_pages.GageTutorial');
     }
 
 

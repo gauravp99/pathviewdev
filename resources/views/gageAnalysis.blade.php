@@ -13,7 +13,7 @@
     <datalist id="specieslist">
         <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
         <?php
-        $species = DB::table('Species')->get();
+        $species = DB::table('species')->get();
         foreach ($species as $species1) {
             echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
         }
@@ -344,16 +344,16 @@ $('#submit-button').click(function(){
     //saved species to be used in javascript
     var speciesArray = <?php echo JSON_encode($species);?> ;
 <?php
-$goSpecies = DB::table('Species')
-        ->join('GoSpecies', 'Species.species_id', '=', 'GoSpecies.species_id')
-        ->select('GoSpecies.species_id','Species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
+$goSpecies = DB::table('species')
+        ->join('GoSpecies', 'species.species_id', '=', 'GoSpecies.species_id')
+        ->select('GoSpecies.species_id','species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
 $GageSpeciesGeneIDMAtch = DB::table('GageSpeceisGeneIdMatch')
                             ->select('species_id','geneid')->get();
 ?>
 var goSpeciesArray = <?php echo JSON_encode($goSpecies);?>;
 var GageSpeciesGeneIDMAtch = <?php echo JSON_encode($GageSpeciesGeneIDMAtch);?>;
 <?php
-$species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
+$species_disesae = DB::table('species')->where('disease_index_exist','N')->get();?>
 var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
     $('#gage_anal_form').validate({
 
