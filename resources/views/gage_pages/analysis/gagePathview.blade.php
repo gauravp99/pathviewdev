@@ -17,17 +17,7 @@
             <p><b>Example GAGE Analysis 1</b></p>
         </div>
         <div id="error-message"></div>
-        {{--<div class="col-md-2">
-            <div id="progress" class="col-md-12" hidden>
-                <h2 class="alert alert-info"> Executing, Please wait. </h2>
-                <img width="200px" hieght="200px" src="/images/load.gif">
-            </div>
-            <div id="completed" class="list-group col-md-12" hidden>
-                <p> Completed gage_pages Analysis</p>
-                <a id ='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
-                <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
-            </div>
-        </div>--}}
+
     </div>
     <?php
     //specifying default values for all the variables;
@@ -111,8 +101,6 @@
                                 </div>
 
                                 <div class="col-sm-7">
-
-
                                     <div class="input-group">
                                         <span style="color:red" ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
                                         <a href="/all/data/gagedata.txt" target="_blank">gse16873.csv</a>
@@ -135,7 +123,7 @@
                             <datalist id="specieslist">
                                 <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
                                 <?php
-        $species = DB::table('Species')->get();
+        $species = DB::table('species')->get();
         foreach ($species as $species1) {
             echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
         }
@@ -758,8 +746,8 @@
         //saved species to be used in javascript
         var speciesArray = <?php echo JSON_encode($species);?> ;
                 <?php
-                $goSpecies = DB::table('Species')
-                        ->join('GoSpecies', 'Species.species_id', '=', 'GoSpecies.species_id')
+                $goSpecies = DB::table('species')
+                        ->join('GoSpecies', 'species.species_id', '=', 'GoSpecies.species_id')
                         ->select('GoSpecies.species_id','Species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
                 $GageSpeciesGeneIDMAtch = DB::table('GageSpeceisGeneIdMatch')
                                             ->select('species_id','geneid')->get();
@@ -767,7 +755,7 @@
                 var goSpeciesArray = <?php echo JSON_encode($goSpecies);?>;
         var GageSpeciesGeneIDMAtch = <?php echo JSON_encode($GageSpeciesGeneIDMAtch);?>;
                 <?php
-                $species_disesae = DB::table('Species')->where('disease_index_exist','N')->get();?>
+                $species_disesae = DB::table('species')->where('disease_index_exist','N')->get();?>
                 var speciesdiseaseArray = <?php echo JSON_encode($species_disesae);?> ;
         $('#gage_anal_form').validate({
 
@@ -1065,12 +1053,6 @@
         }, "Max size should only contains digits or inf");
 
     </script>
-
-
-
-
-
-
 
 
 

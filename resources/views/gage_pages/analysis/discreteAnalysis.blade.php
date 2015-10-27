@@ -225,7 +225,20 @@
                             </div>
                         </div>
 
+                        <div class="stepsdiv" id="qcutoff-div">
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="gageTutorial#n_value_cutoff" onclick="window.open('gageTutorial#n_value_cutoff', 'newwindow', 'width=300, height=250').focus() ;return false;" title="numeric, n-value cutoff between 0 and 1 for signficant gene sets selection." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    <label for="cutoff">Test Enrich:</label>
+                                </div>
+                                <div class="col-sm-7">
 
+                                    <input class="ex8"   type="checkbox" name="testEnrich"  id="ncutoff" checked=""  placeholder="0.1">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="stepsdiv" id="setSize-div">
                             <div class="col-sm-12">
@@ -430,6 +443,10 @@
                     required: true,
                     decimal:true
                 },
+                ncutoff:{
+                    required: true,
+                    decimal:true
+                },
                 geneIdFile:{
                     required:true
                 },
@@ -484,6 +501,10 @@
                 cutoff: {
                     required: "* Cutoff field value is required",
                     decimal: "* Cutoff field must be decimal value"
+                },
+                ncutoff: {
+                    required: "* nCutoff field value is required",
+                    decimal: "* nCutoff field must be decimal value"
                 },
                 species: {
                     required: "* Species field value is required",

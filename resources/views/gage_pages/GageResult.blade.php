@@ -95,7 +95,7 @@
 
                 }
 
-            $dir = substr($destDir,strlen("/var/www/Pathway/public/"));
+            $dir = substr($destDir,strlen("/var/www/PathwayWeb/public/"));
             $contents = scandir($destDir);
 
             if ($contents) {

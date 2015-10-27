@@ -4,51 +4,32 @@ args <- commandArgs(TRUE)
 
                                         # @arguments are split on comma as they are passed to Rscript with comma separated
 library(pathview)
-arg.v = strsplit(args[1],split=",|:")[[1]]
+arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
 
 logic.idx=c("kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc")
-                                        #num.idx=c("offset", "glmt", "gbins", "clmt", "cbins", "pathidx")
-num.idx=c("offset", "gbins", "cbins", "pathidx")# "generef", "genesamp", "cpdref", "cpdsamp"
+num.idx=c("offset", "glmt", "gbins", "clmt", "cbins", "pathidx")
+#num.idx=c("offset", "gbins", "cbins", "pathidx")
+cn.idx=c("generef", "genesamp", "cpdref", "cpdsamp")
 
 
-args2=as.list(args1)
-args2[logic.idx]=as.list(as.logical(args1[logic.idx]))
-args2[num.idx]=as.list(as.numeric(args1[num.idx]))
-
-if(identical(args2$generef, "NULL"))
-{
-    args2$generef = NULL
-}else{
-    args2$generef = as.numeric(args2$generef)
-}
-if(identical(args2$genesamp, "NULL"))
-{
-    args2$genesamp = NULL
-}else{
-    args2$genesamp = as.numeric(args2$genesamp)
-}
-
-if(identical(args2$cpdref, "NULL"))
-{
-    args2$cpdref = NULL
-}else{
-    args2$cpdref = as.numeric(args2$cpdref)
-}
-if(identical(args2$cpdsamp, "NULL"))
-{
-    args2$cpdsamp = NULL
-}else{
-    args2$cpdsamp = as.numeric(args2$cpdsamp)
-}
+#args2=as.list(args1)
+args2=strsplit(args1, ",")
+args2[logic.idx]=lapply(args2[logic.idx],as.logical)
+args2[num.idx]=lapply(args2[num.idx],as.numeric)
+args2[cn.idx]=lapply(args2[cn.idx], function(x){
+                         if(length(x)==0) return(NULL)
+                         if(x[1]=="NULL") return(NULL)
+                         else return(as.numeric(x))
+                     })
 
 setwd(args2$targedir)
 save.image("workenv.RData")
-path.ids = strsplit(args2$pathway,split=";")[[1]]
-args2$glmt = as.numeric(strsplit(args2$glmt,split=";")[[1]])
-args2$clmt = as.numeric(strsplit(args2$clmt,split=";")[[1]])
+#path.ids = strsplit(args2$pathway,split=";")[[1]]
+#args2$glmt = as.numeric(strsplit(args2$glmt,split=";")[[1]])
+#args2$clmt = as.numeric(strsplit(args2$clmt,split=";")[[1]])
 args2$cpdid=tolower(args2$cpdid)
 
 #setwd(args2$targedir)
@@ -63,14 +44,14 @@ if(!is.null(args2$geneextension)){
 
     if(ncol(a)>1){
         gene.d=as.matrix(a[,-1])
-if(args2$generef!="NULL"){
-    args2$generef=as.numeric(args2$generef)
-    args2$genesamp=as.numeric(args2$genesamp)
-    ngsamp=length(args2$genesamp)
-    ngref=length(args2$generef)
-    if(args2$genecompare="paired" & ngsamp==ngref) gene.d=gene.d[,samp]- gene.d[,ref]
-    else gene.d=gene.d[,samp]- gene.d[,ref]
-}
+        if(!is.null(args2$generef[1])){
+            ngsamp=length(args2$genesamp)
+            ngref=length(args2$generef)
+            if(args2$genecompare=="paired" & ngsamp==ngref) gene.d=gene.d[,args2$genesamp]- gene.d[,args2$generef]
+            else if (ngref==1) gene.d=gene.d[,args2$genesamp]- gene.d[,args2$generef]
+            else gene.d=gene.d[,args2$genesamp]- rowMeans(gene.d[,args2$generef])
+        }
+        gene.d=cbind(gene.d)
         rownames(gene.d)=make.unique(as.character(a[,1]))
     } else if(ncol(a)==1) {
         a=as.matrix(a)
@@ -88,6 +69,14 @@ if(!is.null(args2$cpdextension)){
 
     if(ncol(a1)>1){
         cpd.d=as.matrix(a1[,-1])
+        if(!is.null(args2$cpdref[1])){
+            ncsamp=length(args2$cpdsamp)
+            ncref=length(args2$cpdref)
+            if(args2$cpdcompare=="paired" & ncsamp==ncref) cpd.d=cpd.d[,args2$cpdsamp]- cpd.d[,args2$cpdref]
+            else if (ncref==1) cpd.d=cpd.d[,args2$cpdsamp]- cpd.d[,args2$cpdref]
+            else cpd.d=cpd.d[,args2$cpdsamp]- rowMeans(cpd.d[,args2$cpdref])
+        }
+        cpd.d=cbind(cpd.d)
         rownames(cpd.d)=make.unique(as.character(a1[,1]))
     } else if(ncol(a1)==1) {
         a1=as.matrix(a1)
@@ -99,16 +88,17 @@ if(!is.null(args2$cpdextension)){
 kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species, sep=""),sep="")
 #if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
 system(paste("mkdir -p", kegg.dir))
-                                        #path.ids=args1[grep("^pathway", names(args1))]
-save.image("workenv.RData")
-source("/var/www/Pathway/public/kg.map.R")
-kg.map(args2$species)
-kg.cmap()
-gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")
-cm.fname=paste0(mmap.dir1, "cpd", ".RData")
-load(gm.fname)
-load(cm.fname)
 
+save.image("workenv.RData")
+#source("/var/www/PathwayWeb/public/scripts/kg.map.R")
+#kg.map(args2$species)
+#kg.cmap()
+#gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")
+#cm.fname=paste0(mmap.dir1, "cpd", ".RData")
+#load(gm.fname)
+#load(cm.fname)
+
+path.ids=args2$pathway
 pv.run=sapply(path.ids, function(pid){
 pv.out <- try(pathview(gene.data = gene.d,gene.idtype = args2$geneid,cpd.data = cpd.d,cpd.idtype=args2$cpdid, pathway.id = pid,species = args2$species,out.suffix = args2$suffix,kegg.native = args2$kegg, sign.pos =args2$pos,same.layer = args2$layer,keys.align = args2$align,split.group = args2$split,expand.node = args2$expand,multi.state=args2$multistate, match.data = args2$matchd ,node.sum=args2$nsum,key.pos = args2$kpos,cpd.lab.offset= args2$offset,limit = list(gene = args2$glmt, cpd = args2$clmt), bins = list(gene = args2$gbins, cpd= args2$cbins),low = list(gene = args2$glow, cpd = args2$clow),mid = list(gene = args2$gmid, cpd = args2$cmid), high = list(gene = args2$ghigh, cpd =args2$chigh),discrete = list(gene = args2$gdisc, cpd = args2$cdisc),kegg.dir =kegg.dir))
 

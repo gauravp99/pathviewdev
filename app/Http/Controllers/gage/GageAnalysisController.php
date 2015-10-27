@@ -45,6 +45,8 @@ class GageAnalysisController extends Controller
         $filename = "";
         $time = "";
 
+
+
         /*
          * checks if the user is authorised or not if authorised check if he has the space enough for the analysis to be done
          * if the user exceed the min memory allocated to the user return a page to delete analysis and rerun it.
@@ -159,9 +161,6 @@ class GageAnalysisController extends Controller
                 return view('gage_pages.GageAnalysis');
             }
 
-
-
-
         }
 
         $argument .= "filename:" . $filename . ";";
@@ -221,6 +220,9 @@ class GageAnalysisController extends Controller
             $argument .= "cutoff:";
             $argument .= $_POST['cutoff'].";";
         }
+
+
+
 
         if (isset($_POST['geneIdType'])) {
 
@@ -492,12 +494,18 @@ class GageAnalysisController extends Controller
         return  view('Gage.GageResultView');*/
 
         //creates a process to run the R script
+
+
+
         if (isset($_POST['dopathview'])&& strcmp($analysis, 'GagePathviewAnalysis') == 0)
         {
             exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }else {
-            exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/PathviewGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+            exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }
+
+
+
         //function to get the user using the application ip address
 
         function get_client_ip()
@@ -542,6 +550,7 @@ class GageAnalysisController extends Controller
 
     public function discreteGageAnalysis()
     {
+
         /**
          * check if the user is authorised user if not creating a directory within user directory.
          * if guest user a input folder is created under users folder
@@ -711,6 +720,18 @@ class GageAnalysisController extends Controller
             }
         }
 
+        if (isset($_POST['ncutoff'])) {
+            $argument .= "ncut:";
+            $argument .= $_POST['ncutoff'].";";
+        }
+
+        if(isset($_POST["testEnrich"]))
+        {
+            $argument .= "test.enrich:T;";
+
+        }else{
+            $argument .= "test.enrich:F;";
+        }
 
 
         if (isset($_POST['setSizeMin'])) {

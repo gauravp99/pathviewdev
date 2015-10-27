@@ -405,7 +405,7 @@ use Illuminate\Cacheache;
                     var ref_selected_text = "";
 
 
-                    for (var j = 1; j < 4; j++) {
+                    for (var j = 1; j < 5; j++) {
                         ref_selected_text = "";
                         $("#Cpdsamselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                     }
@@ -424,7 +424,7 @@ use Illuminate\Cacheache;
                     var noOfColumns = $('#cpdColumns').val();
                     console.log("noofcolumns: is working"+noOfColumns);
                     var sample_selected_text = "";
-                    for (var j = 1; j < 6; j++) {
+                    for (var j = 1; j < 5; j++) {
                         sample_selected_text = "";
                         $("#Cpdrefselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                     }

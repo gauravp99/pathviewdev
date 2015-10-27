@@ -90,7 +90,7 @@ kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species
 system(paste("mkdir -p", kegg.dir))
 
 save.image("workenv.RData")
-source("/var/www/Pathway/public/kg.map.R")
+source("/var/www/PathwayWeb/public/scripts/kg.map.R")
 kg.map(args2$species)
 kg.cmap()
 gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")

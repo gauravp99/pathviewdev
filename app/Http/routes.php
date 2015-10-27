@@ -207,6 +207,7 @@ Route::post('exampleGageAnalysis2', 'gage\GageAnalysisController@ExampleGageAnal
 Route::get('discreteGage',function(){
     return view('gage_pages.analysis.discreteAnalysis');
 });
+
 Route::get('gagePathview',function(){
     return view('gage_pages.analysis.gagePathview');
 });
@@ -227,8 +228,6 @@ Route::get('gage-guest-home', array(
     'uses' => function () {
         return view('profile.guest.guest-home');
     }));
-
-
 
 Route::get('gageExample1',function(){
     return view('gage_pages.analysis.gageExample1');

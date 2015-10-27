@@ -108,15 +108,16 @@
                                         $("#completed").show();
                                         clearInterval(myVar1);
                                     } else {
-                                        if ((j * 10) > 100) {
 
-                                            $( "#progress" ).blur();
+                                            var fac = Math.round((j * 10)/factor);
+                                            if(fac < 1)
+                                            {
+                                                fac = 1;
+                                            }
+                                            $('#progressData').text("" +fac + "%");
+                                            $('#progressData').attr('aria-valuenow', "" + fac);
+                                            $('#progressData').css('width', fac + '%');
 
-                                        } else {
-                                            $('#progressData').text("" + Math.round((j * 10)/factor) + "%");
-                                            $('#progressData').attr('aria-valuenow', "" + Math.round((j * 10)/factor));
-                                            $('#progressData').css('width', Math.round((j * 10)/factor) + '%');
-                                        }
 
                                     }
                                 }
