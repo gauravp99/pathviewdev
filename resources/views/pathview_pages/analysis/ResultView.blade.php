@@ -114,6 +114,7 @@
             foreach ($contents as $k => $v) {
             if(strcmp($v, "errorFile.Rout") == 0)
             {
+
             $v = $directory . "/" . $v;
             if(filesize($v) > 0)
             {
@@ -171,15 +172,21 @@
                     <ul class="dropdown-menu" style="width:100%;">
 
                         <?php
-                        $lines = file($directory . "/errorFile.Rout");
-                        $flag = false;
+                        if(file_exists($directory . "/errorFile.Rout"))
+                            {
+                                $lines = file($directory . "/errorFile.Rout");
+                                $flag = false;
 
-                        foreach ($lines as $temp) {
-                            if (strpos($temp, 'directory') == false) {
+                                foreach ($lines as $temp) {
+                                    if (strpos($temp, 'directory') == false) {
 
-                                echo "<div style='width:100%;'>" . $temp . "</div>";
+                                        echo "<div style='width:100%;'>" . $temp . "</div>";
+                                    }
+                                }
+
+
+
                             }
-                        }
                         ?>
                     </ul>
                 </li>

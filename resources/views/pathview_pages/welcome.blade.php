@@ -4,11 +4,12 @@
 
     <div class="content">
         <div class="rows">
-<script src="js/ChartNew.js"></script>
+            <script src="js/ChartNew.js"></script>
             <div class="col-sm-12">
                 <div class="col-sm-8">
                     <h2 class="marketing-hero-heading">
-                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a> maps, integrates and renders a wide variety of biological data on relevant pathway graphs.
+                        <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a>
+                        maps, integrates and renders a wide variety of biological data on relevant pathway graphs.
                     </h2>
                 </div>
             </div>
@@ -18,9 +19,9 @@
                         Pathview Web provides easy interactive access, and generates high quality, hyperlinked graphs.
                     </h2>
                 </div>
-                <div class="col-sm-4" >
+                <div class="col-sm-4">
                     <a href="/guest">
-                        <button type="button"  class="btn btn-primary btn-lg GetStarted" >
+                        <button type="button" class="btn btn-primary btn-lg GetStarted">
                             Quick Start
                         </button>
                     </a>
@@ -60,30 +61,40 @@
 
 
                     <div class="col-sm-12 ">
-                                <h2 class="homepage-heading">Citations:</h2>
-                                    <p class="content1"><i>
-                                        Luo W, Brouwer C. Pathview: an R/Biocondutor package for pathway-based data integration and visualization. Bioinformatics, 2013, 29(14):1830-1831, doi:
-                                        <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">10.1093/bioinformatics/btt285</a>
-                                    </i></p>
-                                    <p class="content1">
-                                    </p>
-				    <br>
-                                    <p class="content1">
-                                        Please cite our paper if you use the Pathview package or this website. In addition, please cite this website if you use it. This will help the Pathview project in return.
-                                    </p>
+                        <h2 class="homepage-heading">Citations:</h2>
+
+                        <p class="content1"><i>
+                                Luo W, Brouwer C. Pathview: an R/Biocondutor package for pathway-based data integration
+                                and visualization. Bioinformatics, 2013, 29(14):1830-1831, doi:
+                                <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full"
+                                   target="_blank">10.1093/bioinformatics/btt285</a>
+                            </i></p>
+
+                        <p class="content1">
+                        </p>
+                        <br>
+
+                        <p class="content1">
+                            Please cite our paper if you use the Pathview package or this website. In addition, please
+                            cite this website if you use it. This will help the Pathview project in return.
+                        </p>
                     </div>
 
-                    <div class="col-sm-12 contactDiv" >
-                                <h2 class="homepage-heading">Contact:</h2>
-                                <p class="contact">Project Contact: <a href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></p>
-                                <p class="contact"> Report Issues : <a href="mailto:byeshvant@hotmail.com">byeshvant@gmail.com</a></p>
-                     </div>
+                    <div class="col-sm-12 contactDiv">
+                        <h2 class="homepage-heading">Contact:</h2>
+
+                        <p class="contact">Project Contact: <a href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo
+                                .com</a></p>
+
+                        <p class="contact"> Report Issues : <a href="mailto:byeshvant@hotmail.com">byeshvant@gmail
+                                .com</a></p>
+                    </div>
 
                 </div>
                 <div class="col-sm-4 leftsidebar">
 
                     <div class="panel panel-default">
-                        <div class="panel-heading leftpanel " >Login</div>
+                        <div class="panel-heading leftpanel ">Login</div>
                         <div class="panel-body">
                             @if (count($errors) > 0)
                                 <div class="alert alert-danger">
@@ -98,8 +109,10 @@
 
                             <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/login') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">E-Mail</label>
+
                                     <div class="col-md-6">
                                         <input type="email" class="form-control" name="email"
                                                value="{{ old('email') }}">
@@ -107,6 +120,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-4 control-label">Password</label>
+
                                     <div class="col-md-6">
                                         <input type="password" class="form-control" name="password">
                                     </div>
@@ -139,67 +153,69 @@
                             </form>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-lg register clickRegister" data-toggle="modal" data-target="#myModal">
+                        <button type="button" class="btn btn-primary btn-lg register clickRegister" data-toggle="modal"
+                                data-target="#myModal">
                             Click here to Register
                         </button>
-                        </div>
+                    </div>
                     <div class="panel panel-default">
-                        <div class="panel-heading leftpanel" >Usage Statistics</div>
+                        <div class="panel-heading leftpanel">Usage Statistics</div>
                         <div class="panel-body">
-                            <p >Pathview web</p>
+                            <p>Pathview web</p>
 
                             <div id="graph1" class="col-md-12">
 
 
-                                    <table class="tables" >
-                                        <tr>
+                                <table class="tables">
+                                    <tr>
 
-                                            <td>
-                                                <div class="bar12">
-                                                    &nbsp
-                                                </div>
-                                            </td>
-                                            <td class="tdContent">Graphs:</td>
-                                            <td><?php echo $web_dnld_cnt ?></td>
-                                            <td>
-                                                <div class="bar11" >
-                                                    &nbsp
-                                                </div>
-                                            </td>
-                                            <td  class="tdContent">IP's:</td>
-                                            <td><?php echo $web_ip_cnt ?></td>
-                                        </tr>
+                                        <td>
+                                            <div class="bar12">
+                                                &nbsp
+                                            </div>
+                                        </td>
+                                        <td class="tdContent">Graphs:</td>
+                                        <td><?php echo $web_dnld_cnt ?></td>
+                                        <td>
+                                            <div class="bar11">
+                                                &nbsp
+                                            </div>
+                                        </td>
+                                        <td class="tdContent">IP's:</td>
+                                        <td><?php echo $web_ip_cnt ?></td>
+                                    </tr>
 
-                                    </table>
+                                </table>
                             </div>
-                            <canvas id="myChart" ></canvas>
+                            <canvas id="myChart"></canvas>
                             <p> Bioc Package</p>
+
                             <div id="graph1" class="col-md-12">
-                                    <table class="tables">
-                                        <tr>
-                                            <td>
-                                                <div class="bar2">
-                                                    &nbsp&nbsp
-                                                </div>
-                                            </td>
+                                <table class="tables">
+                                    <tr>
+                                        <td>
+                                            <div class="bar2">
+                                                &nbsp&nbsp
+                                            </div>
+                                        </td>
 
-                                            <td  class="tdContent">Downloads:</td>
-                                            <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
+                                        <td class="tdContent">Downloads:</td>
+                                        <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
 
 
-                                            <td>
-                                                <div class="bar1" >
-                                                    &nbsp&nbsp
-                                                </div>
-                                            </td>
+                                        <td>
+                                            <div class="bar1">
+                                                &nbsp&nbsp
+                                            </div>
+                                        </td>
 
-                                            <td  class="tdContent">IP's:</td>
-                                            <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
+                                        <td class="tdContent">IP's:</td>
+                                        <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
 
-                                        </tr>
-                                    </table>
+                                    </tr>
+                                </table>
                             </div>
-                            <canvas id="myChart1" ></canvas>
+                            <canvas id="myChart1"></canvas>
                         </div>
                     </div>
                 </div>
@@ -216,7 +232,8 @@
                             <h2 class="modal-title " id="myModalLabel">Register</h2>
                         </div>
                         <div class="modal-body">
-                            <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
+                            <form class="form-horizontal" role="form" method="POST"
+                                  action="{{ url('/auth/register') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                 <div class="form-group">
@@ -239,7 +256,8 @@
                                     <label class="col-md-4 control-label">E-Mail</label>
 
                                     <div class="col-md-6">
-                                        <input type="email" class="form-control" name="email" value="{{ old('email') }}">
+                                        <input type="email" class="form-control" name="email"
+                                               value="{{ old('email') }}">
                                     </div>
                                 </div>
 
@@ -278,12 +296,11 @@
                 </div>
             </div>
 
+        </div>
+
+
     </div>
-
-
-
-</div>
-<link href="{{ asset('/css/carousel.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/carousel.css') }}" rel="stylesheet">
     <script>
         var ctx = $("#myChart").get(0).getContext("2d");
 

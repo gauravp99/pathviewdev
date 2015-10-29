@@ -25,8 +25,18 @@ args2[cn.idx]=lapply(args2[cn.idx], function(x){
                          else return(as.numeric(x))
                      })
 
+
+currentDirectory = getwd()
 setwd(args2$targedir)
+dir = paste(currentDirectory,"/public/data/publicPath.txt",sep="")
+
+
+publicPathlines = readLines(paste(currentDirectory,"/public/data/publicPath.txt",sep=""))
+
 save.image("workenv.RData")
+
+
+
 #path.ids = strsplit(args2$pathway,split=";")[[1]]
 #args2$glmt = as.numeric(strsplit(args2$glmt,split=";")[[1]])
 #args2$clmt = as.numeric(strsplit(args2$clmt,split=";")[[1]])
@@ -88,9 +98,9 @@ if(!is.null(args2$cpdextension)){
 kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species, sep=""),sep="")
 #if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
 system(paste("mkdir -p", kegg.dir))
-
+dir = getwd()
 save.image("workenv.RData")
-source("/var/www/PathwayWeb/public/scripts/kg.map.R")
+source(paste(publicPathlines,"/scripts/kg.map.R",sep=""))
 kg.map(args2$species)
 kg.cmap()
 gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")

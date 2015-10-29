@@ -14,16 +14,6 @@ use Illuminate\Http\Request;
 class AdminController extends Controller {
 
 
-
-	public function emailAll()
-	{
-		return "hello";
-		//to be developed
-	}
-
-
-
-
 	//auth function checking for credentails in user table.
 	public function auth()
 	{

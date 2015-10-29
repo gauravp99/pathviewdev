@@ -2,11 +2,14 @@
 <project version="4">
   <component name="BookmarkManager">
     <bookmark url="file://$PROJECT_DIR$/resources/views/gage_pages/GageTutorial.blade.php" line="663" />
-    <bookmark url="file://$PROJECT_DIR$/resources/views/profile/faq.blade.php" line="87" mnemonic="4" />
+    <bookmark url="file://$PROJECT_DIR$/resources/views/profile/faq.blade.php" line="99" mnemonic="4" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="925ff104-9ab6-4512-bc64-29f946b5eaae" name="Default" comment="ui changes">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/publicPath.txt" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/api/GetAnalysisQuery.blade.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/gage/.GageAnalysisController.php.swp" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/app/Http/Controllers/gage/gagedump.sql" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2015_06_22_200957_create_analyses_table.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2015_06_22_201056_create_analyses_errors_table.php" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/database/migrations/2015_06_22_201106_create_biocstatistics_table.php" afterPath="" />
@@ -225,14 +228,52 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/nested.env" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/quoted.env" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/specialchars.env" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/admin/AdminController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/admin/AdminController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AjaxAnalysisQueueStatusCheck.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AjaxAnalysisQueueStatusCheck.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/gage/AjaxGageAnalysisStatusCheck.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/gage/AjaxGageAnalysisStatusCheck.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/api/AngularAdminController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/AngularAdminController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/admin/AuthenticateController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/admin/AuthenticateController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/DiscreteGageResult.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/DiscreteGageResult.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/DiscreteGageRscript.R" afterPath="$PROJECT_DIR$/public/scripts/DiscreteGageRscript.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/GageAbout.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/GageAbout.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/GageFileList.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/GageFileList.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/GageHistoryResult.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/GageHistoryResult.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/GageNavigation.blade.php" afterPath="$PROJECT_DIR$/resources/views/GageNavigation.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/GagePathviewRscript.R" afterPath="$PROJECT_DIR$/public/scripts/GagePathviewRscript.R" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/carousel.css" afterPath="$PROJECT_DIR$/public/css/carousel.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/footer.blade.php" afterPath="$PROJECT_DIR$/resources/views/footer.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profile/home.blade.php" afterPath="$PROJECT_DIR$/resources/views/profile/home.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/GageRscript.R" afterPath="$PROJECT_DIR$/public/scripts/GageRscript.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/api/GetAnal.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/api/GetAnal.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/MessageUs.blade.php" afterPath="$PROJECT_DIR$/resources/views/MessageUs.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordEditController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordEditController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/ResultView.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/ResultView.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Commands/SendJobAnalysisCompletionMail.php" afterPath="$PROJECT_DIR$/app/Commands/SendJobAnalysisCompletionMail.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/about.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/about.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/emails/adminBroadcast.blade.php" afterPath="$PROJECT_DIR$/resources/views/emails/adminBroadcast.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/analysis/discreteAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/analysis/discreteAnalysis.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/errorFile.Rout" afterPath="$PROJECT_DIR$/public/errorFile.Rout" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profile/faq.blade.php" afterPath="$PROJECT_DIR$/resources/views/profile/faq.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/kegg.r" afterPath="$PROJECT_DIR$/public/scripts/kegg.r" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/kg.map.R" afterPath="$PROJECT_DIR$/public/scripts/kg.map.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/emails/message.blade.php" afterPath="$PROJECT_DIR$/resources/views/emails/message.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/my_Rscript.R" afterPath="$PROJECT_DIR$/public/scripts/my_Rscript.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/navigation.blade.php" afterPath="$PROJECT_DIR$/resources/views/navigation.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/outputFile.Rout" afterPath="$PROJECT_DIR$/public/outputFile.Rout" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/emails/password.blade.php" afterPath="$PROJECT_DIR$/resources/views/emails/password.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/emails/result.blade.php" afterPath="$PROJECT_DIR$/resources/views/emails/result.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Commands/sendGageAnalysisCompletionMail.php" afterPath="$PROJECT_DIR$/app/Commands/sendGageAnalysisCompletionMail.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/style.css" afterPath="$PROJECT_DIR$/public/css/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/sim.mol.data2.R" afterPath="$PROJECT_DIR$/public/scripts/sim.mol.data2.R" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/tutorial.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/tutorial.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/emails/userCreated.blade.php" afterPath="$PROJECT_DIR$/resources/views/emails/userCreated.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/profile/user_edit.blade.php" afterPath="$PROJECT_DIR$/resources/views/profile/user_edit.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/welcome.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/welcome.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Pathway.iws" />
@@ -266,7 +307,32 @@
     <favorites_list name="Pathway" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="GageResult.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.35190615">
+              <caret line="143" column="56" selection-start-line="143" selection-start-column="12" selection-end-line="143" selection-end-column="56" />
+              <folding>
+                <marker date="1446138321110" expanded="true" signature="5262:5312" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="5420:5437" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="5606:5616" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="5727:5778" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="5861:5870" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="5911:5992" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="11276:11326" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="11481:11491" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="11614:11665" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="11771:11780" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="11833:11897" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="18884:18897" placeholder="..." />
+                <marker date="1446138321110" expanded="true" signature="24910:24921" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -290,57 +356,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/vendor/tymon/jwt-auth/src/Providers/User/EloquentUserAdapter.php" />
-        <option value="$PROJECT_DIR$/storage/logs/laravel-2015-10-20.log" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/admin/AuthenticateController.php" />
-        <option value="$PROJECT_DIR$/public/app/views/comments.html" />
-        <option value="$PROJECT_DIR$/public/app/scripts/controllers/main.js" />
-        <option value="$PROJECT_DIR$/public/app/scripts/app.js" />
-        <option value="$PROJECT_DIR$/public/app/index.html" />
-        <option value="$PROJECT_DIR$/public/app/views/AnalysisTrends.html" />
-        <option value="$PROJECT_DIR$/public/app/views/AnalysisTrendsMannual.html" />
-        <option value="$PROJECT_DIR$/public/app/views/AnalysisTrendsMonthly.html" />
-        <option value="$PROJECT_DIR$/public/app/views/contact.html" />
-        <option value="$PROJECT_DIR$/public/app/views/profile.html" />
-        <option value="$PROJECT_DIR$/config/cache.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/profile/ProfileController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/profile/HomeController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Models/DbDataFetch.php" />
-        <option value="$PROJECT_DIR$/public/app/scripts/controllers/profile.js" />
-        <option value="$PROJECT_DIR$/public/app/views/addMultipleUsers.html" />
-        <option value="$PROJECT_DIR$/public/app/scripts/controllers/UserCreationController.js" />
-        <option value="$PROJECT_DIR$/config/constants.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/gage/AjaxGageAnalysisStatusCheck.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/gage/gageController.php" />
-        <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/NewAnalysis.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/pathview_pages/welcome.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/WelcomeController.php" />
-        <option value="$PROJECT_DIR$/public/app/views/main.html" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/PathviewAboutController.php" />
+        <option value="$PROJECT_DIR$/resources/views/profile/home.blade.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" />
+        <option value="$PROJECT_DIR$/resources/views/footer.blade.php" />
         <option value="$PROJECT_DIR$/app/Commands/SendJobAnalysisCompletionMail.php" />
+        <option value="$PROJECT_DIR$/app/Commands/sendGageAnalysisCompletionMail.php" />
+        <option value="$PROJECT_DIR$/app/Commands/FileMaintainence.php" />
+        <option value="$PROJECT_DIR$/app/Http/routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/admin/AdminController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/admin/AuthenticateController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/api/AngularAdminController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/api/GetAnal.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Auth/PasswordEditController.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/gage/AjaxGageAnalysisStatusCheck.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AjaxAnalysisQueueStatusCheck.php" />
-        <option value="$PROJECT_DIR$/public/js/faq.js" />
-        <option value="$PROJECT_DIR$/resources/views/profile/faq.blade.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" />
-        <option value="$PROJECT_DIR$/public/js/PathviewApp.js" />
+        <option value="$PROJECT_DIR$/resources/views/email.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/emails/message.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/emails/result.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/emails/userCreated.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/emails/password.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/emails/adminBroadcast.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/gage_pages/analysis/discreteAnalysis.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/gage_pages/DiscreteGageResult.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/gage_pages/GageAbout.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/gage_pages/GageFileList.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/gage_pages/GageHistoryResult.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pathview_pages/about.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pathview_pages/tutorial.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pathview_pages/welcome.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profile/faq.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/profile/user_edit.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/analysis.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/GageNavigation.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/MessageUs.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/navigation.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/ResultView.blade.php" />
+        <option value="$PROJECT_DIR$/public/scripts/DiscreteGageRscript.R" />
+        <option value="$PROJECT_DIR$/public/scripts/sim.mol.data2.R" />
+        <option value="$PROJECT_DIR$/public/data/publicPath.txt" />
+        <option value="$PROJECT_DIR$/public/scripts/GagePathviewRscript.R" />
+        <option value="$PROJECT_DIR$/public/scripts/kegg.r" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" />
         <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_two.blade.php" />
         <option value="$PROJECT_DIR$/config/app.php" />
         <option value="$PROJECT_DIR$/public/scripts/my_Rscript.R" />
         <option value="$PROJECT_DIR$/public/scripts/kg.map.R" />
         <option value="$PROJECT_DIR$/public/scripts/GageRscript.R" />
-        <option value="$PROJECT_DIR$/app/Http/routes.php" />
-        <option value="$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/app.blade.php" />
-        <option value="$PROJECT_DIR$/public/css/carousel.css" />
-        <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/resources/views/profile/home.blade.php" />
-        <option value="$PROJECT_DIR$/app/Commands/sendGageAnalysisCompletionMail.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" />
         <option value="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/footer.blade.php" />
       </list>
     </option>
   </component>
@@ -404,6 +470,74 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="storage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gage_pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -845,15 +979,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="60" y="24" width="1860" height="1176" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20837927" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.39722222" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.070562296" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21940464" sideWeight="0.06944445" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296582" sideWeight="0.06851852" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21940464" sideWeight="0.9305556" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3296582" sideWeight="0.9314815" order="0" side_tool="true" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -939,7 +1073,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="php">
           <url>file://$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php</url>
-          <line>7</line>
+          <line>9</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="php">
@@ -963,117 +1097,7 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageAnalysis.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-23.222221">
-          <caret line="312" column="99" selection-start-line="312" selection-start-column="94" selection-end-line="312" selection-end-column="99" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/analysis.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.293255">
-          <caret line="482" column="30" selection-start-line="482" selection-start-column="30" selection-end-line="482" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/app/views/main.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.9416499">
-          <caret line="52" column="6" selection-start-line="52" selection-start-column="6" selection-end-line="52" selection-end-column="6" />
-          <folding>
-            <element signature="n#style#0;n#button#0;n#div#0;n#div#2;n#form#0;n#div#1;n#div#0;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/pathview/WelcomeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5288367">
-          <caret line="46" column="40" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
-          <caret line="56" column="40" selection-start-line="56" selection-start-column="40" selection-end-line="56" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/auth/login.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35190615">
-          <caret line="20" column="80" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="80" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Models/Analysis.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select count..analysis..." />
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select count..analysis..." />
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select count..users..." />
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select disti..analysis..." />
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select disti..analysis..." />
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select count..analysis..." />
-            <marker date="1444940338492" expanded="true" signature="-1:-1" placeholder="select count..analysis..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Models/PathviewAnalysis.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.017595308">
-          <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding>
-            <element signature="e#6#90#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Models/DbDataFetch.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.017595308">
-          <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
-          <folding>
-            <element signature="e#119#153#0#PHP" expanded="true" />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="SELECT COUNT..." />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="select * fro..admin..." />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="select count..analysis..." />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="select count..analysis..." />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="select sum(n..biocStatistics..." />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="select sum(n..biocStatistics..." />
-            <marker date="1445372159968" expanded="true" signature="-1:-1" placeholder="select conca..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Models/Usage.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.37243402">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/profile/HomeController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.6666665">
-          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/profile/ProfileController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-37.333332">
-          <caret line="65" column="5" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/profile/GuestController.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageResultView.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1081,186 +1105,113 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2015-10-22.log">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageTutorial.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-284.8">
+        <state vertical-scroll-proportion="288.81482">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/ResultView.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageWelcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.017595308">
-          <caret line="10" column="71" selection-start-line="10" selection-start-column="70" selection-end-line="10" selection-end-column="71" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-37.25926">
-          <caret line="134" column="74" selection-start-line="134" selection-start-column="74" selection-end-line="134" selection-end-column="74" />
-          <folding>
-            <marker date="1445538358471" expanded="true" signature="-1:-1" placeholder="select analy..analysis..." />
-            <marker date="1445538358471" expanded="true" signature="-1:-1" placeholder="select analy..analysis..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/NewAnalysis.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33431086">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AjaxAnalysisQueueStatusCheck.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-80.0">
-          <caret line="120" column="8" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
-          <folding>
-            <element signature="e#57#79#0#PHP" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/faq.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="4" selection-start-line="0" selection-start-column="4" selection-end-line="0" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2068965">
-          <caret line="420" column="35" selection-start-line="420" selection-start-column="8" selection-end-line="420" selection-end-column="35" />
-          <folding>
-            <element signature="e#39#61#0#PHP" expanded="true" />
-            <marker date="1445968433035" expanded="true" signature="-1:-1" placeholder="select pathw..pathway..." />
-            <marker date="1445968433035" expanded="true" signature="-1:-1" placeholder="select gene_..gene..." />
-            <marker date="1445968433035" expanded="true" signature="-1:-1" placeholder="select compo..compoundID..." />
-            <marker date="1445968433035" expanded="true" signature="-1:-1" placeholder="select speci..species..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/profile/faq.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29912025">
-          <caret line="17" column="45" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/MessageUs.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4985337">
+        <state vertical-scroll-proportion="-2.7302053">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_three.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.058651">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_one.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.6774194">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1444940338588" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1444940338588" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1444940338588" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/tutorial.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.765396">
+          <caret line="251" column="34" selection-start-line="251" selection-start-column="34" selection-end-line="251" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/about.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2727273">
+          <caret line="47" column="52" selection-start-line="47" selection-start-column="52" selection-end-line="47" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/welcome.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.6920822">
-          <caret line="294" column="32" selection-start-line="294" selection-start-column="32" selection-end-line="294" selection-end-column="32" />
+        <state vertical-scroll-proportion="206.77777">
+          <caret line="22" column="37" selection-start-line="22" selection-start-column="37" selection-end-line="22" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2015-10-27.log">
-      <provider editor-type-id="com.intellij.database.editor.CsvTableFileEditorProvider">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/guest/guest.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15269.581">
-          <caret line="26517" column="0" selection-start-line="26517" selection-start-column="0" selection-end-line="26517" selection-end-column="0" />
+        <state vertical-scroll-proportion="-10.0">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/DiscreteGageResult.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/guest/guest-home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4444444">
+        <state vertical-scroll-proportion="48.11111">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/anal_hist.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-5.6896553">
+          <caret line="248" column="71" selection-start-line="248" selection-start-column="64" selection-end-line="248" selection-end-column="71" />
           <folding>
-            <marker date="1446091433261" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446091433261" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446091433261" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446091433261" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446088164441" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446088164441" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446088164441" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446088164441" expanded="true" signature="-1:-1" placeholder="select conca..species..." />
+            <marker date="1446088164441" expanded="true" signature="-1:-1" placeholder="select conca..pathway..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/analysis/discreteAnalysis.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/faq.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-101.333336">
-          <caret line="401" column="53" selection-start-line="401" selection-start-column="53" selection-end-line="401" selection-end-column="53" />
+        <state vertical-scroll-proportion="-1.2346041">
+          <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/user_edit.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4814814">
-          <caret line="111" column="70" selection-start-line="111" selection-start-column="70" selection-end-line="111" selection-end-column="70" />
-          <folding>
-            <marker date="1446089761645" expanded="true" signature="-1:-1" placeholder="select conca..species..." />
-            <marker date="1446089761645" expanded="true" signature="-1:-1" placeholder="select conca..pathway..." />
-            <marker date="1446089761645" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446089761645" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446089761645" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446089761645" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/js/PathviewApp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="29" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.6158358">
+          <caret line="35" column="0" selection-start-line="35" selection-start-column="0" selection-end-line="35" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/pathview/PathviewAboutController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.0">
-          <caret line="33" column="40" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
-          <caret line="43" column="40" selection-start-line="43" selection-start-column="40" selection-end-line="43" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="42.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1445919165102" expanded="true" signature="-1:-1" placeholder="select pathw..pathway..." />
-            <marker date="1445919165102" expanded="true" signature="-1:-1" placeholder="select gene_..gene..." />
-            <marker date="1445919165102" expanded="true" signature="-1:-1" placeholder="select compo..compoundID..." />
-            <marker date="1445919165102" expanded="true" signature="-1:-1" placeholder="select speci..species..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config/constants.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.0">
-          <caret line="6" column="49" selection-start-line="6" selection-start-column="49" selection-end-line="6" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Commands/Command.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/user.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -1268,46 +1219,188 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_two.blade.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/profile/home.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.185185">
-          <caret line="439" column="19" selection-start-line="439" selection-start-column="18" selection-end-line="439" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.3326613">
+          <caret line="65" column="40" selection-start-line="65" selection-start-column="39" selection-end-line="65" selection-end-column="40" />
           <folding>
-            <marker date="1445974152171" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445974152171" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1445974152171" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/app.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/analysis.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.0">
-          <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
+        <state vertical-scroll-proportion="0.49266863">
+          <caret line="418" column="0" selection-start-line="418" selection-start-column="0" selection-end-line="418" selection-end-column="0" />
+          <folding>
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446138665750" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/gageAnalysis.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.22873901">
+          <caret line="13" column="49" selection-start-line="0" selection-start-column="0" selection-end-line="702" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/kg.map.R">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.034285713">
-          <caret line="2" column="37" selection-start-line="2" selection-start-column="37" selection-end-line="2" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/my_Rscript.R">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5847619">
-          <caret line="92" column="27" selection-start-line="92" selection-start-column="17" selection-end-line="92" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/geneData.R">
+    <entry file="file://$PROJECT_DIR$/resources/views/footer.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.49266863">
+          <caret line="28" column="21" selection-start-line="0" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/GageApp.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.595308">
+          <caret line="36" column="0" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/GageNavigation.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.0205278">
+          <caret line="226" column="26" selection-start-line="226" selection-start-column="26" selection-end-line="226" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/MessageUs.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.3225807">
+          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
+          <folding>
+            <element signature="e#6#91#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/navigation.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.2492669">
+          <caret line="21" column="57" selection-start-line="21" selection-start-column="57" selection-end-line="21" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/biocStatsimport.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/awkDemo.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/biocGageStatsimport.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/GageRscript.1.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/GageRscript.luo.1.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/GageRscript.old.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/sim.mol.data2.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34285715">
+          <caret line="20" column="68" selection-start-line="20" selection-start-column="68" selection-end-line="20" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/Script_Rserv.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.937143">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/ProcessStatus.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/org19.gid.types.RData">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/data/publicPath.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="26" selection-start-line="0" selection-start-column="26" selection-end-line="0" selection-end-column="26" />
           <folding />
         </state>
       </provider>
@@ -1320,262 +1413,172 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/scripts/GageRscript.R">
+    <entry file="file://$PROJECT_DIR$/public/scripts/DiscreteGageRscript.R">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-72.0">
-          <caret line="124" column="56" selection-start-line="124" selection-start-column="51" selection-end-line="124" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.10598626">
+          <caret line="6" column="15" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="15" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageResultView.blade.php">
+    <entry file="file://$PROJECT_DIR$/public/scripts/GagePathviewRscript.R">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="16.777779">
+        <state vertical-scroll-proportion="-21.258064">
+          <caret line="204" column="38" selection-start-line="204" selection-start-column="23" selection-end-line="204" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/kegg.r">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="6" column="110" selection-start-line="6" selection-start-column="110" selection-end-line="6" selection-end-column="110" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/my_input.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.448276">
-          <caret line="211" column="49" selection-start-line="211" selection-start-column="37" selection-end-line="211" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.7586207">
-          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
-          <folding>
-            <element signature="e#2043#2064#0#HTML" expanded="true" />
-            <element signature="e#2487#2524#0#HTML" expanded="true" />
-            <element signature="e#2552#2578#0#HTML" expanded="true" />
-            <element signature="e#2719#2756#0#HTML" expanded="true" />
-            <element signature="e#2784#2810#0#HTML" expanded="true" />
-            <element signature="e#3726#3762#0#HTML" expanded="true" />
-            <element signature="e#3848#3875#0#HTML" expanded="true" />
-            <element signature="e#4207#4224#0#HTML" expanded="true" />
-            <element signature="e#5100#5136#0#HTML" expanded="true" />
-            <element signature="e#5222#5249#0#HTML" expanded="true" />
-            <element signature="e#5541#5559#0#HTML" expanded="true" />
-            <element signature="e#6812#6848#0#HTML" expanded="true" />
-            <element signature="e#6934#6961#0#HTML" expanded="true" />
-            <element signature="e#7561#7602#0#HTML" expanded="true" />
-            <element signature="e#7855#7874#0#HTML" expanded="true" />
-            <element signature="e#8980#9063#0#HTML" expanded="true" />
-            <element signature="e#9790#9826#0#HTML" expanded="true" />
-            <element signature="e#9912#9939#0#HTML" expanded="true" />
-            <element signature="e#13321#13357#0#HTML" expanded="true" />
-            <element signature="e#13443#13470#0#HTML" expanded="true" />
-            <element signature="e#14213#14232#0#HTML" expanded="true" />
-            <element signature="e#15299#15335#0#HTML" expanded="true" />
-            <element signature="e#15421#15448#0#HTML" expanded="true" />
-            <element signature="e#15920#15939#0#HTML" expanded="true" />
-            <element signature="e#16989#17025#0#HTML" expanded="true" />
-            <element signature="e#17111#17138#0#HTML" expanded="true" />
-            <element signature="e#18159#18195#0#HTML" expanded="true" />
-            <element signature="e#18281#18308#0#HTML" expanded="true" />
-            <element signature="e#18563#18640#0#HTML" expanded="true" />
-            <element signature="e#18945#18969#0#HTML" expanded="true" />
-            <element signature="e#19627#19663#0#HTML" expanded="true" />
-            <element signature="e#19749#19776#0#HTML" expanded="true" />
-            <element signature="e#21292#21328#0#HTML" expanded="true" />
-            <element signature="e#21414#21441#0#HTML" expanded="true" />
-            <element signature="e#21743#21763#0#HTML" expanded="true" />
-            <element signature="e#22377#22413#0#HTML" expanded="true" />
-            <element signature="e#22499#22526#0#HTML" expanded="true" />
-            <element signature="e#22820#22840#0#HTML" expanded="true" />
-            <element signature="e#23487#23523#0#HTML" expanded="true" />
-            <element signature="e#23609#23636#0#HTML" expanded="true" />
-            <element signature="e#24607#24643#0#HTML" expanded="true" />
-            <element signature="e#24729#24756#0#HTML" expanded="true" />
-            <element signature="e#26100#26136#0#HTML" expanded="true" />
-            <element signature="e#26222#26249#0#HTML" expanded="true" />
-            <element signature="e#26565#26585#0#HTML" expanded="true" />
-            <element signature="e#27196#27232#0#HTML" expanded="true" />
-            <element signature="e#27318#27345#0#HTML" expanded="true" />
-            <element signature="e#28454#28490#0#HTML" expanded="true" />
-            <element signature="e#28576#28603#0#HTML" expanded="true" />
-            <element signature="e#29856#29892#0#HTML" expanded="true" />
-            <element signature="e#29974#30001#0#HTML" expanded="true" />
-            <element signature="e#30349#30375#0#HTML" expanded="true" />
-            <element signature="e#30875#30911#0#HTML" expanded="true" />
-            <element signature="e#30993#31020#0#HTML" expanded="true" />
-            <element signature="e#31412#31438#0#HTML" expanded="true" />
-            <element signature="e#31938#31974#0#HTML" expanded="true" />
-            <element signature="e#32056#32083#0#HTML" expanded="true" />
-            <element signature="e#32478#32504#0#HTML" expanded="true" />
-            <element signature="e#32844#32880#0#HTML" expanded="true" />
-            <element signature="e#32962#32989#0#HTML" expanded="true" />
-            <element signature="e#33387#33413#0#HTML" expanded="true" />
-            <element signature="e#33931#33967#0#HTML" expanded="true" />
-            <element signature="e#34049#34076#0#HTML" expanded="true" />
-            <element signature="e#34426#34452#0#HTML" expanded="true" />
-            <element signature="e#34811#34847#0#HTML" expanded="true" />
-            <element signature="e#34929#34956#0#HTML" expanded="true" />
-            <element signature="e#35311#35337#0#HTML" expanded="true" />
-            <element signature="e#35922#35958#0#HTML" expanded="true" />
-            <element signature="e#36040#36067#0#HTML" expanded="true" />
-            <element signature="e#36441#36467#0#HTML" expanded="true" />
-            <element signature="e#36818#36854#0#HTML" expanded="true" />
-            <element signature="e#36936#36963#0#HTML" expanded="true" />
-            <element signature="e#37316#37342#0#HTML" expanded="true" />
-            <element signature="e#37980#38016#0#HTML" expanded="true" />
-            <element signature="e#38061#38088#0#HTML" expanded="true" />
-            <element signature="e#39005#39041#0#HTML" expanded="true" />
-            <element signature="e#39123#39150#0#HTML" expanded="true" />
-            <element signature="e#40028#40063#0#HTML" expanded="true" />
-            <element signature="e#40145#40172#0#HTML" expanded="true" />
-            <element signature="e#40272#40299#0#HTML" expanded="true" />
-            <element signature="e#40542#40569#0#HTML" expanded="true" />
-            <element signature="e#41281#41316#0#HTML" expanded="true" />
-            <element signature="e#41398#41425#0#HTML" expanded="true" />
-            <element signature="e#41525#41552#0#HTML" expanded="true" />
-            <element signature="e#41595#41680#0#HTML" expanded="true" />
-            <element signature="e#41694#41742#0#HTML" expanded="true" />
-            <element signature="e#41851#41878#0#HTML" expanded="true" />
-            <element signature="e#42989#43025#0#HTML" expanded="true" />
-            <element signature="e#43107#43134#0#HTML" expanded="true" />
-            <element signature="e#44281#44300#0#HTML" expanded="true" />
-            <element signature="e#44382#44409#0#HTML" expanded="true" />
-            <element signature="e#44954#45004#0#HTML" expanded="true" />
-            <element signature="e#45087#45130#0#HTML" expanded="true" />
-            <element signature="e#45267#45310#0#HTML" expanded="true" />
-            <element signature="e#45364#45408#0#HTML" expanded="true" />
-            <element signature="e#46226#46262#0#HTML" expanded="true" />
-            <element signature="e#46344#46371#0#HTML" expanded="true" />
-            <element signature="e#47734#47770#0#HTML" expanded="true" />
-            <element signature="e#47852#47879#0#HTML" expanded="true" />
-            <element signature="e#49210#49246#0#HTML" expanded="true" />
-            <element signature="e#49328#49355#0#HTML" expanded="true" />
-            <element signature="e#49851#49876#0#HTML" expanded="true" />
-            <element signature="e#50714#50750#0#HTML" expanded="true" />
-            <element signature="e#50832#50859#0#HTML" expanded="true" />
-            <element signature="e#51354#51378#0#HTML" expanded="true" />
-            <element signature="e#52290#52326#0#HTML" expanded="true" />
-            <element signature="e#52408#52435#0#HTML" expanded="true" />
-            <element signature="e#52908#52932#0#HTML" expanded="true" />
-            <element signature="e#53299#53380#0#HTML" expanded="true" />
-            <element signature="e#53505#53585#0#HTML" expanded="true" />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446090018033" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.666667">
-          <caret line="16" column="30" selection-start-line="16" selection-start-column="30" selection-end-line="16" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#nav#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/carousel.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.15897939">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3886163">
-          <caret line="22" column="32" selection-start-line="22" selection-start-column="32" selection-end-line="22" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5121951">
-          <caret line="28" column="19" selection-start-line="28" selection-start-column="19" selection-end-line="28" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/Commands/sendGageAnalysisCompletionMail.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19354838">
-          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Commands/SendJobAnalysisCompletionMail.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22873901">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="38" />
+        <state vertical-scroll-proportion="-16.555555">
+          <caret line="93" column="15" selection-start-line="93" selection-start-column="15" selection-end-line="93" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.5826614">
+          <caret line="809" column="71" selection-start-line="809" selection-start-column="61" selection-end-line="809" selection-end-column="71" />
+          <folding>
+            <element signature="e#283#305#0#PHP" expanded="true" />
+            <marker date="1446135138614" expanded="true" signature="-1:-1" placeholder="select pathw..pathway..." />
+            <marker date="1446135138614" expanded="true" signature="-1:-1" placeholder="select gene_..gene..." />
+            <marker date="1446135138614" expanded="true" signature="-1:-1" placeholder="select compo..compoundID..." />
+            <marker date="1446135138614" expanded="true" signature="-1:-1" placeholder="select speci..species..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.4814816">
+          <caret line="70" column="13" selection-start-line="70" selection-start-column="13" selection-end-line="70" selection-end-column="13" />
+          <folding>
+            <marker date="1446138448442" expanded="true" signature="-1:-1" placeholder="select analy..analysis..." />
+            <marker date="1446138448442" expanded="true" signature="-1:-1" placeholder="select analy..analysis..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/ResultView.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-126.0">
+          <caret line="189" column="26" selection-start-line="189" selection-start-column="26" selection-end-line="189" selection-end-column="26" />
+          <folding>
+            <marker date="1446140617230" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446140617230" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446140617230" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446140617230" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446140617230" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.413793">
+          <caret line="637" column="195" selection-start-line="637" selection-start-column="190" selection-end-line="637" selection-end-column="195" />
+          <folding>
+            <element signature="e#39#61#0#PHP" expanded="true" />
+            <marker date="1446143378458" expanded="true" signature="-1:-1" placeholder="select pathw..pathway..." />
+            <marker date="1446143378458" expanded="true" signature="-1:-1" placeholder="select gene_..gene..." />
+            <marker date="1446143378458" expanded="true" signature="-1:-1" placeholder="select compo..compoundID..." />
+            <marker date="1446143378458" expanded="true" signature="-1:-1" placeholder="select speci..species..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-24.0">
+          <caret line="36" column="34" selection-start-line="36" selection-start-column="34" selection-end-line="36" selection-end-column="34" />
+          <folding>
+            <marker date="1446143390790" expanded="true" signature="-1:-1" placeholder="select conca..species..." />
+            <marker date="1446143390790" expanded="true" signature="-1:-1" placeholder="select conca..pathway..." />
+            <marker date="1446143390790" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446143390790" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446143390790" expanded="true" signature="-1:-1" placeholder="..." />
+            <marker date="1446143390790" expanded="true" signature="-1:-1" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/app.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-10.666667">
+          <caret line="16" column="25" selection-start-line="16" selection-start-column="21" selection-end-line="16" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/my_Rscript.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="102" column="56" selection-start-line="102" selection-start-column="7" selection-end-line="102" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/kg.map.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="45" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/geneData.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.0628572">
+          <caret line="62" column="37" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/scripts/GageRscript.R">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2011776">
+          <caret line="68" column="43" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-36.555557">
-          <caret line="727" column="9" selection-start-line="727" selection-start-column="9" selection-end-line="727" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.35190615">
+          <caret line="143" column="56" selection-start-line="143" selection-start-column="12" selection-end-line="143" selection-end-column="56" />
           <folding>
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446130395838" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/pathview_pages/tutorial.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-34.555557">
-          <caret line="684" column="13" selection-start-line="638" selection-start-column="4" selection-end-line="684" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/profile/home.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.6896553">
-          <caret line="145" column="86" selection-start-line="145" selection-start-column="86" selection-end-line="145" selection-end-column="86" />
-          <folding>
-            <element signature="e#4491#4534#0#HTML" expanded="true" />
-            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1446129858574" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/footer.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12316716">
-          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <marker date="1446138321110" expanded="true" signature="5262:5312" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="5420:5437" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="5606:5616" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="5727:5778" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="5861:5870" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="5911:5992" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="11276:11326" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="11481:11491" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="11614:11665" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="11771:11780" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="11833:11897" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="18884:18897" placeholder="..." />
+            <marker date="1446138321110" expanded="true" signature="24910:24921" placeholder="..." />
           </folding>
         </state>
       </provider>

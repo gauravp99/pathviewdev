@@ -16,24 +16,20 @@
         else{
             $user = "demo";
         }
-       $directory = public_path()."/all/".$user."/".$id;
-    $contents = scandir($directory);
-        $dir = substr($directory,strlen('/var/www/Pathway/public/'));
+
+        $directory = public_path()."/all/".$user."/".$id;
+        $contents = scandir($directory);
+        $dir = substr($directory,strlen(public_path()));
 
 foreach ($contents as $k => $v) {
-
-
     if(strcmp($v,'.')==0||strcmp($v,'..')==0||strcmp($v,'errorFile.Rout')==0||strcmp($v,'outputFile.Rout')==0||strcmp($v,'workenv.RData')==0)
     {
-
     }
     else
     {
         echo "<li><a target=\"_blank\" href=\"$dir/" . $v . "  \">$v</a></li>";
     }
-
 }
-
     ?>
 </div>
 </div>

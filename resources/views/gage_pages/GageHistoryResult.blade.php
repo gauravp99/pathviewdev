@@ -11,9 +11,9 @@
             </div>
             <?php
 
-            echo public_path()."/all/".Auth::user()->email."/".$_GET['analyses'];
+
             $destDir = public_path()."/all/".Auth::user()->email."/".$_GET['analyses']."/";
-            $dir = substr($destDir,strlen("/var/www/Pathway/public/"));
+            $dir = substr($destDir,strlen(public_path()));
             $contents = scandir($destDir);
 
             if ($contents) {
@@ -181,7 +181,7 @@
             <div class="col-md-4">
                 <?php
 
-                $analyses =  DB::table('analyses')->where('analysis_id', $_GET['analyses'])->first();
+                $analyses =  DB::table('analysis')->where('analysis_id', $_GET['analyses'])->first();
                 if(sizeof($analyses)>0)
                     {
                 $argument = $analyses->arguments;

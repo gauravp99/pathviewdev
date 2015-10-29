@@ -16,6 +16,14 @@ use DateTime;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\pathview\analysis\AnalysisController;
 
+
+/***
+ * Class SendJobAnalysisCompletionMail
+ * @package App\Commands
+ *
+ * This class is used to run the pathview analysis by the queue
+ * handle is function called when queue submits the job
+ */
 class SendJobAnalysisCompletionMail extends Command implements SelfHandling, ShouldBeQueued
 {
 

@@ -1,14 +1,20 @@
 <script src="js/jquery.validate.min.js"></script>
-<div class="stepsdiv" id="geneid-div" @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
+<div class="stepsdiv" id="geneid-div"
+     @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#gene_id" onclick="window.open('tutorial#gene_id', 'newwindow', 'width=300, height=250').focus();return false;" title="ID type used for the Gene Data. This can be selected from the autosuggest drop down list." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#gene_id"
+               onclick="window.open('tutorial#gene_id', 'newwindow', 'width=300, height=250').focus();return false;"
+               title="ID type used for the Gene Data. This can be selected from the autosuggest drop down list."
+               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('geneid','Gene ID Type:')!!}
         </div>
         <div class="col-sm-7">
-            <input class="ex8" list="geneidlist" name="geneid" id="geneid" value="<?php echo isset(Session::get('Sess')['geneid']) ? Session::get('Sess')['geneid'] : $geneid ?>" autocomplete="on">
+            <input class="ex8" list="geneidlist" name="geneid" id="geneid"
+                   value="<?php echo isset(Session::get('Sess')['geneid']) ? Session::get('Sess')['geneid'] : $geneid ?>"
+                   autocomplete="on">
         </div>
     </div>
     <datalist id="geneidlist">
@@ -32,17 +38,23 @@
 </div>
 
 
-
-<div class="stepsdiv" id="cpdid-div" <?php if (isset(Session::get('err_atr')['cpdid'])) { echo "style='background-color:#DA6666;'"; } ?>>
+<div class="stepsdiv" id="cpdid-div" <?php if (isset(Session::get('err_atr')['cpdid'])) {
+    echo "style='background-color:#DA6666;'";
+} ?>>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#cpd_id" onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=300, height=250').focus();return false;" title="ID type used for the Compound Data. This can be selected from the autosuggest drop down list." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#cpd_id"
+               onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=300, height=250').focus();return false;"
+               title="ID type used for the Compound Data. This can be selected from the autosuggest drop down list."
+               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('cpdid','Compound ID Type:') !!}
         </div>
         <div class="col-sm-7">
-            <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid" value="<?php echo isset(Session::get('Sess')['cpdid']) ? Session::get('Sess')['cpdid'] : $cpdid ?>" autocomplete="on">
+            <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"
+                   value="<?php echo isset(Session::get('Sess')['cpdid']) ? Session::get('Sess')['cpdid'] : $cpdid ?>"
+                   autocomplete="on">
         </div>
     </div>
 
@@ -66,16 +78,23 @@
 </div>
 
 
-<div class="stepsdiv" id="species-div" <?php if (isset(Session::get('err_atr')['species'])) {echo "style='background-color:#DA6666;'";} ?>>
+<div class="stepsdiv" id="species-div" <?php if (isset(Session::get('err_atr')['species'])) {
+    echo "style='background-color:#DA6666;'";
+} ?>>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#species" onclick="window.open('tutorial#species', 'newwindow', 'width=300, height=250').focus();return false;" title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#species"
+               onclick="window.open('tutorial#species', 'newwindow', 'width=300, height=250').focus();return false;"
+               title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."
+               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('species','Species:') !!}
         </div>
         <div class="col-sm-7">
-            <input class="ex8" list="specieslist" name="species" id="species" value="<?php echo isset(Session::get('Sess')['species']) ? Session::get('Sess')['species'] : $species?>"  autocomplete="on">
+            <input class="ex8" list="specieslist" name="species" id="species"
+                   value="<?php echo isset(Session::get('Sess')['species']) ? Session::get('Sess')['species'] : $species?>"
+                   autocomplete="on">
         </div>
     </div>
     <datalist id="specieslist">
@@ -101,12 +120,16 @@
 </div>
 
 
-
-<div class="stepsdiv" <?php if (isset(Session::get('err_atr')['pathway'])) { echo "style='background-color:#DA6666;'";} ?> id="pat-select">
+<div class="stepsdiv" <?php if (isset(Session::get('err_atr')['pathway'])) {
+    echo "style='background-color:#DA6666;'";
+} ?> id="pat-select">
     <div class="col-sm-12">
         <div class="col-sm-12">
-            <div class="col-sm-5" >
-                <a href="tutorial#pwy_id" onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=300, height=250').focus();return false;" title="KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box."  target="_blank" class="scrollToTop" style="float:left;margin-right:5px;margin-left: -15px">
+            <div class="col-sm-5">
+                <a href="tutorial#pwy_id"
+                   onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;margin-left: -15px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('pathway','Pathway ID:') !!}
@@ -115,22 +138,24 @@
 
         <div class="col-sm-5">
 
-            <input class="ex8" style="width:100%;font-size: 15px;" list="pathwaylist" placeholder="Type in here or select below"  name="pathway" id="pathway1"  value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : '' ?>" autocomplete="on">
+            <input class="ex8" style="width:100%;font-size: 15px;" list="pathwaylist"
+                   placeholder="Type in here or select below" name="pathway" id="pathway1"
+                   value="<?php echo isset(Session::get('Sess')['pathway']) ? Session::get('Sess')['pathway'] : '' ?>"
+                   autocomplete="on">
             <br/>
-            <select name="selectfrom" style="float:none;width:100%;height:236px;font-size: 17px;" id="select-from" multiple="" size="10"  class="multiple-select">
+            <select name="selectfrom" style="float:none;width:100%;height:236px;font-size: 17px;" id="select-from"
+                    multiple="" size="10" class="multiple-select">
                 <?php
-                $pathway = Cache::remember('Pathway', 10, function()
-                {
+                $pathway = Cache::remember('Pathway', 10, function () {
                     return DB::table('pathway')->get();
                 });
-                if (Cache::has('Pathway'))
-                {
+                if (Cache::has('Pathway')) {
                     $pathway = Cache::get('Pathway');
                 }
 
 
                 foreach ($pathway as $pathway1) {
-                    echo "<option value=".$pathway1->pathway_id.">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
+                    echo "<option value=" . $pathway1->pathway_id . ">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
                 }
                 ?>
 
@@ -141,23 +166,29 @@
         <div class="col-sm-2" style="margin-left: 20px;">
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add1" style="font-size:24px;">
 
-                <span id="plus" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px 57px 6px 59px;margin: 0px -50px -17px;" class="glyphicon glyphicon-plus"></span>
+                <span id="plus"
+                      style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px 57px 6px 59px;margin: 0px -50px -17px;"
+                      class="glyphicon glyphicon-plus"></span>
             </a>
 
             <div class="pathwayiconsep" style="margin-top: 60px">
-                </div>
+            </div>
 
 
             <a class="margin-top:-10px" href="JavaScript:void(0);" id="btn-add" style="font-size:24px;">
 
-                <span id="forward" class="glyphicon glyphicon-forward" style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px;padding-left: 59px;margin: -50px;padding-right: 57px;margin-top: 30px;"></span>
+                <span id="forward" class="glyphicon glyphicon-forward"
+                      style="box-shadow: 0px 0px 3px #AAA;border: 1px solid #060606;padding: 6px;padding-left: 59px;margin: -50px;padding-right: 57px;margin-top: 30px;"></span>
             </a>
 
         </div>
 
         <div class="col-sm-5" style="margin-left: -20px;">
-            <h6 style="font-family: Verdana;font-size=5px;color:black;margin-top: -24px;margin-left:10px;">Note: Remove items by deleting</h6>
-            <textarea id="selecttextfield" name="selecttextfield" wrap="off" style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11" cols="14" ><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
+            <h6 style="font-family: Verdana;font-size=5px;color:black;margin-top: -24px;margin-left:10px;">Note: Remove
+                items by deleting</h6>
+            <textarea id="selecttextfield" name="selecttextfield" wrap="off"
+                      style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11"
+                      cols="14"><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
         </div>
     </div>
     <datalist id="pathwaylist">
@@ -176,17 +207,22 @@
 </div>
 
 
-
-<div id="suffix-div" class="stepsdiv" <?php if (isset(Session::get('err_atr')['suffix'])) {echo "style='background-color:#DA6666;'";} ?> @if ($errors->has('suffix')) style="background-color:#DA6666;" @endif>
+<div id="suffix-div" class="stepsdiv" <?php if (isset(Session::get('err_atr')['suffix'])) {
+    echo "style='background-color:#DA6666;'";
+} ?> @if ($errors->has('suffix')) style="background-color:#DA6666;" @endif>
     <div class="col-sm-12">
         <div class="col-sm-5">
-            <a href="tutorial#suffix" onclick="window.open('tutorial#suffix', 'newwindow', 'width=300, height=250').focus();return false;" title="The suffix to be added after the pathway name as part of the output graph file name." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+            <a href="tutorial#suffix"
+               onclick="window.open('tutorial#suffix', 'newwindow', 'width=300, height=250').focus();return false;"
+               title="The suffix to be added after the pathway name as part of the output graph file name."
+               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             {!!form::label('suffix','Output Suffix:') !!}
         </div>
         <div class="col-sm-7">
-            <input type="text" class="ex8" name="suffix" id="suffix" value="<?php echo isset(Session::get('Sess')['suffix']) ? Session::get('Sess')['suffix'] : $suffix ?>">
+            <input type="text" class="ex8" name="suffix" id="suffix"
+                   value="<?php echo isset(Session::get('Sess')['suffix']) ? Session::get('Sess')['suffix'] : $suffix ?>">
         </div>
     </div>
 </div>
@@ -196,20 +232,41 @@
     <div class="stepsdiv" id="kegg-layer-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#kegg" onclick="window.open('tutorial#kegg', 'newwindow', 'width=300, height=250').focus();return false;"
-                   title="Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf). " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#kegg"
+                   onclick="window.open('tutorial#kegg', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf). "
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('kegg','Kegg Native:') !!}
-                <input name="kegg" value="T" id="kegg" <?php if (isset(Session::get('Sess')['kegg'])) {echo "checked";} else {if ((Session::get('Sess') == NULL)) { if($kegg) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                <input name="kegg" value="T" id="kegg" <?php if (isset(Session::get('Sess')['kegg'])) {
+                    echo "checked";
+                } else {
+                    if ((Session::get('Sess') == NULL)) {
+                        if ($kegg) {
+                            echo "checked";
+                        }
+                    }
+                }?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#layer" onclick="window.open('tutorial#layer', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type legend be plotted in the same page when Kegg Native is unchecked. " target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#layer"
+                   onclick="window.open('tutorial#layer', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Controls plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type legend be plotted in the same page when Kegg Native is unchecked. "
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('layer','Same Layer:' ) !!}
                 <input name="layer" value="T" id="layer"
-                <?php if (isset(Session::get('Sess')['layer'])) {echo "checked";} else {if ((Session::get('Sess') == NULL)) { if($layer) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                       <?php if (isset(Session::get('Sess')['layer'])) {
+                           echo "checked";
+                       } else {
+                           if ((Session::get('Sess') == NULL)) {
+                               if ($layer) {
+                                   echo "checked";
+                               }
+                           }
+                       }?> type="checkbox" style="margin-left: 10px;">
             </div>
         </div>
     </div>
@@ -217,20 +274,42 @@
     <div class="stepsdiv" id="desc-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#desc" onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether gene data should be treated as discrete." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#desc"
+                   onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether gene data should be treated as discrete." target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('gdesc',' Descrete Gene:') !!}
                 <input name="gdisc" value="T" id="gdisc"
-                <?php if (isset(Session::get('Sess')['gdisc'])) {echo "checked";} else {if ((Session::get('Sess') == NULL)) { if($gdisc) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                       <?php if (isset(Session::get('Sess')['gdisc'])) {
+                           echo "checked";
+                       } else {
+                           if ((Session::get('Sess') == NULL)) {
+                               if ($gdisc) {
+                                   echo "checked";
+                               }
+                           }
+                       }?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#desc" onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether compound data should be treated as discrete." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#desc"
+                   onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether compound data should be treated as discrete." target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('cdesc','Descrete Compound:') !!}
                 <input name="cdisc" value="T" id="cdisc"
-                <?php if (isset(Session::get('Sess')['cdisc'])) {echo "checked";} else {if ((Session::get('Sess') == NULL)) { if($cdisc) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                       <?php if (isset(Session::get('Sess')['cdisc'])) {
+                           echo "checked";
+                       } else {
+                           if ((Session::get('Sess') == NULL)) {
+                               if ($cdisc) {
+                                   echo "checked";
+                               }
+                           }
+                       }?> type="checkbox" style="margin-left: 10px;">
             </div>
         </div>
     </div>
@@ -238,18 +317,40 @@
     <div class="stepsdiv" id="split-expand-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#split" onclick="window.open('tutorial#split', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether split node groups are split to individual nodes." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#split"
+                   onclick="window.open('tutorial#split', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether split node groups are split to individual nodes." target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
                 </a>
                 {!!form::label('split','Split Group:') !!}
-                <input name="split" value="T" id="split"<?php if (isset(Session::get('Sess')['split'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {if($split) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                <input name="split" value="T" id="split" <?php if (isset(Session::get('Sess')['split'])) {
+                    echo "checked";
+                } else {
+                    if (Session::get('Sess') == NULL) {
+                        if ($split) {
+                            echo "checked";
+                        }
+                    }
+                }?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#expand" onclick="window.open('tutorial#expand', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether the multiple-gene nodes are expanded into single-gene nodes" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#expand"
+                   onclick="window.open('tutorial#expand', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether the multiple-gene nodes are expanded into single-gene nodes" target="_blank"
+                   class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('expand','Expand Node:') !!}
-                <input name="expand" value="T" id="expand" <?php if (isset(Session::get('Sess')['expand'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {if($expand) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                <input name="expand" value="T" id="expand" <?php if (isset(Session::get('Sess')['expand'])) {
+                    echo "checked";
+                } else {
+                    if (Session::get('Sess') == NULL) {
+                        if ($expand) {
+                            echo "checked";
+                        }
+                    }
+                }?> type="checkbox" style="margin-left: 10px;">
             </div>
         </div>
     </div>
@@ -257,30 +358,60 @@
     <div class="stepsdiv" id="multi-matchd-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#multi" onclick="window.open('tutorial#multi', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether multiple states (samples or columns) gene data or compound data should be integrated and plotted in the same graph." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#multi"
+                   onclick="window.open('tutorial#multi', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether multiple states (samples or columns) gene data or compound data should be integrated and plotted in the same graph."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('multistate','Multi State:') !!}
-                <input name="multistate" value="T" id="multistate"<?php if (isset(Session::get('Sess')['multistate'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {if($multistate) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                <input name="multistate" value="T" id="multistate"
+                       <?php if (isset(Session::get('Sess')['multistate'])) {
+                           echo "checked";
+                       } else {
+                           if (Session::get('Sess') == NULL) {
+                               if ($multistate) {
+                                   echo "checked";
+                               }
+                           }
+                       }?> type="checkbox" style="margin-left: 10px;">
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#match" onclick="window.open('tutorial#match', 'newwindow', 'width=300, height=250').focus();return false;" title="Whether the samples of gene data and Compound data are paired" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#match"
+                   onclick="window.open('tutorial#match', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Whether the samples of gene data and Compound data are paired" target="_blank"
+                   class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('matchd','Match Data:') !!}
-                <input name="matchd" value="T" id="matchd"<?php if (isset(Session::get('Sess')['matchd'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {if($matchd) {echo "checked";}}}?> type="checkbox" style="margin-left: 10px;">
+                <input name="matchd" value="T" id="matchd" <?php if (isset(Session::get('Sess')['matchd'])) {
+                    echo "checked";
+                } else {
+                    if (Session::get('Sess') == NULL) {
+                        if ($matchd) {
+                            echo "checked";
+                        }
+                    }
+                }?> type="checkbox" style="margin-left: 10px;">
             </div>
         </div>
     </div>
 
-    <div class="stepsdiv" id="offset-div" <?php if (isset(Session::get('err_atr')['offset'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="offset-div" <?php if (isset(Session::get('err_atr')['offset'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#clabel" onclick="window.open('tutorial#clabel', 'newwindow', 'width=300, height=250').focus();return false;" title="How much compound labels should be put above the default position or node center." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
+                <a href="tutorial#clabel"
+                   onclick="window.open('tutorial#clabel', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="How much compound labels should be put above the default position or node center."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
+                            class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
                 {!!form::label('offset','Compound Label Offset:') !!}
             </div>
             <div class="col-sm-6">
-                <input type="text" class="ex8" name="offset" id="offset" value="<?php echo isset(Session::get('Sess')['offset']) ? Session::get('Sess')['offset'] : $offset ?>">
+                <input type="text" class="ex8" name="offset" id="offset"
+                       value="<?php echo isset(Session::get('Sess')['offset']) ? Session::get('Sess')['offset'] : $offset ?>">
             </div>
         </div>
     </div>
@@ -289,7 +420,10 @@
     <div class="stepsdiv" id="kalgin-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#kalign" onclick="window.open('tutorial#kalign', 'newwindow', 'width=300, height=250').focus();return false;" title="How the color keys are aligned when both Gene Data and Compound Data are not NULL." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#kalign"
+                   onclick="window.open('tutorial#kalign', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="How the color keys are aligned when both Gene Data and Compound Data are not NULL."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('align','Key Alignment:') !!}
@@ -303,9 +437,13 @@
     <div class="stepsdiv" id="pos-kpos-div">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#spos" onclick="window.open('tutorial#spos', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls the position of pathview signature." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                <a href="tutorial#spos"
+                   onclick="window.open('tutorial#spos', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Controls the position of pathview signature." target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
+
                 <div class="col-sm-6" style="margin-left: -20px;">
                     {!!form::label('pos','Signature
                     Position:',array('class' => 'awesome')) !!}
@@ -317,9 +455,13 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <a href="tutorial#kpos" onclick="window.open('tutorial#kpos', 'newwindow', 'width=300, height=250').focus();return false;" title="Controls the position of color key(s)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px">
+                <a href="tutorial#kpos"
+                   onclick="window.open('tutorial#kpos', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Controls the position of color key(s)." target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
+
                 <div class="col-sm-6" style="margin-left: -30px;">
 
                     <h4 style="
@@ -340,10 +482,15 @@
 </fieldset>
 
 <fieldset class="step">
-    <div class="stepsdiv" id="nodesum-div" <?php if (isset(Session::get('err_atr')['nodesun'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="nodesum-div" <?php if (isset(Session::get('err_atr')['nodesun'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#nsum" onclick="window.open('tutorial#nsum', 'newwindow', 'width=300, height=250').focus();return false;" title="The method name to calculate node summary given that multiple genes or compounds are mapped to it." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#nsum"
+                   onclick="window.open('tutorial#nsum', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="The method name to calculate node summary given that multiple genes or compounds are mapped to it."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('nodesum','Node Sum:',array('class' => 'awesome')) !!}
@@ -355,10 +502,15 @@
         </div>
     </div>
 
-    <div class="stepsdiv" id="nacolor-div" <?php if (isset(Session::get('err_atr')['nacolor'])) {echo "style='background-color:#DA6666;'";} ?> class="coloration">
+    <div class="stepsdiv" id="nacolor-div" <?php if (isset(Session::get('err_atr')['nacolor'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?> class="coloration">
         <div class="col-sm-12">
             <div class="col-sm-6">
-                <a href="tutorial#ncolor" onclick="window.open('tutorial#ncolor', 'newwindow', 'width=300, height=250').focus();return false;"  title="Color used for NA's or missing values in Gene Data and Compound Data." target="_blank" class="scrollToTop" style="float:left;">
+                <a href="tutorial#ncolor"
+                   onclick="window.open('tutorial#ncolor', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="Color used for NA's or missing values in Gene Data and Compound Data." target="_blank"
+                   class="scrollToTop" style="float:left;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('nacolor','NA Color:') !!}
@@ -379,10 +531,17 @@
         </div>
 
     </div>
-    <div class="stepsdiv" id="glmt-clmt-div" <?php if (isset(Session::get('err_atr')['clmt'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['glmt'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="glmt-clmt-div" <?php if (isset(Session::get('err_atr')['clmt'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?><?php if (isset(Session::get('err_atr')['glmt'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#limit" onclick="window.open('tutorial#limit', 'newwindow', 'width=300, height=250').focus();return false;" title="The limit values for Gene Data and Compound Data when converting them to pseudo colors.This field is a numeric field you can enter two values separated by a comma for example 1,2." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#limit"
+                   onclick="window.open('tutorial#limit', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="The limit values for Gene Data and Compound Data when converting them to pseudo colors.This field is a numeric field you can enter two values separated by a comma for example 1,2."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('limit',' Limit:') !!}
@@ -390,7 +549,7 @@
 
             <div class="col-sm-4">
                 {!!form::text('glmt',isset(Session::get('Sess')['glmt']) ? Session::get('Sess')['glmt']:$glmt,array('class' => 'coloration', 'id' => 'glmt')) !!}
-               </div>
+            </div>
             <div class="col-sm-4" style="align-content: left">
                 {!!form::text('clmt',isset(Session::get('Sess')['clmt']) ? Session::get('Sess')['clmt'] :$clmt,array('class' => 'coloration', 'id' => 'clmt','style'=>'margin-left:50px')) !!}
             </div>
@@ -398,28 +557,42 @@
     </div>
 
 
-    <div class="stepsdiv" id="gbins-cbins-div"<?php if (isset(Session::get('err_atr')['gbins'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['cbins'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="gbins-cbins-div"<?php if (isset(Session::get('err_atr')['gbins'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?><?php if (isset(Session::get('err_atr')['cbins'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#bins" onclick="window.open('tutorial#bins', 'newwindow', 'width=300, height=250').focus();return false;" title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#bins"
+                   onclick="window.open('tutorial#bins', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('Bins',' Bins:')!!}
             </div>
             <div class="col-sm-4">
                 {!!form::text('gbins',isset(Session::get('Sess')['gbins']) ?Session::get('Sess')['gbins'] :$gbins,array('class' => 'coloration', 'id' => 'gbins')) !!}
-                </div>
-                <div class="col-sm-4">
+            </div>
+            <div class="col-sm-4">
                 {!!form::text('cbins',isset(Session::get('Sess')['cbins']) ? Session::get('Sess')['cbins'] :$cbins,array('class' => 'coloration', 'id' => 'cbins','style'=>'margin-left:50px')) !!}
             </div>
         </div>
     </div>
 
 
-    <div class="stepsdiv" id="glow-clow-div"<?php if (isset(Session::get('err_atr')['glow'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['clow'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="glow-clow-div"<?php if (isset(Session::get('err_atr')['glow'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?><?php if (isset(Session::get('err_atr')['clow'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#color" onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;" title="These arguments specify specifies the color spectra to code Gene Data and Compound Data" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#color"
+                   onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('glow',' Low:')!!}
@@ -427,31 +600,47 @@
 
 
             <div class="col-sm-8">
-                <input class="color coloration {hash:true}" id="glow" name="glow" value={{isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : '#00FF00'}}>
-                <input class="color coloration {hash:true}" id="clow" name="clow" style="margin-left:50px;" value={{isset(Session::get('genecolor')['clow']) ? Session::get('genecolor')['clow'] : '#0000FF'}}>
+                <input class="color coloration {hash:true}" id="glow" name="glow"
+                       value={{isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : '#00FF00'}}>
+                <input class="color coloration {hash:true}" id="clow" name="clow" style="margin-left:50px;"
+                       value={{isset(Session::get('genecolor')['clow']) ? Session::get('genecolor')['clow'] : '#0000FF'}}>
             </div>
         </div>
     </div>
 
-    <div class="stepsdiv" id="gmid-cmid-div" <?php if (isset(Session::get('err_atr')['gmid'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['cmid'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="gmid-cmid-div" <?php if (isset(Session::get('err_atr')['gmid'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?><?php if (isset(Session::get('err_atr')['cmid'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#color" onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;" title="These arguments specify specifies the color spectra to code Gene Data and Compound Data" target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <a href="tutorial#color"
+                   onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
+                   title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>
                 {!!form::label('gmid',' Mid:')!!}
             </div>
             <div class="col-sm-8">
-                <input class="color coloration {hash:true}" id="gmid" name="gmid" value={{isset(Session::get('genecolor')['gmid']) ? Session::get('genecolor')['gmid'] : '#D3D3D3'}}>
-                <input class="color coloration {hash:true}" id="cmid" name="cmid"  style="margin-left:50px" value={{isset(Session::get('genecolor')['cmid']) ? Session::get('genecolor')['cmid'] : '#D3D3D3'}} >
+                <input class="color coloration {hash:true}" id="gmid" name="gmid"
+                       value={{isset(Session::get('genecolor')['gmid']) ? Session::get('genecolor')['gmid'] : '#D3D3D3'}}>
+                <input class="color coloration {hash:true}" id="cmid" name="cmid" style="margin-left:50px"
+                       value={{isset(Session::get('genecolor')['cmid']) ? Session::get('genecolor')['cmid'] : '#D3D3D3'}} >
             </div>
         </div>
     </div>
 
-    <div class="stepsdiv" id="ghigh-chigh-div"<?php if (isset(Session::get('err_atr')['ghigh'])) {echo "style='background-color:#DA6666;'";} ?><?php if (isset(Session::get('err_atr')['chigh'])) {echo "style='background-color:#DA6666;'";} ?>>
+    <div class="stepsdiv" id="ghigh-chigh-div"<?php if (isset(Session::get('err_atr')['ghigh'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?><?php if (isset(Session::get('err_atr')['chigh'])) {
+        echo "style='background-color:#DA6666;'";
+    } ?>>
         <div class="col-sm-12">
             <div class="col-sm-4">
-                <a href="tutorial#color" onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
+                <a href="tutorial#color"
+                   onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
                    title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
@@ -459,8 +648,10 @@
 
             </div>
             <div class="col-sm-8">
-                <input class="color coloration {hash:true}" id="ghigh" name="ghigh"  value={{isset(Session::get('genecolor')['ghigh']) ? Session::get('genecolor')['ghigh'] : '#FF0000'}}>
-                <input class="color coloration {hash:true}" id="chigh" name="chigh"  style="margin-left:50px" value={{isset(Session::get('genecolor')['chigh']) ? Session::get('genecolor')['chigh'] : '#FFFF00'}}>
+                <input class="color coloration {hash:true}" id="ghigh" name="ghigh"
+                       value={{isset(Session::get('genecolor')['ghigh']) ? Session::get('genecolor')['ghigh'] : '#FF0000'}}>
+                <input class="color coloration {hash:true}" id="chigh" name="chigh" style="margin-left:50px"
+                       value={{isset(Session::get('genecolor')['chigh']) ? Session::get('genecolor')['chigh'] : '#FFFF00'}}>
             </div>
         </div>
     </div>
@@ -469,35 +660,35 @@
 </div>
 <div class="steps">
     <!-- <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return fileCheck()"/> -->
-    <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" />
-    <input type="Reset" id="reset" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset" onclick="return reset()"/>
+    <input type="submit" id="submit-button" class="btn btn-primary"
+           style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit"/>
+    <input type="Reset" id="reset" class="btn btn-primary"
+           style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset"
+           onclick="return reset()"/>
 </div>
 {!! form::close() !!}
 
 <script>
 
 
-    tab1_array = ["assayData","cpdassayData","geneid","cpdid","species","pathway","selecttextfield","suffix"];
+    tab1_array = ["assayData", "cpdassayData", "geneid", "cpdid", "species", "pathway", "selecttextfield", "suffix"];
     tab2_array = ["offset"];
-    tab3_array = ["glmt","clmt","gbins","cbins"];
+    tab3_array = ["glmt", "clmt", "gbins", "cbins"];
     $('#anal_form').validate({
 
-        invalidHandler: function(form,validator) {
+        invalidHandler: function (form, validator) {
             var errors = validator.numberOfInvalids();
 
-            $.each(validator.errorList,function(index,value){
-                if($.inArray(value.element.attributes.id.nodeValue+"",tab1_array) > 0)
-                {
+            $.each(validator.errorList, function (index, value) {
+                if ($.inArray(value.element.attributes.id.nodeValue + "", tab1_array) > 0) {
                     $('#inputOutput').css('background-color', '#f2dede')
-                } else if($.inArray(value.element.attributes.id.nodeValue+"",tab2_array) > 0 )
-                {
+                } else if ($.inArray(value.element.attributes.id.nodeValue + "", tab2_array) > 0) {
                     $('#graphics').css('background-color', '#f2dede')
-                } else if($.inArray(value.element.attributes.id.nodeValue+"",tab3_array) > 0){
+                } else if ($.inArray(value.element.attributes.id.nodeValue + "", tab3_array) > 0) {
                     $('#coloration').css('background-color', '#f2dede')
                 }
 
             });
-
 
 
         },
@@ -509,7 +700,7 @@
 
                 required: {
 
-                    depends: function(element) {
+                    depends: function (element) {
 
                         return $("#cpdassayData").is(':empty');
                     }
@@ -524,9 +715,9 @@
 
                 required: {
 
-                    depends: function(element) {
+                    depends: function (element) {
 
-                            return $("#assayData").is(':empty');
+                        return $("#assayData").is(':empty');
                     }
 
                 }
@@ -548,13 +739,13 @@
             species: {
                 required: true,
                 speciesDBMatch: true,
-                speciesGeneIdMatch:true
+                speciesGeneIdMatch: true
             },
 
             pathway: {
                 pathwayIdDBMatch: true
             },
-            selecttextfield:{
+            selecttextfield: {
                 required: true,
                 ListPathwayMatch: true
             },
@@ -614,36 +805,34 @@
                 speciesDBMatch: "Species is not valid",
                 speciesGeneIdMatch: "For this Species value Gene ID Type  should be either 'ENTREZ' or 'KEGG'."
             },
-            pathway: {
-
-            },
+            pathway: {},
             selecttextfield: {
                 required: "At least one Pathway should be selected.",
                 ListPathwayMatch: "Entered Pathway ID is not a valid pathway."
             },
-            suffix:{
+            suffix: {
                 required: "Output Suffix Cannot be left empty"
 
             },
-            offset:{
+            offset: {
                 required: "Compound Label Offset value cannot be left empty",
                 number: "Compound Label Offset  Value must be numeric"
             },
-            glmt:{
+            glmt: {
                 required: "Gene Limit value cannot be left empty",
                 lmtFormat: "Gene Limit Value must be numeric values separated by comma",
                 //number: "Gene Limit Value must be numeric"
             },
-            clmt:{
+            clmt: {
                 required: "Compound limit  Cannot be left empty",
                 lmtFormat: "Compound Limit Value must be numeric values separated by comma",
                 //number: "Compound Limit Value must be numeric"
             },
-            gbins:{
+            gbins: {
                 required: "Gene Bins Cannot be left empty",
                 digits: "Gene bins Value must be numeric"
             },
-            cbins:{
+            cbins: {
                 required: "Compound Bins Cannot be left empty",
                 digits: "Compound Bins values must be numeric"
             }
@@ -652,25 +841,24 @@
         }
 
 
-
     });
 
-    jQuery.validator.addMethod('geneIdDBMatch',function(value, element){
+    jQuery.validator.addMethod('geneIdDBMatch', function (value, element) {
         console.log(gene_array);
-        return (in_gene_array(gene_array,value));
+        return (in_gene_array(gene_array, value));
 
     });
-    jQuery.validator.addMethod('cpdidDBMatch',function(value, element){
+    jQuery.validator.addMethod('cpdidDBMatch', function (value, element) {
         console.log(cmpd_array);
-        return (in_cmpd_array(cmpd_array,value));
+        return (in_cmpd_array(cmpd_array, value));
 
     });
-    jQuery.validator.addMethod('speciesDBMatch',function(value, element){
+    jQuery.validator.addMethod('speciesDBMatch', function (value, element) {
         var species_value = value.split("-")[0];
-        return (in_species_array(species_array,species_value));
+        return (in_species_array(species_array, species_value));
     });
 
-    jQuery.validator.addMethod('speciesGeneIdMatch',function(value, element){
+    jQuery.validator.addMethod('speciesGeneIdMatch', function (value, element) {
 
         var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
         var most_flag = false;
@@ -682,36 +870,33 @@
             }
         }
         if (!most_flag && ( $('#geneid').val().toUpperCase() != 'ENTREZ' && $('#geneid').val().toUpperCase() != 'KEGG' )) {
-         return false;
+            return false;
         }
-        else{
+        else {
             return true;
         }
     });
 
-    jQuery.validator.addMethod('pathwayIdDBMatch',function(value, element){
-        if(value ==  null)
-        {
+    jQuery.validator.addMethod('pathwayIdDBMatch', function (value, element) {
+        if (value == null) {
             return true;
         }
 
         return true;
     });
-    jQuery.validator.addMethod('ListPathwayMatch',function(value, element){
+    jQuery.validator.addMethod('ListPathwayMatch', function (value, element) {
         //pathway_array
 
         pathwayArray = $('#selecttextfield').text().split(',');
         newCreateArray = "";
         evenOneTrueFlag = false;
-        $.each(pathwayArray,function(index,value) {
-            if(value != null )
-            {
+        $.each(pathwayArray, function (index, value) {
+            if (value != null) {
                 pt_value = value.split("-")[0];
                 //check existence
-                if(in_pathway_array(pathway_array,pt_value))
-                {
+                if (in_pathway_array(pathway_array, pt_value)) {
                     evenOneTrueFlag = true;
-                    newCreateArray = newCreateArray +(value)+",";
+                    newCreateArray = newCreateArray + (value) + ",";
                 }
             }
         });
@@ -721,12 +906,11 @@
     });
 
 
-
-    jQuery.validator.addMethod('lmtFormat',function(value, element){
+    jQuery.validator.addMethod('lmtFormat', function (value, element) {
 
         var lmtArray = value.split(",");
         var flag = true;
-        if(lmtArray.length <= 2) {
+        if (lmtArray.length <= 2) {
             $.each(lmtArray, function (index, value1) {
                 if (value1 != null && value1 != "") {
                     var patt = new RegExp("^[1-9]\d*(\.\d+)?$");
@@ -736,7 +920,7 @@
                     }
                 }
             });
-        }else{
+        } else {
             flag = false;
         }
         return flag;

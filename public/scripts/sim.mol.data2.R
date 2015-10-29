@@ -1,6 +1,6 @@
 require(pathview)
 require(KEGGREST)
-
+publicPathlines = readLines("data/publicPath.txt")
 sim.mol.data2=function(mol.type=c("gene","gene.ko","cpd")[1], id.type=NULL, species="hsa", discrete=FALSE, nmol=1000, nexp=1, rand.seed=100)
 {
     msg.fmt="\"%s\" is not a good \"%s\" \"%s\" ID type for simulation!"
@@ -18,7 +18,7 @@ sim.mol.data2=function(mol.type=c("gene","gene.ko","cpd")[1], id.type=NULL, spec
         id.type=toupper(id.type)
 
         ##data(bods, package="gage")
-        load("/var/www/Pathway/public/scripts/org19.gid.types.RData")
+        load(paste(publicPathlines,"/scripts/org19.gid.types.RData"))
         org19=bods[,"kegg code"]
         
         if(!species %in% c(org19, "ko")){

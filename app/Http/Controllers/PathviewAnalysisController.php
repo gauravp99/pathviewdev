@@ -630,91 +630,99 @@ class PathviewAnalysisController extends Controller {
 		$totalSize = $geneFileSize + $compoundFileSize;
 
 		$factor = ($noOfPathways*0.7 + $numberofUser*0.5 +  $totalSize*0.6)/3;
+		$queueEnabled = Config::get("app.enableQueue");
+
+		if(!$queueEnabled){
+			$this->runAnalysis($uniqid,$argument,$path,$analyType);
+			Redis::set('users_count',Redis::get('users_count') -1 );
+			return view('pathview_pages.analysis.Result')->with(array('exception' => null, 'directory' => $path, 'analysisid' => $uniqid,'queueid' => 0, 'directory1' => $path , 'factor' => '-1000','queue' => false));
+		}   else {
 
 
+			//code to check if there are more than 2 current jobs for user executing
+			$jobs = Redis::get("id:" . $this->uID) + 1;
+			$process_queue_id = 0;
+			if (is_null($jobs)) {
+				Redis::set("id:" . $this->uID, 0);
+			} else {
 
-		//code to check if there are more than 2 current jobs for user executing
-		$jobs = Redis::get("id:".$this->uID)+1;
-		$process_queue_id = 0;
-		if(is_null($jobs))
-		{
-		Redis::set("id:".$this->uID,0);
+				if ($jobs > 2) {
+					Redis::set("wait:" . $uniqid, true);
+					$process_queue_id = -1;
+					Redis::set("id:" . $this->uID, $jobs);
+					return view('pathview_pages.analysis.Result')->with(array('exception' => null,
+						'directory' => public_path() . "/" . $path,
+						'directory1' => $path,
+						'directory1' => $path,
+						'queueid' => $process_queue_id,
+						'analysisid' => $uniqid,
+						'factor', $factor));
+
+				} else {
+					Redis::set("id:" . $this->uID, $jobs);
+					$process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($uniqid, $this->uID));
+					$users_count = Redis::get("users_count");
+					Redis::set("users_count", $users_count - 1);
+
+					return view('pathview_pages.analysis.Result')->with(array('exception' => null,
+						'directory' => public_path() . "/" . $path,
+						'directory1' => $path,
+						'queueid' => $process_queue_id,
+						'analysisid' => $uniqid,
+						'factor' => $factor));
+				}
+
+			}
 		}
-		else{
-
-			if($jobs > 2)
-			{
-				Redis::set("wait:".$uniqid,true);
-				$process_queue_id = -1;
-				Redis::set("id:".$this->uID,$jobs);
-				return view('pathview_pages.analysis.Result')->with(array('exception' => null,
-					'directory' => public_path()."/".$path,
-					'directory1' => $path,
-					'directory1' => $path,
-					'queueid' => $process_queue_id,
-					'analysisid' => $uniqid,
-					'factor',$factor));
-
-			}
-			else{
-				Redis::set("id:".$this->uID,$jobs);
-				$process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($uniqid,$this->uID));
-				$users_count = Redis::get("users_count");
-				Redis::set("users_count",$users_count-1);
-
-				return view('pathview_pages.analysis.Result')->with(array('exception' => null,
-					'directory' => public_path()."/".$path,
-					'directory1' => $path,
-					'queueid' => $process_queue_id,
-					'analysisid' => $uniqid,
-					'factor' => $factor));
-			}
-
-			}
 
 	}
 
 
 	public function runAnalysis($time, $argument, $destFile, $anal_type)
 	{
-		exec("/home/ybhavnasi/R-3.1.2/bin/Rscript my_Rscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+		$Rloc = Config::get("app.RLoc");
+		$publicPath = Config::get("app.publicPath");
+		exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
 
 		$date = new \DateTime;
 
 		if (Auth::user())
 			DB::table('analysis')->insert(
-				array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date,'analysis_origin' => 'pathview', 'ipadd' => get_client_ip())
+				array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date,'analysis_origin' => 'pathview', 'ip_add' => "127.0.0.1")
 			);
 		else
 			DB::table('analysis')->insert(
-				array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ipadd' => get_client_ip())
+				array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => "127.0.0.1")
 			);
+
 		//start If there are error in the code analysis saving into database for reporting and solving by admin
-		$lines = file($destFile . "errorFile.Rout");
-		$flag = false;
-		foreach ($lines as $temp) {
+		if(file_exists(public_path()."/".$destFile . "/errorFile.Rout"))
+		{
+			$lines = file(public_path()."/".$destFile . "/errorFile.Rout");
+			$flag = false;
+			foreach ($lines as $temp) {
 
-			$temp = strtolower($temp);
-			$array_string = explode(" ", $temp);
-			foreach ($array_string as $a_string) {
+				$temp = strtolower($temp);
+				$array_string = explode(" ", $temp);
+				foreach ($array_string as $a_string) {
 
-				if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:') == 0) {
-					DB::table('analysisErrors')->insert(array('analysis_id' => $time . "", 'error_string' => $temp, 'created_at' => $date));
-					$flag = true;
+					if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:') == 0) {
+						DB::table('analysisErrors')->insert(array('analysis_id' => $time . "", 'error_string' => $temp, 'created_at' => $date));
+						$flag = true;
+						break;
+					}
+
+				}
+				if ($flag) {
 					break;
 				}
 
-			}
-			if ($flag) {
-				break;
-			}
 
-
+			}
 		}
-		//end If there are error in the code analysis saving into database for reporting and solving by admin
-		//returning the analysis
-		//Redis::set('users_count', Redis::get('users_count') - 1);
+
+
 	}
 
 

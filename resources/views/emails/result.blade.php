@@ -1,3 +1,4 @@
+
 Hello {{$name}},
 
 <br/><br/>
@@ -24,7 +25,7 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
             <?php
             $arguments = array();
 
-            $arguments = explode(",", $argument);
+            $arguments = explode(";", $argument);
             $arguments = array_unique($arguments);
             foreach($arguments as $arg)
             {
@@ -211,7 +212,7 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
 Pathview Project
 <br/>
 
-<a href={{url('/')}}><img src="/images/logo.png"></a>
+<a target="_blank" href={{url('/')}}><img src="/images/logo.png"></a>
 
 <br/>
 
@@ -227,6 +228,5 @@ Report Issues : byeshvant@hotmail.com
 
 <br/>
 @include('footer')
-</body>
-</html>
+
 

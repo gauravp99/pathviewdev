@@ -4,7 +4,7 @@ arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
-
+publicPathlines = readLines("data/publicPath.txt")
 logic.idx=c("do.pathview")
 num.idx=c(  "setSizeMin", "setSizeMax", "cutoff")
 args2=strsplit(args1, ",")
@@ -58,8 +58,8 @@ gs.type=args2$geneSetCategory
 gid.type=tolower(args2$geneIdType)
 map.data=F
 data(bods, package="gage")
-gsets.dir="/var/www/PathwayWeb/public/genesets/"
-
+#gsets.dir="/var/www/PathwayWeb/public/genesets/"
+gsets.dir = publicPathlines;
 if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {
         gid.type0=gid.type

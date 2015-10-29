@@ -1,3 +1,4 @@
+
 Hello {{$name}},
 
 <br/><br/>
@@ -11,7 +12,7 @@ Pathview Project
 <br/>
 {{$body}}
 <b>Password {{$userPassword}}</b>
-<a href={{url('/')}}><img src="/images/logo.png"></a>
+<a target="_blank" href={{url('/')}}><img src="/images/logo.png"></a>
 
 <br/>
 
@@ -27,7 +28,6 @@ Report Issues : byeshvant@hotmail.com
 
 <br/>
 @include('footer')
-</body>
-</html>
+
 
 

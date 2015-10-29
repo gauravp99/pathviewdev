@@ -165,32 +165,6 @@
 
             }
             echo "</map>";
-
-
-
-
-            /*    $a = cURL("http://www.genome.jp/kegg-bin/show_pathway?map=" . $_GET['id']);
-
-             $c = extract_unit($a, "<map name=\"mapdata\">", "</map>");
-             $d = str_replace("href=\"", "href=\"http://www.genome.jp", $c);
-                         if(Auth::user())
-                             {
-         $dir = "all/".Auth::user()->email."/".$_GET['analyses']."/".$_GET['image'];
-                             }
-                         else if(isset($_GET['email']))
-                             {
-                                 $dir = "all/".$_GET['email']."/".$_GET['analyses']."/".$_GET['image'];
-                             }
-                         else{
-                             $dir = "all/demo/".$_GET['analyses']."/".$_GET['image'];
-                         }
-             echo "<img src=" . $dir . " name=\"pathwayimage\" usemap=\"#mapdata\" border=\"0\" />";
-
-             echo "<map name=\"mapdata\">";
-             echo $d;
-             echo "</map>";
-
-         */
             ?>
 
 

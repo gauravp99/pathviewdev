@@ -15,19 +15,30 @@ class PasswordEditController extends Controller {
 	 *
 	 * @return Response
 	 */
+
+    // this function is called whenever a password reset is userd
 	public function index()
 	{
 
+        //get the current user details
         $user = Auth::user();
+
+        //check if the user is authorised or not
         if((Auth::user())) {
+
+            //check if the old password mentioned is correct or not
             if (Hash::check($_POST["oldpassword"], $user->password))
             {
+                //create a laravel validator and check for the rules give below
                 $rules = [
                     'email' => 'required',
                     'oldpassword' => 'required',
                     'password' => 'required|confirmed|min:6|max:20'
                 ];
+                //run the validator on the data
                 $validator = Validator::make($_POST, $rules);
+
+                //if validation is passed then password reset is successfully done otherwise a message is sent with error details
                 if ($validator->fails())
                 {
                     return redirect()->back()
@@ -35,23 +46,16 @@ class PasswordEditController extends Controller {
                 }
                 else
                 {
-
                         $user->password = bcrypt($_POST['password']);
                         $user->save();
-
                     return Redirect::route('home');
                 }
-                echo "Hello in save method" .print_r($user);
-                return "hello";
 
             }
             return redirect()->back()
                 ->withErrors('Entered Old Password is not correct');
-
         }
 
     }
-
-
 
 }

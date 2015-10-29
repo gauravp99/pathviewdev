@@ -6,7 +6,7 @@ arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
-
+publicPathlines = readLines("data/publicPath.txt")
 logic.idx=c("rankTest", "useFold", "test.2d", "do.pathview","kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc")
 num.idx=c(  "setSizeMin", "setSizeMax", "cutoff","offset", "gbins", "cbins")
 
@@ -68,8 +68,8 @@ gs.type=args2$geneSetCategory
 gid.type=tolower(args2$geneIdType)
 map.data=F
 data(bods, package="gage")
-gsets.dir="/var/www/PathwayWeb/public/genesets/"
-
+#gsets.dir="/var/www/PathwayWeb/public/genesets/"
+gsets.dir=publicPathlines
 if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {
         gid.type0=gid.type
@@ -125,7 +125,8 @@ if(gs.type=="kegg"){
 
 
 if(map.data){
-    source("/var/www/PathwayWeb/public/scripts/annot.map.R")
+
+    source(paste(publicPathlines,"/scripts/annot.map.R",sep=""))
     pkg.name = bods[idx, "package"]
     gid.in=gid.type0
     gid.out=gid.type
@@ -188,7 +189,7 @@ if(nsig.all>0){
     if(gs.type!="user") {outnames =sapply(strsplit(sig.gs.all, " "), "[", 1)
                      }else {outnames=sig.gs.all}
     outnames = gsub(" |:|/", "_", outnames)
-    source("/var/www/PathwayWeb/public/scripts/geneData.R")
+    source(paste(publicPathlines,"/geneData.R",sep=""))
     environment(geneData2)=environment(geneData)
     for (i in (1:nsig.all)[1:3]) {
         geneData2(genes = gsets[[sig.gs.all[i]]], exprs = exprs, ref = args2$reference,
@@ -201,7 +202,7 @@ if(nsig.all>0){
 
 ### pathview
     if(args2$do.pathview & gs.type=="kegg"){
-        kegg.dir="/var/www/PathwayWeb/public/Kegg" #specify your own
+        kegg.dir=paste(publicPathlines,"/Kegg",sep="") #specify your own
         require(pathview)
         if(!is.null(args2$reference) & !is.null(args2$sample)) {
         if(args2$compare=="paired") exprs.d=exprs[,args2$sample]-exprs[,args2$reference]

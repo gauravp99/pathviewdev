@@ -34,113 +34,120 @@
 
                     waitFlag = true;
 
+                if(factor != -1000)
+                {
+                    if (queue_id == -1) {
+                        $("#progress").hide();
+                        $("#completed").hide();
+                        console.log("in waiting method");
+                        $("#waiting").show();
+                        console.log("watiting for other jobs to complete");
+                        var myVar2 = setInterval(function () {
+                            $.ajax({
+                                url: "/ajax/waitingAnalysisStatus",
+                                method: 'POST',
+                                data: {
+                                    'analysisid': myvar,
+                                    'id': id,
+                                    'suffix': suffix,
+                                    'argument': argument,
+                                    'anal_type': anal_type
+                                },
+                                success: function (data) {
+                                    if (data.length > 0) {
+                                        console.log("success: data " + data);
 
-                if (queue_id == -1) {
-                    $("#progress").hide();
-                    $("#completed").hide();
-                    console.log("in waiting method");
-                    $("#waiting").show();
-                    console.log("watiting for other jobs to complete");
-                    var myVar2 = setInterval(function () {
-                        $.ajax({
-                            url: "/ajax/waitingAnalysisStatus",
-                            method: 'POST',
-                            data: {
-                                'analysisid': myvar,
-                                'id': id,
-                                'suffix': suffix,
-                                'argument': argument,
-                                'anal_type': anal_type
-                            },
-                            success: function (data) {
-                                if (data.length > 0) {
-                                    console.log("success: data " + data);
+                                        if (data == "pushedJob") {
 
-                                    if (data == "pushedJob") {
+                                            $("#waiting").remove();
+                                            $("#progress").show();
+                                            waitFlag1 = true;
+                                            clearInterval(myVar2);
 
+                                        }
+                                    }
+                                },
+                                error: function (data) {
+                                    console.log("error" + data);
+                                }
+                            });
+                        }, 1000);
+                    }
+
+
+                    if (queue_id > 0 || waitFlag) {
+
+                        console.log("in progress method");
+                        $("#completed").hide();
+                        if(queue_id > 0 )
+                            $("#waiting").remove();
+
+                        if( waitFlag1 ||queue_id > 0)
+                            $("#progress").show();
+                        var myVar1 = setInterval(function () {
+                            j = j + 1;
+                            $.ajax({
+                                url: "/ajax/analysisStatus",
+                                method: 'POST',
+                                data: {
+                                    'analysisid': myvar,
+                                    'id': id,
+                                    'suffix': suffix,
+                                    'argument': argument,
+                                    'anal_type': anal_type
+                                },
+                                success: function (data) {
+                                    if (data.length > 0) {
+                                        console.log("success: data " + data);
                                         $("#waiting").remove();
                                         $("#progress").show();
-                                        waitFlag1 = true;
-                                        clearInterval(myVar2);
-
-                                    }
-                                }
-                            },
-                            error: function (data) {
-                                console.log("error" + data);
-                            }
-                        });
-                    }, 1000);
-                }
-
-
-                if (queue_id > 0 || waitFlag) {
-
-                    console.log("in progress method");
-                    $("#completed").hide();
-                    if(queue_id > 0 )
-                    $("#waiting").remove();
-
-                    if( waitFlag1 ||queue_id > 0)
-                    $("#progress").show();
-                    var myVar1 = setInterval(function () {
-                        j = j + 1;
-                        $.ajax({
-                            url: "/ajax/analysisStatus",
-                            method: 'POST',
-                            data: {
-                                'analysisid': myvar,
-                                'id': id,
-                                'suffix': suffix,
-                                'argument': argument,
-                                'anal_type': anal_type
-                            },
-                            success: function (data) {
-                                if (data.length > 0) {
-                                    console.log("success: data " + data);
-                                    $("#waiting").remove();
-                                    $("#progress").show();
-                                    $("#completed").hide();
-                                    if (data === "true") {
-                                        $('#progressData').text("100%");
-                                        $('#progressData').attr('aria-valuenow', '100');
-                                        $("#progress").remove();
-                                        $("#completed").show();
-                                        clearInterval(myVar1);
-                                    } else {
+                                        $("#completed").hide();
+                                        if (data === "true") {
+                                            $('#progressData').text("100%");
+                                            $('#progressData').attr('aria-valuenow', '100');
+                                            $("#progress").remove();
+                                            $("#completed").show();
+                                            clearInterval(myVar1);
+                                        } else {
 
                                             var fac = Math.round((j * 10)/factor);
                                             if(fac < 1)
                                             {
                                                 fac = 1;
                                             }
-					    if(fac > 100)
-					    {
-				           
-						$('#progressData').css("opacity","0.4");
-						$('#progressImage').show();
-						 $('#progressData').text("100%");
+                                            if(fac > 100)
+                                            {
+
+                                                $('#progressData').css("opacity","0.4");
+                                                $('#progressImage').show();
+                                                $('#progressData').text("100%");
                                             }
-					    else{
-  
-                                            $('#progressData').text("" +fac + "%");
-                                            $('#progressData').attr('aria-valuenow', "" + fac);
-                                            $('#progressData').css('width', fac + '%');
+                                            else{
+
+                                                $('#progressData').text("" +fac + "%");
+                                                $('#progressData').attr('aria-valuenow', "" + fac);
+                                                $('#progressData').css('width', fac + '%');
                                             }
 
+                                        }
                                     }
+                                },
+                                error: function (data) {
+                                    console.log("error" + data);
                                 }
-                            },
-                            error: function (data) {
-                                console.log("error" + data);
-                            }
-                        });
-                    }, 1500);
+                            });
+                        }, 1500);
 
-                } else {
+                    } else {
 
-                    $('#completed').show();
+                        $('#completed').show();
+                    }
+                }else{
+                    $("#waiting").remove();
+                    $("#progress").remove();
+
                 }
+
             }
         });
 
@@ -155,7 +162,11 @@
 
                 <h2>Analysis ID:{{$_SESSION['analyses_id']}}</h2>
 <?php
-               Session::put('anal_id',$_SESSION['analyses_id']);
+                    if(!Auth::user())
+                        {
+                            Session::put('anal_id',$_SESSION['analyses_id']);
+                        }
+
                     ?>
                 <h1> Analysis Input arguments </h1>
                 <br/>

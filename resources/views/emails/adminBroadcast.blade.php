@@ -1,3 +1,4 @@
+
  Hello {{$name}},
 
 <br/><br/>
@@ -25,6 +26,6 @@ Project Contact : luo_weijun@yahoo.com
 Report Issues : byeshvant@hotmail.com
 
 <br/>
+@stop
 @include('footer')
-</body>
-</html>
+

@@ -8,9 +8,9 @@
         <h1><b>Help Information</b></h1>
 
 
-
         <div class="col-md-12 content">
             <h1 class="arg_content">Custom Analysis</h1>
+
             <div class="col-lg-4">
                 <a href="#Input"><img class="img-circle content" src="/images/file_upload.png" alt="Input & output"
                                       height="140" width="140"></a>
@@ -33,8 +33,6 @@
                 <p>Specify the layout, style, and node/edge or legend attributes of the output graphs.</p>
 
 
-
-
             </div>
             <!-- /.col-lg-4 -->
             <div class="col-lg-4">
@@ -46,11 +44,10 @@
                 <p>Customize the color coding of your gene and compound data.</p>
 
 
-
             </div>
             <!-- /.col-lg-4 -->
         </div>
-        <div class="col-md-12 content" >
+        <div class="col-md-12 content">
             <div class="col-md-4">
                 <div class="list-group">
 
@@ -58,7 +55,7 @@
                         <li class="dropdown" style="width:100%;margin-bottom: 10px;">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
-                                        class="glyphicon glyphicon-download pull-right" ></span></a>
+                                        class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
 
                                 <li style="width:300px;"><a href="#gene_data">Gene Data</a></li>
@@ -87,7 +84,7 @@
                         <li class="dropdown" style="width:100%;margin-bottom: 10px;">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
-                                        class="glyphicon glyphicon-download pull-right" ></span></a>
+                                        class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
 
                                 <li style="width:300px;"><a href="#kegg">Kegg Native</a></li>
@@ -124,7 +121,7 @@
                         <li class="dropdown" style="width:100%;margin-bottom: 10px;">
                             <a href="#" class="dropdown-toggle list-group-item active"
                                data-toggle="dropdown">Options<span
-                                        class="glyphicon glyphicon-download pull-right" ></span></a>
+                                        class="glyphicon glyphicon-download pull-right"></span></a>
                             <ul class="dropdown-menu" style="width:100%">
 
                                 <li style="width:300px;"><a href="#nsum">Node Sum</a></li>
@@ -154,6 +151,7 @@
         <br/>
         <br/>
         <br/>
+
         <div class="col-md-12"></div>
         <div class="col-md-12 content">
 
@@ -174,7 +172,7 @@
                 <p><a class="btn btn-default" href="#example2" role="button">View details »</a></p>
             </div>
             <div class="col-md-4">
-                <div style="height:70px"> <h2>ID Mapping</h2></div>
+                <div style="height:70px"><h2>ID Mapping</h2></div>
 
                 <p>This example shows the ID mapping capability of Pathview.</p>
 
@@ -192,7 +190,16 @@
                                 <dt><a name="gene_data">Gene Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv). Data matrix has genes as rows and samples as columns. First column should be gene IDs, first row sample IDs. The data may also be a single-column of gene IDs. Here gene ID is a generic concepts, including multiple types of gene, transcript and protein uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs as to handle metagenomic data. For example, check: <a href="all/demo/example/gse16873.d3.txt" target="_balnk">Example Gene Data 1</a> and <a href="all/demo/example/gene.symb.csv" target="_balnk">Example Gene Data 2</a>. </dd>
+                                <dd>Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv). Data
+                                    matrix has genes as rows and samples as columns. First column should be gene IDs,
+                                    first row sample IDs. The data may also be a single-column of gene IDs. Here gene ID
+                                    is a generic concepts, including multiple types of gene, transcript and protein
+                                    uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs
+                                    as to handle metagenomic data. For example, check: <a
+                                            href="all/demo/example/gse16873.d3.txt" target="_balnk">Example Gene Data
+                                        1</a> and <a href="all/demo/example/gene.symb.csv" target="_balnk">Example Gene
+                                        Data 2</a>.
+                                </dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -200,7 +207,12 @@
                                 <dt><a name="cpd_data">Compound Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv). The format is the same as Gene Data in format, excpet rows are compounds including metabolites, drugs, small molecules etc. For example, check: <a href="all/demo/example/sim.cpd.data2.txt" target="_balnk">Example Compound Data 1</a> and <a href="all/demo/example/sim.cpd.data.csv" target="_balnk">Example Compound Data 2.</a></dd>
+                                <dd>Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv).
+                                    The format is the same as Gene Data in format, excpet rows are compounds including
+                                    metabolites, drugs, small molecules etc. For example, check: <a
+                                            href="all/demo/example/sim.cpd.data2.txt" target="_balnk">Example Compound
+                                        Data 1</a> and <a href="all/demo/example/sim.cpd.data.csv" target="_balnk">Example
+                                        Compound Data 2.</a></dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -208,7 +220,9 @@
                                 <dt><a name="gene_id">Gene ID Type</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>ID type used for the Gene Data. This can be selected from the autosuggest drop down list. </dd>
+                                <dd>ID type used for the Gene Data. This can be selected from the autosuggest drop down
+                                    list.
+                                </dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -216,7 +230,9 @@
                                 <dt><a name="cpd_id">Compound ID Type</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>ID type used for the Compound Data. This can be selected from the autosuggest drop down list. </dd>
+                                <dd>ID type used for the Compound Data. This can be selected from the autosuggest drop
+                                    down list.
+                                </dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
@@ -224,7 +240,9 @@
                                 <dt><a name="species">Species</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Either the KEGG code, scientific name or the common name of the target species. Species may also be "ko" for KEGG Orthology pathways. This can be selected from the autosuggest drop down list.
+                                <dd>Either the KEGG code, scientific name or the common name of the target species.
+                                    Species may also be "ko" for KEGG Orthology pathways. This can be selected from the
+                                    autosuggest drop down list.
                                 </dd>
                             </div>
                         </div>
@@ -233,7 +251,8 @@
                                 <dt><a name="pwy_id">Pathway ID</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box.
+                                <dd>KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and
+                                    autosuggest text box.
                                 </dd>
                             </div>
                         </div>
@@ -243,7 +262,8 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd>The suffix to be added after the pathway name as part of the output graph file name.
-                                    Sample names or column names of the Gene Data or Compound Data are also added when there are
+                                    Sample names or column names of the Gene Data or Compound Data are also added when
+                                    there are
                                     multiple samples.
                                 </dd>
                             </div>
@@ -276,9 +296,10 @@
                                 <dt><a name="layer">Same Layer</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>  Controls plotting layers: 1) if node colors be plotted
+                                <dd> Controls plotting layers: 1) if node colors be plotted
                                     in
-                                    the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type
+                                    the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node
+                                    type
                                     legend be plotted in the same page when Kegg Native is unchecked.
                                 </dd>
                             </div>
@@ -372,7 +393,8 @@
                                 <dt><a name="spos">Signature Position</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Controls the position of pathview signature. Default value is "bottom right". No pathview signature will be put when "None" is selected.
+                                <dd>Controls the position of pathview signature. Default value is "bottom right". No
+                                    pathview signature will be put when "None" is selected.
                                     Potential
                                     values can be found in the drop down list.
                                 </dd>
@@ -383,7 +405,8 @@
                                 <dt><a name="kpos">Key Position</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Controls the position of color key(s). Default value is  "top left". No color key will be plot when "None" is selected. Potential values
+                                <dd>Controls the position of color key(s). Default value is "top left". No color key
+                                    will be plot when "None" is selected. Potential values
                                     can
                                     be found in the drop down list.
                                 </dd>
@@ -428,7 +451,8 @@
                                 <dt><a name="ncolor">NA Color</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd>Color used for NA's or missing values in Gene Data and Compound Data. Potential value
+                                <dd>Color used for NA's or missing values in Gene Data and Compound Data. Potential
+                                    value
                                     can be
                                     "transparent" or "grey".
                                 </dd>
@@ -441,7 +465,8 @@
                             <div class="panel-body argument">
                                 <dd>The limit values for Gene Data and Compound Data when
                                     converting them to pseudo colors. This field is a numeric field you can enter two
-                                    values separated by a comma for example "1,2" (without quote). First value stands for lower limit and second
+                                    values separated by a comma for example "1,2" (without quote). First value stands
+                                    for lower limit and second
                                     value for higher limit. If a single value n is given then limit is taken as (-n, n).
                                     Input fields are enabled after checking respective
                                     checkpoints for Gene and Compound Data.
@@ -467,7 +492,8 @@
                                     Data.
                                     Default spectra (low-mid-high) "green-gray-red" and "blue-gray-yellow" are
                                     used
-                                    for Gene Data and Compound Data respectively. Users may specify colors using common names (green, red etc), hex color codes (00FF00, D3D3D3 etc), or the color picker.
+                                    for Gene Data and Compound Data respectively. Users may specify colors using common
+                                    names (green, red etc), hex color codes (00FF00, D3D3D3 etc), or the color picker.
                                 </dd>
                             </div>
                         </div>
@@ -484,8 +510,10 @@
 
 
                 <h1 class="arg_content">Example 1: Multiple Sample KEGG View</h1>
+
                 <p>
-                    This example shows the multiple sample/state integration with Pathview KEGG vieww. Data files are pre
+                    This example shows the multiple sample/state integration with Pathview KEGG vieww. Data files are
+                    pre
                     loaded and the options have been preset as below.
                     Data files used in this example are <a href="all/demo/example/gse16873.d3.txt" target="_balnk">Gene
                         Data</a> and <a href="all/demo/example/sim.cpd.data2.csv" target="_balnk">Compound Data</a>.
@@ -500,12 +528,36 @@
                 <div class="col-sm-4">
                     <ul class="list-group">
                         <li class="list-group-item disabled">Applied Options</li>
-                        <li class="list-group-item"><div class="pathviewargVar">Pathway ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal"> 00640-Propanoate metabolism</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Species</div><div class="pathviewargColon">:</div><div class="pathviewargVal">hsa</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Kegg Native</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Same Layer</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Multi State</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Match Data</div><div class="pathviewargColon">:</div><div class="pathviewargVal">FALSE</div></li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Pathway ID</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal"> 00640-Propanoate metabolism</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Species</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">hsa</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Kegg Native</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Same Layer</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Multi State</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Match Data</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">FALSE</div>
+                        </li>
                     </ul>
                     <a href="/example1">
                         <button type="button" class="btn btn-primary btn-lg GetStarted  " data-toggle="modal">
@@ -523,7 +575,8 @@
                 <h1 class="arg_content">Example 2: Multiple Sample Graphviz View</h1>
 
                 <p>
-                    This example shows the multiple sample/state integration with Pathview Graphviz viewo. Data files are pre
+                    This example shows the multiple sample/state integration with Pathview Graphviz viewo. Data files
+                    are pre
                     loaded and the options have been preset as below.
                     Data files used in this example are <a href="all/demo/example/gse16873.d3.txt" target="_balnk">Gene
                         Data</a> and <a href="all/demo/example/sim.cpd.data2.csv" target="_blank">Compound Data</a>.
@@ -544,13 +597,41 @@
                         <a class="list-group-item disabled">
                             Applied Arguments
                         </a>
-                        <li class="list-group-item"><div class="pathviewargVar">Pathway ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">00640-Propanoate metabolism</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Species</div><div class="pathviewargColon">:</div><div class="pathviewargVal">hsa</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Kegg Native</div><div class="pathviewargColon">:</div><div class="pathviewargVal">FALSE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Same Layer</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Multi State</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Match Data</div><div class="pathviewargColon">:</div><div class="pathviewargVal">FALSE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Gene Limit</div><div class="pathviewargColon">:</div><div class="pathviewargVal">-1(min),2(max)</div></li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Pathway ID</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">00640-Propanoate metabolism</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Species</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">hsa</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Kegg Native</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">FALSE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Same Layer</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Multi State</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Match Data</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">FALSE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Gene Limit</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">-1(min),2(max)</div>
+                        </li>
 
                     </ul>
                     <a href="/example2">
@@ -570,7 +651,8 @@
                 <h1 class="arg_content">Example 3: ID Mapping</h1>
 
                 <p>
-                    Here's an example showing the ID mapping capability of pathview. Data files are pre loaded and  the options have been preset as below (including Gene ID type and Compound ID type).
+                    Here's an example showing the ID mapping capability of pathview. Data files are pre loaded and the
+                    options have been preset as below (including Gene ID type and Compound ID type).
                     Data files used in this example are <a href="all/demo/example/gene.ensprot.txt"
                                                            target="_blank">Gene
                         Data</a> and <a href="all/demo/example/cpd.cas.csv" target="_blank">Compound Data</a>.
@@ -585,14 +667,46 @@
                         <a class="list-group-item disabled">
                             Applied Arguments
                         </a>
-                        <li class="list-group-item"><div class="pathviewargVar">Pathway ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">00640-Propanoate metabolism</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Species</div><div class="pathviewargColon">:</div><div class="pathviewargVal">hsa</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Gene ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">ENSEMBLPROT</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Compound ID</div><div class="pathviewargColon">:</div><div class="pathviewargVal">CAS Registry Number</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Kegg Native</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Same Layer</div><div class="pathviewargColon">:</div><div class="pathviewargVal">TRUE</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Limit </div><div class="pathviewargColon">:</div><div class="pathviewargVal">Gene:3; Compound: 3</div></li>
-                        <li class="list-group-item"><div class="pathviewargVar">Bins </div><div class="pathviewargColon">:</div><div class="pathviewargVal">Gene:6; Compound: 6</div></li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Pathway ID</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">00640-Propanoate metabolism</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Species</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">hsa</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Gene ID</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">ENSEMBLPROT</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Compound ID</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">CAS Registry Number</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Kegg Native</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Same Layer</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">TRUE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Limit</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">Gene:3; Compound: 3</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Bins</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">Gene:6; Compound: 6</div>
+                        </li>
 
                     </ul>
                     <a href="/example3">
@@ -629,8 +743,8 @@
                 <p class="contact">Project Contact: <a
                             href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></p>
 
-                <p class="contact"> Report Issues:  <a
-                            href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a>   </p>
+                <p class="contact"> Report Issues: <a
+                            href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a></p>
             </section>
 
         </div>

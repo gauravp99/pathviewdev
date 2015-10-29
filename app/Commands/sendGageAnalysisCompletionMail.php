@@ -13,7 +13,12 @@ use Illuminate\Support\Facades\Config;
 use Redis;
 use DB;
 
-
+/**
+ * Class sendGageAnalysisCompletionMail
+ * @package App\Commands
+ *
+ * This job is used run the gage analysis by the queue
+ */
 class sendGageAnalysisCompletionMail extends Command implements SelfHandling {
 
 	/**

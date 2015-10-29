@@ -26,6 +26,12 @@ class AjaxAnalysisQueueStatusCheck extends Controller
 {
 
 
+    /**
+     * @return string
+     * This function is called on ajax request from the analysis result page
+     * this function looks for queue status in redis for job if completed successfully or not
+     * if completed successfully it returns true.
+     */
     public function index()
     {
 
@@ -51,75 +57,36 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                     }
                 });
 
-                if (Cookie::get('uID') == null)
-                {
-                    $analysis = new AnalysisController();
-                    $uID = $analysis->get_client_ip();
-                }
-                else{
-                    $uID = Cookie::get("uID");
-                }
-
+                //delete the analaysisid status from redis
                 Redis::del(Input::get('analysisid') . ":Status");
                 Redis::del(Input::get('analysisid'));
                 return "true";
 
             } else {
-                if (Cookie::get('uID') == null)
-                {
-                    $analysis = new AnalysisController();
-                    $uID = $analysis->get_client_ip();
-                }
-                else{
-                    $uID = Cookie::get("uID");
-                }
 
                 Redis::del(Input::get('analysisid') . ":Status");
                 Redis::del(Input::get('analysisid'));
                 return "true";
 
             }
-
-
         }else{
             return "false";
         }
 
-
-
-
         die();
     }
 
+
+    /**
+     * @return string
+     * This function is called whenever a user is requesting multiple jobs at a time typically more than 2 requests at a time
+     * if this happens then wait flag is set for user whenever number of parallel request are reduced to less than 1 then the request is sent to queue
+     */
+
     public function checkStatus(){
 
-        if(Auth::user()){
-            $count = 0;
-            if(!is_null(Redis::get("id:".Auth::user()->email)))
-            {
-                $count = Redis::get("id:".Auth::user()->email);
-
-            }
-
-            if($count < 2)
-            {
-                Redis::set("id:".Auth::user()->email,$count+1);
-                $jobflag = Redis::get("wait:".Input::get('analysisid'));
-                if(!is_null($jobflag))
-                {
-                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail(Input::get('analysisid'),Auth::user()->email));
-                    Redis::del("wait:".Input::get('analysisid'));
-                }
-
-                Redis::set("users_count",Redis::get("users_count")-1);
-                return "pushedJob";
-            }
-            else{
-                return "stillWaiting";
-            }
-
-        }else{
-
+        //if the count is greater than 2 then set a wait flag and set all details into redis so that it can be fetched again by queue and run the job again
+        //if less thna 2 then wait falg is removed also the details are fetched and a job is pushed to the queue
             if (Cookie::get('uID') == null) {
                 $analysis = new AnalysisController();
                 $uID = $analysis->get_client_ip();
@@ -153,7 +120,7 @@ class AjaxAnalysisQueueStatusCheck extends Controller
 
 
 
-    }
+
 
 
 

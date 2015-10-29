@@ -31,7 +31,6 @@ class AjaxGageAnalysisStatusCheck extends Controller {
         {
 
             //have to write code to send mail to user that analysis is done
-
             //deleting the status check from redis
             Redis::del(Input::get('analysisid') . ":Status");
             Redis::del(Input::get('analysisid'));
