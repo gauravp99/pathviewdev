@@ -16,7 +16,7 @@
 
 
     <p class="text-center" ng-show="loading"></p>
-            <button type="button" class="btn btn-default navbar-btn" id="hideComments" >Frequently Asked Questions <span class="glyphicon glyphicon-resize-full"></span></button>
+            <button type="button" class="btn btn-default navbar-btn" id="hideComments" >Show previously Asked Questions <span class="glyphicon glyphicon-resize-full"></span></button>
             <div class="comment" id="hidebar" hidden="" >
     <div class="comment" ng-hide="loading" ng-repeat="comment in comments">
         <div class="col-md-12">
@@ -86,13 +86,13 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
         <script>
             $( document ).ready(function() {
                 $('#hideComments').click(function(){
-                    if($('#hideComments').text() === "Hide Frequently Asked Questions")
+                    if($('#hideComments').text() === "Hide Previosly Asked Questions")
                     {
                         $('#hidebar').hide();
-                        $('#hideComments').text("Show Frequently Asked Questions ");
+                        $('#hideComments').text("Show Previously Asked Questions");
                     }else{
                         $('#hidebar').show();
-                        $('#hideComments').text("Hide Frequently Asked Questions");
+                        $('#hideComments').text("Hide Previosly Asked Questions");
                     }
 
                 });

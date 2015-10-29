@@ -8,7 +8,10 @@ html {
 body {
     margin: 0;
 }
-
+.wrapper-pathview{
+max-width: 1200px;
+margin: auto;
+}
 article,
 aside,
 details,

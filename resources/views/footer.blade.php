@@ -1,5 +1,3 @@
-
-
 <div class="col-sm-12 footer" id="footer">
 
 

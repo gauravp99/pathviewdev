@@ -748,7 +748,7 @@
                 <?php
                 $goSpecies = DB::table('species')
                         ->join('GoSpecies', 'species.species_id', '=', 'GoSpecies.species_id')
-                        ->select('GoSpecies.species_id','Species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
+                        ->select('GoSpecies.species_id','species.species_desc','GoSpecies.Go_name','GoSpecies.id_type')->get();
                 $GageSpeciesGeneIDMAtch = DB::table('GageSpeceisGeneIdMatch')
                                             ->select('species_id','geneid')->get();
                 ?>

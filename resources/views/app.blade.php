@@ -10,11 +10,11 @@
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/angular/angular.js"></script>
-    <title>Pathview</title>
+     <script src="/bower_components/angular/angular.js"></script>
+	 <title>Pathview</title>
 </head>
 
-<body>
+<body class="wrapper-pathview">
 
 
 <nav class="navbar navbar-default navbar-change">
@@ -31,6 +31,7 @@
                                                                                  class="navbrand-image"></a>
             <a class="navbar-brand textlogo" href="{{ url('/') }}"><img src="/images/logo-text.png" height="40px"
                                                                         style="margin-top: -16px">
+
                 <div class="navbrand-text">Pathway based data integration and visualization</div>
             </a>
         </div>
@@ -87,29 +88,30 @@
                 <li <?php if (basename(Request::url()) == "about") {
                     echo "class=\"active\"";
                 }?>>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">About <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">About
+                        <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li>
                             <a
-                               href="/about">
+                                    href="/about">
                                 About Us
                             </a>
                         </li>
                         <li>
                             <a
-                               href="/faq">
+                                    href="/faq">
                                 Contact Us
                             </a>
                         </li>
-                        </ul>
+                    </ul>
 
                 </li>
 
-               <!-- <li <?php if (basename(Request::url()) == "related") {
+                 <li <?php if (basename(Request::url()) == "related") {
                     echo "class=\"active\"";
                 }?>>
                     <a href="/gageIndex" target="_blank">Related</a>
-                </li> -->
+                </li> 
 
                 @if (Auth::guest())
                     <?php if(basename(Request::url()) == "login")
@@ -275,7 +277,7 @@
         var footerTop = $('#footer').position().top + footerHeight;
         if (footerTop < docHeight) {
 
-            $('#footer').css('margin-top',-30+ (docHeight - footerTop) + 'px');
+            $('#footer').css('margin-top', -30 + (docHeight - footerTop) + 'px');
         }
     });
 </script>
@@ -362,4 +364,5 @@
 
 </body>
 </html>
+
 

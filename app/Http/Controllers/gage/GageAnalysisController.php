@@ -753,7 +753,8 @@ class GageAnalysisController extends Controller
         }
         $_SESSION['argument'] = $argument;
         $_SESSION['destDir'] = $destFile;
-        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        #n $argument;
+	exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         function get_client_ip()
         {
@@ -787,7 +788,7 @@ class GageAnalysisController extends Controller
             DB::table('analysis')->insert(
                 array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => "discreteGageAnalysis", 'created_at' => $date, 'ip_add' => get_client_ip(), 'analysis_origin' => 'gage')
             );
-        return view('gege_pages.DiscreteGageResult');
+        return view('gage_pages.DiscreteGageResult');
 
     }
     public function newGageAnalysis()

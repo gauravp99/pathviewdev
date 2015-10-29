@@ -58,7 +58,7 @@ gs.type=args2$geneSetCategory
 gid.type=tolower(args2$geneIdType)
 map.data=F
 data(bods, package="gage")
-gsets.dir="/var/www/Pathway/public/genesets/"
+gsets.dir="/var/www/PathwayWeb/public/genesets/"
 
 if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {

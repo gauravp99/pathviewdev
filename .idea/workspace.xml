@@ -225,19 +225,6 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/nested.env" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/quoted.env" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/vendor/vlucas/phpdotenv/tests/fixtures/specialchars.env" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/GageRscript.R" afterPath="$PROJECT_DIR$/public/scripts/GageRscript.R" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/Result.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/analysis/discreteAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/analysis/discreteAnalysis.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_two.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_two.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/kg.map.R" afterPath="$PROJECT_DIR$/public/scripts/kg.map.R" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/my_Rscript.R" afterPath="$PROJECT_DIR$/public/scripts/my_Rscript.R" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/my_Rscript.luo.R" afterPath="$PROJECT_DIR$/public/my_Rscript.luo.R" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/outputFile.Rout" afterPath="$PROJECT_DIR$/public/outputFile.Rout" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Pathway.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -338,8 +325,8 @@
       <file leaf-file-name="gagePathview.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.27217743">
-              <caret line="90" column="71" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.45362905">
+              <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
               <folding>
                 <element signature="e#2043#2064#0#HTML" expanded="true" />
                 <element signature="e#2487#2524#0#HTML" expanded="true" />
@@ -451,17 +438,17 @@
                 <element signature="e#52908#52932#0#HTML" expanded="true" />
                 <element signature="e#53299#53380#0#HTML" expanded="true" />
                 <element signature="e#53505#53585#0#HTML" expanded="true" />
-                <marker date="1445979267979" expanded="true" signature="5853:5865" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="40340:40445" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="40352:40443" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="40610:40914" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="40624:40912" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="40637:40803" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="41919:42227" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="41933:42225" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="41947:42113" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="43404:43631" placeholder="..." />
-                <marker date="1445979267979" expanded="true" signature="43418:43629" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="5853:5865" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="40340:40445" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="40352:40443" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="40610:40914" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="40624:40912" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="40637:40803" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="41919:42227" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="41933:42225" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="41947:42113" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="43404:43631" placeholder="..." />
+                <marker date="1446090018033" expanded="true" signature="43418:43629" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -1783,8 +1770,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/gage_pages/analysis/gagePathview.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.27217743">
-          <caret line="90" column="71" selection-start-line="90" selection-start-column="51" selection-end-line="90" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.45362905">
+          <caret line="25" column="23" selection-start-line="25" selection-start-column="23" selection-end-line="25" selection-end-column="23" />
           <folding>
             <element signature="e#2043#2064#0#HTML" expanded="true" />
             <element signature="e#2487#2524#0#HTML" expanded="true" />
@@ -1896,17 +1883,17 @@
             <element signature="e#52908#52932#0#HTML" expanded="true" />
             <element signature="e#53299#53380#0#HTML" expanded="true" />
             <element signature="e#53505#53585#0#HTML" expanded="true" />
-            <marker date="1445979267979" expanded="true" signature="5853:5865" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="40340:40445" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="40352:40443" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="40610:40914" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="40624:40912" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="40637:40803" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="41919:42227" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="41933:42225" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="41947:42113" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="43404:43631" placeholder="..." />
-            <marker date="1445979267979" expanded="true" signature="43418:43629" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="5853:5865" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="40340:40445" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="40352:40443" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="40610:40914" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="40624:40912" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="40637:40803" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="41919:42227" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="41933:42225" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="41947:42113" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="43404:43631" placeholder="..." />
+            <marker date="1446090018033" expanded="true" signature="43418:43629" placeholder="..." />
           </folding>
         </state>
       </provider>

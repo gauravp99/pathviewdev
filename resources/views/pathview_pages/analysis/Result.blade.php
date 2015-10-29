@@ -114,10 +114,19 @@
                                             {
                                                 fac = 1;
                                             }
+					    if(fac > 100)
+					    {
+				           
+						$('#progressData').css("opacity","0.4");
+						$('#progressImage').show();
+						 $('#progressData').text("100%");
+                                            }
+					    else{
+  
                                             $('#progressData').text("" +fac + "%");
                                             $('#progressData').attr('aria-valuenow', "" + fac);
                                             $('#progressData').css('width', fac + '%');
-
+                                            }
 
                                     }
                                 }
@@ -564,6 +573,7 @@
         <div id="progress" class="col-md-4" >
 
             <h2 class="alert alert-info">  Executing, Please wait. </h2>
+<img src='images/load.gif' id='progressImage' hidden=""/>
             <div class="progress">
                 <div class="progress-bar" role="progressbar" id="progressData" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
                     0%

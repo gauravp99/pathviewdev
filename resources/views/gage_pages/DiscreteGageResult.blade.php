@@ -48,7 +48,7 @@
 
     $argument = $_SESSION['argument'];
             $destDir = $_SESSION['destDir'];
-            $dir = substr($destDir,strlen("/var/www/Pathway/public/"));
+            $dir = substr($destDir,strlen("/var/www/PathwayWeb/public/"));
             $contents = scandir($destDir);
                 $pathway_list_flag = false;
             foreach($contents as $k => $v)
