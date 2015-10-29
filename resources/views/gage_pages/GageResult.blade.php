@@ -679,6 +679,53 @@ echo "<div class='col-md-4'><div> <h3> Output/Error Log </h3>";
         </div>
         </div>
     </div>
+<div class="scroll">
+    <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-menu-up"
+                                          style="font-size: 30px; margin-left: 100px;"></span></a></div>
+<style>
+    .scrollToTop {
+        width: 100px;
+        height: 130px;
+        padding: 10px;
+        text-align: center;
+        background: whiteSmoke;
+        font-weight: bold;
+        color: #444;
+        text-decoration: none;
+        position: fixed;
+        top: 75px;
+        right: 40px;
+        display: none;
+        font-size: 50px;
+
+        background: url("/images/icontop.png") no-repeat 0px 20px;
+    }
+
+    .scrollToTop:hover {
+        text-decoration: none;
+    }
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+
+        //Check to see if the window is top if not then display button
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.scrollToTop').fadeIn();
+            } else {
+                $('.scrollToTop').fadeOut();
+            }
+        });
+
+        //Click event to scroll to top
+        $('.scrollToTop').click(function () {
+            $('html, body').animate({scrollTop: 0}, 800);
+            return false;
+        });
+
+    });
+</script>
     <script>
         $(document).ready(function () {
 

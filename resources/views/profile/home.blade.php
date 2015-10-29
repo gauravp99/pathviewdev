@@ -143,7 +143,7 @@
         if (is_null($analyses)) {
             echo "No recenet Activity's";
         } else { ?>
-        <table class="table table-bordered">
+        <table class="table table-bordered" style="padding:10px;width:90%;margin:auto;">
             <thead>
             <tr>
                 <th><a href="#" id='deleteAll' data-toggle='modal'   data-target='#myModal'>Delete </a></th>
@@ -201,6 +201,7 @@
 
 
         </table>
+        </div>
             <input type="submit" id="delete" data-toggle='modal'  data-target='#myModal' value="Delete Selected" style="padding:5px;" hidden="">
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">

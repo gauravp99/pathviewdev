@@ -8,13 +8,10 @@ use Session;
 use File;
 use DB;
 use Log;
-use Redis;
-use Illuminate\Http\Request;
 use Queue;
 use Storage;
-use App\Commands\sendGageAnalysisCompletionMail;
 use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
-
+use Illuminate\Support\Facades\Config;
 /**
  * Class GageAnalysis
  * @package App\Http\Controllers
@@ -495,13 +492,18 @@ class GageAnalysisController extends Controller
 
         //creates a process to run the R script
 
+        $Rloc = Config::get("app.RLoc");
+        $publicPath = Config::get("app.publicPath");
+
 
 
         if (isset($_POST['dopathview'])&& strcmp($analysis, 'GagePathviewAnalysis') == 0)
         {
-            exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+            exec($Rloc."Rscript ".$publicPath."GagePathviewRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+            //exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }else {
-            exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+            exec($Rloc."Rscript ".$publicPath."GageRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+            //exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }
 
 
@@ -754,7 +756,11 @@ class GageAnalysisController extends Controller
         $_SESSION['argument'] = $argument;
         $_SESSION['destDir'] = $destFile;
         #n $argument;
-	exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        $Rloc = Config::get("app.RLoc");
+        $publicPath = Config::get("app.publicPath");
+
+        exec($Rloc."Rscript ".$publicPath."DiscreteGageRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+	//exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         function get_client_ip()
         {

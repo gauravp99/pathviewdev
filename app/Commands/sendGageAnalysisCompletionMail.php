@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldBeQueued;
 use App\User;
 use Mail;
+use Illuminate\Support\Facades\Config;
 use Redis;
 use DB;
 
@@ -77,8 +78,11 @@ class sendGageAnalysisCompletionMail extends Command implements SelfHandling {
         $errorfile = $destFile . '/errorFile.Rout';
         echo $outFile;
         echo $errorfile;
+        $Rloc = Config::get("app.RLoc");
+        $publicPath = Config::get("app.publicPath");
 
-        exec("/home/ybhavnasi/R-3.1.2/bin/Rscript /var/www/Pathway/public/scripts/GageRscript.R \"$argument\" >$outFile  2> $errorfile ");
+        exec($Rloc."Rscript ".$publicPath."GageRscript.R \"$argument\" >$outFile  2> $errorfile ");
+
         $anal_type = 'gage';
         $date = new \DateTime;
         $record = DB::table('analyses')->where('analysis_id',$time)->get();

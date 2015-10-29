@@ -1,4 +1,4 @@
-<div class="col-sm-12 footer" id="footer">
+<div class="col-sm-12 footer" id="footer" style="margin-top:10px;">
 
 
     <p class="footer_title" > © 2013 -&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pathview Project
