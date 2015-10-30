@@ -2,3 +2,4 @@ public/all/
 config/
 .env
 storage/
+public/data/publicPath.txt

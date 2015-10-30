@@ -621,15 +621,15 @@ class GageAnalysisController extends Controller
         }
         if(Input::hasFile('backgroundListInputFile'))
         {
-            $argument .="baclgroundList:file". ";";;
+            $argument .="backgroundList:file". ";";;
             $file = Input::file('backgroundListInputFile');
             $filename1 = Input::file('backgroundListInputFile')->getClientOriginalName();
             $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
             $file->move($destFile, $filename1);
-            $argument .="baclgroundListFile:".$filename1.";";
+            $argument .="backgroundListFile:".$filename1.";";
 
         }else{
-            $argument .="baclgroundList:inputbox". ";";
+            $argument .="backgroundList:inputbox". ";";
             $BackgroundList = $_POST['backgroundList'];
             $file = public_path() . "/" . "all/" . $email . "/" . $time . "/backgroundList.txt";
             File::put($file, $BackgroundList);
@@ -689,7 +689,7 @@ class GageAnalysisController extends Controller
         }
 
         if (isset($_POST['cutoff'])) {
-            $argument .= "cutoff:";
+            $argument .= "pcut:";
             $argument .= $_POST['cutoff'].";";
         }
 
@@ -758,8 +758,9 @@ class GageAnalysisController extends Controller
         #n $argument;
         $Rloc = Config::get("app.RLoc");
         $publicPath = Config::get("app.publicPath");
-
-        exec($Rloc."Rscript ".$publicPath."DiscreteGageRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        #return $argument;
+        //exec($Rloc."Rscript ".$publicPath."DiscreteGageRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+       exec($Rloc."Rscript ".$publicPath."discrete.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 	//exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         function get_client_ip()

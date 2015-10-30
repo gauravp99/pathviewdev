@@ -12,6 +12,7 @@ use Illuminate\Cacheache;
                     <p><b>Example Analysis 1: Multiple Sample KEGG View</b></p>
         </div>
         <div class="col-sm-5">
+
             @if ($errors->any())
                 <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
                     @foreach ($errors->all() as $error)
@@ -19,8 +20,8 @@ use Illuminate\Cacheache;
                     @endforeach
                 </ul>
             @endif
-            @if(Session::get('err')!=NULL)
 
+            @if(Session::get('err')!=NULL)
                 <ul class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
                     <?php
                     for ($x = 0; $x < sizeof(Session::get('err')); $x++) {
@@ -28,11 +29,10 @@ use Illuminate\Cacheache;
                     }
                     ?>
                 </ul>
-
             @endif
+
             <ul id="errors" hidden="true" class="alert alert-danger" style="font-size: 14px;list-style-type: none;">
             </ul>
-
         </div>
     </div>
     <?php

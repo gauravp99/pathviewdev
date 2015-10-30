@@ -458,7 +458,7 @@
             "E coli strain Sakai": "eg",
             "Chicken": "eg",
             "Human": "eg",
-            "Mouse": "eg",
+            "Mo use": "eg",
             "Rhesus": "eg",
             "Malaria": "orf",
             "Chimp": "eg",
@@ -501,15 +501,14 @@
                     required: {
 
                         depends: function (element) {
-                            console.log("checking " + $("#sampleList").is(':empty'));
-                            return $("#sampleList").is(':empty');
+                            return $("#sampleList").val() == ""
                         }
                     }
                 },
                 sampleList: {
                     required: {
                         depends: function (element) {
-                            return $("#sampleListInputFile").is(':empty');
+                            return $("#sampleListInputFile").val() == ""
                         }
                     }
                 },
@@ -518,14 +517,16 @@
                     required: {
 
                         depends: function (element) {
-                            return $("#backgroundList").is(':empty');
+                            return $("#backgroundList").val() == ""
+
                         }
                     }
                 },
                 backgroundList: {
                     required: {
                         depends: function (element) {
-                            return $("#backgroundListInputFile").is(':empty');
+                            return $("#backgroundListInputFile").val() == ""
+
                         }
                     }
                 },

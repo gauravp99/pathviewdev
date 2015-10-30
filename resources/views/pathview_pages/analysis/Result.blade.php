@@ -103,14 +103,23 @@
                                         $("#progress").show();
                                         $("#completed").hide();
                                         if (data === "true") {
-                                            $('#progressData').text("100%");
-                                            $('#progressData').attr('aria-valuenow', '100');
-                                            $("#progress").remove();
-                                            $("#completed").show();
+
+                                            $('#progressData').text("80%");
+                                            $('#progressData').attr('aria-valuenow', '80');
+                                            $('#progressData').css('width', '80%');
+                                            setTimeout(function delayFun() {
+                                                $('#progressData').text("100%");
+                                                $('#progressData').attr('aria-valuenow', '100');
+                                                $('#progressData').css('width', '100%');
+                                                $("#progress").remove();
+                                                $("#completed").show();
+                                            },2000);
+
                                             clearInterval(myVar1);
                                         } else {
 
                                             var fac = Math.round((j * 10)/factor);
+
                                             if(fac < 1)
                                             {
                                                 fac = 1;
@@ -136,7 +145,7 @@
                                     console.log("error" + data);
                                 }
                             });
-                        }, 1500);
+                        }, 1500  );
 
                     } else {
 

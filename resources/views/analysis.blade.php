@@ -14,7 +14,7 @@
         <div class="col-sm-7">
             <input class="ex8" list="geneidlist" name="geneid" id="geneid"
                    value="<?php echo isset(Session::get('Sess')['geneid']) ? Session::get('Sess')['geneid'] : $geneid ?>"
-                   autocomplete="on">
+                   autocomplete="off">
         </div>
     </div>
     <datalist id="geneidlist">
@@ -54,7 +54,7 @@
         <div class="col-sm-7">
             <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"
                    value="<?php echo isset(Session::get('Sess')['cpdid']) ? Session::get('Sess')['cpdid'] : $cpdid ?>"
-                   autocomplete="on">
+                   autocomplete="off">
         </div>
     </div>
 
@@ -94,7 +94,7 @@
         <div class="col-sm-7">
             <input class="ex8" list="specieslist" name="species" id="species"
                    value="<?php echo isset(Session::get('Sess')['species']) ? Session::get('Sess')['species'] : $species?>"
-                   autocomplete="on">
+                   autocomplete="off">
         </div>
     </div>
     <datalist id="specieslist">
@@ -186,9 +186,9 @@
         <div class="col-sm-5" style="margin-left: -20px;">
             <h6 style="font-family: Verdana;font-size=5px;color:black;margin-top: -24px;margin-left:10px;">Note: Remove
                 items by deleting</h6>
-            <textarea id="selecttextfield" name="selecttextfield" wrap="off"
+            <textarea id="pathwayList" name="pathwayList" wrap="off"
                       style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11"
-                      cols="14"><?php echo isset(Session::get('Sess')['selecttextfield']) ? Session::get('Sess')['selecttextfield'] : $selectpath; ?></textarea>
+                      cols="14"><?php echo isset(Session::get('Sess')['pathwayList']) ? Session::get('Sess')['pathwayList'] : $selectpath; ?></textarea>
         </div>
     </div>
     <datalist id="pathwaylist">
@@ -671,7 +671,7 @@
 <script>
 
 
-    tab1_array = ["assayData", "cpdassayData", "geneid", "cpdid", "species", "pathway", "selecttextfield", "suffix"];
+    tab1_array = ["assayData", "cpdassayData", "geneid", "cpdid", "species", "pathway", "pathwayList", "suffix"];
     tab2_array = ["offset"];
     tab3_array = ["glmt", "clmt", "gbins", "cbins"];
     $('#anal_form').validate({
@@ -745,7 +745,7 @@
             pathway: {
                 pathwayIdDBMatch: true
             },
-            selecttextfield: {
+            pathwayList: {
                 required: true,
                 ListPathwayMatch: true
             },
@@ -806,7 +806,7 @@
                 speciesGeneIdMatch: "For this Species value Gene ID Type  should be either 'ENTREZ' or 'KEGG'."
             },
             pathway: {},
-            selecttextfield: {
+            pathwayList: {
                 required: "At least one Pathway should be selected.",
                 ListPathwayMatch: "Entered Pathway ID is not a valid pathway."
             },
@@ -887,7 +887,7 @@
     jQuery.validator.addMethod('ListPathwayMatch', function (value, element) {
         //pathway_array
 
-        pathwayArray = $('#selecttextfield').text().split(',');
+        pathwayArray = $('#pathwayList').text().split(',');
         newCreateArray = "";
         evenOneTrueFlag = false;
         $.each(pathwayArray, function (index, value) {
@@ -901,7 +901,7 @@
             }
         });
         console.log(newCreateArray);
-        $('#selecttextfield').text(newCreateArray);
+        $('#pathwayList').text(newCreateArray);
         return evenOneTrueFlag;
     });
 

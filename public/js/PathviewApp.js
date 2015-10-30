@@ -11,9 +11,9 @@ app.controller('example2Controller',function($scope){
     $scope.GeneCompare = true;
     $scope.CpdCompare = true;
     console.log("hello from example2 controller");
-    $scope.geneRefSelect = [1,2,5];
+    $scope.geneRefSelect = [1,2,3];
     $scope.cpdRefSelect = [1,2];
-    $scope.geneSamSelect = [3,4,6];
+    $scope.geneSamSelect = [4,5,6];
     $scope.cpdSamSelect = [3,4];
 
 

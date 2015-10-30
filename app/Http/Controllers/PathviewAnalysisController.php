@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Facades\Cookie;
 use App\Commands\SendJobAnalysisCompletionMail;
+use Illuminate\Support\Facades\Redirect;
 class PathviewAnalysisController extends Controller {
 
 	public $cookieEnabled = false;
@@ -21,6 +22,9 @@ class PathviewAnalysisController extends Controller {
 
 	public function analysis($analyType)
 	{
+
+		try{
+
 
 		//to store the number of parallel users to the application
 
@@ -330,7 +334,7 @@ class PathviewAnalysisController extends Controller {
 		$analsisObject->setSuffix(preg_replace("/[^A-Za-z0-9 ]/", '', $_POST["suffix"]));
 
 		//-----------------------pathwayids
-		preg_match_all('!\d{5}!', $_POST['selecttextfield'], $matches);
+		preg_match_all('!\d{5}!', $_POST['pathwayList'], $matches);
 		$pathway_array = array();
 		$i = 0;
 		foreach ($matches as $pathway1) {
@@ -343,11 +347,17 @@ class PathviewAnalysisController extends Controller {
 					array_push($pathway_array, $pathway);
 				$i = $i + 1;
 				//limit imposed as per req to pathway id not more than 20 to each request
-				if($i == 20)
+				if(sizeof(array_unique($pathway_array)) > 20)
+				{
+
 					break;
+				}
 			}
-			if($i == 20)
+			if(sizeof(array_unique($pathway_array)) > 20)
+			{
 				break;
+			}
+
 		}
 		//remove redundent pathway ids
 		$pathway_array1 = array_unique($pathway_array);
@@ -656,7 +666,7 @@ class PathviewAnalysisController extends Controller {
 						'directory1' => $path,
 						'queueid' => $process_queue_id,
 						'analysisid' => $uniqid,
-						'factor', $factor));
+						'factor' => $factor));
 
 				} else {
 					Redis::set("id:" . $this->uID, $jobs);
@@ -674,7 +684,12 @@ class PathviewAnalysisController extends Controller {
 
 			}
 		}
+		}
+		catch( Exception $e)
+		{
+			Redis::set("users_count", $users_count - 1);
 
+		}
 	}
 
 

@@ -96,7 +96,7 @@ $(document).ready(function () {
     //end on each change in the species check for species and pathway list update
 
 
-    $('#selecttextfield').append(",\r\n");
+    $('#pathwayList').append(",\r\n");
 
     $('#reset').click(function () {
         $("#errors").empty();
@@ -114,7 +114,7 @@ $(document).ready(function () {
         $('#select-from option:selected').each(function () {
             var val = $(this).text();
             $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
-            $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
+            $('#pathwayList').val($('#pathwayList').val() + val + ",\r\n");
         });
     });
 
@@ -128,7 +128,7 @@ $(document).ready(function () {
         }
         else {
             $("<option />", {'value': val, text: val}).appendTo("#select-to");
-            $('#selecttextfield').val($('#selecttextfield').val() + val + ",\r\n");
+            $('#pathwayList').val($('#pathwayList').val() + val + ",\r\n");
         }
 
     });
@@ -171,7 +171,7 @@ else {
 /*checking the geneid is in the list or not */
 function in_gene_array(gene, id) {
     for (var i = 0; i < gene.length; i++) {
-        if (gene[i]['geneid'].toLowerCase() === id.toLowerCase()) {
+        if (gene[i]['gene_id'].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }
@@ -234,7 +234,7 @@ function fileCheck() {
     var glow = document.getElementById("glow");
     var gmid = document.getElementById("gmid");
     var ghigh = document.getElementById("ghigh");
-    var pathway_text = document.getElementById("selecttextfield");
+    var pathway_text = document.getElementById("pathwayList");
     var offset = document.getElementById("offset");
 
     /* Trim the text field for spaces in all input fields not required for suffix already handled*/
@@ -274,7 +274,7 @@ function fileCheck() {
     /*------------------------Gene and compound File check ------------------------------*/
 
     /*------------------------Pathway ID check ------------------------------*/
-    if (document.getElementById('selecttextfield').value.length < 5) {
+    if (document.getElementById('pathwayList').value.length < 5) {
 
         var myElement = document.getElementById("pat-select");
         myElement.style.backgroundColor = "#DA6666";
@@ -285,7 +285,7 @@ function fileCheck() {
 
 
     }
-    else if (!in_pathway_array(pathway_array, document.getElementById('selecttextfield').value.substring(0, 5))) {
+    else if (!in_pathway_array(pathway_array, document.getElementById('pathwayList').value.substring(0, 5))) {
         var myElement = document.getElementById("pat-select");
         myElement.style.backgroundColor = "#DA6666";
         var li = document.createElement("li");

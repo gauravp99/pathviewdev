@@ -45,7 +45,7 @@ args2$cpdid=tolower(args2$cpdid)
 #setwd(args2$targedir)
 zz <- file("errorFile.Rout", open = "wt")
 sink(zz,type = "message")
-if(!is.null(args2$geneextension)){
+if(!is.null(args2$geneextension) && length(args2$geneextension) > 0){
     if(args2$geneextension == "txt"){
         a=read.delim(args2$filename, sep="\t")
     } else if(args2$geneextension == "csv"){
@@ -70,7 +70,7 @@ if(!is.null(args2$geneextension)){
     } else stop("Empty gene data file!")
 } else gene.d=NULL
 
-if(!is.null(args2$cpdextension)){
+if(!is.null(args2$cpdextension) && length(args2$cpdextension) > 0){
     if(args2$cpdextension == "txt"){
         a1=read.delim(args2$cfilename, sep="\t")
     } else if(args2$cpdextension == "csv"){
