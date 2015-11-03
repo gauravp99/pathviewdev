@@ -53,13 +53,14 @@ save.image("workenv.RData")
 # sub.idx=unique(unlist(kset.data["sigmet.idx"]))
 # gsets=kset.data$kg.sets[sub.idx]
 ###gene set data
+library(gage)
 species0=species=args2$species
 gs.type=args2$geneSetCategory
 gid.type=tolower(args2$geneIdType)
 map.data=F
 data(bods, package="gage")
 #gsets.dir="/var/www/PathwayWeb/public/genesets/"
-gsets.dir = publicPathlines;
+gsets.dir = paste(publicPathlines,"/genesets",sep="");
 if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {
         gid.type0=gid.type
@@ -68,7 +69,7 @@ if(gs.type=="kegg"){
         idx=which(bods[,"kegg code"] == species)
         ##        if(length(idx)!=1) stop("bad species value")
     }
-    gsets.dir=paste(gsets.dir, "kegg/", sep="")
+    gsets.dir=paste(gsets.dir, "/kegg/", sep="")
     gsfn=paste(gsets.dir, species, ".", gid.type, ".kset.RData", sep="")
     fnames=list.files(gsets.dir, full.names=F)
     if(basename(gsfn) %in% fnames){

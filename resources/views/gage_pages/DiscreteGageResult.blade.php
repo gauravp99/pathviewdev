@@ -54,38 +54,89 @@
             $dir = substr($destDir, strlen(public_path()));
             $contents = scandir($destDir);
             $pathway_list_flag = false;
+                $pathway_significant_flag = false;
             foreach ($contents as $k => $v) {
 
-                if (strcmp($v, "pathways_list.txt") == 0) {
+                if (strcmp($v, "discrete.res.txt") == 0) {
                     $sigLines = file($destDir . $v);
                     $pathway_list_flag = true;
                 }
+                else if(strcmp($v, "discrete.sig.txt") == 0)
+                    {
+                        $pathway_significant_flag = true;
+                    }
 
             }
-            if ($pathway_list_flag) {
+                if($pathway_significant_flag)
+                    {
+                        echo "<div class='col8'>";
+                        echo "<div style='width:0.1%'>";
+                       // echo "<a href='#'><span  class = 'glyphicon glyphicon-triangle-bottom' id='expand' style='margin-left:-40px;alignment: right;font-size: 30px;' ></span></a>";
+                        echo "</div >";
+                        echo "<div style='width:99%'>";
+                        echo "<table style='font-size: 14px;margin-bottom: 30px;margin-top:-30px;width=100%;text-align: left;' border=1>";
+                        echo "<tbody>";
+                        echo "<th>Significant Pathway List </th>";
+                        echo "<th>Ranked Value</th>";
+                        $lineNumer = 0;
+                        foreach ($sigLines as $temp) {
+                            if($lineNumer > 0)
+                                {
+                                    $temp1 = explode("\t", $temp);
+                                    if (sizeof($temp1) > 1) {
+                                        echo "<tr>";
+                                        echo "<td>";
+                                        echo $temp1[0];
+                                        echo "</td>";
+                                        echo "<td>";
+
+                                        echo "" . number_format((float)$temp1[1], 2, '.', '') . "";
+                                        echo "</td>";
+                                        echo "</tr>";
+                                    }
+                                }
+
+                            $lineNumer = $lineNumer + 1;
+                            if ($lineNumer > 50) {
+                                break;
+                            }
+                        }
+                        echo "</tbody>";
+                        echo "</table>";
+                        echo "<h4> <a href ='$dir/discrete.sig.txt' target ='_blank'>Click here for full table</a> </h4>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+            else if ($pathway_list_flag) {
                 echo "<div class='col8'>";
+                echo "<h2>There are no significant pathways, Here is the complete Pathways List </h2>";
                 echo "<div style='width:0.1%'>";
-                echo "<a href='#'><span  class = 'glyphicon glyphicon-triangle-bottom' id='expand' style='margin-left:-40px;alignment: right;font-size: 30px;' ></span></a>";
+               // echo "<a href='#'><span  class = 'glyphicon glyphicon-triangle-bottom' id='expand' style='margin-left:-40px;alignment: right;font-size: 30px;' ></span></a>";
                 echo "</div >";
                 echo "<div style='width:99%'>";
-                echo "<table style='font-size: 14px;margin-bottom: 30px;margin-top:-30px;width=100%;text-align: left;' border=1>";
+
+                echo "<table style='font-size: 14px;margin-bottom: 30px;margin-top:0px;width=100%;text-align: left;' border=1>";
                 echo "<tbody>";
-                echo "<th>Pathway List </th>";
+                echo "<th>Pathways</th>";
                 echo "<th>Ranked Value</th>";
                 $lineNumer = 0;
                 foreach ($sigLines as $temp) {
-                    $temp1 = explode(",", $temp);
-                    if (sizeof($temp1) > 1) {
-                        echo "<tr>";
-                        echo "<td>";
-                        echo $temp1[0];
-                        echo "</td>";
-                        echo "<td>";
+                    if($lineNumer > 0)
+                    {
+                        $temp1 = explode("\t", $temp);
+                        if (sizeof($temp1) > 1) {
+                            echo "<tr>";
+                            echo "<td>";
+                            echo $temp1[0];
+                            echo "</td>";
+                            echo "<td>";
 
-                        echo "" . number_format((float)$temp1[1], 2, '.', '') . "";
-                        echo "</td>";
-                        echo "</tr>";
+                            echo "" . number_format((float)$temp1[1], 2, '.', '') . "";
+                            echo "</td>";
+                            echo "</tr>";
+                        }
                     }
+
                     $lineNumer = $lineNumer + 1;
                     if ($lineNumer > 50) {
                         break;
@@ -93,7 +144,7 @@
                 }
                 echo "</tbody>";
                 echo "</table>";
-                echo "<h4> <a href ='$dir/pathways_list.txt' target ='_blank'>Click here for full table</a> </h4>";
+                echo "<h4> <a href ='$dir/discrete.res.txt' target ='_blank'>Click here for full table</a> </h4>";
                 echo "</div>";
                 echo "</div>";
             } else {

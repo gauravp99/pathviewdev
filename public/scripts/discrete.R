@@ -38,7 +38,7 @@ if(args2$test.enrich){
             mol.bg = mol.bg[mol.bg>""]
         } else
             {
-                mol.bg = scan(file =args2$baclgroundListFile, what=" ",sep=c(",", ";", ":", "\t", "\n"),strip.white=TRUE)
+                mol.bg = scan(file =args2$backgroundListFile, what=" ",sep=c(",", ";", ":", "\t", "\n"),strip.white=TRUE)
                 mol.bg = mol.bg[mol.bg>""]
             }
     if(any(!mol.sel %in% mol.bg)) stop("Selected IDs not from background!")

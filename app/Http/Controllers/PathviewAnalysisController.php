@@ -228,7 +228,7 @@ class PathviewAnalysisController extends Controller {
 
 				if(!(Input::get('gcheck') == 'T')&& !(Input::get('cpdcheck') == 'T'))
 				{
-					return view('pathview_pages.analysis.exampleAnalysis1');
+					return view('pathview_pages.analysis.example_one');
 				}
 
 
@@ -288,7 +288,7 @@ class PathviewAnalysisController extends Controller {
 				}
 				if(!(Input::get('gcheck') == 'T') && !(Input::get('cpdcheck') == 'T'))
 				{
-					return view('pathview_pages.analysis.exampleAnalysis2');
+					return view('pathview_pages.analysis.example_two');
 				}
 
 			}
@@ -309,7 +309,7 @@ class PathviewAnalysisController extends Controller {
 				}
 				if(!(Input::get('gcheck') == 'T')&& !(Input::get('cpdcheck') == 'T'))
 				{
-					return view('pathview_pages.analysis.exampleAnalysis3');
+					return view('pathview_pages.analysis.example_three');
 				}
 
 			}
@@ -347,7 +347,7 @@ class PathviewAnalysisController extends Controller {
 					array_push($pathway_array, $pathway);
 				$i = $i + 1;
 				//limit imposed as per req to pathway id not more than 20 to each request
-				if(sizeof(array_unique($pathway_array)) > 20)
+				if(sizeof(array_unique($pathway_array)) >= 20)
 				{
 
 					break;

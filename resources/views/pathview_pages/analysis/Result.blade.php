@@ -103,6 +103,8 @@
                                         $("#progress").show();
                                         $("#completed").hide();
                                         if (data === "true") {
+if(Math.round((j * 10)/factor) < 100)
+{
 
                                             $('#progressData').text("80%");
                                             $('#progressData').attr('aria-valuenow', '80');
@@ -113,8 +115,11 @@
                                                 $('#progressData').css('width', '100%');
                                                 $("#progress").remove();
                                                 $("#completed").show();
-                                            },2000);
-
+                                            },2000);}
+else{
+$("#progress").remove();
+$("#completed").show();
+}
                                             clearInterval(myVar1);
                                         } else {
 
@@ -129,7 +134,7 @@
 
                                                 $('#progressData').css("opacity","0.4");
                                                 $('#progressImage').show();
-                                                $('#progressData').text("100%");
+                                                $('#progressData').text("...");
                                             }
                                             else{
 
@@ -255,6 +260,7 @@
                         $arg1[0] = "Pathway ID";
                         $val = DB::select(DB::raw("select concat(concat(pathway_id,\"-\"),pathway_desc) as path from pathway where pathway_id like '$arg1[1]' LIMIT 1"));
                         if (sizeof($val) > 0) {
+
                             $arg1[1] = $val[0]->path;
                         }
                         ?>

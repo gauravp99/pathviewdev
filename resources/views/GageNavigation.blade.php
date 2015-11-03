@@ -7,7 +7,7 @@
  */
 ?>
 <div class="col-md-2">
-    <ul class="navigation nav" style="margin-right: 4%">
+    <ul class="navigation nav" style="margin-right: 6%">
         <li <?php if (basename(Request::url()) == "gage-home" || basename(Request::url()) == "gage-guest-home" || basename(Request::url()) == "guest") {
             echo "class=\"active\"";
         }?>>
@@ -22,10 +22,10 @@
         }?>><a href="/discreteGage"><b>Discrete Gage Analysis</b></a></li>
         <li <?php if (basename(Request::url()) == "gageExample1") {
             echo "class=\"active\"";
-        }?>><a href="/gageExample1"><b>Example Analysis 1</b></a></li>
+        }?>><a href="/gageExample1"><b>Example Analysis1</b></a></li>
         <li <?php if (basename(Request::url()) == "gageExample2") {
             echo "class=\"active\"";
-        }?>><a href="/gageExample2"><b>Example Analysis 2</b></a></li>
+        }?>><a href="/gageExample2"><b>Example Analysis2</b></a></li>
         <li <?php if (basename(Request::url()) == "gagePathview") {
             echo "class=\"active\"";
         }?>><a href="/gagePathview"><b>Gage and Pathview Analysis</b></a></li>

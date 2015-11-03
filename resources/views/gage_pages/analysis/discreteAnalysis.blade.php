@@ -23,7 +23,7 @@
     $reference = "1,3";
     $sample = "2,4";
     $cutoff = "0.1";
-    $ncutoff = "0.1";
+    $ncutoff = "1";
     $setSizeMin = "10";
     $setSizeMax = "infinite";
     $compare = "paired";
