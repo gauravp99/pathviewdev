@@ -689,10 +689,18 @@ class GageAnalysisController extends Controller
         }
 
         if (isset($_POST['cutoff'])) {
-            $argument .= "pcut:";
+            $argument .= "qcut:";
             $argument .= $_POST['cutoff'].";";
         }
-
+        if (isset($_POST['dopathview'])) {
+            $argument .= "do.pathview:T;";
+            if (isset($_POST['dataType'])) {
+                $argument .= "data.type:" . $_POST['dataType'] . ";";
+            }
+            if (isset($_POST['bins'])) {
+                $argument .= "bins:" . $_POST['bins'] . ";";
+            }
+        }
         if (isset($_POST['geneIdType'])) {
 
             $argument .= "geneIdType:" . $_POST['geneIdType'] . ";";
@@ -736,23 +744,8 @@ class GageAnalysisController extends Controller
         }
 
 
-        if (isset($_POST['setSizeMin'])) {
-            $argument .= "setSizeMin:" . $_POST['setSizeMin'] . ";";
-        }
 
-        if (isset($_POST['setSizeMax'])) {
-            if (strcmp(strtolower($_POST['setSizeMax']), 'infinite') == 0) {
-                $argument .= "setSizeMax:INF;";
-            } else {
-                $argument .= "setSizeMax:" . $_POST['setSizeMax'] . ";";
-            }
-        } else {
-            $argument .= "setSizeMax:INF;";
-        }
 
-        if (isset($_POST['resultBasedOn'])) {
-            $argument .= "resultBasedOn:" . $_POST['resultBasedOn'] . ";";
-        }
         $_SESSION['argument'] = $argument;
         $_SESSION['destDir'] = $destFile;
         #n $argument;

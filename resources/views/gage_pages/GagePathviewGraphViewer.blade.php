@@ -11,9 +11,9 @@
             if (Auth::user()) {
                 $user_id = Auth::user()->id;
 
-                $val1 = DB::select(DB::raw("select analysis_id from analyses where id = $user_id  and analysis_id ='$anal_id'"));
+                $val1 = DB::select(DB::raw("select analysis_id from analysis where id = $user_id  and analysis_id ='$anal_id'"));
             } else {
-                $val1 = DB::select(DB::raw("select analysis_id from analyses where id = 0  and analysis_id ='$anal_id'"));
+                $val1 = DB::select(DB::raw("select analysis_id from analysis where id = 0  and analysis_id ='$anal_id'"));
             }
             /**if(sizeof($val1) == 0 && !isset($_GET['email']))
             {
@@ -68,11 +68,11 @@
             $d = str_replace("href=\"", "href=\"http://www.genome.jp", $c);
             if(Auth::user())
             {
-                $dir = "all/".Auth::user()->email."/".$_GET['analyses']."/".$_GET['image'];
+                $dir = "all/".Auth::user()->email.$_GET['id'].$_GET['image'];
             }
             else if(isset($_GET['email']))
             {
-                $dir = "all/".$_GET['email']."/".$_GET['id']."/".$_GET['image'];
+                $dir = "all/".$_GET['email'].$_GET['id'].$_GET['image'];
             }
             else{
                 $dir = "all/demo/".$_GET['id']."/".$_GET['image'];

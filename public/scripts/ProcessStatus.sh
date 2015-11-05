@@ -19,7 +19,7 @@ else
 fi
 
 #check if supervisor is running or not
-ps cax | grep supervisor > /dev/nukk
+ps cax | grep supervisor > /dev/null
 if [ $? -eq 0 ]; then
 	echo "\t\tsupervisor is running."
 else 
@@ -47,3 +47,8 @@ else
 	echo "starting memcached"
 	sudo /etc/init.d/memcached restart
 fi
+
+
+#setting an environment variable to R to look for correct project public directory
+export pvwdir='/var/www/PathwayWeb/public/'
+

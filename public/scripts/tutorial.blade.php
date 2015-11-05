@@ -190,46 +190,24 @@
                                 <dt><a name="gene_data">Gene Data</a></dt>
                             </div>
                             <div class="panel-body argument">
-                                <dd><p>Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv). Data
+                                <dd>Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv). Data
                                     matrix has genes as rows and samples as columns. First column should be gene IDs,
                                     first row sample IDs. The data may also be a single-column of gene IDs. Here gene ID
                                     is a generic concept, including multiple types of genes, transcripts and proteins
                                     uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs
-                                    as to handle metagenomic data.</p>
+                                    as to handle metagenomic data. 
 
-                                    <p>Both the absolute or original expression levels and the relative expression levels (log2 fold changes, t-statistics) can be visualized on pathways. However, the latter are more frequently used.
-                                    If you supply data as original expression levels, but you want to visualize the relative expression levels (or differences) between two states. You need to specify a few extra parameters:
-                                    <ul class="dataList" style="margin-left:30px;">
+Both the absolute or original expression levels and the relative expression levels (log2 fold changes, t-statistics) can be visualized on pathways. However, the latter are more frequently used.
+If you supply data as original expression levels, but you want to visualize the relative expression levels (or differences) between two states. You need to specify a few extra parameters: 
+Control/reference: the column numbers for controls;
+Case/sample: the column numbers for cases;
+Compare: whether the experiment samples are paired or not.
+You don't have to specify another of these parameters if your just want to visualize the input data as it is.
 
-
-                                            <li>
-                                        <dt name="control_reference"> <b>Control/reference:</b></dt> <dd>the column numbers for controls;</dd>
-                                                </li>
-
-
-
-
-                                        <li >
-                                        <dt name="control_sample"><b>Case/sample:</b> </dt><dd>the column numbers for cases;</dd>
-                                        </li>
-
-
-
-
-                                        <li >
-                                        <dt name="compare"><b>Compare:</b></dt> <dd>whether the experiment samples are paired or not.</dd>
-                                        </li>
-
-
-                                    </ul>
-
-
-                                    You don't have to specify another of these parameters if your just want to visualize the input data as it is.</p>
-
-                                    <p>For examples of gene data, check: <a
+For examples of gene data, check: <a
                                             href="all/demo/example/gse16873.d3.txt" target="_balnk">Example Gene Data
                                         1</a> and <a href="data/gse16873.3.txt" target="_balnk">Example Gene
-                                        Data 2</a>.</p>
+                                        Data 2</a>.
                                 </dd>
                             </div>
                         </div>

@@ -191,8 +191,22 @@ use Illuminate\Cacheache;
                                 <div class="modal-body">
                                     <div class="col-sm-12">
                                         <div class="col-md-6">
-                                            <input type="text" id="geneColumns" name="geneColumns" ng-model="geneColumns" hidden="" class="ng-pristine ng-untouched ng-valid">
-                                            <input type="text" id="generef" name="generef" ng-model="geneRefSelect" class="ng-pristine ng-untouched ng-valid">
+                                            <a href="tutorial#control_reference" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for controls"
+                                               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Control/Refernce  </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for cases"
+                                               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Case/Sample </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" id="geneColumns" name="geneColumns" style="width:100%;" ng-model="geneColumns" hidden="" class="ng-pristine ng-untouched ng-valid">
+                                            <input type="text" id="generef" name="generef" style="width:100%;" ng-model="geneRefSelect" class="ng-pristine ng-untouched ng-valid">
                                             <select name="GeneRef[]" id="Generefselect" multiple="" size="10" style="width:100%;" ng-model="geneRefSelect"  class="ng-pristine ng-valid ng-touched">
                                                 <option  value="1">
                                                     HN_1
@@ -210,7 +224,7 @@ use Illuminate\Cacheache;
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <input type="text" id="genesam" name="genesam" ng-model="geneSamSelect" class="ng-pristine ng-untouched ng-valid">
+                                            <input type="text" id="genesam" name="genesam" style="width:100%;" ng-model="geneSamSelect" class="ng-pristine ng-untouched ng-valid">
                                             <select name="GeneSam[]" id="Genesamselect" multiple="" size="10" style="width:100%;" ng-model="geneSamSelect"  class="ng-pristine ng-untouched ng-valid">
                                                 <option  value="1">
                                                     HN_1
@@ -230,7 +244,7 @@ use Illuminate\Cacheache;
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="col-sm-5">
-                                            <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                            <a href="tutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                             </a>
                                             <label for="compare">Compare:</label>
@@ -263,8 +277,24 @@ use Illuminate\Cacheache;
                                 <div class="modal-body">
                                     <div class="col-sm-12">
                                         <div class="col-md-6">
-                                            <input type="text" id="cpdColumns" name="cpdColumns" ng-model="cpdColumns" hidden="" class="ng-pristine ng-untouched ng-valid">
-                                            <input type="text" name="cpdref" id="cpdref" ng-model="cpdRefSelect" class="ng-pristine ng-untouched ng-valid">
+                                            <a href="tutorial#control_reference" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for controls"
+                                               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Control/Refernce  </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for cases"
+                                               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Case/Sample </span>
+                                            </a>
+                                        </div>
+
+                                        <div class="col-md-6">
+
+                                            <input type="text" id="cpdColumns" style="width:80%;" name="cpdColumns" ng-model="cpdColumns" hidden="" class="ng-pristine ng-untouched ng-valid">
+                                            <input type="text" name="cpdref" style="width:100%;" id="cpdref" ng-model="cpdRefSelect" class="ng-pristine ng-untouched ng-valid">
                                             <select name="CompoundRef[]" id="Cpdrefselect" multiple="" size="10" style="width:100%;" ng-model="cpdRefSelect"  class="ng-pristine ng-valid ng-touched">
                                                 <option  value="1">
                                                     cont1
@@ -280,8 +310,9 @@ use Illuminate\Cacheache;
                                                 </option>
                                             </select>
                                         </div>
+
                                         <div class="col-md-6">
-                                            <input type="text" name="cpdsam" id="cpdsam" ng-model="cpdSamSelect" class="ng-pristine ng-untouched ng-valid">
+                                            <input type="text" name="cpdsam" style="width:100%;" id="cpdsam" ng-model="cpdSamSelect" class="ng-pristine ng-untouched ng-valid">
                                             <select name="CompoundSam[]" id="Cpdsamselect" multiple="" size="10" style="width:100%;" ng-model="cpdSamSelect"  class="ng-pristine ng-untouched ng-valid">
                                                <option  value="1">
                                                     cont1
@@ -300,7 +331,7 @@ use Illuminate\Cacheache;
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="col-sm-5">
-                                            <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                            <a href="tutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                             </a>
                                             <label for="compare">Compare:</label>

@@ -144,8 +144,22 @@ use Illuminate\Cacheche;
                                         <div class="modal-body">
                                             <div class="col-sm-12">
                                                 <div class="col-md-6">
-                                                    <input type="text" id="geneColumns" name="geneColumns" ng-model="geneColumns" hidden="">
-                                                    <input type="text" id="generef" name="generef" ng-model="geneRefSelect">
+                                                <a href="tutorial#control_reference" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for controls"
+                                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Control/Refernce  </span>
+                                                </a>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for cases"
+                                                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Case/Sample </span>
+                                                </a>
+                                            </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="geneColumns" name="geneColumns" style="width:100%;" ng-model="geneColumns" hidden="">
+                                                    <input type="text" id="generef" name="generef" style="width:100%;" ng-model="geneRefSelect">
                                                     <select name="GeneRef[]" id="Generefselect"   multiple="" size="10" style="width:100%;" ng-model='geneRefSelect' ng-show="Genecolumns.length > 0">
                                                         <option ng-repeat="column in Genecolumns track by $index"
                                                                 value="<% $index+1 %>">
@@ -154,7 +168,7 @@ use Illuminate\Cacheche;
                                                     </select>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <input type="text" id="genesam" name="genesam" ng-model="geneSamSelect">
+                                                    <input type="text" id="genesam" name="genesam" style="width:100%;" ng-model="geneSamSelect">
                                                     <select name="GeneSam[]" id="Genesamselect"   multiple="" size="10" style="width:100%;" ng-model='geneSamSelect' ng-show="Genecolumns.length > 0">
                                                         <option ng-repeat="column in Genecolumns track by $index"
                                                                 value="<% $index+1 %>">
@@ -165,7 +179,7 @@ use Illuminate\Cacheche;
                                             </div>
                                             <div class="col-sm-12">
                                                 <div class="col-sm-5">
-                                                    <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                                    <a href="tutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                                     </a>
                                                     <label for="compare">Compare:</label>
@@ -229,9 +243,23 @@ use Illuminate\Cacheche;
                                 </div>
                                 <div class="modal-body">
                                     <div class="col-sm-12">
+                                        <div class="col-md-6">
+                                            <a href="tutorial#control_reference" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for controls"
+                                               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Control/Refernce  </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for cases"
+                                               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Case/Sample </span>
+                                            </a>
+                                        </div>
                                     <div class="col-md-6">
                                         <input type="text" id="cpdColumns" name="cpdColumns" ng-model="cpdColumns" hidden="">
-                                        <input type="text" name="cpdref" id="cpdref" ng-model="cpdRefSelect">
+                                        <input type="text" name="cpdref" id="cpdref" style="width:100%;" ng-model="cpdRefSelect">
                                         <select name="CompoundRef[]" id="Cpdrefselect"   multiple="" size="10" style="width:100%;" ng-model='cpdRefSelect' ng-show="Compoundcolumns.length > 0">
                                             <option ng-repeat="column in Compoundcolumns track by $index"
                                                     value="<% $index+1 %>">
@@ -240,7 +268,7 @@ use Illuminate\Cacheche;
                                         </select>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" name="cpdsam" id="cpdsam" ng-model="cpdSamSelect">
+                                        <input type="text" name="cpdsam" id="cpdsam" style="width:100%;" ng-model="cpdSamSelect">
                                         <select name="CompoundSam[]" id="Cpdsamselect"   multiple="" size="10" style="width:100%;" ng-model='cpdSamSelect' ng-show="Compoundcolumns.length > 0">
                                             <option ng-repeat="column in Compoundcolumns track by $index"
                                                     value="<% $index+1 %>">
@@ -251,7 +279,7 @@ use Illuminate\Cacheche;
                                         </div>
                                     <div class="col-sm-12">
                                         <div class="col-sm-5">
-                                            <a href="gageTutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                            <a href="tutorial#compare" onclick="window.open('gageTutorial#compare', 'newwindow', 'width=300, height=250').focus() ;return false;" title="Comparison scheme to be used." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                             </a>
                                             <label for="compare">Compare:</label>
@@ -546,9 +574,12 @@ use Illuminate\Cacheche;
             $('#Generefselect').change(function () {
                 console.log("in generefselect function");
                 var ref_selected_text = "";
+
                 var noOfColumns = $('#geneColumns').val() ;
+
                 console.log("noofcolumns: is working"+noOfColumns);
                 for (var j = 1; j < noOfColumns; j++) {
+
                     $("#Genesamselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');
                 }
                 console.log($(this).val());

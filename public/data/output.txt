@@ -1,8 +1,14 @@
---2015-10-02 16:00:01--  http://bioconductor.org/packages/stats/bioc/gage.html
-ResoResolving bioconductor.org (bioconductor.org)54.230.16.89, 54.254.230.1, 54.254.230.1, ..,
-ConnConnecting to bioconductor.org (bioconductor.org)|54.230.16.89|:80connconnectHTTPHTTP request sent, awaiting response200 200 OK
-Length: 3543 (3.5K) [text/html]
-Saving to: `pathview.html'
+--2015-11-03 13:00:01--  http://bioconductor.org/packages/stats/bioc/gage.html
+Resolving bioconductor.org (bioconductor.org)... 54.154.192.20, 54, 54.192.206.154, 54.230.206.244, Connecting to bioconductor.org (bioconductor.org)|54.192.205.60|:80... connconnected.
+HTTP request sent, awaiting response200 OK
+Length: 3512 (3.4K) [text/html]
+Saving to: `gage.html'
 
-     0K ...                                                   100%  52015-10-2015-10-02 16:00:01 (518 MB/s) - `pathview.html' saved [insert into biocGagestatistic values('October','2015',21,23);
-,34,57);
+     0K ...                                                   100%  371M=0s
+
+2015-11-03 13:00:01 (371 MB/s) - `gage.html' saved [3512/3512]
+
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+insert into biocGagestatistic values('November','2015',497,720);
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ord: YES)

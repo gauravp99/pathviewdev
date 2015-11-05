@@ -1,8 +1,7 @@
 #source("/var/www/Pathway/public/kg.map.R")
-projectPath = substr(getwd(),1,nchar(getwd())-30)
-print(projectPath)
-publicPathlines = readLines(paste(projectPath,"/public/data/publicPath.txt",sep=""))
-mmap.dir1=paste(publicPathlines,"/mmap/",sep="")
+if(!exists("pvwdir")) pvwdir = substr(getwd(),1,nchar(getwd())-30)
+print(pvwdir)
+mmap.dir1=paste(pvwdir,"/mmap/",sep="")
 kg.map=function(species="hsa", mmap.dir=mmap.dir1){
     fn.list=list.files(mmap.dir, full.names=F)
     furl=paste0("http://rest.kegg.jp/list/", species)

@@ -52,6 +52,12 @@
             $argument = $_SESSION['argument'];
             $destDir = $_SESSION['destDir'];
             $dir = substr($destDir, strlen(public_path()));
+                $user = "demo";
+                if(Auth::user())
+                    {
+                    $user = Auth::user()->email;
+                    }
+                $anal_id = substr($dir,strlen("/all/".$user."/"),strlen($dir)-1);
             $contents = scandir($destDir);
             $pathway_list_flag = false;
                 $pathway_significant_flag = false;
@@ -67,34 +73,99 @@
                     }
 
             }
+            $rootPath = realpath($destDir);
+
+            chdir($destDir);
+            // Initialize archive object
+            $zip = new ZipArchive();
+            $zip->open('file.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+
+            // Create recursive directory iterator
+            /** @var SplFileInfo[] $files */
+            $files = new RecursiveIteratorIterator(
+                    new RecursiveDirectoryIterator($rootPath),
+                    RecursiveIteratorIterator::LEAVES_ONLY
+            );
+
+            foreach ($files as $name => $file) {
+                // Skip directories (they would be added automatically)
+                if (!$file->isDir()) {
+
+                    // Get real and relative path for current file
+                    $filePath = $file->getRealPath();
+                    $relativePath = substr($filePath, strlen($rootPath) + 1);
+
+                    // Add current file to archive
+                    if(!strpos($filePath,'RData')&& !strpos($filePath,'Rout'))
+                        $zip->addFile($filePath, $relativePath);
+
+                }
+            }
+
+            // Zip archive will be created only after closing object
+            $zip->close();
+
+
+
+
+
                 if($pathway_significant_flag)
                     {
                         echo "<div class='col8'>";
-                        echo "<div style='width:0.1%'>";
-                       // echo "<a href='#'><span  class = 'glyphicon glyphicon-triangle-bottom' id='expand' style='margin-left:-40px;alignment: right;font-size: 30px;' ></span></a>";
-                        echo "</div >";
+
+                        echo "<h1>Analysis : $anal_id</h1>";
+                        echo "<h2 class='alert alert-info'> Click here to download the zipped output files <a href=".$dir."/file.zip target='_blank'>File.zip</a></h2>";
                         echo "<div style='width:99%'>";
-                        echo "<table style='font-size: 14px;margin-bottom: 30px;margin-top:-30px;width=100%;text-align: left;' border=1>";
+                        echo "<div style='width:0.1%'>";
+                        echo "<a href='#'><span  class = 'glyphicon glyphicon-triangle-bottom' id='expand' style='margin-left:-40px;alignment: right;font-size: 30px;' ></span></a>";
+                        echo "</div >";
+                        echo "<table style='font-size: 14px;margin-bottom: 30px;width=100%;text-align: left;' border=1>";
                         echo "<tbody>";
-                        echo "<th>Significant Pathway List </th>";
-                        echo "<th>Ranked Value</th>";
+
                         $lineNumer = 0;
                         foreach ($sigLines as $temp) {
                             if($lineNumer > 0)
                                 {
                                     $temp1 = explode("\t", $temp);
                                     if (sizeof($temp1) > 1) {
-                                        echo "<tr>";
+                                        if ($lineNumer > 10) {
+                                            if($lineNumer == 50)
+                                            {
+                                                break;
+                                            }
+                                            echo "<tr class='expandable'>";
+                                        }else{
+                                            echo "<tr>";
+                                        }
                                         echo "<td>";
                                         echo $temp1[0];
                                         echo "</td>";
-                                        echo "<td>";
+                                        $temp1 = array_diff($temp1,array($temp1[0]));
+                                        foreach($temp1 as $temp)
+                                        {
 
-                                        echo "" . number_format((float)$temp1[1], 2, '.', '') . "";
-                                        echo "</td>";
+                                            echo "<td>";
+                                            echo "" . number_format((float)$temp, 2, '.', '') . "";
+                                            echo "</td>";
+                                        }
                                         echo "</tr>";
                                     }
+                                }else{
+                                $temp1 = explode("\t", $temp);
+                                echo "<tr>";
+                                echo "<th>";
+                                echo "Signifcant Pathway ID";
+                                echo "</th>";
+                                foreach($temp1 as $temp)
+                                {
+                                    echo "<th>";
+                                    echo $temp;
+                                    echo "</th>";
                                 }
+
+
+                                echo "</tr>";
+                            }
 
                             $lineNumer = $lineNumer + 1;
                             if ($lineNumer > 50) {
@@ -104,8 +175,36 @@
                         echo "</tbody>";
                         echo "</table>";
                         echo "<h4> <a href ='$dir/discrete.sig.txt' target ='_blank'>Click here for full table</a> </h4>";
+
+                        foreach ($contents as $k => $v) {
+
+                            if (strpos($v,".png") >-1) {
+                                if(Auth::user())
+                                {
+                                    $id = substr($dir,strlen('all/'.Auth::user()->email.'/'));
+                                }
+                                else
+                                {
+
+                                    $id = substr($dir,strlen('all/demo/'));
+                                }
+
+
+                                echo "<div class = 'col12  pdf' >";
+                                echo "<a href='/pathviewViewer?id=$id&image=$v' target='_blank'><img class='pdf-info' width='500px' height='500px' src=".$dir .$v."></a>";
+                                echo "<p class='pdf-info' style='align:center;'>".$v."</p>";
+                                echo "</div>";
+                            }
+
+                        }
+
+
+
                         echo "</div>";
                         echo "</div>";
+
+
+
                     }
             else if ($pathway_list_flag) {
                 echo "<div class='col8'>";
@@ -117,34 +216,83 @@
 
                 echo "<table style='font-size: 14px;margin-bottom: 30px;margin-top:0px;width=100%;text-align: left;' border=1>";
                 echo "<tbody>";
-                echo "<th>Pathways</th>";
-                echo "<th>Ranked Value</th>";
+
                 $lineNumer = 0;
                 foreach ($sigLines as $temp) {
                     if($lineNumer > 0)
                     {
                         $temp1 = explode("\t", $temp);
                         if (sizeof($temp1) > 1) {
-                            echo "<tr>";
+                            if ($lineNumer > 10) {
+                                if($lineNumer == 50)
+                                    {
+                                        break;
+                                    }
+                                echo "<tr class='expandable'>";
+                            }else{
+                                echo "<tr>";
+                            }
                             echo "<td>";
                             echo $temp1[0];
                             echo "</td>";
-                            echo "<td>";
+                            $temp1 = array_diff($temp1,array($temp1[0]));
+                            foreach($temp1 as $temp)
+                            {
+                                echo "<td>";
+                                echo "" . number_format((float)$temp, 2, '.', '') . "";
+                                echo "</td>";
+                            }
 
-                            echo "" . number_format((float)$temp1[1], 2, '.', '') . "";
-                            echo "</td>";
+
                             echo "</tr>";
                         }
+                    }else {
+                        $temp1 = explode("\t", $temp);
+
+
+                        echo "<th>";
+                        echo "pathway ID";
+                        echo "</th>";
+                        foreach($temp1 as $temp)
+                            {
+                                echo "<th>";
+                                echo $temp;
+                                echo "</th>";
+                            }
+
+
+                        echo "</tr>";
                     }
 
                     $lineNumer = $lineNumer + 1;
-                    if ($lineNumer > 50) {
-                        break;
-                    }
+
                 }
                 echo "</tbody>";
                 echo "</table>";
                 echo "<h4> <a href ='$dir/discrete.res.txt' target ='_blank'>Click here for full table</a> </h4>";
+
+                foreach ($contents as $k => $v) {
+
+                    if (strpos($v,".png") >-1) {
+                        if(Auth::user())
+                        {
+                            $id = substr($dir,strlen('all/'.Auth::user()->email.'/'));
+                        }
+                        else
+                        {
+
+                            $id = substr($dir,strlen('all/demo/'));
+                        }
+
+
+                        echo "<div class = 'col12  pdf' >";
+                        echo "<a href='/pathviewViewer?id=$id&image=$v' target='_blank'><img class='pdf-info' width='500px' height='500px' src=".$dir .$v."></a>";
+                        echo "<p class='pdf-info' style='align:center;'>".$v."</p>";
+                        echo "</div>";
+                    }
+
+                }
+
                 echo "</div>";
                 echo "</div>";
             } else {
@@ -152,6 +300,10 @@
             }
             ?>
         </div>
+
+
+
+
     </div>
     <script>
         $(document).ready(function () {

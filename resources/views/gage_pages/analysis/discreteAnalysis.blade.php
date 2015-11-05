@@ -33,6 +33,7 @@
     $test = "gs.tTest";
     $dopathview = false;
     $dataType = "gene";
+    $bins = 3;
     ?>
     <input type="text" id="rememberTxt" hidden="">
 
@@ -318,32 +319,7 @@
                             </div>
                         </div>
 
-                        <div class="stepsdiv" id="setSize-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#set_size"
-                                       onclick="window.open('gageTutorial#set_size', 'newwindow', 'width=300, height=250').focus() ;return false;"
-                                       title="Gene set size (number of genes) range to be considered for enrichment test. Tests for too small or too big gene sets are not robust statistically or informative bio-logically. "
-                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="setSize">Set Size,</label>
-                                    <label for="setSize">Minimum:</label>
-                                    <h4 for="setSize"
-                                        style="max-width: 100%;margin-top:20px;font-weight: bold;margin-left: 116px;">
-                                        Maximum:</h4>
-                                </div>
-                                <div class="col-sm-7">
 
-                                    <input class="ex8" style="" name="setSizeMin" id="setSizeMin"
-                                           value={{$setSizeMin}}  placeholder="5">
-                                    <input class="ex8" style="margin-top:20px;" name="setSizeMax"
-                                           class="MaxGreaterThanMinCheck" data-min="setSizeMin" id="setSizeMax"
-                                           value={{$setSizeMax}} placeholder="100">
-
-                                </div>
-                            </div>
-                        </div>
 
 
                         <div class="stepsdiv" id="UsePathview-div">
@@ -364,25 +340,6 @@
                             </div>
                         </div>
 
-                        <div class="stepsdiv" id="resultBasedOn-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-5">
-                                    <a href="gageTutorial#resultBasedOn"
-                                       onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;"
-                                       title="Data type Gene,Compound while generating the pathviews." target="_blank"
-                                       class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="ResultsBasedOn">Results Based On:</label>
-                                </div>
-                                <div class="col-sm-7">
-                                    <select name="resultBasedOn" class="styled-select" id="dataType" class="compare">
-                                        <option value="number">number (selected)</option>
-                                        <option value="ratio">ratio (selected vs background)</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
                         <div class="stepsdiv" id="dataType-div">
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
@@ -402,6 +359,22 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="stepsdiv" id="bins-div">
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="gageTutorial#bins"
+                                       onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=300, height=250').focus() ;return false;"
+                                       title="Data type Gene,Compound while generating the pathviews." target="_blank"
+                                       class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    <label for="usePathview">Bins:</label>
+                                </div>
+                                <div class="col-sm-7">
+                                    <input type="text" id="usePathview" name="bins"  value={{$bins}}  >
+                                </div>
+                            </div>
+                        </div>
 
                     </fieldset>
                 </div>
@@ -409,7 +382,7 @@
                 <div class="steps">
                     <input type="submit" id="submit-button" class="btn btn-primary"
                            style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;"
-                           value="Submit" onclick="return validation()"/>
+                           value="Submit" />
                     <input type="Reset" id="reset" class="btn btn-primary"
                            style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;"
                            value="Reset"/>
@@ -532,15 +505,7 @@
                 },
                 'geneSet[]': "required",
 
-                setSizeMin: {
-                    required: true,
-                    digits: true
-                },
-                setSizeMax: {
-                    setSize: true,
-                    MaxGreaterThanMinCheck: true,
-                    setSizeMaxDigitCheck: true
-                },
+
                 cutoff: {
                     required: true,
                     decimal: true
@@ -591,15 +556,7 @@
                     refSampleFieldValidate: "* Input field should be Column numbers of input file separated by comma or NULL",
                     refSampleSameColumnCheck: "* column numbers should not intersect with each other"
                 },
-                setSizeMin: {
-                    required: "* Set Size Min field is required",
-                    digits: "* Set Size Min field must be numeric"
-                },
-                setSizeMax: {
-                    setSize: "* Set Size Max field must be numeric or INFINITE",
-                    MaxGreaterThanMinCheck: "* SetSizeMax value should be greater than Min",
-                    setSizeMaxDigitCheck: "* Max size should only contains digits or inf to indicate infinity "
-                },
+
                 cutoff: {
                     required: "* Cutoff field value is required",
                     decimal: "* Cutoff field must be decimal value"
@@ -758,25 +715,6 @@
 
         }, "Column numbers should not intersect with each other");
 
-        jQuery.validator.addMethod('MaxGreaterThanMinCheck', function (value, element) {
-            if (value.toLowerCase() === 'infinite') {
-                return true;
-            }
-            else {
-                return parseInt(value) > parseInt($('#setSizeMin').val());
-            }
-
-        }, "Max must be greater than min");
-        jQuery.validator.addMethod('setSizeMaxDigitCheck', function (value, element) {
-            if (value.toLowerCase() === 'infinite') {
-                return true;
-            }
-            else {
-                return $.isNumeric($("#setSizeMax").val());
-
-            }
-
-        }, "Max size should only contains digits or inf");
 
     </script>
 

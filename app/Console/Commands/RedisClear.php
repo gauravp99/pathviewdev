@@ -1,4 +1,4 @@
-<?php namespace App\Commands\Console;
+<?php namespace App\Console\Commands;
 
 
 use Illuminate\Console\Command;
@@ -26,8 +26,9 @@ class RedisClear extends Command {
 	 */
 	public function handle()
 	{
-
+		echo "started the redis clear";
 		Redis::del('*');
+		echo "deleted redis configurations";
 	}
 
 }

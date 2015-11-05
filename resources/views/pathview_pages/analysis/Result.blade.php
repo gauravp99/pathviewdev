@@ -13,6 +13,8 @@
         var waitFlag = false;
         var waitFlag1 = false;
         $(document).ready(function () {
+            $("#completed").hide();
+
             if($('#status').val())
             {
                 $("#waiting").remove();
@@ -36,6 +38,7 @@
 
                 if(factor != -1000)
                 {
+
                     if (queue_id == -1) {
                         $("#progress").hide();
                         $("#completed").hide();
@@ -56,14 +59,84 @@
                                 success: function (data) {
                                     if (data.length > 0) {
                                         console.log("success: data " + data);
-
+                                        $("#completed").hide();
                                         if (data == "pushedJob") {
 
                                             $("#waiting").remove();
                                             $("#progress").show();
                                             waitFlag1 = true;
                                             clearInterval(myVar2);
+                                            var myVar1 = setInterval(function () {
+                                                j = j + 1;
+                                                $.ajax({
+                                                    url: "/ajax/analysisStatus",
+                                                    method: 'POST',
+                                                    data: {
+                                                        'analysisid': myvar,
+                                                        'id': id,
+                                                        'suffix': suffix,
+                                                        'argument': argument,
+                                                        'anal_type': anal_type
+                                                    },
+                                                    success: function (data) {
+                                                        if (data.length > 0) {
+                                                            console.log("success: data " + data);
+                                                            $("#waiting").remove();
+                                                            $("#progress").show();
+                                                            $("#completed").hide();
+                                                            if (data === "true") {
 
+                                                                if(Math.round((j * 10)/factor) < 100)
+                                                                {
+
+                                                                    $('#progressData').text("80%");
+                                                                    $('#progressData').attr('aria-valuenow', '80');
+                                                                    $('#progressData').css('width', '80%');
+                                                                    setTimeout(function delayFun() {
+                                                                        $('#progressData').text("100%");
+                                                                        $('#progressData').attr('aria-valuenow', '100');
+                                                                        $('#progressData').css('width', '100%');
+                                                                        $("#progress").remove();
+                                                                        $("#completed").show();
+                                                                    },2000);
+                                                                }
+                                                                else{
+                                                                    $("#progress").remove();
+                                                                    $("#completed").show();
+                                                                }
+
+                                                                clearInterval(myVar1);
+
+                                                            } else {
+
+                                                                var fac = Math.round((j * 10)/factor);
+
+                                                                if(fac < 1)
+                                                                {
+                                                                    fac = 1;
+                                                                }
+                                                                if(fac > 100)
+                                                                {
+
+                                                                    $('#progressData').css("opacity","0.4");
+                                                                    $('#progressImage').show();
+                                                                    $('#progressData').text("...");
+                                                                }
+                                                                else{
+
+                                                                    $('#progressData').text("" +fac + "%");
+                                                                    $('#progressData').attr('aria-valuenow', "" + fac);
+                                                                    $('#progressData').css('width', fac + '%');
+                                                                }
+
+                                                            }
+                                                        }
+                                                    },
+                                                    error: function (data) {
+                                                        console.log("error" + data);
+                                                    }
+                                                });
+                                            }, 1500  );
                                         }
                                     }
                                 },
@@ -75,7 +148,7 @@
                     }
 
 
-                    if (queue_id > 0 || waitFlag) {
+                    if (queue_id > 0 || waitFlag1) {
 
                         console.log("in progress method");
                         $("#completed").hide();
@@ -102,9 +175,10 @@
                                         $("#waiting").remove();
                                         $("#progress").show();
                                         $("#completed").hide();
-                                        if (data === "true") {
-if(Math.round((j * 10)/factor) < 100)
-{
+                                if (data === "true") {
+
+                                    if(Math.round((j * 10)/factor) < 100)
+                                    {
 
                                             $('#progressData').text("80%");
                                             $('#progressData').attr('aria-valuenow', '80');
@@ -115,12 +189,15 @@ if(Math.round((j * 10)/factor) < 100)
                                                 $('#progressData').css('width', '100%');
                                                 $("#progress").remove();
                                                 $("#completed").show();
-                                            },2000);}
-else{
-$("#progress").remove();
-$("#completed").show();
-}
+                                            },2000);
+                                    }
+                                     else{
+                                        $("#progress").remove();
+                                        $("#completed").show();
+                                        }
+
                                             clearInterval(myVar1);
+
                                         } else {
 
                                             var fac = Math.round((j * 10)/factor);
@@ -154,7 +231,7 @@ $("#completed").show();
 
                     } else {
 
-                        $('#completed').show();
+                       // $('#completed').show();
                     }
                 }else{
                     $("#waiting").remove();

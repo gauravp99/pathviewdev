@@ -34,13 +34,14 @@ app.controller('analysisController',function($scope,$timeout) {
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.Genecolumns = $fileContent.split("\n")[0].replace(" ", "").split(",");
-            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,"").split(",");
+            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,"").split(",");
             console.log(columns1.length+" "+columns2.length);
             if(columns1.length === columns2.length)
             {
                 $scope.Genecolumns.splice(0, 1);
             }
+            $scope.geneColumns = columns1.length;
 
         }
         else if($scope.filetype === 'text/plain')
@@ -90,14 +91,14 @@ app.controller('analysisController',function($scope,$timeout) {
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.Compoundcolumns = $fileContent.split("\n")[0].replace(" ", "").split(",");
-            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,",").split(",");
-            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,",").split(",");
+            var columns1 = $fileContent.split("\n")[0].replace(/\s/g,"").split(",");
+            var columns2 = $fileContent.split("\n")[1].replace(/\s/g,"").split(",");
             console.log(columns1.length+" "+columns2.length);
             if(columns1.length === columns2.length)
             {
                 $scope.Compoundcolumns.splice(0, 1);
             }
-
+            $scope.cpdColumns = columns1.length;
         }
         else if($scope.filetype === 'text/plain')
         {

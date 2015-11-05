@@ -5,8 +5,8 @@ function validation() {
     var geneIdType = $('#geneIdType');
     var reference = $('#reference');
     var sample = $('#sample');
-    var setSizeMin = $('#setSizeMin');
-    var setSizeMax = $('#setSizeMax');
+
+
     var compare = $('#compare');
     var sameDir = $('#sameDir');
     var rankTest = $('#rankTest');
@@ -16,12 +16,6 @@ function validation() {
     var refSetlength = ($("#ref option:selected").length);
     var samplelength = ($("#sample option:selected").length);
 
-    if (setSizeMin.val() !== "" && !$.isNumeric(setSizeMin.val())) {
-
-        $("label#setSizeMinError").show(); //Show error
-        $("input#setSizeMin").focus(); //Focus on field
-        return false;
-    }
 
 
 }
@@ -35,6 +29,7 @@ $(document).ready(function () {
         $('#graphics').hide();
         $('#coloration').hide();
         $('#dataType-div').toggle();
+        $('#bins-div').toggle();
         $('#pathviewSettings-div').toggle();
         $("[name='dopathview']").bootstrapSwitch();
         $("[name='test2d']").bootstrapSwitch();
@@ -44,6 +39,10 @@ $(document).ready(function () {
         $("[name='useFold']").bootstrapSwitch.defaults.setOffLabel = "setOnLabel";
         $('input[name="dopathview"]').on('switchChange.bootstrapSwitch', function (event, state) {
             $('#dataType-div').toggle();
+            if($('#bins-div'))
+            {
+                $('#bins-div').toggle();
+            }
             $('#pathviewSettings-div').toggle();
         });
 

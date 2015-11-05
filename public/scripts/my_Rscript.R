@@ -26,12 +26,11 @@ args2[cn.idx]=lapply(args2[cn.idx], function(x){
                      })
 
 
-currentDirectory = getwd()
+#pvwdir = Sys.getenv("pvwdir")
+pvwdir = paste0(getwd(), "/public/")
+
 setwd(args2$targedir)
-dir = paste(currentDirectory,"/public/data/publicPath.txt",sep="")
 
-
-publicPathlines = readLines(paste(currentDirectory,"/public/data/publicPath.txt",sep=""))
 
 save.image("workenv.RData")
 
@@ -98,9 +97,9 @@ if(!is.null(args2$cpdextension) && length(args2$cpdextension) > 0){
 kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species, sep=""),sep="")
 #if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
 system(paste("mkdir -p", kegg.dir))
-dir = getwd()
+
 save.image("workenv.RData")
-source(paste(publicPathlines,"/scripts/kg.map.R",sep=""))
+source(paste(pvwdir,"scripts/kg.map.R",sep=""))
 kg.map(args2$species)
 kg.cmap()
 gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")

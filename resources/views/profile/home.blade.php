@@ -97,7 +97,7 @@
         $size = substr($size, 0, strpos($size, "\t"));
 
         pclose($io);
-        $size = (100000 - intval($size))/1024;
+        $size = (100*1024 - intval($size))/1024;
         if($size < 10)
         {
         ?>

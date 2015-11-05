@@ -16,6 +16,7 @@ return array(
     'CreateGenesTable' => $baseDir . '/database/migrations/2015_10_09_215036_create_genes_table.php',
     'CreateJobsTable' => $baseDir . '/database/migrations/2015_10_10_034131_create_jobs_table.php',
     'CreatePathwaysTable' => $baseDir . '/database/migrations/2015_10_09_215041_create_pathway_table.php',
+    'CreateSessionTable' => $baseDir . '/database/migrations/2015_11_03_121004_create_session_table.php',
     'CreateSpeciesPathwayMatchesTable' => $baseDir . '/database/migrations/2015_10_09_215055_create_species_pathway_matches_table.php',
     'CreateSpeciesTable' => $baseDir . '/database/migrations/2015_10_09_215045_create_species_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2015_10_09_215102_create_users_table.php',

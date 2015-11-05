@@ -5,20 +5,14 @@ arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
-publicPathlines = readLines(paste(getwd(),"/data/publicPath.txt",sep=""))
+#pvwdir = Sys.getenv("pvwdir")
+pvwdir = paste0(getwd(), "/")
 logic.idx=c("test.enrich", "do.pathview")
-num.idx=c("setSizeMin", "setSizeMax", "ncut", "pcut")
+num.idx=c("bins", "ncut", "qcut")
 
 args2=strsplit(args1, ",")
 args2[logic.idx]=lapply(args2[logic.idx],as.logical)
 args2[num.idx]=lapply(args2[num.idx],as.numeric)
-if( args2$setSizeMax == "INF" ){
-    args2$setSizeMax = Inf
-    args2$set.size = c(args2$setSizeMin,args2$setSizeMax)
-}else {
-    args2$set.size = c(args2$setSizeMin,args2$setSizeMax)
-}
-
 
 ###molecular data
 setwd(args2$destDir)
@@ -55,7 +49,7 @@ gid.type=tolower(args2$geneIdType)
 map.data=F
 data(bods, package="gage")
 #gsets.dir="/var/www/Pathway/public/genesets/"
-gsets.dir=paste(publicPathlines,"/genesets/",sep="")
+gsets.dir=paste(pvwdir,"genesets/",sep="")
 if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {
         gid.type0=gid.type
@@ -143,12 +137,13 @@ if(args2$test.enrich){
                        ii=gs %in% mol.bg
                        return(c(length(ii), sum(ii)))
                    })
-    p.val=phyper(cnts.sel[2,]-1, cnts.bg[2,], cnts.bg[1,]-cnts.bg[2,],cnts.sel[1,], lower.tail=F)
+#    p.val=phyper(cnts.sel[2,]-1, cnts.bg[2,], cnts.bg[1,]-cnts.bg[2,],cnts.sel[1,], lower.tail=F)
+    p.val=phyper(cnts.sel[2,]-1, cnts.bg[2,], nbg-cnts.bg[2,],nsel, lower.tail=F)
     q.val=p.adjust(p.val,  method ="BH")
-    stats=cbind(t(cnts.sel)[,2:1], t(cnts.bg)[,2:1], p.val, q.val)
+    stats=cbind(cnts.sel[2,],nsel, cnts.bg[2,], nbg, p.val, q.val)
     colnames(stats)=c("hits", "selected", "hits.bg", "background", "p.val", "q.val")
     stats=stats[order(p.val),]
-    sel.idx=stats[,"hits"]>=args2$ncut & stats[,"p.val"]<=args2$pcut
+    sel.idx=stats[,"hits"]>=args2$ncut & stats[,"q.val"]<=args2$qcut
 } else{
     stats=cbind(t(cnts.sel)[,2:1])
     colnames(stats)=c("hits", "selected")
@@ -159,20 +154,20 @@ if(args2$test.enrich){
 print(1)
 
 ### significant.genesets
-if(nrow(stats)>0)  write.table(stats, file = "discrete.res.txt", sep = "\t")
+if(nrow(stats)>0)  write.table(stats, file = "discrete.res.txt", sep = "\t", quote=F)
 
 nsig=sum(sel.idx)
 if(nsig>0) {
-write.table(stats[sel.idx,], file = "discrete.sig.txt", sep = "\t")
+write.table(stats[sel.idx,], file = "discrete.sig.txt", sep = "\t", quote=F)
 
 ### pathview
 if(args2$do.pathview & gs.type=="kegg"){
-    kegg.dir=paste(publicPathlines,"/Kegg",sep="") #specify your own
+    kegg.dir=paste(pvwdir,"Kegg",sep="") #specify your own
     require(pathview)
     path.ids=substr(rownames(stats),1,8)
     if(args2$data.type=="gene"){
-        pv.out.list <- sapply(path.ids[1:3], function(pid) pathview(gene.data = exprs.d, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type))
-       } else pv.out.list <- sapply(path.ids[1:3], function(pid) pathview(cpd.data = exprs.d, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type))
+        pv.out.list <- sapply(path.ids[1:3], function(pid) pathview(gene.data = mol.sel, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type, limit=args2$bins, bins=args2$bins, discrete =T))
+       } else pv.out.list <- sapply(path.ids[1:3], function(pid) pathview(cpd.data = mol.sel, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type, limit=1, bins=1, discrete =T))
 }
 } else print("No gene set selected, you may relax the cutoff q-value!")
 
