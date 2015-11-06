@@ -201,7 +201,7 @@
                                         } else {
 
                                             var fac = Math.round((j * 10)/factor);
-
+                                            console.log(fac);
                                             if(fac < 1)
                                             {
                                                 fac = 1;
@@ -231,7 +231,7 @@
 
                     } else {
 
-                       // $('#completed').show();
+                        $('#completed').show();
                     }
                 }else{
                     $("#waiting").remove();

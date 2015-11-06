@@ -135,11 +135,11 @@
                                 $val += ';';
 
                                 $val += 'git:';
-                                $("#geneIdType > option").each(function() {
+                                $("#geneIdType > option").each(function () {
 
-                                    $val += this.value+",";
+                                    $val += this.value + ",";
                                 });
-                                $val +=';';
+                                $val += ';';
 
                                 $val += 'ref:';
                                 if (referenceSelected != null || referenceSelected != undefined) {
@@ -228,7 +228,7 @@
                                         else if (value.substr(0, 3) === 'gid') {
                                             geneid = value.substr(4);
                                         }
-                                        else if(value.substr(0,3) === 'git')   {
+                                        else if (value.substr(0, 3) === 'git') {
 
                                             gidTotal = value.substr(4).split(',');
                                         }
@@ -258,8 +258,6 @@
                                                     });
 
 
-
-
                                                 }
                                                 else {
                                                     $('#specieslist').empty();
@@ -275,8 +273,7 @@
                                         $colum = columns.split(',').slice(0);
                                         $colum.splice(($colum).length, 1);
                                         $colum.splice(($colum).length - 1, 1);
-                                        if($colum.length > 0)
-                                        {
+                                        if ($colum.length > 0) {
                                             $('#sampleselect').attr('class', 'dynamicshow');
                                             $('#refselect').attr('class', 'dynamicshow');
                                             $('#sampleselect').show();
@@ -297,7 +294,7 @@
 
                                         });
 
-                                        if(referenceText !== '') {
+                                        if (referenceText !== '') {
                                             var refArray = referenceText.split(',').splice(0);
                                             refArray.splice((refArray).length, 1);
                                             refArray.splice((refArray).length - 1, 1);
@@ -305,7 +302,7 @@
                                                 $('#refselect option[value=' + value + ']').attr('selected', 'selected');
                                             });
                                         }
-                                        if(sampleText !== '') {
+                                        if (sampleText !== '') {
                                             var sampleArray = sampleText.split(',').splice(0);
                                             sampleArray.splice((sampleArray).length, 1);
                                             sampleArray.splice((sampleArray).length - 1, 1);
@@ -322,11 +319,11 @@
                                         }
                                         else if (geneid !== 'entrez' && geneid !== 'kegg') {
                                             $('#geneIdType').empty();
-                                            $.each(gidTotal,function(index,value){
+                                            $.each(gidTotal, function (index, value) {
                                                 $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
                                             });
 
-                                            $('#geneIdType option[value='+geneid+']')[0].setAttribute('selected','selected');
+                                            $('#geneIdType option[value=' + geneid + ']')[0].setAttribute('selected', 'selected');
                                         }
 
                                         if (usePathview == 'true') {

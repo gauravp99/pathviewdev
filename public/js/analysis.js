@@ -191,7 +191,7 @@ function in_species_array(species, id) {
 /*checking the species is in the list or not */
 function in_cmpd_array(cpd, id) {
     for (var i = 0; i < cpd.length; i++) {
-        if (cpd[i]['cmpdid'].toLowerCase() === id.toLowerCase()) {
+        if (cpd[i]['compound_id'].toLowerCase() === id.toLowerCase()) {
             return true;
         }
     }

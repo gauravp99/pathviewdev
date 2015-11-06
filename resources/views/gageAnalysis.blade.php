@@ -592,7 +592,8 @@
                     return true;
                 }
                 else {
-                    return false;
+                    //custom change will modify validation having spcies to allowed as custom even if custom with other values
+                    return true;
                 }
             }
         }

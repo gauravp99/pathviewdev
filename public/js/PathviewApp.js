@@ -29,8 +29,11 @@ app.controller('analysisController',function($scope,$timeout) {
 
         if($scope.filename)
             $scope.content = $fileContent;
+        console.log("filename: "+$scope.fileName1);
+
         console.log("fileType: "+$scope.filetype);
-        if($scope.filetype === 'text/csv')
+
+        if($scope.filetype === 'text/csv' || $scope.fileExtension === 'csv')
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.Genecolumns = $fileContent.split("\n")[0].replace(" ", "").split(",");
@@ -44,8 +47,9 @@ app.controller('analysisController',function($scope,$timeout) {
             $scope.geneColumns = columns1.length;
 
         }
-        else if($scope.filetype === 'text/plain')
+        else if($scope.filetype === 'text/plain' || $scope.fileExtension === 'txt')
         {
+            console.log("File type got to script"+$scope.filetype);
             $scope.Genecolumns = $fileContent.split("\n")[0].split("\t");
             var columns1 = $fileContent.split("\n")[0].split("\t");
             var columns2 = $fileContent.split("\n")[1].split("\t");
@@ -60,22 +64,26 @@ app.controller('analysisController',function($scope,$timeout) {
         }
         else
         {
+            console.log("File type got to script"+$scope.filetype);
             alert("File uploded is not in specified format");
-            $('#gfilePopUp').trigger('click');
+
         }
 
 
         $scope.content = $fileContent.split("\n")[0];
         console.log($scope);
 
-
-        if( $scope.Genecolumns.length > 0)
+        if($scope.Genecolumns != null)
         {
+            if( $scope.Genecolumns.length > 0)
+            {
 
+            }
+            else{
+                $('#gfilePopUp').trigger('click');
+            }
         }
-        else{
-            $('#gfilePopUp').trigger('click');
-        }
+
 
 
         $('#edit').css("visibility", "");
@@ -87,7 +95,7 @@ app.controller('analysisController',function($scope,$timeout) {
         if($scope.filename)
             $scope.content = $fileContent;
 
-        if($scope.filetype === 'text/csv')
+        if($scope.filetype === 'text/csv' || $scope.fileExtension === 'csv')
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.Compoundcolumns = $fileContent.split("\n")[0].replace(" ", "").split(",");
@@ -100,7 +108,7 @@ app.controller('analysisController',function($scope,$timeout) {
             }
             $scope.cpdColumns = columns1.length;
         }
-        else if($scope.filetype === 'text/plain')
+        else if($scope.filetype === 'text/plain' || $scope.fileExtension === 'txt')
         {
             $scope.Compoundcolumns = $fileContent.split("\n")[0].split("\t");
             var columns1 = $fileContent.split("\n")[0].split("\t");
@@ -117,21 +125,24 @@ app.controller('analysisController',function($scope,$timeout) {
         else
         {
             alert("File uploded is not in specified format");
-            $('#gfilePopUp').trigger('click');
+
         }
 
 
         $scope.content = $fileContent.split("\n")[0];
         console.log($scope);
 
-
-        if( $scope.Compoundcolumns.length > 0)
+        if($scope.Compoundcolumns != null)
         {
+            if( $scope.Compoundcolumns.length > 0)
+            {
 
+            }
+            else{
+                $('#gfilePopUp').trigger('click');
+            }
         }
-        else{
-            $('#gfilePopUp').trigger('click');
-        }
+
         $('#cpdedit').css("visibility", "");
         $('option[disabled="false"]').removeAttr('disabled');
 
@@ -168,10 +179,11 @@ app.directive('onReadFile', function($parse){
                     });
                 };
                 scope.filetype =( (onChangeEvent.srcElement || onChangeEvent.target).files[0].type);
-
+                console.log((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
                 if(attrs['onReadFile'].substring(0,10) === "showGeneCo")
                 {
                     console.log("genes");
+
                     scope.geneRefSelect = "";
                     scope.geneSamSelect = "";
 
@@ -183,6 +195,9 @@ app.directive('onReadFile', function($parse){
 
                 }
 
+                scope.fileName1 = (onChangeEvent.srcElement || onChangeEvent.target).files[0].name;
+                scope.fileExtension = scope.fileName1.substring(scope.fileName1.length-3,scope.fileName1.length);
+                console.log((onChangeEvent.srcElement || onChangeEvent.target).files[0].name);
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
 
             }) ;

@@ -49,7 +49,7 @@
     $cpdid = "CAS Registry Number";
     $species = "hsa-Homo sapiens";
     $pathway = "00010-Glycolysis / Gluconeogenesis";
-    $selectpath = "00640-Propanoate metabolism";
+    $selectpath = "00640-Propanoate metabolism,";
     $pathidx = 0;
     $suffix = "IDMapping";
     $kegg = true;

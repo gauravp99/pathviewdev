@@ -9,7 +9,7 @@ use Illuminate\Cacheache;
     <script src="js/sliding.form.js"></script>
     <div class="col-sm-9">
         <div class="conetent-header">
-                    <p><b>Example Analysis 1: Multiple Sample KEGG View</b></p>
+            <p><b>Example Analysis 1: Multiple Sample KEGG View</b></p>
         </div>
         <div class="col-sm-5">
 
@@ -36,14 +36,14 @@ use Illuminate\Cacheache;
         </div>
     </div>
     <?php
-            /* default values for all the attributes required in the example one page of the pathview analysis */
+    /* default values for all the attributes required in the example one page of the pathview analysis */
     $gfile = "gse16873.d3.txt";
     $cpdfile = "sim.cpd.data2.csv";
     $geneid = "ENTREZ";
     $cpdid = "KEGG";
     $species = "hsa-Homo sapiens";
     $pathway = "00010-Glycolysis / Gluconeogenesis";
-    $selectpath = "00640-Propanoate metabolism";
+    $selectpath = "00640-Propanoate metabolism,";
     $pathidx = -1;
     $suffix = "multistatekegg";
     $kegg = true;
@@ -72,76 +72,96 @@ use Illuminate\Cacheache;
     $ncolor = "transparent";
     ?>
 
-    {{--Div for Form for generating the analysis Form is devided into pages
+    <!--Div for Form for generating the analysis Form is devided into pages
     1. Input and Output
     2. Graphics
-    3. Coloration --}}
+    3. Coloration -->
     <div class="col-sm-7">
-    <div id="content">
-        <div id="wrapper">
-            <div id="navigation" style="display:none;">
-                <ul>
-                    <li class="selected">
-                        <a href="#" id="inputOutput">Input & Output</a>
-                    </li>
-                    <li>
-                        <a href="#" id="graphics">Graphics</a>
-                    </li>
-                    <li>
-                        <a href="#" id="coloration">Coloration</a>
-                    </li>
+        <div id="content">
+            <div id="wrapper">
+                <div id="navigation" style="display:none;">
+                    <ul>
+                        <li class="selected">
+                            <a href="#" id="inputOutput">Input & Output</a>
+                        </li>
+                        <li>
+                            <a href="#" id="graphics">Graphics</a>
+                        </li>
+                        <li>
+                            <a href="#" id="coloration">Coloration</a>
+                        </li>
 
-                </ul>
-            </div>
-
-
+                    </ul>
+                </div>
 
 
-            <div id="steps">
+                <div id="steps">
 
-                {!! form::open(array('url' => 'post_exampleAnalysis1','method'=>'POST','files'=>true,'id' =>
-                'anal_form')) !!}
+                    {!! form::open(array('url' => 'post_exampleAnalysis1','method'=>'POST','files'=>true,'id' =>
+                    'anal_form')) !!}
 
-                <fieldset class="step">
+                    <fieldset class="step">
 
-                    <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0"/>
+                        <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0"/>
 
-                    <div class="stepsdiv" id="gfile-div" @if (isset(Session::get('err_atr')['gfile'])) style="background-color:#DA6666;" @endif>
-                        <div class="col-sm-12">
-                            <div class="col-sm-5">
-                                <a href="tutorial#gene_data" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
-                                </a>
-                                {!!form::label('gcheck','Gene Data:')!!}
-                            </div>
-                            <div class="col-sm-7">
-                                <input name="gcheck" id="gcheck" value="T" type="checkbox" <?php if (isset(Session::get('Sess')['gcheck'])) { echo "checked"; } else {if (Session::get('Sess') == NULL) {echo "checked";}}?>>
-                                <a href="/all/demo/example/gse16873.d3.txt" target="_blank">{{$gfile}}</a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="stepsdiv" id="cfile-div" @if (isset(Session::get('err_atr')['cfile'])) style="background-color:#DA6666;" @endif>
-                        <div class="col-sm-12">
-                            <div class="col-sm-5">
-                                 <a href="tutorial#cpd_data" onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus(); return false;"  title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)." target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                 </a>
-                                 {!!form::label('cpdcheck','Compound Data:')!!}
-                            </div>
-
-                            <div class="col-sm-7">
-                                <input name="cpdcheck" id="cpdcheck" value="T" type="checkbox" <?php if (isset(Session::get('Sess')['cpdcheck'])) {echo "checked";} else {if (Session::get('Sess') == NULL) {echo "checked";}}?>>
-                                <a href="/all/demo/example/sim.cpd.data2.csv" target="_blank">{{$cpdfile}}</a>
+                        <div class="stepsdiv" id="gfile-div"
+                             @if (isset(Session::get('err_atr')['gfile'])) style="background-color:#DA6666;" @endif>
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="tutorial#gene_data"
+                                       onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;"
+                                       title="Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
+                                    </a>
+                                    {!!form::label('gcheck','Gene Data:')!!}
+                                </div>
+                                <div class="col-sm-7">
+                                    <input name="gcheck" id="gcheck" value="T"
+                                           type="checkbox" <?php if (isset(Session::get('Sess')['gcheck'])) {
+                                        echo "checked";
+                                    } else {
+                                        if (Session::get('Sess') == NULL) {
+                                            echo "checked";
+                                        }
+                                    }?>>
+                                    <a href="/all/demo/example/gse16873.d3.txt" target="_blank">{{$gfile}}</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-<!-- Analysis Template for the analysis web page -->
+
+                        <div class="stepsdiv" id="cfile-div"
+                             @if (isset(Session::get('err_atr')['cfile'])) style="background-color:#DA6666;" @endif>
+                            <div class="col-sm-12">
+                                <div class="col-sm-5">
+                                    <a href="tutorial#cpd_data"
+                                       onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=300, height=250').focus(); return false;"
+                                       title="Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv)."
+                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    {!!form::label('cpdcheck','Compound Data:')!!}
+                                </div>
+
+                                <div class="col-sm-7">
+                                    <input name="cpdcheck" id="cpdcheck" value="T"
+                                           type="checkbox" <?php if (isset(Session::get('Sess')['cpdcheck'])) {
+                                        echo "checked";
+                                    } else {
+                                        if (Session::get('Sess') == NULL) {
+                                            echo "checked";
+                                        }
+                                    }?>>
+                                    <a href="/all/demo/example/sim.cpd.data2.csv" target="_blank">{{$cpdfile}}</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Analysis Template for the analysis web page -->
                     @include('analysis')
+                </div>
+            </div>
         </div>
     </div>
-    </div>
-</div>
 
     <script type="text/javascript">
 

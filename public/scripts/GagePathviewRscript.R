@@ -6,7 +6,8 @@ arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
-publicPathlines = readLines(paste(getwd(),"/data/publicPath.txt",sep=""))
+#publicPathlines = readLines(paste(getwd(),"/data/publicPath.txt",sep=""))
+publicPathlines = paste(getwd(),"/public",sep="")
 logic.idx=c("rankTest", "useFold", "test.2d", "do.pathview","kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc")
 num.idx=c(  "setSizeMin", "setSizeMax", "cutoff","offset", "gbins", "cbins")
 
@@ -68,7 +69,9 @@ gs.type=args2$geneSetCategory
 gid.type=tolower(args2$geneIdType)
 map.data=F
 data(bods, package="gage")
+
 #gsets.dir="/var/www/PathwayWeb/public/genesets/"
+
 gsets.dir=paste(publicPathlines,"/genesets/",sep="")
 if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {

@@ -155,7 +155,7 @@ class PathviewAnalysisController extends Controller {
 					{
 						$analsisObject->setGeneSample($_POST['genesam']);
 					}
-					if(!isset($_POST['genecompare']))
+					if(isset($_POST['genecompare']))
 					{
 						$analsisObject->setGeneCompare("paired");
 					}else{
@@ -189,7 +189,7 @@ class PathviewAnalysisController extends Controller {
 					{
 						$analsisObject->setCompoundSample($_POST['cpdsam']);
 					}
-					if(!isset($_POST['cpdCompare']))
+					if(isset($_POST['cpdCompare']))
 					{
 						$analsisObject->setCompoundCompare("paired");
 					}else{
@@ -637,14 +637,22 @@ class PathviewAnalysisController extends Controller {
 
 		$numberofUser = Redis::get("users_count");
 
+		if($numberofUser < 0)
+		{
+				$numberofUser = 1;
+		}
+
 		$totalSize = $geneFileSize + $compoundFileSize;
 
 		$factor = ($noOfPathways*0.7 + $numberofUser*0.5 +  $totalSize*0.6)/3;
 		$queueEnabled = Config::get("app.enableQueue");
 
 		if(!$queueEnabled){
-			$this->runAnalysis($uniqid,$argument,$path,$analyType);
-			Redis::set('users_count',Redis::get('users_count') -1 );
+			return $argument;
+			$ret_value = $this->runAnalysis($uniqid,$argument,$path,$analyType);
+			$u_count = Redis::get('users_count');
+			if( $u_count > 0)
+				Redis::set('users_count',$u_count -1 );
 			return view('pathview_pages.analysis.Result')->with(array('exception' => null, 'directory' => $path, 'analysisid' => $uniqid,'queueid' => 0, 'directory1' => $path , 'factor' => '-1000','queue' => false));
 		}   else {
 
@@ -687,18 +695,22 @@ class PathviewAnalysisController extends Controller {
 		}
 		catch( Exception $e)
 		{
-			Redis::set("users_count", $users_count - 1);
+			//Redis::set("users_count", $users_count - 1);
 
+		}
+		finally {
+
+			Redis::set("users_count", Redis::get("users_count") - 1);
 		}
 	}
 
 
 	public function runAnalysis($time, $argument, $destFile, $anal_type)
 	{
+
 		$Rloc = Config::get("app.RLoc");
 		$publicPath = Config::get("app.publicPath");
 		exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-
 
 		$date = new \DateTime;
 

@@ -52,7 +52,7 @@ use Illuminate\Cacheache;
     $cpdid = "KEGG";
     $species = "hsa-Homo sapiens";
     $pathway = "00010-Glycolysis / Gluconeogenesis";
-    $selectpath = "00640-Propanoate metabolism";
+    $selectpath = "00640-Propanoate metabolism,";
     $pathidx = 0;
     $suffix = "multi";
     $kegg = false;
@@ -194,15 +194,15 @@ use Illuminate\Cacheache;
                                             <a href="tutorial#control_reference" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for controls"
                                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
-                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Control/Refernce  </span>
-                                            </a>
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
+                                            </a><label>Control/Refernce</label>
                                         </div>
                                         <div class="col-md-6">
                                             <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for cases"
                                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
-                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Case/Sample </span>
-                                            </a>
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
+                                            </a><label>Case/Sample</label>
                                         </div>
                                         <div class="col-md-6">
                                             <input type="text" id="geneColumns" name="geneColumns" style="width:100%;" ng-model="geneColumns" hidden="" class="ng-pristine ng-untouched ng-valid">
@@ -280,15 +280,16 @@ use Illuminate\Cacheache;
                                             <a href="tutorial#control_reference" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for controls"
                                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
-                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Control/Refernce  </span>
-                                            </a>
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                            </a><label>Control/Refernce</label>
+
                                         </div>
                                         <div class="col-md-6">
                                             <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=300, height=250').focus(); return false;" title="The column numbers for cases"
                                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
-                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> Case/Sample </span>
-                                            </a>
+                                                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;">  </span>
+                                            </a><label>Case/Sample</label>
                                         </div>
 
                                         <div class="col-md-6">
@@ -471,11 +472,11 @@ use Illuminate\Cacheache;
                 });
                 console.log( $('#compoundFileDetails').val() );
                 console.log( $('#geneFileDetails').val() );
-                geneFileDetails = $('#geneFileDetails').val();
+                var geneFileDetails = $('#geneFileDetails').val();
                 //gene data rendering
                 if(geneFileDetails != null)
                 {
-                    geneDataArray = geneFileDetails.split(";");
+                    var geneDataArray = geneFileDetails.split(";");
                     if(geneDataArray[0] != null) {
                         if (geneDataArray[0].split(":")[1] != null) {
                             $('#edit').css("visibility", "visible");
@@ -535,10 +536,10 @@ use Illuminate\Cacheache;
 
 
                 //compound data rendering
-                compoundFileDetails = $('#compoundFileDetails').val();
+                var compoundFileDetails = $('#compoundFileDetails').val();
 
                 if(compoundFileDetails != null) {
-                    compoundDataArray = compoundFileDetails.split(";");
+                    var compoundDataArray = compoundFileDetails.split(";");
 
                     //select fileds
                     if(compoundDataArray[0] != null) {

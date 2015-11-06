@@ -158,6 +158,7 @@ $(document).ready(function () {
                     {
 
                         goSpeciesMatch = true;
+                        break;
                     }
 
                     i++;
@@ -182,17 +183,28 @@ $(document).ready(function () {
                             .attr("value", "custom").text("custom"));
                         $('#geneIdFile').show();
                     }else {
-
                         $("#geneSet option[value='BP']")[0].setAttribute('disabled', 'disabled');
                         $("#geneSet option[value='CC']")[0].setAttribute('disabled', 'disabled');
                         $("#geneSet option[value='MF']")[0].setAttribute('disabled', 'disabled');
                         $("#geneSet option[value='BP,CC,MF']")[0].setAttribute('disabled', 'disabled');
 
+                        //to make sure that these options are not enabled even none of the option selected
+
+                        $("#geneSet option[value='BP']")[0].setAttribute('DoNotEnable', 'DoNotEnable');
+                        $("#geneSet option[value='CC']")[0].setAttribute('DoNotEnable', 'DoNotEnable');
+                        $("#geneSet option[value='MF']")[0].setAttribute('DoNotEnable', 'DoNotEnable');
+                        $("#geneSet option[value='BP,CC,MF']")[0].setAttribute('DoNotEnable', 'DoNotEnable');
+
                     }
                 }
-
                 else
                 {
+                    $("#geneSet option[value='BP']")[0].removeAttribute('DoNotEnable');
+                    $("#geneSet option[value='CC']")[0].removeAttribute('DoNotEnable');
+                    $("#geneSet option[value='MF']")[0].removeAttribute('DoNotEnable');
+                    $("#geneSet option[value='BP,CC,MF']")[0].removeAttribute('DoNotEnable');
+
+
                     $("#geneSet option[value='BP']")[0].removeAttribute('disabled');
                     $("#geneSet option[value='CC']")[0].removeAttribute('disabled');
                     $("#geneSet option[value='MF']")[0].removeAttribute('disabled');
@@ -201,7 +213,6 @@ $(document).ready(function () {
                     $("#geneSet option[value='met.idx']")[0].removeAttribute('disabled');
                     $("#geneSet option[value='sigmet.idx']")[0].removeAttribute('disabled');
                     $("#geneSet option[value='dise.idx']")[0].removeAttribute('disabled');
-                    $("#geneSet option[value='BP,CC,MF']")[0].removeAttribute('disabled');
                     $("#geneSet option[value='sigmet.idx,dise.idx']")[0].removeAttribute('disabled');
                     $("#geneSet option[value='custom']")[0].removeAttribute('disabled');
                 }
@@ -218,6 +229,9 @@ $(document).ready(function () {
                     }
                 });
 
+
+
+
                 if ($('#geneIdType > option').length == 1) {
                     if (goSpecIdBind[$('#species').val()] != null) {
                         $('#geneIdType').empty();
@@ -231,8 +245,7 @@ $(document).ready(function () {
                     }
 
 
-                }
-                else {
+                } else {
                     $("#geneSet option[value='dise.idx']")[0].removeAttribute('disabled');
                     $.each(speciesdiseaseArray, function (speciesIter, specieValue) {
                         if (specieValue['species_id'] === $('#species').val().split('-')[0]) {
@@ -241,7 +254,17 @@ $(document).ready(function () {
                         }
                     });
                 }
-                $("#geneIdType option[value=\""+geneidType + "\"]")[0].setAttribute('selected','selected');
+
+                if(!flag)
+                {
+                    $('#geneIdType').empty();
+                    flag = true;
+                    $('#geneIdType').append($("<option></option>").attr("value","KEGG").text("KEGG"));
+                    $('#geneIdType').append($("<option></option>").attr("value", "ENTREZ").text("ENTREZ"));
+                }else{
+                    $("#geneIdType option[value=\""+geneidType + "\"]")[0].setAttribute('selected','selected');
+                }
+
             }
         );
 
@@ -336,15 +359,18 @@ $(document).ready(function () {
                 $(this).prop("selected", false);
                 currentSelect = -1;
 
-                $("#geneSet option[value='BP']")[0].removeAttribute('disabled');
-                $("#geneSet option[value='CC']")[0].removeAttribute('disabled');
-                $("#geneSet option[value='MF']")[0].removeAttribute('disabled');
-                $("#geneSet option[value='BP,CC,MF']")[0].removeAttribute('disabled');
+                if(!$("#geneSet option[value='BP']")[0].getAttribute('DoNotEnable'))
+                {
+                    $("#geneSet option[value='BP']")[0].removeAttribute('disabled');
+                    $("#geneSet option[value='CC']")[0].removeAttribute('disabled');
+                    $("#geneSet option[value='MF']")[0].removeAttribute('disabled');
+                    $("#geneSet option[value='BP,CC,MF']")[0].removeAttribute('disabled');
+                }
+
                 $("#geneSet option[value='sig.idx']")[0].removeAttribute('disabled');
                 $("#geneSet option[value='met.idx']")[0].removeAttribute('disabled');
                 $("#geneSet option[value='sigmet.idx']")[0].removeAttribute('disabled');
                 $("#geneSet option[value='dise.idx']")[0].removeAttribute('disabled');
-                $("#geneSet option[value='BP,CC,MF']")[0].removeAttribute('disabled');
                 $("#geneSet option[value='sigmet.idx,dise.idx']")[0].removeAttribute('disabled');
                 $("#geneSet option[value='custom']")[0].removeAttribute('disabled');
 
@@ -381,15 +407,8 @@ $(document).ready(function () {
 
                         $('#specieslist').empty();
 
-                       /* $('#species').val('hsa-Homo sapiens-Human');*/
-
                     }
-                   /* $('#geneIdType').empty();
 
-                    $.each(keggGeneIdType, function (value, key) {
-                        $('#geneIdType').append($("<option></option>")
-                            .attr("value", value).text(key));
-                    });*/
                     $.each(speciesArray, function (speciesIter, specieValue) {
 
                             if(specieValue['species_common_name'] == null)
@@ -450,9 +469,9 @@ $(document).ready(function () {
 
                     $('#geneIdType').append($("<option></option>")
                         .attr("value", "custom").text("custom"));
-                    $('#specieslist').empty();
+                    //$('#specieslist').empty();
                     $('#specieslist').append($("<option></option>").attr("value", "custom").text("custom"));
-                    $('#species').val('custom');
+                    //$('#species').val('custom');
 
                     $('#geneIdFile').show();
                     $("#geneSet option[value='BP']")[0].setAttribute('disabled', 'disabled');

@@ -394,6 +394,12 @@
 
 
         $('#submit-button').click(function () {
+            console.log($('#geneSet').val());
+            if(($('#geneSet').val()[0]==='custom') && (!$('#backgroundList').val()&& !$('#backgroundListFile').val()))
+            {
+                var r = confirm("Note: You will need background list gene id's to enrich the results for custom gene id sets!");
+                return !r;
+            }
             //$('#progress').show();
             $('#completed').hide();
         });
@@ -485,7 +491,7 @@
                         }
                     }
                 },
-                backgroundListInputFile: {
+                /*backgroundListInputFile: {
                     extension: "txt|csv",
                     required: {
 
@@ -502,7 +508,7 @@
 
                         }
                     }
-                },
+                },*/
                 'geneSet[]': "required",
 
 

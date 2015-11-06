@@ -628,16 +628,19 @@ class GageAnalysisController extends Controller
             $file->move($destFile, $filename1);
             $argument .="backgroundListFile:".$filename1.";";
 
-        }else{
+        }else if($_POST['backgroundList'] != "")
+        {
             $argument .="backgroundList:inputbox". ";";
             $BackgroundList = $_POST['backgroundList'];
             $file = public_path() . "/" . "all/" . $email . "/" . $time . "/backgroundList.txt";
-            File::put($file, $BackgroundList);
+            $bytes_written = File::put($file, $BackgroundList);
             if ($bytes_written === false)
             {
                 die("Error writing to file");
             }
 
+        }else{
+            $argument .="backgroundList:none;";
         }
 
 
@@ -744,17 +747,14 @@ class GageAnalysisController extends Controller
         }
 
 
-
-
         $_SESSION['argument'] = $argument;
         $_SESSION['destDir'] = $destFile;
         #n $argument;
         $Rloc = Config::get("app.RLoc");
         $publicPath = Config::get("app.publicPath");
-        #return $argument;
-        //exec($Rloc."Rscript ".$publicPath."DiscreteGageRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
+        $_SESSION['analysis_id'] = $time;
+
        exec($Rloc."Rscript ".$publicPath."discrete.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-	//exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/DiscreteGageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         function get_client_ip()
         {
