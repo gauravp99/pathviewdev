@@ -294,7 +294,28 @@ class GageAnalysisController extends Controller
             $argument .= "test:" . $_POST['test'] . ";";
         }
 
-        if (isset($_POST['dopathview'])) {
+        if(isset($_POST['normalizedData']))
+	{
+	   $argument .="normalized:T;";
+	}else{
+           $argument .="normalized:F;";	
+	}
+
+	if(isset($_POST['countData']))
+	{
+       		$argument .="count.data:T;";
+	}else{
+		$argument .="count.data:F;";
+	}
+	
+	if(isset($_POST['logTransformed']))
+        {
+       		$argument .="do.log:T;";
+	}else{
+		$argument .="do.log:F;";
+	}
+
+	if (isset($_POST['dopathview'])) {
             $argument .= "do.pathview:T;";
             if (isset($_POST['dataType'])) {
                 $argument .= "data.type:" . $_POST['dataType'] . ";";

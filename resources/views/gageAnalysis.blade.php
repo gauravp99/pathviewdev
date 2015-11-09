@@ -317,6 +317,64 @@
         </div>
     </div>
 
+<div class="stepsdiv" id="normalizedData-div">
+        <div class="col-sm-12">
+            <div class="col-sm-5">
+                <a href="gageTutorial#normalizedData"
+                   onclick="window.open('gageTutorial#normalizedData', 'newwindow', 'width=300, height=250').focus() ;return false;"
+                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
+                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                </a>
+                <label for="normalized">Normalized data:</label>
+            </div>
+            <div class="col-sm-7">
+                <input type="checkbox" id="normalizedData" value="true" style="width: 44px;" name="normalizedData"
+                       @if ($normalizedData) checked @endif >
+            </div>
+        </div>
+    </div>
+
+
+<div class="stepsdiv" id="countData-div">
+        <div class="col-sm-12">
+            <div class="col-sm-5">
+                <a href="gageTutorial#countData"
+                   onclick="window.open('gageTutorial#countData', 'newwindow', 'width=300, height=250').focus() ;return false;"
+                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
+                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                </a>
+                <label for="countData">Count data:</label>
+            </div>
+            <div class="col-sm-7">
+                <input type="checkbox" id="countData" value="true" style="width: 44px;" name="countData"
+                       @if ($countData) checked @endif >
+            </div>
+        </div>
+    </div>
+
+
+<div class="stepsdiv" id="logTransformed-div">
+        <div class="col-sm-12">
+            <div class="col-sm-5">
+                <a href="gageTutorial#logTransformed"
+                   onclick="window.open('gageTutorial#logTransformed', 'newwindow', 'width=300, height=250').focus() ;return false;"
+                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
+                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                </a>
+                <label for="logTransformed">Log transformed:</label>
+            </div>
+            <div class="col-sm-7">
+                <input type="checkbox" id="logTransformed" value="true" style="width: 44px;" name="logTransformed"
+                       @if ($logTransformed) checked @endif >
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="stepsdiv" id="UsePathview-div">
         <div class="col-sm-12">
             <div class="col-sm-5">
@@ -350,6 +408,7 @@
                 <select name="dataType" class="styled-select" id="dataType" class="compare">
                     <option value="gene">gene</option>
                     <option value="compound">compound</option>
+		    <option value="other">other</option>
                 </select>
             </div>
         </div>

@@ -267,7 +267,7 @@
 @include('footer')
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.1/js/bootstrap.min.js"></script>
 <script src="js/ChartNew.js"></script>
-<script type="text/javascript" src="http://jscolor.com/example/jscolor/jscolor.js"></script>
+<script src="js/jscolor.js"></script>
 <script src="js/app.js"></script>
 <script>
     $(document).ready(function () {

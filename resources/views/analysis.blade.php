@@ -1,13 +1,16 @@
     <script src="js/jquery.validate.min.js"></script>
-    <!---
+   <script type="text/javascript">
+  window.onload = function() {  };
+  window.onunload = function(){};
+</script>
+ 
+   <!---
     Each div here is for each row in the form
     consist of following elements
     before label each div is having a info button with hover text and hyperlink to the help page
     1. Label : Label contains the string
     2. Element itself : Input element
 
-    We have set all input elements auto completion attribute to off because we don't want the user entered random text to be saved
-    for future. We wat values only to be taken from the auto suggestion
     Error handling messages : We have considered two time error handling on the client side and on server side
     client side is done with jquery validation framework and server side is shown with checking the session attributes
     -->
@@ -19,7 +22,7 @@
             <!--lable-->
             <div class="col-sm-5">
                 <a href="tutorial#gene_id"
-                   onclick="window.open('tutorial#gene_id', 'newwindow', 'width=300, height=250').focus();return false;"
+                   onclick="window.open('tutorial#gene_id', 'newwindow', 'width=500, height=500,scrollbars=1,status=1').focus();return false;"
                    title="ID type used for the Gene Data. This can be selected from the autosuggest drop down list."
                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -30,7 +33,7 @@
             <div class="col-sm-7">
                 <input class="ex8" list="geneidlist" name="geneid" id="geneid"
                        value=@if (isset(Session::get('Sess')['geneid'])) "{{Session::get('Sess')['geneid']}}" @else "{{$geneid}}" @endif
-                       autocomplete="off">
+                       >
             </div>
         </div>
 
@@ -70,7 +73,7 @@
             <div class="col-sm-7">
                 <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"
                        value=@if (isset(Session::get('Sess')['cpdid']))  "{{Session::get('Sess')['cpdid']}}" @else "{{$cpdid}}" @endif
-                       autocomplete="off">
+                       >
             </div>
         </div>
 
@@ -108,7 +111,7 @@
             <div class="col-sm-7">
                 <input class="ex8" list="specieslist" name="species" id="species"
                        value=@if (isset(Session::get('Sess')['species']))  "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif
-                       autocomplete="off">
+                       >
             </div>
         </div>
         <datalist id="specieslist">
@@ -485,7 +488,7 @@
                     <div class="col-sm-6" style="margin-left: -40px;">
                         {!! form::select('kpos', array('bottomleft' => 'bottom left', 'bottomright' => 'bottom
                         right','topleft' => 'top left', 'topright' => 'top right','none' => 'none'),isset(Session::get('Sess')['kpos']) ?
-                        Session::get('Sess')['kpos'] : $kpos) !!}
+                        Session::get('Sess')['kpos'] : $kpos,array('id'=>'kpos'))!!}
                     </div>
                 </div>
             </div>
@@ -506,7 +509,7 @@
                 </div>
 
                 <div class="col-sm-6">
-                    {!! form::select('nodesun', array('sum' => 'sum', 'mean' => 'mean','median' => 'median', 'max'=> 'max','max.abs' => 'max.abs' ,'random' => 'random'),isset(Session::get('Sess')['nodesun']) ?Session::get('Sess')['nodesun'] : $nsum) !!}
+                    {!! form::select('nodesun', array('sum' => 'sum', 'mean' => 'mean','median' => 'median', 'max'=> 'max','max.abs' => 'max.abs' ,'random' => 'random'),isset(Session::get('Sess')['nodesun']) ?Session::get('Sess')['nodesun'] : $nsum,array('id'=> 'nodesun')) !!}
                 </div>
             </div>
         </div>
@@ -524,7 +527,7 @@
                     {!!form::label('nacolor','NA Color:') !!}
                 </div>
                 <div class="col-sm-6">
-                    {!! form::select('nacolor', array('transparent' => 'transparent', 'grey' => 'grey'),isset(Session::get('Sess')['nacolor']) ?Session::get('Sess')['nacolor'] : $ncolor) !!}
+                    {!! form::select('nacolor', array('transparent' => 'transparent', 'grey' => 'grey'),isset(Session::get('Sess')['nacolor']) ?Session::get('Sess')['nacolor'] : $ncolor,array('id'=>'nacolor')) !!}
                 </div>
 
             </div>
@@ -607,10 +610,10 @@
 
 
                 <div class="col-sm-8">
-                    <input class="color coloration {hash:true}" id="glow" name="glow"
+                    <input class=" jscolor color coloration {hash:true}" id="glow" name="glow" autocomplete="on" 
                            value={{isset(Session::get('genecolor')['glow']) ? Session::get('genecolor')['glow'] : '#00FF00'}}>
-                    <input class="color coloration {hash:true}" id="clow" name="clow" style="margin-left:50px;"
-                           value={{isset(Session::get('genecolor')['clow']) ? Session::get('genecolor')['clow'] : '#0000FF'}}>
+                    <input class="jscolor color coloration {hash:true}" id="clow" name="clow" style="margin-left:50px;"
+autocomplete="on"                           value={{isset(Session::get('genecolor')['clow']) ? Session::get('genecolor')['clow'] : '#0000FF'}}>
                 </div>
             </div>
         </div>
@@ -631,10 +634,10 @@
                     {!!form::label('gmid',' Mid:')!!}
                 </div>
                 <div class="col-sm-8">
-                    <input class="color coloration {hash:true}" id="gmid" name="gmid"
+                    <input class="jscolor color coloration {hash:true}" id="gmid" name="gmid" autocomplete="on"
                            value={{isset(Session::get('genecolor')['gmid']) ? Session::get('genecolor')['gmid'] : '#D3D3D3'}}>
-                    <input class="color coloration {hash:true}" id="cmid" name="cmid" style="margin-left:50px"
-                           value={{isset(Session::get('genecolor')['cmid']) ? Session::get('genecolor')['cmid'] : '#D3D3D3'}} >
+                    <input class="jscolor color coloration {hash:true}" id="cmid" name="cmid" style="margin-left:50px"
+autocomplete="on"                           value={{isset(Session::get('genecolor')['cmid']) ? Session::get('genecolor')['cmid'] : '#D3D3D3'}} >
                 </div>
             </div>
         </div>
@@ -655,9 +658,9 @@
 
                 </div>
                 <div class="col-sm-8">
-                    <input class="color coloration {hash:true}" id="ghigh" name="ghigh"
+                    <input class="jscolor color coloration {hash:true}" id="ghigh" name="ghigh" autocomplete="on"
                            value={{isset(Session::get('genecolor')['ghigh']) ? Session::get('genecolor')['ghigh'] : '#FF0000'}}>
-                    <input class="color coloration {hash:true}" id="chigh" name="chigh" style="margin-left:50px"
+                    <input class="jscolor color coloration {hash:true}" id="chigh" name="chigh" style="margin-left:50px" autocomplete="on"
                            value={{isset(Session::get('genecolor')['chigh']) ? Session::get('genecolor')['chigh'] : '#FFFF00'}}>
                 </div>
             </div>
@@ -699,15 +702,27 @@
                     var clow = keyValueMap[6].split(":")[1];
                     var cmid = keyValueMap[7].split(":")[1];
                     var chigh = keyValueMap[8].split(":")[1];
-                   /* var pathwayList = keyValueMap[9].split(":")[1];
-                    pathwayList = pathwayList.replace(",",",\n");*/
+                    var pathwayList = keyValueMap[9].split(":")[1];
+                    pathwayList = pathwayList.replace(",",",\n");
                     var suffix = keyValueMap[10].split(":")[1];
                     var offset = keyValueMap[11].split(":")[1];
                     var glmt = keyValueMap[12].split(":")[1];
                     var clmt = keyValueMap[13].split(":")[1];
                     var gbins = keyValueMap[14].split(":")[1];
                     var cbins = keyValueMap[15].split(":")[1];
-
+		    var kpos = 	keyValueMap[16].split(":")[1];
+                    var pos = keyValueMap[17].split(":")[1];
+		    var nodesun = keyValueMap[18].split(":")[1];
+		    var nacolor = keyValueMap[19].split(":")[1];
+		    var align = keyValueMap[20].split(":")[1];
+		    var kegg = keyValueMap[21].split(":")[1];
+		    var layer = keyValueMap[22].split(":")[1];
+	            var gdisc = keyValueMap[23].split(":")[1];
+	 	    var cdisc = keyValueMap[24].split(":")[1];
+		    var split = keyValueMap[25].split(":")[1];
+		    var expand = keyValueMap[26].split(":")[1];
+		    var multistate = keyValueMap[27].split(":")[1];
+		    var matchd = keyValueMap[28].split(":")[1];	
                     $('#species').val(species);
                     $('#geneid').val(geneid);
                     $('#cpdid').val(compoundid);
@@ -724,6 +739,41 @@
                     $('#cglmt').val(clmt);
                     $('#gbins').val(gbins);
                     $('#cbins').val(cbins);
+	            $('#kpos').val(kpos);
+	            $('#pos').val(pos);
+		    $('#nodesun').val(nodesun);
+		    $('#nacolor').val(nacolor);
+		    $('#align').val(align);
+
+		    if(kegg == "true")	
+		    $('#kegg').prop('checked', true);
+
+		    if(layer == "true")  
+                    $('#layer').prop('checked', true);
+
+		     if(gdisc == "true")  
+                    $('#gdisc').prop('checked', true);
+
+		     if(cdisc == "true")  
+                    $('#cdisc').prop('checked', true);
+
+
+	              if(split == "true")  
+                    $('#split').prop('checked', true);
+
+			
+		       if(expand == "true")  
+                    $('#expand').prop('checked', true);
+
+
+			 if(multistate == "true")  
+                    $('#multistate').prop('checked', true);
+
+			 if(matchd == "true")  
+                    $('#matchd').prop('checked', true);
+
+
+
                 }
 
                 console.log(keyValueMap.length);
@@ -747,18 +797,34 @@
             var clow = $('#clow').val();
             var cmid = $('#cmid').val();
             var chigh = $('#chigh').val();
-            //var pathwayList = $('#pathwayList').val().replace(" ","");
+            var pathwayList = $('#pathwayList').val().replace(" ","");
             var suffix = $('#suffix').val();
             var offset = $('#offset').val();
             var glmt = $('#glmt').val();
             var clmt = $('#clmt').val();
             var gbins = $('#gbins').val();
             var cbins = $('#cbins').val();
+	    var kpos = $('#kpos').val();
+	    var pos =  $('#pos').val();
+	    var nodesun =  $('#nodesun').val();
+	    var nacolor = $('#nacolor').val();
+	    var align = $('#align').val();
+            var kegg = $('#kegg').is(":checked");
+            var layer = $('#layer').is(":checked");
+	    var gdisc = $('#gdisc').is(":checked");
+	    var cdisc = $('#cdisc').is(":checked");
+	    var split = $('#split').is(":checked");
+	    var expand = $('#expand').is(":checked");
+	    var multistate = $('#multistate').is(":checked");
+	    var matchd = $('#matchd').is(":checked");
 
             var savedString = "species:" + species + ";geneid:" + geneid + ";compoundid:" + compoundid +
                                 ";glow:" + glow + ";gmid:" + gmid + ";ghigh:" + ghigh + ";clow:" + clow +
                                 ";cmid:" + cmid + ";chigh:" + chigh + ";pathwayList:" + pathwayList + ";suffix:" + suffix +
-                                ";offset:" + offset +";glmt:" + glmt + ";clmt:" +clmt + ";gbins:" +gbins+ ";cbins:" +cbins +";" ;
+                                ";offset:" + offset +";glmt:" + glmt + ";clmt:" +clmt + ";gbins:" +gbins+ ";cbins:" +cbins + 
+";kpos:" + kpos + ";pos:" + pos +";nodesun:" +
+ nodesun + ";nacolor:" + nacolor + ";align:" + align + ";kegg:" + kegg + ";layer:" + layer + ";gdisc:" + gdisc + ";cdisc:" + cdisc + ";split:" + split 
++ ";expand:" + expand + ";multistate:" + multistate + ";matchd:" + matchd + ";"  ;
 
             $('#saveAttributes').val(savedString);
         }
@@ -818,6 +884,25 @@
                     }
 
                 },
+                
+		gcheck: {
+		 required: {
+                          depends: function(element) {
+				
+				return !$("#cpdcheck").is(':checked');
+			}
+			}
+		},
+		
+
+		cpdcheck: {
+			required: {
+			 	depends: function(element) {
+				return !$("#gcheck").is(':checked');
+				}
+			}
+
+		},
 
                 geneid: {
 
@@ -887,6 +972,12 @@
                     required: "Upload the Gene Data or Compound Data file.",
                     extension: "Uploaded Compound Data file extension is not supported. Supports only txt/csv."
                 },
+		gcheck: {
+		  required: "any of the gene data or compound data should be checked"
+		},
+		cpdcheck: {
+		  required: "any of the gene data or compound data should be checked"
+		},
                 geneid: {
                     required: "Gene ID Type is not valid.",
                     geneIdDBMatch: "Gene ID Type Cannot be empty."

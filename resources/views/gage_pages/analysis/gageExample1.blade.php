@@ -43,6 +43,10 @@
     $useFold = true;
     $test = "gs.tTest";
     $dopathview = false;
+    $normalizedData = false;
+    $countData = false;
+    $logTransformed = false;
+
     $dataType = "gene";
     ?>
         <input type="text" id="rememberTxt" hidden="" >

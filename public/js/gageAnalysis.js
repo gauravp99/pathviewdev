@@ -32,7 +32,10 @@ $(document).ready(function () {
         $('#bins-div').toggle();
         $('#pathviewSettings-div').toggle();
         $("[name='dopathview']").bootstrapSwitch();
-        $("[name='test2d']").bootstrapSwitch();
+	$("[name='normalizedData']").bootstrapSwitch();
+	$("[name='countData']").bootstrapSwitch();
+        $("[name='logTransformed']").bootstrapSwitch();
+	$("[name='test2d']").bootstrapSwitch();
         $("[name='rankTest']").bootstrapSwitch();
         $("[name='useFold']").bootstrapSwitch();
         $("[name='useFold']").setOnLabel = "setOnLabel";
