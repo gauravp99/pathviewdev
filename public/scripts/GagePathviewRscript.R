@@ -7,7 +7,7 @@ idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
 #publicPathlines = readLines(paste(getwd(),"/data/publicPath.txt",sep=""))
-publicPathlines = paste(getwd(),"/public",sep="")
+publicPathlines = paste(getwd(),sep="")
 logic.idx=c("rankTest", "useFold", "test.2d", "do.pathview","kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc")
 num.idx=c(  "setSizeMin", "setSizeMax", "cutoff","offset", "gbins", "cbins")
 
@@ -192,7 +192,7 @@ if(nsig.all>0){
     if(gs.type!="user") {outnames =sapply(strsplit(sig.gs.all, " "), "[", 1)
                      }else {outnames=sig.gs.all}
     outnames = gsub(" |:|/", "_", outnames)
-    source(paste(publicPathlines,"/geneData.R",sep=""))
+    source(paste(publicPathlines,"/scripts/geneData.R",sep=""))
     environment(geneData2)=environment(geneData)
     for (i in (1:nsig.all)[1:3]) {
         geneData2(genes = gsets[[sig.gs.all[i]]], exprs = exprs, ref = args2$reference,

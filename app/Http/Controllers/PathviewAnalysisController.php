@@ -447,7 +447,7 @@ class PathviewAnalysisController extends Controller {
 			$analsisObject->setMatchDataFlag(false);
 
 		//----------gene descrete
-		if(isset($_POST["gdis"]))
+		if(isset($_POST["gdisc"]))
 			$analsisObject->setGeneDiscreteFlag(true);
 		else
 			$analsisObject->setGeneDiscreteFlag(false);

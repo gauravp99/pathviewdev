@@ -34,7 +34,7 @@
 
         <script>
             function openWindow() {
-                window.open('/gageTutorial', 'newwindow', "scrollbars=1,width=2000, height=window.innerHeight");
+                window.open('/gageTutorial', 'newwindow', "scrollbars=1,status=1,width=2000, height=window.innerHeight");
                 var w = window.innerWidth;
                 var h = window.innerHeight;
             }

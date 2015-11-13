@@ -88,22 +88,9 @@
                 <li <?php if (basename(Request::url()) == "about") {
                     echo "class=\"active\"";
                 }?>>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">About
-                        <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a
-                                    href="/about">
-                                About Us
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                    href="/faq">
-                                Contact Us
-                            </a>
-                        </li>
-                    </ul>
+                    <a href="/about"  role="button" aria-expanded="true">About
+                        </a>
+
 
                 </li>
 

@@ -63,7 +63,7 @@
         <div class="col-sm-12">
             <div class="col-sm-5">
                 <a href="tutorial#cpd_id"
-                   onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=300, height=250').focus();return false;"
+                   onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                    title="ID type used for the Compound Data. This can be selected from the autosuggest drop down list."
                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -101,7 +101,7 @@
         <div class="col-sm-12">
             <div class="col-sm-5">
                 <a href="tutorial#species"
-                   onclick="window.open('tutorial#species', 'newwindow', 'width=300, height=250').focus();return false;"
+                   onclick="window.open('tutorial#species', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                    title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."
                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -141,7 +141,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-5">
                     <a href="tutorial#pwy_id"
-                       onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and autosuggest text box."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;margin-left: -15px">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -227,7 +227,7 @@
         <div class="col-sm-12">
             <div class="col-sm-5">
                 <a href="tutorial#suffix"
-                   onclick="window.open('tutorial#suffix', 'newwindow', 'width=300, height=250').focus();return false;"
+                   onclick="window.open('tutorial#suffix', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                    title="The suffix to be added after the pathway name as part of the output graph file name."
                    target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -247,7 +247,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#kegg"
-                       onclick="window.open('tutorial#kegg', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#kegg', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf). "
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -263,7 +263,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a href="tutorial#layer"
-                       onclick="window.open('tutorial#layer', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#layer', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Controls plotting layers: 1) if node colors be plotted in the same layer as the pathway graph when Kegg Native is checked, 2) if edge/node type legend be plotted in the same page when Kegg Native is unchecked. "
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -287,7 +287,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#desc"
-                       onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#desc', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether gene data should be treated as discrete." target="_blank" class="scrollToTop"
                        style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -306,7 +306,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a href="tutorial#desc"
-                       onclick="window.open('tutorial#desc', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#desc', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether compound data should be treated as discrete." target="_blank" class="scrollToTop"
                        style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -330,7 +330,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#split"
-                       onclick="window.open('tutorial#split', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#split', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether split node groups are split to individual nodes." target="_blank" class="scrollToTop"
                        style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
@@ -349,7 +349,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a href="tutorial#expand"
-                       onclick="window.open('tutorial#expand', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#expand', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether the multiple-gene nodes are expanded into single-gene nodes" target="_blank"
                        class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -373,7 +373,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#multi"
-                       onclick="window.open('tutorial#multi', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#multi', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether multiple states (samples or columns) gene data or compound data should be integrated and plotted in the same graph."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -392,7 +392,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a href="tutorial#match"
-                       onclick="window.open('tutorial#match', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#match', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Whether the samples of gene data and Compound data are paired" target="_blank"
                        class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -416,7 +416,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#clabel"
-                       onclick="window.open('tutorial#clabel', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#clabel', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="How much compound labels should be put above the default position or node center."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;"><span
                                 class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
@@ -434,7 +434,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#kalign"
-                       onclick="window.open('tutorial#kalign', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#kalign', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="How the color keys are aligned when both Gene Data and Compound Data are not NULL."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -451,7 +451,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#spos"
-                       onclick="window.open('tutorial#spos', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#spos', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Controls the position of pathview signature." target="_blank" class="scrollToTop"
                        style="float:left;margin-right:5px">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -469,7 +469,7 @@
                 </div>
                 <div class="col-sm-6">
                     <a href="tutorial#kpos"
-                       onclick="window.open('tutorial#kpos', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#kpos', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Controls the position of color key(s)." target="_blank" class="scrollToTop"
                        style="float:left;margin-right:5px">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -500,7 +500,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#nsum"
-                       onclick="window.open('tutorial#nsum', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#nsum', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="The method name to calculate node summary given that multiple genes or compounds are mapped to it."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -519,7 +519,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-6">
                     <a href="tutorial#ncolor"
-                       onclick="window.open('tutorial#ncolor', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#ncolor', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="Color used for NA's or missing values in Gene Data and Compound Data." target="_blank"
                        class="scrollToTop" style="float:left;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -549,7 +549,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-4">
                     <a href="tutorial#limit"
-                       onclick="window.open('tutorial#limit', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#limit', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="The limit values for Gene Data and Compound Data when converting them to pseudo colors.This field is a numeric field you can enter two values separated by a comma for example 1,2."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -575,7 +575,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-4">
                     <a href="tutorial#bins"
-                       onclick="window.open('tutorial#bins', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#bins', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="This argument specifies the number of levels or bins for Gene Data and Compound Data when converting them to pseudo colors."
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -600,7 +600,7 @@
             <div class="col-sm-12">
                 <div class="col-sm-4">
                     <a href="tutorial#color"
-                       onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -626,7 +626,7 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
             <div class="col-sm-12">
                 <div class="col-sm-4">
                     <a href="tutorial#color"
-                       onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
@@ -650,7 +650,7 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
             <div class="col-sm-12">
                 <div class="col-sm-4">
                     <a href="tutorial#color"
-                       onclick="window.open('tutorial#color', 'newwindow', 'width=300, height=250').focus();return false;"
+                       onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
                        title="These arguments specify specifies the color spectra to code Gene Data and Compound Data"
                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span></a>
@@ -684,6 +684,8 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
 
 
         $(document).ready(function () {
+            //removing the extra comma if existed
+            $('#pathwayList').val($('#pathwayList').text().split(',')[0]+",");
             //function to load and reload the content of the page chrome reloads the page so need this functionality to be implemented
 
             var savedAttributes = $('#saveAttributes').val();

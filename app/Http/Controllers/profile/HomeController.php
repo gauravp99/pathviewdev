@@ -36,6 +36,6 @@ class HomeController extends Controller
     {
 
 
-        return view('profile.home')->with('analyses',Analysis::where('id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20));
+        return view('profile.home')->with('analyses',Analysis::where('id', Auth::user()->id)->where('isDeleted','N')->orderBy('created_at', 'desc')->paginate(20));
     }
 }

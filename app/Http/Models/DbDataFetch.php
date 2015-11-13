@@ -25,7 +25,7 @@ class DbDataFetch
             $analysis_vals = Cache::get('analysis_vals');
         }else{
             $analysis_vals =  DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ip_add_count, created_at as date FROM analysis where analysis_origin = \'pathview\'  GROUP BY YEAR(created_at), MONTH(created_at)'));
-            Cache::put('analysis_vals',$analysis_vals, 50);
+            //Cache::put('analysis_vals',$analysis_vals, 50);
         }
 
         $web_usage = array();
@@ -91,21 +91,21 @@ class DbDataFetch
     {
         //retrieve usage from BIOC tables
 
-        if(Cache::has('bioc_sum_dwnlds'))
+       /* if(Cache::has('bioc_sum_dwnlds'))
         {
             $bioc_sum_dwnlds = Cache::get('bioc_sum_dwnlds');
-        }else{
+        }else{*/
             $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(number_of_downloads)+15000 as "downloads" from biocStatistics'));
             Cache::put('bioc_sum_dwnlds',$bioc_sum_dwnlds, 50);
-        }
+        //}
 
-        if(Cache::has('bioc_ip_dwnlds'))
+      /*  if(Cache::has('bioc_ip_dwnlds'))
         {
             $bioc_ip_dwnlds = Cache::get('bioc_ip_dwnlds');
-        }else{
+        }else{*/
             $bioc_ip_dwnlds =   DB::select(DB::raw('select sum(number_of_unique_ip)+7500 as "ips" from biocStatistics'));
             Cache::put('bioc_ip_dwnlds',$bioc_ip_dwnlds, 50);
-        }
+        //}
 
             if(!is_null($bioc_ip_dwnlds)&&!is_null($bioc_sum_dwnlds))
             {

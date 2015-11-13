@@ -46,7 +46,7 @@ class AnalysisController extends Controller
                     $directory = public_path() . '/all/' . Auth::user()->email . '/' . $analysis_id;
                     DB::table('analysis')
                         ->where('analysis_id', '=', $analysis_id)
-                        ->update(array('id' => "0"));
+                        ->update(array('isDeleted' => "Y"));
                     $success = File::deleteDirectory($directory);
                 }
             }

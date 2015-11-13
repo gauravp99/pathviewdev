@@ -139,8 +139,8 @@ use Illuminate\Cacheche;
                                          id="edit">
                                         <a href=""><span class="glyphicon glyphicon-edit" id="geneMenu"
                                                          data-toggle="modal" data-target="#GenemyModal"></span></a>
-                                        <a href=""><span class="glyphicon glyphicon-trash" id="GeneClearFile"
-                                                          ng-click="geneFileReset();GeneReset(assayData);"></span></a>
+                                        <a href=""><span class="glyphicon glyphicon-trash" id="clearFile"
+                                                         onclick="reset($('#assayData'))"></span></a>
                                     </div>
                                     <div class="col-sm-10">
                                         <!--//'data-toggle'=>"modal",'data-target'=>"#GenemyModal"-->
@@ -225,7 +225,7 @@ use Illuminate\Cacheche;
                                                         <p style="display: inline;margin-right:10px;">Paired</p> <input
                                                                 style="display: inline!important;" type="checkbox"
                                                                 id="GeneCompare" name="genecompare"
-                                                                ng-model="GeneCompare" ng-checked="GeneCompare"
+                                                                ng-model="GeneCompare" ng-init="checked=true"
                                                                 checked="">
                                                     </div>
                                                 </div>
@@ -268,8 +268,8 @@ use Illuminate\Cacheche;
                                          id="cpdedit">
                                         <a href=""><span class="glyphicon glyphicon-edit" id="compoundMenu"
                                                          data-toggle="modal" data-target="#myModal"></span></a>
-                                        <a href=""><span class="glyphicon glyphicon-trash" id="CompoundClearFile"  ng-click="CompoundFileReset();CompoundReset();" ></span></a>
-
+                                        <a href=""><span class="glyphicon glyphicon-trash" id="clearFile"
+                                                         onclick="reset($('#cpdassayData'))"></span></a>
                                     </div>
                                     <div class="col-sm-10">
                                         {!!form::file('cpdfile', $attributes = array('id' => 'cpdassayData','on-read-file' => 'showCompoundContent($fileContent,"compound")', 'ng-click'=>'delete()','style'=> 'margin-top:10px'))!!}
@@ -351,7 +351,7 @@ use Illuminate\Cacheche;
                                                 <div class="col-sm-7">
                                                     <p style="display: inline;margin-right:10px;">Paired</p> <input
                                                             style="display: inline;" type="checkbox" id="CpdCompare"
-                                                            name="cpdCompare" ng-model="CpdCompare" ng-init="CpdCompare"
+                                                            name="cpdCompare" ng-model="CpdCompare" ng-init="checked=true"
                                                             checked="true">
                                                 </div>
                                             </div>
@@ -382,11 +382,6 @@ use Illuminate\Cacheche;
             All this code is for regenerating the fields on the pop up fields columns-->
         <script type="text/javascript">
             $(document).ready(function () {
-                var control = $("#cpdassayData");
-
-                $("#clear").on("click", function () {
-                    control.replaceWith( control = control.clone( true ) );
-                });
                 ////console.log($('#compoundFileDetails').val());
                 ////console.log($('#geneFileDetails').val());
                 /*this part of the script handles things to save the dynamic content created and rendered coming back to the same page
@@ -779,5 +774,4 @@ use Illuminate\Cacheche;
 
         </script>
 @stop
-
 

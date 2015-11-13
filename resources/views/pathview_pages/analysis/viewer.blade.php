@@ -157,7 +157,7 @@
 
                     $cmpd_line_array = explode("\t",$cmpd_line);
                     if(sizeof($cmpd_line_array) > 7 && strcmp($cmpd_line_array[4],"")!=0 )
-                        echo "<area shape=\"circle\" coords=\"".$cmpd_line_array[6].",".$cmpd_line_array[7].",4\" href=\"http://www.genome.jp/dbget-bin/www_bget?".$cmpd_line_array[1]."\" title=\"".$cmpd_line_array[1]." (".$cmpd_line_array[4].")\" onmouseover=\"popupTimer(&quot;".$cmpd_line_array[1]."&quot;, &quot;".$cmpd_line_array[1]." (".$cmpd_line_array[4].")&quot;, &quot;#ffffff&quot;)\" onmouseout=\"hideMapTn()\">";
+                        echo "<area shape=\"circle\" coords=\"".$cmpd_line_array[6].",".$cmpd_line_array[7].",8\" href=\"http://www.genome.jp/dbget-bin/www_bget?".$cmpd_line_array[1]."\" title=\"".$cmpd_line_array[1]." (".$cmpd_line_array[4].")\" onmouseover=\"popupTimer(&quot;".$cmpd_line_array[1]."&quot;, &quot;".$cmpd_line_array[1]." (".$cmpd_line_array[4].")&quot;, &quot;#ffffff&quot;)\" onmouseout=\"hideMapTn()\">";
 
                     echo "\n";
 

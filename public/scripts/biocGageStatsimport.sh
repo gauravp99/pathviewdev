@@ -11,8 +11,8 @@ month=`date +'%B'`
 
 year=`date +'%Y'`
 
-echo "delete from biocGagestatistic where month = '$month' and year = '$year';"|mysql -uroot -ptcs@YASH pathway
+echo "delete from biocGagestatistic where month = '$month' and year = '$year';"|mysql -uroot -pAdminAdmin PathwayWeb
 echo "insert into biocGagestatistic values('$month','$year',$ipadd,$downloads);"
-echo "insert into biocGagestatistic values('$month','$year',$ipadd,$downloads);" |mysql -uroot -ptcs@YASH pathway
+echo "insert into biocGagestatistic values('$month','$year',$ipadd,$downloads);" |mysql -uroot -pAdminAdmin PathwayWeb
 
 rm gage.html
