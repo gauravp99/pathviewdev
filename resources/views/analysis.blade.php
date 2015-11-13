@@ -685,7 +685,7 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
 
         $(document).ready(function () {
             //removing the extra comma if existed
-            $('#pathwayList').val($('#pathwayList').text().split(',')[0]+",");
+            $('#pathwayList').val($('#pathwayList').text().split(',')[0]+"\,\n");
             //function to load and reload the content of the page chrome reloads the page so need this functionality to be implemented
 
             var savedAttributes = $('#saveAttributes').val();
@@ -704,8 +704,9 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
                     var clow = keyValueMap[6].split(":")[1];
                     var cmid = keyValueMap[7].split(":")[1];
                     var chigh = keyValueMap[8].split(":")[1];
-                    var pathwayList = keyValueMap[9].split(":")[1];
-                    pathwayList = pathwayList.replace(",",",\n");
+                    var pathwayList1 = keyValueMap[9].split(":")[1];
+                    var pathwayList = pathwayList1.replace(new RegExp(",","g"),"\,\n");
+                    
                     var suffix = keyValueMap[10].split(":")[1];
                     var offset = keyValueMap[11].split(":")[1];
                     var glmt = keyValueMap[12].split(":")[1];
@@ -734,7 +735,9 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
                     $('#clow').val(clow);
                     $('#cmid').val(cmid);
                     $('#chigh').val(chigh);
-                    //$('#pathwayList').val(pathwayList);
+
+                    console.log(pathwayList);
+                    $('#pathwayList').val(pathwayList);
                     $('#suffix').val(suffix);
                     $('#offset').val(offset);
                     $('#glmt').val(glmt);

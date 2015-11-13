@@ -7,50 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="925ff104-9ab6-4512-bc64-29f946b5eaae" name="Default" comment="ui changes">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/file-page1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/hsa00010.multistate.kegg.multi-1.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/hsa00640.IDMapping.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/hsa00640.multistate.kegg.multi.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/pathviewIntro_flyer.pdf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/bmp6.d.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/c1_all_v3_0_symbols.gmt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/cpd.cas.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/cpd.cas.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gagedata.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gene.ensprot.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gene.ensprot.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gene.symb.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gse16873.d3.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gse16873.d3.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/gse16873.symb.txt" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/sim.cpd.data.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/sim.cpd.data2.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/data/sim.cpd.data2.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.env" afterPath="$PROJECT_DIR$/.env" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Models/DbDataFetch.php" afterPath="$PROJECT_DIR$/app/Http/Models/DbDataFetch.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Models/GageAnalysis.php" afterPath="$PROJECT_DIR$/app/Http/Models/GageAnalysis.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/gage/GageAnalysisController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/GageNavigation.blade.php" afterPath="$PROJECT_DIR$/resources/views/GageNavigation.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/GagePathviewRscript.R" afterPath="$PROJECT_DIR$/public/scripts/GagePathviewRscript.R" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" afterPath="$PROJECT_DIR$/resources/views/gage_pages/GageResult.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/profile/HomeController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/profile/HomeController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Console/Kernel.php" afterPath="$PROJECT_DIR$/app/Console/Kernel.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/NewAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/NewAnalysis.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/PathviewApp.js" afterPath="$PROJECT_DIR$/public/js/PathviewApp.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/analysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/analysis.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/app.blade.php" afterPath="$PROJECT_DIR$/resources/views/app.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/biocGageStatsimport.sh" afterPath="$PROJECT_DIR$/public/scripts/biocGageStatsimport.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/scripts/biocStatsimport.sh" afterPath="$PROJECT_DIR$/public/scripts/biocStatsimport.sh" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/blade.xml" afterPath="$PROJECT_DIR$/.idea/blade.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_one.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_one.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_three.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_three.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_two.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_two.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" afterPath="$PROJECT_DIR$/resources/views/gageAnalysis.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/navigation.blade.php" afterPath="$PROJECT_DIR$/resources/views/navigation.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/outputFile.Rout" afterPath="$PROJECT_DIR$/public/outputFile.Rout" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php" afterPath="$PROJECT_DIR$/resources/views/pathview_pages/analysis/viewer.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Pathway.iws" />
@@ -136,7 +95,7 @@
         <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2015-11-13.log">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="2783.8386">
-              <caret line="7497" column="0" selection-start-line="7497" selection-start-column="0" selection-end-line="7497" selection-end-column="0" />
+              <caret line="7533" column="0" selection-start-line="7533" selection-start-column="0" selection-end-line="7533" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -145,12 +104,37 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".env" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/.env">
+      <file leaf-file-name="app.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.30857143">
-              <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+            <state vertical-scroll-proportion="-5.6896553">
+              <caret line="259" column="14" selection-start-line="259" selection-start-column="6" selection-end-line="259" selection-end-column="14" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="analysis.blade.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/analysis.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.4604106">
+              <caret line="708" column="20" selection-start-line="708" selection-start-column="20" selection-end-line="708" selection-end-column="20" />
+              <folding>
+                <marker date="1447448244355" expanded="true" signature="1969:1981" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="3693:3705" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="5463:5475" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="9849:9861" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="24293:24386" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="24305:24384" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="24515:24795" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="24529:24793" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="24542:24696" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="25878:26181" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="25892:26180" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="25906:26060" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="27247:27498" placeholder="..." />
+                <marker date="1447448244355" expanded="true" signature="27261:27496" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -244,7 +228,6 @@
         <option value="$PROJECT_DIR$/app/Console/Kernel.php" />
         <option value="$PROJECT_DIR$/resources/views/pathview_pages/analysis/example_one.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/PathviewAnalysisController.php" />
-        <option value="$PROJECT_DIR$/resources/views/analysis.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Models/DbDataFetch.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AnalysisController.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/profile/HomeController.php" />
@@ -252,6 +235,7 @@
         <option value="$PROJECT_DIR$/storage/logs/laravel-2015-11-13.log" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/pathview/analysis/AjaxAnalysisQueueStatusCheck.php" />
         <option value="$PROJECT_DIR$/.env" />
+        <option value="$PROJECT_DIR$/resources/views/analysis.blade.php" />
       </list>
     </option>
   </component>
@@ -362,135 +346,39 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Pathway" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="PathwayWeb" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="config" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathwayWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathwayWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathwayWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathwayWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathview" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathwayWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Http" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pathview" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="analysis" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Pathway" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PathwayWeb" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Commands" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -937,9 +825,9 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32962963" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32685184" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2993385" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34674752" sideWeight="0.06759259" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34674752" sideWeight="0.06944445" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34674752" sideWeight="0.9324074" order="0" side_tool="true" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34674752" sideWeight="0.9305556" order="0" side_tool="true" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287037" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
@@ -1226,16 +1114,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.2413793">
-          <caret line="92" column="0" selection-start-line="92" selection-start-column="0" selection-end-line="92" selection-end-column="0" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#0;n#nav#0;n#body#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/js/PathviewApp.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6742857">
@@ -1353,29 +1231,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/analysis.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.034483">
-          <caret line="699" column="28" selection-start-line="699" selection-start-column="28" selection-end-line="699" selection-end-column="28" />
-          <folding>
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1447439387810" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/pathview/PathviewAboutController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2111437">
@@ -1472,7 +1327,7 @@
     <entry file="file://$PROJECT_DIR$/storage/logs/laravel-2015-11-13.log">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2783.8386">
-          <caret line="7497" column="0" selection-start-line="7497" selection-start-column="0" selection-end-line="7497" selection-end-column="0" />
+          <caret line="7533" column="0" selection-start-line="7533" selection-start-column="0" selection-end-line="7533" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1503,11 +1358,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
+    <entry file="file://$PROJECT_DIR$/resources/views/app.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30857143">
-          <caret line="18" column="0" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
+        <state vertical-scroll-proportion="-5.6896553">
+          <caret line="259" column="14" selection-start-line="259" selection-start-column="6" selection-end-line="259" selection-end-column="14" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/analysis.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4604106">
+          <caret line="708" column="20" selection-start-line="708" selection-start-column="20" selection-end-line="708" selection-end-column="20" />
+          <folding>
+            <marker date="1447448244355" expanded="true" signature="1969:1981" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="3693:3705" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="5463:5475" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="9849:9861" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="24293:24386" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="24305:24384" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="24515:24795" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="24529:24793" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="24542:24696" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="25878:26181" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="25892:26180" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="25906:26060" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="27247:27498" placeholder="..." />
+            <marker date="1447448244355" expanded="true" signature="27261:27496" placeholder="..." />
+          </folding>
         </state>
       </provider>
     </entry>
