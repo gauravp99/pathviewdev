@@ -113,7 +113,7 @@ pv.out <- try(pathview(gene.data = gene.d,gene.idtype = args2$geneid,cpd.data = 
 
 
 if(class(pv.out) =="list"){
-    if(!is.null(gene.d)) {
+    if(!is.null(gene.d) & !is.null(pv.out$plot.data.gene)) {
         gids=pv.out$plot.data.gene$all.mapped
         gids=strsplit(gids, ",")
         lens=sapply(gids, length)
@@ -128,7 +128,7 @@ if(class(pv.out) =="list"){
         pvg=cbind(pv.out$plot.data.gene[,1:3], all.mapped.symb=gsymbs, pv.out$plot.data.gene[,4:ncg])
         write.table(pvg,file=paste(paste(paste("genedata.",args2$species,sep=""),pid,sep=""),".txt",sep=""),quote = FALSE, sep="\t")
     }
-    if(!is.null(cpd.d)) {
+    if(!is.null(cpd.d) & !is.null(pv.out$plot.data.cpd)) {
         cids=pv.out$plot.data.cpd$all.mapped
         cnames=cids
         eidx=cnames>""

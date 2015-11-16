@@ -3,3 +3,8 @@ config/
 .env
 storage/
 public/data/publicPath.txt
+vendor/
+public/Kegg/
+public/mmap/
+public/genesets/
+.idea/

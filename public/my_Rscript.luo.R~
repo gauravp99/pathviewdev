@@ -90,13 +90,13 @@ kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species
 system(paste("mkdir -p", kegg.dir))
 
 save.image("workenv.RData")
-source("/var/www/PathwayWeb/public/script/kg.map.R")
-kg.map(args2$species)
-kg.cmap()
-gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")
-cm.fname=paste0(mmap.dir1, "cpd", ".RData")
-load(gm.fname)
-load(cm.fname)
+#source("/var/www/PathwayWeb/public/scripts/kg.map.R")
+#kg.map(args2$species)
+#kg.cmap()
+#gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")
+#cm.fname=paste0(mmap.dir1, "cpd", ".RData")
+#load(gm.fname)
+#load(cm.fname)
 
 path.ids=args2$pathway
 pv.run=sapply(path.ids, function(pid){
