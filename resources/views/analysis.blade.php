@@ -686,7 +686,9 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
         $(document).ready(function () {
             //removing the extra comma if existed
             $('#pathwayList').val($('#pathwayList').text().split(',')[0]+"\,\n");
-            //function to load and reload the content of the page chrome reloads the page so need this functionality to be implemented
+	    $('#pathwayList').val($.trim($('#pathwayList').val()));  
+
+          //function to load and reload the content of the page chrome reloads the page so need this functionality to be implemented
 
             var savedAttributes = $('#saveAttributes').val();
             if (savedAttributes !== '') {

@@ -27,8 +27,8 @@ function validation() {
 //select box allowing to select multiple option without pressing control
 $(document).ready(function () {
         $('#graphics').hide();
+	$('dataType-div').show();
         $('#coloration').hide();
-        $('#dataType-div').toggle();
         $('#bins-div').toggle();
         $('#pathviewSettings-div').toggle();
         $("[name='dopathview']").bootstrapSwitch();
@@ -41,11 +41,11 @@ $(document).ready(function () {
         $("[name='useFold']").setOnLabel = "setOnLabel";
         $("[name='useFold']").bootstrapSwitch.defaults.setOffLabel = "setOnLabel";
         $('input[name="dopathview"]').on('switchChange.bootstrapSwitch', function (event, state) {
-            $('#dataType-div').toggle();
-            if($('#bins-div'))
-            {
-                $('#bins-div').toggle();
-            }
+           // $('#dataType-div').toggle();
+           if($('#bins-div'))
+           {
+             $('#bins-div').toggle();
+           }
             $('#pathviewSettings-div').toggle();
         });
 
