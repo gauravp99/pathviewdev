@@ -1,6 +1,0 @@
-args <- commandArgs(TRUE)
-input <- shQuote(args[1])
-input <- paste(paste('analyses',input,sep="("),"",sep=")")
-library("RSclient")
-c=RS.connect()
-RS.eval(c,quote(input))

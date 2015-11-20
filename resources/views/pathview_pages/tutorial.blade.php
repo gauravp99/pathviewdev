@@ -227,7 +227,7 @@
                                     You don't have to specify another of these parameters if your just want to visualize the input data as it is.</p>
 
                                     <p>For examples of gene data, check: <a
-                                            href="all/demo/example/gse16873.d3.txt" target="_balnk">Example Gene Data
+                                            href="data/gse16873.d3.txt" target="_balnk">Example Gene Data
                                         1</a> and <a href="data/gse16873.3.txt" target="_balnk">Example Gene
                                         Data 2</a>.</p>
                                 </dd>
@@ -241,7 +241,7 @@
                                 <dd>Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv).
                                     The format is the same as Gene Data in format (and you may also need to specify sample columns and experiment design), excpet rows are compounds including
                                     metabolites, drugs, small molecules etc. For example, check: <a
-                                            href="all/demo/example/sim.cpd.data2.txt" target="_balnk">Example Compound
+                                            href="data/sim.cpd.data2.txt" target="_balnk">Example Compound
                                         Data 1</a> and <a href="data/sim.cpd.data1.csv" target="_balnk">Example
                                         Compound Data 2.</a></dd>
                             </div>
@@ -546,15 +546,15 @@
                     This example shows the multiple sample/state integration with Pathview KEGG vieww. Data files are
                     pre
                     loaded and the options have been preset as below.
-                    Data files used in this example are <a href="all/demo/example/gse16873.d3.txt" target="_balnk">Gene
-                        Data</a> and <a href="all/demo/example/sim.cpd.data2.csv" target="_balnk">Compound Data</a>.
+                    Data files used in this example are <a href="data/gse16873.d3.txt" target="_balnk">Gene
+                        Data</a> and <a href="data/sim.cpd.data2.csv" target="_balnk">Compound Data</a>.
                     In this example Gene Data has 3 samples and Compound Data has 2 samples.
 
                 </p>
 
                 <div class="col-sm-8">
 
-                    <img src="all/demo/example/hsa00640.multistate.kegg.multi.png" style="width: 99%;">
+                    <img src="data/hsa00640.multistate.kegg.multi.png" style="width: 99%;">
                 </div>
                 <div class="col-sm-4">
                     <ul class="list-group">
@@ -609,8 +609,8 @@
                     This example shows the multiple sample/state integration with Pathview Graphviz viewo. Data files
                     are pre
                     loaded and the options have been preset as below.
-                    Data files used in this example are <a href="all/demo/example/gse16873.d3.txt" target="_balnk">Gene
-                        Data</a> and <a href="all/demo/example/sim.cpd.data2.csv" target="_blank">Compound Data</a>.
+                    Data files used in this example are <a href="data/gse16873.d3.txt" target="_balnk">Gene
+                        Data</a> and <a href="data/sim.cpd.data2.csv" target="_blank">Compound Data</a>.
                     In this example Gene Data has 3 samples and Compound Data has 2 samples. Difference on this example
                     is
                     you are generating a Graphviz view
@@ -620,7 +620,7 @@
                 </p>
 
                 <div class="col-sm-8">
-                    <img src="all/demo/example/file-page1.png" style="width: 99%;">
+                    <img src="data/file-page1.png" style="width: 99%;">
 
                 </div>
                 <div class="col-sm-4">
@@ -684,14 +684,14 @@
                 <p>
                     Here's an example showing the ID mapping capability of pathview. Data files are pre loaded and the
                     options have been preset as below (including Gene ID type and Compound ID type).
-                    Data files used in this example are <a href="all/demo/example/gene.ensprot.txt"
+                    Data files used in this example are <a href="data/gene.ensprot.txt"
                                                            target="_blank">Gene
-                        Data</a> and <a href="all/demo/example/cpd.cas.csv" target="_blank">Compound Data</a>.
+                        Data</a> and <a href="data/cpd.cas.csv" target="_blank">Compound Data</a>.
 
                 </p>
 
                 <div class="col-sm-8">
-                    <img src="all/demo/example/hsa00640.IDMapping.png" style="width: 99%;">
+                    <img src="data/hsa00640.IDMapping.png" style="width: 99%;">
                 </div>
                 <div class="col-sm-4">
                     <ul class="list-group">

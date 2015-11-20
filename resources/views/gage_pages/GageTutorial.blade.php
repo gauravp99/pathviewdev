@@ -662,7 +662,7 @@
                         </li>
                         <li class="list-group-item"><div class="argumentVar">reference</div> <div class="argumentColon">:</div> <div class="argumentVal">1,3</div></li>
                         <li class="list-group-item"><div class="argumentVar">sample</div> <div class="argumentColon">:</div> <div class="argumentVal">2,4</div></li>
-                        <li class="list-group-item"><div class="argumentVar">filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="all/data/gagedata.txt" target="_blank">gagedata.txt</a></div></li>
+                        <li class="list-group-item"><div class="argumentVar">filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="data/gagedata.txt" target="_blank">gagedata.txt</a></div></li>
                         <li class="list-group-item"><div class="argumentVar">gene Set Category</div> <div class="argumentColon">:</div> <div class="argumentVal">kegg</div></li>
                         <li class="list-group-item"><div class="argumentVar">geneSet</div> <div class="argumentColon">:</div> <div class="argumentVal">sig.idx</div></li>
                         <li class="list-group-item"><div class="argumentVar">species</div> <div class="argumentColon">:</div> <div class="argumentVal">hsa</div></li>
@@ -715,8 +715,8 @@
                     </li>
                     <li class="list-group-item"><div class="argumentVar">reference</div> <div class="argumentColon">:</div> <div class="argumentVal">1,3</div></li>
                     <li class="list-group-item"><div class="argumentVar">sample</div><div class="argumentColon">:</div> <div class="argumentVal">2,4</div></li>
-                    <li class="list-group-item"><div class="argumentVar">filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="all/data/gse16873.symb.txt" target="_blank">gse16873.symb.txt</a></div></li>
-                    <li class="list-group-item"><div class="argumentVar">GeneSet filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="all/data/c1_all_v3_0_symbols.gmt" target="_blank">c1_all_v3_0_symbols</a></div></li>
+                    <li class="list-group-item"><div class="argumentVar">filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="data/gse16873.symb.txt" target="_blank">gse16873.symb.txt</a></div></li>
+                    <li class="list-group-item"><div class="argumentVar">GeneSet filename</div> <div class="argumentColon">:</div> <div class="argumentVal"><a href="data/c1_all_v3_0_symbols.gmt" target="_blank">c1_all_v3_0_symbols</a></div></li>
                     <li class="list-group-item"><div class="argumentVar">gene Set Category</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
                     <li class="list-group-item"><div class="argumentVar">geneSet</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
                     <li class="list-group-item"><div class="argumentVar">species</div> <div class="argumentColon">:</div> <div class="argumentVal">custom</div></li>
