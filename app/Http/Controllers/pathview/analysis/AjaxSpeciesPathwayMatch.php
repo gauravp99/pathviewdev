@@ -25,5 +25,15 @@ class AjaxSpeciesPathwayMatch extends Controller {
         die();
 	}
 
+    public function speciesGeneIdMatch()
+    {
+            $var = substr(Input::get('species'),0,3);
+            $gene_id = DB::select(DB::raw("select geneid from GageSpeceisGeneIdMatch where species_id = '$var'  "));
+
+            return json_encode($gene_id);
+            die();
+
+    }
+
 }
 

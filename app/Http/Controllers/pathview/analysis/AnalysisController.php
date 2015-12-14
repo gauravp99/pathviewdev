@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Cookie;
 use App\Commands\SendJobAnalysisCompletionMail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Config;
+use DebugBar\DebugBar;
+
 class AnalysisController extends Controller
 {
 
@@ -30,10 +32,11 @@ class AnalysisController extends Controller
     public $uID=0;
     public function delete()
     {
+	#Debugbar::info('hello');
         $analysis_id = $_POST["analysisID"];
-
         if (strlen($analysis_id) > 13) {
 
+            //delete given analysis id
             $analyis_array = explode(',', $analysis_id);
 
             foreach ($analyis_array as $analysis_id) {
@@ -50,29 +53,11 @@ class AnalysisController extends Controller
                     $success = File::deleteDirectory($directory);
                 }
             }
-            return Redirect::back()->with('success', 'Error');
 
-        } else {
+        } 
+return Redirect::back()->with('success', 'Error');
 
-            $result = DB::table('analysis')
-                ->where('analysis_id', '=', $analysis_id)
-                ->where('id', '=', Auth::user()->id)->first();
-            if (sizeof($result) > 0) {
-                //analysis belong this user deleting using storage
-                $directory = public_path() . '/all/' . Auth::user()->email . '/' . $analysis_id;
-                DB::table('analysis')
-                    ->where('analysis_id', '=', $analysis_id)
-                    ->update(array('id' => "0"));
-                $success = File::deleteDirectory($directory);
-                return Redirect::back()->with('success', 'succes message');
-            } else {
-                return Redirect::back()->with('success', 'Error');
-
-
-            }
-
-
-        }
+        
     }
 
     public function postAnalysis(CraeteAnalysisRequest $resqest)
@@ -103,6 +88,9 @@ class AnalysisController extends Controller
         return $ipaddress;
     }
 
+
+    //this function is archieve code not being used fro analysis
+    // code at /app/Http/Controllers/PathviewAnalysisController.php is used for analaysis
     public function analysis($anal_type)
     {
 

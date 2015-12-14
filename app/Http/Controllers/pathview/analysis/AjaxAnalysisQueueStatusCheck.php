@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Cookie;
 use \Illuminate\Support\Facades\Input;
 use App\Commands\SendJobAnalysisCompletionMail;
 use Queue;
+use Illuminate\Support\Facades\URL;
 /**
  * Class AjaxAnalysisQueueStatusCheck
  * @package App\Http\Controllers
@@ -22,6 +23,7 @@ use Queue;
  * Status of each job when submitted is set using <#analysisID>:Status
  *
  */
+
 class AjaxAnalysisQueueStatusCheck extends Controller
 {
 
@@ -42,20 +44,32 @@ class AjaxAnalysisQueueStatusCheck extends Controller
             if (Auth::user()) {
                 $data['content'] = "?analyses=" . Input::get('analysisid') . "&id=" . Input::get('id') . "&suffix=" . Input::get('suffix') . "&email=" . Auth::user()->email;
                 $data['name'] = Auth::user()->name;
+                $data['email'] = Auth::user()->email;
                 $data['time'] = date('l jS \of F Y h:i:s A');
                 $data['anal_type'] = Input::get('anal_type');
                 $data['argument'] = Input::get('argument');
+                $data['url'] = URL::to('/');
 
-                Mail::send('emails.result', $data, function ($message) use ($data) {
-                    try {
+                try{
+                    Mail::queue('emails.result', $data, function ($message) use ($data) {
+                        try {
+                            $user_email = $data['email'];
+                            $user_name = $data['name'];
+                            $message->to($user_email, $user_name)->subject('Analysis completed');
 
-                        $user = Auth::user();
-                        $message->to($user->email, $user->name)->subject('Analysis completed');
+                        } catch (Exception $e) {
+                            return "exception in mail";
+                        }
+                    });
+                }
+                catch(Exception $e)
+                {
+                    //delete the analaysisid status from redis
+                    Redis::del(Input::get('analysisid') . ":Status");
+                    Redis::del(Input::get('analysisid'));
+                    return "true";
+                }
 
-                    } catch (Exception $e) {
-                        return "exception in mail";
-                    }
-                });
 
                 //delete the analaysisid status from redis
                 Redis::del(Input::get('analysisid') . ":Status");
@@ -93,25 +107,18 @@ class AjaxAnalysisQueueStatusCheck extends Controller
             }else{
                 $uID = Cookie::get("uID");
             }
+        $jobflag = Redis::get("wait:".Input::get('analysisid'));
+        if(!is_null($jobflag))
+        {
 
-            $count = 0;
-            if(!is_null(Redis::get("id:".$uID)))
-            {
-                $count = Redis::get("id:".$uID);
-            }
-            if($count <= 2){
+          if($jobflag == "true")
+          {
+              return "pushedJob";
+          }else{
+            return "still waiting";
+        }
+        }
 
-                $jobflag = Redis::get("wait:".Input::get('analysisid'));
-                if(!is_null($jobflag))
-                {
-                    $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail(Input::get('analysisid'),$uID));
-                    Redis::del("wait:".Input::get('analysisid'));
-                }
-                return "pushedJob";
-            }
-            else{
-                return $uID+"stillWaiting"+$count;
-            }
 
 
         }

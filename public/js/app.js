@@ -17,7 +17,7 @@ app.controller('analysisController',function($scope,$timeout) {
         if($scope.filename)
             $scope.content = $fileContent;
         console.log($scope.filetype);
-        if($scope.filetype === 'text/csv')
+        if($scope.filetype === 'text/csv' || $scope.fileExtension === 'csv' )
         {
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.columns = $fileContent.split("\n")[0].replace(" ", "").split(",");
@@ -96,6 +96,8 @@ app.directive('onReadFile', function($parse){
                         fn(scope,{$fileContent:onLoadEvent.target.result});
                     });
                 };
+                scope.fileName1 = (onChangeEvent.srcElement || onChangeEvent.target).files[0].name;
+                scope.fileExtension = scope.fileName1.substring(scope.fileName1.length-3,scope.fileName1.length);
                 scope.filetype =( (onChangeEvent.srcElement || onChangeEvent.target).files[0].type);
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
 

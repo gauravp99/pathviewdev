@@ -51,7 +51,7 @@ use Illuminate\Cacheche;
     $cpdfile = "";
     $geneid = "ENTREZ";
     $cpdid = "KEGG";
-    $species = "hsa-Homo sapiens";
+    $species = "hsa-Homo sapiens-human";
     $pathway = "00640-Propanoate metabolism";
     $selectpath = "00010-Glycolysis / Gluconeogenesis,";
     $pathidx = 0;

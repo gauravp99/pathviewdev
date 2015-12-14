@@ -33,10 +33,7 @@
 
             // Make destination directory
             if (!is_dir($dest)) {
-
                 mkdir($dest, $permissions);
-
-
             }
 
             // Loop through the folder
@@ -143,11 +140,37 @@
         if (is_null($analyses)) {
             echo "No recenet Activity's";
         } else { ?>
+
+
+        <div class="col-sm-12">
+
+            <div class="col-sm-5">
+                {!! $analyses->render() !!}
+            </div>
+            <!-- <div class="col-sm-5">
+                <div class="btn-group" style=""><a href='#' data-id='' data-toggle='modal' id='Analysisdelete' data-analysisID="" style='display:none;' class='delete' data-target='#myModal'>
+                        <button type="button" class="btn btn-default dropdown-toggle" ><span class='glyphicon glyphicon-trash'> Delete</span></button>
+                    </a>
+                </div>
+            </div>-->
+
+        </div>
+
+
+
         <table class="table table-bordered" style="padding:10px;width:90%;margin:auto;">
             <thead>
-            <tr>
-                <th><a href="#" id='deleteAll' data-toggle='modal'   data-target='#myModal'>Delete </a></th>
-                <th></th>
+           <tr>
+	   <div  style="margin-left:55px;margin-bottom:5px;">
+                <div class="btn-group" style=""><a href='#' data-id='' data-toggle='modal' id='Analysisdelete' data-analysisID="" style='display:none;' class='delete' data-target='#myModal'>
+                        <button type="button" class="btn btn-default dropdown-toggle" ><span class='glyphicon glyphicon-trash'> Delete</span></button>
+                    </a>
+                </div>
+            </div>
+            </tr>
+	    <tr>
+                <th><input type="checkbox" name="select" id="selectAll"><span   id="selectAlltext" >  Select All</span></th>
+
                 <th>#</th>
                 <th>Analysis Type</th>
                 <th>Number of days</th>
@@ -161,12 +184,7 @@
                 $now = time(); // or your date as well
                 $your_date = strtotime(str_split($analyses1->created_at, 10)[0]);
                 $date_diff = $now - $your_date;
-                echo "<tr><td><input type='checkbox' value=$analyses1->analysis_id name=$analyses1->analysis_id ></td>
-                <td>
-                <a href='#' data-id=$analyses1->analysis_id data-toggle='modal' id='Analysisdelete' class='delete' data-target='#myModal'>
-                <span class='glyphicon glyphicon-trash'><span>
-                </a>
-                </td>";
+                echo "<tr><td><input type='checkbox' id='analID' alue=$analyses1->analysis_id name=$analyses1->analysis_id ></td>";
                 echo "<td>$analyses1->analysis_id</td><td><h4> $analyses1->analysis_type </h4></td>";
 
                 echo "<td> ".floor($date_diff / (60 * 60 * 24))." days ago ";
@@ -197,12 +215,14 @@
 
             }}?>
 
-            {!! $analyses->render() !!}
+
 
 
         </table>
+
+
         </div>
-            <input type="submit" id="delete" data-toggle='modal'  data-target='#myModal' value="Delete Selected" style="padding:5px;" hidden="">
+
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -215,12 +235,12 @@
                     <div class="modal-body">
                         <p id="analysis"> </p>
                         <h3 class="alert alert-danger">Alert!! Clicking ok Will delete the files and lost. You will not be able to retrieve it back.</h3>
-                        {!! form::open(array('url' => 'analysisDelete','method'=>'POST')) !!}
+                        {!! form::open(array('url' => '/analysisDelete','method'=>'POST','id'=>'deleteAnalysis')) !!}
                         <input type="text" name="analysisID" id="analysisID" value="" hidden/>
                         <input type="submit" value="OK" class="btn btn-default" >
                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel
                         </button>
-
+			{!! form::close() !!}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close
@@ -235,35 +255,88 @@
 
 
     $(function(){
-        var analy_ids="";
-        $('input[type="checkbox"]').change(function() {
-            if(this.checked) {
-                analy_ids += $(this).val();
-                analy_ids +=",";
-                console.log(analy_ids);
-            }
-            $('#delete').show();
-        });
-        $(document).on("click", ".delete", function () {
-            var analysisID = $(this).data('id');
-            $("#analysis").text("Deleting "+ analysisID);
-            $(".modal-body #analysisID").val( analysisID );
-        });
-        $(document).on("click", "#deleteAll", function () {
-            $(".modal-body #analysisID").val("");
-            $('input[type=checkbox]').each(function() {
 
-                analy_ids+= $(this).val();
+        //unselect all checkbox on load selects the checkbox if already checked and refreshed
+        $.each($( ":checkbox"),function(id,element){
+            element.checked = false;
+        });
+
+$('#Analysisdelete').click(function(){
+ var Ids = $(this).attr('data-analysisID');
+     console.log(Ids);
+	$(".modal-body #analysisID").val( Ids);
+
+});
+
+
+
+	//select all checkbox 
+        $('#selectAll').change(function(){
+            if(this.checked)
+            {
+                var analysisIDText = "";
+                $.each($( ":checkbox"),function(id,element){
+                    element.checked = true;
+
+                    if(element.id==="analID")
+                    analysisIDText += element.name+",";
+
+                });
+		
+		//setting the analysis id's in the form element
+		console.log(analysisIDText);
+		$('#Analysisdelete').attr('data-analysisID',analysisIDText);
+                $('#Analysisdelete').show();
+		
+            }
+            else{
+                $.each($( ":checkbox"),function(id,element){
+                    element.checked = false;
+
+                });
+                $('#Analysisdelete').hide();
+            }
+
+
+        });
+
+        var analy_ids="";
+
+
+        $('input[type="checkbox"]').change(function() {
+        
+	var vflag = false;    
+	if(this.checked && $(this).attr('id') != 'selectAll') {
+                analy_ids += $(this).attr('name');
                 analy_ids +=",";
                 console.log(analy_ids);
-                $("#analysis").text("Deleting Analysis:deleting all");
-                $(".modal-body #analysisID").val( analysisID );
-            });
-        });
-        $(document).on("click", "#delete", function () {
-            console.log('delete selected button clicked');
-            $("#analysis").text("Deleting Analysis:"+analy_ids);
-            $(".modal-body #analysisID").val( analy_ids );
+                $('#Analysisdelete').show();
+		$('#Analysisdelete').attr('data-analysisID',analy_ids);
+            }else if($(this).attr('id') != 'selectAll'){
+                var countOfChecked = 0;
+                analy_ids = "";
+		$.each($( ":checkbox"),function(id,element){
+                
+		        if(element.checked)
+                        {
+			    analy_ids += element.name+",";
+                            countOfChecked++;
+                        }
+                });
+		
+		
+                if(countOfChecked == 0)
+                {
+                    $('#Analysisdelete').hide();
+                }
+            }else{
+		vflag = true;
+			}
+		if(!vflag)
+		{
+		console.log(analy_ids);
+		$('#Analysisdelete').attr('data-analysisID',analy_ids);
+		}
         });
 
     });

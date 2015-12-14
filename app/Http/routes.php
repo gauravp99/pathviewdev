@@ -54,6 +54,10 @@
 
 /* Ajax controller for species and pathway match retrievel */
         Route::post('/ajax/specPathMatch','pathview\analysis\AjaxSpeciesPathwayMatch@index');
+
+/* Ajax controller for species and pathway match retrievel */
+        Route::post('/ajax/specGeneIdMatch','pathview\analysis\AjaxSpeciesPathwayMatch@speciesGeneIdMatch');
+
 /* Ajax Queue status checking */
         Route::post('/ajax/analysisStatus','pathview\analysis\AjaxAnalysisQueueStatusCheck@index');
 /* Ajax checking the analysis queue waiting status */

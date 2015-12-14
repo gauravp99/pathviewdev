@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Config;
 use DateTime;
 use Illuminate\Support\Facades\Cookie;
 use App\Http\Controllers\pathview\analysis\AnalysisController;
-
+use Queue;
+//use Illuminate\Log;
 
 /***
  * Class SendJobAnalysisCompletionMail
@@ -28,17 +29,19 @@ class SendJobAnalysisCompletionMail extends Command implements SelfHandling, Sho
 {
 
     use InteractsWithQueue, SerializesModels;
-    protected $time;
-    public $uniqueID;
+
+    protected $analysisID,$user_unique_id;
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct($time,$uniqueID)
+    public function __construct($analysisID,$user_unique_id)
     {
-        $this->time = $time;
-        $this->uniqueID = $uniqueID;
+
+
+        $this->analysisID = $analysisID;
+        $this->user_unique_id = $user_unique_id;
     }
 
     /**
@@ -46,85 +49,99 @@ class SendJobAnalysisCompletionMail extends Command implements SelfHandling, Sho
      *
      * @return void
      */
-    function get_client_ip()
-    {
-
-        if (getenv('HTTP_CLIENT_IP'))
-            $ipaddress = getenv('HTTP_CLIENT_IP');
-        else if (getenv('HTTP_X_FORWARDED_FOR'))
-            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-        else if (getenv('HTTP_X_FORWARDED'))
-            $ipaddress = getenv('HTTP_X_FORWARDED');
-        else if (getenv('HTTP_FORWARDED_FOR'))
-            $ipaddress = getenv('HTTP_FORWARDED_FOR');
-        else if (getenv('HTTP_FORWARDED'))
-            $ipaddress = getenv('HTTP_FORWARDED');
-        else if (getenv('REMOTE_ADDR'))
-            $ipaddress = getenv('REMOTE_ADDR');
-        else if (isset($_SERVER['REMOTE_ADDR']))
-            $ipaddress = $_SERVER['REMOTE_ADDR'];
-        else
-            $ipaddress = 'UNKNOWN';
-        return $ipaddress;
-    }
-
     public function handle()
     {
-
-        //reduce the number of parllel job of the user currently exist by 1
-
-        $hashdata = json_decode(Redis::get($this->time),true);
-        Redis::del("wait:".$this->time);
+        //Log::info('Starting Pull');
 
 
-        $time = $this -> time;
+       //retrieving information from redis set for the analysis
+        $hashdata = json_decode(Redis::get($this->analysisID),true);
+
+
 
         $argument = $hashdata['argument'];
         $destFile = $hashdata['destFile'];
         $anal_type = $hashdata['anal_type'];
         $userobject = $hashdata['user'];
-        if($userobject=="demo")
-        $user = 0;
+        $ip_add = $hashdata['ip_add'];
+      // check if user is guest user or authenticated user
+	    if($userobject=="demo")
+            $user = 0;
         else
             $user = $userobject;
+
         $outFile = $destFile . '/outputFile.Rout';
         $errorfile = $destFile . '/errorFile.Rout';
-        echo $outFile;
-        echo $errorfile;
+
         $Rloc = Config::get("app.RLoc");
         $publicPath = Config::get("app.publicPath");
 
         exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\" >$outFile  2> $errorfile ");
-        $count = Redis::get("id:".$this->uniqueID) -1 ;
-        Redis::set("test:".$count,$this->uniqueID);
-        if($count <0)
+
+        Redis::del($this->analysisID);
+        Redis::set($this->analysisID.":Status","true");
+
+        $count = Redis::get("id:".$this->user_unique_id) -1 ;
+
+        if($count < 0)
             $count = 0;
-        Redis::set("id:".$this->uniqueID,$count);
+
+        Redis::set("id:".$this->user_unique_id,$count);
 
         $date = new DateTime;
-        $record = DB::table('analysis')->where('analysis_id',$time)->get();
+        $record = DB::table('analysis')->where('analysis_id',$this->analysisID)->get();
         if(strcmp($anal_type,"Analysis History regenerated")==0 || sizeof($record)>0) {
 
         DB::table('analysis')
-            ->where('analysis_id', $time)
+            ->where('analysis_id', $this->analysisID)
             ->update(['analysis_type' => 'Analysis History regenerated']);
         }
         else
         {
             if ($user != 0)
                 DB::table('analysis')->insert(
-                    array('analysis_id' => $time . "", 'id' => $user . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => $this->get_client_ip())
+                    array('analysis_id' => $this->analysisID . "", 'id' => $user . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => $ip_add)
                 );
             else
                 DB::table('analysis')->insert(
-                    array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => $this->get_client_ip())
-
+                    array('analysis_id' => $this->analysisID . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => $ip_add)
                 );
         }
-        Redis::del($time);
-        Redis::set($time.":Status","true");
 
 
+
+        //deleting the wait tag if exist for usr
+        if(!is_null(Redis::get("wait:".$this->analysisID)))
+        Redis::del("wait:".$this->analysisID);
+
+        //get any job present in waiting status to run in queue
+        $wjobidsjson = Redis::get("wids:" . $this->user_unique_id);
+
+        $wjobids = array();
+        if(!is_null($wjobidsjson))
+        {
+            $wjobids = json_decode($wjobidsjson);
+        }
+
+        if(sizeof($wjobids) > 0)
+        {
+
+
+            $first_waiting_job = array_shift($wjobids);
+
+            //update the redis with waiting ids
+            Redis::set("wids:" . $this->user_unique_id,json_encode($wjobids));
+
+                Redis::set("wait:".$first_waiting_job,"true");
+
+            //push the job to queue
+            $process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($first_waiting_job, $this->user_unique_id));
+
+            $jobs = Redis::get("id:". $this->user_unique_id);
+            Redis::set("id:" . $this->user_unique_id, $jobs+1);
+
+
+        }
 
 
     }

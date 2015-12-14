@@ -14,6 +14,44 @@
     Error handling messages : We have considered two time error handling on the client side and on server side
     client side is done with jquery validation framework and server side is shown with checking the session attributes
     -->
+    <div class="stepsdiv" id="species-div" @if (isset(Session::get('err_atr')['species'])) style='background-color:#DA6666;' @endif>
+        <div class="col-sm-12">
+            <div class="col-sm-5">
+                <a href="tutorial#species"
+                   onclick="window.open('tutorial#species', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
+                   title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."
+                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                </a>
+                {!!form::label('species','Species:') !!}
+            </div>
+            <div class="col-sm-7">
+                <input class="ex8" list="specieslist" name="species" id="species"
+                       value=@if (isset(Session::get('Sess')['species']))  "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif
+                >
+            </div>
+        </div>
+        <datalist id="specieslist">
+            <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
+            <?php
+
+              $species = Cache::remember('Species', 10, function()
+            {
+                return DB::table('species')->get();
+            });
+            if (Cache::has('Species'))
+            {
+                $species = Cache::get('Species');
+            }
+
+            foreach ($species as $species1) {
+                //echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
+                echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
+            }
+            ?>
+            <!--[if (lt IE 10)]></select><![endif]-->
+        </datalist>
+    </div>
 
     <div class="stepsdiv" id="geneid-div"
          @if (isset(Session::get('err_atr')['geneid'])) style="background-color:#DA6666;" @endif>
@@ -43,7 +81,7 @@
             <?php
             $gene = Cache::remember('gene', 10, function()
             {
-                return DB::table('gene')->get();
+                return DB::table('GageSpeceisGeneIdMatch')->where('species_id','hsa')->get();
             });
             if (Cache::has('gene'))
             {
@@ -51,7 +89,7 @@
             }
 
             foreach ($gene as $gene1) {
-                echo "<option value='$gene1->gene_id'>$gene1->gene_id</option>";
+                echo "<option value='$gene1->geneid'>$gene1->geneid</option>";
             }
             ?>
             <!--[if (lt IE 10)]></select><![endif]-->
@@ -97,43 +135,7 @@
     </div>
 
 
-    <div class="stepsdiv" id="species-div" @if (isset(Session::get('err_atr')['species'])) style='background-color:#DA6666;' @endif>
-        <div class="col-sm-12">
-            <div class="col-sm-5">
-                <a href="tutorial#species"
-                   onclick="window.open('tutorial#species', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus();return false;"
-                   title="Either the KEGG code, scientific name or the common name of the target species. Species may also be 'ko' for KEGG Orthology pathways."
-                   target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                </a>
-                {!!form::label('species','Species:') !!}
-            </div>
-            <div class="col-sm-7">
-                <input class="ex8" list="specieslist" name="species" id="species"
-                       value=@if (isset(Session::get('Sess')['species']))  "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif
-                       >
-            </div>
-        </div>
-        <datalist id="specieslist">
-            <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
-            <?php
 
-              $species = Cache::remember('Species', 10, function()
-            {
-                return DB::table('species')->get();
-            });
-            if (Cache::has('Species'))
-            {
-                $species = Cache::get('Species');
-            }
-
-            foreach ($species as $species1) {
-                echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
-            }
-            ?>
-            <!--[if (lt IE 10)]></select><![endif]-->
-        </datalist>
-    </div>
 
 
     <div class="stepsdiv" @if (isset(Session::get('err_atr')['pathway'])) style='background-color:#DA6666;' @endif id="pat-select">
@@ -685,8 +687,19 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
 
         $(document).ready(function () {
             //removing the extra comma if existed
-            $('#pathwayList').val($('#pathwayList').text().split(',')[0]+"\,\n");
-	    $('#pathwayList').val($.trim($('#pathwayList').val()));  
+
+            //making the pathway list aligned using newline character
+            var pathway_string = "";
+            $('#pathwayList').val($.trim($('#pathwayList').val()));
+            var splittedPathwayArray = $('#pathwayList').val().split("\t");
+            if(splittedPathwayArray.length > 2)
+            {
+                console.log("reformating the pathway ids");
+                $.each($('#pathwayList').val().split("\t"),function(index,value){ pathway_string = pathway_string + $.trim(value) + "\t\r\n"; });
+                $('#pathwayList').val(pathway_string);
+            }
+
+
 
           //function to load and reload the content of the page chrome reloads the page so need this functionality to be implemented
 
@@ -707,7 +720,7 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
                     var cmid = keyValueMap[7].split(":")[1];
                     var chigh = keyValueMap[8].split(":")[1];
                     var pathwayList1 = keyValueMap[9].split(":")[1];
-                    var pathwayList = pathwayList1.replace(new RegExp(",","g"),"\,\n");
+                    //var pathwayList = pathwayList1.replace(new RegExp(",","g"),"\,\n");
                     
                     var suffix = keyValueMap[10].split(":")[1];
                     var offset = keyValueMap[11].split(":")[1];
@@ -715,19 +728,19 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
                     var clmt = keyValueMap[13].split(":")[1];
                     var gbins = keyValueMap[14].split(":")[1];
                     var cbins = keyValueMap[15].split(":")[1];
-		    var kpos = 	keyValueMap[16].split(":")[1];
+		            var kpos = 	keyValueMap[16].split(":")[1];
                     var pos = keyValueMap[17].split(":")[1];
-		    var nodesun = keyValueMap[18].split(":")[1];
-		    var nacolor = keyValueMap[19].split(":")[1];
-		    var align = keyValueMap[20].split(":")[1];
-		    var kegg = keyValueMap[21].split(":")[1];
-		    var layer = keyValueMap[22].split(":")[1];
-	            var gdisc = keyValueMap[23].split(":")[1];
-	 	    var cdisc = keyValueMap[24].split(":")[1];
-		    var split = keyValueMap[25].split(":")[1];
-		    var expand = keyValueMap[26].split(":")[1];
-		    var multistate = keyValueMap[27].split(":")[1];
-		    var matchd = keyValueMap[28].split(":")[1];	
+		            var nodesun = keyValueMap[18].split(":")[1];
+		            var nacolor = keyValueMap[19].split(":")[1];
+		            var align = keyValueMap[20].split(":")[1];
+		            var kegg = keyValueMap[21].split(":")[1];
+		            var layer = keyValueMap[22].split(":")[1];
+                    var gdisc = keyValueMap[23].split(":")[1];
+                    var cdisc = keyValueMap[24].split(":")[1];
+		            var split = keyValueMap[25].split(":")[1];
+		            var expand = keyValueMap[26].split(":")[1];
+		            var multistate = keyValueMap[27].split(":")[1];
+		            var matchd = keyValueMap[28].split(":")[1];
                     $('#species').val(species);
                     $('#geneid').val(geneid);
                     $('#cpdid').val(compoundid);
@@ -738,8 +751,7 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
                     $('#cmid').val(cmid);
                     $('#chigh').val(chigh);
 
-                    console.log(pathwayList);
-                    $('#pathwayList').val(pathwayList);
+
                     $('#suffix').val(suffix);
                     $('#offset').val(offset);
                     $('#glmt').val(glmt);
@@ -763,7 +775,6 @@ autocomplete="on"                           value={{isset(Session::get('genecolo
 
 		     if(cdisc == "true")  
                     $('#cdisc').prop('checked', true);
-
 
 	              if(split == "true")  
                     $('#split').prop('checked', true);

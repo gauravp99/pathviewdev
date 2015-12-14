@@ -66,13 +66,9 @@ class AdminController extends Controller {
 				$user = DB::table("users")->where('email', $value)->get();
 
 				$data['name'] = 'user';
-				/*if (!is_null($user)) {
-					$data['name'] = $user->name;
-				} else {
-					$data['name'] = "user";
-				}*/
 
-				Mail::send('emails.adminBroadcast', $data, function ($message) use ($data) {
+
+				Mail::queue('emails.adminBroadcast', $data, function ($message) use ($data) {
 					try {
 
 						$message->to(trim($data['email']), trim($data['name']))->subject($data['subject']);
@@ -87,6 +83,8 @@ class AdminController extends Controller {
 		}
 
 	}
+
+
 	//function used for sending mail to all users registered in the application
 	public function adminBroadcastMessage()
 	{
@@ -111,7 +109,7 @@ class AdminController extends Controller {
 					$data['name'] = "user";
 				}
 
-				Mail::send('emails.adminBroadcast', $data, function ($message) use ($data) {
+				Mail::queue('emails.adminBroadcast', $data, function ($message) use ($data) {
 					try {
 
 						$message->to(trim($data['email']), trim($data['name']))->subject('Pathway Project test Message');

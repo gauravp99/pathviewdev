@@ -12,19 +12,38 @@
                 $directory1 = "/all/" . Auth::user()->email . "/" . $_GET['analyses'];
 
             } else {
+
                 $directory = public_path() . "/all/demo/" . $_GET['analyses'];
                 $directory1 = "/all/demo/" . $_GET['analyses'];
+
             }
+                try{
 
-            $contents = scandir($directory);
+                    $contents = scandir($directory);
 
-            if ($contents) {
-                foreach ($contents as $key => $value) {
-                    if ($value == "." || $value == "..") {
-                        unset($key);
+                    if ($contents) {
+
+                        foreach ($contents as $key => $value) {
+                            if ($value == "." || $value == "..") {
+                                unset($key);
+                            }
+                        }
                     }
-                }
-            }
+            }catch(Exception $e)
+                    {
+                        if(Auth::user())
+                            {
+                                echo "Ohh.. Refresh page you can see the analysis in your profile.";
+                            }
+                        else{
+                            echo "Ohh.. Please Login Again";
+                        }
+
+
+                    }
+
+
+
 
             $val = "";
             $id = $_GET['id'];

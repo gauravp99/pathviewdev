@@ -142,8 +142,7 @@
 
         <div class="col12">
             <?php
-$direc= substr($dir,strlen("all/demo/"),13);
-echo "<h1>Analysis : $direc</h1>";
+echo "<h1>Analysis : ".$_SESSION['analysis_id']."</h1>";
 echo "<h2 class='alert alert-info'> Click here to download the zipped output files <a href=".$dir."/file.zip target='_blank'>File.zip</a></h2>";
 
 

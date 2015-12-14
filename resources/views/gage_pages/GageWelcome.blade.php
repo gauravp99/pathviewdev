@@ -14,6 +14,14 @@
                             Quick Start
                         </button>
                     </a>
+                    <a href="/">
+                        <button type="button" class="btn btn-primary btn-lg GetStarted">
+                            Try Pathview
+                        </button>
+                    </a>
+
+
+
                     <div class="panel panel-default">
                         <div class="panel-heading leftpanel " >Login</div>
                         <div class="panel-body">

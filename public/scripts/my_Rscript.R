@@ -93,8 +93,9 @@ if(!is.null(args2$cpdextension) && length(args2$cpdextension) > 0){
         if(is.null(names(cpd.d))) cpd.d=as.character(cpd.d)
     } else stop("Empty compound data file!")
 } else cpd.d=NULL
-# code removed for static folder location 23 indicates the file name /public/a;;/uniq identification number
-kegg.dir=paste(substr(getwd(),1,nchar(getwd())-23),paste("/Kegg/", args2$species, sep=""),sep="")
+
+##kegg directory
+kegg.dir=paste0(pvwdir,paste0("Kegg/", args2$species))
 #if (!dir.exists(kegg.dir)) dir.create(kegg.dir)
 system(paste("mkdir -p", kegg.dir))
 

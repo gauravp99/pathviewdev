@@ -11,24 +11,23 @@
                     <p class="content1">
                         <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html" target="_blank">Pathview</a>
                         maps, integrates and renders a wide variety of biological data on relevant pathway graphs. Here
-                        is a detailed <a href="all/demo/example/pathviewIntro_flyer.pdf" target="_balnk">overview</a>.
+                        is a detailed <a href="data/pathviewIntro_flyer.pdf" target="_balnk">overview</a>.
                         Pathview Web provides easy interactive access, and generates high quality, hyperlinked graphs.
                         Pathview package is written in R/Bioconductor, this web interface is built on PHP with Laravel
-                        Framework , XAMPP and R.
+                        Framework and R.
                     </p>
 
                     <h2 class="homepage-heading">Credits</h2>
 
                     <p class="content1">
                         Pathview web is designed and developed by Weijun Luo and Yeshvant Kumar Bhavnasi. We also get
-                        support from Steven Blanchard, Cory Brouwer and the whole Bioinformatics Service Division (BSD)
+                        support from Steven Blanchard, Cory Brouwer and the whole <a href="https://bioservices.uncc.edu/" target="_blank">Bioinformatics Service Division (BiSD)</a>
                         at UNC Charlotte.
                     </p>
 
-                    <p class="content1">
-                        This project is sponsored by BSD and Department of Bioinformatics and Genomics, and is supported
-                        by the Faculty Innovaton Fund to Weijun Luo from the College of Computing and Informatics.
-                    </p>
+
+
+
 
                     <h2 class="homepage-heading">Disclaimer</h2>
 
@@ -57,6 +56,26 @@
                         this website if you use it. This will help the Pathview project in return.
                     </p>
 
+                        <h2 class="homepage-heading">Sponsors</h2>
+
+                        <p class="content1">
+                            This project is sponsored by <a href="https://bioservices.uncc.edu/" target="_blank">BiSD</a> and <a href="http://bioinformatics.uncc.edu/" target="_blank">Department of Bioinformatics and Genomics</a>, and is supported
+                            by the Faculty Innovaton Fund to Weijun Luo from the <a href="http://cci.uncc.edu/" target="_blank">College of Computing and Informatics</a>.
+                        </p>
+                    <div class="col-sm-12">
+                        <div class="col-sm-3">
+
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="https://bioservices.uncc.edu/" target="_blank"><img src="images/servicesDivisionLogo.png" width="45%" height="45%"></a>
+                            <a href="http://bioinformatics.uncc.edu/" target="_blank"><img src="images/BioinformaticsLogo.jpg" width="50%" height="50%"></a>
+                        </div>
+                        <div class="col-sm-3">
+
+                        </div>
+
+                    </div>
+
                 </div>
 
                 <div class="col-sm-4 leftsidebar">
@@ -70,6 +89,12 @@
                             Quick Start
                         </button>
                     </a>
+                    <a href="/gageIndex" hidden="">
+                            <button type="button" class="btn btn-primary btn-lg GetStarted ">
+                                Try GAGE
+                            </button>
+                        </a>
+
                     <?php
                     }
                     else{?>

@@ -59,6 +59,32 @@ $(document).ready(function () {
         }
         else {
             $('#geneidlist option').removeAttr('disabled');
+            species = $('#species').val();
+            $.ajax({
+                url: "/ajax/specGeneIdMatch",
+                method: 'POST',
+                dataType: "json",
+                data: {'species': species},
+                cache: false,
+                success: function (data) {
+                    if (data.length > 0) {
+
+                        console.log("success from geneidspecies match ajaz call");
+                       $('#geneidlist').empty();
+                      console.log("success empty the geneid list"+data);
+                        $.each(data, function() {
+                            $('#geneidlist').append("<option value="+this['geneid']+">"+this['geneid']+"</option>");
+                           console.log(this['geneid']);
+                        });
+
+
+
+                    }
+                },
+                error: function (data) {
+                    console.log("error");
+                }
+            });
         }
         /* End Check for most used species if it is most used update the gene ID listed */
 
@@ -96,7 +122,6 @@ $(document).ready(function () {
     //end on each change in the species check for species and pathway list update
 
 
-    $('#pathwayList').append(",\r\n");
 
     $('#reset').click(function () {
         $("#errors").empty();
@@ -110,17 +135,27 @@ $(document).ready(function () {
 
     //javascript code for the forward button adding pathway from select box to the text box
     $('#btn-add').click(function () {
+        console.log("in button add function");
 
+        if($('#pathwayList').val().split('\n').length ==1)
+        {
+            $('#pathwayList').val($('#pathwayList').val() + "\t\r\n");
+        }
         $('#select-from option:selected').each(function () {
             var val = $(this).text();
             $('#select-to').append("<option value='" + $(this).val() + "'>" + $(this).text() + "</option>");
-            $('#pathwayList').val($('#pathwayList').val() + val + ",\r\n");
+            $('#pathwayList').val($('#pathwayList').val() + val + "\t\r\n");
         });
     });
 
     //javascript code for the add(+) button adding pathway from select box to the text box
     $('#btn-add1').click(function () {
 
+
+        if($('#pathwayList').val().split('\n').length ==1)
+        {
+            $('#pathwayList').val($('#pathwayList').val() + "\t\r\n");
+        }
         var val = $("#pathway1").val();
 
         if (!in_pathway_array(pathway_array, val.substring(0, 5))) {
@@ -128,7 +163,7 @@ $(document).ready(function () {
         }
         else {
             $("<option />", {'value': val, text: val}).appendTo("#select-to");
-            $('#pathwayList').val($('#pathwayList').val() + val + ",\r\n");
+            $('#pathwayList').val($('#pathwayList').val() + val + "\t\r\n");
         }
 
     });

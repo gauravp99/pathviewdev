@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Input;
 use DB;
+
 class gageAnalysisController extends Controller {
 
 	public function index($analysis)
 	{
+
 		//check if the user is authorised or not if user is authorised then check if user specific folder is existed or not
 		// if not existed delete it
 
@@ -54,6 +56,7 @@ class gageAnalysisController extends Controller {
 		$gage_model = new GageAnalysis();
 
 		$unique_analysis_id = uniqid();
+
 		File::makeDirectory("all/$file_location/$unique_analysis_id");
 		$destFile = public_path() . "/" . "all/" . $file_location ."/".$unique_analysis_id."/";
 
@@ -73,6 +76,7 @@ class gageAnalysisController extends Controller {
 			}
 		}
 		else {
+
 			if (strcmp($analysis, 'exampleGageAnalysis1') == 0) {
 				$file_location1 = Config::get('constants.example1_gage_file_location');
 				$filename = Config::get('constants.example1_gage_file_name');
@@ -87,10 +91,17 @@ class gageAnalysisController extends Controller {
 			}
 
 			$complete_file_location = public_path()."/".$file_location1;
-			if (!File::copy($complete_file_location, $destFile . $filename)) {
+
+			try{
+
+				copy($complete_file_location, $destFile . $filename);
+			}catch(Exception $e)
+			{
 				$_SESSION['error'] = 'Unfortunately file cannot be uploaded';
 				return view('gage_pages.GageAnalysis');
 			}
+
+
 			$gage_model->setAssayData($filename);
 
 		}
@@ -268,9 +279,9 @@ class gageAnalysisController extends Controller {
 
 			if(isset($_POST['logTransformed']))
 			{
-				$gage_model->setLogTransformed("T");
-			}else{
 				$gage_model->setLogTransformed("F");
+			}else{
+				$gage_model->setLogTransformed("T");
 			}
 
 			if (isset($_POST['dopathview'])) {
@@ -576,6 +587,7 @@ public function discreteGageAnalysis()
             }
         }
         $time = uniqid();
+		$_SESSION['analysis_id'] = $time;
         File::makeDirectory("all/$email/$time", 0777,true);
         $destFile = public_path() . "/" . "all/" . $email . "/" . $time . "/";
         /**
@@ -730,10 +742,12 @@ public function discreteGageAnalysis()
         }
 
 
+
         $_SESSION['argument'] = $argument;
         $_SESSION['destDir'] = $destFile;
         #n $argument;
-
+		$Rloc = Config::get("app.RLoc");
+		$publicPath = Config::get("app.publicPath");
         $_SESSION['analysis_id'] = $time;
 
        exec($Rloc."Rscript ".$publicPath."discrete.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");

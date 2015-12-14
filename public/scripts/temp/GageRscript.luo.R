@@ -6,8 +6,8 @@ idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
 publicPathlines = readLines(paste(getwd(),"/data/publicPath.txt",sep=""))
-logic.idx=c("rankTest", "useFold", "test.2d", "do.pathview")
-num.idx=c(  "setSizeMin", "setSizeMax", "cutoff")
+logic.idx=c("rankTest", "useFold", "test.2d", "dopathview", "normalized", "count.data", "do.log")
+num.idx=c("setSizeMin", "setSizeMax", "cutoff")
 
 args2=strsplit(args1, ",")
 args2[logic.idx]=lapply(args2[logic.idx],as.logical)
@@ -45,13 +45,14 @@ if(args2$geneextension == "txt"){
     a=read.delim(args2$filename, sep=",", row.names=NULL)
 } else stop(paste(args2$geneextension, ": unsupported gene data file type!"), sep="")
 
+d0=0
 if(ncol(a)>1){
     exprs=as.matrix(a[,-1])
     mol.ids=as.character(a[,1])
     rownames(exprs)=make.unique(mol.ids)
     if(!is.numeric(exprs[,1])) stop("Data matrix has to be numeric!")
     if(!args2$normalized & ncol(exprs)>1 & !is.null(args2$reference)){
-        if(count.data){
+        if(args2$count.data){
             sel.rn=rowSums(exprs) != 0
             exprs=exprs[sel.rn,]
             libsizes=colSums(exprs)
@@ -65,24 +66,23 @@ if(ncol(a)>1){
             if(!any(i0)) d0=min(exprs[i0])/2
             exprs=log2(exprs+d0)
         }
-    } else if(do.log){
+    } else if(args2$do.log & quantile(exprs, 0.05)>0){
         i0=exprs>0
-        if(!any(i0)) d0=min(exprs[i0])/2 else d0=0
+        if(!any(i0)) d0=min(exprs[i0])/2
         exprs=log2(exprs+d0)
     }
 } else if(ncol(a)==1) {
     a=as.matrix(a)
     exprs=a[,1]
     if(is.null(names(exprs))) mol.ids=exprs=as.character(exprs)
-    else if(do.log){
+    else if(args2$do.log & quantile(exprs, 0.05)>0){
         i0=exprs>0
-        if(!any(i0)) d0=min(exprs[i0])/2 else d0=0
+        if(!any(i0)) d0=min(exprs[i0])/2
         exprs=log2(exprs+d0)
     }
 } else stop("Empty gene data file!")
 
 require(gage)
-library(gage)
 
 ###gene set data
 species0=species=args2$species
@@ -222,7 +222,7 @@ if(nsig.all>0){
 
 
 ### pathview
-    if(args2$do.pathview & gs.type=="kegg"){
+    if(args2$dopathview & gs.type=="kegg"){
         kegg.dir=paste(publicPathlines,"/Kegg",sep="") #specify your own
         require(pathview)
         if(!is.null(args2$reference) & !is.null(args2$sample)) {

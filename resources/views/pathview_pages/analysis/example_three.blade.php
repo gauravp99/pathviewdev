@@ -47,7 +47,7 @@
     $cpdfile = "cpd.cas.csv";
     $geneid = "ENSEMBLPROT";
     $cpdid = "CAS Registry Number";
-    $species = "hsa-Homo sapiens";
+    $species = "hsa-Homo sapiens-human";
     $pathway = "00010-Glycolysis / Gluconeogenesis";
     $selectpath = "00640-Propanoate metabolism,";
     $pathidx = 0;
@@ -137,7 +137,7 @@
                                     }?>>
 
 
-                                    <a href="/all/demo/example/{{$gfile}}" target="_blank">{{$gfile}}</a>
+                                    <a href="/data/{{$gfile}}" target="_blank">{{$gfile}}</a>
 
                                 </div>
                             </div>

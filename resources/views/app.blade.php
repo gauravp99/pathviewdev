@@ -97,7 +97,8 @@
                  <li <?php if (basename(Request::url()) == "related") {
                     echo "class=\"active\"";
                 }?>>
-                    <a href="/gageIndex" target="_blank">Related</a>
+<!--                    <a href="#" target="_blank">Related</a> -->
+                    <a href="#" >Related</a>
                 </li> 
 
                 @if (Auth::guest())
@@ -264,7 +265,7 @@
         var footerTop = $('#footer').position().top + footerHeight;
         if (footerTop < docHeight) {
 
-            $('#footer').css('margin-top', -30 + (docHeight - footerTop) + 'px');
+            $('#footer').css('margin-top', -10 + (docHeight - footerTop) + 'px');
         }
     });
 </script>

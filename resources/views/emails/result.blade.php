@@ -211,22 +211,16 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
 <br/>
 Pathview Project
 <br/>
+<br/>
 
-<a target="_blank" href={{url('/')}}><img src="/images/logo.png"></a>
+<a target="_blank" href={{url('/')}}>{{url('/')}}</a>
 
 <br/>
 
-{{url('/')}}
+Email us : pathomics@gmail.com
 
 <br/>
 
-Project Contact : luo_weijun@yahoo.com
-
-<br/>
-
-Report Issues : byeshvant@hotmail.com
-
-<br/>
 @include('footer')
 
 

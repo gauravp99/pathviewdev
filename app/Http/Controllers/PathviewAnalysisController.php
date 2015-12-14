@@ -619,7 +619,7 @@ class PathviewAnalysisController extends Controller {
 		else
 			$runHashdata['user'] = "demo";
 		$runHashdata['argument'] = $argument;
-
+		$runHashdata['ip_add'] = $this->get_client_ip();
 		Redis::set($uniqid,json_encode($runHashdata));
 		Redis::set($uniqid.":Status","false");
 
@@ -648,7 +648,6 @@ class PathviewAnalysisController extends Controller {
 		$queueEnabled = Config::get("app.enableQueue");
 
 		if(!$queueEnabled){
-			return $argument;
 			$ret_value = $this->runAnalysis($uniqid,$argument,$path,$analyType);
 			$u_count = Redis::get('users_count');
 			if( $u_count > 0)
@@ -658,16 +657,52 @@ class PathviewAnalysisController extends Controller {
 
 
 			//code to check if there are more than 2 current jobs for user executing
-			$jobs = Redis::get("id:" . $this->uID) + 1;
+			$jobs = Redis::get("id:" . $this->uID);
+
 			$process_queue_id = 0;
 			if (is_null($jobs)) {
-				Redis::set("id:" . $this->uID, 0);
-			} else {
 
-				if ($jobs > 2) {
-					Redis::set("wait:" . $uniqid, true);
+				Redis::set("id:".$this->uID, 0);
+				$jobs = 0;
+			}
+
+			if (intval($jobs) >= 2){
+
+					//keeping a different counter for waiting jobs to get the wait jobs pushed not waiting for all jobs to complete
+
+					//get the waiting job counter check
+					$wjobs = Redis::get("wc:" . $this->uID);
+
+					//if there are no waiting jobs then counter will be zero
+					if(is_null($wjobs))
+					{
+						Redis::set("wc:" . $this->uID,0);
+						$wjobs = 0;
+					}
+
+					//incerement the wait counter
+					Redis::set("wc:" . $this->uID,$wjobs+1);
+
+					//update the job ids
+					$wjobids = array();
+					$wjobidsjson = Redis::get("wids:".$this->uID);
+					if(!is_null($wjobidsjson))
+					{
+
+						$wjobids = json_decode($wjobidsjson);
+
+					}else{
+						$wjobids = array();
+					}
+					array_push($wjobids,$uniqid);
+					Redis::set("wids:".$this->uID,json_encode($wjobids));
+
+					//flag to check the wait status of this analysis
+					Redis::set("wait:".$uniqid, "false");
+
 					$process_queue_id = -1;
-					Redis::set("id:" . $this->uID, $jobs);
+
+
 					return view('pathview_pages.analysis.Result')->with(array('exception' => null,
 						'directory' => public_path() . "/" . $path,
 						'directory1' => $path,
@@ -677,11 +712,21 @@ class PathviewAnalysisController extends Controller {
 						'factor' => $factor));
 
 				} else {
-					Redis::set("id:" . $this->uID, $jobs);
+
+				//get the number of jobs currently handled by queue
+					$jobs = intval(Redis::get("id:".$this->uID));
+
+				//incrementing the number of jobs
+					Redis::set("id:".$this->uID, $jobs+1);
+
+				//fisrt argument is analysis unique id
+				//second argument is user id
+
 					$process_queue_id = Queue::push(new SendJobAnalysisCompletionMail($uniqid, $this->uID));
+
 					$users_count = Redis::get("users_count");
 					Redis::set("users_count", $users_count - 1);
-
+					//return $argument;
 					return view('pathview_pages.analysis.Result')->with(array('exception' => null,
 						'directory' => public_path() . "/" . $path,
 						'directory1' => $path,
@@ -691,11 +736,11 @@ class PathviewAnalysisController extends Controller {
 				}
 
 			}
-		}
+
 		}
 		catch( Exception $e)
 		{
-			//Redis::set("users_count", $users_count - 1);
+			//print exception
 
 		}
 		finally {

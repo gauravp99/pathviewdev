@@ -12,21 +12,18 @@ Pathview Project
 <br/>
 {{$body}}
 <b>Password {{$userPassword}}</b>
-<a target="_blank" href={{url('/')}}><img src="/images/logo.png"></a>
+
 
 <br/>
 
-{{url('/')}}
+<a target="_blank" href={{url('/')}}>{{url('/')}}</a>
 
 <br/>
 
-Project Contact : luo_weijun@yahoo.com
+Email us : pathomics@gmail.com
 
 <br/>
 
-Report Issues : byeshvant@hotmail.com
-
-<br/>
 @include('footer')
 
 

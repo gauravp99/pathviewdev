@@ -1,8 +1,8 @@
 
 
 <div class="stepsdiv" id="normalizedData-div">
-        <div class="col-sm-12">
-            <div class="col-sm-5">
+        <div class="col-sm-6">
+            <div class="col-sm-9">
                 <a href="gageTutorial#normalizedData"
                    onclick="window.open('gageTutorial#normalizedData', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
                    title="To perform pathview generation or not" target="_blank" class="scrollToTop"
@@ -11,16 +11,31 @@
                 </a>
                 <label for="normalized">Normalized data:</label>
             </div>
-            <div class="col-sm-7">
+            <div class="col-sm-3">
                 <input type="checkbox" id="normalizedData" value="true" style="width: 44px;" name="normalizedData"
                        @if ($normalizedData) checked @endif >
             </div>
         </div>
+    <div class="col-sm-6">
+        <div class="col-sm-8">
+            <a href="gageTutorial#countData"
+               onclick="window.open('gageTutorial#countData', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+               title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+               style="float:left;margin-right:5px;">
+                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+            </a>
+            <label for="countData">Count data:</label>
+        </div>
+        <div class="col-sm-4">
+            <input type="checkbox" id="countData" value="true" style="width: 44px;" name="countData"
+                   @if ($countData) checked @endif >
+        </div>
+    </div>
     </div>
 
 
-<div class="stepsdiv" id="countData-div">
-        <div class="col-sm-12">
+<!--<div class="stepsdiv" id="countData-div">
+        <div class="col-sm-6">
             <div class="col-sm-5">
                 <a href="gageTutorial#countData"
                    onclick="window.open('gageTutorial#countData', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
@@ -35,7 +50,7 @@
                        @if ($countData) checked @endif >
             </div>
         </div>
-    </div>
+    </div>-->
 
 
 
@@ -51,7 +66,7 @@
                 <label for="logTransformed">Log transformed:</label>
             </div>
             <div class="col-sm-7">
-                <input type="checkbox" id="logTransformed" value="true" style="width: 44px;" name="logTransformed"
+                <input type="checkbox" id="logTransformed" value="true" style="width: 44px;" data-off-text="False" data-on-text="True"  name="logTransformed"
                        @if ($logTransformed) checked @endif >
             </div>
         </div>

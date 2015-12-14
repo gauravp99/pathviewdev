@@ -50,7 +50,7 @@ use Illuminate\Cacheache;
     $cpdfile = "sim.cpd.data1.csv";
     $geneid = "ENTREZ";
     $cpdid = "KEGG";
-    $species = "hsa-Homo sapiens";
+    $species = "hsa-Homo sapiens-human";
     $pathway = "00010-Glycolysis / Gluconeogenesis";
     $selectpath = "00640-Propanoate metabolism,";
     $pathidx = 0;

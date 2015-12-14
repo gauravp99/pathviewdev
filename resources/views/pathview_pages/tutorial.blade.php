@@ -771,11 +771,7 @@
 
                 <h1 class="arg_content">Contact</h1>
 
-                <p class="contact">Project Contact: <a
-                            href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></p>
-
-                <p class="contact"> Report Issues: <a
-                            href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a></p>
+                <p class="contact">Email us: <a href="mailto:pathomics@gmail.com">pathomics@gmail.com</a></p>
             </section>
 
         </div>

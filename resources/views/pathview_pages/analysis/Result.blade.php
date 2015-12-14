@@ -57,11 +57,13 @@
                                     'anal_type': anal_type
                                 },
                                 success: function (data) {
-                                    if (data.length > 0) {
-                                        console.log("success: data " + data);
-                                        $("#completed").hide();
-                                        if (data == "pushedJob") {
+                                    console.log("Waiting job status " + data);
 
+
+                                        $("#completed").hide();
+
+                                        if (data === "pushedJob") {
+                                            console.log("job pushed " + data);
                                             $("#waiting").remove();
                                             $("#progress").show();
                                             waitFlag1 = true;
@@ -138,7 +140,7 @@
                                                 });
                                             }, 1500  );
                                         }
-                                    }
+
                                 },
                                 error: function (data) {
                                     console.log("error" + data);
@@ -229,7 +231,7 @@
                             });
                         }, 1500  );
 
-                    } else {
+                    } else if(!waitFlag) {
 
                         $('#completed').show();
                     }
@@ -683,12 +685,12 @@
                 </div>
             </div>
         </div>
-        <div id="waiting" class="col-md-4" >
+        <div id="waiting" class="col-md-4" style="display: none;">
 
             <h2 class="alert alert-info"> Waiting..</h2>
             <img width="200px" hieght="200px" src="/images/hourglass.gif">
         </div>
-        <div id="completed" class="col-md-4">
+        <div id="completed" class="col-md-4" style="display: none;">
             <h2 class="alert alert-success " style="color:black;"> Completed </h2>
 
             <p>Click to see the output Generated and Logs under execution</p>

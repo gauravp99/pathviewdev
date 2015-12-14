@@ -12,6 +12,13 @@
                         maps, integrates and renders a wide variety of biological data on relevant pathway graphs.
                     </h2>
                 </div>
+                <div class="col-sm-4">
+                    <a href="/guest">
+                        <button type="button" class="btn btn-primary btn-lg GetStarted">
+                            Quick Start
+                        </button>
+                    </a>
+                </div>
             </div>
             <div class="col-sm-12">
                 <div class="col-sm-8">
@@ -19,12 +26,13 @@
                         Pathview Web provides easy interactive access, and generates high quality, hyperlinked graphs.
                     </h2>
                 </div>
-                <div class="col-sm-4">
-                    <a href="/guest">
+                <div class="col-sm-4" hidden="">
+                    <a href="/gageIndex">
                         <button type="button" class="btn btn-primary btn-lg GetStarted">
-                            Quick Start
+                           Try GAGE
                         </button>
                     </a>
+
                 </div>
             </div>
 
@@ -83,11 +91,9 @@
                     <div class="col-sm-12 contactDiv">
                         <h2 class="homepage-heading">Contact:</h2>
 
-                        <p class="contact">Project Contact: <a href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo
-                                .com</a></p>
+                        <p class="contact">Email us: <a href="mailto:pathomics@gmail.com">pathomics@gmail.com
+                                </a></p>
 
-                        <p class="contact"> Report Issues : <a href="mailto:byeshvant@hotmail.com">byeshvant@gmail
-                                .com</a></p>
                     </div>
 
                 </div>
