@@ -4,9 +4,8 @@ config/
 storage/
 public/data/publicPath.txt
 vendor/
+public/*.Rout
 public/Kegg/
 public/mmap/
 public/genesets/
 .idea/
-public/outputFile.Rout 
-public/errorFile.Rout
