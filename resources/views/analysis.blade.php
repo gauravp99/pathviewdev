@@ -347,7 +347,7 @@
                                         checked
                                     @endif
                                 @endif
-                           @endif type="checkbox" style="margin-left: 10px;">
+                           @endif type="checkbox" style="margin-left: 10px;" onclick="return false;" readonly="readonly">
                 </div>
                 <div class="col-sm-6">
                     <a href="tutorial#expand"
@@ -366,7 +366,7 @@
                                         checked
                                     @endif
                                 @endif
-                           @endif type="checkbox" style="margin-left: 10px;">
+                           @endif type="checkbox" style="margin-left: 10px;" onclick="return false;" readonly="readonly">
                 </div>
             </div>
         </div>
