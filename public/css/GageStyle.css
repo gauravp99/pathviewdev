@@ -6,17 +6,48 @@
     margin-bottom: 10px;
 }
 
-.expandable{
+.expandable {
 display: none;
 }
-.side-expand{
+.side-expand {
     display: none;
 }
+
+#normalizedData-div{
+
+    width: 700px;
+    padding-left: 0px;
+    margin-left: 30px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    padding-right: 0px;
+    margin-right: 30px;
+
+}
+.multiple-columns-stepsDiv {
+    width:30%
+    margin: 5px 0px 5px 32px;
+    background-color: #F4F4F4;
+    border: 1px solid #FFF;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #AAA;
+
+}
+
 select[multiple].geneSet {
   width: 100%;
   border-radius: 10px;
   font-family:monospace;
  padding: 10px;
+}
+
+.useFold .bootstrap-switch .bootstrap-switch-container .bootstrap-switch-handle-off{
+    font-size: 9px;
+}
+
+.useFold .bootstrap-switch .bootstrap-switch-container .bootstrap-switch-handle-on{
+    font-size: 11px;
 }
 
 select[multiple] {
@@ -30,6 +61,13 @@ border-color:black;
 background-color: whitesmoke;
 color: brown;
 }
+
+optgroup[label="SMPDB"] {
+    border: 2px;
+    background-color: whitesmoke;
+    color: blue;
+}
+
 img.gageExampleImg {
     border-style: solid;
     border-color: black;

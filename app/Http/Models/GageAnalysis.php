@@ -51,12 +51,15 @@ class GageAnalysis
         $argument .= "filename:".$this->assayData.";";
         $argument .= "destFile:".$this->destFile.";";
         $argument .= "destDir:".$this->destDir.";";
-        $argument .= "geneextension:".$this->fileExtension.";";
-        $argument .= "geneSetCategory:".$this->geneSetCategory.";";
-        $argument .= "geneSet:".$this->geneSet.";";
+        #$argument .= "geneextension:".$this->fileExtension.";";
+        $argument .= "fn.extension:".$this->fileExtension.";";
+	#$argument .= "geneSetCategory:".$this->geneSetCategory.";";
+	$argument .= "mset.category:".$this->geneSetCategory.";";        
+	#$argument .= "geneSet:".$this->geneSet.";";
+	$argument .= "mset:".$this->geneSet.";";
         $argument .= "species:".$this->species.";";
         $argument .= "cutoff:".$this->cutoff.";";
-        $argument .= "geneIdType:".$this->geneIdType.";";
+        $argument .= "mid.type:".$this->geneIdType.";";
         if(strcmp($this->geneIdType,"custom")==0)
         {
             $argument .= "gsfn:".$this->customGeneIDFile.";";

@@ -26,8 +26,11 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
 
+
+        $filePath = public_path()."/logs/output.txt";
+
         //check if file exists or not if not exists create it
-        $filePath = public_path()."/storage/logs/output.txt";
+
         /*if(!file_exists($filePath)) {
             touch($filePath);
         }*/
@@ -36,13 +39,10 @@ class Kernel extends ConsoleKernel
         $schedule->command('inspire')->hourly();
         $schedule->command('fileMaintained')->dailyAt('3:00')->sendOutputTo($filePath)->emailOutputTo([$email]);
         $schedule->command('rm -r '.public_path().'/all/demo/[0-9]*')->dailyAt('3:10')->sendOutputTo($filePath)->emailOutputTo([$email]);
-        #$schedule->exec('. ./var/www/PathwayWeb/public/scripts/ProcessStatus.sh')->at("12:47")->sendOutputTo($filePath)->emailOutputTo($email);
         $schedule->exec('sh '.public_path().'/scripts/biocStatsimport.sh')->weekly()->sendOutputTo($filePath);
         $schedule->exec('sh '.public_path().'/scripts/biocGageStatsimport.sh')->weekly()->sendOutputTo($filePath);
-        //$schedule->exec('sh /var/www/Pathway/public/scripts/FileMaintain_new.sh')->twiceDaily()->sendOutputTo($filePath);
         $schedule->exec('sh '.public_path().'/scripts/KeggDownload.sh')->monthly()->sundays()->at('02:00')->sendOutputTo($filePath)->emailOutputTo($email);
-        $schedule->command('redis')->dailyAt('03:00');
-        $schedule->command('redis')->at('11:32')->sendOutputTo($filePath)->emailOutputTo($email);
+        $schedule->command('redis')->dailyAt('3:11')->sendOutputTo($filePath)->emailOutputTo([$email]);
 
     }
 

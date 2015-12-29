@@ -94,18 +94,106 @@
 
                                 <div class="col-sm-7">
 
+                                    <div id="edit" class="col-sm-2" style="font-size: 18px;display:none;margin-top:10px;">
 
+                                        <a href=""><span class="glyphicon glyphicon-edit" id="menu"
+                                                         data-toggle="modal" data-target="#myModal"></span></a>
+                                        <a href=""><span class="glyphicon glyphicon-trash" id="clearFile"
+                                                         ng-click="fileReset();reset(assayData);"></span></a>
+
+                                    </div>
+                                    <div class="col-sm-10">
                                     <div class="input-group">
                                     <span style="color:red"
                                           ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                <span class="input-group-btn">
-                    <span class="btn btn-primary btn-file">
-                        Browse&hellip; <input type="file" name="assayData" type="file" id="assayData"
+                                     <span class="input-group-btn">
+                                        <span class="btn btn-primary btn-file">
+                                              Browse&hellip; <input type="file" name="assayData" type="file" id="assayData"
                                               on-read-file="showContent($fileContent)" ng-click="delete()">
-                    </span>
-                </span>
+                                        </span>
+                                    </span>
+
+                                        <!--Popup model shown whenever file upload is done -->
+                                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                                             aria-labelledby="ModalLabel"
+                                             aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title " id="ModalLabel">Data</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="col-sm-12">
+                                                            <div class="col-md-6">
+                                                                <a href="tutorial#control_reference"
+                                                                   onclick="window.open('tutorial#gene_data', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus(); return false;"
+                                                                   title="The column numbers for controls"
+                                                                   target="_blank" class="scrollToTop"
+                                                                   style="float:left;margin-right:5px;">
+
+                                                            <span class="glyphicon glyphicon-info-sign"
+                                                                  style="margin-right: 20px;">   </span> </a> <label>Control/Refernce</label>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <a href="tutorial#control_sample"
+                                                                   onclick="window.open('tutorial#gene_data', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus(); return false;"
+                                                                   title="The column numbers for cases"
+                                                                   target="_blank" class="scrollToTop"
+                                                                   style="float:left;margin-right:5px;">
+
+                                                            <span class="glyphicon glyphicon-info-sign"
+                                                                  style="margin-right: 20px;">  </span></a><label>Case/Sample</label>
+
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input class="ex8" name="reference" id="reference"  ng-model="reference">
+                                                                <!-- To get the number of column fields in a file and render it on ref and sample columns -->
+                                                                <input type="text" name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns">
+                                                                <select name="ref[]" id="refselect" multiple="" size="5" style="width:100%;" ng-model='refselect'
+                                                                        ng-show="columns.length > 0">
+                                                                    <option ng-repeat="column in columns track by $index"
+                                                                            value="<% $index+1 %>">
+                                                                        <% column %>
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <input class="ex8" name="samples" id="sample" ng-model="sample">
+                                                                <select name="sample[]" id="sampleselect" multiple="" size="5" style="width:100%;" ng-model='sampleselect'
+                                                                        ng-show="columns.length > 0">
+                                                                    <option ng-repeat="column in columns track by $index"
+                                                                            value="<% $index+1 %>">
+                                                                        <% column %>
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" id="123" class="btn btn-default"
+                                                                data-dismiss="modal"
+                                                                onclick="">
+                                                            Close
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Model end for gene data-->
+                                        <!-- to indicate the number of columns in the file use this field -->
+                                        <input type="text" name="NoOfColumns" value="<% Genecolumns.length %>" hidden=""
+                                               id="NoOfColumns">
+
+
                                         <input type="text" class="form-control" readonly>
                                     </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>
@@ -326,7 +414,8 @@
                                                 $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
                                             });
 
-                                            $('#geneIdType option[value=' + geneid + ']')[0].setAttribute('selected', 'selected');
+                                            $('#geneIdType').val(geneid);
+                                            //$('#geneIdType option[value=' + geneid + ']')[0].setAttribute('selected', 'selected');
                                         }
 
                                         if (usePathview == 'true') {

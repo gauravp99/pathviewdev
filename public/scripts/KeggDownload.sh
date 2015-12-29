@@ -1,17 +1,16 @@
 #!/bin/bash
-echo $pvwdir"data/species.txt"
+echo $pvwdir"../data/species.txt"
 $date = date
-mv $pvwdir"Kegg" $pvwdir"Kegg"$date
-mkdir $pvwdir"Kegg"
+cd ../Kegg1
 while read line           
 do           
-mkdir $pvwdir"Kegg/"$line
+mkdir $pvwdir""$line
 echo $line
 while read line1
 do 
     echo $line1" "$line
-    Rscript kegg.r $line1 $line 
-done <$pvwdir"data/pathway.txt"
+    Rscript ../scripts/kegg.r $line1 $line 
+done <$pvwdir"../data/pathway.txt"
 
-done <$pvwdir"data/species.txt"
+done <$pvwdir"../data/species.txt"
  

@@ -26,9 +26,10 @@ class RedisClear extends Command {
 	 */
 	public function handle()
 	{
-		echo "started the redis clear";
-		Redis::del('*');
-		echo "deleted redis configurations";
+		echo "Started the redis clear".date('l jS \of F Y h:i:s A');
+		Redis::flushAll();
+
+		echo "\nDeleted redis configurations";
 	}
 
 }

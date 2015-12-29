@@ -12,7 +12,6 @@ month=`date +'%B'`
 year=`date +'%Y'`
 
 echo "delete from biocStatistics where month = '$month' and year = '$year';"|mysql -uroot -pAdminAdmin PathwayWeb
-echo "insert into biocStatistics values('$month','$year',$ipadd,$downloads,'','');"
 echo "insert into biocStatistics values('$month','$year',$ipadd,$downloads,'','');" |mysql -uroot -pAdminAdmin PathwayWeb
 
 rm pathview.html

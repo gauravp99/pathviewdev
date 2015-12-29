@@ -39,11 +39,11 @@ save.image("workenv.RData")
 
 ###molecular data
 
-if(args2$geneextension == "txt"){
+if(args2$fn.extension == "txt"){
     a=read.delim(args2$filename, sep="\t", row.names=NULL)
-} else if(args2$geneextension == "csv"){
+} else if(args2$fn.extension == "csv"){
     a=read.delim(args2$filename, sep=",", row.names=NULL)
-} else stop(paste(args2$geneextension, ": unsupported gene data file type!"), sep="")
+} else stop(paste(args2$fn.extension, ": unsupported gene data file type!"), sep="")
 
 d0=0
 if(ncol(a)>1){
@@ -86,13 +86,14 @@ require(gage)
 
 ###gene set data
 species0=species=args2$species
-gs.type=args2$geneSetCategory
-gid.type=tolower(args2$geneIdType)
+gs.type=args2$mset.category
+gid.type=tolower(args2$mid.type)
 map.data=F
 data(bods, package="gage")
 #gsets.dir="/var/www/PathwayWeb/public/genesets/"
 gsets.dir=paste(publicPathlines,'/genesets/',sep="")
-if(gs.type=="kegg"){
+if(args2$data.type=="gene"){
+    if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {
         gid.type0=gid.type
         gid.type="entrez"
@@ -105,12 +106,12 @@ if(gs.type=="kegg"){
     fnames=list.files(gsets.dir, full.names=F)
     if(basename(gsfn) %in% fnames){
         load(gsfn)
-        sub.idx=unique(unlist(kset.data[args2$geneSet]))
+        sub.idx=unique(unlist(kset.data[args2$mset]))
         gsets=kset.data$kg.sets[sub.idx]
     } else {
         kset.data=kegg.gsets(species=species, id.type =gid.type)
         save(kset.data, file=gsfn)
-        sub.idx=unique(unlist(kset.data[args2$geneSet]))
+        sub.idx=unique(unlist(kset.data[args2$mset]))
         gsets=kset.data$kg.sets[sub.idx]
     }
 } else if(gs.type=="go"){
@@ -126,12 +127,12 @@ if(gs.type=="kegg"){
     fnames=list.files(gsets.dir, full.names=F)
     if(basename(gsfn) %in% fnames){
         load(gsfn)
-        sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
+        sub.idx=unique(unlist(goset.data$go.subs[args2$mset]))
         gsets=goset.data$go.sets[sub.idx]
     }else {
         goset.data=go.gsets(species=species)
         save(goset.data, file=gsfn)
-        sub.idx=unique(unlist(goset.data$go.subs[args2$geneSet]))
+        sub.idx=unique(unlist(goset.data$go.subs[args2$mset]))
         gsets=goset.data$go.sets[sub.idx]
     }
 } else {
@@ -159,6 +160,80 @@ if(map.data){
     write.table(gene.idmap, file = "gene.idmap.txt", sep = "\t", row.names=F, quote=F)
     exprs0=exprs
     exprs=pathview::mol.sum(exprs, gene.idmap)
+}
+}else if(args2$data.type=="compound"){
+    data(rn.list, package="pathview")
+    cpd.type=names(rn.list)=tolower(names(rn.list))
+    cpd.type=c(cpd.type,"compound name")
+    cpd.type2=c("SMPDB ID", cpd.type[c(3,5,8:11)])
+    cpd.type2=tolower(cpd.type2)
+    kg.idx=grep("kegg", cpd.type)
+    gsets.dir=paste(gsets.dir, "cpd/", sep="")
+    
+if(gs.type=="kegg"){
+    if(!gid.type %in% cpd.type) stop("Incorrect type!")
+    if(!gid.type %in% cpd.type[kg.idx]) {
+        gid.type0=gid.type
+        gid.type="kegg"#?
+        map.data=T
+    }
+
+    gsfn=paste(gsets.dir,  "kegg.cpd.set.RData", sep="")
+    fnames=list.files(gsets.dir, full.names=F)
+    if(basename(gsfn) %in% fnames){
+        load(gsfn)
+        gsets=kegg.cpd.set
+    } else stop("Can't find KEGG compound set data!")
+}else if(gs.type=="smpdb"){
+    if(!gid.type %in% c(cpd.type, cpd.type2)) stop("Incorrect type!")
+    if(!gid.type %in% cpd.type2){
+        gid.type0=gid.type
+        gid.type="kegg"#?
+        map.data=T
+    }
+
+    gsfn=paste(gsets.dir,  "smpdb.set.RData", sep="")
+    fnames=list.files(gsets.dir, full.names=F)
+    if(basename(gsfn) %in% fnames){
+        load(gsfn)
+        if(gid.type %in% cpd.type2) gsets=eval(as.name(paste("smpdb.set",strsplit(gid.type," ")[[1]][1], sep=".")))
+        else gsets=smpdb.set.kegg
+        sub.idx=unique(unlist(smpdb.sub[args2$mset]))
+        gsets=gsets[sub.idx]
+
+    } else stop("Can't find SMPDB compound set data!")
+} else {
+    if(args2$gsetextension == "gmt"){
+        gsets=readList(args2$gsfn)
+        gsets=lapply(gsets, function(x) x[x>""])
+    } else {
+        gsets=read.delim(args2$gsfn, sep="\t", row.names=NULL)
+        gsets=split(as.character(gsets[,1]), gsets[,2])
+    }
+    ##  save(gsets, file=paste(args2$user.dir, basename(gsfn))
+}
+
+
+if(map.data){
+    require(pathview)
+    gid.in=gid.type0
+    gid.out=gid.type
+    gene.idmap=cpdidmap(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out))#?kegg 2 name update
+    didx=duplicated(gene.idmap[,1])
+    gene.idmap=gene.idmap[!didx,]
+    write.table(gene.idmap, file = "compound.idmap.txt", sep = "\t", row.names=F, quote=F)
+    exprs0=exprs
+    exprs=pathview::mol.sum(exprs, gene.idmap)
+}
+} else{
+    if(args2$gsetextension == "gmt"){
+        gsets=readList(args2$gsfn)
+        gsets=lapply(gsets, function(x) x[x>""])
+    } else {
+        gsets=read.delim(args2$gsfn, sep="\t", row.names=NULL)
+        gsets=split(as.character(gsets[,1]), gsets[,2])
+    }
+    ##  save(gsets, file=paste(args2$user.dir, basename(gsfn))
 }
 
 print(0)

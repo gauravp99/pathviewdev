@@ -1,36 +1,111 @@
-
-
-<div class="stepsdiv" id="normalizedData-div">
-        <div class="col-sm-6">
-            <div class="col-sm-9">
-                <a href="gageTutorial#normalizedData"
-                   onclick="window.open('gageTutorial#normalizedData', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
-                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
-                   style="float:left;margin-right:5px;">
-                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                </a>
-                <label for="normalized">Normalized data:</label>
-            </div>
-            <div class="col-sm-3">
-                <input type="checkbox" id="normalizedData" value="true" style="width: 44px;" name="normalizedData"
-                       @if ($normalizedData) checked @endif >
-            </div>
+<!--
+<div class="stepsdiv" id="ref-div">
+    <div class="col-sm-12">
+        <div class="col-sm-5">
+            <a href="gageTutorial#contorl_reference"
+               onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+               title="Column numbers for the reference condition or phenotype i.e. control group if you specify null than all the columns are considered as target experiments. "
+               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+            </a>
+            <label for="ref">Control / Reference:</label>
         </div>
-    <div class="col-sm-6">
-        <div class="col-sm-8">
+        <div class="col-sm-7">
+            <input class="ex8" name="reference" id="reference" value={{$reference}}> <h6 class="noteHint">eg: 1,3,5 or
+                NULL</h6>
+            <!-- To get the number of column fields in a file and render it on ref and sample columns -->
+            <!--<input type="text" name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns">
+            <select name="ref[]" id="refselect" multiple="" size="5" style="width:100%;" ng-model='refselect'
+                    ng-show="columns.length > 0">
+                <option ng-repeat="column in columns track by $index"
+                        value="<% $index+1 %>">
+                    <% column %>
+                </option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="stepsdiv" id="sample-div">
+    <div class="col-sm-12">
+        <div class="col-sm-5">
+            <a href="gageTutorial#case_sample"
+               onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+               title="Column numbers for the target condition or phenotype i.e. experiment group in the exprs data matrix. if you specify null than all the columns other than ref are considered as target experiments."
+               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+            </a>
+            <label for="sample">Case / Sample:</label>
+        </div>
+        <div class="col-sm-7">
+            <input class="ex8" name="samples" id="sample" value={{$sample}} > <h6 class="noteHint">eg: 2,4,6 or
+                NULL</h6>
+            <select name="sample[]" id="sampleselect" multiple="" size="5" style="width:100%;" ng-model='sampleselect'
+                    ng-show="columns.length > 0">
+                <option ng-repeat="column in columns track by $index"
+                        value="<% $index+1 %>">
+                    <% column %>
+                </option>
+            </select>
+        </div>
+    </div>
+</div>-->
+<div class="row" id="normalizedData-div" >
+    <div class="col-sm-12" style="
+padding-left: 3px;
+padding-right: 0px;
+width: 702px;
+">
+    <div class="col-sm-4 multiple-columns-stepsDiv">
+        <div class="col-sm-12 ">
+
+            <a href="gageTutorial#logTransformed"
+               onclick="window.open('gageTutorial#logTransformed', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+               title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+               style="float:left;margin-right:5px;">
+                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+            </a>
+            <label for="logTransformed" >Log transformed:</label>
+
+
+        </div>
+        <div class="col-sm-12" >
+            <input type="checkbox" id="logTransformed" value="true" data-size="small" style="width: 44px;" data-off-text="FALSE" data-on-text="TRUE"  name="logTransformed"
+                   @if ($logTransformed) checked @endif >
+        </div>
+
+    </div>
+    <div class="col-sm-4 multiple-columns-stepsDiv">
+        <div class="col-sm-12 ">
             <a href="gageTutorial#countData"
                onclick="window.open('gageTutorial#countData', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
                title="To perform pathview generation or not" target="_blank" class="scrollToTop"
                style="float:left;margin-right:5px;">
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
-            <label for="countData">Count data:</label>
+            <label for="countData"> <br/>Count data:</label>
         </div>
-        <div class="col-sm-4">
-            <input type="checkbox" id="countData" value="true" style="width: 44px;" name="countData"
+        <div class="col-sm-12">
+            <input type="checkbox" id="countData" value="true" data-size="small" style="width: 44px;" name="countData"
                    @if ($countData) checked @endif >
         </div>
+
     </div>
+    <div class="col-sm-4 multiple-columns-stepsDiv ">
+            <div class="col-sm-12 ">
+            <a href="gageTutorial#normalizedData"
+               onclick="window.open('gageTutorial#normalizedData', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+               title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+               style="float:left;margin-right:5px;">
+                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+            </a>
+            <label for="normalized">Normalized data:</label>
+            </div>
+            <div class="col-sm-4">
+                <input type="checkbox" id="normalizedData" value="true" data-size="small" style="width: 44px;" name="normalizedData"
+                       @if ($normalizedData) checked @endif >
+            </div>
+        </div>
+</div>
     </div>
 
 
@@ -46,31 +121,12 @@
                 <label for="countData">Count data:</label>
             </div>
             <div class="col-sm-7">
-                <input type="checkbox" id="countData" value="true" style="width: 44px;" name="countData"
+                <input type="checkbox" id="countData" value="true" data-size="small" style="width: 44px;" name="countData"
                        @if ($countData) checked @endif >
             </div>
         </div>
     </div>-->
 
-
-
-<div class="stepsdiv" id="logTransformed-div">
-        <div class="col-sm-12">
-            <div class="col-sm-5">
-                <a href="gageTutorial#logTransformed"
-                   onclick="window.open('gageTutorial#logTransformed', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
-                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
-                   style="float:left;margin-right:5px;">
-                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                </a>
-                <label for="logTransformed">Log transformed:</label>
-            </div>
-            <div class="col-sm-7">
-                <input type="checkbox" id="logTransformed" value="true" style="width: 44px;" data-off-text="False" data-on-text="True"  name="logTransformed"
-                       @if ($logTransformed) checked @endif >
-            </div>
-        </div>
-    </div>
 
 
 
@@ -146,15 +202,15 @@
             </div>
         </div>
         <div class="col-sm-7">
-            <select name="geneSet[]" id="geneSet" class="geneSet" multiple="" size="10" style="width:100%;">
-                <optgroup label="KEGG">
-                    <option value="sigmet.idx">Signaling & Metabolic</option>
+            <select name="geneSet[]" id="geneSet" class="geneSet" multiple size="10" style="width:100%;">
+                <optgroup label="KEGG" id="Kegg">
+                    <option select="" value="sigmet.idx">Signaling & Metabolic</option>
                     <option value="sig.idx">Signaling</option>
                     <option value="met.idx">Metabolic</option>
                     <option value="dise.idx">Disease</option>
                     <option value="sigmet.idx,dise.idx">All</option>
                 </optgroup>
-                <optgroup label="GO">
+                <optgroup label="GO" id="Go">
                     <option value="BP">Biological Process</option>
                     <option value="CC">Cellular Component</option>
                     <option value="MF">Molecular Function</option>
@@ -180,6 +236,7 @@
                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
             </a>
             <label for="geneIdType">Gene ID Type:</label>
+            <p id="MolecularAnnotation" class="noteHint" style="display:none;margin-left:40px;">(Gene / Compound)</p>
         </div>
         <div class="col-sm-7" id="geneid">
             <select class="styled-select" name="geneIdType" id="geneIdType">
@@ -215,58 +272,6 @@
                 <option value="UNIPROT" @if (strcmp(strtoupper($geneIdType),'UNIPROT') == 0 ) selected @endif >UNIPROT
                 </option>
                 <?php }?>
-            </select>
-        </div>
-    </div>
-</div>
-
-
-<div class="stepsdiv" id="ref-div">
-    <div class="col-sm-12">
-        <div class="col-sm-5">
-            <a href="gageTutorial#contorl_reference"
-               onclick="window.open('gageTutorial#contorl_reference', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
-               title="Column numbers for the reference condition or phenotype i.e. control group if you specify null than all the columns are considered as target experiments. "
-               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-            </a>
-            <label for="ref">Control / Reference:</label>
-        </div>
-        <div class="col-sm-7">
-            <input class="ex8" name="reference" id="reference" value={{$reference}}> <h6 class="noteHint">eg: 1,3,5 or
-                NULL</h6>
-            <!-- To get the number of column fields in a file and render it on ref and sample columns -->
-            <input type="text" name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns">
-            <select name="ref[]" id="refselect" multiple="" size="5" style="width:100%;" ng-model='refselect'
-                    ng-show="columns.length > 0">
-                <option ng-repeat="column in columns track by $index"
-                        value="<% $index+1 %>">
-                    <% column %>
-                </option>
-            </select>
-        </div>
-    </div>
-</div>
-<div class="stepsdiv" id="sample-div">
-    <div class="col-sm-12">
-        <div class="col-sm-5">
-            <a href="gageTutorial#case_sample"
-               onclick="window.open('gageTutorial#case_sample', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
-               title="Column numbers for the target condition or phenotype i.e. experiment group in the exprs data matrix. if you specify null than all the columns other than ref are considered as target experiments."
-               target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-            </a>
-            <label for="sample">Case / Sample:</label>
-        </div>
-        <div class="col-sm-7">
-            <input class="ex8" name="samples" id="sample" value={{$sample}} > <h6 class="noteHint">eg: 2,4,6 or
-                NULL</h6>
-            <select name="sample[]" id="sampleselect" multiple="" size="5" style="width:100%;" ng-model='sampleselect'
-                    ng-show="columns.length > 0">
-                <option ng-repeat="column in columns track by $index"
-                        value="<% $index+1 %>">
-                    <% column %>
-                </option>
             </select>
         </div>
     </div>
@@ -352,7 +357,7 @@
             </div>
             <div class="col-sm-7">
 
-                <input type="checkbox" id="sameDir" style="width: 44px;" value="true" name="test2d"
+                <input type="checkbox" id="sameDir" style="width: 44px;" data-size="small" value="true" name="test2d"
                        @if ($test2d) checked @endif >
             </div>
         </div>
@@ -370,7 +375,7 @@
                 <label for="rankTest">Rank Test:</label>
             </div>
             <div class="col-sm-7">
-                <input type="checkbox" id="rankTest" style="width: 44px;" value="true" name="rankTest"
+                <input type="checkbox" id="rankTest" style="width: 44px;" data-size="small" value="true" name="rankTest"
                        @if ($rankTest) checked @endif >
 
             </div>
@@ -388,9 +393,8 @@
                 </a>
                 <label for="useFold">Per Gene Score:</label>
             </div>
-            <div class="col-sm-7">
-                <input type="checkbox" id="useFold" value="true" data-off-text="t-test" data-on-text="fold"
-                       name="useFold" @if ($useFold) checked @endif>
+            <div class="col-sm-7" >
+                <input type="checkbox" id="useFold" value="true" data-size="small" data-off-text="T-test" data-on-text="Fold" name="useFold" @if ($useFold) checked @endif>
             </div>
         </div>
     </div>
@@ -431,7 +435,7 @@
                 <label for="usePathview">Use Pathview:</label>
             </div>
             <div class="col-sm-7">
-                <input type="checkbox" id="usePathview" value="true" style="width: 44px;" name="dopathview"
+                <input type="checkbox" id="usePathview" value="true" data-size="small" style="width: 44px;" name="dopathview"
                        @if ($dopathview) checked @endif >
             </div>
         </div>
@@ -441,10 +445,13 @@
 </fieldset>
 </div>
 
+<!-- to save the custom inputs and render it back -->
+<input type="text" id="input" name="input" value="" hidden="">
+
 <div class="steps">
     <input type="submit" id="submit-button" class="btn btn-primary"
            style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit"
-           onclick="return validation()"/>
+           onclick="return save()"/>
     <input type="Reset" id="reset" class="btn btn-primary"
            style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset"/>
 </div>

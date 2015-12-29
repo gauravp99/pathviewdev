@@ -1,0 +1,2 @@
+Started the redis clearMonday 28th of December 2015 03:11:02 AM
+Deleted redis configurations

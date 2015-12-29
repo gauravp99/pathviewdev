@@ -14,6 +14,27 @@ app.controller('analysisController',function($scope,$timeout) {
 
     $scope.showContent = function($fileContent)
     {
+        $('#edit').show();
+        $scope.fileReset = function(){
+            $('#geneMenu').hide();
+            $('#GeneClearFile').hide();
+            $scope.columns = "";
+            $scope.geneRefSelect = "";
+            $scope.Genecolumns = "";
+            $scope.samSelect = "";
+        };
+        $scope.reset = function(e){
+            console.log("reset function of the file called");
+            e = $('#assayData');
+            console.log("reset function of the file called");
+            e.wrap('<form>').closest('form').get(0).reset();
+            e.unwrap();
+            $(".form-control").val("");
+            $('#clearFile').hide();
+            $('#menu').hide();
+        };
+
+
         if($scope.filename)
             $scope.content = $fileContent;
         console.log($scope.filetype);
@@ -59,15 +80,11 @@ app.controller('analysisController',function($scope,$timeout) {
 
         });
 
-       /* var duplication = _.chain(geneIDArray).countBy().pairs().max(_.last).value();
-        console.log(duplication);
-        if(duplication[1] > 2)
-        {
-            alert("File Contains duplication rows most duplicated column is a \"" + duplication[0]+"\"" );
-        }*/
+
         $scope.content = $fileContent.split("\n")[0];
 
-
+        $scope.reference = "";
+        $scope.sample = "";
 
     };
 
@@ -100,7 +117,7 @@ app.directive('onReadFile', function($parse){
                 scope.fileExtension = scope.fileName1.substring(scope.fileName1.length-3,scope.fileName1.length);
                 scope.filetype =( (onChangeEvent.srcElement || onChangeEvent.target).files[0].type);
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-
+                $('#menu').trigger('click');
             }) ;
 
         }

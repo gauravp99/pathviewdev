@@ -136,6 +136,11 @@ class gageAnalysisController extends Controller {
 			else if (strcmp($_POST['geneSet'][0], 'BP') == 0 || strcmp($_POST['geneSet'][0], 'CC') == 0 || strcmp($_POST['geneSet'][0], 'MF') == 0 || strcmp($_POST['geneSet'][0], 'BP,CC,MF') == 0 ) {
 				$gage_model->setGeneSetCategory("go");
 			}
+			else if(strcmp($_POST['geneSet'][0], 'Metabolic') == 0 || strcmp($_POST['geneSet'][0], 'Physiological') == 0 || strcmp($_POST['geneSet'][0], 'Signaling') == 0
+				|| strcmp($_POST['geneSet'][0], 'Drug Metabolism') == 0 || strcmp($_POST['geneSet'][0], 'Drug Action') == 0 || strcmp($_POST['geneSet'][0], 'Disease') == 0
+				|| strcmp($_POST['geneSet'][0], 'All') == 0){
+				$gage_model->setGeneSetCategory("smpdb");
+			}
 			else if(strcmp($_POST['geneSet'][0], 'custom') == 0)
 			{
 				$gage_model->setGeneSetCategory("custom");
@@ -475,6 +480,7 @@ if (isset($_POST['dopathview'])&& strcmp($analysis, 'GagePathviewAnalysis') == 0
             exec($Rloc."Rscript ".$publicPath."GagePathviewRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
             //exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GagePathviewRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }else {
+
             exec($Rloc."Rscript ".$publicPath."GageRscript.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
             //exec("/home/ybhavnasi/R-3.1.2/bin/Rscript scripts/GageRscript.R  \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
         }
@@ -641,12 +647,18 @@ public function discreteGageAnalysis()
 
         if (isset($_POST['geneSet']) && is_array($_POST['geneSet'])) {
 
-            if (strcmp($_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
+            if (strcmp(strcmp($_POST['geneSet'][0], 'Kegg') == 0 || $_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
                 $argument .= "geneSetCategory:kegg;";
             }
             else if (strcmp($_POST['geneSet'][0], 'BP') == 0 || strcmp($_POST['geneSet'][0], 'CC') == 0 || strcmp($_POST['geneSet'][0], 'MF') == 0 || strcmp($_POST['geneSet'][0], 'BP,CC,MF') == 0 ) {
                 $argument .= "geneSetCategory:go;";
             }
+
+			else if(strcmp($_POST['geneSet'][0], 'Metabolic') == 0 || strcmp($_POST['geneSet'][0], 'Physiological') == 0 || strcmp($_POST['geneSet'][0], 'Signaling') == 0
+			|| strcmp($_POST['geneSet'][0], 'Drug Metabolism') == 0 || strcmp($_POST['geneSet'][0], 'Drug Action') == 0 || strcmp($_POST['geneSet'][0], 'Disease') == 0
+			|| strcmp($_POST['geneSet'][0], 'All') == 0){
+				$argument .= "geneSetCategory:smpdb;";
+			}
             else if(strcmp($_POST['geneSet'][0], 'custom') == 0)
             {
                 $argument .= "geneSetCategory:custom;";
@@ -749,7 +761,7 @@ public function discreteGageAnalysis()
 		$Rloc = Config::get("app.RLoc");
 		$publicPath = Config::get("app.publicPath");
         $_SESSION['analysis_id'] = $time;
-
+	return $argument;
        exec($Rloc."Rscript ".$publicPath."discrete.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         function get_client_ip()

@@ -22,7 +22,7 @@ class FileMaintainence extends Command
 	public function handle()
 	{
 
-
+		echo "Started File Maintenance Job:".date('l jS \of F Y h:i:s A');
 		//this php files is scheduled in cron to run every day adn look for the user profile if the file size is exceeding the quota assigned to him then it is going to delete the past 5 analysis and an email is send to user.
 		/**
 		 * Algortihm to maintain files:
@@ -37,7 +37,7 @@ class FileMaintainence extends Command
 		$path = public_path() . "/all/";
 		//get all the users
 		$users = DB::table('users')->get();
-
+		echo "\n total Number of users in the system: ".sizeof($users);
 		//iterate on all users details
 		foreach ($users as $userDetails) {
 
@@ -53,6 +53,7 @@ class FileMaintainence extends Command
 
 
 				if ($size / 1024 > 99) {
+					echo "\nUser: ".$user." folder size is more than 100 MB deleting old files";
 					print $path . "/" . $user . " " . "size: " . $size / 1024;
 					$directory_Contents = scandir($path . "/" . $user);
 					$directory_Contents = array_diff($directory_Contents, array('..', '.'));
@@ -90,7 +91,7 @@ class FileMaintainence extends Command
 
 					}
 
-					//delete these files and also remove the recurd from db
+					//delete these files and also remove the record from db
 
 					foreach ($oldestFileList as $toDelFile) {
 						$analysisID = substr($toDelFile,strlen($path . "/" . $user."/"));
@@ -101,7 +102,7 @@ class FileMaintainence extends Command
 						}
 						catch(Exception $e)
 						{
-
+							echo "\n exception occured in deleting records from table";
 						}
 
 						foreach (scandir($toDelFile) as $file) {
@@ -112,6 +113,8 @@ class FileMaintainence extends Command
 						rmdir($toDelFile);
 					}
 
+
+
 					/*print print_r($file_with_timestamp);
 					print print_r($oldestFileList);*/
 
@@ -120,6 +123,7 @@ class FileMaintainence extends Command
 			}
 
 		}
+		echo "\n done removing files File Maintenance Job";
 	}
 }
 		

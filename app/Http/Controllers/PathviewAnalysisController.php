@@ -16,7 +16,6 @@ use App\Commands\SendJobAnalysisCompletionMail;
 use Illuminate\Support\Facades\Redirect;
 class PathviewAnalysisController extends Controller {
 
-	public $cookieEnabled = false;
 	public $uID=0;
 
 
@@ -55,28 +54,20 @@ class PathviewAnalysisController extends Controller {
                             return view('errors.SpaceExceeded');
                         }
                     }
-		
+
 
 		$this->uID = Cookie::get('uID');
 		if(is_null($this->uID))
 		{
-		//	if(Auth::user())
-		//	{
-		//		$this->uID = Auth::user()->email;
-		//	}else{
 				Cookie::queue("uID",uniqid(),1440);
 				$this->uID = Cookie::get('uID');
-		//	}
-
 		}
 
-		if(is_null(Cookie::get('uID')))
+		if(is_null($this->uID))
 		{
-			$this->cookieEnabled = false;
+
 			$this->uID = $this->get_client_ip();
-		}
-		else{
-			$this->cookieEnabled = true;
+			Cookie::queue("uID",$this->uID,1440);
 		}
 
 		//variables needs declaration used in later part of the code
@@ -658,7 +649,7 @@ class PathviewAnalysisController extends Controller {
 
 			//code to check if there are more than 2 current jobs for user executing
 			$jobs = Redis::get("id:" . $this->uID);
-
+			$demoTest = $jobs;
 			$process_queue_id = 0;
 			if (is_null($jobs)) {
 
@@ -666,10 +657,15 @@ class PathviewAnalysisController extends Controller {
 				$jobs = 0;
 			}
 
+			if($jobs<0)
+			{
+				$jobs = 0;
+			}
+
+
 			if (intval($jobs) >= 2){
-
 					//keeping a different counter for waiting jobs to get the wait jobs pushed not waiting for all jobs to complete
-
+				//return ($jobs)." from waiting";
 					//get the waiting job counter check
 					$wjobs = Redis::get("wc:" . $this->uID);
 
@@ -718,7 +714,7 @@ class PathviewAnalysisController extends Controller {
 
 				//incrementing the number of jobs
 					Redis::set("id:".$this->uID, $jobs+1);
-
+				//return ($jobs+1)." : ".$demoTest." : ".$this->uID;
 				//fisrt argument is analysis unique id
 				//second argument is user id
 
