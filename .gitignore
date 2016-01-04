@@ -7,5 +7,6 @@ vendor/
 public/*.Rout
 public/Kegg/
 public/genesets/
+public/mmap/
 public/logs/
 .idea/
