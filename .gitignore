@@ -8,4 +8,5 @@ public/*.Rout
 public/Kegg/
 public/mmap/
 public/genesets/
+public/logs/
 .idea/

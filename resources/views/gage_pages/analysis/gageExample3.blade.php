@@ -13,7 +13,7 @@
 
     <div class="col-md-9">
         <div class="conetent-header ">
-            <p><b>Example GAGE Analysis 2</b></p>
+            <p><b>Example GAGE Analysis 3</b></p>
         </div>
         <div id="error-message"></div>
         {{--<div class="col-md-2">

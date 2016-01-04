@@ -53,6 +53,7 @@
 
             if($scope.filetype === 'text/csv' || $scope.fileExtension === 'csv')
             {
+                $scope.Genecolumns = [];
                 $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
                 $scope.Genecolumns = $fileContent.split("\n")[0].replace(" ", "").split(",");
                 var columns1 = $fileContent.split("\n")[0].replace(/\s/g,"").split(",");
@@ -67,6 +68,7 @@
             }
             else if($scope.filetype === 'text/plain' || $scope.fileExtension === 'txt')
             {
+                $scope.Genecolumns = [];
                 console.log("File type got to script"+$scope.filetype);
                 $scope.Genecolumns = $fileContent.split("\n")[0].split("\t");
                 var columns1 = $fileContent.split("\n")[0].split("\t");
@@ -117,7 +119,7 @@
             };
 
 		$scope.CpdCompare = true;
-		 $('#compoundMenu').show();
+		        $('#compoundMenu').show();
                 $('#CompoundClearFile').show();
 
             $scope.CompoundFileReset = function(){
@@ -137,6 +139,7 @@
 
             if($scope.filetype === 'text/csv' || $scope.fileExtension === 'csv')
             {
+                $scope.Compoundcolumns = [];
                 $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
                 $scope.Compoundcolumns = $fileContent.split("\n")[0].replace(" ", "").split(",");
                 var columns1 = $fileContent.split("\n")[0].replace(/\s/g,"").split(",");
@@ -150,6 +153,7 @@
             }
             else if($scope.filetype === 'text/plain' || $scope.fileExtension === 'txt')
             {
+                $scope.Compoundcolumns = [];
                 $scope.Compoundcolumns = $fileContent.split("\n")[0].split("\t");
                 var columns1 = $fileContent.split("\n")[0].split("\t");
                 var columns2 = $fileContent.split("\n")[1].split("\t");
@@ -227,18 +231,28 @@
                         scope.geneRefSelect = "";
                         scope.geneSamSelect = "";
 
+                        //removing option rendered on back press button rendered values
+                        $("#Generefselect option[class !='ng-binding ng-scope']").remove();
+                        $("#Genesamselect option[class !='ng-binding ng-scope']").remove();
+
                     }
                     else{
                         console.log("else compound");
                         scope.cpdRefSelect = "";
                         scope.cpdSamSelect = "";
 
+                        //removing option rendered on back press button rendered values
+                        $("#Cpdrefselect option[class !='ng-binding ng-scope']").remove();
+                        $("#Cpdsamselect option[class !='ng-binding ng-scope']").remove();
                     }
 
                     scope.fileName1 = (onChangeEvent.srcElement || onChangeEvent.target).files[0].name;
                     scope.fileExtension = scope.fileName1.substring(scope.fileName1.length-3,scope.fileName1.length);
                     console.log((onChangeEvent.srcElement || onChangeEvent.target).files[0].name);
                     reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+
+                    //removing options which are not rendered with angularjs
+
 
                 }) ;
 

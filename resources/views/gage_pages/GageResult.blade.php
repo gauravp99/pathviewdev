@@ -466,14 +466,10 @@ $numOfFile = 1;
                         echo "<a href='/pathviewViewer?id=$id&image=$v' target='_blank'><img class='pdf-info' width='500px' height='500px' src=".$dir .$v."></a>";
                         echo "<p class='pdf-info' style='align:center;'>".$pathwaySetName[$i-1]."</p>";
                         echo "</div>";
-                        if($numOfFile >=3 )
-                        {
-                            break;
-                        }
+
                     }else if(!$pathview_flag && strcmp($v,$pathway.'.geneData.heatmap.pdf')==0 )
                     {
                         $numOfFile++;
-
                     echo "<div class = 'col12  pdf' >";
                     echo "<embed width='500px' height='500px' src=".$dir .$v.">";
                         echo "<p class='pdf-info'>".$pathwaySetName[$i-1]."</p>";
@@ -585,100 +581,119 @@ $numOfFile = 1;
 
         <div class="col12" style="font-size: 14px;">
 
-        <div class="col-md-4">
-            <h3>Files Generated</h3>
-        <?php
-$count_files = 0;
-            foreach ($contents as $k => $v) {
-
-
-                if(strcmp($v,'.')==0||strcmp($v,'..')==0||strcmp($v,'errorFile.Rout')==0||strcmp($v,'outputFile.Rout')==0||strcmp($v,'workenv.RData')==0)
-                    {
-
-                    }
-                else
-                    {
-                        if($count_files > 26)
-                        {
-                            echo "<a href ='/fullList?id=$direc'>Click here</a> for full list of the files generated";
-                            break;
-                        }
-                        $count_files++;
-            echo "<li><a target=\"_blank\" href=\"$dir/" . $v . "  \">$v</a></li>";
-                        }
-
-            }
-
-           echo "</div>";
-                ?>
-            <div class="col-md-4">
+                <div class="col-md-4">
+                    <h3>Files Generated</h3>
                 <?php
+        $count_files = 0;
+                    foreach ($contents as $k => $v) {
 
-                //split
-                $args = array();
-                $args = explode(';',$argument);
-                echo "<h3>User Input Values</h3>";
-                echo "<table border=1><tbody><tr><th>Argument</th><th>Argument Value</th>";
-                foreach($args as &$arg)
-                {
-                    $keyAndValue = explode(':',$arg);
-                    if(sizeof($keyAndValue) == 2 )
-                    {
 
-                        if($keyAndValue[0] =='destDir' || $keyAndValue[0] == 'destFile' )
-                        {
-                            continue;
-                        }
-                        else{
-                            echo "<tr><td>".$keyAndValue[0]."</td><td>".$keyAndValue[1]."</td></tr>";
-                        }
+                        if(strcmp($v,'.')==0||strcmp($v,'..')==0||strcmp($v,'errorFile.Rout')==0||strcmp($v,'outputFile.Rout')==0||strcmp($v,'workenv.RData')==0)
+                            {
+
+                            }
+                        else
+                            {
+                                if($count_files > 26)
+                                {
+                                    echo "<a href ='/fullList?id=$direc'>Click here</a> for full list of the files generated";
+                                    break;
+                                }
+                                $count_files++;
+
+
+                                if(strpos($v,"pathview") > -1 && strpos($v,".png") > -1 ){
+                                    if(Auth::user())
+                                    {
+                                        $id = substr($dir,strlen('all/'.Auth::user()->email.'/'));
+                                    }
+                                    else
+                                    {
+
+                                        $id = substr($dir,strlen('all/demo/'));
+                                    }
+                                    echo "<li><a href='/pathviewViewer?id=$id&image=$v' target='_blank'>$v</a></li>";
+                                }else{
+                                        echo "<li><a target=\"_blank\" href=\"$dir/" . $v . "  \">$v</a></li>";
+                                    }
+
+                                }
 
                     }
 
-                }
-                echo "</tbody></table>";?>
-            </div>
-            <?php
-echo "<div class='col-md-4'><div> <h3> Output/Error Log </h3>";
 
-            $lines = file($destDir . "/errorFile.Rout");
-            $flag = false;
-?>
-            <ul class="nav navbar-nav" style="margin-left: 30px;">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle list-group-item active" style="width:100%;"
-                       data-toggle="dropdown">Click Here Analysis Logs</a>
-                    <ul class="dropdown-menu" style="width:100%;">
-            <?php
-                        $count_lines = 0;
-            foreach ($lines as $temp) {
+                        ?>
+                    </div>
+                <div class="col-md-4">
+                        <?php
 
-                if (strpos($temp, 'directory') == false) {
+                        //split
+                        $args = array();
+                        $args = explode(';',$argument);
+                        echo "<h3>User Input Values</h3>";
+                        echo "<table border=1><tbody><tr><th>Argument</th><th>Argument Value</th>";
+                        foreach($args as &$arg)
+                        {
+                            $keyAndValue = explode(':',$arg);
+                            if(sizeof($keyAndValue) == 2 )
+                            {
+
+                                if($keyAndValue[0] =='destDir' || $keyAndValue[0] == 'destFile' )
+                                {
+                                    continue;
+                                }
+                                else{
+                                    echo "<tr><td>".$keyAndValue[0]."</td><td>".$keyAndValue[1]."</td></tr>";
+                                }
+
+                            }
+
+                        }
+                        echo "</tbody></table>";?>
+                    </div>
+                <div class='col-md-4'>
+                        <div> <h3> Output/Error Log </h3>
+                    <?php
+
+                    $lines = file($destDir . "/errorFile.Rout");
+                    $flag = false;
+        ?>
+                    <ul class="nav navbar-nav" style="margin-left: 30px;">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle list-group-item active" style="width:100%;"
+                               data-toggle="dropdown">Click Here Analysis Logs</a>
+                            <ul class="dropdown-menu" style="width:100%;">
+                    <?php
+                                $count_lines = 0;
+                    foreach ($lines as $temp) {
+
+                        if (strpos($temp, 'directory') == false) {
+                            if($count_lines > 16)
+                            {
+                                break;
+                            }
+                            $count_lines ++;
+                            echo "<div style='width:100%;'>" . $temp . "</div>";
+                        }
+
+                    }
+                                    ?>
+                            </ul>
+                        </li>
+                    </ul>
+                        <?php
+
+                        echo "</div>";
                     if($count_lines > 16)
                     {
-                        break;
+                        echo "<a href=$dir/errorFile.Rout target ='_blank' >Click here</a> for complete error file";
                     }
-                    $count_lines ++;
-                    echo "<div style='width:100%;'>" . $temp . "</div>";
-                }
+                       /* }*/
+                    ?>
+                </div>
 
-            }
-                            ?>
-                    </ul>
-                </li>
-            </ul>
-                <?php
+            </div>
 
-                echo "</div>";
-            if($count_lines > 16)
-            {
-                echo "<a href=$dir/errorFile.Rout target ='_blank' >Click here</a> for complete error file";
-            }
-               /* }*/
-            ?>
-        </div>
-        </div>
-    </div>
 <div class="scroll">
     <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-menu-up"
                                           style="font-size: 30px; margin-left: 100px;"></span></a></div>

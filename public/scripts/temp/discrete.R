@@ -249,40 +249,21 @@ if(nrow(stats)>0)  write.table(stats, file = "discrete.res.txt", sep = "\t", quo
 
 nsig=sum(sel.idx)
 if(nsig>0) {
-    write.table(stats[sel.idx,], file = "discrete.sig.txt", sep = "\t", quote=F)
+write.table(stats[sel.idx,], file = "discrete.sig.txt", sep = "\t", quote=F)
 
 ### pathview
-    if(args2$do.pathview & gs.type=="kegg"){
-        if(nsig>3) ii=1:3 else ii=1:nsig
-        path.ids=sapply(strsplit(rownames(stats)[sel.idx], " "), "[", 1)
-        path.ids=gsub(paste0(species, '|map'), "", path.ids)
-        path.ids=path.ids[ii]
-        
-        source(paste(pvwdir,"scripts/kg.map.R",sep=""))
-        kg.map(args2$species)
-        kg.cmap()
-        gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")
-        cm.fname=paste0(mmap.dir1, "cpd", ".RData")
-        load(gm.fname)
-        load(cm.fname)
-        pv.dt="gene"
-        if(args2$data.type=="compound") pv.dt="cpd"
+if(args2$do.pathview & gs.type=="kegg"){
+    path.ids=sapply(strsplit(rownames(stats)[sel.idx], " "), "[", 1)
+    path.ids=gsub(paste0(species, '|map'), "", path.ids)
+    if(nsig>3) ii=1:3 else ii=1:nsig
 
-        kegg.dir=paste0(pvwdir,"Kegg/", species)
-        system(paste("mkdir -p", kegg.dir))
-        require(pathview)
-
-        pv.run=sapply(path.ids, function(pid){
-                          if(args2$data.type=="gene"){
-                              pv.out <- try(pathview(gene.data = mol.sel, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type, limit=args2$bins, bins=args2$bins, discrete =T))
-                          } else if(args2$data.type=="compound"){
-                              pv.out <- try( pathview(cpd.data = mol.sel, pathway.id = pid, species = species, kegg.dir=kegg.dir, cpd.idtype=gid.type, limit=1, bins=1, discrete =T))
-                          }
-                          if(class(pv.out) =="list"){
-                              pv.labels(pv.out=pv.out, pv.data.type=pv.dt, pid=pid)
-                          }  else  print(paste("error using pawthway id",pid,sep=":"))
-                      })
-    }
+    kegg.dir=paste0(pvwdir,"Kegg/", species)
+    system(paste("mkdir -p", kegg.dir))
+    require(pathview)
+    if(args2$data.type=="gene"){
+        pv.out.list <- sapply(path.ids[ii], function(pid) pathview(gene.data = mol.sel, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type, limit=args2$bins, bins=args2$bins, discrete =T))
+    } else if(args2$data.type=="compound") pv.out.list <- sapply(path.ids[ii], function(pid) pathview(cpd.data = mol.sel, pathway.id = pid, species = species, kegg.dir=kegg.dir, cpd.idtype=gid.type, limit=1, bins=1, discrete =T))
+}
 } else print("No gene set selected, you may relax the cutoff q-value!")
 
 print(2)

@@ -44,7 +44,7 @@
                 <div id="navigation" style="display:none;">
                     <ul>
                         <li class="selected">
-                            <a href="#">Input / Output</a>
+                            <a id="inputA" href="#">Input / Output</a>
                         </li>
                         <li>
                             <a href="#">Analysis</a>
@@ -56,35 +56,18 @@
                     <fieldset class="step inputOutput-step">
                         <div class="stepsdiv" id="SampleListData-div">
                             <div class="col-sm-12">
-
-                                <div class="col-sm-5">
+                                <div class="col-sm-12">
+                                <div class="col-sm-6">
                                     <a href="gageTutorial#sampleList"
                                        onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;"
                                        title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension."
                                        target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
                                         <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                                     </a>
+
                                     <label for="assayData">Sample List:</label>
                                 </div>
-
-                                <div class="col-sm-7">
-
-
-                                    <div class="input-group">
-                                        <span style="color:red"
-                                              ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                        <textarea class="form-control valid" id="sampleList" rows="4" name="sampleList"
-                                                  aria-invalid="false"></textarea>
-                                        <label for="sampleList">(Or)</label>
-                                        <input type="file" id="sampleListInputFile" name="sampleListInputFile">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="stepsdiv" id="BackgroundData-div">
-                            <div class="col-sm-12">
-
-                                <div class="col-sm-5">
+                                <div class="col-sm-6">
                                     <a href="gageTutorial#sampleList"
                                        onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;"
                                        title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension."
@@ -93,11 +76,24 @@
                                     </a>
                                     <label for="assayData">Background List:</label>
                                 </div>
+                                    </div>
+                                <div class="col-sm-12">
+                                <div class="col-sm-6">
 
-                                <div class="col-sm-7">
+
+                                    <div class="input-group">
+                                        <span style="color:red"
+                                              ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
+                                        <textarea class="form-control valid" id="sampleList" rows="4" name="sampleList"
+                                                  aria-invalid="false" wrap="off" style=" resize: none;float:none;width:90%;height:120px;font-size:16px;margin-left: 5px;"></textarea>
+                                        <label for="sampleList">(Or)</label>
+                                        <input type="file" id="sampleListInputFile" name="sampleListInputFile">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
 
                                     <textarea class="form-control valid" rows="4" id="backgroundList"
-                                              name="backgroundList" aria-invalid="false"></textarea>
+                                              name="backgroundList" aria-invalid="false" wrap="off" style=" resize: none;float:none;width:100%;height:120px;font-size:16px;margin-left: 5px;"></textarea>
                                     <label for="sampleList">(Or)</label>
 
                                     <div class="input-group">
@@ -106,8 +102,30 @@
                                         <input type="file" id="backgroundListInputFile" name="backgroundListInputFile">
                                     </div>
                                 </div>
+                                    </div>
                             </div>
                         </div>
+
+			<div class="stepsdiv" id="dataType-div">
+        <div class="col-sm-12">
+            <div class="col-sm-5">
+                <a href="gageTutorial#data_type"
+                   onclick="window.open('gageTutorial#data_type', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+                   title="Data type Gene,Compound while generating the pathviews." target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
+                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                </a>
+                <label for="usePathview">Data Type:</label>
+            </div>
+            <div class="col-sm-7">
+                <select name="dataType" class="styled-select" id="dataType" class="compare">
+                    <option value="gene">gene</option>
+                    <option value="compound">compound</option>
+                    <option value="other">other</option>
+                </select>
+            </div>
+        </div>
+    </div>
                         <div class="stepsdiv" id="species-div">
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
@@ -340,7 +358,7 @@
                             </div>
                         </div>
 
-                        <div class="stepsdiv" id="dataType-div">
+            <!--            <div class="stepsdiv" id="dataType-div">
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
                                     <a href="gageTutorial#data_type"
@@ -358,7 +376,7 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="stepsdiv" id="bins-div">
                             <div class="col-sm-12">
                                 <div class="col-sm-5">
@@ -378,7 +396,7 @@
 
                     </fieldset>
                 </div>
-
+<input type="text" value="" id="input" name="input" hidden="">
                 <div class="steps">
                     <input type="submit" id="submit-button" class="btn btn-primary"
                            style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;"
@@ -397,6 +415,8 @@
             console.log($('#geneSet').val());
             if(($('#geneSet').val()[0]==='custom') && (!$('#backgroundList').val()&& !$('#backgroundListFile').val()))
             {
+                console.log("background list file: "+$('#backgroundListFile').val());
+                console.log($("background list input: "+'#backgroundList').val());
                 var r = confirm("Note: You will need background list gene id's to enrich the results for custom gene id sets!");
                 return !r;
             }
@@ -412,6 +432,7 @@
         });
 
         $(document).ready(function () {
+	    $('#ncutoff');
             $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
 
                 var input = $(this).parents('.input-group').find(':text'),
@@ -632,7 +653,7 @@
         jQuery.validator.addMethod('speciesValid', function (value, element) {
             var validSpeciesFlag = false;
 
-            if ($('#geneIdType > option').length == 1) {
+          /*  if ($('#geneIdType > option').length == 1) {
                 if ($('#geneIdType > option')[0].text === 'custom') {
                     if (value.split('-')[0].toLowerCase() === 'custom') {
                         return true;
@@ -641,7 +662,7 @@
                         return false;
                     }
                 }
-            }
+            }*/
             if ($('#geneSet').val() !== null) {
                 if ($('#geneSet').val()[0] === 'BP' || $('#geneSet').val()[0] === 'CC' || $('#geneSet').val()[0] === 'MF' || $('#geneSet').val()[0] === 'BP,CC,MF') {
                     $.each(goSpecIdBind, function (key1, value1) {

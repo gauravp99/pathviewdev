@@ -72,7 +72,7 @@
                 <div id="navigation" style="display:none;">
                     <ul style="">
                         <li class="selected">
-                            <a id="input" href="#">Input / Output</a>
+                            <a id="inputA" href="#">Input / Output</a>
                         </li>
                         <li id="analysis">
                             <a id="analysisA" href="#">Analysis</a>

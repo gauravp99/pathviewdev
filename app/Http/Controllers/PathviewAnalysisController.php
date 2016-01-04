@@ -22,6 +22,7 @@ class PathviewAnalysisController extends Controller {
 	public function analysis($analyType)
 	{
 
+		//return "debug mode ".$analyType;
 		try{
 
 

@@ -54,7 +54,12 @@ class GageAnalysis
         #$argument .= "geneextension:".$this->fileExtension.";";
         $argument .= "fn.extension:".$this->fileExtension.";";
 	#$argument .= "geneSetCategory:".$this->geneSetCategory.";";
-	$argument .= "mset.category:".$this->geneSetCategory.";";        
+        if(is_null($this->geneSetCategory)){
+            $argument .= "mset.category:kegg;";
+        }else{
+            $argument .= "mset.category:".$this->geneSetCategory.";";
+        }
+
 	#$argument .= "geneSet:".$this->geneSet.";";
 	$argument .= "mset:".$this->geneSet.";";
         $argument .= "species:".$this->species.";";
@@ -76,12 +81,11 @@ class GageAnalysis
         $argument .= "count.data:".$this->countData.";";
         $argument .= "do.log:".$this->logTransformed.";";
         $argument .= "dopathview:".$this->dopathview.";";
-        if(strcmp($this->dopathview,"T")==0)
         $argument .= "data.type:".$this->dataType.";";
 
         //pathview
 
-        if(strcmp($this->pathviewAnalysisFlag,'T') ==0 )
+   if(strcmp($this->pathviewAnalysisFlag,'T') ==0 )
 	{
 
 

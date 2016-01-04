@@ -26,9 +26,9 @@
         <li <?php if (basename(Request::url()) == "gageExample2") {
             echo "class=\"active\"";
         }?>><a href="/gageExample2"><b>Example Analysis2</b></a></li>
-        <li <?php if (basename(Request::url()) == "gagePathview") {
+        <li <?php if (basename(Request::url()) == "gageExample3") {
             echo "class=\"active\"";
-        }?>><a href="/gagePathview"><b>Gage and Pathview Analysis</b></a></li>
+        }?>><a href="/gageExample3"><b>Example Analysis3</b></a></li>
         <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
 

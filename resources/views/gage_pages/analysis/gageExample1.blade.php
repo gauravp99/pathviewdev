@@ -58,7 +58,7 @@
             <div id="navigation" style="display:none;">
                 <ul>
                     <li class="selected">
-                        <a href="#">Input / Output</a>
+                        <a id="inputA" href="#">Input / Output</a>
                     </li>
                     <li>
                         <a href="#">Analysis</a>
@@ -100,7 +100,7 @@
             $("#geneSet option[value='custom']")[0].setAttribute('disabled', 'disabled');
 
 
-            $("#sampleselect option[value='2']")[0].setAttribute("selected", "selected");
+     /**       $("#sampleselect option[value='2']")[0].setAttribute("selected", "selected");
             $("#sampleselect option[value='4']")[0].setAttribute("selected", "selected");
             $("#sampleselect option[value='1']")[0].setAttribute("disabled", "disabled");
             $("#sampleselect option[value='3']")[0].setAttribute("disabled", "disabled");
@@ -109,7 +109,7 @@
             $("#refselect option[value='1']")[0].setAttribute("selected", "selected");
             $("#refselect option[value='3']")[0].setAttribute("selected", "selected");
             $("#refselect option[value='2']")[0].setAttribute("disabled", "disabled");
-            $("#refselect option[value='4']")[0].setAttribute("disabled", "disabled");
+            $("#refselect option[value='4']")[0].setAttribute("disabled", "disabled"); */
         });
 
         $(window).bind('beforeunload', function() {

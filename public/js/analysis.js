@@ -6,6 +6,7 @@
     $(document).ready(function () {
 
 
+
         document.getElementById('submit-button').removeAttribute("data-toggle");
         document.getElementById('submit-button').removeAttribute("data-target");
         //start check for the species when page loaded hide and show the pathway id list associated with it

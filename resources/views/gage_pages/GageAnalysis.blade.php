@@ -20,17 +20,7 @@
             <p><b>GAGE Analysis</b></p>
         </div>
         <div id="error-message"></div>
-        <!-- <div class="col-md-2">
-  <div id="progress" class="col-md-12" hidden>
-      <h2 class="alert alert-info"> Executing, Please wait. </h2>
-      <img width="200px" hieght="200px" src="/images/load.gif">
-  </div>
-  <div id="completed" class="list-group col-md-12" hidden>
-      <p> Completed gage_pages Analysis</p>
-      <a id='resultLink' href="/gageResult?analysis_id=" target="_blank">Click here to see results</a>
-      <button id="backbutton" onclick="showWrapperForm()">Go Back</button>
-  </div>
-</div>-->
+
     </div>
     <?php
     //specifying default values for all the variables;
@@ -50,7 +40,7 @@
     $dopathview = false;
     $normalizedData = false;
     $countData = false;
-    $logTransformed = false;
+    $logTransformed = true;
     $dataType = "gene";
     ?>
 
@@ -67,12 +57,19 @@
 
                     <ul>
                         <li class="selected">
-                            <a href="#">Input / Output</a>
+                            <a id="inputA" href="#">Input / Output</a>
                         </li>
                         <li>
                             <a href="#">Analysis</a>
                         </li>
-
+                        <li id="graphics">
+                            <a id="graphicsA" href="#" style="display: block;margin: 0px 0;"> <span><p>Pathview</p> <p
+                                            style="margin-top: -35px;">Graphics</p></span></a>
+                        </li>
+                        <li id="coloration">
+                            <a href="#" style="display: block;margin: 0px 0;"> <span><p>Pathview</p> <p
+                                            style="margin-top: -35px;">Coloration</p></span> </a>
+                        </li>
 
                     </ul>
                 </div>
@@ -169,10 +166,33 @@
                                                                             value="<% $index+1 %>">
                                                                         <% column %>
                                                                     </option>
+
+                                                                </select>
+                                                                <h6 style="font-family: Verdana;font-size=5px;color:black;margin-left:10px;">Note: Ctrl-click to unselect</h6>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-12">
+                                                            <div class="col-sm-5">
+                                                                <a href="gageTutorial#compare"
+                                                                   onclick="window.open('gageTutorial#compare', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+                                                                   title="Comparison scheme to be used." target="_blank" class="scrollToTop"
+                                                                   style="float:left;margin-right:5px;">
+                                                                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                                                </a>
+                                                                <label for="compare">Compare:</label>
+                                                            </div>
+                                                            <div class="col-sm-7">
+                                                                <select name="compare" class="styled-select" id="compare" class="compare">
+                                                                    <option value="paired" @if (strcmp($compare,'paired') == 0 ) selected @endif >paired</option>
+                                                                    <option value="unpaired" @if (strcmp($compare,'unpaired') == 0 ) selected @endif >unpaired</option>
+                                                                    <option value="1ongroup" @if (strcmp($compare,'1ongroup') == 0 ) selected @endif>1ongroup</option>
+                                                                    <option value="as.group" @if (strcmp($compare,'as.group') == 0 ) selected @endif >as.group</option>
                                                                 </select>
                                                             </div>
                                                         </div>
 
+                                                        <br/>
+                                                        <br/>
 
                                                     </div>
                                                     <div class="modal-footer">

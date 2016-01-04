@@ -1,0 +1,23 @@
+
+path.ids=args2$pathway
+if(args2$kegg) {
+    source(paste(pvwdir,"scripts/kg.map.R",sep=""))
+    kg.map(args2$species)
+    kg.cmap()
+    gm.fname=paste0(mmap.dir1, args2$species, ".gene.RData")
+    cm.fname=paste0(mmap.dir1, "cpd", ".RData")
+    load(gm.fname)
+    load(cm.fname)
+    pv.dt=c("gene", "cpd")[c(!is.null(gene.d), !is.null(cpd.d))]
+}
+
+pv.run=sapply(path.ids, function(pid){
+pv.out <- try(pathview(gene.data = gene.d,gene.idtype = args2$geneid,cpd.data = cpd.d,cpd.idtype=args2$cpdid, pathway.id = pid,species = args2$species,out.suffix = args2$suffix,kegg.native = args2$kegg, sign.pos =args2$pos,same.layer = args2$layer,keys.align = args2$align,split.group = args2$split,expand.node = args2$expand,multi.state=args2$multistate, match.data = args2$matchd ,node.sum=args2$nsum,key.pos = args2$kpos,cpd.lab.offset= args2$offset,limit = list(gene = args2$glmt, cpd = args2$clmt), bins = list(gene = args2$gbins, cpd= args2$cbins),low = list(gene = args2$glow, cpd = args2$clow),mid = list(gene = args2$gmid, cpd = args2$cmid), high = list(gene = args2$ghigh, cpd =args2$chigh),discrete = list(gene = args2$gdisc, cpd = args2$cdisc),kegg.dir =kegg.dir))
+
+
+if(class(pv.out) =="list" & args2$kegg){
+pv.labels(pv.out=pv.out, pv.data.type=pv.dt, pid=pid)
+}  else  print(paste("error using pawthway id",pid,sep=":"))
+})
+
+

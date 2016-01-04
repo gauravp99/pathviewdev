@@ -1,2 +1,2 @@
-Started the redis clearMonday 28th of December 2015 03:11:02 AM
+Started the redis clearSunday 3rd of January 2016 03:11:01 AM
 Deleted redis configurations

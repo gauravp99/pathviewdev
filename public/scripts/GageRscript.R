@@ -5,11 +5,12 @@ arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
-publicPathlines = readLines(paste(getwd(),"/data/publicPath.txt",sep=""))
-logic.idx=c("rankTest", "useFold", "test.2d", "dopathview", "normalized", "count.data", "do.log")
-num.idx=c("setSizeMin", "setSizeMax", "cutoff")
+#pvwdir = paste0(getwd(), "/public/")
+pvwdir = paste0(getwd(), "/")
 
 args2=strsplit(args1, ",")
+logic.idx=c("rankTest", "useFold", "test.2d", "dopathview", "normalized", "count.data", "do.log")
+num.idx=c("setSizeMin", "setSizeMax", "cutoff")
 args2[logic.idx]=lapply(args2[logic.idx],as.logical)
 args2[num.idx]=lapply(args2[num.idx],as.numeric)
 if( args2$setSizeMax == "INF" )
@@ -32,6 +33,17 @@ if(identical(args2$sample, "NULL"))
 }else{
     print("in sample else");
     args2$sample = as.numeric(args2$sample)
+}
+
+#extra parameters for pathview
+if(!is.null(args2$kegg)){
+logic.idx=c("kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc")
+num.idx=c("offset", "glmt", "gbins", "clmt", "cbins", "pathidx")
+args2[logic.idx]=lapply(args2[logic.idx],as.logical)
+args2[num.idx]=lapply(args2[num.idx],as.numeric)
+#commented parameters
+args2$split=F
+args2$expand=F
 }
 
 setwd(args2$destDir)
@@ -91,7 +103,7 @@ gid.type=tolower(args2$mid.type)
 map.data=F
 data(bods, package="gage")
 #gsets.dir="/var/www/PathwayWeb/public/genesets/"
-gsets.dir=paste(publicPathlines,'/genesets/',sep="")
+gsets.dir=paste(pvwdir,'genesets/',sep="")
 if(args2$data.type=="gene"){
     if(gs.type=="kegg"){
     if(!gid.type %in% c("entrez", "kegg")) {
@@ -148,13 +160,14 @@ if(args2$data.type=="gene"){
 
 
 if(map.data){
-        source(paste(publicPathlines,"/scripts/annot.map.R",sep=""))
+    require(pathview)
+#        source(paste(pvwdir,"scripts/annot.map.R",sep=""))
     pkg.name = bods[idx, "package"]
     gid.in=gid.type0
     gid.out=gid.type
     if(gid.in=="entrez" | gid.in=="eg") gid.in="ENTREZID"
     if(gid.out=="entrez" | gid.out=="eg") gid.out="ENTREZID"
-    gene.idmap=annot.map(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out), annot.db=pkg.name, na.rm=F)
+    gene.idmap=geneannot.map(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out), pkg.name=pkg.name, na.rm=F)
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
     write.table(gene.idmap, file = "gene.idmap.txt", sep = "\t", row.names=F, quote=F)
@@ -169,6 +182,7 @@ if(map.data){
     cpd.type2=tolower(cpd.type2)
     kg.idx=grep("kegg", cpd.type)
     gsets.dir=paste(gsets.dir, "cpd/", sep="")
+    species="ko"
     
 if(gs.type=="kegg"){
     if(!gid.type %in% cpd.type) stop("Incorrect type!")
@@ -218,7 +232,15 @@ if(map.data){
     require(pathview)
     gid.in=gid.type0
     gid.out=gid.type
+    if(gid.in=="compound name"){
+        source(paste(pvwdir,"scripts/kg.map.R",sep=""))
+        kg.name2id()
+        cm.fname=paste0(mmap.dir1, "cpd.name2id", ".RData")
+        load(cm.fname)
+        gene.idmap=cbind(in.inds=mol.ids, out.ids=cname2id[mol.ids])
+    } else{
     gene.idmap=cpdidmap(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out))#?kegg 2 name update
+    }
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
     write.table(gene.idmap, file = "compound.idmap.txt", sep = "\t", row.names=F, quote=F)
@@ -236,13 +258,18 @@ if(map.data){
     ##  save(gsets, file=paste(args2$user.dir, basename(gsfn))
 }
 
-print(0)
+if((args2$do.log & quantile(exprs, 0.05)>0)|
+   args2$count.data |
+   (! args2$normalized & ncol(exprs)>1 & !is.null(args2$reference)) |
+   map.data) write.table(exprs, file = "processed.data.txt", sep = "\t", quote = FALSE)
+
+    print(0)
 ### gage 1-d #implement weights later
 gage.res=gage(exprs=exprs, gsets=gsets, ref = args2$reference, samp = args2$sample, 
     set.size = args2$set.size, same.dir = TRUE, compare = args2$compare,
     rank.test = args2$rankTest, use.fold = args2$useFold, saaTest = eval(as.name(args2$test)))
 write.table(rbind(gage.res$greater, gage.res$less), 
-            file = "gage.res.txt", sep = "\t")
+            file = "gage.res.txt", sep = "\t", quote = FALSE)
 
 print(1)
 
@@ -252,7 +279,7 @@ sig.gs=unique(c(rownames(gage.res.sig$greater), rownames(gage.res.sig$less)))
 nsig=length(sig.gs)
 if(nsig>0) {
     write.table(rbind(gage.res.sig$greater, gage.res.sig$less), 
-                file = "gage.res.sig.txt", sep = "\t")
+                file = "gage.res.sig.txt", sep = "\t", quote = FALSE)
 } else print("No gene set selected in 1d-test!")
 
 print(2)
@@ -263,13 +290,13 @@ if(args2$test.2d & gs.type!="go"){
         set.size = args2$set.size, same.dir = FALSE, compare = args2$compare,
         rank.test = args2$rankTest, use.fold = args2$useFold, saaTest = eval(as.name(args2$test)))
     write.table(gage.res.2d$greater, file = "gage.res.2d.txt", 
-                sep = "\t")
+                sep = "\t", quote = FALSE)
     gage.res.2d.sig<-sigGeneSet(gage.res.2d, outname="gage.res", cutoff=args2$cutoff)
     sig.gs.2d=rownames(gage.res.2d.sig$greater)
     nsig.2d=length(sig.gs.2d)
     if(nsig.2d>0) {
         write.table(gage.res.2d.sig$greater, file = "gage.res.2d.sig.txt", 
-                    sep = "\t")
+                    sep = "\t", quote = FALSE)
     } else print("No gene set selected in 2d-test!")
 } else sig.gs.2d=NULL
 sig.gs.all=unique(c(sig.gs,sig.gs.2d))
@@ -282,12 +309,14 @@ print(3)
 if(nsig.all>0){
 
 ### geneData
+nm=4
+if(nsig.all>nm) ii=1:nm else ii=1:nsig.all
     if(gs.type!="user") {outnames =sapply(strsplit(sig.gs.all, " "), "[", 1)
                      }else {outnames=sig.gs.all}
     outnames = gsub(" |:|/", "_", outnames)
-    source(paste(publicPathlines,"/scripts/geneData.R",sep=""))
+    source(paste(pvwdir,"scripts/geneData.R",sep=""))
     environment(geneData2)=environment(geneData)
-    for (i in (1:nsig.all)[1:3]) {
+    for (i in (1:nsig.all)[ii]) {
         geneData2(genes = gsets[[sig.gs.all[i]]], exprs = exprs, ref = args2$reference,
                  samp = args2$sample, outname = outnames[i], txt = T, heatmap = T, 
                  Colv = F, Rowv = F, dendrogram = "none", limit = 3, scatterplot = T)
@@ -297,16 +326,15 @@ if(nsig.all>0){
 
 
 ### pathview
+    outnames=gsub(paste0(species, '|map'), "", outnames)
+path.ids=outnames[ii]
     if(args2$dopathview & gs.type=="kegg"){
-        kegg.dir=paste(publicPathlines,"/Kegg",sep="") #specify your own
-        require(pathview)
         if(!is.null(args2$reference) & !is.null(args2$sample)) {
         if(args2$compare=="paired") exprs.d=exprs[,args2$sample]-exprs[,args2$reference]
         else exprs.d=exprs[,args2$reference]-rowMeans(exprs[,args2$reference])
         } else exprs.d=exprs
-        if(args2$data.type=="gene")
-            pv.out.list <- sapply(outnames[1:3], function(pid) pathview(gene.data = exprs.d, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type))
-        else pv.out.list <- sapply(outnames[1:3], function(pid) pathview(cpd.data = exprs.d, pathway.id = pid, species = species, kegg.dir=kegg.dir, gene.idtype=gid.type))
+
+    source(paste(pvwdir,"scripts/do.pathview.R",sep=""))
     }
 } else print("No gene set selected by GAGE, you may relax the cutoff q-value!")
 

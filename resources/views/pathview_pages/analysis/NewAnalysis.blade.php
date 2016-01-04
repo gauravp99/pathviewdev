@@ -401,11 +401,13 @@ use Illuminate\Cacheche;
                 */
 
                 /* Code to update te the geneFileDetails */
-                var geneFileDetails = $('#geneFileDetails').val();
+                        var geneFileDetails = $('#geneFileDetails').val();
                 //value to geneFileDetails contains only if the page is re visited from another page
                 //so check if the value is not null
 
                 if (geneFileDetails != null) {
+                    $('#compoundMenu').show();
+                    $('#CompoundClearFile').show();
                     var geneDataArray = geneFileDetails.split(";");
                     if (geneDataArray[0] != null) {
                         if (geneDataArray[0].split(":")[1] != null) {
@@ -414,8 +416,8 @@ use Illuminate\Cacheche;
                             var selectOptionsList = geneDataArray[0].split(":")[1].split(",");
                             $.each(selectOptionsList, function (index, value) {
                                 //console.log(value);
-                                $('#Genesamselect').append('<option value="' + (index + 1) + '">' + value + '</option>');
-                                $('#Generefselect').append('<option value="' + (index + 1) + '">' + value + '</option>');
+                                $('#Genesamselect').append('<option  value="' + (index + 1) + '">' + value + '</option>');
+                                $('#Generefselect').append('<option  value="' + (index + 1) + '">' + value + '</option>');
                             });
                             //console.log($('#Genesamselect'));
                             //console.log($('#Generefselect'));
@@ -438,7 +440,9 @@ use Illuminate\Cacheche;
 
                                 $("#Genesamselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
                             });
-                            $('#generef').val(geneRefSelected);
+                                if(geneDataArray[1].split(":")[0] !== "geneCompare")
+                                $('#generef').val(geneRefSelected);
+
 
 
                         }
@@ -455,6 +459,7 @@ use Illuminate\Cacheche;
                                 $("#Genesamselect option[value='" + $.trim(value) + "']").attr("selected", 1);
                                 $("#Generefselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
                             });
+
                             $('#genesam').val(geneSamSelected);
 
                         }
@@ -512,6 +517,10 @@ use Illuminate\Cacheche;
                                 $("#Cpdesamselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
                             });
                             $('#cpdref').val(compoundRefSelected);
+                            if(compoundRefSelectedArray.length == 0)
+                            {
+                                $('#cpdref').val("");
+                            }
                         }
 
                     }
@@ -527,14 +536,17 @@ use Illuminate\Cacheche;
                                 $("#Cpdrefselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
                             });
                             $('#cpdsam').val(compoundSamSelected);
+                            if(compoundSamSelectedArray.length == 0)
+                            {
+                                $('#cpdsam').val("");
+                            }
                         }
 
                     }
 
                 }
 
-                $('#compoundFileDetails').val("");
-                $('#geneFileDetails').val("");
+
 
             });
             var savedCompoundDynamicText = "";
@@ -564,7 +576,7 @@ use Illuminate\Cacheche;
             }
 
             function saveGeneDynamicConentet() {
-
+                $('#geneFileDetails').val("");
                 if (savedGeneDynamicText.indexOf("geneSelect") != -1) {
                     savedGeneDynamicText = "";
 
@@ -651,6 +663,10 @@ use Illuminate\Cacheche;
 
                     var noOfColumns = $('#geneColumns').val();
 
+                    if(noOfColumns.length == 0)
+                    {
+                        noOfColumns = $('select#Generefselect option').length;
+                    }
                     //console.log("noofcolumns: is working" + noOfColumns);
                     for (var j = 1; j < noOfColumns; j++) {
 
@@ -669,6 +685,13 @@ use Illuminate\Cacheche;
 
                     var noOfColumns = $('#geneColumns').val();
                     var sample_selected_text = "";
+
+                    if(noOfColumns.length == 0)
+                    {
+                        noOfColumns = $('select#Genesamselect option').length;
+                    }
+
+
                     //console.log("noofcolumns: is working" + noOfColumns);
                     for (var j = 1; j < noOfColumns; j++) {
                         sample_selected_text = "";
@@ -689,6 +712,13 @@ use Illuminate\Cacheche;
                     //console.log("in generefselect function");
                     var ref_selected_text = "";
                     var noOfColumns = $('#cpdColumns').val();
+
+                    if(noOfColumns.length == 0)
+                    {
+                        noOfColumns = $('select#Cpdrefselect option').length;
+                    }
+
+
                     //console.log("noofcolumns: is working" + noOfColumns);
                     for (var j = 1; j < noOfColumns; j++) {
                         ref_selected_text = "";
@@ -709,6 +739,15 @@ use Illuminate\Cacheche;
                     var noOfColumns = $('#cpdColumns').val();
                     //console.log("noofcolumns: is working" + noOfColumns);
                     var sample_selected_text = "";
+
+
+                    if(noOfColumns.length == 0)
+                    {
+                        noOfColumns = $('select#Cpdsamselect option').length;
+                    }
+
+
+
                     for (var j = 1; j < noOfColumns; j++) {
                         sample_selected_text = "";
                         $("#Cpdrefselect option[value=\"" + j + "\"]")[0].removeAttribute('disabled');

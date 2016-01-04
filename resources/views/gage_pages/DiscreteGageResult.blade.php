@@ -118,7 +118,7 @@
                 echo "</div >";
                 echo "<table style='font-size: 14px;margin-bottom: 30px;width=100%;text-align: left;' border=1>";
                 echo "<tbody>";
-
+                $sigLines = file($destDir . "discrete.sig.txt");
                 $lineNumer = 0;
                 $integer_array = array();
                 foreach ($sigLines as $temp) {
@@ -180,39 +180,108 @@
                 }
                 echo "</tbody>";
                 echo "</table>";
-                echo "<h4> <a href ='$dir/discrete.res.txt' target ='_blank'>Click here for full table</a> </h4>";
+                echo "<h4> <a href ='$dir/discrete.sig.txt' target ='_blank'>Click here for full table</a> </h4>";
 
             ?>
             <div class="col12">
-                <div class="col6">
+
+                <div class="col12">
                     <div class="col-md-4">
-            <?php
+                        <h3>Files Generated</h3>
+                        <?php
+                        $count_files = 0;
+                        foreach ($contents as $k => $v) {
 
-            //split
-            $args = array();
-            $args = explode(';',$argument);
-            echo "<h3>User Input Values</h3>";
-            echo "<table border=1><tbody><tr><th>Argument</th><th>Argument Value</th>";
-            foreach($args as &$arg)
-            {
-                $keyAndValue = explode(':',$arg);
-                if(sizeof($keyAndValue) == 2 )
-                {
 
-                    if($keyAndValue[0] =='destDir' || $keyAndValue[0] == 'destFile' )
-                    {
-                        continue;
-                    }
-                    else{
-                        echo "<tr><td>".$keyAndValue[0]."</td><td>".$keyAndValue[1]."</td></tr>";
-                    }
+                            if(strcmp($v,'.')==0||strcmp($v,'..')==0||strcmp($v,'errorFile.Rout')==0||strcmp($v,'outputFile.Rout')==0||strcmp($v,'workenv.RData')==0)
+                            {
 
-                }
+                            }
+                            else
+                            {
+                                if($count_files > 26)
+                                {
+                                    echo "<a href ='/fullList?id=$direc'>Click here</a> for full list of the files generated";
+                                    break;
+                                }
+                                $count_files++;
+                                echo "<li><a target=\"_blank\" href=\"$dir/" . $v . "  \">$v</a></li>";
+                            }
 
-            }
-            echo "</tbody></table>";?>
-        </div>
-    </div>
+                        }
+
+
+                        ?>
+                    </div>
+
+                    <div class="col-md-4">
+                        <?php
+
+                        //split
+                        $args = array();
+                        $args = explode(';',$argument);
+                        echo "<h3>User Input Values</h3>";
+                        echo "<table border=1><tbody><tr><th>Argument</th><th>Argument Value</th>";
+                        foreach($args as &$arg)
+                        {
+                            $keyAndValue = explode(':',$arg);
+                            if(sizeof($keyAndValue) == 2 )
+                            {
+
+                                if($keyAndValue[0] =='destDir' || $keyAndValue[0] == 'destFile' )
+                                {
+                                    continue;
+                                }
+                                else{
+                                    echo "<tr><td>".$keyAndValue[0]."</td><td>".$keyAndValue[1]."</td></tr>";
+                                }
+
+                            }
+
+                        }
+                        echo "</tbody></table>";?>
+                    </div>
+                    <div class="col-md-4">
+                        <?php
+                        echo "<div class='col-md-12'><div> <h3> Output/Error Log </h3>";
+
+                        $lines = file($destDir . "/errorFile.Rout");
+                        $flag = false;
+                        ?>
+                        <ul class="nav navbar-nav" style="margin-left: 30px;">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle list-group-item active" style="width:100%;"
+                                   data-toggle="dropdown">Click Here Analysis Logs</a>
+                                <ul class="dropdown-menu" style="width:100%;">
+                                    <?php
+                                    $count_lines = 0;
+                                    foreach ($lines as $temp) {
+
+                                        if (strpos($temp, 'directory') == false) {
+                                            if($count_lines > 16)
+                                            {
+                                                break;
+                                            }
+                                            $count_lines ++;
+                                            echo "<div style='width:100%;'>" . $temp . "</div>";
+                                        }
+
+                                    }
+                                    ?>
+                                </ul>
+                            </li>
+                        </ul>
+                        <?php
+
+                        echo "</div>";
+                        if($count_lines > 16)
+                        {
+                            echo "<a href=$dir/errorFile.Rout target ='_blank' >Click here</a> for complete error file";
+                        }
+                        /* }*/
+                        ?>
+                    </div>
+                </div>
     <div class="col6">
         <?php
         foreach ($contents as $k => $v) {
@@ -408,4 +477,9 @@
                     });
                 });
             </script>
+
+
+
+
+
 @stop

@@ -224,6 +224,9 @@
 /*URL route for POST gage analysis example 2 page*/
         Route::post('exampleGageAnalysis2', 'gage\GageAnalysisController@ExampleGageAnalysis2');
 
+/*URL route for POST gage analysis example 2 page*/
+        Route::post('exampleGageAnalysis3', 'gage\GageAnalysisController@ExampleGageAnalysis3');
+
 /*URL route for get Discrete Gage Analysis  page*/
         Route::get('discreteGage',function(){
             return view('gage_pages.analysis.discreteAnalysis');
@@ -272,6 +275,11 @@
         Route::get('gageExample2',function(){
             return view('gage_pages.analysis.gageExample2');
         });
+/*URL route for get gage analysis example 3 page*/
+        Route::get('gageExample3',function(){
+            return view('gage_pages.analysis.gageExample3');
+        });
+
 
 /*URL route for get gage pathview analysis example page*/
         Route::get('pathviewViewer',function(){

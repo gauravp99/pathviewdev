@@ -12,17 +12,25 @@ app.controller('analysisController',function($scope,$timeout) {
         $('.tempColumn').remove();
     };
 
+
     $scope.showContent = function($fileContent)
     {
+
+        console.log("inshow content function");
+        console.log($scope.reference+" : "+$scope.sample);
         $('#edit').show();
+        $('#clearFile').show();
+        $('#menu').show();
+
         $scope.fileReset = function(){
             $('#geneMenu').hide();
             $('#GeneClearFile').hide();
             $scope.columns = "";
-            $scope.geneRefSelect = "";
             $scope.Genecolumns = "";
-            $scope.samSelect = "";
+            $scope.reference = "";
+            $scope.sample = "";
         };
+
         $scope.reset = function(e){
             console.log("reset function of the file called");
             e = $('#assayData');
@@ -40,21 +48,26 @@ app.controller('analysisController',function($scope,$timeout) {
         console.log($scope.filetype);
         if($scope.filetype === 'text/csv' || $scope.fileExtension === 'csv' )
         {
+            console.log("reading csv file");
             $scope.content = $fileContent.split("\n")[0].replace(" ", "").split(",").length;
             $scope.columns = $fileContent.split("\n")[0].replace(" ", "").split(",");
             var columns1 = $fileContent.split("\n")[0].split(",");
             var columns2 = $fileContent.split("\n")[1].split(",");
-            console.log(columns1.length+" "+columns2.length);
+
             if(columns1.length === columns2.length)
             {
                 $scope.columns.splice(0, 1);
             }
+            $scope.Genecolumns = $scope.columns;
 
+            console.log("in read file clearning sample and reference values: "+$scope.Genecolumns);
+            console.log("in read file clearning sample and reference values: "+$scope.columns);
         }
 
         else if($scope.filetype === 'text/plain')
         {
 
+            console.log("reading text file");
             $scope.columns = $fileContent.split("\n")[0].split("\t");
             var columns1 = $fileContent.split("\n")[0].split("\t");
             var columns2 = $fileContent.split("\n")[1].split("\t");
@@ -63,8 +76,10 @@ app.controller('analysisController',function($scope,$timeout) {
             {
                 $scope.columns.splice(0,1);
             }
-            $scope.sample=[];
-            $scope.ref=[];
+            $scope.Genecolumns = $scope.columns;
+
+            console.log("in read file clearning sample and reference values: "+$scope.Genecolumns);
+            console.log("in read file clearning sample and reference values: "+$scope.columns);
 
         }
         else
@@ -83,9 +98,10 @@ app.controller('analysisController',function($scope,$timeout) {
 
         $scope.content = $fileContent.split("\n")[0];
 
-        $scope.reference = "";
-        $scope.sample = "";
-
+        $("#sample").val("");
+        $("#reference").val("");
+        console.log("at the end: "+$scope.Genecolumns);
+        console.log("at the end: "+$scope.columns);
     };
 
 });
@@ -118,6 +134,8 @@ app.directive('onReadFile', function($parse){
                 scope.filetype =( (onChangeEvent.srcElement || onChangeEvent.target).files[0].type);
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
                 $('#menu').trigger('click');
+                $("#sample").val("");
+                $("#reference").val("");
             }) ;
 
         }

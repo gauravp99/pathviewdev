@@ -689,6 +689,13 @@
 
 
                 $(document).ready(function () {
+
+
+                    //removing error message if exists
+                    $("#reset").click(function(){
+                        validator.resetForm();
+                    });
+
                     //removing the extra comma if existed
 
                     //making the pathway list aligned using newline character
@@ -744,6 +751,10 @@
                             var expand = keyValueMap[26].split(":")[1];
                             var multistate = keyValueMap[27].split(":")[1];
                             var matchd = keyValueMap[28].split(":")[1];
+                            var paired = keyValueMap[29].split(":")[1];
+                            var geneColumns = keyValueMap[30].split(":")[1];
+                            var cpdColumns = keyValueMap[31].split(":")[1];
+
                             $('#species').val(species);
                             $('#geneid').val(geneid);
                             $('#cpdid').val(compoundid);
@@ -761,42 +772,62 @@
                             $('#cglmt').val(clmt);
                             $('#gbins').val(gbins);
                             $('#cbins').val(cbins);
-                        $('#kpos').val(kpos);
-                        $('#pos').val(pos);
-                    $('#nodesun').val(nodesun);
-                    $('#nacolor').val(nacolor);
-                    $('#align').val(align);
+                            $('#kpos').val(kpos);
+                            $('#pos').val(pos);
+                            $('#nodesun').val(nodesun);
+                            $('#nacolor').val(nacolor);
+                            $('#align').val(align);
 
-                    if(kegg == "true")
-                    $('#kegg').prop('checked', true);
+                            $('#geneColumns').val(geneColumns);
+                            $('#NoOfColumns').val(cpdColumns);
 
-                    if(layer == "true")
+
+                        if(kegg == "true")
+                            $('#kegg').prop('checked', true);
+                        else
+                            $('#kegg').prop('checked', false);
+                        if(layer == "true")
                             $('#layer').prop('checked', true);
-
-                     if(gdisc == "true")
+                        else
+                            $('#layer').prop('checked', false);
+                        if(gdisc == "true")
                             $('#gdisc').prop('checked', true);
-
-                     if(cdisc == "true")
+                        else
+                            $('#gdisc').prop('checked', false);
+                        if(cdisc == "true")
                             $('#cdisc').prop('checked', true);
-
+                        else
+                            $('#cdisc').prop('checked', false);
                           if(split == "true")
                             $('#split').prop('checked', true);
+                          else
+                              $('#split').prop('checked', false);
 
-
-                       if(expand == "true")
+                        if(expand == "true")
                             $('#expand').prop('checked', true);
+                        else
+                            $('#expand').prop('checked', false);
 
-
-                     if(multistate == "true")
+                        if(multistate == "true")
                             $('#multistate').prop('checked', true);
+                        else
+                            $('#multistate').prop('checked', false);
 
-                     if(matchd == "true")
+                        if(matchd == "true")
                             $('#matchd').prop('checked', true);
+                        else
+                            $('#matchd').prop('checked', false);
+
+                        if(paired == "true")
+                            $('#GeneCompare').prop('checked', true);
+                        else
+                            $('#GeneCompare').prop('checked', false);
 
 
 
                         }
 
+                        console.log(keyValueMap);
                         console.log(keyValueMap.length);
 
 
@@ -825,27 +856,29 @@
                     var clmt = $('#clmt').val();
                     var gbins = $('#gbins').val();
                     var cbins = $('#cbins').val();
-                var kpos = $('#kpos').val();
-                var pos =  $('#pos').val();
-                var nodesun =  $('#nodesun').val();
-                var nacolor = $('#nacolor').val();
-                var align = $('#align').val();
+                    var kpos = $('#kpos').val();
+                    var pos =  $('#pos').val();
+                    var nodesun =  $('#nodesun').val();
+                    var nacolor = $('#nacolor').val();
+                    var align = $('#align').val();
                     var kegg = $('#kegg').is(":checked");
                     var layer = $('#layer').is(":checked");
-                var gdisc = $('#gdisc').is(":checked");
-                var cdisc = $('#cdisc').is(":checked");
-                var split = $('#split').is(":checked");
-                var expand = $('#expand').is(":checked");
-                var multistate = $('#multistate').is(":checked");
-                var matchd = $('#matchd').is(":checked");
-
+                    var gdisc = $('#gdisc').is(":checked");
+                    var cdisc = $('#cdisc').is(":checked");
+                    var split = $('#split').is(":checked");
+                    var expand = $('#expand').is(":checked");
+                    var multistate = $('#multistate').is(":checked");
+                    var matchd = $('#matchd').is(":checked");
+                    var paired = $("#GeneCompare").is(":checked");
+                    var geneColumns =  $("#geneColumns").val();
+                    var cpdColumns =  $("#NoOfColumns").val();
                     var savedString = "species:" + species + ";geneid:" + geneid + ";compoundid:" + compoundid +
                                         ";glow:" + glow + ";gmid:" + gmid + ";ghigh:" + ghigh + ";clow:" + clow +
                                         ";cmid:" + cmid + ";chigh:" + chigh + ";pathwayList:" + pathwayList + ";suffix:" + suffix +
                                         ";offset:" + offset +";glmt:" + glmt + ";clmt:" +clmt + ";gbins:" +gbins+ ";cbins:" +cbins +
         ";kpos:" + kpos + ";pos:" + pos +";nodesun:" +
          nodesun + ";nacolor:" + nacolor + ";align:" + align + ";kegg:" + kegg + ";layer:" + layer + ";gdisc:" + gdisc + ";cdisc:" + cdisc + ";split:" + split
-        + ";expand:" + expand + ";multistate:" + multistate + ";matchd:" + matchd + ";"  ;
+        + ";expand:" + expand + ";multistate:" + multistate + ";matchd:" + matchd + ";geneCompare:" + paired + ";geneColumns:" + geneColumns +";cmpdColumns:" + cpdColumns ;
 
                     $('#saveAttributes').val(savedString);
                 }
@@ -856,7 +889,7 @@
                 tab3_array = ["glmt", "clmt", "gbins", "cbins"];
 
                 //validation using jquery-validation framework
-                $('#anal_form').validate({
+                var validator = $('#anal_form').validate({
 
                     invalidHandler: function (form, validator) {
                         var errors = validator.numberOfInvalids();

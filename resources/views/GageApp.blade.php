@@ -241,6 +241,7 @@
 
 
 
+
 <script>
     $(document).ready(function () {
         var docHeight = $(window).height();
@@ -259,6 +260,7 @@ if ( basename(Request::url())== "gageIndex" && !Auth::user() || basename(Request
 
        ?>
 <script src="{{asset('/js/ChartNew.js')}}"></script>
+
 <script>
     var ctx = $("#myChart").get(0).getContext("2d");
 

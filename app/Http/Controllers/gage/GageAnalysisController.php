@@ -16,6 +16,9 @@ class gageAnalysisController extends Controller {
 	public function index($analysis)
 	{
 
+
+
+		//return "Debug mode ".$analysis;
 		//check if the user is authorised or not if user is authorised then check if user specific folder is existed or not
 		// if not existed delete it
 
@@ -129,8 +132,9 @@ class gageAnalysisController extends Controller {
 			$gage_model->setSample($_POST['samples']);
 		}
 
-		if (isset($_POST['geneSet']) && is_array($_POST['geneSet'])) {
-			if (strcmp($_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
+		//if (isset($_POST['geneSet']) && is_array($_POST['geneSet'])) {
+		if (isset($_POST['geneSet'])){
+			if (strcmp(strtolower($_POST['geneSet'][0]), 'kegg') == 0 || strcmp($_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
 				$gage_model->setGeneSetCategory("kegg");
 			}
 			else if (strcmp($_POST['geneSet'][0], 'BP') == 0 || strcmp($_POST['geneSet'][0], 'CC') == 0 || strcmp($_POST['geneSet'][0], 'MF') == 0 || strcmp($_POST['geneSet'][0], 'BP,CC,MF') == 0 ) {
@@ -144,6 +148,8 @@ class gageAnalysisController extends Controller {
 			else if(strcmp($_POST['geneSet'][0], 'custom') == 0)
 			{
 				$gage_model->setGeneSetCategory("custom");
+			}else{
+				$gage_model->setGeneSetCategory("kegg");
 			}
 
 			$geneSet_String = "";
@@ -288,16 +294,20 @@ class gageAnalysisController extends Controller {
 			}else{
 				$gage_model->setLogTransformed("T");
 			}
-
+			if (isset($_POST['dataType'])) {
+				$gage_model->setDataType($_POST['dataType']);
+			}
 			if (isset($_POST['dopathview'])) {
 				$gage_model->setDopathview("T");
-				if (isset($_POST['dataType'])) {
-					$gage_model->setDataType($_POST['dataType']);
-				}
 
+			if(isset($_POST['pathviewSettings']))
+			{
+				if(strcmp($_POST['pathviewSettings'],"customize") == 0)
+				$gage_model->setPathviewAnalysisFlag("T");
+			}
 			//for gage pathview analysis
 				$analsisObject = new PathviewAnalysis();
-				if(strcmp($analysis, 'GagePathviewAnalysis') == 0)
+				if(strcmp($analysis, 'GagePathviewAnalysis') == 0 || strcmp($_POST['pathviewSettings'],"customize") == 0)
 				{
 					$gage_model->setPathviewAnalysisFlag("T");
 					$analsisObject = new PathviewAnalysis();
@@ -306,7 +316,7 @@ class gageAnalysisController extends Controller {
 					if (isset($_POST["kegg"]))
 						$analsisObject->setKeggFlag("T");
 					else
-						$analsisObject->setKeggFlag("T");
+						$analsisObject->setKeggFlag("F");
 					/*----------------------Kegg ID----------------------------------------------------------*/
 
 
@@ -470,7 +480,7 @@ class gageAnalysisController extends Controller {
 			$argument = $gage_model->generateArgument();
 			$_SESSION['argument'] = $argument;
  			$_SESSION['destDir'] = $destFile;
-        #n $argument;
+
         $Rloc = Config::get("app.RLoc");
         $publicPath = Config::get("app.publicPath");
         $_SESSION['analysis_id'] = $unique_analysis_id;
@@ -523,30 +533,6 @@ if (isset($_POST['dopathview'])&& strcmp($analysis, 'GagePathviewAnalysis') == 0
         return view('gage_pages.GageResult');
 
 		}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	}
 
 
@@ -648,10 +634,12 @@ public function discreteGageAnalysis()
         if (isset($_POST['geneSet']) && is_array($_POST['geneSet'])) {
 
             if (strcmp(strcmp($_POST['geneSet'][0], 'Kegg') == 0 || $_POST['geneSet'][0], 'sig.idx') == 0 || strcmp($_POST['geneSet'][0], 'met.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx') == 0 || strcmp($_POST['geneSet'][0], 'dise.idx') == 0 || strcmp($_POST['geneSet'][0], 'sigmet.idx,dise.idx') == 0) {
-                $argument .= "geneSetCategory:kegg;";
+                //$argument .= "geneSetCategory:kegg;";
+		$argument .= "mset.category:kegg;";
             }
             else if (strcmp($_POST['geneSet'][0], 'BP') == 0 || strcmp($_POST['geneSet'][0], 'CC') == 0 || strcmp($_POST['geneSet'][0], 'MF') == 0 || strcmp($_POST['geneSet'][0], 'BP,CC,MF') == 0 ) {
-                $argument .= "geneSetCategory:go;";
+               // $argument .= "geneSetCategory:go;";
+		$argument .= "mset.category:go;";
             }
 
 			else if(strcmp($_POST['geneSet'][0], 'Metabolic') == 0 || strcmp($_POST['geneSet'][0], 'Physiological') == 0 || strcmp($_POST['geneSet'][0], 'Signaling') == 0
@@ -661,10 +649,16 @@ public function discreteGageAnalysis()
 			}
             else if(strcmp($_POST['geneSet'][0], 'custom') == 0)
             {
-                $argument .= "geneSetCategory:custom;";
-            }
-            $argument .= "geneSet:";
-            foreach ($_POST['geneSet'] as $geneSet) {
+               // $argument .= "geneSetCategory:custom;";
+		$argument .= "mset.category:custom;";
+            }else{
+
+				//$argument .= "geneSetCategory:kegg;";
+				$argument .= "mset.category:kegg;";
+			}
+            //$argument .= "geneSet:";
+	$argument .= "mset:";	
+	foreach ($_POST['geneSet'] as $geneSet) {
                 $argument .= $geneSet . ",";
             }
             $argument .= ";";
@@ -702,19 +696,20 @@ public function discreteGageAnalysis()
             $argument .= "qcut:";
             $argument .= $_POST['cutoff'].";";
         }
-        if (isset($_POST['dopathview'])) {
-            $argument .= "do.pathview:T;";
-            if (isset($_POST['dataType'])) {
+	 if (isset($_POST['dataType'])) {
                 $argument .= "data.type:" . $_POST['dataType'] . ";";
             }
+
+        if (isset($_POST['dopathview'])) {
+            $argument .= "do.pathview:T;";
             if (isset($_POST['bins'])) {
                 $argument .= "bins:" . $_POST['bins'] . ";";
             }
         }
         if (isset($_POST['geneIdType'])) {
 
-            $argument .= "geneIdType:" . $_POST['geneIdType'] . ";";
-
+            //$argument .= "geneIdType:" . $_POST['geneIdType'] . ";";
+	    $argument .= "mid.type:" . $_POST['geneIdType'] . ";";
             //if the example is 2nd example or geneIdType is geneIdType
             if (strcmp($_POST['geneIdType'], 'custom') == 0) {
                 if(Input::hasFile('geneIdFile'))
@@ -761,7 +756,7 @@ public function discreteGageAnalysis()
 		$Rloc = Config::get("app.RLoc");
 		$publicPath = Config::get("app.publicPath");
         $_SESSION['analysis_id'] = $time;
-	return $argument;
+//	return $argument;
        exec($Rloc."Rscript ".$publicPath."discrete.R \"$argument\" > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
 
         function get_client_ip()
