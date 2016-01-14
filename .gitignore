@@ -6,6 +6,7 @@ public/data/publicPath.txt
 vendor/
 public/*.Rout
 public/Kegg/
+public/kList/
 public/genesets/
 public/mmap/
 public/logs/
