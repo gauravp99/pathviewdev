@@ -291,7 +291,7 @@
                                     $float = (double)$string;
                                     if ($i == 1 && $lineNumer < 4) {
                                         $pathway_string = explode(" ", $string);
-                                        //array_push($pathwaySetName, $string);
+                                        array_push($pathwaySetName, $string);
                                         if (strpos($pathway_string[0], 'GO') !== false) {
                                             array_push($pathwaySet, str_replace(':', '_', $pathway_string[0]));
                                         } else {
@@ -472,10 +472,10 @@
                                         $float = (double)$string;
                                         if ($i == 1 && $lineNumer < 4) {
                                             $pathway_string = explode(" ", $string);
-                                            //array_push($pathwaySetName, $string);
+                                            array_push($pathwaySetName, $string);
                                             if (strpos($pathway_string[0], 'GO') !== false) {
                                                 array_push($pathwaySet, str_replace(':', '_', $pathway_string[0]));
-                                            } else {
+                                            } else if($pathway_string[0]) {
                                                 array_push($pathwaySet, $pathway_string[0]);
                                             }
                                         }
