@@ -30,6 +30,7 @@ args2$expand=F
 
 #pvwdir = Sys.getenv("pvwdir")
 pvwdir = paste0(getwd(), "/public/")
+pvwdir=gsub("public/public/", "public/", pvwdir)
 
 setwd(args2$targedir)
 

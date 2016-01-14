@@ -102,6 +102,7 @@ gs.type=args2$mset.category
 gid.type=tolower(args2$mid.type)
 map.data=F
 data(bods, package="gage")
+bods[,"id.type"]=gsub("eg", "entrez", bods[,"id.type"])
 #gsets.dir="/var/www/PathwayWeb/public/genesets/"
 gsets.dir=paste(pvwdir,'genesets/',sep="")
 if(args2$data.type=="gene"){

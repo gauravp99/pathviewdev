@@ -1,5 +1,8 @@
 #source("/var/www/Pathway/public/kg.map.R")
-if(!exists("pvwdir")) pvwdir = substr(getwd(),1,nchar(getwd())-30)
+if(!exists("pvwdir")) {
+pvwdir = paste0(getwd(), "/public/")
+pvwdir=gsub("public/public/", "public/", pvwdir)
+}
 print(pvwdir)
 mmap.dir1=paste(pvwdir,"/mmap/",sep="")
 kg.map=function(species="hsa", mmap.dir=mmap.dir1){

@@ -5,8 +5,8 @@ arg.v = strsplit(args[1],split=";|:")[[1]]
 idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
-#pvwdir = paste0(getwd(), "/public/")
-pvwdir = paste0(getwd(), "/")
+pvwdir = paste0(getwd(), "/public/")
+pvwdir=gsub("public/public/", "public/", pvwdir)
 
 args2=strsplit(args1, ",")
 logic.idx=c("rankTest", "useFold", "test.2d", "dopathview", "normalized", "count.data", "do.log")
@@ -102,6 +102,7 @@ gs.type=args2$mset.category
 gid.type=tolower(args2$mid.type)
 map.data=F
 data(bods, package="gage")
+bods[,"id.type"]=gsub("eg", "entrez", bods[,"id.type"])
 #gsets.dir="/var/www/PathwayWeb/public/genesets/"
 gsets.dir=paste(pvwdir,'genesets/',sep="")
 if(args2$data.type=="gene"){

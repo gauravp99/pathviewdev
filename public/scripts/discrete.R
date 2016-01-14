@@ -6,7 +6,8 @@ idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
 #pvwdir = Sys.getenv("pvwdir")
-pvwdir = paste0(getwd(), "/")
+pvwdir = paste0(getwd(), "/public/")
+pvwdir=gsub("public/public/", "public/", pvwdir)
 logic.idx=c("test.enrich", "do.pathview")
 num.idx=c("bins", "ncut", "qcut")
 
