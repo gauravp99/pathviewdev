@@ -26,7 +26,6 @@ app.controller('analysisController',function($scope,$timeout) {
             $('#geneMenu').hide();
             $('#GeneClearFile').hide();
             $scope.columns = "";
-            $scope.Genecolumns = "";
             $scope.reference = "";
             $scope.sample = "";
         };
@@ -60,7 +59,6 @@ app.controller('analysisController',function($scope,$timeout) {
             }
             $scope.Genecolumns = $scope.columns;
 
-            console.log("in read file clearning sample and reference values: "+$scope.Genecolumns);
             console.log("in read file clearning sample and reference values: "+$scope.columns);
         }
 
@@ -98,9 +96,6 @@ app.controller('analysisController',function($scope,$timeout) {
 
         $scope.content = $fileContent.split("\n")[0];
 
-        $("#sample").val("");
-        $("#reference").val("");
-        console.log("at the end: "+$scope.Genecolumns);
         console.log("at the end: "+$scope.columns);
     };
 
@@ -108,7 +103,20 @@ app.controller('analysisController',function($scope,$timeout) {
 
 
 app.controller('ExampleAnalysisController1',function($scope) {
+    $scope.columns = ['"HN_1"','"DCIS_1"','"HN_2"','"DCIS_2"','"HN_3"','"DCIS_3"','"HN_4"','"DCIS_4"','"HN_5"','"DCIS_5"','"HN_6"','"DCIS_6"'];
+    $scope.reference = [1,3,5,7,9,11];
+    $scope.sample = [2,4,6,8,10,12];
+});
+app.controller('ExampleAnalysisController2',function($scope) {
     $scope.columns = ['HN_1','DCIS_1','HN_2','DCIS_2','HN_3','DCIS_3','HN_4','DCIS_4','HN_5','DCIS_5','HN_6','DCIS_6'];
+    $scope.reference = [1,3,5,7,9,11];
+    $scope.sample = [2,4,6,8,10,12];
+
+});
+app.controller('ExampleAnalysisController3',function($scope) {
+    $scope.columns = ["cont1","cont2","bcpd","bcpd2"];
+    $scope.reference = [1,2];
+    $scope.sample = [3,4];
 });
 
 app.directive('onReadFile', function($parse){
@@ -133,9 +141,13 @@ app.directive('onReadFile', function($parse){
                 scope.fileExtension = scope.fileName1.substring(scope.fileName1.length-3,scope.fileName1.length);
                 scope.filetype =( (onChangeEvent.srcElement || onChangeEvent.target).files[0].type);
                 reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+                console.log(scope.reference+" "+scope.sample);
+                scope.reference = "";
+                scope.sample = "";
+
                 $('#menu').trigger('click');
-                $("#sample").val("");
-                $("#reference").val("");
+
+
             }) ;
 
         }

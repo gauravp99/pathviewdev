@@ -1,0 +1,339 @@
+<?xml version="1.0"?>
+<!DOCTYPE pathway SYSTEM "http://www.kegg.jp/kegg/xml/KGML_v0.7.1_.dtd">
+<!-- Creation date: Oct 8, 2014 14:39:19 +0900 (GMT+09:00) -->
+<pathway name="path:ptr05221" org="ptr" number="05221"
+         title="Acute myeloid leukemia"
+         image="http://www.kegg.jp/kegg/pathway/ptr/ptr05221.png"
+         link="http://www.kegg.jp/kegg-bin/show_pathway?ptr05221">
+    <entry id="1" name="ptr:100614588 ptr:454647" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:100614588+ptr:454647">
+        <graphics name="ZBTB16..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="940" y="650" width="46" height="17"/>
+    </entry>
+    <entry id="2" name="ptr:473387" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:473387">
+        <graphics name="KRAS" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="498" y="290" width="46" height="17"/>
+    </entry>
+    <entry id="3" name="ptr:742713" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:742713">
+        <graphics name="NRAS" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="497" y="241" width="46" height="17"/>
+    </entry>
+    <entry id="4" name="ptr:452508" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:452508">
+        <graphics name="FLT3" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="275" y="281" width="46" height="17"/>
+    </entry>
+    <entry id="5" name="ptr:451169" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:451169">
+        <graphics name="SPI1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1033" y="563" width="46" height="17"/>
+    </entry>
+    <entry id="6" name="ptr:746673" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:746673">
+        <graphics name="CEBPA" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1033" y="492" width="46" height="17"/>
+    </entry>
+    <entry id="7" name="ptr:101058316 ptr:472816" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:101058316+ptr:472816">
+        <graphics name="RUNX1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="940" y="560" width="46" height="17"/>
+    </entry>
+    <entry id="8" name="path:ptr04630" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04630">
+        <graphics name="Jak-STAT signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="642" y="367" width="111" height="34"/>
+    </entry>
+    <entry id="9" name="path:ptr04150" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04150">
+        <graphics name="mTOR signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1002" y="211" width="111" height="34"/>
+    </entry>
+    <entry id="10" name="path:ptr04640" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04640">
+        <graphics name="Hematopoietic cell lineage" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="106" y="288" width="111" height="34"/>
+    </entry>
+    <entry id="11" name="ptr:463188" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:463188">
+        <graphics name="PPARD" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1111" y="796" width="46" height="17"/>
+    </entry>
+    <entry id="12" name="ptr:464393" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:464393">
+        <graphics name="MYC" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1111" y="774" width="46" height="17"/>
+    </entry>
+    <entry id="13" name="ptr:461406 ptr:466665" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:461406+ptr:466665">
+        <graphics name="NFKB1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="840" y="116" width="46" height="17"/>
+    </entry>
+    <entry id="14" name="ptr:454679 ptr:454681 ptr:454682" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:454679+ptr:454681+ptr:454682">
+        <graphics name="STAT5A, STAT5B..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="484" y="340" width="46" height="17"/>
+    </entry>
+    <entry id="15" name="ptr:454667" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:454667">
+        <graphics name="JUP" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="774" y="775" width="46" height="17"/>
+    </entry>
+    <entry id="17" name="ptr:747442" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:747442">
+        <graphics name="CCND1, CDKN1A" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1111" y="752" width="46" height="17"/>
+    </entry>
+    <entry id="18" name="ptr:450743 ptr:461425 ptr:744526 ptr:745839" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:450743+ptr:461425+ptr:744526+ptr:745839">
+        <graphics name="TCF7L2..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="842" y="810" width="46" height="17"/>
+    </entry>
+    <entry id="19" name="ptr:453736 ptr:454647" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:453736+ptr:454647">
+        <graphics name="PML..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="940" y="605" width="46" height="17"/>
+    </entry>
+    <entry id="20" name="ptr:451169" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:451169">
+        <graphics name="SPI1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1033" y="537" width="46" height="17"/>
+    </entry>
+    <entry id="21" name="ptr:462656" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:462656">
+        <graphics name="PIM1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1056" y="328" width="46" height="17"/>
+    </entry>
+    <entry id="22" name="ptr:466302 ptr:473387 ptr:742713" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:466302+ptr:473387+ptr:742713">
+        <graphics name="HRAS..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="497" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="23" name="ptr:101058316" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:101058316">
+        <graphics name="RUNX1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1033" y="398" width="46" height="17"/>
+    </entry>
+    <entry id="24" name="path:ptr04210" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04210">
+        <graphics name="Apoptosis" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1001" y="163" width="111" height="34"/>
+    </entry>
+    <entry id="25" name="ptr:100609537 ptr:100610002 ptr:450673 ptr:472749" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:100609537+ptr:100610002+ptr:450673+ptr:472749">
+        <graphics name="100609537..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="740" y="117" width="46" height="17"/>
+    </entry>
+    <entry id="26" name="ptr:100615623" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:100615623">
+        <graphics name="BAD" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="740" y="160" width="46" height="17"/>
+    </entry>
+    <entry id="27" name="ptr:473600" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:473600">
+        <graphics name="PIM2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1056" y="352" width="46" height="17"/>
+    </entry>
+    <entry id="28" name="ptr:746673" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:746673">
+        <graphics name="CEBPA" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1033" y="467" width="46" height="17"/>
+    </entry>
+    <entry id="29" name="ptr:468426 ptr:746903" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:468426+ptr:746903">
+        <graphics name="RPS6KB1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="781" y="221" width="46" height="17"/>
+    </entry>
+    <entry id="30" name="ptr:452897 ptr:459171" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:452897+ptr:459171">
+        <graphics name="SOS2..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="429" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="31" name="ptr:737245" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:737245">
+        <graphics name="GRB2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="360" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="32" name="cpd:C05981" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C05981">
+        <graphics name="C05981" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="581" y="158" width="8" height="8"/>
+    </entry>
+    <entry id="33" name="ptr:461316" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:461316">
+        <graphics name="KIT" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="275" y="255" width="46" height="17"/>
+    </entry>
+    <entry id="34" name="ptr:457945" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:457945">
+        <graphics name="MTOR, FRAP1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="709" y="205" width="46" height="17"/>
+    </entry>
+    <entry id="35" name="ptr:464114" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:464114">
+        <graphics name="EIF4EBP1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="781" y="192" width="46" height="17"/>
+    </entry>
+    <entry id="36" name="path:ptr04010" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04010">
+        <graphics name="MAPK signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="695" y="297" width="111" height="34"/>
+    </entry>
+    <entry id="37" name="ptr:100609583 ptr:456035 ptr:740898" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:100609583+ptr:456035+ptr:740898">
+        <graphics name="AKT3..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="637" y="160" width="46" height="17"/>
+    </entry>
+    <entry id="38" name="ptr:455085 ptr:455855 ptr:456565 ptr:457922 ptr:460858 ptr:461836 ptr:463649 ptr:471079" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:455085+ptr:455855+ptr:456565+ptr:457922+ptr:460858+ptr:461836+ptr:463649+ptr:471079">
+        <graphics name="PIK3R5..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="552" y="184" width="46" height="17"/>
+    </entry>
+    <entry id="39" name="path:ptr05221" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr05221">
+        <graphics name="TITLE:Acute myeloid leukemia" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="151" y="58" width="223" height="25"/>
+    </entry>
+    <entry id="40" name="path:ptr04110" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04110">
+        <graphics name="Cell cycle" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1197" y="709" width="111" height="34"/>
+    </entry>
+    <entry id="41" name="ptr:454037 ptr:458680" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:454037+ptr:458680">
+        <graphics name="MAPK3..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="784" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="42" name="ptr:450188 ptr:456390" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:450188+ptr:456390">
+        <graphics name="MAP2K1, MEK..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="685" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="43" name="ptr:100614256 ptr:460182 ptr:463781" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr:100614256+ptr:460182+ptr:463781">
+        <graphics name="ARAF..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="589" y="265" width="46" height="17"/>
+    </entry>
+    <entry id="44" name="path:ptr04151" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?ptr04151">
+        <graphics name="PI3K-Akt signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="601" y="117" width="111" height="34"/>
+    </entry>
+    <relation entry1="38" entry2="37" type="PPrel">
+        <subtype name="compound" value="32"/>
+    </relation>
+    <relation entry1="33" entry2="38" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="4" entry2="38" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="34" entry2="29" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="33" entry2="31" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="4" entry2="31" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="31" entry2="30" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="30" entry2="22" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="3" entry2="38" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="22" entry2="38" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="2" entry2="38" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="3" entry2="43" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="22" entry2="43" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="2" entry2="43" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="33" entry2="14" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="4" entry2="14" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="37" entry2="25" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="phosphorylation" value="+p"/>
+    </relation>
+    <relation entry1="37" entry2="34" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="phosphorylation" value="+p"/>
+    </relation>
+    <relation entry1="43" entry2="42" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="phosphorylation" value="+p"/>
+    </relation>
+    <relation entry1="42" entry2="41" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+        <subtype name="phosphorylation" value="+p"/>
+    </relation>
+    <relation entry1="25" entry2="13" type="PPrel">
+        <subtype name="indirect effect" value="..&gt;"/>
+    </relation>
+    <relation entry1="37" entry2="26" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+        <subtype name="phosphorylation" value="+p"/>
+    </relation>
+    <relation entry1="34" entry2="35" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+    <relation entry1="14" entry2="21" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="14" entry2="27" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="4" entry2="6" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+    <relation entry1="4" entry2="5" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+    <relation entry1="7" entry2="6" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+    <relation entry1="7" entry2="5" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+    <relation entry1="19" entry2="15" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="1" entry2="15" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="7" entry2="15" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="15" entry2="17" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="15" entry2="12" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="15" entry2="11" type="GErel">
+        <subtype name="expression" value="--&gt;"/>
+    </relation>
+    <relation entry1="15" entry2="18" type="PPrel">
+        <subtype name="binding/association" value="---"/>
+    </relation>
+    <relation entry1="19" entry2="5" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+</pathway>

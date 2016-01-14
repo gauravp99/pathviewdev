@@ -456,7 +456,7 @@
                             $arg1[1] = "False";
                         }
                         ?>
-                        <tr>id:561fb76cbb76f
+                        <tr>
                             <td><b>{{$arg1[0]}}</b></td>
                             <td>{{$arg1[1]}}</td>
                         </tr>

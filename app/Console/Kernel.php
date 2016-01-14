@@ -3,6 +3,8 @@
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Config;
+use File;
+use Day;
 class Kernel extends ConsoleKernel
 {
 
@@ -19,7 +21,8 @@ class Kernel extends ConsoleKernel
 
     /**
      * Define the application's command schedule.
-     *
+     * this program is scheduled to call by cron on every second
+     * this program triggers commands if the time scheduled are reached
      * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
@@ -27,23 +30,119 @@ class Kernel extends ConsoleKernel
     {
 
 
-        $filePath = public_path()."/logs/output.txt";
+        //to have the filepath for the commands to put their logs
+        $filePath_recent = storage_path()."/logs/recent.log";
+        $filePath = storage_path()."/logs/scheduledJobs.log";
 
-        //check if file exists or not if not exists create it
 
-        /*if(!file_exists($filePath)) {
-            touch($filePath);
-        }*/
 
+        //get the email in config to send the mail to admin
         $email =  Config::get("app.adminEmail");
-        $schedule->command('inspire')->hourly();
-        $schedule->command('fileMaintained')->dailyAt('3:00')->sendOutputTo($filePath)->emailOutputTo([$email]);
-        $schedule->command('rm -r '.public_path().'/all/demo/[0-9]*')->dailyAt('3:10')->sendOutputTo($filePath)->emailOutputTo([$email]);
-        $schedule->exec('sh '.public_path().'/scripts/biocStatsimport.sh')->weekly()->sendOutputTo($filePath);
-        $schedule->exec('sh '.public_path().'/scripts/biocGageStatsimport.sh')->weekly()->sendOutputTo($filePath);
-        $schedule->exec('sh '.public_path().'/scripts/KeggDownload.sh')->monthly()->sundays()->at('02:00')->sendOutputTo($filePath)->emailOutputTo($email);
-        $schedule->command('redis')->dailyAt('3:11')->sendOutputTo($filePath)->emailOutputTo([$email]);
+
+        //1. Job for file maintenance for users files reaching more than their allocated space runs daily
+        $output = $schedule->command('fileMaintained')
+            ->dailyAt('3:30')
+            ->sendOutputTo($filePath_recent)
+            ->emailOutputTo([$email])
+            ->then(function (){
+
+                $filePath_recent = storage_path()."/logs/recent.log";
+                $filePath = storage_path()."/logs/scheduledJobs.log";
+
+                if(!File::exists($filePath_recent)) {
+                    $myfile = fopen($filePath_recent, "w");
+                }
+
+                if(!File::exists($filePath)) {
+                    $myfile = fopen($filePath, "w");
+                }
+
+                // path does not exist
+                File::append($filePath, File::get($filePath_recent));
+            });
+
+        //2. Job for deleting files in the demo folder for guest users runs daily
+        $schedule->exec(public_path().'/scripts/demoFileMaintained.sh '.public_path()."/all/demo/")
+            ->dailyAt('3:32')
+            ->sendOutputTo($filePath_recent)
+            ->emailOutputTo([$email])
+            ->then(function (){
+                $filePath_recent = storage_path()."/logs/recent.log";
+                $filePath = storage_path()."/logs/scheduledJobs.log";
+                if(!File::exists($filePath_recent)) {
+                    $myfile = fopen($filePath_recent, "w");
+                }
+
+                if(!File::exists($filePath)) {
+                    $myfile = fopen($filePath, "w");
+                }
+
+                File::append($filePath, File::get($filePath_recent));
+            });
+
+        //3. Job for getting the statistics of the package usage from bioc website for pathview
+        $schedule->exec(public_path().'/scripts/biocStatsimport.sh')
+            ->weeklyOn(0,'3:34')
+            ->sendOutputTo($filePath_recent)
+            ->emailOutputTo([$email])
+            ->then(function (){
+                $filePath_recent = storage_path()."/logs/recent.log";
+                $filePath = storage_path()."/logs/scheduledJobs.log";
+                if(!File::exists($filePath_recent)) {
+                    $myfile = fopen($filePath_recent, "w");
+                }
+
+                if(!File::exists($filePath)) {
+                    $myfile = fopen($filePath, "w");
+                }
+
+                File::append($filePath, File::get($filePath_recent));
+            });
+
+        //4. Job for getting the statistics of the package usage from bioc website for gage
+        $schedule->exec(public_path().'/scripts/biocGageStatsimport.sh')
+            ->weeklyOn(0,'3:35')
+            ->sendOutputTo($filePath_recent)->emailOutputTo([$email])
+            ->then(function (){
+                $filePath_recent = storage_path()."/logs/recent.log";
+                $filePath = storage_path()."/logs/scheduledJobs.log";
+                if(!File::exists($filePath_recent)) {
+                    $myfile = fopen($filePath_recent, "w");
+                }
+
+                if(!File::exists($filePath)) {
+                    $myfile = fopen($filePath, "w");
+                }
+
+                File::append($filePath, File::get($filePath_recent));
+            });
+
+        //5. Kegg script to download most common used images and xml files maintained to have fast  analysis
+        $schedule->exec('Rscript '.public_path().'/scripts/update.kegg.R '.public_path())
+            ->cron('37 3 7 * *')
+            ->sendOutputTo($filePath_recent)
+            ->emailOutputTo($email)
+            ->then(function (){
+                $filePath_recent = storage_path()."/logs/recent.log";
+                $filePath = storage_path()."/logs/scheduledJobs.log";
+                if(!File::exists($filePath_recent)) {
+                    $myfile = fopen($filePath_recent, "w");
+                }
+
+                if(!File::exists($filePath)) {
+                    $myfile = fopen($filePath, "w");
+                }
+
+                File::append($filePath, File::get($filePath_recent));
+            });
+
+        //6. Job to clear redis database key values. stored every day for each analysis
+        $schedule->command('redis')
+            ->dailyAt('3:36')
+            ->sendOutputTo($filePath_recent)
+            ->emailOutputTo([$email]);
 
     }
 
 }
+

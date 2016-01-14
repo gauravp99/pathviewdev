@@ -34,10 +34,10 @@ class WelcomeController extends Controller
         $data_comm = new DbDataFetch;
 
         //get the analysis data of past 6 months data from analysis tables
-        $web_usage = $data_comm->getAnalysisDetails();
+        $web_usage = $data_comm->getAnalysisDetails("pathview");
 
         //get bioc analysis data of past 6 months from bioc table filled by the batch job
-        $lib_usage = $data_comm->getBiocStatisTics();
+        $lib_usage = $data_comm->getBiocStatisTics("pathview");
 
         $web_date = array();
         $web_count = array();
@@ -61,9 +61,9 @@ class WelcomeController extends Controller
 
 
         //get the count of bioc values
-        $biocUsage = $data_comm->getTotalBiocAnalysisDetails();
+        $biocUsage = $data_comm->getTotalBiocAnalysisDetails("pathview");
         //get the count details from analysis table
-        $analysisUsage = $data_comm->getTotalAnalysisDetails();
+        $analysisUsage = $data_comm->getTotalAnalysisDetails("pathview");
         $bioc_count = 0;
         if(!is_null($biocUsage->getUsage())){
             $bioc_count = $biocUsage->getUsage();

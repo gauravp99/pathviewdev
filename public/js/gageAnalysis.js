@@ -1,6 +1,7 @@
             //saving the arguments and re-render on back button
             var pathviewSettingsTab = false;
             var pathviewSettingsCustomizable = false;
+            //this function saves the content on the current page and put into a input hidden text
             function save() {
                 //resetting the input element
                 $("#input").val();
@@ -102,7 +103,6 @@
 
 
                 //18. sampleselect
-
                 var sampleselectOptions = "sampleselectOptions:";
                 $("#sampleselect option").each(function () {
                     if ($.trim($(this).text()).length > 0)
@@ -227,27 +227,25 @@
                // }
 
                 //save the string into input element
-                //console.log("savedString: "+savedString);
+                console.log("savedString: "+savedString);
                 $("#input").val(savedString);
 
             }
 
-            //reDisplay function rendering the page
+            //reDisplay taking the input from input box function rendering the page
             function reDisplay() {
                 console.log("redisplay function displaying the reselected options");
                 //1. assay data is populated by default
                 //2. Need to display the edit button and delete button
 
                 var inputString = $("#input").val();
-                console.log("Input String: " + inputString);
                 if ($.trim(inputString)) {
                     console.log("showing the edit div");
                     $("#edit").show();
                 }
                 //split the array into parts for input elements
                 var arr = inputString.split(';');
-                console.log("splitted the string");
-                console.log(arr);
+
 
                 //1. Assay Data
                 if (arr !== "undefined" && $.trim(inputString)) {
@@ -256,7 +254,6 @@
                     //$("#assayData").val(arr[0].split(":")[1]);
 
                     //2. Log transformed
-                    console.log("setting the arguments");
                     var logTransformed = arr[1].split(":")[1];
                     if (logTransformed == "true")
                         $("#logTransformed").prop("checked", true);
@@ -298,10 +295,11 @@
                     var geneSetOptions = arr[7].split(":")[1].split(",");
                     $("#geneSet").empty();
                     console.log("geneSetOptions :" + geneSetOptions.length);
-                    /* $.each(geneSetOptions,function (index,value) {
-                     $("#geneSet").append("<option></option>").attr("value", value).text(value);
-                     });*/
+
                     val = dataType;
+
+                    //because the geneset and geneIdfile is dynamically changed we have saved all the option in the select box for geneset and
+                    //geneid re-render process makes the options to be removed and pasted back
                     if (val === "compound") {
                         //greying out the species
                         $("#species").prop("readonly", true);
@@ -309,10 +307,11 @@
                         $('#geneIdFile').hide();
                         //populating the compound related fields
 
-
                         //updating gene set label to Compound set
                         var label = $("label[for='GeneSet']");
-                        //setting the value of setSize Min to 5
+
+
+                            //setting the value of setSize Min to 5
                         // $('#setSizeMin').val(5);
                         // $('#setSizeMin').val(5);
                         //labels change the inner text
@@ -352,13 +351,14 @@
                             , "Reaxys Registry Number", "UM-BBD compID"
                             , "Wikipedia accession", "Compound name"];
 
+
                         $.each(keggGeneSetArray, function (index, value) {
                             $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
                         });
+
                         $('#geneIdType').append($("<option></option>").attr("value", 'custom').text('custom'));
 
-                        // $("#geneIdType").val("KEGG COMPOUND accession");
-                        //$("#geneIdType option[value='KEGG COMPOUND accession']")[0].setAttribute('selected', '');
+
 
                     }
 
@@ -424,15 +424,12 @@
                         var geneIdTypeArray = ['ACCNUM', 'ENSEMBL', 'ENSEMBLPROT', 'ENSEMBLTRANS', 'ENTREZ', 'ENZYME', 'GENENAME', 'PROSITE', 'REFSEQ', 'SYMBOL', 'UNIGENE', 'UNIPROT']
 
                         $('#geneIdType').empty();
-
+                        console.log("rendering the geneid array");
                         $.each(geneIdTypeArray, function (index, value) {
                             $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
+
                         });
 
-
-                        //$('#geneIdType').append($("<option></option>").attr("value", 'custom').text('custom'));
-                        /* $("#geneIdType").val("ENTREZ");
-                         $('#geneSet').val("sigmet.idx");*/
                     }
 
 
@@ -455,11 +452,10 @@
 
                     //getting the options which are dynamically generated
                     var geneIdTypeOptions = arr[9].split(":")[1].split(",");
-                    $("#geneIdType").empty();
-                    $.each(geneIdTypeOptions, function (index, value) {
-                        $("#geneIdType").append("<option></option>").attr("value", value).text(value);
+                   $.each(geneIdTypeOptions, function (index, value) {
+                        console.log("value:"+value);
+                       // $("#geneIdType").append("<option></option>").attr("value", value).text(value);
                     });
-
                     // 9.q-value Cutoff
                     var cutoff = arr[10].split(":")[1];
                     $("#cutoff").val(cutoff);
@@ -705,6 +701,15 @@
             //select box allowing to select multiple option without pressing control
             $(document).ready(function () {
 
+               //clear button for the file upload
+                $("#clearFile").on("click",function() {
+                    $("#assayData").val(null);/*
+                    $('#menu').hide();
+                    $('#clearFile').hide();*/
+                    $('#edit').hide();
+                });
+
+
                     //code change for reset button fix
                     $("#reset").click(function(){
 
@@ -772,6 +777,8 @@
 
                     });
 
+
+                    //the popup window refselect and sample select option values on change function
                     $('#refselect').change(function () {
                         console.log("refselect change function");
                         var noOfColumns = $('#refselect option').size();
@@ -806,9 +813,13 @@
 
                     });
 
+                    //assy data file chnage function
                     $("#assayData").change(function () {
                         var fileName = $("#assayData").val();
+
                         if (fileName) {
+                            $('#reference').val("");
+                            $('#sample').val("");
                             $("#refselect option").prop("disabled", false);
                             $("#sampleselect option").prop("disabled", false);
                         }
@@ -817,16 +828,13 @@
                     //onclick function
                     $("#submit-button").click(function () {
                         //calling a function
-                        console.log("saving function onclick submit");
                         save();
                     });
 
                     //redisplay function formatting the string and redisplay the input elements
                     reDisplay();
-
+                    $("#graphics").hide();
                     console.log(pathviewSettingsTab+": in document ready function");
-
-                    $('#graphics').hide();
 
                     //get the input element value
                     var value = $("#input").val();
@@ -847,6 +855,7 @@
                     $("[name='useFold']").bootstrapSwitch();
                     $("[name='useFold']").setOnLabel = "setOnLabel";
                     $("[name='useFold']").bootstrapSwitch.defaults.setOffLabel = "setOnLabel";
+
                     $('input[name="dopathview"]').on('switchChange.bootstrapSwitch', function (event, state) {
                         // $('#dataType-div').toggle();
                         if ($('#bins-div')) {
@@ -863,9 +872,7 @@
                         }
                     });
 
-                    $("#usePathview").change(function(){
-                        console.log($(this).val());
-                    });
+
 
                     $('#pathviewSettings').change(function () {
                         var pathviewSettingval = $('#pathviewSettings').val();
@@ -960,7 +967,6 @@
                     //data type change function
                     $('#dataType').change(function () {
                         var val = $('#dataType').val();
-                        console.log(val + "selected");
                         if (val === "compound") {
 
                             //setting species input non editable and greyed out
@@ -992,10 +998,21 @@
                             $('#geneSet').append($("<optgroup></optgroup>").attr('label', 'SMPDB').attr('id', 'SMPDB'));
 
                             $.each(molecularSet, function (index, value) {
-                                $('#SMPDB').append($("<option></option>").attr("value", value).text(value));
+                                if(value === "All")
+                                {
+                                    $('#SMPDB').append($("<option></option>").attr("value", "Metabolic,Physiological,Signaling,Drug Metabolism,Drug Action,Disease").text(value));
+                                }else{
+                                    $('#SMPDB').append($("<option></option>").attr("value", value).text(value));
+                                }
+
                             });
 
                             $('#geneSet').append($("<option></option>").attr("value", "custom").attr("style", "background-color: whitesmoke;font-weight: bold;margin-left:-1px;width:101%;").text("Custom"));
+
+                            //default option set for geneset to kegg and disable all
+                            $('#geneSet option').attr('disabled',true);
+                            $('#geneSet option[value="Kegg"]')[0].removeAttribute('disabled');
+
 
                             var label = $("label[for='geneIdType']");
                             $(label[0]).html("Compound ID Type");
@@ -1024,7 +1041,12 @@
 
                         }
 
-                        if (val === "other") {
+                        if (val === "other")
+                        {
+                            //disable pathview optio
+                            $("#usePathview").bootstrapSwitch('state', false);
+                            $("[name='dopathview']").bootstrapSwitch('disabled',true);
+
                             $('#geneIdFile').show();
                             //setting species input non editable and greyed out
                             $("#species").prop("readonly",true);
@@ -1341,7 +1363,13 @@
 
                     $('#geneSet').change(function () {
 
-                        if($(this).val()[0] != null){
+
+                        if($(this).val() == null)
+                        {
+                            console.log("variable is empty");
+                            $("#geneSet option").attr("disabled", false);
+                        }
+                        else if($(this).val()[0] != null){
                             //log the value
                             var checkValue = $(this).val()[0];
                             console.log($(this).val()[0]);
@@ -1349,9 +1377,9 @@
                             console.log($.inArray(checkValue, keggValues ));
                             if($.inArray(checkValue, keggValues ) < 0)
                             {
-                                console.log($("#usePathviw").is(":checked"));
-                                //if($("#usePathviw").is(":checked"))
 
+                                //if($("#usePathviw").is(":checked"))
+                                $("#usePathview").bootstrapSwitch('state', false);
                                 $("[name='dopathview']").bootstrapSwitch('disabled',true);
                                 $("#usePathview").attr('checked',false);
                                 $('#graphics').hide();
@@ -1366,9 +1394,8 @@
                         }
 
 
-
-
-                        var dataType = $('#dataType').val();
+                        
+			            var dataType = $('#dataType').val();
                         var keggGeneSetArray = ["Agricola citation", "Beilstein Registry Number"
                             , "CAS Registry Number", "COMe accession"
                             , "ChEMBL COMPOUND", "DrugBank accession"
@@ -1389,11 +1416,13 @@
                             var selectedGeneSet = $('#geneSet').val();
 
                             if ($(this).val() == null) {
+                                $('#geneIdFile').hide();
                                 $.each($("#geneSet option"), function (index, value) {
                                     value.removeAttribute('disabled');
                                 });
                             }
-                            else if ($.trim(selectedGeneSet) !== "Kegg") {
+                            else if ($.trim(selectedGeneSet) !== "Kegg" && $.trim(selectedGeneSet) !== "custom") {
+                                $('#geneIdFile').hide();
                                 $('#geneSet option[value = "Kegg" ]')[0].setAttribute('disabled', 'disabled');
                                 $('#geneSet option[value = "custom" ]')[0].setAttribute('disabled', 'disabled');
                                 $('#geneIdType').empty();
@@ -1407,7 +1436,25 @@
 
                                 $('#geneIdType').val("KEGG COMPOUND accession");
 
-                            } else {
+                            }
+                            else if($.trim(selectedGeneSet) === "custom"){
+                                //disabling all option and enabling custom option
+                                $("#geneSet option").attr("disabled", true);
+                                $('#geneSet option[value = "custom"]')[0].removeAttribute('disabled');
+
+                                //removing options in geneid and adding a custom option
+                                $('#geneIdType').empty();
+
+                                $('#geneIdType').append($("<option></option>")
+                                    .attr("value", "custom").text("custom"));
+
+                                $('#specieslist').append($("<option></option>").attr("value", "custom").text("custom"));
+                                $('#geneIdFile').show();
+
+
+
+                            }else {
+                                $('#geneIdFile').hide();
                                 var molecularSet = ['Metabolic',
                                     'Physiological', 'Signaling',
                                     'Drug Metabolism', 'Drug Action',
@@ -1421,6 +1468,7 @@
                                 $.each(keggGeneSetArray, function (index, value) {
                                     $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
                                 });
+                                $('#geneIdType').val("KEGG COMPOUND accession");
                             }
 
                         }
@@ -1441,6 +1489,16 @@
                             else {
                                 var $selected = $(this).val()[$(this).val().length - 1];
                                 if ($selected === "sig.idx" || $selected === "met.idx" || $selected === "sigmet.idx" || $selected === "dise.idx" || $selected === "sigmet.idx,dise.idx") {
+                                    var geneIdTypeArray = ['ACCNUM', 'ENSEMBL', 'ENSEMBLPROT', 'ENSEMBLTRANS', 'ENTREZ', 'ENZYME', 'GENENAME', 'PROSITE', 'REFSEQ', 'SYMBOL', 'UNIGENE', 'UNIPROT']
+
+                                    $('#geneIdType').empty();
+                                    console.log("rendering the geneid array");
+                                    $.each(geneIdTypeArray, function (index, value) {
+                                        $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
+
+                                    });
+                                    $('#geneIdType').val("ENTREZ");
+
                                     $('#geneIdType').show();
                                     $('#geneIdFile').hide();
                                     if (!KegggetSetChange) {
@@ -1470,7 +1528,15 @@
 
                                 }
                                 else if ($selected === "BP" || $selected === "CC" || $selected === "MF" || $selected === "BP,CC,MF") {
+                                    var geneIdTypeArray = ['ACCNUM', 'ENSEMBL', 'ENSEMBLPROT', 'ENSEMBLTRANS', 'ENTREZ', 'ENZYME', 'GENENAME', 'PROSITE', 'REFSEQ', 'SYMBOL', 'UNIGENE', 'UNIPROT']
 
+                                    $('#geneIdType').empty();
+                                    console.log("rendering the geneid array");
+                                    $.each(geneIdTypeArray, function (index, value) {
+                                        $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
+
+                                    });
+                                    $('#geneIdType').val("ENTREZ");
                                     $('#geneIdType').show();
                                     $('#geneIdFile').hide();
 
@@ -1524,8 +1590,6 @@
 
                     });
 
-                    console.log("Settings tab:" +pathviewSettingsTab);
-                    console.log("Customizable tab:" +pathviewSettingsCustomizable);
                     if(pathviewSettingsTab){
                         $("#pathviewSettings-div").show();
                         if(pathviewSettingsCustomizable)
@@ -1534,8 +1598,73 @@
                             $('#coloration').show();
                         }
 
+
                     }
 
+
+                    //check the data type and disable geneset options
+                    var dataType = $('#dataType').val();
+                    if(dataType === "gene"){
+                        var kegg = ['sig.idx','met.idx','sigmet.idx','dise.idx','sigmet.idx,dise.idx'];
+                        //check the value of geneset
+                        var geneSet = $('#geneSet').val();
+                        if( geneSet !== null)
+                        {
+                            var res =geneSet;
+
+                            if(res.length > 0)
+                            {
+                                if($.inArray(res[0], kegg ) != -1)
+                                {
+                                    $('#geneSet option').attr("disabled",true);
+                                    $.each(kegg,function(index,value){
+                                        $('#geneSet option[value=\''+value+'\']')[0].removeAttribute("disabled");
+                                    });
+
+                                }else if(res[0] === "custom"){
+                                    $('#geneSet option').attr("disabled",true);
+                                    $('#geneSet option[value="custom"]')[0].attr("disabled",false);
+                                }else{
+
+                                    $.each(kegg,function(index,value){
+                                        $('#geneSet option[value=\''+value+'\']')[0].setAttribute("disabled","disabled");
+                                    });
+                                    $('#geneSet option[value="custom"]')[0].setAttribute("disabled","disabled");
+                                }
+                            }
+                        }
+                    }
+                    else if(dataType === "compound"){
+                        var kegg = ['Kegg'];
+                        //check the value of geneset
+                        var geneSet = $('#geneSet').val();
+                        if( geneSet !== null)
+                        {
+                            console.log(geneSet);
+                            var res =geneSet;
+
+                            if(res.length > 0)
+                            {
+                                if($.inArray(res[0], kegg ) != -1 )
+                                {
+                                    $('#geneSet option').attr("disabled",true);
+                                    $.each(kegg,function(index,value){
+                                        $('#geneSet option[value=\''+value+'\']')[0].removeAttribute("disabled");
+                                    });
+
+                                }else if(res[0] === "custom"){
+                                    $('#geneSet option').attr("disabled",true);
+                                    $('#geneSet option[value="custom"]')[0].removeAttribute("disabled");
+                                }else{
+
+                                    $.each(kegg,function(index,value){
+                                        $('#geneSet option[value=\''+value+'\']')[0].setAttribute("disabled","disabled");
+                                    });
+                                    $('#geneSet option[value="custom"]')[0].setAttribute("disabled","disabled");
+                                }
+                            }
+                        }
+                    }
 
 
                 }

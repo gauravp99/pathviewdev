@@ -174,7 +174,7 @@
 
 
                             foreach ($pathway as $pathway1) {
-                                echo "<option value=" . $pathway1->pathway_id . ">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
+                                echo "<option value=\"" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc ."\">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
                             }
                             ?>
 
@@ -219,7 +219,7 @@
                                 $pathway = Cache::get('Pathway');
                             }
                     foreach ($pathway as $pathway1) {
-                        echo "<option value=".$pathway1->pathway_id.">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
+                        echo "<option value=\"".$pathway1->pathway_id."-" . $pathway1->pathway_desc ."\">" . $pathway1->pathway_id . "-" . $pathway1->pathway_desc . "</option>";
                     }
                     ?>
                     <!--[if (lt IE 10)]></select><![endif]-->
@@ -1132,9 +1132,10 @@
                     evenOneTrueFlag = false;
                     $.each(pathwayArray, function (index, value) {
                         if (value != null) {
-                            pt_value = value.split("-")[0].trim();
+                            pt_value = $.trim(value);
                             //check existence
-                            if (in_pathway_array(pathway_array, pt_value)) {
+                            console.log(""+pt_value);
+                            if ($.inArray(pt_value,pathway_array) >-1) {
                                 evenOneTrueFlag = true;
                                 newCreateArray = newCreateArray + value + ",";
                             }

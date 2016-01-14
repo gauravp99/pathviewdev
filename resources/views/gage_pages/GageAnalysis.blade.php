@@ -100,15 +100,10 @@
 
                                     </div>
                                     <div class="col-sm-10">
-                                    <div class="input-group">
-                                    <span style="color:red"
-                                          ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
-                                     <span class="input-group-btn">
-                                        <span class="btn btn-primary btn-file">
-                                              Browse&hellip; <input type="file" name="assayData" type="file" id="assayData"
+
+                                            <input type="file" name="assayData" type="file" id="assayData"
                                               on-read-file="showContent($fileContent)" ng-click="delete()">
-                                        </span>
-                                    </span>
+
 
                                         <!--Popup model shown whenever file upload is done -->
                                         <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -150,7 +145,7 @@
                                                                 <input class="ex8" name="reference" id="reference"  ng-model="reference">
                                                                 <!-- To get the number of column fields in a file and render it on ref and sample columns -->
                                                                 <input type="text" name="NoOfColumns" value="<% columns.length %>" hidden="" id="NoOfColumns">
-                                                                <select name="ref[]" id="refselect" multiple="" size="5" style="width:100%;" ng-model='refselect'
+                                                                <select name="ref[]" id="refselect" multiple="" size="5" style="width:100%;" ng-model='reference'
                                                                         ng-show="columns.length > 0">
                                                                     <option ng-repeat="column in columns track by $index"
                                                                             value="<% $index+1 %>">
@@ -160,7 +155,7 @@
                                                             </div>
                                                             <div class="col-md-6">
                                                                 <input class="ex8" name="samples" id="sample" ng-model="sample">
-                                                                <select name="sample[]" id="sampleselect" multiple="" size="5" style="width:100%;" ng-model='sampleselect'
+                                                                <select name="sample[]" id="sampleselect" multiple="" size="5" style="width:100%;" ng-model='sample'
                                                                         ng-show="columns.length > 0">
                                                                     <option ng-repeat="column in columns track by $index"
                                                                             value="<% $index+1 %>">
@@ -210,242 +205,13 @@
                                         <input type="text" name="NoOfColumns" value="<% Genecolumns.length %>" hidden=""
                                                id="NoOfColumns">
 
-
-                                        <input type="text" class="form-control" readonly>
                                     </div>
                                         </div>
                                 </div>
                             </div>
-                        </div>
+
                         @include('gageAnalysis')
-                        <script>
-                            $(window).bind('beforeunload', function () {
-                                var geneIdSelected = $("#geneIdType").val();
-                                var species = $("#species").val();
-                                var geneSetSelected = $('#geneSet').val();
-                                var referenceSelected = $('#refselect').val();
-                                var sampleSelected = $('#sampleselect').val();
-                                var dataTypeSelected = $('#dataType').val();
-                                var usePathview = $('#usePathview').is(":checked");
-                                var columns = [];
-                                $("#refselect option").each(function () {
-                                    columns.push($(this).text()); // Add $(this).val() to your list
-                                });
-
-
-                                //adding the dynamically added text hidden input variable
-
-                                $val = 'col:';
-                                if (columns != null || columns != undefined) {
-                                    $.each(columns, function (index, value) {
-                                        value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
-                                        $val += value;
-                                        $val += ',';
-                                    });
-                                }
-                                $val += ';';
-
-                                $val += 'git:';
-                                $("#geneIdType > option").each(function () {
-
-                                    $val += this.value + ",";
-                                });
-                                $val += ';';
-
-                                $val += 'ref:';
-                                if (referenceSelected != null || referenceSelected != undefined) {
-                                    $.each(referenceSelected, function (index, value) {
-                                        value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
-                                        $val += value;
-                                        $val += ',';
-                                    });
-                                }
-                                $val += ';';
-
-                                $val += 'sam:';
-
-                                if (sampleSelected != null || sampleSelected != undefined) {
-                                    $.each(sampleSelected, function (index, value) {
-                                        value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
-                                        $val += value;
-                                        $val += ',';
-                                    });
-                                }
-                                $val += ';';
-
-                                $val += 'gen:';
-                                if (geneSetSelected != null || geneSetSelected != undefined) {
-                                    $.each(geneSetSelected, function (index, value) {
-                                        value = value.replace(/(\r\n|\n|\r|\s)/gm, "");
-                                        $val += value;
-                                        $val += ',';
-                                    });
-                                }
-                                $val += ';';
-
-                                $val += 'gid:' + geneIdSelected + ';';
-
-                                if ($('#geneIdType > option').length == 1 && geneIdSelected == 'custom') {
-                                    $val += 'gty:custom;';
-                                }
-                                else if ($('#geneIdType > option').length == 1) {
-                                    $val += 'gty:go;';
-
-                                }
-                                else {
-                                    $val += 'gty:kegg;';
-                                }
-                                if (usePathview)
-                                    $val += 'pat:true;';
-                                else
-                                    $val += 'pat:false;';
-                                $val += 'dat:' + dataTypeSelected + ';';
-
-                                $val += 'spe:' + species + ';';
-
-                                $('#rememberTxt').val($val);
-                            });
-
-
-                            $(function () {
-                                referenceText = "";
-                                sampleText = "";
-                                var isOpera = !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
-                                // Opera 8.0+ (UA detection to detect Blink/v8-powered Opera)
-                                var isFirefox = typeof InstallTrigger !== 'undefined';   // Firefox 1.0+
-                                var isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-                                // At least Safari 3+: "[object HTMLElementConstructor]"
-                                var isChrome = !!window.chrome && !isOpera;              // Chrome 1+
-                                var isIE = /*@cc_on!@*/false || !!document.documentMode;   // At least IE6
-
-                                if (isChrome || isIE || isSafari || isFirefox) {
-                                    var each = $('#rememberTxt').val().split(';').slice(0);
-
-                                    $.each(each, function (index, value) {
-                                        if (value.substr(0, 3) === 'col') {
-                                            columns = value.substr(4);
-                                        }
-                                        else if (value.substr(0, 3) === 'ref') {
-                                            referenceText = value.substr(4);
-                                        }
-
-                                        else if (value.substr(0, 3) === 'sam') {
-                                            sampleText = value.substr(4);
-                                        }
-
-                                        else if (value.substr(0, 3) === 'gen') {
-                                            geneSet = value.substr(4);
-                                        }
-                                        else if (value.substr(0, 3) === 'gid') {
-                                            geneid = value.substr(4);
-                                        }
-                                        else if (value.substr(0, 3) === 'git') {
-
-                                            gidTotal = value.substr(4).split(',');
-                                        }
-                                        else if (value.substr(0, 3) === 'pat') {
-                                            usePathview = value.substr(4);
-                                        }
-
-                                        else if (value.substr(0, 3) === 'dat') {
-                                            dataTypeSelected = value.substr(4);
-                                        }
-                                        else if (value.substr(0, 3) === 'spe') {
-                                            species = value.substr(4);
-                                            $('#species').val(species);
-                                        }
-                                        else if (value.substr(0, 3) === 'gty') {
-                                            geneIDType = value.substr(4);
-                                            if (geneIDType !== 'kegg') {
-                                                $('#specieslist').empty();
-                                                $.each(goSpeciesArray, function (index, xyz) {
-                                                    $('#specieslist').append($("<option></option>")
-                                                            .attr("value", goSpeciesArray[index]['species_id'] + '-' + goSpeciesArray[index]['species_desc'] + '-' + goSpeciesArray[index]['Go_name']).text(goSpeciesArray[index]['species_id'] + '-' + goSpeciesArray[index]['species_desc'] + '-' + goSpeciesArray[index]['Go_name']));
-                                                });
-                                                if (geneIDType === 'go') {
-                                                    $.each(goSpecIdBind, function (key1, value1) {
-                                                        $('#specieslist').append($("<option></option>")
-                                                                .attr("value", key1).text(key1));
-                                                    });
-
-
-                                                }
-                                                else {
-                                                    $('#specieslist').empty();
-                                                    $('#specieslist').append($("<option></option>")
-                                                            .attr("value", "custom").text("custom"));
-                                                }
-                                            }
-
-                                        }
-                                    });
-
-                                    if ($('#rememberTxt').val() !== '') {
-                                        $colum = columns.split(',').slice(0);
-                                        $colum.splice(($colum).length, 1);
-                                        $colum.splice(($colum).length - 1, 1);
-                                        if ($colum.length > 0) {
-                                            $('#sampleselect').attr('class', 'dynamicshow');
-                                            $('#refselect').attr('class', 'dynamicshow');
-                                            $('#sampleselect').show();
-                                            $('#refselect').show();
-                                        }
-                                        $.each($colum, function (index, value) {
-                                            $('#sampleselect').append($("<option></option>")
-                                                    .attr("value", index + 1).text(value));
-
-                                            $('#refselect').append($("<option></option>")
-                                                    .attr("value", index + 1).text(value));
-
-                                        });
-                                        $.each($colum, function (index, value) {
-                                            $('#refselect option[value=' + (index + 1) + ']').attr('class', 'tempColumn');
-
-                                            $('#sampleselect option[value=' + (index + 1) + ']').attr('class', 'tempColumn');
-
-                                        });
-
-                                        if (referenceText !== '') {
-                                            var refArray = referenceText.split(',').splice(0);
-                                            refArray.splice((refArray).length, 1);
-                                            refArray.splice((refArray).length - 1, 1);
-                                            $.each(refArray, function (index, value) {
-                                                $('#refselect option[value=' + value + ']').attr('selected', 'selected');
-                                            });
-                                        }
-                                        if (sampleText !== '') {
-                                            var sampleArray = sampleText.split(',').splice(0);
-                                            sampleArray.splice((sampleArray).length, 1);
-                                            sampleArray.splice((sampleArray).length - 1, 1);
-                                            $.each(sampleArray, function (index, value) {
-                                                $('#sampleselect option[value=' + value + ']').attr('selected', 'selected');
-                                            });
-                                        }
-
-                                        $('#NoOfColumns').val(($colum).length - 1);
-
-                                        if (geneid === 'custom') {
-                                            $('#geneIdType').append($("<option></option>").attr("value", geneid).text(geneid));
-                                            $('#geneIdFile').show();
-                                        }
-                                        else if (geneid !== 'entrez' && geneid !== 'kegg') {
-                                            $('#geneIdType').empty();
-                                            $.each(gidTotal, function (index, value) {
-                                                $('#geneIdType').append($("<option></option>").attr("value", value).text(value));
-                                            });
-
-                                            $('#geneIdType').val(geneid);
-                                            //$('#geneIdType option[value=' + geneid + ']')[0].setAttribute('selected', 'selected');
-                                        }
-
-                                        if (usePathview == 'true') {
-                                            $('#dataType-div').show();
-                                        }
-                                    }
-                                }
-                            });
-
-                        </script>
+                       
 
 @stop
 

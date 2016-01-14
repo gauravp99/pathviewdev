@@ -155,16 +155,17 @@
             }
             var val = $("#pathway1").val();
 
-            if (!in_pathway_array(pathway_array, val.substring(0, 5))) {
-                alert("Not a Valid pathway");
+            console.log(pathway_array[0]);
+            console.log($.inArray(val,pathway_array));
+            if ($.inArray(val,pathway_array)> -1) {
+                $('#pathwayList').val($('#pathwayList').val() + val + ",\r\n");
             }
             else {
-                $("<option />", {'value': val, text: val}).appendTo("#select-to");
-                $('#pathwayList').val($('#pathwayList').val() + val + "\t\r\n");
+                alert("Not a valid Pathway");
             }
 
         });
-        console.log("done at analysis page");
+
 
     });
 

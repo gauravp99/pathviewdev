@@ -17,9 +17,6 @@
         <li <?php if (basename(Request::url()) == "gage") {
             echo "class=\"active\"";
         }?>><a href="/gage"><b>GAGE Analysis</b></a></li>
-        <li <?php if (basename(Request::url()) == "discreteGage") {
-            echo "class=\"active\"";
-        }?>><a href="/discreteGage"><b>Discrete Gage Analysis</b></a></li>
         <li <?php if (basename(Request::url()) == "gageExample1") {
             echo "class=\"active\"";
         }?>><a href="/gageExample1"><b>Example Analysis1</b></a></li>
@@ -29,6 +26,9 @@
         <li <?php if (basename(Request::url()) == "gageExample3") {
             echo "class=\"active\"";
         }?>><a href="/gageExample3"><b>Example Analysis3</b></a></li>
+        <li <?php if (basename(Request::url()) == "discreteGage") {
+            echo "class=\"active\"";
+        }?>><a href="/discreteGage"><b>Discrete Gage Analysis</b></a></li>
         <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
 

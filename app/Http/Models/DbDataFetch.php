@@ -20,13 +20,8 @@ class DbDataFetch
     public function getAnalysisDetails()
     {
 
-        if(Cache::has('analysis_vals'))
-        {
-            $analysis_vals = Cache::get('analysis_vals');
-        }else{
             $analysis_vals =  DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ip_add_count, created_at as date FROM analysis where analysis_origin = \'pathview\'  GROUP BY YEAR(created_at), MONTH(created_at)'));
             //Cache::put('analysis_vals',$analysis_vals, 50);
-        }
 
         $web_usage = array();
 
@@ -60,20 +55,13 @@ class DbDataFetch
 
     }
 
-    public function getTotalAnalysisDetails()
+    public function getTotalAnalysisDetails($application)
     {
         //retrieve usage from BIOC tables
 
-            $anal_sum_dwnlds =  DB::select(DB::raw('select count(*) as "downloads" from analysis where analysis_origin = \'pathview\' '));
-            Cache::put('anal_sum_dwnlds',$anal_sum_dwnlds, 50);
-
-        if(Cache::has('anal_ip_dwnlds'))
-        {
-            $anal_ip_dwnlds = Cache::get('anal_ip_dwnlds');
-        }else{
-            $anal_ip_dwnlds =  DB::select(DB::raw('select count(distinct ip_add) as "ip" from analysis where analysis_origin = \'pathview\' '));
-            Cache::put('anal_ip_dwnlds',$anal_ip_dwnlds, 50);
-        }
+	$anal_sum_dwnlds = DB::select(DB::raw("select count(*) as \"downloads\" from analysis where analysis_origin = '$application' "));
+		
+            $anal_ip_dwnlds =  DB::select(DB::raw("select count(distinct ip_add) as ip from analysis where analysis_origin = '$application' "));
 
         if(!is_null($anal_sum_dwnlds)&&!is_null($anal_ip_dwnlds))
         {
@@ -87,7 +75,7 @@ class DbDataFetch
 
     }
 
-    public function getTotalBiocAnalysisDetails()
+    public function getTotalBiocAnalysisDetails($application)
     {
         //retrieve usage from BIOC tables
 
@@ -95,16 +83,33 @@ class DbDataFetch
         {
             $bioc_sum_dwnlds = Cache::get('bioc_sum_dwnlds');
         }else{*/
-            $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(number_of_downloads)+15000 as "downloads" from biocStatistics'));
+	    if( strcmp($application,"pathview") == 0)
+	    {
+            $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(number_of_downloads)+24600 as "downloads" from biocStatistics'));
             Cache::put('bioc_sum_dwnlds',$bioc_sum_dwnlds, 50);
+	    }
+	    else
+	    {
+             $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(numberof_downloads)+47200 as "downloads" from biocGagestatistic'));
+            Cache::put('bioc_sum_dwnlds',$bioc_sum_dwnlds, 50);
+		
+            }		
         //}
 
       /*  if(Cache::has('bioc_ip_dwnlds'))
         {
             $bioc_ip_dwnlds = Cache::get('bioc_ip_dwnlds');
         }else{*/
-            $bioc_ip_dwnlds =   DB::select(DB::raw('select sum(number_of_unique_ip)+7500 as "ips" from biocStatistics'));
+	    if( strcmp($application,"pathview") == 0)
+            {
+            $bioc_ip_dwnlds =   DB::select(DB::raw('select sum(number_of_unique_ip)+11900 as "ips" from biocStatistics'));
             Cache::put('bioc_ip_dwnlds',$bioc_ip_dwnlds, 50);
+	    }
+	    else{
+		$bioc_ip_dwnlds =   DB::select(DB::raw('select sum(numberof_uniqueip)+23200 as "ips" from biocGagestatistic'));
+            Cache::put('bioc_ip_dwnlds',$bioc_ip_dwnlds, 50);
+
+		}
         //}
 
             if(!is_null($bioc_ip_dwnlds)&&!is_null($bioc_sum_dwnlds))
@@ -119,16 +124,18 @@ class DbDataFetch
 
 
     //get details from Biocstatistcis table filled by script
-    public function getBiocStatisTics()
+    public function getBiocStatisTics($application)
     {
-        if(Cache::has('bioc_vals'))
-        {
-            $bioc_vals = Cache::get('bioc_vals');
-        }else{
-            $bioc_vals =  DB::select(DB::raw('select concat(concat(month,\'-\'),year) as date,number_of_unique_ip as ip_add,number_of_downloads as downloads from biocStatistics'));
-            Cache::put('bioc_vals',$bioc_vals, 50);
-        }
 
+	if( strcmp($application,"pathview") == 0)
+            {
+
+	            $bioc_vals =  DB::select(DB::raw('select concat(concat(month,\'-\'),year) as date,number_of_unique_ip as ip_add,number_of_downloads as downloads from biocStatistics'));
+		}
+		else{
+		     $bioc_vals =  DB::select(DB::raw('select concat(concat(month,\'-\'),year) as date,numberof_uniqueip as ip_add,numberof_downloads as downloads from biocGagestatistic'));
+
+			}
         $lib_usage = array();
         //fill the array lists with usage objects
         foreach ($bioc_vals as $bioc_val )
@@ -149,6 +156,14 @@ class DbDataFetch
     function __toString()
     {
       return "DB";
+    }
+
+    function getArgumentsList($analysis_id)
+    {
+        $query_result =   DB::select(DB::raw("select arguments  from analysis where analysis_id = '".$analysis_id."'"));
+
+        return $query_result[0]->arguments;
+
     }
 
 

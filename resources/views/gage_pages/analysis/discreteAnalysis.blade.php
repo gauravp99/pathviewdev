@@ -23,7 +23,7 @@
     $reference = "1,3";
     $sample = "2,4";
     $cutoff = "0.1";
-    $ncutoff = "1";
+    $ncutoff = "2";
     $setSizeMin = "10";
     $setSizeMax = "infinite";
     $compare = "paired";
@@ -54,10 +54,11 @@
                 <div id="steps">
                     {!! form::open(array('url' => 'discreteGageAnalysis','method'=>'POST','files'=>true,'id' => 'gage_anal_form','name'=>'gage_anal_form')) !!}
                     <fieldset class="step inputOutput-step">
-                        <div class="stepsdiv" id="SampleListData-div">
-                            <div class="col-sm-12">
-                                <div class="col-sm-12">
-                                <div class="col-sm-6">
+
+                            <div class="col-sm-12" style="padding-left: 31px;padding-right: 0px;width: 732px;" >
+
+                                <div class="col-sm-6 multiple-columns-stepsDiv">
+
                                     <a href="gageTutorial#sampleList"
                                        onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;"
                                        title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension."
@@ -66,20 +67,6 @@
                                     </a>
 
                                     <label for="assayData">Sample List:</label>
-                                </div>
-                                <div class="col-sm-6">
-                                    <a href="gageTutorial#sampleList"
-                                       onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;"
-                                       title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension."
-                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
-                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                    </a>
-                                    <label for="assayData">Background List:</label>
-                                </div>
-                                    </div>
-                                <div class="col-sm-12">
-                                <div class="col-sm-6">
-
 
                                     <div class="input-group">
                                         <span style="color:red"
@@ -88,23 +75,36 @@
                                                   aria-invalid="false" wrap="off" style=" resize: none;float:none;width:90%;height:120px;font-size:16px;margin-left: 5px;"></textarea>
                                         <label for="sampleList">(Or)</label>
                                         <input type="file" id="sampleListInputFile" name="sampleListInputFile">
+                                        <div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-6 multiple-columns-stepsDiv">
 
-                                    <textarea class="form-control valid" rows="4" id="backgroundList"
-                                              name="backgroundList" aria-invalid="false" wrap="off" style=" resize: none;float:none;width:100%;height:120px;font-size:16px;margin-left: 5px;"></textarea>
-                                    <label for="sampleList">(Or)</label>
 
+                                    <a href="gageTutorial#sampleList"
+                                       onclick="window.open('gageTutorial#assay_data', 'newwindow', 'width=300, height=250').focus() ;return false;"
+                                       title="Input data containing an expression matrix or matrix-like data structure, with genes as rows and samples as columns. Accepts only CSV and TXT as extension."
+                                       target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
+                                        <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                                    </a>
+                                    <label for="assayData">Background List:</label>
                                     <div class="input-group">
                                         <span style="color:red"
                                               ng-show="userForm.files.$dirty && userForm.files.$invalid"></span>
+                                    <textarea class="form-control valid" rows="4" id="backgroundList"
+                                              name="backgroundList" aria-invalid="false" wrap="off" style=" resize: none;float:none;width:90%;height:120px;font-size:16px;margin-left: 5px;"></textarea>
+                                    <label for="sampleList">(Or)</label>
                                         <input type="file" id="backgroundListInputFile" name="backgroundListInputFile">
+
                                     </div>
-                                </div>
-                                    </div>
-                            </div>
+
                         </div>
+                                <div style="margin-left: 240px;margin-top: 8px;position: absolute;border: black;">
+                                    <a href="#" id="loadData"><span class="label label-default"><span class="">Example</span></span></a>
+                                </div>
+
+                            </div>
 
 			<div class="stepsdiv" id="dataType-div">
         <div class="col-sm-12">
@@ -432,7 +432,20 @@
         });
 
         $(document).ready(function () {
-	    $('#ncutoff');
+
+            //load example data on click
+            $('#loadData').click(function(){
+                jQuery.get('/data/fglist.txt', function(data) {
+                    //process text file line by line
+                    $('#sampleList').val(data);
+                });
+                jQuery.get('/data/bglist.txt', function(data) {
+                    //process text file line by line
+                    $('#backgroundList').val(data);
+                });
+            });
+
+
             $('.btn-file :file').on('fileselect', function (event, numFiles, label) {
 
                 var input = $(this).parents('.input-group').find(':text'),

@@ -165,7 +165,7 @@
                                             echo "checked";
                                         }
                                     }?>>
-                                    <a href="/all/demo/example/{{$cpdfile}}" target="_blank">{{$cpdfile}}</a>
+                                    <a href="/data/{{$cpdfile}}" target="_blank">{{$cpdfile}}</a>
                                 </div>
                             </div>
 

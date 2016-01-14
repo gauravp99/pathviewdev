@@ -880,10 +880,11 @@ width: 702px;
     </div>
 
 </fieldset>
+<input type="text" id="input" name="input" value="" hidden="">
 </div>
 
 <!-- to save the custom inputs and render it back -->
-<input type="text" id="input" name="input" value="" hidden="">
+
 
 <div class="steps">
     <input type="submit" id="submit-button" class="btn btn-primary"
@@ -895,6 +896,8 @@ width: 702px;
 </div>
 </div>
 </div>
+{!! form::close() !!}
+
 <script src="{{asset('js/jscolor.js')}}"></script>
 <script>
 

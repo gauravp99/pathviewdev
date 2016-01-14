@@ -4,6 +4,8 @@ use App\Http\Requests;
 use DateTime;
 use Illuminate\Support\Facades\DB;
 use stdClass;
+use App\Http\Models\DbDataFetch;
+use App\Http\Models\Usage;
 use Auth;
 use App\Http\Controllers\Controller;
 /**
@@ -21,127 +23,69 @@ class gageController extends Controller {
 	 * @return Response
 	 */
 	public function about()
-	{/**
-     * To get the statistics of usage from bioc and web usage from the
-     * database and send it to the javascript library
-     */
-        $usage = array();
-        $ip = array();
-        $months = array();
+        {
 
-        /**
-         * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
-         * @Analyses(Number of analyses generated)
-         */
-        $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analysis where analysis_origin = \'gage\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
-        foreach ($val as $month) {
-            array_push($usage, $month->count);
-            array_push($ip, $month->ipadd_count);
-            array_push($months, $month->date);
+	
+	$data_comm = new DbDataFetch;
+
+        //get the analysis data of past 6 months data from analysis tables
+        $web_usage = $data_comm->getAnalysisDetails("gage");
+
+        //get bioc analysis data of past 6 months from bioc table filled by the batch job
+        $lib_usage = $data_comm->getBiocStatisTics("gage");
+
+        $web_date = array();
+        $web_count = array();
+        $web_ip = array();
+        foreach($web_usage as $web)
+        {
+            array_push($web_date,date("M, Y",strtotime($web->getDate())));
+            array_push($web_count,$web->getUsage());
+            array_push($web_ip,$web->getIp());
         }
 
-        /**
-         * Pathway Package downloads. Script file biocGagestatistic.sh is used to get the details
-         * of current month from bio website. This script is a cron job running each week on saturday 5:00 AM EST
-         */
-        $bioc_val = DB::select(DB::raw('select concat(concat(month,\'-\'),year%100) as date,numberof_uniqueip as ipadd,numberof_downloads as downloads from biocGagestatistic'));
-        $bioc_downloads = array();
-        $bioc_ip = array();
-        $bioc_months = array();
-
-        foreach ($bioc_val as $month) {
-            array_push($bioc_downloads, $month->downloads);
-            array_push($bioc_ip, $month->ipadd);
-            array_push($bioc_months, $month->date);
+        $lib_date = array();
+        $lib_count = array();
+        $lib_ip = array();
+        foreach($lib_usage as $lib)
+        {
+            array_push($lib_date,date("M, Y",strtotime($lib->getDate())));
+            array_push($lib_count,$lib->getUsage());
+            array_push($lib_ip,$lib->getIp());
         }
-
-        /**
-         * Pathway Package downloads and web usage counts you can see that we are adding 15000 and 7500 to the sql query's since
-         * we didnt had any statistics count of the initial 1 year we manually added approximation value
-         */
-        $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+40000 as "downloads" from biocGagestatistic'));
-        $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+20000 as "ip" from biocGagestatistic'));
-        $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analysis where analysis_origin = \'gage\' '));
-        $count_web_ips = DB::select(DB::raw('select count(distinct ip_add) as "ip" from analysis where analysis_origin = \'gage\' '));
-
-        /**
-         * To make sure that the data is not empty from the database
-         */
-        foreach ($count_bioc_downlds as $bioc_dwnld) {
-            $count_bioc_downlds = $bioc_dwnld;
-            break;
+    //get the count of bioc values
+        $biocUsage = $data_comm->getTotalBiocAnalysisDetails("gage");
+        //get the count details from analysis table
+        $analysisUsage = $data_comm->getTotalAnalysisDetails("gage");
+        $bioc_count = 0;
+        if(!is_null($biocUsage->getUsage())){
+            $bioc_count = $biocUsage->getUsage();
         }
-
-        foreach ($count_bioc_ips as $bioc_dwnld) {
-            $count_bioc_ips = $bioc_dwnld;
-            break;
+         $bioc_ips = 0;
+        if(!is_null($biocUsage->getIp())){
+            $bioc_ips = $biocUsage->getIp();
         }
-
-        foreach ($count_web_downlds as $bioc_dwnld) {
-            $count_web_downlds = $bioc_dwnld;
-            break;
+         $anal_count = 0;
+        if(!is_null($analysisUsage->getUsage())){
+            $anal_count = $analysisUsage->getUsage();
         }
-
-        foreach ($count_web_ips as $bioc_dwnld) {
-            $count_web_ips = $bioc_dwnld;
-            break;
+         $anal_ips = 0;
+        if(!is_null($analysisUsage->getIp())){
+            $anal_ips = $analysisUsage->getIp();
         }
 
 
-        /**
-         * Start Sorting the date according the dates order
-         */
-        $array = array();
-        $array[0] = new stdClass();
-        $id = 0;
-        foreach ($bioc_months as $mon) {
-            $array[$id] = new stdClass();
-            $array[$id]->id = $id;
-            $array[$id]->Month = $mon;
-            $array[$id]->ip = $bioc_ip[$id];
-            $array[$id]->download = $bioc_downloads[$id];
-            $id = $id + 1;
-        }
-
-        usort($array, function ($a, $b) {
-            $aDate = DateTime::createFromFormat("M-Y", $a->Month);
-            $bDate = DateTime::createFromFormat("M-Y", $b->Month);
-            return $aDate->getTimestamp() - $bDate->getTimestamp();
-        });
-        $sorted_bioc_months = array();
-        $sorted_bioc_ip = array();
-        $sorted_bioc_download = array();
-        foreach ($array as $mon) {
-            array_push($sorted_bioc_months, $mon->Month);
-            array_push($sorted_bioc_ip, $mon->ip);
-            array_push($sorted_bioc_download, $mon->download);
-
-
-        }
-        #to get lst 12 months statistics only
-        $sorted_bioc_month_12 = array();
-        $sorted_bioc_ip_12 = array();
-        $sorted_bioc_download_12 = array();
-        $total_months = sizeof($sorted_bioc_months) - 1;
-        for ($i = $total_months; $i > $total_months - 12; $i = $i - 1) {
-            array_push($sorted_bioc_month_12, $sorted_bioc_months[$i]);
-            array_push($sorted_bioc_ip_12, $sorted_bioc_ip[$i]);
-            array_push($sorted_bioc_download_12, $sorted_bioc_download[$i]);
-        }
-        /**
-         * End Sorting the date according the dates order
-         */
-
-        return view('gage_pages.GageAbout')->with('usage', $usage)
-            ->with('ip', $ip)
-            ->with('months', $months)
-            ->with('bioc_downloads', array_reverse($sorted_bioc_download_12))
-            ->with('bioc_ip', array_reverse($sorted_bioc_ip_12))
-            ->with('bioc_months', array_reverse($sorted_bioc_month_12))
-            ->with('bioc_dnld_cnt', $count_bioc_downlds->downloads)
-            ->with('bioc_ip_cnt', $count_bioc_ips->ip)
-            ->with('web_dnld_cnt', $count_web_downlds->downloads)
-            ->with('web_ip_cnt', $count_web_ips->ip);
+       
+ return view('gage_pages.GageAbout')->with('usage', $web_count)
+            ->with('ip', $web_ip)
+            ->with('months', $web_date)
+            ->with('bioc_downloads',$lib_count)
+            ->with('bioc_ip',$lib_ip)
+            ->with('bioc_months',$lib_date)
+            ->with('bioc_dnld_cnt',$bioc_count)
+            ->with('bioc_ip_cnt', $bioc_ips)
+            ->with('web_dnld_cnt', $anal_count)
+            ->with('web_ip_cnt', $anal_ips);
 
 	}
     public function index()
@@ -153,123 +97,69 @@ class gageController extends Controller {
         if (Auth::user()) {
             return view("gage_pages.GageAnalysis");
         } else {
-            $usage = array();
-            $ip = array();
-            $months = array();
+$data_comm = new DbDataFetch;
 
-            /**
-             * WEb usage statistic gets the last 6 months details of the usage such as @ip(ipadderess distinct)
-             * @Analyses(Number of analyses generated)
-             */
-            $val = DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ipadd_count, DATE_FORMAT(created_at, \'%b-%y\') as date FROM analysis where analysis_origin = \'gage\' and created_at >= CURDATE() - INTERVAL 6 MONTH GROUP BY YEAR(created_at), MONTH(created_at)'));
-            foreach ($val as $month) {
-                array_push($usage, $month->count);
-                array_push($ip, $month->ipadd_count);
-                array_push($months, $month->date);
-            }
+        //get the analysis data of past 6 months data from analysis tables
+        $web_usage = $data_comm->getAnalysisDetails("gage");
 
-            /**
-             * Pathway Package downloads. Script file biocGagestatistic.sh is used to get the details
-             * of current month from bio website. This script is a cron job running each week on saturday 5:00 AM EST
-             */
-            $bioc_val = DB::select(DB::raw('select concat(concat(month,\'-\'),year%100) as date,numberof_uniqueip as ipadd,numberof_downloads as downloads from biocGagestatistic'));
-            $bioc_downloads = array();
-            $bioc_ip = array();
-            $bioc_months = array();
+        //get bioc analysis data of past 6 months from bioc table filled by the batch job
+        $lib_usage = $data_comm->getBiocStatisTics("gage");
 
-            foreach ($bioc_val as $month) {
-                array_push($bioc_downloads, $month->downloads);
-                array_push($bioc_ip, $month->ipadd);
-                array_push($bioc_months, $month->date);
-            }
+        $web_date = array();
+        $web_count = array();
+        $web_ip = array();
+        foreach($web_usage as $web)
+        {
+            array_push($web_date,date("M, Y",strtotime($web->getDate())));
+            array_push($web_count,$web->getUsage());
+            array_push($web_ip,$web->getIp());
+        }
 
-            /**
-             * Pathway Package downloads and web usage counts you can see that we are adding 15000 and 7500 to the sql query's since
-             * we didnt had any statistics count of the initial 1 year we manually added approximation value
-             */
-            $count_bioc_downlds = DB::select(DB::raw('select sum(numberof_downloads)+15000 as "downloads" from biocGagestatistic'));
-            $count_bioc_ips = DB::select(DB::raw('select sum(numberof_uniqueip)+7500 as "ip" from biocGagestatistic'));
-            $count_web_downlds = DB::select(DB::raw('select count(*) as "downloads" from analysis where analysis_origin = \'gage\' '));
-            $count_web_ips = DB::select(DB::raw('select count(distinct ip_add) as "ip" from analysis where analysis_origin = \'gage\' '));
+        $lib_date = array();
+        $lib_count = array();
+        $lib_ip = array();
+        foreach($lib_usage as $lib)
+        {
+            array_push($lib_date,date("M, Y",strtotime($lib->getDate())));
+            array_push($lib_count,$lib->getUsage());
+            array_push($lib_ip,$lib->getIp());
+        }
+    //get the count of bioc values
+        $biocUsage = $data_comm->getTotalBiocAnalysisDetails("gage");
+        //get the count details from analysis table
+        $analysisUsage = $data_comm->getTotalAnalysisDetails("gage");
+        $bioc_count = 0;
+        if(!is_null($biocUsage->getUsage())){
+            $bioc_count = $biocUsage->getUsage();
+        }
 
-            /**
-             * To make sure that the data is not empty from the database
-             */
-            foreach ($count_bioc_downlds as $bioc_dwnld) {
-                $count_bioc_downlds = $bioc_dwnld;
-                break;
-            }
-
-            foreach ($count_bioc_ips as $bioc_dwnld) {
-                $count_bioc_ips = $bioc_dwnld;
-                break;
-            }
-
-            foreach ($count_web_downlds as $bioc_dwnld) {
-                $count_web_downlds = $bioc_dwnld;
-                break;
-            }
-
-            foreach ($count_web_ips as $bioc_dwnld) {
-                $count_web_ips = $bioc_dwnld;
-                break;
-            }
+	
+ $bioc_ips = 0;
+        if(!is_null($biocUsage->getIp())){
+            $bioc_ips = $biocUsage->getIp();
+        }
+         $anal_count = 0;
+        if(!is_null($analysisUsage->getUsage())){
+            $anal_count = $analysisUsage->getUsage();
+        }
+         $anal_ips = 0;
+        if(!is_null($analysisUsage->getIp())){
+            $anal_ips = $analysisUsage->getIp();
+        }
 
 
-            /**
-             * Start Sorting the date according the dates order
-             */
-            $array = array();
-            $array[0] = new stdClass();
-            $id = 0;
-            foreach ($bioc_months as $mon) {
-                $array[$id] = new stdClass();
-                $array[$id]->id = $id;
-                $array[$id]->Month = $mon;
-                $array[$id]->ip = $bioc_ip[$id];
-                $array[$id]->download = $bioc_downloads[$id];
-                $id = $id + 1;
-            }
 
-            usort($array, function ($a, $b) {
-                $aDate = DateTime::createFromFormat("M-Y", $a->Month);
-                $bDate = DateTime::createFromFormat("M-Y", $b->Month);
-                return $aDate->getTimestamp() - $bDate->getTimestamp();
-            });
-            $sorted_bioc_months = array();
-            $sorted_bioc_ip = array();
-            $sorted_bioc_download = array();
-            foreach ($array as $mon) {
-                array_push($sorted_bioc_months, $mon->Month);
-                array_push($sorted_bioc_ip, $mon->ip);
-                array_push($sorted_bioc_download, $mon->download);
+ return view('gage_pages.GageWelcome')->with('usage', $web_count)
+            ->with('ip', $web_ip)
+            ->with('months', $web_date)
+            ->with('bioc_downloads',$lib_count)
+            ->with('bioc_ip',$lib_ip)
+            ->with('bioc_months',$lib_date)
+            ->with('bioc_dnld_cnt',$bioc_count)
+            ->with('bioc_ip_cnt', $bioc_ips)
+            ->with('web_dnld_cnt', $anal_count)
+            ->with('web_ip_cnt', $anal_ips);
 
-
-            }
-            #to get lst 12 months statistics only
-            $sorted_bioc_month_12 = array();
-            $sorted_bioc_ip_12 = array();
-            $sorted_bioc_download_12 = array();
-            $total_months = sizeof($sorted_bioc_months) - 1;
-            for ($i = $total_months; $i > $total_months - 12; $i = $i - 1) {
-                array_push($sorted_bioc_month_12, $sorted_bioc_months[$i]);
-                array_push($sorted_bioc_ip_12, $sorted_bioc_ip[$i]);
-                array_push($sorted_bioc_download_12, $sorted_bioc_download[$i]);
-            }
-            /**
-             * End Sorting the date according the dates order
-             */
-
-            return view('gage_pages.GageWelcome')->with('usage', $usage)
-                ->with('ip', $ip)
-                ->with('months', $months)
-                ->with('bioc_downloads', array_reverse($sorted_bioc_download_12))
-                ->with('bioc_ip', array_reverse($sorted_bioc_ip_12))
-                ->with('bioc_months', array_reverse($sorted_bioc_month_12))
-                ->with('bioc_dnld_cnt', $count_bioc_downlds->downloads)
-                ->with('bioc_ip_cnt', $count_bioc_ips->ip)
-                ->with('web_dnld_cnt', $count_web_downlds->downloads)
-                ->with('web_ip_cnt', $count_web_ips->ip);
 
 
         }

@@ -1,0 +1,314 @@
+<?xml version="1.0"?>
+<!DOCTYPE pathway SYSTEM "http://www.kegg.jp/kegg/xml/KGML_v0.7.1_.dtd">
+<!-- Creation date: Jul 10, 2013 16:07:44 +0900 (GMT+09:00) -->
+<pathway name="path:mcc05320" org="mcc" number="05320"
+         title="Autoimmune thyroid disease"
+         image="http://www.kegg.jp/kegg/pathway/mcc/mcc05320.png"
+         link="http://www.kegg.jp/kegg-bin/show_pathway?mcc05320">
+    <entry id="1" name="path:mcc04660" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04660">
+        <graphics name="T cell receptor signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="552" y="386" width="113" height="34"/>
+    </entry>
+    <entry id="2" name="mcc:100187587 mcc:100428228 mcc:100429857 mcc:692100 mcc:705588 mcc:716823 mcc:717623 mcc:717702 mcc:717870 mcc:717947 mcc:717969 mcc:717992 mcc:720582" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:100187587+mcc:100428228+mcc:100429857+mcc:692100+mcc:705588+mcc:716823+mcc:717623+mcc:717702+mcc:717870+mcc:717947+mcc:717969+mcc:717992+mcc:720582">
+        <graphics name="MAMU-DRA, DR-alpha, HLA-DRA, Mamu-DRA1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="425" y="634" width="46" height="17"/>
+    </entry>
+    <entry id="3" name="mcc:708792" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:708792">
+        <graphics name="708792" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="506" y="634" width="46" height="17"/>
+    </entry>
+    <entry id="4" name="mcc:574160" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574160">
+        <graphics name="CD40LG" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="725" y="634" width="46" height="17"/>
+    </entry>
+    <entry id="5" name="mcc:707749" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:707749">
+        <graphics name="CD40" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="808" y="634" width="46" height="17"/>
+    </entry>
+    <entry id="6" name="mcc:708792" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:708792">
+        <graphics name="708792" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="725" y="657" width="46" height="17"/>
+    </entry>
+    <entry id="7" name="mcc:100187587 mcc:100428228 mcc:100429857 mcc:692100 mcc:705588 mcc:716823 mcc:717623 mcc:717702 mcc:717870 mcc:717947 mcc:717969 mcc:717992 mcc:720582" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:100187587+mcc:100428228+mcc:100429857+mcc:692100+mcc:705588+mcc:716823+mcc:717623+mcc:717702+mcc:717870+mcc:717947+mcc:717969+mcc:717992+mcc:720582">
+        <graphics name="MAMU-DRA, DR-alpha, HLA-DRA, Mamu-DRA1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="808" y="657" width="46" height="17"/>
+    </entry>
+    <entry id="8" name="path:mcc04612" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04612">
+        <graphics name="Antigen processing and presentation" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="400" y="386" width="112" height="34"/>
+    </entry>
+    <entry id="9" name="path:mcc04514" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04514">
+        <graphics name="Cell adhesion molecules (CAMs)" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="471" y="546" width="113" height="34"/>
+    </entry>
+    <entry id="10" name="path:mcc04662" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04662">
+        <graphics name="B cell receptor signaling pathway" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="845" y="500" width="112" height="34"/>
+    </entry>
+    <entry id="11" name="mcc:721122" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:721122">
+        <graphics name="721122" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="849" y="603" width="46" height="17"/>
+    </entry>
+    <entry id="12" name="path:mcc05320" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc05320">
+        <graphics name="TITLE:Autoimmune thyroid disease" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="169" y="58" width="257" height="25"/>
+    </entry>
+    <entry id="13" name="cpd:C01382" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C01382">
+        <graphics name="C01382" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="212" y="131" width="8" height="8"/>
+    </entry>
+    <entry id="14" name="dr:D00636" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?D00636">
+        <graphics name="D00636" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="260" y="131" width="8" height="8"/>
+    </entry>
+    <entry id="15" name="mcc:721610" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:721610">
+        <graphics name="TPO" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="240" y="411" width="46" height="17"/>
+    </entry>
+    <entry id="16" name="mcc:701526 mcc:701756" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:701526+mcc:701756">
+        <graphics name="TG..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="240" y="439" width="46" height="17"/>
+    </entry>
+    <entry id="17" name="mcc:574251" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574251">
+        <graphics name="TSHR" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="240" y="501" width="46" height="17"/>
+    </entry>
+    <entry id="18" name="mcc:100187587 mcc:100428228 mcc:100429857 mcc:692100 mcc:705588 mcc:716823 mcc:717623 mcc:717702 mcc:717870 mcc:717947 mcc:717969 mcc:717992 mcc:720582" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:100187587+mcc:100428228+mcc:100429857+mcc:692100+mcc:705588+mcc:716823+mcc:717623+mcc:717702+mcc:717870+mcc:717947+mcc:717969+mcc:717992+mcc:720582">
+        <graphics name="MAMU-DRA, DR-alpha, HLA-DRA, Mamu-DRA1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="425" y="267" width="46" height="17"/>
+    </entry>
+    <entry id="19" name="mcc:708792" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:708792">
+        <graphics name="708792" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="505" y="267" width="46" height="17"/>
+    </entry>
+    <entry id="20" name="mcc:574160" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574160">
+        <graphics name="CD40LG" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="724" y="341" width="46" height="17"/>
+    </entry>
+    <entry id="21" name="mcc:707749" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:707749">
+        <graphics name="CD40" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="808" y="341" width="46" height="17"/>
+    </entry>
+    <entry id="22" name="mcc:708792" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:708792">
+        <graphics name="708792" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="724" y="366" width="46" height="17"/>
+    </entry>
+    <entry id="23" name="mcc:100187587 mcc:100428228 mcc:100429857 mcc:692100 mcc:705588 mcc:716823 mcc:717623 mcc:717702 mcc:717870 mcc:717947 mcc:717969 mcc:717992 mcc:720582" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:100187587+mcc:100428228+mcc:100429857+mcc:692100+mcc:705588+mcc:716823+mcc:717623+mcc:717702+mcc:717870+mcc:717947+mcc:717969+mcc:717992+mcc:720582">
+        <graphics name="MAMU-DRA, DR-alpha, HLA-DRA, Mamu-DRA1..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="808" y="366" width="46" height="17"/>
+    </entry>
+    <entry id="24" name="mcc:721122" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:721122">
+        <graphics name="721122" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="849" y="396" width="46" height="17"/>
+    </entry>
+    <entry id="25" name="mcc:574251" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574251">
+        <graphics name="TSHR" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1034" y="593" width="46" height="17"/>
+    </entry>
+    <entry id="26" name="mcc:574251" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574251">
+        <graphics name="TSHR" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1031" y="691" width="46" height="17"/>
+    </entry>
+    <entry id="27" name="mcc:574332" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574332">
+        <graphics name="FAS, CD95" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1029" y="205" width="46" height="17"/>
+    </entry>
+    <entry id="28" name="mcc:721122" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:721122">
+        <graphics name="721122" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="962" y="687" width="46" height="17"/>
+    </entry>
+    <entry id="29" name="mcc:574159" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574159">
+        <graphics name="FASLG, CD95-L, CD95L, FASL, TNFSF6" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="952" y="205" width="46" height="17"/>
+    </entry>
+    <entry id="30" name="mcc:708792" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:708792">
+        <graphics name="708792" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="952" y="177" width="46" height="17"/>
+    </entry>
+    <entry id="31" name="mcc:100141394 mcc:694372 mcc:699243 mcc:700391 mcc:709076 mcc:711532 mcc:711832 mcc:714964 mcc:715737 mcc:719483 mcc:720132 mcc:720372 mcc:722711 mcc:723284 mcc:723473 mcc:723552" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:100141394+mcc:694372+mcc:699243+mcc:700391+mcc:709076+mcc:711532+mcc:711832+mcc:714964+mcc:715737+mcc:719483+mcc:720132+mcc:720372+mcc:722711+mcc:723284+mcc:723473+mcc:723552">
+        <graphics name="MAMU-B18..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="1029" y="177" width="46" height="17"/>
+    </entry>
+    <entry id="32" name="mcc:716518" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:716518">
+        <graphics name="GZMB" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="992" y="268" width="46" height="17"/>
+    </entry>
+    <entry id="33" name="mcc:710241" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:710241">
+        <graphics name="PRF1" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="992" y="243" width="46" height="17"/>
+    </entry>
+    <entry id="34" name="path:mcc04210" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04210">
+        <graphics name="Apoptosis" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1214" y="272" width="106" height="25"/>
+    </entry>
+    <entry id="35" name="path:mcc04610" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04610">
+        <graphics name="Complement and coagulation cascades" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="978" y="420" width="112" height="34"/>
+    </entry>
+    <entry id="36" name="mcc:697859 mcc:709374" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:697859+mcc:709374">
+        <graphics name="CGA..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="962" y="721" width="46" height="17"/>
+    </entry>
+    <entry id="37" name="cpd:C02465" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C02465">
+        <graphics name="C02465" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="1201" y="572" width="8" height="8"/>
+    </entry>
+    <entry id="38" name="cpd:C01829" type="compound"
+        link="http://www.kegg.jp/dbget-bin/www_bget?C01829">
+        <graphics name="C01829" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="circle" x="1201" y="606" width="8" height="8"/>
+    </entry>
+    <entry id="39" name="mcc:721122" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:721122">
+        <graphics name="721122" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="978" y="337" width="46" height="17"/>
+    </entry>
+    <entry id="40" name="mcc:721122" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:721122">
+        <graphics name="721122" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="962" y="593" width="46" height="17"/>
+    </entry>
+    <entry id="41" name="mcc:705673" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:705673">
+        <graphics name="CTLA4, CTLA-4" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="276" y="188" width="46" height="17"/>
+    </entry>
+    <entry id="43" name="mcc:574281" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574281">
+        <graphics name="IL4" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="770" y="263" width="46" height="17"/>
+    </entry>
+    <entry id="44" name="mcc:710622" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:710622">
+        <graphics name="IL5" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="770" y="285" width="46" height="17"/>
+    </entry>
+    <entry id="45" name="mcc:574281" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:574281">
+        <graphics name="IL4" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="770" y="702" width="46" height="17"/>
+    </entry>
+    <entry id="46" name="mcc:710622" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:710622">
+        <graphics name="IL5" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="770" y="729" width="46" height="17"/>
+    </entry>
+    <entry id="47" name="mcc:708017" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:708017">
+        <graphics name="IL2, IL-2" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="790" y="196" width="46" height="17"/>
+    </entry>
+    <entry id="48" name="mcc:694631 mcc:709559 mcc:709755 mcc:709948 mcc:710487 mcc:710528 mcc:710568 mcc:710654 mcc:710707 mcc:710751 mcc:711088 mcc:711252" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:694631+mcc:709559+mcc:709755+mcc:709948+mcc:710487+mcc:710528+mcc:710568+mcc:710654+mcc:710707+mcc:710751+mcc:711088+mcc:711252">
+        <graphics name="694631..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="329" y="135" width="46" height="17"/>
+    </entry>
+    <entry id="49" name="mcc:714390 mcc:732518" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:714390+mcc:732518">
+        <graphics name="CD86..." fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="425" y="289" width="46" height="17"/>
+    </entry>
+    <entry id="50" name="mcc:705313" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:705313">
+        <graphics name="CD28" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="505" y="290" width="46" height="17"/>
+    </entry>
+    <entry id="51" name="mcc:714390" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:714390">
+        <graphics name="CD86" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="425" y="657" width="46" height="17"/>
+    </entry>
+    <entry id="52" name="mcc:705313" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:705313">
+        <graphics name="CD28" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="506" y="657" width="46" height="17"/>
+    </entry>
+    <entry id="53" name="mcc:694931" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:694931">
+        <graphics name="IL10" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="770" y="753" width="46" height="17"/>
+    </entry>
+    <entry id="54" name="mcc:694931" type="gene"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc:694931">
+        <graphics name="IL10" fgcolor="#000000" bgcolor="#BFFFBF"
+             type="rectangle" x="770" y="308" width="46" height="17"/>
+    </entry>
+    <entry id="55" name="path:mcc04918" type="map"
+        link="http://www.kegg.jp/dbget-bin/www_bget?mcc04918">
+        <graphics name="Thyroid hormone synthesis" fgcolor="#000000" bgcolor="#FFFFFF"
+             type="roundrectangle" x="1081" y="528" width="112" height="34"/>
+    </entry>
+    <relation entry1="4" entry2="5" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="49" entry2="50" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="20" entry2="21" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="29" entry2="27" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="51" entry2="52" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="18" entry2="19" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="31" entry2="30" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="23" entry2="22" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="2" entry2="3" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="7" entry2="6" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="40" entry2="25" type="PPrel">
+        <subtype name="activation" value="--&gt;"/>
+    </relation>
+    <relation entry1="28" entry2="26" type="PPrel">
+        <subtype name="inhibition" value="--|"/>
+    </relation>
+</pathway>

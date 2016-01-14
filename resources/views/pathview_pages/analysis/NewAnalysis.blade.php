@@ -383,7 +383,19 @@ use Illuminate\Cacheche;
         <script type="text/javascript">
             $(document).ready(function () {
                 var control = $("#cpdassayData");
+		
+		$("#GeneClearFile").on("click",function() {
+			$("#assayData").val(null);
+			 $('#geneMenu').hide();
+	                 $('#GeneClearFile').hide();
+	
+		});
+		$("#CompoundClearFile").on("click",function(){
+			$("#cpdassayData").val(null);
+			 $('#compoundMenu').hide();
+	                $('#CompoundClearFile').hide();
 
+		});
                 $("#clear").on("click", function () {
                     control.replaceWith( control = control.clone( true ) );
                 });

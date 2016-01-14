@@ -156,25 +156,25 @@
         Route::post('analysisDelete','pathview\analysis\AnalysisController@delete');
 
 /* URL route for POST Analysis (New Analysis)  */
-        Route::post('postAnalysis', 'PathviewAnalysisController@postAnalysis');
+        Route::post('postAnalysis', 'pathview\analysis\PathviewAnalysisController@postAnalysis');
 
 /* URL route for POST Analysis (example1)  */
-        Route::post('post_exampleAnalysis1', 'PathviewAnalysisController@post_exampleAnalysis1');
+        Route::post('post_exampleAnalysis1', 'pathview\analysis\PathviewAnalysisController@post_exampleAnalysis1');
 
 /* URL route for POST Analysis (example2)  */
-        Route::post('post_exampleAnalysis2','PathviewAnalysisController@post_exampleAnalysis2');
+        Route::post('post_exampleAnalysis2','pathview\analysis\PathviewAnalysisController@post_exampleAnalysis2');
 
 /* URL route for POST Analysis (example3)  */
-        Route::post('post_exampleAnalysis3', 'PathviewAnalysisController@post_exampleAnalysis3');
+        Route::post('post_exampleAnalysis3', 'pathview\analysis\PathviewAnalysisController@post_exampleAnalysis3');
 
 /* URL route for GET Analysis (example1)  */
-        Route::get('example1', 'PathviewAnalysisController@example_one');
+        Route::get('example1', 'pathview\analysis\PathviewAnalysisController@example_one');
 
 /* URL route for GET Analysis (example2)  */
-        Route::get('example2', 'PathviewAnalysisController@example_two');
+        Route::get('example2', 'pathview\analysis\PathviewAnalysisController@example_two');
 
 /* URL route for GET Analysis (example3)  */
-        Route::get('example3', 'PathviewAnalysisController@example_three');
+        Route::get('example3', 'pathview\analysis\PathviewAnalysisController@example_three');
 
 
 /*URL route for tutrial/Help page */
@@ -216,16 +216,16 @@
         });
 
 /*URL route for POST new gage analysis page*/
-        Route::post('gageAnalysis', 'gage\GageAnalysisController@newGageAnalysis');
+        Route::post('gageAnalysis', 'gage\analysis\GageAnalysisController@newGageAnalysis');
 
 /*URL route for POST gage analysis example 1 page*/
-        Route::post('exampleGageAnalysis1', 'gage\GageAnalysisController@ExampleGageAnalysis1');
+        Route::post('exampleGageAnalysis1', 'gage\analysis\GageAnalysisController@ExampleGageAnalysis1');
 
 /*URL route for POST gage analysis example 2 page*/
-        Route::post('exampleGageAnalysis2', 'gage\GageAnalysisController@ExampleGageAnalysis2');
+        Route::post('exampleGageAnalysis2', 'gage\analysis\GageAnalysisController@ExampleGageAnalysis2');
 
-/*URL route for POST gage analysis example 2 page*/
-        Route::post('exampleGageAnalysis3', 'gage\GageAnalysisController@ExampleGageAnalysis3');
+/*URL route for POST gage analysis example 3 page*/
+        Route::post('exampleGageAnalysis3', 'gage\analysis\GageAnalysisController@ExampleGageAnalysis3');
 
 /*URL route for get Discrete Gage Analysis  page*/
         Route::get('discreteGage',function(){
@@ -238,10 +238,7 @@
         });
 
 /*URL route for POST Discrete Gage Analysis  page*/
-        Route::post('discreteGageAnalysis','gage\GageAnalysisController@discreteGageAnalysis');
-
-/*URL route for POST Pathview Gage Analysis  page*/
-        Route::post('gagePathviewAnalysis','gage\GageAnalysisController@GagePathviewAnalysis');
+        Route::post('discreteGageAnalysis','gage\analysis\GageAnalysisController@discreteGageAnalysis');
 
 /*URL route for get Gage welcome page*/
         Route::get('gageIndex','gage\gageController@index');
@@ -297,6 +294,11 @@
         });
 
 /*URL route for get gage ajax status check page*/
-        Route::post('/ajax/GageanalysisStatus','gage.AjaxGageAnalysisStatusCheck@index');
+        Route::post('/ajax/gageAnalysisStatus','gage\analysis\AjaxAnalysisQueueStatusCheck@index');
+        Route::post('/ajax/gageWaitingAnalysisStatus','gage\analysis\AjaxAnalysisQueueStatusCheck@checkStatus');
 
+/*URL get mapping for result view */
+        Route::get('gageResult',function(){
+            return view('gage_pages.GageResult');
+        });
 /**************************gage application *********************************/
