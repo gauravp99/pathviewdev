@@ -110,12 +110,18 @@ use Illuminate\Cacheche;
                 {{--Input and Output slider --}}
                 <div id="steps">
 
-                    {!! form::open(array('url' => 'postAnalysis','enctype' => 'multipart/form-data','method'=>'POST','files'=>true,'id' => 'anal_form')) !!}
+                    {!! form::open(array('url' => 'postAnalysis','enctype' => 'multipart/form-data','method'=>'POST','files'=>true,'id' => 'anal_form', 'rest_flag' => 'true')) !!}
 
 
                     <fieldset class="step">
                         <!-- this hiden input variable is used to know if you are refreshing or coming to this page back from some page -->
                         <input type="hidden" id="page_is_dirty" name="page_is_dirty" value="0"/>
+                        @if (isset($rest_flag))
+                         <input type="hidden" id="rest_flag" name="rest_flag" value= "1"/>
+                        @else
+                         <input type="hidden" id="rest_flag" name="rest_flag" value= "0" />
+                        @endif
+
 
                         <!--gene data file-->
                         <div class="stepsdiv" id="gfile-div" @if (isset(Session::get('err_atr')['gfile']))
@@ -372,7 +378,11 @@ use Illuminate\Cacheche;
                         <input type="text" id="compoundFileDetails" value="" hidden="">
 
                         <!--get static template for all the analysis fron analysis.blade.php file-->
-                    @include('analysis')
+                         @if (isset($rest_flag))
+			  @include('analysis', ['is_rest' => 'true'])
+                         @else
+			  @include('analysis')
+                         @endif
                 </div>
             </div>
 

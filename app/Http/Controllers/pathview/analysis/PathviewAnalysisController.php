@@ -647,7 +647,9 @@ class PathviewAnalysisController extends Controller {
 		$queueEnabled = Config::get("app.enableQueue");
 
 		if(!$queueEnabled){
+
 			$ret_value = $this->runAnalysis($uniqid,$argument,$path,$analyType);
+//return $ret_value."hello";
 			$u_count = Redis::get('users_count');
 			if( $u_count > 0)
 				Redis::set('users_count',$u_count -1 );
@@ -761,8 +763,10 @@ class PathviewAnalysisController extends Controller {
 
 		$Rloc = Config::get("app.RLoc");
 		$publicPath = Config::get("app.publicPath");
-		exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'");
-
+//		exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'", $output, $return);
+		exec($Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\"", $output, $return);
+//if(!$return) return "true"; else return $Rloc."Rscript ".$publicPath."my_Rscript.R \"$argument\"  > $destFile.'/outputFile.Rout' 2> $destFile.'/errorFile.Rout'";
+//return "debug".$argument.$time.$destFile.$anal_type;
 		$date = new \DateTime;
 
 		if (Auth::user())
@@ -807,13 +811,443 @@ class PathviewAnalysisController extends Controller {
 
 	public function new_analysis()
 	{
-		return view('pathview_pages.analysis.NewAnalysis');
+		return view('pathview_pages.analysis.NewAnalysis') ->with('rest_flag',False);
+	}
+        public function api_analysis()
+        {
+              return view('pathview_pages.analysis.NewAnalysis') ->with('rest_flag',True);
 	}
 
 	public function postAnalysis()
 	{
-		$d = new PathviewAnalysisController();
-		return $d->analysis("newAnalysis");
+		$input=Input::all();
+		//print_r($input);
+		//print_r($_POST);
+		print('****************************************');
+		$rest_flag=Input::get('rest_flag');
+
+		if($rest_flag)
+		{
+		   print($rest_flag);
+		   $invocation_string_full=$this -> createInvocationString($input);
+		   $invocation_string = $invocation_string_full[1];
+		   $invocation_string_short = $invocation_string_full[0];
+		   $msg=['message' => $invocation_string];
+		   #return response() -> json($msg, 201);
+		   //return 'Hello World';
+	     	   return Redirect::to('apiview')
+					->with('invocation', $invocation_string)
+					->with('invocation_short', $invocation_string_short);
+		}
+		else
+		{
+		   $d = new PathviewAnalysisController();
+		   return $d->analysis("newAnalysis");
+		}
+	}
+	public function createInvocationString($argument)
+	{
+	   $api_string='';
+	   $api_string_short='';
+#http -f POST 10.23.251.42:8000/api/analysis  gene_data@gse16873.d3.txt cpd_data@sim.cpd.data2.csv species='hsa-Homo sapiens-human' gene_id='ENTREZ' cpd_id='KEGG' pathway_id='00640-Propanoate metabolism' suffix='multi' kegg='T' layer='T' multistate='T' matched='F' offset=1 align='y' signatureposition='bottomleft' limit_gene='1' limit_cpd='1' bins_gene=10 bins_cpd=10 low_gene='#00FF00' low_cpd='#0000FF' mid_gene='#D3D3D3' mid_cpd='#D3D3D3' high_gene='#FF0000' high_cpd='#FFFF00'
+
+	   #$root_url=Request::root();
+	   #$root_url= env('APP_URL');
+	   $root_url= 'http://10.23.251.42/';
+	   #$api_string .= "http -f POST ".$root_url."api/analysis ";
+	   $api_string .= "./pathwayapi.sh ";
+	   $api_string_short .= "./pathwayapi.sh ";
+	   if(Input::hasFile('gfile'))
+	   {
+             $gfile  = Input::file('gfile')->getClientOriginalName();
+             #$gfile_path  = Input::file('gfile')->getPathName();
+	     $api_string .='--gene_data '.$gfile.' ';
+	     $api_string_short .='--gene_data '.$gfile.' ';
+             if(!is_null($_POST['generef']))
+             {
+             	$gene_reference= $_POST['generef'];
+		if (strlen($gene_reference) > 0)
+		{
+	           $api_string .="--gene_reference '$gene_reference' ";
+	           $api_string_short .="--gene_reference '$gene_reference' ";
+		}
+             }
+             if(!is_null($_POST['genesam']))
+             {
+             	$gene_sample= $_POST['genesam'];
+		if (strlen($gene_sample) > 0)
+		{
+	           $api_string .="--gene_sample '$gene_sample' ";
+	           $api_string_short .="--gene_sample '$gene_sample' ";
+		}
+             }
+             if(isset($_POST['genecompare']))
+             {
+             	$gene_compare= $_POST['genecompare'];
+	        $api_string .="--gene_compare 'paired' ";
+             }else{
+	        $api_string .="--gene_compare 'unpaired' ";
+	        $api_string_short .="--gene_compare unpaired ";
+             }
+	   }
+
+	   if(Input::hasFile('cpdfile'))
+	   {
+             $cpdfile  = Input::file('cpdfile')->getClientOriginalName();
+	     $api_string .='--cpd_data '.$cpdfile.' ';
+	     $api_string_short .='--cpd_data '.$cpdfile.' ';
+             if(!is_null($_POST['cpdref']))
+             {
+             	$cpd_reference= $_POST['cpdref'];
+		if (strlen($cpd_reference) > 0)
+		{
+	           $api_string .="--cpd_reference '$cpd_reference' ";
+	           $api_string_short .="--cpd_reference '$cpd_reference' ";
+		}
+             }
+             if(!is_null($_POST['cpdsam']))
+             {
+
+             	$cpd_sample= $_POST['cpdsam'];
+		if (strlen($cpd_sample) > 0)
+		{
+	           $api_string .="cpd_sample '$cpd_sample' ";
+	           $api_string_short .="cpd_sample '$cpd_sample' ";
+		}
+             }
+             if(isset($_POST['cpdcompare']))
+             {
+             	$cpd_compare= $_POST['cpdcompare'];
+	        $api_string .="--cpd_compare 'paired' ";
+             }else{
+	        $api_string .="--cpd_compare 'unpaired' ";
+	        $api_string_short .="cpd_compare 'unpaired' ";
+             }
+	   }
+
+		//------------------------suffix
+	        $suffix=$_POST["suffix"];
+	        $api_string .= "--suffix '$suffix' ";
+		if ($suffix != 'pathview')
+		{
+	          $api_string_short .= "--suffix $suffix ";
+		}
+
+		//-----------------------pathwayids
+		preg_match_all('!\d{5}!', $_POST['pathwayList'], $matches);
+		$pathway_array = array();
+		$i = 0;
+		foreach ($matches as $pathway1) {
+
+			foreach ($pathway1 as $pathway)
+			{
+				//check in db if pathway exists or not
+				$val = DB::select(DB::raw("select pathway_id from pathway where pathway_id like '$pathway' LIMIT 1"));
+				if(sizeof($val) > 0)
+					array_push($pathway_array, $pathway);
+				$i = $i + 1;
+				//limit imposed as per req to pathway id not more than 20 to each request
+				if(sizeof(array_unique($pathway_array)) >= 20)
+				{
+					break;
+				}
+			}
+			if(sizeof(array_unique($pathway_array)) > 20)
+			{
+				break;
+			}
+
+		}
+		//remove redundent pathway ids
+		$pathway_array1 = array_unique($pathway_array);
+
+		if(sizeof($pathway_array1) == 0)
+		{
+			array_push($errors, "Entered pathway ID doesn't exist");
+			$err_atr["pathway"] = 1;
+		}
+                //$pathway=$_POST['pathwayList'];
+		$pathway_string=implode(',',$pathway_array1);
+		$api_string .= "--pathway_id '$pathway_string' ";
+		$api_string_short .= "--pathway_id $pathway_string ";
+
+		//------------Gene ID
+
+		$gene_id = $_POST['geneid'];
+
+		$val = DB::select(DB::raw("select gene_id  from gene where gene_id  like '$gene_id' LIMIT 1 "));
+
+		if(sizeof($val)>0){
+			$api_string .=  "--gene_id '$gene_id' ";
+			if ($gene_id != 'ENTREZ')
+			   $api_string_short .=  "--gene_id $gene_id ";
+
+		}else{
+			array_push($errors, "Entered Gene ID doesn't exist");
+		}
+
+		//---------Compound ID
+
+		$cpd_id = $_POST['cpdid'];
+
+		$val = DB::select(DB::raw("select compound_id  from compoundID where compound_id  like '$cpd_id' LIMIT 1 "));
+
+		if (sizeof($val) > 0) {
+			$api_string .=  "cpd_id='$cpd_id' ";
+			if ($cpd_id != 'KEGG')
+			   $api_string_short .=  "--cpd_id '$cpd_id' ";
+
+		}else{
+			array_push($errors, "Entered compound ID doesn't exist");
+			$err_atr["cpdid"] = 1;
+		}
+
+
+		//----------Species ID
+
+		$species_id = explode("-", $_POST["species"]);
+
+		$val = DB::select(DB::raw("select species_id from species where species_id like '$species_id[0]' LIMIT 1"));
+
+		if (sizeof($val) > 0) {
+			$species_id=$val[0]->species_id;
+			$api_string .=  "--species '$species_id' ";
+			if ($species_id != 'hsa')
+			 $api_string_short .=  "--species $species_id ";
+
+		}else{
+			array_push($errors, "Entered Species ID doesn't exist");
+		}
+
+		//------------Kegg ID
+		if (isset($_POST["kegg"]))
+			$api_string .=  "--kegg 'T' ";
+		else
+		{
+			$api_string .=  "--kegg 'F' ";
+			$api_string_short .=  "--kegg F ";
+		}
+
+		//-------------Layer
+		if(isset($_POST["layer"]))
+			$api_string .=  "--layer 'T' ";
+		else
+		{
+			$api_string .=  "--layer 'F' ";
+			$api_string_short .=  "--layer F ";
+		}
+
+		//----------Split node
+		if(isset($_POST["split"]))
+		{
+			$api_string .=  "--split 'T' ";
+			$api_string_short .=  "--split T ";
+		}
+		else
+			$api_string .=  "--split 'F' ";
+
+		//---------Expand node
+		if(isset($_POST["expand"]))
+		{
+			$api_string .=  "--expand 'T' ";
+			$api_string_short .=  "--expand T ";
+		}
+		else
+			$api_string .=  "--expand 'F' ";
+
+
+		//--------Multi State
+		if(isset($_POST["multistate"]))
+			$api_string .=  "--multistate 'T' ";
+		else
+		{
+			$api_string .=  "--multistate 'F' ";
+			$api_string_short .=  "--multistate F ";
+		}
+
+		//---------Match Data
+		if(isset($_POST["matchd"]))
+			$api_string .=  "--matched 'T' ";
+		else
+		{
+			$api_string .=  "--matched 'F' ";
+			$api_string_short .=  "--matched F ";
+		}
+
+		//----------gene descrete
+		if(isset($_POST["gdisc"]))
+		{
+			$api_string .=  "--discrete_gene 'T' ";
+			$api_string_short .=  "--discrete_gene T ";
+		}
+		else
+			$api_string .=  "--discrete_gene 'F' ";
+
+		//----------Compound descrete
+		if(isset($_POST['cdisc']))
+		{
+			$api_string .=  "--discrete_cpd 'T' ";
+			$api_string_short .=  "--discrete_cpd T ";
+		}
+		else
+			$api_string .=  "--discrete_cpd F ";
+
+		//-----------Key Position
+		$kpos=$_POST["kpos"];
+		$api_string .=  "--keyposition '$kpos' ";
+		if($kpos != 'topright')
+		  $api_string_short .=  "--keyposition $kpos ";
+
+		//------------Signature Position
+                $pos=$_POST['pos'];
+		$api_string .=  "--signatureposition '$pos' ";
+		if($pos != 'bottomleft')
+		   $api_string_short .=  "--signatureposition $pos ";
+
+		//-----------compound label offset
+		if (preg_match('/[a-z]+/', $_POST["offset"])) {
+			array_push($errors, "offset should be Numeric");
+		} else {
+			$offset=$_POST["offset"];
+		        $api_string .=  "offset=$offset ";
+			if ($offset != 1.0)
+			{
+		           $api_string_short .=  "--offset $offset ";
+			}
+		}
+
+		//-----------Key Align
+		$align=$_POST['align'];
+		$api_string .=  "align=$align ";
+		if ($align != 'y')
+		{
+		  $api_string .=  "align=$align ";
+		}
+		 
+
+
+		//-----------Gene Limit
+		if (preg_match('/[a-z]+/', $_POST["glmt"])) {
+			array_push($errors, "Gene Limit should be Numeric");
+		}else{
+			$g_limit=$_POST["glmt"];
+		        $api_string .=  "--limit_gene $g_limit ";
+			if ($g_limit != 1.0)
+			{
+		          $api_string_short .=  "--limit_gene $g_limit ";
+			}
+		}
+		//-----------CompoundLimit
+		if (preg_match('/[a-z]+/', $_POST["clmt"])) {
+			array_push($errors, "Compound Limit should be Numeric");
+			$err_atr["clmt"] = 1;
+		} else{
+			$cpd_limit=$_POST["clmt"];
+		        $api_string .=  "--limit_cpd $cpd_limit ";
+			if($cpd_limit != 1.0)
+		          $api_string_short .=  "--limit_cpd $cpd_limit ";
+		}
+
+		//-------------Gene Bins
+		if (preg_match('/[a-z]+/', $_POST["gbins"])) {
+			array_push($errors, "Gene Bins should be Numeric");
+			$err_atr["gbins"] = 1;
+		}
+		else{
+			$gbins=$_POST["gbins"];
+		        $api_string .=  "--bins_gene $gbins ";
+			if($gbins!= 10)
+		          $api_string_short .=  "--bins_gene $gbins ";
+		}
+
+
+		//-----------Compound Bins
+		if (preg_match('/[a-z]+/', $_POST["cbins"])) {
+			array_push($errors, "Compound Bins should be Numeric");
+			$err_atr["cbins"] = 1;
+		}
+		else{
+			$cbins=$_POST["cbins"];
+		        $api_string .=  "--bins_cpd $cbins ";
+			if($cbins!= 10)
+		          $api_string_short .=  "--bins_cpd $cbins ";
+		}
+
+		//---------Gene Low,mid,high colors
+		if (strpos($_POST["glow"], '#') !== false) {
+			$glow=$_POST["glow"];
+		} else {
+			$glow="#".$_POST["glow"];
+		}
+		$api_string .=  "--low_gene '$glow' ";
+		if ($glow != '#00FF00')
+		   $api_string_short .=  "--low_gene '$glow' ";
+
+
+		if (strpos($_POST["gmid"], '#') !== false) {
+			$gmid=$_POST["gmid"];
+		} else {
+			$gmid="#".$_POST["gmid"];
+		}
+		$api_string .=  "--mid_gene '$gmid' ";
+		if ($gmid != '#D3D3D3')
+		   $api_string_short .=  "--mid_gene '$gmid' ";
+
+		if (strpos($_POST["ghigh"], '#') !== false) {
+			$ghigh=$_POST["ghigh"];
+		} else {
+			$ghigh="#".$_POST["ghigh"];
+		}
+		$api_string .=  "--high_gene '$ghigh' ";
+		if ($ghigh != '#FF0000')
+		   $api_string_short .=  "--high_gene '$ghigh' ";
+
+		//----------Compound Low,Mid,High
+		if (strpos($_POST["clow"], '#') !== false) {
+			$clow=$_POST["clow"];
+		} else {
+			$clow="#".$_POST["clow"];
+		}
+		$api_string .=  "--low_cpd '$clow' ";
+		if ($clow != '#0000FF')
+		  $api_string_short .=  "--low_cpd '$clow' ";
+
+
+		##########short string#################
+
+		if (strpos($_POST["cmid"], '#') !== false) {
+			$cmid=$_POST["cmid"];
+		} else {
+			$cmid="#".$_POST["cmid"];
+		}
+		$api_string .=  "--mid_cpd '$cmid' ";
+		if ($cmid != '#D3D3D3')
+		  $api_string_short .=  "--mid_cpd $cmid ";
+
+		if (strpos($_POST["chigh"], '#') !== false) {
+			$chigh=$_POST["chigh"];
+		} else {
+			$chigh="#".$_POST["chigh"];
+		}
+		$api_string .=  "--high_cpd '$chigh' ";
+		if ($chigh != '#FFFF00')
+		  $api_string_short .=  "--high_cpd '$chigh' ";
+
+
+		//--------Node Sum
+		$nodesum=$_POST["nodesun"];
+		$api_string .=  "--node_sum '$nodesum' ";
+		if ($nodesum != 'sum')
+		  $api_string .=  "--node_sum $nodesum ";
+
+		//--------Not Applicable Color
+		$nacolor=$_POST["nacolor"];
+		$api_string .=  "--na_color '$nacolor' ";
+		if ($nacolor != 'transparent')
+		  $api_string_short .=  "--na_color $nacolor ";
+
+	   return array($api_string_short, $api_string);
+
 	}
 
 	public function post_exampleAnalysis1()
@@ -850,6 +1284,11 @@ class PathviewAnalysisController extends Controller {
 	}
 
 
+	public function api_view()
+	{
+		error_log('inside the metjod of----');
+		return view('pathview_pages.analysis.api_view', ['invocation' => session('invocation'), 'invocation_short' => session('invocation_short')]);
+	}
 
 
 
