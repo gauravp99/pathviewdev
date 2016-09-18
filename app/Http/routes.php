@@ -9,7 +9,27 @@
 | Routes.php Here is where you can register all of the routes for an application.
 | It's a breeze.
 |
+
+
+
 */
+Route::get('register', [
+	    'as' => 'register_path',
+	        'uses' => 'RegistrationController@create'
+	]);
+Route::get('login', [
+	    'as' => 'login_path',
+	        'uses' => 'AuthController@getLogin'
+	]);
+Route::post('register', [
+	    'as' => 'register_path',
+	        'uses' => 'RegistrationController@store'
+	]);
+Route::get('register/verify/{confirmationCode}', [
+	    'as' => 'confirmation_path',
+	        'uses' => 'RegistrationController@confirm'
+		]);
+
 
 /* start api for admin */
 
@@ -35,6 +55,8 @@
             //getting the resources for frequently asked questions
                 Route::resource('comments', 'CommentController',
                     array('only' => array('index', 'store', 'destroy')));
+	   //REST APIs to do the analysis from UrlController
+                Route::post('analysis', 'UrlController@postAnalysis');
 
         });
 
@@ -97,6 +119,8 @@
             'uses' => 'profile\PreviousAnalysis@user'
         ));
 
+#Route::get('user/activation/{token}', 'Auth\AuthController@activateUser')->name('user.activate');
+#Route::get('user/activation/{token}', 'Auth\AuthController@activateUser');
 /* URL route for Home Controller for user analysis history profile page */
         Route::get('home', 'profile\HomeController@index');
 
@@ -133,6 +157,8 @@
 /* URL route for Controller for Analysis page user page */
         Route::get('analysis', 'pathview\analysis\AnalysisController@new_analysis');
 
+/* URL route for Controller for Analysis page user page */
+        Route::get('analysis_api', 'pathview\analysis\AnalysisController@api_analysis');
 /* URL route for Analysis Result Viewing page user page */
         Route::get('viewer', array(
             'as' => 'viewer',
@@ -175,6 +201,8 @@
 
 /* URL route for GET Analysis (example3)  */
         Route::get('example3', 'pathview\analysis\PathviewAnalysisController@example_three');
+/* URL route for GET Analysis (example3)  */
+        Route::get('apiview', 'pathview\analysis\PathviewAnalysisController@api_view');
 
 
 /*URL route for tutrial/Help page */
@@ -182,6 +210,14 @@
             return view("pathview_pages.tutorial");
         });
 
+/*URL route for API Help Page. */
+        Route::get('api_tutorial', function () {
+            return view("pathview_pages.api_tutorial");
+        });
+/*URL route for API Help Page. */
+        Route::get('api_examples', function () {
+            return view("pathview_pages.api_examples");
+        });
 /* URL Route for About page*/
         Route::get('about', 'pathview\PathviewAboutController@index');
 
