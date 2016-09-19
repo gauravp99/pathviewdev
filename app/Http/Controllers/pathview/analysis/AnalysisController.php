@@ -929,6 +929,10 @@ return Redirect::back()->with('success', 'Error');
     {
         return view('pathview_pages.analysis.NewAnalysis');
     }
+    public function api_analysis()
+    {
+        return view('pathview_pages.analysis.NewAnalysis') ->with('rest_flag','true');
+    }
 
     public function post_exampleAnalysis1(CraeteAnalysisRequest $resqest)
     {
