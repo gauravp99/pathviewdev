@@ -50,8 +50,10 @@
                         <li><a href="/tutorial#input">Attributes Help</a></li>
                         <li><a href="/tutorial">Custom Analysis</a></li>
                         <li><a href="/tutorial#example1">Example Analysis</a></li>
+                        <li><a href="/api_tutorial">API Documentation</a></li>
                         <li><a href="/tutorial#refrence">References</a></li>
                         <li><a href="/faq">Question?</a></li>
+
                     </ul>
                 </li>
 

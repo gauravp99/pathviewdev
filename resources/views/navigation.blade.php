@@ -31,6 +31,9 @@
         <li <?php if (basename(Request::url()) == "contact") {
             echo "class=\"active\"";
         }?>><a href="/faq"><b>Questions?</b></a></li>
+        <li <?php if (basename(Request::url()) == "cli") {
+            echo "class=\"active\"";
+        }?>><a href="/analysis_api"><b>CLI Invocation</b></a></li>
         <script>
             function openWindow() {
                 window.open('/tutorial', 'newwindow', "scrollbars=1,status =1,width=2000, height=window.innerHeight");
