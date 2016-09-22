@@ -38,7 +38,7 @@ td {
         <p>Pathview API (url) is a bash script. It requires cURL pre-installed, which is the case for most Unix/Linux/Mac systems. cURL can be download  <a href='https://curl.haxx.se/download.html'>here</a> if needed. To get started:</p>
 	<p>1. Download API with cURL
         </br>
-        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu/scripts/pathwayapi.sh </p>
+        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu </p>
 	<p>2. Modify access of the API </p>
         <p style="font-size: 15px; margin-left: 50px;">chmod +x ./pathwayapi.sh </p>
 	<p>3. Ready to go, please check the following sections for usage</p>
@@ -47,7 +47,7 @@ td {
         <h1 class="arg_content">Synopsis</h1>
         <p> Basic Usage </p>
         <p style="font-size: 15px; margin-left: 50px;"> pathwayapi.sh options --gene_data | --cpd_data [--gene_id] [-- cpd_id] [--pathway_id] ... [--other options] </p>
-        <p> Common Usages </p>
+        <p> Common Usages (Remove annotation in parentheses in real use)</p>
         <p>&nbsp;&nbsp;&nbsp;Gene data:</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --gene_data your/gene/data/file --species hsa (KEGG species code) --gene_id ENTREZ (gene ID type) --pathway_id 00640 (KEGG pathway ID) </p>
         <p>&nbsp;&nbsp;&nbsp;Compound data:</p>
@@ -57,7 +57,6 @@ td {
         <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --gene_data your/gene/data/file --gene_id ENTREZ (gene ID type) --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID)
                 </p>
         </br>
-        <p>&nbsp;&nbsp;&nbsp;<b>Note</b>: Remove annotation in parentheses in real use.</p>
         <p>Help</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --help </p>
         <p>Extras</p>
