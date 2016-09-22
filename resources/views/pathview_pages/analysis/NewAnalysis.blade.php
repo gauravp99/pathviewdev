@@ -23,7 +23,11 @@ use Illuminate\Cacheche;
     <div class="col-sm-9">
 
         <div class="conetent-header ">
-            <p><b>New Pathway Analysis</b></p>
+            @if (isset($rest_flag))
+              <p><b>API Query Generator</b></p>
+            @else
+              <p><b>New Pathway Analysis</b></p>
+            @endif
         </div>
 
         <div class="col-sm-5">
