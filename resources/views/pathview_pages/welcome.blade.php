@@ -2,6 +2,9 @@
 @section('content')
 
 
+    @if (session('message'))
+       <h1 class="success" style="color:rgb(65, 134, 58);"> {{ session('message') }} </h1>
+    @endif
     <div class="content">
         <div class="rows">
             <script src="js/ChartNew.js"></script>
@@ -239,7 +242,7 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal" role="form" method="POST"
-                                  action="{{ url('/auth/register') }}">
+                                  action="{{ url('/register') }}">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                 <div class="form-group">
