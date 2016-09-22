@@ -676,9 +676,16 @@
             </div>
             <div class="steps">
                 <!-- <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return fileCheck()"/> -->
-                <input type="submit" id="submit-button" class="btn btn-primary"
+		@if (isset($is_rest))
+                   <input type="submit" id="submit-button" class="btn btn-primary"
+                       style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="API Query Generator"
+                       onclick="return attrSave()"/>
+		@else
+                   <input type="submit" id="submit-button" class="btn btn-primary"
                        style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit"
                        onclick="return attrSave()"/>
+		@endif
+			
                 <input type="Reset" id="reset" class="btn btn-primary"
                        style="font-size: 20px;width: 30%;margin-left:10%;margin-top: 10px;;float:left;" value="Reset"
                        onclick="return reset()"/>

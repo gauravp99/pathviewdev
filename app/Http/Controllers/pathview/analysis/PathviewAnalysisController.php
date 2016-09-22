@@ -821,9 +821,6 @@ class PathviewAnalysisController extends Controller {
 	public function postAnalysis()
 	{
 		$input=Input::all();
-		//print_r($input);
-		//print_r($_POST);
-		print('****************************************');
 		$rest_flag=Input::get('rest_flag');
 
 		if($rest_flag)
@@ -833,8 +830,6 @@ class PathviewAnalysisController extends Controller {
 		   $invocation_string = $invocation_string_full[1];
 		   $invocation_string_short = $invocation_string_full[0];
 		   $msg=['message' => $invocation_string];
-		   #return response() -> json($msg, 201);
-		   //return 'Hello World';
 	     	   return Redirect::to('apiview')
 					->with('invocation', $invocation_string)
 					->with('invocation_short', $invocation_string_short);
@@ -849,18 +844,11 @@ class PathviewAnalysisController extends Controller {
 	{
 	   $api_string='';
 	   $api_string_short='';
-#http -f POST 10.23.251.42:8000/api/analysis  gene_data@gse16873.d3.txt cpd_data@sim.cpd.data2.csv species='hsa-Homo sapiens-human' gene_id='ENTREZ' cpd_id='KEGG' pathway_id='00640-Propanoate metabolism' suffix='multi' kegg='T' layer='T' multistate='T' matched='F' offset=1 align='y' signatureposition='bottomleft' limit_gene='1' limit_cpd='1' bins_gene=10 bins_cpd=10 low_gene='#00FF00' low_cpd='#0000FF' mid_gene='#D3D3D3' mid_cpd='#D3D3D3' high_gene='#FF0000' high_cpd='#FFFF00'
-
-	   #$root_url=Request::root();
-	   #$root_url= env('APP_URL');
-	   $root_url= 'http://10.23.251.42/';
-	   #$api_string .= "http -f POST ".$root_url."api/analysis ";
 	   $api_string .= "./pathwayapi.sh ";
 	   $api_string_short .= "./pathwayapi.sh ";
 	   if(Input::hasFile('gfile'))
 	   {
              $gfile  = Input::file('gfile')->getClientOriginalName();
-             #$gfile_path  = Input::file('gfile')->getPathName();
 	     $api_string .='--gene_data '.$gfile.' ';
 	     $api_string_short .='--gene_data '.$gfile.' ';
              if(!is_null($_POST['generef']))
@@ -966,7 +954,6 @@ class PathviewAnalysisController extends Controller {
 			array_push($errors, "Entered pathway ID doesn't exist");
 			$err_atr["pathway"] = 1;
 		}
-                //$pathway=$_POST['pathwayList'];
 		$pathway_string=implode(',',$pathway_array1);
 		$api_string .= "--pathway_id '$pathway_string' ";
 		$api_string_short .= "--pathway_id $pathway_string ";
@@ -993,7 +980,7 @@ class PathviewAnalysisController extends Controller {
 		$val = DB::select(DB::raw("select compound_id  from compoundID where compound_id  like '$cpd_id' LIMIT 1 "));
 
 		if (sizeof($val) > 0) {
-			$api_string .=  "cpd_id='$cpd_id' ";
+			$api_string .=  "--cpd_id '$cpd_id' ";
 			if ($cpd_id != 'KEGG')
 			   $api_string_short .=  "--cpd_id '$cpd_id' ";
 
@@ -1109,7 +1096,7 @@ class PathviewAnalysisController extends Controller {
 			array_push($errors, "offset should be Numeric");
 		} else {
 			$offset=$_POST["offset"];
-		        $api_string .=  "offset=$offset ";
+		        $api_string .=  "--offset $offset ";
 			if ($offset != 1.0)
 			{
 		           $api_string_short .=  "--offset $offset ";
@@ -1118,10 +1105,10 @@ class PathviewAnalysisController extends Controller {
 
 		//-----------Key Align
 		$align=$_POST['align'];
-		$api_string .=  "align=$align ";
+		$api_string .=  "--align $align ";
 		if ($align != 'y')
 		{
-		  $api_string .=  "align=$align ";
+		  $api_string .=  "--align $align ";
 		}
 		 
 
@@ -1286,7 +1273,6 @@ class PathviewAnalysisController extends Controller {
 
 	public function api_view()
 	{
-		error_log('inside the metjod of----');
 		return view('pathview_pages.analysis.api_view', ['invocation' => session('invocation'), 'invocation_short' => session('invocation_short')]);
 	}
 

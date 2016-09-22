@@ -38,7 +38,7 @@ td {
         <p>Pathview API (url) is a bash script. It requires cURL pre-installed, which is the case for most Unix/Linux/Mac systems. cURL can be download  <a href='https://curl.haxx.se/download.html'>here</a> if needed. To get started:</p>
 	<p>1. Download API with cURL
         </br>
-        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu </p>
+        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu/scripts/pathwayapi.sh </p>
 	<p>2. Modify access of the API </p>
         <p style="font-size: 15px; margin-left: 50px;">chmod +x ./pathwayapi.sh </p>
 	<p>3. Ready to go, please check the following sections for usage</p>
@@ -56,6 +56,8 @@ td {
         <p>&nbsp;&nbsp;&nbsp;Gene and Compound data:</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --gene_data your/gene/data/file --gene_id ENTREZ (gene ID type) --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID)
                 </p>
+        </br>
+        <p>&nbsp;&nbsp;&nbsp;<b>Note</b>: Remove annotation in parentheses in real use.</p>
         <p>Help</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --help </p>
         <p>Extras</p>
@@ -369,7 +371,7 @@ td {
      <tr>
         <td>--low_gene /--mid_gene / --high_gene </td>
         <td>This argument specify the color spectrum to code Gene Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
-        <td>green-gray-red</td>
+        <td>green/gray/red</td>
         <td><a href="tutorial#color"
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Low,Mid,High Gene</a></td>
@@ -377,7 +379,7 @@ td {
      <tr>
         <td> --low_cpd / --mid_cpd / --high_cpd</td>
         <td>This argument specify the color spectrum to code Compound Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
-        <td>green-gray-red</td>
+        <td>blue/gray/yellow</td>
         <td><a href="tutorial#color"
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Low,Mid,High Compound</a></td>
