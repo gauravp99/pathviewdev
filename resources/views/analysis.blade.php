@@ -678,7 +678,7 @@
                 <!-- <input type="submit" id="submit-button" class="btn btn-primary" style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Submit" onclick="return fileCheck()"/> -->
 		@if (isset($is_rest))
                    <input type="submit" id="submit-button" class="btn btn-primary"
-                       style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="API Query Generator"
+                       style="font-size: 20px;width: 30%;margin-left: 15%;;margin-top: 10px;float:left;" value="Generate Query"
                        onclick="return attrSave()"/>
 		@else
                    <input type="submit" id="submit-button" class="btn btn-primary"

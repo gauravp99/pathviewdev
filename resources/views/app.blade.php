@@ -116,7 +116,7 @@
                             <li <?php if (basename(Request::url()) == "register") {
                                 echo "class=\"active\"";
                             }?>>
-                                <a href="{{ url('/auth/register') }}">Register</a>
+                                <a href="{{ url('/register') }}">Register</a>
                             </li>
                             <li <?php
                                     if (basename(Request::url()) == "guest") {
@@ -182,7 +182,7 @@
                             <li <?php if (basename(Request::url()) == "guest") {
                                 echo "class=\"active\"";
                             }?>>
-                                <a href="{{ url('/auth/register') }}">Register</a>
+                                <a href="{{ url('/register') }}">Register</a>
                             </li>
                         </ul>
                     </li>
@@ -208,7 +208,7 @@
                             <li <?php if (basename(Request::url()) == "register") {
                                 echo "class=\"active\"";
                             }?>>
-                                <a href="{{ url('/auth/register') }}">Register</a>
+                                <a href="{{ url('/register') }}">Register</a>
                             </li>
                             <li <?php if ((basename(Request::url()) == "guest")) {
                                 echo "class=\"active\"";
