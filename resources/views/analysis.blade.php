@@ -2,6 +2,8 @@
     $autopathviewselection = false;
 ?>
             <script src="js/jquery.validate.min.js"></script>
+            <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
+            <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
             <script type="text/javascript">
                 //this code is written to have the firefox browser refresh pressing the back button overriding the onload and onunload function
                 window.onload = function() {  };
