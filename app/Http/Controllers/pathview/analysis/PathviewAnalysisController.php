@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Redirect;
 class PathviewAnalysisController extends Controller {
 
 	public $uID=0;
+	public $autoPathwayId='00000';
 
 
 	public function analysis($analyType)
@@ -336,7 +337,7 @@ class PathviewAnalysisController extends Controller {
 			{
 				//check in db if pathway exists or not
 				$val = DB::select(DB::raw("select pathway_id from pathway where pathway_id like '$pathway' LIMIT 1"));
-				if(sizeof($val) > 0)
+				if((sizeof($val) > 0) || ($pathway == $this->autoPathwayId))
 					array_push($pathway_array, $pathway);
 				$i = $i + 1;
 				//limit imposed as per req to pathway id not more than 20 to each request
@@ -359,6 +360,7 @@ class PathviewAnalysisController extends Controller {
 		{
 			array_push($errors, "Entered pathway ID doesn't exist");
 			$err_atr["pathway"] = 1;
+			//array_push($pathway_array1, '00000'); 
 		}
 		$analsisObject->setPathwayIDs($pathway_array1);
 
@@ -402,6 +404,14 @@ class PathviewAnalysisController extends Controller {
 			$err_atr["species"] = 1;
 		}
 
+		//----------  Auto Pathway selection
+	        if (isset($_POST['autopathviewselection']))
+	        {
+			$analsisObject->setAutoPathwaySelection(true);
+	        }
+	        else{
+			$analsisObject->setAutoPathwaySelection(false);
+	        }
 		//------------Kegg ID
 		if (isset($_POST["kegg"]))
 			$analsisObject->setKeggFlag(true);
@@ -842,6 +852,7 @@ class PathviewAnalysisController extends Controller {
 	}
 	public function createInvocationString($argument)
 	{
+
 	   $api_string='';
 	   $api_string_short='';
 	   $api_string .= "./pathwayapi.sh ";
@@ -931,7 +942,7 @@ class PathviewAnalysisController extends Controller {
 			{
 				//check in db if pathway exists or not
 				$val = DB::select(DB::raw("select pathway_id from pathway where pathway_id like '$pathway' LIMIT 1"));
-				if(sizeof($val) > 0)
+				if((sizeof($val) > 0) || ($pathway == $this->autoPathwayId))
 					array_push($pathway_array, $pathway);
 				$i = $i + 1;
 				//limit imposed as per req to pathway id not more than 20 to each request

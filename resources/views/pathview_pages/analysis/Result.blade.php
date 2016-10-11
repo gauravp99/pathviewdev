@@ -238,8 +238,12 @@
                 }else{
                     $("#waiting").remove();
                     $("#progress").remove();
-
                 }
+		if(factor == -1000)
+		{ 
+                      $('#completed').show();
+		}
+
 
             }
         });
@@ -328,6 +332,20 @@
                         case "suffix":
                         $arg1[0] = "Output Suffix";
                         $suffix = $arg1[1];
+                        ?>
+                        <tr>
+                            <td><b>{{$arg1[0]}}</b></td>
+                            <td>{{$arg1[1]}}</td>
+                        </tr>
+                        <?php
+                        break;
+			case "autoPathwaySelection":
+                        $arg1[0] = "Auto Pathway Selection";
+                        if ($arg1[1] == 'T') {
+                            $arg1[1] = "True";
+                        } else {
+                            $arg1[1] = "False";
+                        }
                         ?>
                         <tr>
                             <td><b>{{$arg1[0]}}</b></td>

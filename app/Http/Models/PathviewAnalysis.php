@@ -21,6 +21,7 @@ class PathviewAnalysis
     private $pathwayIDs = array();
     private $suffix;
     private $keggFlag;
+    private $autoPathwaySelection;
     private $layerFlag;
     private $splitFlag;
     private $expandFlag;
@@ -293,6 +294,10 @@ class PathviewAnalysis
         $argument .="geneid:".$this->geneId.";";
         $argument .="cpdid:".$this->compoundId.";";
         $argument .="species:".$this->speciesID.";";
+        if($this->autoPathwaySelection)
+            $argument .="autoPathwaySelection:T;";
+        else
+            $argument .="autoPathwaySelection:F;";
         $argument .="pathway:".join(",",$this->pathwayIDs).";";
         $argument .="suffix:".$this->suffix.";";
         if($this->keggFlag)
@@ -495,6 +500,13 @@ class PathviewAnalysis
         $this->keggFlag = $keggFlag;
     }
 
+    /**
+     * @param mixed $autoPathwaySelection
+     */
+    public function setAutoPathwaySelection($autoPathwaySelection)
+    {
+        $this->autoPathwaySelection= $autoPathwaySelection;
+    }
     /**
      * @return mixed
      */

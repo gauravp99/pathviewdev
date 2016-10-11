@@ -1,6 +1,7 @@
+<?php
+    $autopathviewselection = false;
+?>
             <script src="js/jquery.validate.min.js"></script>
-
-
             <script type="text/javascript">
                 //this code is written to have the firefox browser refresh pressing the back button overriding the onload and onunload function
                 window.onload = function() {  };
@@ -139,6 +140,25 @@
 
 
 
+    <div class="stepsdiv" id="UsePathview-div">
+        <div class="col-sm-12">
+            <div class="col-sm-5">
+                <a href="tutorial#cpd_id"
+                   onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
+                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+                   style="float:left;margin-right:5px;">
+                    <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
+                </a>
+
+                    <label for="pathviewSelection">Pathway Selection:</label>
+
+                </div>
+                <div class="col-sm-7">
+                    <input type="checkbox" id="pathviewSelection" value="false" data-size="small" style="width: 44px;" data-off-text="Manual" data-on-text="Auto" name="autopathviewselection"
+                           @if ($autopathviewselection) checked @endif >
+                </div>
+	      </div>
+</div>
 
 
             <div class="stepsdiv" @if (isset(Session::get('err_atr')['pathway'])) style='background-color:#DA6666;' @endif id="pat-select">
@@ -152,8 +172,11 @@
                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                             </a>
                             {!!form::label('pathway','Pathway ID:') !!}
+
                         </div>
                     </div>
+
+
 
                     <div class="col-sm-5">
 
@@ -209,6 +232,20 @@
                                   style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11"
                                   cols="14">@if (isset(Session::get('Sess')['pathwayList'])) {{Session::get('Sess')['pathwayList']}} @else {{$selectpath}} @endif
                         </textarea>
+                        <!--<textarea id="pathwayList" name="pathwayList" wrap="off"
+                                  style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11"
+                                  cols="14">
+				   @if ($autopathviewselection)
+                                       '00000,' 
+                                   @else
+                                       @if (isset(Session::get('Sess')['pathwayList'])) 
+ 					   {{Session::get('Sess')['pathwayList']}}
+				       @else
+					   {{$selectpath}}
+                                       @endif
+                                   @endif
+			</textarea>
+                        //-->
                     </div>
                 </div>
                 <datalist id="pathwaylist">
@@ -696,6 +733,26 @@
 
 
                 $(document).ready(function () {
+
+		  var selectpath= '<?php echo $selectpath ?>';
+                  $("[name='autopathviewselection']").bootstrapSwitch();
+		  $('#pathviewSelection').on('switchChange.bootstrapSwitch', function (event, state) {  
+                  if($('#pathviewSelection').is(':checked')){
+                       $('#pat-select').hide();
+		       $('#pathwayList').val('00000');
+                  }
+		  else
+		  {
+		  $('#pat-select').show();
+		  $('#pathwayList').val(selectpath);
+		  }
+			  
+
+		  }); 
+		  if($('#pathwayList').val() == '00000'){
+                       $('#pat-select').hide();
+		       $('#pathwayList').val(selectpath);
+		  }
 
 
                     //removing error message if exists
