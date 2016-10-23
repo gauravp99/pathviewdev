@@ -48,6 +48,17 @@ __command__:
 `make`
 `sudo make install`
 
+
+Note:
+ Installation of R is dependent on the C compiler.
+ If you encounter the below error, please fix it by installing the build-essential first
+
+ While installing R 
+ Error: configure: error: no acceptable C compiler found in $PATH
+ 
+ Fix:
+ `apt-get install build-essential`
+
 ######3.2. Bioc Package Required Version (3.0)
 Bioc Package Downaloat and installation:
 __command__:
