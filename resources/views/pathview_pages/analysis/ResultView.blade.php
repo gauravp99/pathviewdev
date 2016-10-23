@@ -72,7 +72,7 @@
             foreach ($contents as $k => $v) {
 
             //echo $k;
-            if (strpos($v, $_GET['suffix'])) {
+            if (strpos($v, $_GET['suffix']) || strpos($v, 'heatmap.pdf')) {
             $val = $v;
             $analyses_id = $_GET['analyses'];
             $id = substr($val, 0, 8);
@@ -113,7 +113,8 @@
             foreach ($files as $name => $file) {
                 // Skip directories (they would be added automatically)
                 if (!$file->isDir()) {
-                    if (strpos($file, 'log') !== false || strpos($file, "" . $id . ".txt") || (strpos($file, $suffix))) {
+                    //if (strpos($file, 'log') !== false || strpos($file, "" . $id . ".txt") || (strpos($file, $suffix))) {
+                    if (strpos($file, 'log') !== false  || strpos($file, "".".txt") || (strpos($file, $suffix)) || (strpos($file, 'gage'))) {
                         // Get real and relative path for current file
                         $filePath = $file->getRealPath();
                         $relativePath = substr($filePath, strlen($rootPath) + 1);
