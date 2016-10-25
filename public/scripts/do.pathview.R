@@ -16,11 +16,16 @@ if(!is.null(args2$dopathview)){ #call from gage
     }
     osuffix="pathview"
 } else{ #call from pathview
-    gene.data=gene.d
-    cpd.data=cpd.d
-    gene.idtype=args2$geneid
-    cpd.idtype=args2$cpdid
-    osuffix=args2$suffix
+        gene.data=gene.d
+        cpd.data=cpd.d
+        osuffix=args2$suffix
+    if(auto.sel){
+        gene.idtype=gid.type
+        cpd.idtype=cid.type
+    } else{
+        gene.idtype=args2$geneid
+        cpd.idtype=args2$cpdid
+    }
 }
 
 
@@ -28,6 +33,7 @@ kegg.native=T
 if(!is.null(args2$kegg)){
     if(!args2$kegg) kegg.native=F
 }
+#kegg.native=F
 
 if(kegg.native){
     source(paste(pvwdir,"scripts/kg.map.R",sep=""))
@@ -41,8 +47,13 @@ if(kegg.native){
 }
 
 require(pathview)
+#    source(paste(pvwdir,"scripts/id2eg2.R",sep=""))
+#environment(id2eg2)=environment(pathview)
+#assignInNamespace("id2eg", id2eg2, "pathview")
 
+#browser()
 pv.run=sapply(path.ids, function(pid){
+#print(pid)
                   if(is.null(args2$kegg)){
                       pv.out <- try(pathview(gene.data = gene.data, gene.idtype=gene.idtype, cpd.data = cpd.data, cpd.idtype=cpd.idtype, pathway.id = pid, species = species, kegg.dir=kegg.dir))
                   } else{
@@ -51,7 +62,7 @@ pv.run=sapply(path.ids, function(pid){
 
                   if(class(pv.out) =="list" & kegg.native){
                       pv.labels(pv.out=pv.out, pv.data.type=pv.dt, pid=pid)
-                  }  else  print(paste("error using pawthway id",pid,sep=":"))
+                  }  else if(class(pv.out) !="list") print(paste("error using pawthway id",pid,sep=":"))
               })
 
 
