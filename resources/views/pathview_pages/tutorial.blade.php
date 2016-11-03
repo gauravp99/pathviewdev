@@ -68,6 +68,8 @@
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#species">Species</a></li>
                                 <li class="divider"></li>
+                                <li style="width:300px;"><a href="#pwy_id">Pathway Selection</a></li>
+                                <li class="divider"></li>
                                 <li style="width:300px;"><a href="#pwy_id">Pathway ID</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#suffix">Output Suffix</a></li>
@@ -274,6 +276,16 @@
                                 <dd>Either the KEGG code, scientific name or the common name of the target species.
                                     Species may also be "ko" for KEGG Orthology pathways. This can be selected from the
                                     autosuggest drop down list.
+                                </dd>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading argument">
+                                <dt><a name="auto_sel">Pathway Selection</a></dt>
+                            </div>
+                            <div class="panel-body argument">
+				<dd>This argument controls the pathway IDs. 
+                                    If set then the user need not to specify the pathway ids from the auto suggest box. 
                                 </dd>
                             </div>
                         </div>

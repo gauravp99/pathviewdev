@@ -4,6 +4,8 @@
             <script src="js/jquery.validate.min.js"></script>
             <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
             <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
+
+
             <script type="text/javascript">
                 //this code is written to have the firefox browser refresh pressing the back button overriding the onload and onunload function
                 window.onload = function() {  };
@@ -735,6 +737,7 @@
 
 
                 $(document).ready(function () {
+		//	$(window).unload( function () {
 
 		  var selectpath= '<?php echo $selectpath ?>';
                   $("[name='autopathviewselection']").bootstrapSwitch();
@@ -748,14 +751,15 @@
 		  $('#pat-select').show();
 		  $('#pathwayList').val(selectpath);
 		  }
-			  
-
 		  }); 
-		  if($('#pathwayList').val() == '00000'){
+                  if($('#pathviewSelection').is(':checked')){
                        $('#pat-select').hide();
-		       $('#pathwayList').val(selectpath);
+		       $('#pathwayList').val('00000');
+                  }
+		  else
+		  {
+		  $('#pat-select').show();
 		  }
-
 
                     //removing error message if exists
                     $("#reset").click(function(){

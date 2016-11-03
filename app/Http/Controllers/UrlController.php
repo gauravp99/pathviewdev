@@ -18,6 +18,7 @@ use RecursiveDirectoryIterator;
 use Response;
 class UrlController extends Controller
 {
+
    public function index()
    {
       $download_link ="http://10.23.56.41/abc/xyz";
@@ -37,7 +38,7 @@ class UrlController extends Controller
       }
       File::makeDirectory($path, $mode = 0775, true, true);
 
-      $valid_input_keys=array('gene_data', 'cpd_data', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample');
+      $valid_input_keys=array('gene_data', 'cpd_data', 'auto_sel', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample');
       $request_input_keys=array_keys(Input::all());
       $validate_input_array=array_diff($request_input_keys, $valid_input_keys);
       if (sizeof($validate_input_array) != 0)
@@ -110,7 +111,8 @@ class UrlController extends Controller
       foreach ($files as $name => $file) {
           // Skip directories (they would be added automatically)
           if (!$file->isDir()) {
-              if (strpos($file, 'log') !== false || strpos($file, "" . $id . ".txt") || (strpos($file, $suffix))) {
+              //if (strpos($file, 'log') !== false || strpos($file, "" . $id . ".txt") || (strpos($file, $suffix))) {
+              if (strpos($file, 'log') === FALSE  &&  strpos($file, 'Rout') === FALSE && strpos($file, 'workenv') === FALSE) {
                   // Get real and relative path for current file
                   $filePath = $file->getRealPath();
                   $relativePath = substr($filePath, strlen($rootPath) + 1);
@@ -172,6 +174,7 @@ class UrlController extends Controller
       $nsum = "sum";
       $ncolor = "transparent";
       $compare = "paired";
+      $autopathway= 'F';
 
       $argument ="";
 
@@ -228,6 +231,21 @@ class UrlController extends Controller
          $argument .="cpdextension:".$cpd_extension.";";
       }  
 
+      //if (Input::has('autopathway'))
+      if (Input::has('auto_sel'))
+      {
+         //if (!(Input::get('autopathway') == 'T' || Input::get('autopathway') == 'F' ))
+         if (!(Input::get('auto_sel') == 'T' || Input::get('auto_sel') == 'F' ))
+         {
+            $msg="Auto pathway selection value should be either T (True) or F (False). Default value is taken as F (False) ";
+            $status_code=400;
+            $response_arr['message']=$msg;
+            $response_arr['status_code']=$status_code;
+            return $response_arr;
+         }
+         $autopathway=Input::get('auto_sel');
+      }
+
       //-----------------------pathwayids
       if (Input::has('pathway_id') || Input::hasFile('pathway_id')) 
       {
@@ -251,7 +269,7 @@ class UrlController extends Controller
             {
                //check in db if pathway exists or not
          	$val = DB::select(DB::raw("select pathway_id from pathway where pathway_id like '$pathway' LIMIT 1"));
-         	if(sizeof($val) > 0)
+         	if((sizeof($val) > 0) or  $pathway == '00000')
          		array_push($pathway_array, $pathway);
 		else
 	        {
@@ -731,6 +749,8 @@ class UrlController extends Controller
       $argument .="geneid:".$geneid.";";
       $argument .="cpdid:".$cpdid.";";
       $argument .="species:".$species.";";
+      //$argument .="autoPathwaySelection:".$autopathway.";";
+      $argument .="autosel:".$autopathway.";";
       $argument .="pathway:".join(",",$pathway).";";
       $argument .="suffix:".$suffix.";";
       $argument .="kegg:".$kegg.";";
@@ -767,7 +787,6 @@ class UrlController extends Controller
    public function runAnalysisForApi($time, $argument, $destFile, $anal_type)
    {
       $return_status=false;
-      error_log('Inside the runanalysis');
       $Rloc = Config::get("app.RLoc");
       $publicPath = Config::get("app.publicPath");
       try 

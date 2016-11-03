@@ -857,6 +857,7 @@ class PathviewAnalysisController extends Controller {
 	   $api_string_short='';
 	   $api_string .= "./pathwayapi.sh ";
 	   $api_string_short .= "./pathwayapi.sh ";
+	   $auto_sel=false;
 	   if(Input::hasFile('gfile'))
 	   {
              $gfile  = Input::file('gfile')->getClientOriginalName();
@@ -932,6 +933,14 @@ class PathviewAnalysisController extends Controller {
 	          $api_string_short .= "--suffix $suffix ";
 		}
 
+		//-----------------------auto selection pathway
+	        if (isset($_POST['autopathviewselection']))
+	        {
+	               $api_string .= "--auto_sel T ";
+	               $api_string_short .= "--auto_sel T ";
+		       $auto_sel=true;
+	        }
+
 		//-----------------------pathwayids
 		preg_match_all('!\d{5}!', $_POST['pathwayList'], $matches);
 		$pathway_array = array();
@@ -966,8 +975,11 @@ class PathviewAnalysisController extends Controller {
 			$err_atr["pathway"] = 1;
 		}
 		$pathway_string=implode(',',$pathway_array1);
-		$api_string .= "--pathway_id '$pathway_string' ";
-		$api_string_short .= "--pathway_id $pathway_string ";
+		if(!$auto_sel)
+		{
+		  $api_string .= "--pathway_id '$pathway_string' ";
+		  $api_string_short .= "--pathway_id $pathway_string ";
+		}
 
 		//------------Gene ID
 

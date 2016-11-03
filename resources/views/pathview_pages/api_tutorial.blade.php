@@ -185,6 +185,14 @@ td {
              target="_blank">Output Suffix</a></td>
      </tr>
      <tr>
+        <td>--auto_sel</td>
+        <td>This argument controls the pathway IDs. If set then the user need not to specify the pathway ids from the auto suggest box.</td>
+        <td>F</td>
+        <td><a href="tutorial#auto_sel"
+             onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
+             target="_blank">Auto Selection</a></td>
+     </tr>
+     <tr>
         <td>--pathway_id</td>
         <td>This argument specifies the KEGG pathway IDs, usually 5 digit long.Pathway IDs can also be provided in a comma separated file</td>
         <td>00010(00010,00640)</td>

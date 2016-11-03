@@ -51,9 +51,11 @@
             $flag = false;
             $flag1 = false;
             $flag2 = false;
+	    $sigFile = false;
             $files_to_zip = array();
             $suffix = $_GET['suffix'];
             $analyses_id = $_GET['analyses'];
+	    $autopathwayselection = $_GET['autopathwayselection'];
 
                 //print pathway generated text files with hiperlink to the files
             foreach ($contents as $k => $v) {
@@ -72,7 +74,9 @@
             foreach ($contents as $k => $v) {
 
             //echo $k;
-            if (strpos($v, $_GET['suffix']) || strpos($v, 'heatmap.pdf')) {
+            //if (strpos($v, $_GET['suffix']) || strpos($v, 'heatmap.pdf')) {
+            //if (strpos($v, $_GET['suffix']) || strpos($v, 'sig')) {
+            if (strpos($v, $_GET['suffix']) ) {
             $val = $v;
             $analyses_id = $_GET['analyses'];
             $id = substr($val, 0, 8);
@@ -85,6 +89,10 @@
             array_push($files_to_zip, $directory1 . "/" . $val);
 
             } else {
+		if (strpos($val, 'sig'))
+		{
+			$sigFile=true;
+		}
                 echo "<li  style='font-size: 24px;list-style-type: none;'>  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>";
                 array_push($files_to_zip, $directory1 . "/" . $val);
             }
@@ -93,7 +101,36 @@
 
             }
 
+
             echo "</ul>";
+            if($autopathwayselection)
+	    {
+               //echo "<h2>Pathview Selection Results:</h2>";
+               //echo "<ul >";
+	       $header_flag=true;
+               foreach ($contents as $k => $v) {
+               if (strpos($v, 'sig')) {
+               $val = $v;
+               $analyses_id = $_GET['analyses'];
+
+                   //print hyperlink for the images/PDF generated
+               if (strpos($val, 'txt')) {
+		 if ($header_flag)
+		 {
+                  echo "<h2>Pathview Selection Results:</h2>";
+                  echo "<ul >";
+		   $header_flag=false;
+		 }
+		 echo "<li  style='font-size: 24px;list-style-type: none;'>  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>"; ?>
+
+               <?php
+
+               array_push($files_to_zip, $directory1 . "/" . $val);
+	       }
+	       }
+	       }
+               echo "</ul>";
+	    }
 
             //create a zip file so that it can be used to download
             chdir($directory);
@@ -114,7 +151,8 @@
                 // Skip directories (they would be added automatically)
                 if (!$file->isDir()) {
                     //if (strpos($file, 'log') !== false || strpos($file, "" . $id . ".txt") || (strpos($file, $suffix))) {
-                    if (strpos($file, 'log') !== false  || strpos($file, "".".txt") || (strpos($file, $suffix)) || (strpos($file, 'gage'))) {
+                    //if (strpos($file, 'log') !== false  || strpos($file, "".".txt") || (strpos($file, $suffix)) || (strpos($file, 'gage'))) {
+                    if (strpos($file, 'log') === FALSE  &&  strpos($file, 'Rout') === FALSE && strpos($file, 'workenv') === FALSE) {
                         // Get real and relative path for current file
                         $filePath = $file->getRealPath();
                         $relativePath = substr($filePath, strlen($rootPath) + 1);
