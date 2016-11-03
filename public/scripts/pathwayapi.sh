@@ -8,7 +8,7 @@
 #!/bin/bash
 
 argument_list=""
-API_PATH='http://pathview.uncc.edu/api/analysis'
+API_PATH='http://pathview-dev.uncc.edu/api/analysis'
 
 
 function usage()
@@ -118,7 +118,7 @@ while [ "$1" != "" ]; do
                                 ;;
         --auto_sel )          shift
                                 auto_sel=$1
-				argument_list+="-F auto_sel=$auto_sel"
+				argument_list+="-F auto_sel=$auto_sel "
                                 ;;
         --pathway_id )          shift
                                 pathway_id=$1
@@ -271,7 +271,7 @@ done
 
 function run_api_analysis()
 {
-   if  [ $auto_sel == 'T' ] && ! [ -z $pathway_id ]
+   if   ! [ -z $auto_sel ] && [ $auto_sel == 'T' ] && ! [ -z $pathway_id ]
    then
    {
      echo "Warning : The auto selection is set as true so the pathways ids will be ignored."
