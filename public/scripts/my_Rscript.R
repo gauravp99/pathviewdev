@@ -9,7 +9,8 @@ idx=seq(1, length(arg.v), by=2)
 args1=arg.v[idx+1]
 names(args1)=arg.v[idx]
 
-logic.idx=c("kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc", "autoPathwaySelection")#"autosel")
+logic.idx=c("kegg", "layer", "split", "expand", "multistate", "matchd", "gdisc", "cdisc", "autosel")#"autoPathwaySelection")
+
 num.idx=c("offset", "glmt", "gbins", "clmt", "cbins", "pathidx")
 #num.idx=c("offset", "gbins", "cbins", "pathidx")
 cn.idx=c("generef", "genesamp", "cpdref", "cpdsamp")
@@ -43,8 +44,8 @@ save.image("workenv.RData")
 args2$cpdid=tolower(args2$cpdid)
 
 #setwd(args2$targedir)
-#zz <- file("errorFile.Rout", open = "wt")
-#sink(zz,type = "message")
+zz <- file("errorFile.Rout", open = "wt")
+sink(zz,type = "message")
 if(!is.null(args2$geneextension) && length(args2$geneextension) > 0){
     if(args2$geneextension == "txt"){
         a=read.delim(args2$filename, sep="\t", row.names=NULL)
@@ -101,7 +102,7 @@ save.image("workenv.RData")
     species0=species=args2$species
 
 #select pathway here
-auto.sel=args2$autoPathwaySelection
+auto.sel=args2$autosel
 nmax=4
 if(auto.sel){
 require(gage)
@@ -308,7 +309,14 @@ if(cclass=="matrix" | cclass=="numeric"){
     fnames=list.files(gsets.dir, full.names=F)
     if(basename(gsfn) %in% fnames){
         load(gsfn)
-        gsets=kegg.cpd.set
+        csets=kegg.cpd.set
+        if(!is.null(gsets) & species!="ko") {
+            gpaths=names(gsets)
+            cpaths=gsub("ko", species, names(csets))
+            names(csets)=cpaths
+            cpi=cpaths %in% gpaths
+            csets=csets[cpi]
+        }
     } else stop("Can't find KEGG compound set data!")
 
 if(map.data){
@@ -333,7 +341,7 @@ if(map.data){
 } else cpd.d=exprs=cbind(cpd.d)
 
     
-gage.res.cpd=gage(exprs=exprs, gsets=gsets, ref = NULL, samp = NULL,
+gage.res.cpd=gage(exprs=exprs, gsets=csets, ref = NULL, samp = NULL,
     set.size = c(10, Inf),  same.dir = TRUE) #same.dir = FALSE)
 write.table(rbind(gage.res.cpd$greater, gage.res.cpd$less),
             file = "gage.res.cpd.txt", sep = "\t", quote = FALSE)
@@ -379,7 +387,14 @@ print(2)
     fnames=list.files(gsets.dir, full.names=F)
     if(basename(gsfn) %in% fnames){
         load(gsfn)
-        gsets=kegg.cpd.set
+        csets=kegg.cpd.set
+        if(!is.null(gsets) & species!="ko") {
+            gpaths=names(gsets)
+            cpaths=gsub("ko", species, names(csets))
+            names(csets)=cpaths
+            cpi=cpaths %in% gpaths
+            csets=csets[cpi]
+        }
     } else stop("Can't find KEGG compound set data!")
 
 
@@ -396,23 +411,23 @@ if(map.data){
 } else cpd.d=mol.sel
 
 print(0)
-rows = length(gsets)
+rows = length(csets)
                                         #create a matrix with number of rows as number of rows in gests 
 m <- matrix(c(1:rows),nrow=rows)
-gsets.all=unique(unlist(gsets))
+csets.all=unique(unlist(csets))
 mol.sel.0=mol.sel
-mol.sel=mol.sel[mol.sel %in% gsets.all]
-    mol.bg= gsets.all
+mol.sel=mol.sel[mol.sel %in% csets.all]
+    mol.bg= csets.all
 nsel=length(mol.sel)
 nbg=length(mol.bg)
 
-cnts.sel=sapply(gsets, function(gs){
+cnts.sel=sapply(csets, function(gs){
                     ii=gs %in% mol.sel
                     return(c(length(ii), sum(ii)))
                 })
 
 
-    cnts.bg=sapply(gsets, function(gs){
+    cnts.bg=sapply(csets, function(gs){
                        ii=gs %in% mol.bg
                        return(c(length(ii), sum(ii)))
                    })
