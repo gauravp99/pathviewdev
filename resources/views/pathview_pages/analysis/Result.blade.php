@@ -282,6 +282,7 @@
                             $arguments = array();
                             $species = "";
                             $suffix = "";
+                            $autoPathwaySelection = "";
                             $arguments = explode(";", $_SESSION['argument']);
                             $arguments = array_unique($arguments);
                             foreach($arguments as $arg)
@@ -339,13 +340,16 @@
                         </tr>
                         <?php
                         break;
-			case "autoPathwaySelection":
+			//case "autoPathwaySelection":
+			case "autosel":
                         $arg1[0] = "Auto Pathway Selection";
                         if ($arg1[1] == 'T') {
                             $arg1[1] = "True";
                         } else {
                             $arg1[1] = "False";
                         }
+			$autoPathwaySelection=$arg1[1];
+
                         ?>
                         <tr>
                             <td><b>{{$arg1[0]}}</b></td>
@@ -712,7 +716,7 @@
             <h2 class="alert alert-success " style="color:black;"> Completed </h2>
 
             <p>Click to see the output Generated and Logs under execution</p>
-            <a href="resultview?analyses={{$_SESSION['analyses_id']}}&id={{$species}}&suffix={{$suffix}}">Analysis
+            <a href="resultview?analyses={{$_SESSION['analyses_id']}}&id={{$species}}&suffix={{$suffix}}&autopathwayselection={{$autoPathwaySelection}}">Analysis
                 Results and logs</a>
             <img src="/images/checked.png">
             <?php
