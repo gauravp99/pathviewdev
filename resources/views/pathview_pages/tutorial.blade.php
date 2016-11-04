@@ -284,8 +284,11 @@
                                 <dt><a name="auto_sel">Pathway Selection</a></dt>
                             </div>
                             <div class="panel-body argument">
-				<dd>This argument controls the pathway IDs. 
-                                    If set then the user need not to specify the pathway ids from the auto suggest box. 
+				<dd>Whether the target pathways for visualization be selected automatically or specified by the user. 
+                                    Auto-selection is recommended if the user is not sure what pathway(s) to view. Pathways are selected 
+                                    using GAGE for continuous data or over-representation test for discrete data (i.e. list of gene or compound IDs). 
+                                    If no pathways are called significant, the few top pathways will be selected. When both gene and compound data are 
+                                    used, pathways selected for both data types will be viewed.
                                 </dd>
                             </div>
                         </div>

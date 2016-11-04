@@ -18,7 +18,6 @@ use RecursiveDirectoryIterator;
 use Response;
 class UrlController extends Controller
 {
-
    public function index()
    {
       $download_link ="http://10.23.56.41/abc/xyz";
@@ -135,7 +134,7 @@ class UrlController extends Controller
        }
        else
        {
-         return response() -> json(['download link' => ''.$download_link, 'warning' => $response_warning ]); 
+         return response() -> json(['download link' => ''.$download_link, 'Warning' => $response_warning ]); 
        }
        #return response() -> json(['download link' => ''.$download_link]); 
    }
@@ -249,63 +248,75 @@ class UrlController extends Controller
       //-----------------------pathwayids
       if (Input::has('pathway_id') || Input::hasFile('pathway_id')) 
       {
-	      if(Input::has('pathway_id'))
-	      {
-                  $input_pathway=Input::get('pathway_id');
-	      }
-	      else
-	      {
-	          $file=Input::file('pathway_id');
-	          $file_contents=file($file->getRealPath());
-	          $input_pathway=implode(',', $file_contents);
-	      }
-         preg_match_all('!\d{5}!', $input_pathway, $matches);
-         $pathway_array = array();
-	 $invalid_pathway_ids = array();
-         $i = 0;
-	 foreach ($matches as $pathway1) 
+	 if ($autopathway == 'T')
 	 {
-            foreach ($pathway1 as $pathway)
-            {
-               //check in db if pathway exists or not
-         	$val = DB::select(DB::raw("select pathway_id from pathway where pathway_id like '$pathway' LIMIT 1"));
-         	if((sizeof($val) > 0) or  $pathway == '00000')
-         		array_push($pathway_array, $pathway);
-		else
-	        {
-                      array_push($invalid_pathway_ids, $pathway);
-		}
-         	$i = $i + 1;
-         	//limit imposed as per req to pathway id not more than 20 to each request
-         	if(sizeof(array_unique($pathway_array)) >= 20)
-         	{
-         		break;
-         	}
+	    $warning_msg="The auto selection is set as true so the pathways ids will be ignored.";
+            $response_arr['warning_msg']=$warning_msg;
+	    //Set the auto pathway id as '000000' 
+            $pathway = array('00000');
+         }
+	 else
+	 {
+	    if(Input::has('pathway_id'))
+	    {
+                $input_pathway=Input::get('pathway_id');
+	    }
+	    else
+	    {
+	        $file=Input::file('pathway_id');
+	        $file_contents=file($file->getRealPath());
+	        $input_pathway=implode(',', $file_contents);
+	    }
+            preg_match_all('!\d{5}!', $input_pathway, $matches);
+            $pathway_array = array();
+	    $invalid_pathway_ids = array();
+            $i = 0;
+	    foreach ($matches as $pathway1) 
+	    {
+               foreach ($pathway1 as $pathway)
+               {
+                  //check in db if pathway exists or not
+            	$val = DB::select(DB::raw("select pathway_id from pathway where pathway_id like '$pathway' LIMIT 1"));
+            	if((sizeof($val) > 0) or  $pathway == '00000')
+            		array_push($pathway_array, $pathway);
+	           else
+	           {
+                         array_push($invalid_pathway_ids, $pathway);
+	           }
+            	$i = $i + 1;
+            	//limit imposed as per req to pathway id not more than 20 to each request
+            	if(sizeof(array_unique($pathway_array)) >= 20)
+            	{
+            		break;
+            	}
+                }
+                if(sizeof(array_unique($pathway_array)) > 20)
+                {
+                   $msg='Please provide pathway Ids < 20';
+            	$status_code=400;
+                   //return response()->json([ 'message' => $msg ], $status_code);
+	        } 
              }
-             if(sizeof(array_unique($pathway_array)) > 20)
+             $pathway_array1 = array_unique($pathway_array);
+	     if(sizeof($invalid_pathway_ids) > 0)
+	     {
+                $status_code=400;
+	        $invalid_pathways=implode(",", $invalid_pathway_ids);
+	        $warning_msg="Wrong pathway ID(s) '$invalid_pathways'. These will not be considered for doing pathway analysis.";
+                $response_arr['warning_msg']=$warning_msg;
+	     }
+             //if((sizeof($pathway_array1) == 0) && ($autopathway == 'F'))
+             if(sizeof($pathway_array1) == 0)
              {
-                $msg='Please provide pathway Ids < 20';
-         	$status_code=400;
-                //return response()->json([ 'message' => $msg ], $status_code);
-	     } 
-          }
-          $pathway_array1 = array_unique($pathway_array);
-	  if(sizeof($invalid_pathway_ids) > 0)
-	  {
-             $status_code=400;
-	     $invalid_pathways=implode(",", $invalid_pathway_ids);
-	     $warning_msg="Warning: Wrong pathway ID(s) '$invalid_pathways'. These will not be considered for doing pathway analysis.";
-             $response_arr['warning_msg']=$warning_msg;
-	  }
-          if(sizeof($pathway_array1) == 0)
-          {
-             $status_code=400;
-             $msg='Wrong pathway ID entered.Please provide the valid pathway IDs';
-             $response_arr['status_code']=$status_code;
-             $response_arr['message']=$msg;
-	     return $response_arr;
-          }
-          $pathway = $pathway_array1;
+                   $status_code=400;
+                   $msg='Wrong pathway ID entered.Please provide the valid pathway IDs';
+                   $response_arr['status_code']=$status_code;
+                   $response_arr['message']=$msg;
+	           return $response_arr;
+             }
+
+             $pathway = $pathway_array1;
+	 }
       }
 
       ////------------Suffix

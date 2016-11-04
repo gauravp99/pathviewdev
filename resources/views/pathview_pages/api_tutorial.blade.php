@@ -189,7 +189,7 @@ td {
         <td>This argument controls the pathway IDs. If set then the user need not to specify the pathway ids from the auto suggest box.</td>
         <td>F</td>
         <td><a href="tutorial#auto_sel"
-             onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
+             onclick="window.open('tutorial#auto_sel', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Auto Selection</a></td>
      </tr>
      <tr>

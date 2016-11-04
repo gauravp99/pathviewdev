@@ -9,6 +9,7 @@
 
 argument_list=""
 API_PATH='http://pathview-dev.uncc.edu/api/analysis'
+#API_PATH='http://10.23.251.42/api/analysis'
 
 
 function usage()
@@ -32,7 +33,7 @@ function usage()
 	echo "--pathview_id     This argument specifies the KEGG pathway IDs, usually 5 digit long.Pathway IDs can also be provided in a comma separated file"
 	echo "--gene_id         ID type used for the Gene Data"
 	echo "--cpd_id          ID type used for the Compound Data"
-	echo "--auto_sel        This argument controls the manual or auto selection of the pathway id."
+	echo "--auto_sel        This argument is recommended if the user is not sure what pathway(s) to view."	
 	echo "--species         Either the KEGG code, scientific name or the common name of the target species"
 	echo "--kegg            This argument specifies whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf)"
 	echo "--layer           This argument controls plotting layers.Default value is F(False)"
@@ -271,13 +272,6 @@ done
 
 function run_api_analysis()
 {
-   if   ! [ -z $auto_sel ] && [ $auto_sel == 'T' ] && ! [ -z $pathway_id ]
-   then
-   {
-     echo "Warning : The auto selection is set as true so the pathways ids will be ignored."
-   	
-   }
-   fi
 
    if [ -z $gene_data ] && [ -z $cpd_data ]
    then
