@@ -8,9 +8,7 @@
 #!/bin/bash
 
 argument_list=""
-API_PATH='http://pathview-dev.uncc.edu/api/analysis'
-#API_PATH='http://10.23.251.42/api/analysis'
-
+API_PATH='http://pathview.uncc.edu/api/analysis'
 
 function usage()
 {

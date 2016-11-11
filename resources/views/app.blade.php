@@ -7,6 +7,8 @@
     <meta name="AUTHOR" content="Weijun Luo,Yeshvant Kumar Bhavnasi Venkat Satya">
     <link rel="icon" href="/images/plogo.png" sizes="32x32">
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
+    <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('/css/style.css') }}" type="text/css" media="screen"/>
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
@@ -49,7 +51,7 @@
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="/tutorial#input">Attributes Help</a></li>
                         <li><a href="/tutorial">Custom Analysis</a></li>
-                        <li><a href="/tutorial#example1">Example Analysis</a></li>
+                        <li><a href="/api_examples">Example Analysis</a></li>
                         <li><a href="/api_tutorial">API Documentation</a></li>
                         <li><a href="/tutorial#refrence">References</a></li>
                         <li><a href="/faq">Question?</a></li>

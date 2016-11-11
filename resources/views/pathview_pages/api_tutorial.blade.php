@@ -38,7 +38,7 @@ td {
         <p>Pathview API (url) is a bash script. It requires cURL pre-installed, which is the case for most Unix/Linux/Mac systems. cURL can be download  <a href='https://curl.haxx.se/download.html'>here</a> if needed. To get started:</p>
 	<p>1. Download API with cURL
         </br>
-        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview-dev.uncc.edu/scripts/pathwayapi.sh </p>
+        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu/scripts/pathwayapi.sh </p>
 	<p>2. Modify access of the API </p>
         <p style="font-size: 15px; margin-left: 50px;">chmod +x ./pathwayapi.sh </p>
 	<p>3. Ready to go, please check the following sections for usage</p>
