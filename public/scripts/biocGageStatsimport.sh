@@ -1,30 +1,36 @@
 #!/bin/bash
-	wget "http://bioconductor.org/packages/stats/bioc/gage.html"
-	wget -q --spider "http://bioconductor.org/packages/stats/bioc/gage.html"
-	out=$?
-	if [ $out = 0 ]	
-	then	
-		months=("Jan" "Feb" "Mar" "Apr" "May" "Jun" "Jul" "Aug" "Sep" "Oct" "Nov" "Dec" )
-		count=0
-		for i in "${months[@]}"
-		do
-			temp=`grep -oh "$i/[0-9]*" gage.html`
-			month=`echo $temp|cut -c1-3`
-			year=`echo $temp | grep -oh '[0-9]*'`
-			ipadd=$(grep ">$month" gage.html | grep -o ">[0-9]*<" | grep -o "[0-9]*" | head -1)
-			downloads=$(grep ">$month" gage.html | grep -o ">[0-9]*<" | grep -o "[0-9]*" | tail -1)
+#This script is for getting the stats from bioc gage web site and upload to pathway database every day morning 2:30
+#Author: Gaurav P
+#Script usage: Run the script without any parameter ./biocGageStatsimport.sh 
 
-			echo $ipadd "-" $downloads "-" $month "-" $year
+wget -q  "https://bioconductor.org/packages/stats/bioc/gage/gage_stats.tab"
+if [ $? -ne 0 ]
+then
+  echo "Error will fetching the stats from bioc gage website. Exiting..."
+  exit 1
+fi
 
-
-			echo "delete from biocGagestatistic where month = '$month' and year = '$year';"|mysql -uroot -pAdminAdmin PathwayWeb
-			echo "insert into biocGagestatistic values('$month','$year',$ipadd,$downloads);" |mysql -uroot -pAdminAdmin PathwayWeb
-
-		done
-
-		echo "completed inserting"
-	else
-		echo "not able to hit the gave statistics page"
-	fi	
-		rm "gage.html"
-
+files=('gage_stats.tab')
+if [ -f gage_stats.tab ]
+then
+   for file in "${files[@]}"
+   do
+      tail -n +2 $file |grep -v all |  while read line
+      do
+         year=`echo $line | tr -s " "  | awk -F " " '{print $1}'`
+         month=`echo $line| tr -s " "  | awk -F " " '{print $2}'`
+         ipadd=`echo $line | tr -s " "  | awk -F " " '{print $3}'`
+         downloads=`echo $line | tr -s " "  | awk -F " " '{print $4}'`
+         echo $year,$month,$ip,$downloads
+         if [ $downloads -ne 0 ]
+         then
+           echo "delete from biocGagestatistic where month = '$month' and year = '$year';"|mysql -uroot -proot PathwayWeb
+           echo "insert into biocGagestatistic values('$month','$year',$ipadd,$downloads);" |mysql -uroot -proot PathwayWeb
+         fi
+      done
+   done
+   rm gage_stats.tab
+else
+   echo "Bioc Gage Stats file doesn't exist ..Exiting"
+   exit 1
+fi
