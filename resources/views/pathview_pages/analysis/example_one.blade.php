@@ -152,12 +152,12 @@ use Illuminate\Cacheache;
                                             echo "checked";
                                         }
                                     }?>>
-                                    <a href="/all/demo/example/sim.cpd.data2.csv" target="_blank">{{$cpdfile}}</a>
+                                    <a href="/data/sim.cpd.data2.csv" target="_blank">{{$cpdfile}}</a>
                                 </div>
                             </div>
                         </div>
                         <!-- Analysis Template for the analysis web page -->
-                    @include('analysis')
+		    @include('analysis', ['example_analysis' => 'true'])
                 </div>
             </div>
         </div>
