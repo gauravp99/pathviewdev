@@ -1,13 +1,14 @@
 <?php namespace App\Http\Controllers\pathview\analysis;
 
 /**
- * @Author: Yehsvant Bhavnasi, Dr. Weijun Luo
- * @Contact: byeshvant@hotmail.com
+ * @Author: Gaurav Pant, Dr. Weijun Luo
+ * @Contact: gpant@uncc.edu
  * Pathview web @main controller here are all the analysis examples control functions are done
  *
  * This code is deprecated not in user
  */
 use App\Http\Requests;
+use App\User;
 use App\Http\Requests\CraeteAnalysisRequest;
 use Auth;
 use DB;
@@ -46,17 +47,102 @@ class AnalysisController extends Controller
                     ->where('id', '=', Auth::user()->id)->first();
                 if (sizeof($result) > 0) {
                     //analysis belong this user deleting using storage
-                    $directory = public_path() . '/all/' . Auth::user()->email . '/' . $analysis_id;
-                    DB::table('analysis')
-                        ->where('analysis_id', '=', $analysis_id)
+
+                
+		//Child Table Deletion
+		#$shared_result=DB::table('shared_analysis')-> where('shared_analysis_id', '=', $analysis_id)-> where('owner', '=', Auth::user()->id);
+		$owner_id=Auth::user()->id;
+		$shared_result= DB::select(DB::raw("select shared_user from shared_analysis where shared_analysis_id='$analysis_id'"));
+		foreach ($shared_result as $delete_shared_analysis)
+		{
+		   $shared_user_id=$delete_shared_analysis->shared_user;
+		   $shared_analysis_owner= DB::select(DB::raw("select email from users where id=$shared_user_id limit 1"));
+                   $shared_directory = public_path() . '/all/' . $shared_analysis_owner[0]->email . '/' . $analysis_id;
+                    DB::table('shared_analysis')
+                        ->where('shared_analysis_id', '=', $analysis_id)
+			->where('shared_user', '=', $shared_user_id)
                         ->update(array('isDeleted' => "Y"));
-                    $success = File::deleteDirectory($directory);
-                }
+                    $success = File::deleteDirectory($shared_directory);
+		}
+		//Parent Table Deletion
+                $directory = public_path() . '/all/' . Auth::user()->email . '/' . $analysis_id;
+                DB::table('analysis')
+                    ->where('analysis_id', '=', $analysis_id)
+                    ->update(array('isDeleted' => "Y"));
+                $success_delete_owner = File::deleteDirectory($directory);
+	      }
             }
 
         } 
 return Redirect::back()->with('success', 'Error');
 
+        
+    }
+    public function share()
+    {
+        $analysis_id_all = $_POST["analysisID"];
+	$emails = preg_replace('/[ ;]+/', ',', trim($_POST["emailID"]));
+        $email_ids = array_unique(explode(';', $_POST["emailID"]));
+	$invalid_emaild_ids=array();
+        $split_arr = array_map('trim', preg_split('/;|,/', $_POST["emailID"]));
+
+	//Check if user is sharing his email id itself. If yes then 
+	// discard his email id since this will crash the code 
+	// because of failute of link exists.
+	//
+	$pos=array_search(Auth::user()->email,  $split_arr);
+	if ($pos !== FALSE)
+	{
+	  unset($split_arr[$pos]);
+	}
+        if (strlen($analysis_id_all) > 13) 
+        {
+          $analyis_array = array_unique(array_map('trim', explode(',', $analysis_id_all)));
+        }
+        else 
+        {
+	   $message='Invalid analysis id';
+           return Redirect::back()->with('failure', $message);
+        }
+
+	$array_invalid_user=array();
+	foreach ($split_arr as $email_id)
+	{
+	   $checkSharedUserExist= DB::select(DB::raw("select email from users  where email='$email_id' and activated=true limit 1"));
+	   if (empty($checkSharedUserExist))
+	   {
+	     array_push($array_invalid_user, $email_id);
+	     continue;
+	   }
+	   foreach ($analyis_array as $analysis_id) 
+	   {
+               $target_directory = public_path() . "/all/" . Auth::user()->email . "/" . $analysis_id;
+               $shared_directory = public_path() . "/all/" . $email_id;
+	       if (empty($analysis_id) || is_link($shared_directory. "/". $analysis_id))
+	       {
+	         continue;
+	       }
+	       else
+	       {
+	         symlink($target_directory, $shared_directory . "/". $analysis_id);
+	       }
+               $result = DB::table('analysis')
+                   ->where('analysis_id', '=', $analysis_id)
+                   ->where('id', '=', Auth::user()->id)->first();
+               if (sizeof($result) > 0) {
+                 $shared_user = DB::table('users')->where('email',$email_id)->get();
+                 DB::table('shared_analysis')->insert(
+      	          array('shared_analysis_id' => $analysis_id . "", 'owner' => Auth::user()->id, 'shared_user' => $shared_user[0]->id));
+               }
+           }
+	}
+	if (sizeof($array_invalid_user) == sizeof($split_arr))
+	{
+             $message="No user exists with email id(s): ". implode(",", $array_invalid_user). " ";
+             return Redirect::back()->with('failure', $message);
+	}
+	$valid_user=array_diff($split_arr, $array_invalid_user);
+return Redirect::back()->with('message', "Succesfully shared the analysis with user: ".implode(",", $valid_user));
         
     }
 

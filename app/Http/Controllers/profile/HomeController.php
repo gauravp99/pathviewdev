@@ -4,6 +4,7 @@
  * @Contact: byeshvant@hotmail.com
  */
 use App\Analysis;
+use App\SharedAnalysis;
 use Auth;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Controller;
@@ -35,7 +36,6 @@ class HomeController extends Controller
     public function index()
     {
 
-
-        return view('profile.home')->with('analyses',Analysis::where('id', Auth::user()->id)->where('isDeleted','N')->orderBy('created_at', 'desc')->paginate(20));
+        return view('profile.home')->with('analyses',Analysis::where('id', Auth::user()->id)->where('isDeleted','N')->orderBy('created_at', 'desc')->paginate(20))->with('shared_analyses', SharedAnalysis::where('shared_user', Auth::user()->id)->where('isDeleted','N')->orderBy('created_at', 'desc')->paginate(20));
     }
 }

@@ -14,6 +14,12 @@
             ?>@include('navigation')<?php
         }
     ?>
+    @if (Session::has('failure'))
+       <h1 class="danger" style="color:#a94442;"> {{ session('failure') }} </h1>
+    @endif
+    @if (session('message'))
+       <h1 class="success" style="color:rgb(65, 134, 58);"> {{ session('message') }} </h1>
+    @endif
 
     <div class='col-md-2-result sidebar col-md-offset-2'>
         <h1 class="success" style="color:rgb(65, 134, 58);">{{Auth::user()->name}} profile </h1>
@@ -137,10 +143,14 @@
             $len = strpos($string, $end, $ini) - $ini;
             return substr($string, $ini, $len);
         }
-        if (is_null($analyses)) {
-            echo "No recenet Activity's";
+	error_log('--------------------------------------');
+        if (empty($analyses[0]->arguments)) {
+            echo "No recent Activity's";
         } else { ?>
 
+        <div class="col-md-12 content" style="text-align: center;">
+            <h3 class="arg_content">Analysis Owned by user</h3>
+        </div>
 
         <div class="col-sm-12">
 
@@ -156,20 +166,28 @@
 
         </div>
 
-
-
         <table class="table table-bordered" style="padding:10px;width:90%;margin:auto;">
             <thead>
            <tr>
+           <td>
 	   <div  style="margin-left:55px;margin-bottom:5px;">
                 <div class="btn-group" style=""><a href='#' data-id='' data-toggle='modal' id='Analysisdelete' data-analysisID="" style='display:none;' class='delete' data-target='#myModal'>
                         <button type="button" class="btn btn-default dropdown-toggle" ><span class='glyphicon glyphicon-trash'> Delete</span></button>
                     </a>
                 </div>
             </div>
+           </td>
+           <td>
+	   <div  style="margin-left:55px;margin-bottom:5px;">
+                <div class="btn-group" style=""><a href='#' data-id='' data-toggle='modal' id='Analysisshare' data-analysisID="" style='display:none;' class='share' data-target='#myModal1'>
+                        <button type="button" class="btn btn-default dropdown-toggle" ><span class='glyphicon glyphicon-share'> Share</span></button>
+                    </a>
+                </div>
+            </div>
+           </td>
             </tr>
 	    <tr>
-                <th><input type="checkbox" name="select" id="selectAll"><span   id="selectAlltext" >  Select All</span></th>
+		<th><input type="checkbox" name="select" id="selectAll"><span   id="selectAlltext" >  Select All</span></th> 
 
                 <th>#</th>
                 <th>Analysis Type</th>
@@ -211,16 +229,64 @@
                 pclose($io);
                 $size = (intval($size))/1024;
                 echo "<td>".number_format((float)$size, 2, '.', '')." MB</td></tr>";
-
-
             }}?>
-
-
-
-
         </table>
+    <div class="col-md-12 content" style="text-align: center;">
+        <h3 class="arg_content">Analysis Shared by other user</h3>
+    </div>
+        <?php
+        if (empty($shared_analyses[0]->shared_analysis_id)) {
+            echo "No recent Shared Analysis";
+        } else { ?>
 
+        <table class="table table-bordered" style="padding:10px;width:90%;margin:auto;">
+            <thead>
+	    <tr>
+                <th>#</th>
+                <th>Analysis Type</th>
+                <th>Number of days</th>
+                <th>Result access</th>
+                <th>Analysis Size</th>
+                <th>Shared By</th>
+            </tr>
+            </thead>
+            <?php
+            $i = 1;
+            foreach ($shared_analyses as $shared_analyses1) {
+                $now = time(); // or your date as well
+                $your_date = strtotime(str_split($shared_analyses1->created_at, 10)[0]);
+                $date_diff = $now - $your_date;
+            	$arguments_shared= DB::select(DB::raw("select arguments,analysis_type from analysis where analysis_id='$shared_analyses1->shared_analysis_id' limit 1"));
+            	$shared_analysis_owner= DB::select(DB::raw("select email from users where id=$shared_analyses1->owner limit 1"));
+		$shared_analysis_origin='pathview';
+                echo "<td>$shared_analyses1->shared_analysis_id</td><td> {$arguments_shared[0]->analysis_type} </td>";
+                echo "<td> ".floor($date_diff / (60 * 60 * 24))." days ago ";
+                $directory = get_string_between($arguments_shared[0]->arguments, "targedir:", ";");
+                $dir = get_string_between($arguments_shared[0]->arguments, public_path(), ";");
+                $id = get_string_between($arguments_shared[0]->arguments, "species:", ";");
+                $suffix = get_string_between($arguments_shared[0]->arguments, "suffix:", ";");
+                echo "</td>";
+                if(strcmp($shared_analysis_origin,'pathview')==0)
+                    {
+            ?>
+               <td><p>  <a href=/anal_hist?analyses={{$shared_analyses1->shared_analysis_id}}&id={{$id}}&suffix={{$suffix}}&shared_analysis='T'>Analysis:{{$shared_analyses1->shared_analysis_id}}</a> </p></td>
+            <?php
+                        }
+                else if(strcmp($shared_analysis_origin,'gage')==0)
+                    {
+                        echo "<td><p><a href=/gage_hist?analyses=$shared_analyses1->shared_analysis_id>Analysis $shared_analyses1->shared_analysis_id</a> </p></td>";
 
+                    }
+                $f = './all/' . $shared_analysis_owner[0]->email;
+                $io = popen('/usr/bin/du -sk ' . $f.'/'.$shared_analyses1->shared_analysis_id, 'r');
+                $size = fgets($io, 4096);
+                $size = substr($size, 0, strpos($size, "\t"));
+                pclose($io);
+                $size = (intval($size))/1024;
+                echo "<td>".number_format((float)$size, 2, '.', '')." MB</td>";
+                echo "<td> {$shared_analysis_owner[0]->email} </td></tr>";
+	    } }?>
+        </table>
         </div>
 
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -249,19 +315,72 @@
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title " id="myModalLabel">Confirm</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p id="analysis"> </p>
+                        {!! form::open(array('url' => '/analysisShare','method'=>'POST','id'=>'shareAnalysis')) !!}
+                        <label class="col-md-4 control-label">Email Address</label>
+                        <input type="text" name="emailID" id="emailID" value="" />
+                        <input type="text" name="analysisID" id="analysisID" value="" hidden/>
 
 
+                    </div>
+                    <div class="modal-footer">
+                        <input type="submit" value="Share" class="btn btn-default" id='shardsubmitid'>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close
+                        </button>
+			{!! form::close() !!}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/bootcomplete.js/dist/jquery.bootcomplete.js"></script>
 <script>
 
 
     $(function(){
+           $('#emailID').keyup(function ()
+            {
+	      var emailids=$('#emailID').val();
+              //var emailSplit = emailids.split(/[\s;,]+/); 
+              var emailSplit = emailids.split(/[;,]+/); 
+              var patterna=/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
+              for (i in emailSplit)
+              {
+                  if(patterna.test(emailSplit[i]))
+                  {
+                    $('#shardsubmitid').removeAttr("disabled");
+                  }
+                  else
+                  {
+                     $('#shardsubmitid').attr('disabled', true);
+                     break;
+                  }
+              }
+            });
 
+	   //$("#emailID").autocomplete({
+	   //    source: emailid,
+           //    open: function(event, ui) { $(".ui-slider-handle").css("z-index", -1); },
+           //    close: function(event, ui) { $(".ui-slider-handle").css("z-index", 2); }
+           //});
         //unselect all checkbox on load selects the checkbox if already checked and refreshed
         $.each($( ":checkbox"),function(id,element){
             element.checked = false;
         });
 
-$('#Analysisdelete').click(function(){
+$('#Analysisdelete, #Analysisshare').click(function(){
  var Ids = $(this).attr('data-analysisID');
      console.log(Ids);
 	$(".modal-body #analysisID").val( Ids);
@@ -285,8 +404,8 @@ $('#Analysisdelete').click(function(){
 		
 		//setting the analysis id's in the form element
 		console.log(analysisIDText);
-		$('#Analysisdelete').attr('data-analysisID',analysisIDText);
-                $('#Analysisdelete').show();
+		$('#Analysisdelete,#Analysisshare').attr('data-analysisID',analysisIDText);
+                $('#Analysisdelete,#Analysisshare').show();
 		
             }
             else{
@@ -294,7 +413,7 @@ $('#Analysisdelete').click(function(){
                     element.checked = false;
 
                 });
-                $('#Analysisdelete').hide();
+                $('#Analysisdelete,#Analysisshare').hide();
             }
 
 
@@ -310,8 +429,8 @@ $('#Analysisdelete').click(function(){
                 analy_ids += $(this).attr('name');
                 analy_ids +=",";
                 console.log(analy_ids);
-                $('#Analysisdelete').show();
-		$('#Analysisdelete').attr('data-analysisID',analy_ids);
+                $('#Analysisdelete,#Analysisshare').show();
+		$('#Analysisdelete,#Analysisshare').attr('data-analysisID',analy_ids);
             }else if($(this).attr('id') != 'selectAll'){
                 var countOfChecked = 0;
                 analy_ids = "";
@@ -327,7 +446,7 @@ $('#Analysisdelete').click(function(){
 		
                 if(countOfChecked == 0)
                 {
-                    $('#Analysisdelete').hide();
+                    $('#Analysisdelete,#Analysisshare').hide();
                 }
             }else{
 		vflag = true;
@@ -335,7 +454,7 @@ $('#Analysisdelete').click(function(){
 		if(!vflag)
 		{
 		console.log(analy_ids);
-		$('#Analysisdelete').attr('data-analysisID',analy_ids);
+		$('#Analysisdelete,#Analysisshare').attr('data-analysisID',analy_ids);
 		}
         });
 

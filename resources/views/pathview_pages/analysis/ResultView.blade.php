@@ -117,7 +117,7 @@
                if (strpos($val, 'txt')) {
 		 if ($header_flag)
 		 {
-                  echo "<h2>Pathview Selection Results:</h2>";
+                  echo "<h2>Pathway Selected:</h2>";
                   echo "<ul >";
 		   $header_flag=false;
 		 }

@@ -1,6 +1,6 @@
 @extends('app')
-
 @section('content')
+
 <style>
 table, td, th {
     border: 1px solid black;
@@ -38,27 +38,27 @@ td {
         <p>Pathview API (url) is a bash script. It requires cURL pre-installed, which is the case for most Unix/Linux/Mac systems. cURL can be download  <a href='https://curl.haxx.se/download.html'>here</a> if needed. To get started:</p>
 	<p>1. Download API with cURL
         </br>
-        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu/scripts/pathwayapi.sh </p>
+        <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu/scripts/pathviewapi.sh </p>
 	<p>2. Modify access of the API </p>
-        <p style="font-size: 15px; margin-left: 50px;">chmod +x ./pathwayapi.sh </p>
+        <p style="font-size: 15px; margin-left: 50px;">chmod +x ./pathviewapi.sh </p>
 	<p>3. Ready to go, please check the following sections for usage</p>
 <div>
 
         <h1 class="arg_content">Synopsis</h1>
         <p> Basic Usage </p>
-        <p style="font-size: 15px; margin-left: 50px;"> pathwayapi.sh options --gene_data | --cpd_data [--gene_id] [-- cpd_id] [--pathway_id] ... [--other options] </p>
+        <p style="font-size: 15px; margin-left: 50px;"> pathviewapi.sh options --gene_data | --cpd_data [--gene_id] [-- cpd_id] [--pathway_id] ... [--other options] </p>
         <p> Common Usages (Remove annotation in parentheses in real use)</p>
         <p>&nbsp;&nbsp;&nbsp;Gene data:</p>
-        <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --gene_data your/gene/data/file --species hsa (KEGG species code) --gene_id ENTREZ (gene ID type) --pathway_id 00640 (KEGG pathway ID) </p>
+        <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --gene_data your/gene/data/file --species hsa (KEGG species code) --gene_id ENTREZ (gene ID type) --pathway_id 00640 (KEGG pathway ID) </p>
         <p>&nbsp;&nbsp;&nbsp;Compound data:</p>
-         <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID) </p>
+         <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID) </p>
         
         <p>&nbsp;&nbsp;&nbsp;Gene and Compound data:</p>
-        <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --gene_data your/gene/data/file --gene_id ENTREZ (gene ID type) --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID)
+        <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --gene_data your/gene/data/file --gene_id ENTREZ (gene ID type) --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID)
                 </p>
         </br>
         <p>Help</p>
-        <p style="font-size: 15px; margin-left: 50px;">./pathwayapi.sh --help </p>
+        <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --help </p>
         <p>Extras</p>
         <p>&nbsp;&nbsp;&nbsp;Detailed description of the arguments, click <a href="#options" >here</a></p>
         <p>&nbsp;&nbsp;&nbsp;Specific example analysis, click <a href="api_examples" target="_blank" >here</a></p>

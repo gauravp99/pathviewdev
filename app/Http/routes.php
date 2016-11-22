@@ -55,7 +55,8 @@ Route::get('register/verify/{confirmationCode}', [
             //getting the resources for frequently asked questions
                 Route::resource('comments', 'CommentController',
                     array('only' => array('index', 'store', 'destroy')));
-	   //REST APIs to do the analysis from UrlController
+	   //getting all users from new controller
+                Route::resource('url', 'UrlController@index');
                 Route::post('analysis', 'UrlController@postAnalysis');
 
         });
@@ -180,6 +181,8 @@ Route::get('register/verify/{confirmationCode}', [
             }));
 /* URL route for POST Analysis Delete from home page */
         Route::post('analysisDelete','pathview\analysis\AnalysisController@delete');
+/* URL route for POST Analysis Delete from home page */
+        Route::post('analysisShare','pathview\analysis\AnalysisController@share');
 
 /* URL route for POST Analysis (New Analysis)  */
         Route::post('postAnalysis', 'pathview\analysis\PathviewAnalysisController@postAnalysis');
