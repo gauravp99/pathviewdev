@@ -256,9 +256,9 @@
                 $now = time(); // or your date as well
                 $your_date = strtotime(str_split($shared_analyses1->created_at, 10)[0]);
                 $date_diff = $now - $your_date;
-            	$arguments_shared= DB::select(DB::raw("select arguments,analysis_type from analysis where analysis_id='$shared_analyses1->shared_analysis_id' limit 1"));
+            	$arguments_shared= DB::select(DB::raw("select arguments,analysis_type,analysis_origin from analysis where analysis_id='$shared_analyses1->shared_analysis_id' limit 1"));
             	$shared_analysis_owner= DB::select(DB::raw("select email from users where id=$shared_analyses1->owner limit 1"));
-		$shared_analysis_origin='pathview';
+		$shared_analysis_origin=$arguments_shared[0]->analysis_origin;
                 echo "<td>$shared_analyses1->shared_analysis_id</td><td> {$arguments_shared[0]->analysis_type} </td>";
                 echo "<td> ".floor($date_diff / (60 * 60 * 24))." days ago ";
                 $directory = get_string_between($arguments_shared[0]->arguments, "targedir:", ";");

@@ -30,7 +30,18 @@
             $analyses = array();
             if(Auth::user())
             {
-                $analyses = DB::table('analysis')->where(['id' => Auth::user()->id,'analysis_id'=>$analysis])->get();
+		if (isset($_GET['shared_analysis']))
+		{
+                   //$analyses = DB::table('analysis')->where(['id' => Auth::user()->id,'analysis_id'=>$analysis])->get();
+
+                   $analyses = DB::table('analysis')->where(['analysis_id'=>$analysis])->get();
+		}
+		else
+		{
+                   $analyses = DB::table('analysis')->where(['id' => Auth::user()->id,'analysis_id'=>$analysis])->get();
+                   //$analyses = DB::table('analysis')->where(['analysis_id'=>$analysis])->get();
+		}
+
             }
             else
             {
