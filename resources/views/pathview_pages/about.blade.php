@@ -150,7 +150,7 @@
 
                                         <td class="tdContent">Downloads:</td>
 
-                                        <td>&#8776;<?php echo $bioc_dnld_cnt ?></td>
+                                        <td><?php echo $bioc_dnld_cnt ?></td>
 
                                         <td>
                                             <div class="bar1">
@@ -160,7 +160,7 @@
 
                                         <td class="tdContent">IP's:</td>
 
-                                        <td>&#8776;<?php echo $bioc_ip_cnt ?></td>
+                                        <td><?php echo $bioc_ip_cnt ?></td>
                                     </tr>
                                 </table>
                             </div>
