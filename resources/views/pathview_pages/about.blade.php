@@ -1,7 +1,9 @@
 @extends('app')
 
 @section('content')
+@include('navigation')
     <script src="js/ChartNew.js"></script>
+    <div class='col-md-2-result sidebar col-md-offset-2'>
     <div class="content">
         <div class="rows">
             <div class="col-sm-12">

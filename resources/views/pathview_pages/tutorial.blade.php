@@ -1,8 +1,12 @@
 @extends('app')
 
+
 @section('content')
 
-
+@if (!isset($_GET['instruction_flag']))
+   @include('navigation')
+    <div class='col-md-2-result sidebar col-md-offset-2'>
+@endif
     <div class="col-md-12 content" style="text-align: center;">
 
         <h1><b>Help Information</b></h1>
@@ -581,6 +585,7 @@
     <div class="scroll">
         <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-menu-up"
                                               style="font-size: 30px; margin-left: 100px;"></span></a></div>
+ </div>
     <style>
         .scrollToTop {
             width: 100px;

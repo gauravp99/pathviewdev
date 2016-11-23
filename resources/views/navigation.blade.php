@@ -36,7 +36,7 @@
         }?>><a href="/analysis_api"><b>API Query Generator</b></a></li>
         <script>
             function openWindow() {
-                window.open('/tutorial', 'newwindow', "scrollbars=1,status =1,width=2000, height=window.innerHeight");
+                window.open('/tutorial?instruction_flag=T', 'newwindow', "scrollbars=1,status =1,width=2000, height=window.innerHeight");
                 var w = window.innerWidth;
                 var h = window.innerHeight;
             }

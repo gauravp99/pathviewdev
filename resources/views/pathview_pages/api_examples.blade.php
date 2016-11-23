@@ -1,5 +1,7 @@
 @extends('app')
 @section('content')
+@include('navigation')
+    <div class='col-md-2-result sidebar col-md-offset-2'>
         <div class="col-sm-12">
 
             <section id="example1">
@@ -223,4 +225,5 @@
             </section>
 
         </div>
+     </div>
 @stop

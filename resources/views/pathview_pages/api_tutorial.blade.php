@@ -1,6 +1,7 @@
 @extends('app')
 @section('content')
 
+
 <style>
 table, td, th {
     border: 1px solid black;
@@ -30,8 +31,10 @@ td {
 
 </style>
 
-
+@include('navigation')
+    <div class='col-md-2-result sidebar col-md-offset-2'>
     <div class="col-md-12 content" style="text-align: center;">
+
 
         <h1><b>Pathview API Documentation</b></h1>
         <h1 class="arg_content">Get Started</h1>
@@ -431,6 +434,7 @@ td {
     <div class="scroll">
         <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-menu-up"
                                               style="font-size: 30px; margin-left: 100px;"></span></a></div>
+  </div>
     <style>
         .scrollToTop {
             width: 100px;
