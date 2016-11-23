@@ -18,6 +18,28 @@ use RecursiveDirectoryIterator;
 use Response;
 class UrlController extends Controller
 {
+    public function get_client_ip()
+    {
+
+        if (getenv('HTTP_CLIENT_IP'))
+            $ipaddress = getenv('HTTP_CLIENT_IP');
+        else if (getenv('HTTP_X_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+        else if (getenv('HTTP_X_FORWARDED'))
+            $ipaddress = getenv('HTTP_X_FORWARDED');
+        else if (getenv('HTTP_FORWARDED_FOR'))
+            $ipaddress = getenv('HTTP_FORWARDED_FOR');
+        else if (getenv('HTTP_FORWARDED'))
+            $ipaddress = getenv('HTTP_FORWARDED');
+        else if (getenv('REMOTE_ADDR'))
+            $ipaddress = getenv('REMOTE_ADDR');
+        else if (isset($_SERVER['REMOTE_ADDR']))
+            $ipaddress = $_SERVER['REMOTE_ADDR'];
+        else
+            $ipaddress = 'UNKNOWN';
+        return $ipaddress;
+    }
+
    public function index()
    {
       $download_link ="http://10.23.56.41/abc/xyz";
@@ -816,7 +838,7 @@ class UrlController extends Controller
       
       $date = new \DateTime;
       DB::table('analysis')->insert(
-      		array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview_restapi','ip_add' => "127.0.0.1")
+      		array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview_restapi','ip_add' => $this->get_client_ip())
       	);
       //start If there are error in the code analysis saving into database for reporting and solving by admin
       if(file_exists(public_path()."/".$destFile . "/errorFile.Rout"))

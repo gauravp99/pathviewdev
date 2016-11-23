@@ -193,7 +193,7 @@ td {
         <td>F</td>
         <td><a href="tutorial#auto_sel"
              onclick="window.open('tutorial#auto_sel', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
-             target="_blank">Auto Selection</a></td>
+             target="_blank">Pathway Selection</a></td>
      </tr>
      <tr>
         <td>--pathway_id</td>

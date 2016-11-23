@@ -781,11 +781,11 @@ class PathviewAnalysisController extends Controller {
 
 		if (Auth::user())
 			DB::table('analysis')->insert(
-				array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date,'analysis_origin' => 'pathview', 'ip_add' => "127.0.0.1")
+				array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date,'analysis_origin' => 'pathview', 'ip_add' => $this->get_client_ip())
 			);
 		else
 			DB::table('analysis')->insert(
-				array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => "127.0.0.1")
+				array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview','ip_add' => $this->get_client_ip())
 			);
 
 		//start If there are error in the code analysis saving into database for reporting and solving by admin
