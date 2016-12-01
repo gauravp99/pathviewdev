@@ -1,6 +1,12 @@
 <?php
-    $autopathviewselection = false;
+
 ?>
+
+@if (isset($example_analysis_4))
+<?php  $autopathviewselection=true; ?>
+@else
+<?php  $autopathviewselection=false; ?>
+@endif
             <script src="js/jquery.validate.min.js"></script>
             <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
             <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>

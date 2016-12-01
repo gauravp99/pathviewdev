@@ -195,6 +195,8 @@ Route::get('register/verify/{confirmationCode}', [
 
 /* URL route for POST Analysis (example3)  */
         Route::post('post_exampleAnalysis3', 'pathview\analysis\PathviewAnalysisController@post_exampleAnalysis3');
+/* URL route for POST Analysis (example4)  */
+        Route::post('post_exampleAnalysis4', 'pathview\analysis\PathviewAnalysisController@post_exampleAnalysis4');
 
 /* URL route for GET Analysis (example1)  */
         Route::get('example1', 'pathview\analysis\PathviewAnalysisController@example_one');
@@ -204,6 +206,8 @@ Route::get('register/verify/{confirmationCode}', [
 
 /* URL route for GET Analysis (example3)  */
         Route::get('example3', 'pathview\analysis\PathviewAnalysisController@example_three');
+/* URL route for GET Analysis (example4)  */
+        Route::get('example4', 'pathview\analysis\PathviewAnalysisController@example_four');
 /* URL route for GET Analysis (example3)  */
         Route::get('apiview', 'pathview\analysis\PathviewAnalysisController@api_view');
 

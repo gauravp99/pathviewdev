@@ -230,10 +230,6 @@ class PathviewAnalysisController extends Controller {
 			}
 			if ($analyType == 'exampleAnalysis2')
 			{
-
-
-
-
 				if (Input::get('gcheck') == 'T')
 				{
 					$geneFileSize = 1;
@@ -308,6 +304,60 @@ class PathviewAnalysisController extends Controller {
 
 			}
 
+			if ($analyType == 'exampleAnalysis4')
+			{
+				if (Input::get('gcheck') == 'T')
+				{
+					$geneFileSize = 1;
+					$gene_filename = Config::get('constants.example4_genefilename');
+					$gene_filename_path = Config::get('constants.example4_genefilename_path');
+
+					//example2 genecompare and gene sample addition code and gene reference values addition code
+					if(!is_null($_POST['generef']))
+					{
+						$analsisObject->setGeneReference($_POST['generef']);
+					}
+					if(!is_null($_POST['genesam']))
+					{
+						$analsisObject->setGeneSample($_POST['genesam']);
+					}
+					if(!isset($_POST['genecompare']))
+					{
+						$analsisObject->setGeneCompare("paired");
+					}else{
+						$analsisObject->setGeneCompare("unpaired");
+					}
+
+				}
+
+				if (Input::get('cpdcheck') == 'T')
+				{
+					$compoundFileSize = 1;
+					$compound_filename = Config::get('constants.example4_compoundfilename');
+					$compound_filename_path = Config::get('constants.example4_compoundfilename_path');
+
+					//example2 genecompare and compound sample addition code and compound reference values addition code
+					if(!is_null($_POST['cpdref']))
+					{
+						$analsisObject->setCompoundRefeence($_POST['cpdref']);
+					}
+					if(!is_null($_POST['cpdsam']))
+					{
+						$analsisObject->setCompoundSample($_POST['cpdsam']);
+					}
+					if(!isset($_POST['cpdCompare']))
+					{
+						$analsisObject->setCompoundCompare("paired");
+					}else{
+						$analsisObject->setCompoundCompare("unpaired");
+					}
+				}
+				if(!(Input::get('gcheck') == 'T') && !(Input::get('cpdcheck') == 'T'))
+				{
+					return view('pathview_pages.analysis.example_four');
+				}
+
+			}
 			if(Input::get('gcheck') == 'T')
 			{
 				copy($gene_filename_path,$path."/".$gene_filename);
@@ -1277,6 +1327,11 @@ class PathviewAnalysisController extends Controller {
 		$d = new PathviewAnalysisController();
 		return $d->analysis("exampleAnalysis3");
 	}
+	public function post_exampleAnalysis4()
+	{
+		$d = new PathviewAnalysisController();
+		return $d->analysis("exampleAnalysis4");
+	}
 
 	public function example_one()
 	{
@@ -1293,6 +1348,10 @@ class PathviewAnalysisController extends Controller {
 		return view('pathview_pages.analysis.example_three');
 	}
 
+	public function example_four()
+	{
+		return view('pathview_pages.analysis.example_four' , ['example_analysis_4' => 'true']);
+	}
 
 	public function api_view()
 	{

@@ -22,7 +22,7 @@
                     <h2 class="homepage-heading">Credits</h2>
 
                     <p class="content1">
-                        Pathview web is designed and developed by Weijun Luo and Yeshvant Kumar Bhavnasi. We also get
+                        Pathview web is designed and developed by Weijun Luo and his team (Gaurav Pant, Yeshvant Kumar Bhavnasi). We also get
                         support from Steven Blanchard, Cory Brouwer and the whole <a href="https://bioservices.uncc.edu/" target="_blank">Bioinformatics Service Division (BiSD)</a>
                         at UNC Charlotte.
                     </p>
@@ -39,6 +39,8 @@
                         downloads and uses KEGG data. Academic users may freely use the KEGG website, but other uses may
                         require a license agreement (details at <a href="http://www.kegg.jp/kegg/legal.html"
                                                                    target="_blank">KEGG website</a>).
+                        </br>
+                        We made our best efforts when developing Pathview Web server. However, we DO NOT warrant nor assume any legal responsibility for the                         content and function of this server.
                     </p>
 
                     <h2 class="homepage-heading">Citations</h2>
@@ -61,21 +63,14 @@
                         <h2 class="homepage-heading">Sponsors</h2>
 
                         <p class="content1">
-                            This project is sponsored by <a href="https://bioservices.uncc.edu/" target="_blank">BiSD</a> and <a href="http://bioinformatics.uncc.edu/" target="_blank">Department of Bioinformatics and Genomics</a>, and is supported
-                            by the Faculty Innovaton Fund to Weijun Luo from the <a href="http://cci.uncc.edu/" target="_blank">College of Computing and Informatics</a>.
+                            This project is supported by an NSF ABI Development grant (Award # 1565030) and the Faculty Innovation Fund to Weijun Luo from the <a href="http://cci.uncc.edu/" target="_blank">College of Computing and Informatics at UNC Charlotte</a>. Sponsors also include  <a href="https://bioservices.uncc.edu/" target="_blank">BiSD</a> and <a href="http://bioinformatics.uncc.edu/" target="_blank">Department of Bioinformatics and Genomics</a>.
+                            </br>
+
                         </p>
-                    <div class="col-sm-12">
-                        <div class="col-sm-3">
-
-                        </div>
-                        <div class="col-sm-6">
-                            <a href="https://bioservices.uncc.edu/" target="_blank"><img src="images/servicesDivisionLogo.png" width="45%" height="45%"></a>
-                            <a href="http://bioinformatics.uncc.edu/" target="_blank"><img src="images/BioinformaticsLogo.jpg" width="50%" height="50%"></a>
-                        </div>
-                        <div class="col-sm-3">
-
-                        </div>
-
+                    <div class="col-sm-10" align='center'>
+                            <a href="https://nsf.gov/" target="_blank"><img src="images/nsf1.gif" width="15%" height="20%" ></a>
+                            <a href="https://bioservices.uncc.edu/" target="_blank"><img src="images/servicesDivisionLogo.png" width="20%" height="20%"></a>
+                            <a href="http://bioinformatics.uncc.edu/" target="_blank"><img src="images/BioinformaticsLogo.jpg" width="30%" height="30%"></a>
                     </div>
 
                 </div>

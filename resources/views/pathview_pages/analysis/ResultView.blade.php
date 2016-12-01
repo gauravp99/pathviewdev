@@ -114,7 +114,7 @@
                $analyses_id = $_GET['analyses'];
 
                    //print hyperlink for the images/PDF generated
-               if (strpos($val, 'txt')) {
+               if (strpos($val, 'csv')) {
 		 if ($header_flag)
 		 {
                   echo "<h2>Pathway Selected:</h2>";
@@ -183,27 +183,18 @@
                 $array_string = explode(" ", $temp);
                 foreach ($array_string as $a_string) {
                     if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0 || strcmp($a_string, 'error:') == 0) {
-
-                        if (!$flag1) {
-
-
-                            echo "<h4 class='alert alert-warning'> Species and pathway id combination is not Valid/present at KEGG";
-                            echo " Or make sure your input gene and compound uploaded data is in the requested format</h4>";
-                            echo "<br/><h4 class='alert alert-warning'>Mail Send to the admin and admin will reply to you as early as possible with solution</h4><ul class='alert alert-danger'>";
-                            if (strcmp($a_string, 'error') == 0 || strcmp($a_string, 'warning:') == 0) {
-                                $flag1 = true;
-                            }
-
-                        }
-
-
-                        echo "<li>" . $temp . "</li>";
-
-                        $flag = true;
+                        echo "<li class='alert alert-danger'>" . $temp . "</li>";
+                        $flag1 = true;
 
                     }
-
                 }
+
+
+            }
+            if ($flag1) {
+                echo "<h4 class='alert alert-warning'> Species and pathway id combination may not be Valid/present at KEGG";
+                echo " Or make sure your input gene and compound uploaded data is in the requested format</h4>";
+                //echo "<h4 class='alert alert-warning'>Mail Send to the admin and admin will reply to you as early as possible with solution</h4>";
             }
             if ($flag1) {
                 echo "</ul>";

@@ -26,6 +26,9 @@
         <li <?php if (basename(Request::url()) == "example3") {
             echo "class=\"active\"";
         }?>><a href="/example3"><b>Example 3</b></a></li>
+        <li <?php if (basename(Request::url()) == "example4") {
+            echo "class=\"active\"";
+        }?>><a href="/example4"><b>Example 4</b></a></li>
         <li><a href="#" onclick="openWindow()">
                 <b>Instructions</b></a></li>
         <li <?php if (basename(Request::url()) == "contact") {
