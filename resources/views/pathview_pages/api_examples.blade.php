@@ -18,7 +18,7 @@
                     In this example Gene Data has 3 samples and Compound Data has 2 samples.
                 <p> API Invocation </p> 
                 <p style="font-size: 15px; margin-left: 50px;">
-                    ./pathwayapi.sh  --gene_data gse16873.d3.txt --cpd_data sim.cpd.data2.csv --species hsa --gene_id ENTREZ --cpd_id KEGG --pathway_id 00640 --suffix multistatekegg   </p>
+                    ./pathviewapi.sh  --gene_data gse16873.d3.txt --cpd_data sim.cpd.data2.csv --species hsa --gene_id ENTREZ --cpd_id KEGG --pathway_id 00640 --suffix multistatekegg   </p>
                 </p>
                 </br>
 
@@ -87,7 +87,7 @@
                     by unchecking the kegg view selection box.
                 <p> API Invocation </p>
 		<p style="font-size: 15px; margin-left: 50px;">
-		./pathwayapi.sh --gene_data gse16873.3.txt --cpd_data sim.cpd.data1.csv --species hsa --pathway_id 00640 --suffix multi --kegg F  --limit_gene -1,2  --cpd_reference 1,2 --cpd_sample 3,4 --gene_reference 1,3,5 --gene_sample 2,4,6 </p>
+		./pathviewapi.sh --gene_data gse16873.3.txt --cpd_data sim.cpd.data1.csv --species hsa --pathway_id 00640 --suffix multi --kegg F  --limit_gene -1,2  --cpd_reference 1,2 --cpd_sample 3,4 --gene_reference 1,3,5 --gene_sample 2,4,6 </p>
               
                 </p>
                 </br>
@@ -164,7 +164,7 @@
                 </p>
                 <p>  API Invocation </p>
 		<p style="font-size: 15px; margin-left: 50px;">
-		./pathwayapi.sh  --gene_data gene.ensprot.txt  --cpd_data cpd.cas.csv  --species hsa --gene_id ENSEMBLPROT --cpd_id 'CAS Registry Number' --pathway_id 00640 --suffix IDMapping --limit_gene 3 --limit_cpd 3 --bins_gene 6 --bins_cpd 6 </p>
+		./pathviewapi.sh  --gene_data gene.ensprot.txt  --cpd_data cpd.cas.csv  --species hsa --gene_id ENSEMBLPROT --cpd_id 'CAS Registry Number' --pathway_id 00640 --suffix IDMapping --limit_gene 3 --limit_cpd 3 --bins_gene 6 --bins_cpd 6 </p>
 
                 <div class="col-sm-8">
                     <img src="data/hsa00640.IDMapping.png" style="width: 99%;">
@@ -225,5 +225,67 @@
             </section>
 
         </div>
+        <div class="col-sm-12">
+
+            <section id="example4">
+                <h1 class="arg_content">Example 4: Integrated Pathway Analysis (takes longer time)</h1>
+
+                <p>
+		    This example covers a comprehensive workflow including pathway analysis, data integration and visualization. The user 
+                    options of this analysis are similar to other examples, except that Pathway Selection option is set to Auto instead 
+                    of Manual. In this case, pathway analysis is done as to determine the target pathways for downstream visualization and 
+                    interpretation. Since both <a href="data/gse16873.3.txt" target="_blank">gene</a> and <a href="data/sim.cpd.gse16873.csv" target="_blank">compound</a> data (inputs) are included, this example goes beyond in that in integrates 
+                    the two separate regular pathway analysis for <a href=/data/gage.res.sig.gene.csv target="_blank">gene</a> and <a href=/data/gage.res.sig.cpd.csv target="_blank">compound</a> (intermediate results) into a more powerful <a href=/data/combo.res.sig.csv target="_blank">meta-analysis</a> (final results). Data files
+                    are pre
+                    loaded and the options have been preset as below.
+                    Data files used in this example are <a href="data/gse16873.3.txt" target="_blank">Gene
+                        Data</a> and <a href="data/sim.cpd.gse16873.csv" target="_blank">Compound Data</a>.
+                <p> API Invocation </p>
+		<p style="font-size: 15px; margin-left: 50px;">
+		./pathviewapi.sh --gene_data gse16873.3.txt --gene_reference 1,3,5 --gene_sample 2,4,6 --cpd_data sim.cpd.gse16873.csv --cpd_reference 1,2 cpd_sample 3,4 --species hsa --auto_sel T
+                </p>
+                </br>
+
+                <div class="col-sm-8">
+                    <img src="data/example4_sample.png" style="width: 99%;">
+
+                </div>
+                <div class="col-sm-4">
+                    <ul class="list-group">
+                        <a class="list-group-item disabled">
+                            GUI Arguments
+                        </a>
+
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Species</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">hsa</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Kegg Native</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">FALSE</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Pathway Selection</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">Auto</div>
+                        </li>
+                        <li class="list-group-item">
+                            <div class="pathviewargVar">Pathway ID</div>
+                            <div class="pathviewargColon">:</div>
+                            <div class="pathviewargVal">Not Applicable</div>
+                        </li>
+                    </ul>
+                    <a href="/example4">
+                        <button type="button" class="btn btn-primary btn-lg GetStarted  " data-toggle="modal">
+                            Try it
+                        </button>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
      </div>
 @stop

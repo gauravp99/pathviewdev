@@ -15,7 +15,7 @@ use Illuminate\Cacheache;
         <div class="conetent-header">
 
 
-    <p><b>Example Analysis 4:  Integrated Pathway Analysis with Both Gene and Compound Data (takes longer time)</b></p>
+    <p><b>Example Analysis 4:  Integrated Pathway Analysis (takes longer time)</b></p>
 
         </div>
         <div class="col-sm-5">

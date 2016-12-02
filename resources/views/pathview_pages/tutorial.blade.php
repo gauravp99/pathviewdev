@@ -163,26 +163,36 @@
 
             <h1 class="arg_content">Example Analysis</h1>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div style="height:70px"><h2>Multiple Sample KEGG View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview KEGG view.</p>
 
                 <p><a class="btn btn-default" href="api_examples#example1" role="button">View details »</a></p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div style="height:70px"><h2>Multiple Sample Graphviz View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview Graphviz view. </p>
 
                 <p><a class="btn btn-default" href="api_examples#example2" role="button">View details »</a></p>
             </div>
-            <div class="col-md-4">
+
+        </div>
+        <div class="col-md-12 content">
+            <div class="col-md-6">
                 <div style="height:70px"><h2>ID Mapping</h2></div>
 
                 <p>This example shows the ID mapping capability of Pathview.</p>
 
                 <p><a class="btn btn-default" href="api_examples#example3" role="button">View details »</a></p>
+            </div>
+            <div class="col-md-6">
+                <div style="height:70px"><h2>Integrated Pathway Analysis </h2></div>
+
+                <p>This example covers an integration pathway analysis workflow based on Pathview.</p>
+
+                <p><a class="btn btn-default" href="api_examples#example4" role="button">View details »</a></p>
             </div>
         </div>
         <div class="col-sm-12">
@@ -291,8 +301,10 @@
 				<dd>Whether the target pathways for visualization be selected automatically or specified by the user. 
                                     Auto-selection is recommended if the user is not sure what pathway(s) to view. Pathways are selected 
                                     using GAGE for continuous data or over-representation test for discrete data (i.e. list of gene or compound IDs). 
-                                    If no pathways are called significant, the few top pathways will be selected. When both gene and compound data are 
-                                    used, pathways selected for both data types will be viewed.
+				    If no pathways are called significant, the few top pathways will be selected.When both gene data and compound data 
+                                    are present, pathway analysis is done on the two datasets separately first, then the results are combined into more 
+                                    robust global statistics/p-values through meta-analysis. You may either <a href="api_examples#example4">check</a> or <a href=/example4 >try</a> Example 4 to see the effect 
+                                    of setting this option.
                                 </dd>
                             </div>
                         </div>
@@ -302,7 +314,7 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd>KEGG pathway ID(s), usually 5 digit. Can be entered in 2 ways from select box and
-                                    autosuggest text box.
+                                    autosuggest text box.This option is not needed when Pathway Selection option is set to Auto.
                                 </dd>
                             </div>
                         </div>

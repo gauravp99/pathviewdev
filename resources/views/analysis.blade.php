@@ -155,7 +155,7 @@
             <div class="col-sm-5">
                 <a href="tutorial#cpd_id"
                    onclick="window.open('tutorial#cpd_id', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus() ;return false;"
-                   title="To perform pathview generation or not" target="_blank" class="scrollToTop"
+                   title="Whether to select pathways manually or through pathway analysis" target="_blank" class="scrollToTop"
                    style="float:left;margin-right:5px;">
                     <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                 </a>

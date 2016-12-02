@@ -59,6 +59,9 @@ td {
         <p>&nbsp;&nbsp;&nbsp;Gene and Compound data:</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --gene_data your/gene/data/file --gene_id ENTREZ (gene ID type) --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --pathway_id 00640 (KEGG pathway ID)
                 </p>
+        <p>&nbsp;&nbsp;&nbsp;Pathway analysis with Gene and Compound data (can be one of them):</p>
+        <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --gene_data your/gene/data/file --gene_id ENTREZ (gene ID type) --cpd_data your/ cpd/data/file -- cpd_id KEGG (compound ID type) --auto_sel T
+                </p>
         </br>
         <p>Help</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --help </p>
@@ -75,26 +78,35 @@ td {
         <div class="col-md-12 content">
             <h1 class="arg_content">Example Analysis</h1>
 
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div style="height:70px"><h2>Multiple Sample KEGG View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview KEGG view.</p>
 
                 <p><a class="btn btn-default" href="api_examples#example1" role="button">View details »</a></p>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <div style="height:70px"><h2>Multiple Sample Graphviz View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview Graphviz view. </p>
 
                 <p><a class="btn btn-default" href="api_examples/#example2" role="button">View details »</a></p>
             </div>
-            <div class="col-md-4">
+        </div>
+        <div class="col-md-12 content">
+            <div class="col-md-6">
                 <div style="height:70px"><h2>ID Mapping</h2></div>
 
                 <p>This example shows the ID mapping capability of Pathview.</p>
 
-                <p><a class="btn btn-default" href="api_examples/#example3" role="button">View details »</a></p>
+                <p><a class="btn btn-default" href="api_examples#example3" role="button">View details »</a></p>
+            </div>
+            <div class="col-md-6">
+                <div style="height:70px"><h2>Integrated Pathway Analysis </h2></div>
+
+                <p>This example covers an integration pathway analysis workflow based on Pathview.</p>
+
+                <p><a class="btn btn-default" href="api_examples#example4" role="button">View details »</a></p>
             </div>
         </div>
 <div class="col-md-12"></div>
@@ -189,7 +201,7 @@ td {
      </tr>
      <tr>
         <td>--auto_sel</td>
-        <td>This argument controls the pathway IDs. If set then the user need not to specify the pathway ids from the auto suggest box.</td>
+        <td>This argument whether to select pathways manually or through pathway analysis. If set to T (or TRUE), --pathway_id option will be ignored.</td>
         <td>F</td>
         <td><a href="tutorial#auto_sel"
              onclick="window.open('tutorial#auto_sel', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -197,7 +209,7 @@ td {
      </tr>
      <tr>
         <td>--pathway_id</td>
-        <td>This argument specifies the KEGG pathway IDs, usually 5 digit long.Pathway IDs can also be provided in a comma separated file</td>
+        <td>This argument specifies the KEGG pathway IDs, usually 5 digit long.Pathway IDs can also be provided in a comma separated file.This option is not             needed when --auto_sel is T (or TRUE).</td>
         <td>00010(00010,00640)</td>
         <td><a href="tutorial#pwy_id"
              onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        

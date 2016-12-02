@@ -905,8 +905,8 @@ class PathviewAnalysisController extends Controller {
 
 	   $api_string='';
 	   $api_string_short='';
-	   $api_string .= "./pathwayapi.sh ";
-	   $api_string_short .= "./pathwayapi.sh ";
+	   $api_string .= "./pathviewapi.sh ";
+	   $api_string_short .= "./pathviewapi.sh ";
 	   $auto_sel=false;
 	   if(Input::hasFile('gfile'))
 	   {
@@ -919,7 +919,7 @@ class PathviewAnalysisController extends Controller {
 		if (strlen($gene_reference) > 0)
 		{
 	           $api_string .="--gene_reference '$gene_reference' ";
-	           $api_string_short .="--gene_reference '$gene_reference' ";
+	           $api_string_short .="--gene_reference $gene_reference ";
 		}
              }
              if(!is_null($_POST['genesam']))
@@ -928,7 +928,7 @@ class PathviewAnalysisController extends Controller {
 		if (strlen($gene_sample) > 0)
 		{
 	           $api_string .="--gene_sample '$gene_sample' ";
-	           $api_string_short .="--gene_sample '$gene_sample' ";
+	           $api_string_short .="--gene_sample $gene_sample ";
 		}
              }
              if(isset($_POST['genecompare']))
@@ -952,7 +952,7 @@ class PathviewAnalysisController extends Controller {
 		if (strlen($cpd_reference) > 0)
 		{
 	           $api_string .="--cpd_reference '$cpd_reference' ";
-	           $api_string_short .="--cpd_reference '$cpd_reference' ";
+	           $api_string_short .="--cpd_reference $cpd_reference ";
 		}
              }
              if(!is_null($_POST['cpdsam']))
@@ -961,17 +961,17 @@ class PathviewAnalysisController extends Controller {
              	$cpd_sample= $_POST['cpdsam'];
 		if (strlen($cpd_sample) > 0)
 		{
-	           $api_string .="cpd_sample '$cpd_sample' ";
-	           $api_string_short .="cpd_sample '$cpd_sample' ";
+	           $api_string .="--cpd_sample '$cpd_sample' ";
+	           $api_string_short .="--cpd_sample $cpd_sample ";
 		}
              }
-             if(isset($_POST['cpdcompare']))
+             if(isset($_POST['cpdCompare']))
              {
-             	$cpd_compare= $_POST['cpdcompare'];
+             	$cpd_compare= $_POST['cpdCompare'];
 	        $api_string .="--cpd_compare 'paired' ";
              }else{
 	        $api_string .="--cpd_compare 'unpaired' ";
-	        $api_string_short .="cpd_compare 'unpaired' ";
+	        $api_string_short .="--cpd_compare unpaired ";
              }
 	   }
 
