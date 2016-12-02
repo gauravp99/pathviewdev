@@ -2,6 +2,7 @@
 
 ?>
 
+
 @if (isset($example_analysis_4))
 <?php  $autopathviewselection=true; ?>
 @else
