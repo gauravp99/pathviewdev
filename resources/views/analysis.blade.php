@@ -2,7 +2,6 @@
 
 ?>
 
-
 @if (isset($example_analysis_4))
 <?php  $autopathviewselection=true; ?>
 @else
@@ -196,7 +195,7 @@
                                value=@if (isset(Session::get('Sess')['pathway'])) {{Session::get('Sess')['pathway']}} @else '' @endif
                                autocomplete="on">
                         <br/>
-                        <select name="selectfrom" style="float:none;width:100%;height:236px;font-size: 17px;" id="select-from"
+                        <select name="selectfrom" style="float:none;width:100%;height:174px;font-size: 17px;" id="select-from"
                                 multiple="" size="10" class="multiple-select">
                             <?php
                             $pathway = Cache::remember('Pathway', 10, function () {
@@ -240,7 +239,7 @@
                         <h6 style="font-family: Verdana;font-size=5px;color:black;margin-top: -24px;margin-left:10px;">Note: Remove
                             items by deleting</h6>
                         <textarea id="pathwayList" name="pathwayList" wrap="off"
-                                  style="resize: none;float:none;width:100%;height:280px;font-size:16px;margin-left: 5px;" rows="11"
+                                  style="resize: none;float:none;width:100%;height:210px;font-size:16px;margin-left: 5px;" rows="11"
                                   cols="14">@if (isset(Session::get('Sess')['pathwayList'])) {{Session::get('Sess')['pathwayList']}} @else {{$selectpath}} @endif
                         </textarea>
                         <!--<textarea id="pathwayList" name="pathwayList" wrap="off"

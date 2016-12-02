@@ -16,7 +16,7 @@
                     Data files used in this example are <a href="data/gse16873.d3.txt" target="_balnk">Gene
                         Data</a> and <a href="data/sim.cpd.data2.csv" target="_balnk">Compound Data</a>.
                     In this example Gene Data has 3 samples and Compound Data has 2 samples.
-                <p> API Invocation </p> 
+                <p> API Query </p> 
                 <p style="font-size: 15px; margin-left: 50px;">
                     ./pathviewapi.sh  --gene_data gse16873.d3.txt --cpd_data sim.cpd.data2.csv --species hsa --gene_id ENTREZ --cpd_id KEGG --pathway_id 00640 --suffix multistatekegg   </p>
                 </p>
@@ -85,7 +85,7 @@
                     is
                     you are generating a Graphviz view
                     by unchecking the kegg view selection box.
-                <p> API Invocation </p>
+                <p> API Query </p>
 		<p style="font-size: 15px; margin-left: 50px;">
 		./pathviewapi.sh --gene_data gse16873.3.txt --cpd_data sim.cpd.data1.csv --species hsa --pathway_id 00640 --suffix multi --kegg F  --limit_gene -1,2  --cpd_reference 1,2 --cpd_sample 3,4 --gene_reference 1,3,5 --gene_sample 2,4,6 </p>
               
@@ -162,7 +162,7 @@
                         Data</a> and <a href="data/cpd.cas.csv" target="_blank">Compound Data</a>.
 
                 </p>
-                <p>  API Invocation </p>
+                <p>  API Query </p>
 		<p style="font-size: 15px; margin-left: 50px;">
 		./pathviewapi.sh  --gene_data gene.ensprot.txt  --cpd_data cpd.cas.csv  --species hsa --gene_id ENSEMBLPROT --cpd_id 'CAS Registry Number' --pathway_id 00640 --suffix IDMapping --limit_gene 3 --limit_cpd 3 --bins_gene 6 --bins_cpd 6 </p>
 
@@ -240,9 +240,9 @@
                     loaded and the options have been preset as below.
                     Data files used in this example are <a href="data/gse16873.3.txt" target="_blank">Gene
                         Data</a> and <a href="data/sim.cpd.gse16873.csv" target="_blank">Compound Data</a>.
-                <p> API Invocation </p>
+                <p> API Query </p>
 		<p style="font-size: 15px; margin-left: 50px;">
-		./pathviewapi.sh --gene_data gse16873.3.txt --gene_reference 1,3,5 --gene_sample 2,4,6 --cpd_data sim.cpd.gse16873.csv --cpd_reference 1,2 cpd_sample 3,4 --species hsa --auto_sel T
+		./pathviewapi.sh --gene_data gse16873.3.txt --gene_reference 1,3,5 --gene_sample 2,4,6 --cpd_data sim.cpd.gse16873.csv --cpd_reference 1,2 --cpd_sample 3,4 --species hsa --auto_sel T
                 </p>
                 </br>
 
@@ -264,7 +264,7 @@
                         <li class="list-group-item">
                             <div class="pathviewargVar">Kegg Native</div>
                             <div class="pathviewargColon">:</div>
-                            <div class="pathviewargVal">FALSE</div>
+                            <div class="pathviewargVal">TRUE</div>
                         </li>
                         <li class="list-group-item">
                             <div class="pathviewargVar">Pathway Selection</div>
@@ -274,7 +274,7 @@
                         <li class="list-group-item">
                             <div class="pathviewargVar">Pathway ID</div>
                             <div class="pathviewargColon">:</div>
-                            <div class="pathviewargVal">Not Applicable</div>
+                            <div class="pathviewargVal">(Not Applicable)</div>
                         </li>
                     </ul>
                     <a href="/example4">

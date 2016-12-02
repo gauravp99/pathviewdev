@@ -164,14 +164,14 @@
             <h1 class="arg_content">Example Analysis</h1>
 
             <div class="col-md-6">
-                <div style="height:70px"><h2>Multiple Sample KEGG View</h2></div>
+                <div style="height:70px"><h2 style="text-align:left">Multiple Sample KEGG View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview KEGG view.</p>
 
                 <p><a class="btn btn-default" href="api_examples#example1" role="button">View details »</a></p>
             </div>
-            <div class="col-md-6">
-                <div style="height:70px"><h2>Multiple Sample Graphviz View</h2></div>
+            <div class="col-md-6" >
+                <div style="height:70px"><h2 style="text-align:left">Multiple Sample Graphviz View</h2></div>
 
                 <p>This example shows the multiple sample/state integration with Pathview Graphviz view. </p>
 
@@ -181,14 +181,14 @@
         </div>
         <div class="col-md-12 content">
             <div class="col-md-6">
-                <div style="height:70px"><h2>ID Mapping</h2></div>
+                <div style="height:70px"><h2 style="text-align:left">ID Mapping</h2></div>
 
                 <p>This example shows the ID mapping capability of Pathview.</p>
 
                 <p><a class="btn btn-default" href="api_examples#example3" role="button">View details »</a></p>
             </div>
             <div class="col-md-6">
-                <div style="height:70px"><h2>Integrated Pathway Analysis </h2></div>
+                <div style="height:70px"><h2 style="text-align:left">Integrated Pathway Analysis </h2></div>
 
                 <p>This example covers an integration pathway analysis workflow based on Pathview.</p>
 

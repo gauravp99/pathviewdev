@@ -542,11 +542,14 @@ use Illuminate\Cacheche;
 
                                 $("#Cpdesamselect option[value='" + $.trim(value) + "']").attr("disabled", 1);
                             });
-                            $('#cpdref').val(compoundRefSelected);
-                            if(compoundRefSelectedArray.length == 0)
-                            {
-                                $('#cpdref').val("");
-                            }
+			    //Commenting now 
+                            //$('#cpdref').val(compoundRefSelected);
+                            //if(compoundRefSelectedArray.length == 0)
+                            //{
+                            //    $('#cpdref').val("");
+                            //}
+			    if(cpdDataArray[1].split(":")[0] !== "cpdCompare")
+			       $('#cpdref').val(geneRefSelected);
                         }
 
                     }
@@ -821,6 +824,17 @@ use Illuminate\Cacheche;
             document.getElementById('assayData').addEventListener('change', myMethod, false);
 
             function myMethod(evt) {
+                var files = evt.target.files;
+                f = files[0];
+                if (f == undefined) {
+                    document.getElementById('123').click();
+                }
+
+            }
+            ;
+            document.getElementById('cpdassayData').addEventListener('change', myMethod1, false);
+
+            function myMethod1(evt) {
                 var files = evt.target.files;
                 f = files[0];
                 if (f == undefined) {
