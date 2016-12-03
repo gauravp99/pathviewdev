@@ -50,25 +50,27 @@ class AjaxAnalysisQueueStatusCheck extends Controller
                 $data['argument'] = Input::get('argument');
                 $data['url'] = URL::to('/');
 
-                try{
-                    Mail::queue('emails.result', $data, function ($message) use ($data) {
-                        try {
-                            $user_email = $data['email'];
-                            $user_name = $data['name'];
-                            $message->to($user_email, $user_name)->subject('Analysis completed');
+		//Commenting it now not to send mail when analysis completed
+                //try{
+                //    Mail::queue('emails.result', $data, function ($message) use ($data) {
+                //    #Mail::send('emails.result', $data, function ($message) use ($data) {
+                //        try {
+                //            $user_email = $data['email'];
+                //            $user_name = $data['name'];
+                //            $message->to($user_email, $user_name)->subject('Analysis completed');
 
-                        } catch (Exception $e) {
-                            return "exception in mail";
-                        }
-                    });
-                }
-                catch(Exception $e)
-                {
-                    //delete the analaysisid status from redis
-                    Redis::del(Input::get('analysisid') . ":Status");
-                    Redis::del(Input::get('analysisid'));
-                    return "true";
-                }
+                //        } catch (Exception $e) {
+                //            return "exception in mail";
+                //        }
+                //    });
+                //}
+                //catch(Exception $e)
+                //{
+                //    //delete the analaysisid status from redis
+                //    Redis::del(Input::get('analysisid') . ":Status");
+                //    Redis::del(Input::get('analysisid'));
+                //    return "true";
+                //}
 
 
                 //delete the analaysisid status from redis

@@ -376,7 +376,7 @@ td {
      </tr>
      <tr>
         <td>--node_sum</td>
-        <td>This argument calculates the node summary given that multiple genes or compounds are mapped to it.</td>
+        <td>The method name to calculate node summary  given that multiple genes or compounds are mapped to it. Potential values can be found in Node Sum drop down list in GUI.</td>
         <td>sum</td>
         <td><a href="tutorial#nsum"
              onclick="window.open('tutorial#nsum', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -384,7 +384,7 @@ td {
      </tr>
      <tr>
         <td>--na_color</td>
-        <td>This argument specify the color used for NA's or missing values in Gene Data and Compound Data. Potential value can be transparent or grey.</td>
+        <td>This argument specifies  the color used for NA's or missing values in Gene Data and Compound Data. Potential value can be transparent or grey.</td>
         <td>transparent</td>
         <td><a href="tutorial#ncolor"
              onclick="window.open('tutorial#ncolor', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -392,7 +392,7 @@ td {
      </tr>
      <tr>
         <td>--low_gene /--mid_gene / --high_gene </td>
-        <td>This argument specify the color spectrum to code Gene Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
+        <td>These arguments specify the color spectrum to code Gene Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
         <td>green/gray/red</td>
         <td><a href="tutorial#color"
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -400,7 +400,7 @@ td {
      </tr>
      <tr>
         <td> --low_cpd / --mid_cpd / --high_cpd</td>
-        <td>This argument specify the color spectrum to code Compound Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
+        <td>These arguments specify the color spectrum to code Compound Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
         <td>blue/gray/yellow</td>
         <td><a href="tutorial#color"
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
