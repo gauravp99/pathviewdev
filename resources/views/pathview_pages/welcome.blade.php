@@ -49,9 +49,14 @@
                                 <li class="" data-target="#myCarousel" data-slide-to="2"></li>
                                 <li class="" data-target="#myCarousel" data-slide-to="3"></li>
                                 <li class="" data-target="#myCarousel" data-slide-to="4"></li>
+                                <li class="" data-target="#myCarousel" data-slide-to="5"></li>
                             </ol>
                             <div class="carousel-inner" role="listbox">
+
                                 <div class="item active">
+                                    <img class="sixth-slide" src="images/sixthslide.png" alt="Sixth slide">
+                                </div>
+                                <div class="item">
                                     <img class="first-slide" src="images/firstslide.png" alt="First slide">
                                 </div>
                                 <div class="item">
@@ -66,6 +71,7 @@
                                 <div class="item">
                                     <img class="third-slide" src="images/fifthslide.jpg" alt="Fifth slide">
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -183,7 +189,7 @@
                                                 &nbsp
                                             </div>
                                         </td>
-                                        <td class="tdContent">Graphs:</td>
+                                        <td class="tdContent">Analysis:</td>
                                         <td><?php echo $web_dnld_cnt ?></td>
                                         <td>
                                             <div class="bar11">

@@ -9,7 +9,7 @@ use Illuminate\Cacheache;
     <script src="js/sliding.form.js"></script>
     <div class="col-sm-9">
         <div class="conetent-header">
-            <p><b>Example Analysis 1: Multiple Sample KEGG View</b></p>
+            <p><b><a href="/api_examples#example1">Example Analysis 1: Multiple Sample KEGG View</a></b></p>
         </div>
         <div class="col-sm-5">
 

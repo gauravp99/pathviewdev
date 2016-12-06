@@ -9,7 +9,7 @@
         <div class="conetent-header">
 
 
-    <p><b>Example Analysis 3: ID Mapping</b></p>
+    <p><b><a href="/api_examples#example3">Example Analysis 3: ID Mapping</a></b></p>
 
 
         </div>

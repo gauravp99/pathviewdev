@@ -38,7 +38,7 @@ td {
 
         <h1><b>Pathview API Documentation</b></h1>
         <h1 class="arg_content">Get Started</h1>
-        <p>Pathview API (url) is a bash script. It requires cURL pre-installed, which is the case for most Unix/Linux/Mac systems. cURL can be download  <a href='https://curl.haxx.se/download.html'>here</a> if needed. To get started:</p>
+        <p>Pathview API (url) is a bash script. It depends on cURL which is already pre-installed with  most Unix/Linux/Mac systems. cURL can be download  <a href='https://curl.haxx.se/download.html'>here</a> if needed. To get started:</p>
 	<p>1. Download API with cURL
         </br>
         <p style="font-size: 15px; margin-left: 50px;">curl -O http://pathview.uncc.edu/scripts/pathviewapi.sh </p>
@@ -49,7 +49,7 @@ td {
 
         <h1 class="arg_content">Synopsis</h1>
         <p> Basic Usage </p>
-        <p style="font-size: 15px; margin-left: 50px;"> pathviewapi.sh options --gene_data | --cpd_data [--gene_id] [-- cpd_id] [--pathway_id] ... [--other options] </p>
+        <p style="font-size: 15px; margin-left: 50px;"> ./pathviewapi.sh options --gene_data | --cpd_data [--gene_id] [-- cpd_id] [--pathway_id] ... [--other options] </p>
         <p> Common Usages (Remove annotation in parentheses in real use)</p>
         <p>&nbsp;&nbsp;&nbsp;Gene data:</p>
         <p style="font-size: 15px; margin-left: 50px;">./pathviewapi.sh --gene_data your/gene/data/file --species hsa (KEGG species code) --gene_id ENTREZ (gene ID type) --pathway_id 00640 (KEGG pathway ID) </p>
@@ -114,7 +114,7 @@ td {
 
 
 <div>
-<h1 class="arg_content">Options/Arguments for the API</h1>
+<h1 class="arg_content">Options for the API (see GUI option page for details)</h1>
 <div>
 <section id="options">
    <table>
@@ -145,7 +145,7 @@ td {
      </tr>
      <tr>
         <td>--gene_reference</td>
-        <td>This argument specifies the column numbers for controls.</td>
+        <td>The column numbers for controls. Not needed if data is relative abundance (log ratios or fold changes).</td>
         <td>NULL(1,3,5)</td>
         <td><a href="tutorial#gene_data" 
              onclick="window.open('tutorial#gene_data', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -153,7 +153,7 @@ td {
      </tr>
      <tr>
         <td>--gene_sample</td>
-        <td>This argument specifies the column numbers for cases.</td>
+        <td>The column numbers for cases. Not needed if data is relative abundance (log ratios or fold changes).</td>
         <td>NULL(2,4,6)</td>
         <td><a href="tutorial#gene_data"
              onclick="window.open('tutorial#gene_data', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -161,7 +161,7 @@ td {
      </tr>
      <tr>
         <td>--gene_compare</td>
-        <td>This argument specifies whether the experiment samples are paired or not.</td>
+        <td>Whether the experiment samples are paired or not. Not needed if data is relative abundance (log ratios or fold changes).</td>
         <td>paired</td>
         <td><a href="tutorial#gene_data"
              onclick="window.open('tutorial#gene_data', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -169,7 +169,7 @@ td {
      </tr>
      <tr>
         <td>--cpd_reference</td>
-        <td>This argument specifies the column numbers for controls.</td>
+        <td>The column numbers for controls. Not needed if data is relative abundance (log ratios or fold changes).</td>
         <td>NULL(1,3,5)</td>
         <td><a href="tutorial#cpd_data"
              onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -177,7 +177,7 @@ td {
      </tr>
      <tr>
         <td>--cpd_sample</td>
-        <td>This argument specifies the column numbers for cases.</td>
+        <td>The column numbers for cases. Not needed if data is relative abundance (log ratios or fold changes).</td>
         <td>NULL(2,4,6)</td>
         <td><a href="tutorial#cpd_data"
              onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -185,7 +185,7 @@ td {
      </tr>
      <tr>
         <td>--cpd_compare</td>
-        <td>This argument specifies whether the experiment samples are paired or not.</td>
+        <td>Whether the experiment samples are paired or not. Not needed if data is relative abundance (log ratios or fold changes).</td>
         <td>paired</td>
         <td><a href="tutorial#cpd_data"
              onclick="window.open('tutorial#cpd_data', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -193,7 +193,7 @@ td {
      </tr>
      <tr>
         <td>--suffix</td>
-        <td>This argument specifies the suffix to be added after the pathway name as part of the output graph file name.</td>
+        <td>The suffix to be added after the pathway name as part of the output graph file name.</td>
         <td>pathview</td>
         <td><a href="tutorial#suffix"
              onclick="window.open('tutorial#suffix', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -201,7 +201,7 @@ td {
      </tr>
      <tr>
         <td>--auto_sel</td>
-        <td>This argument whether to select pathways manually or through pathway analysis. If set to T (or TRUE), --pathway_id option will be ignored.</td>
+        <td> Whether to select pathways manually or through pathway analysis. If set to T (or TRUE), --pathway_id option will be ignored.</td>
         <td>F</td>
         <td><a href="tutorial#auto_sel"
              onclick="window.open('tutorial#auto_sel', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -209,7 +209,7 @@ td {
      </tr>
      <tr>
         <td>--pathway_id</td>
-        <td>This argument specifies the KEGG pathway IDs, usually 5 digit long.Pathway IDs can also be provided in a comma separated file.This option is not             needed when --auto_sel is T (or TRUE).</td>
+        <td> The KEGG pathway IDs, usually 5 digit long.Pathway IDs can also be provided in a comma separated file.This option is not             needed when --auto_sel is T (or TRUE).</td>
         <td>00010(00010,00640)</td>
         <td><a href="tutorial#pwy_id"
              onclick="window.open('tutorial#pwy_id', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -244,7 +244,7 @@ td {
      </tr>
      <tr>
         <td>--kegg</td>
-        <td>This argument specifies whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf).</td>
+        <td> Whether to render the pathway as native KEGG graph (.png) or using Graphviz layout engine (.pdf).</td>
         <td>T</td>
         <td><a href="tutorial#kegg"
              onclick="window.open('tutorial#kegg', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -252,7 +252,7 @@ td {
      </tr>
      <tr>
         <td>--layer</td>
-        <td>This argument controls plotting layers.</td>
+        <td> Controls plotting layers. Check the GUI option page for details.</td>
         <td>F</td>
         <td><a href="tutorial#layer"
              onclick="window.open('tutorial#layer', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -260,7 +260,7 @@ td {
      </tr>
      <tr>
         <td>--split</td>
-        <td>This argument specifies whether split node groups are split to individual nodes.</td>
+        <td> Whether split node groups are split to individual nodes.</td>
         <td>F</td>
         <td><a href="tutorial#split"
              onclick="window.open('tutorial#split', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -268,7 +268,7 @@ td {
      </tr>
      <tr>
         <td>--expand</td>
-        <td>This argument specifies whether the multiple-gene nodes are expanded into single-gene nodes.</td>
+        <td> Whether the multiple-gene nodes are expanded into single-gene nodes.</td>
         <td>F</td>
         <td><a href="tutorial#expand"
              onclick="window.open('tutorial#expand', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -276,7 +276,7 @@ td {
      </tr>
      <tr>
         <td>--multistate</td>
-        <td>This argument specifies whether multiple states (samples or columns) Gene Data or Compound Data should be integrated and plotted in the same graph.</td>
+        <td> Whether multiple states (samples or columns) Gene Data or Compound Data should be integrated and plotted in the same graph.</td>
         <td>T</td>
         <td><a href="tutorial#multi"
              onclick="window.open('tutorial#multi', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -284,7 +284,7 @@ td {
      </tr>
      <tr>
         <td>--matched</td>
-        <td>This argument specifies whether the samples of Gene Data and Compound Data are paired.</td>
+        <td> Whether the samples of Gene Data and Compound Data are paired.</td>
         <td>T</td>
         <td><a href="tutorial#match"
              onclick="window.open('tutorial#match', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -292,7 +292,7 @@ td {
      </tr>
      <tr>
         <td>--discrete_gene</td>
-        <td>Describes whether Gene Data should be treated as discrete.</td>
+        <td>Whether Gene Data should be treated as discrete.</td>
         <td>F</td>
         <td><a href="tutorial#desc"
              onclick="window.open('tutorial#desc', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -300,7 +300,7 @@ td {
      </tr>
      <tr>
         <td>--discrete_cpd</td>
-        <td>Describes whether Compound Data should be treated as discrete.</td>
+        <td>Whether Compound Data should be treated as discrete.</td>
         <td>F</td>
         <td><a href="tutorial#desc"
              onclick="window.open('tutorial#desc', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -324,7 +324,7 @@ td {
      </tr>
      <tr>
         <td>--offset</td>
-        <td>This argument specifies how much compound labels should be put above the default position or node center.</td>
+        <td>How much compound labels should be put above the default position or node center.</td>
         <td>1.0</td>
         <td><a href="tutorial#clabel"
              onclick="window.open('tutorial#clabel', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -332,7 +332,7 @@ td {
      </tr>
      <tr>
         <td>--align</td>
-        <td>This argumet specifies how the color keys are aligned when both Gene Data and Compound Data are not NULL. Potential values are x and y.</td>
+        <td>How the color keys are aligned when both Gene Data and Compound Data are present. Potential values are x and y.</td>
         <td>x</td>
         <td><a href="tutorial#kalign"
              onclick="window.open('tutorial#kalign', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -343,16 +343,16 @@ td {
      </tr>
      <tr>
         <td>--limit_gene</td>
-        <td>The limit values for Gene Data when converting them to pseudo colors. This field is a numeric field.</td>
-        <td>1</td>
+        <td>The limit values for Gene Data when converting them to pseudo colors.</td>
+        <td>1(-1,1)</td>
         <td><a href="tutorial#limit"
              onclick="window.open('tutorial#limit', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Limit Gene</a></td>
      </tr>
      <tr>
         <td>--limit_cpd</td>
-        <td>The limit values for Compound Data when converting them to pseudo colors. This field is a numeric field.</td>
-        <td>1</td>
+        <td>The limit values for Compound Data when converting them to pseudo colors.</td>
+        <td>1(-1,1)</td>
         <td><a href="tutorial#limit"
              onclick="window.open('tutorial#limit', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Limit Compound</a></td>
@@ -360,7 +360,7 @@ td {
      </tr>
      <tr>
         <td>--bins_gene</td>
-        <td>This argument specifies the number of levels or bins for Gene Data when converting them to pseudo colors.</td>
+        <td> The number of levels or bins for Gene Data when converting them to pseudo colors.</td>
         <td>10</td>
         <td><a href="tutorial#bins"
              onclick="window.open('tutorial#bins', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -368,7 +368,7 @@ td {
      </tr>
      <tr>
         <td>--bins_cpd</td>
-        <td>This argument specifies the number of levels or bins for Compound Data when converting them to pseudo colors.</td>
+        <td> The number of levels or bins for Compound Data when converting them to pseudo colors.</td>
         <td>10</td>
         <td><a href="tutorial#bins"
              onclick="window.open('tutorial#bins', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -377,14 +377,14 @@ td {
      <tr>
         <td>--node_sum</td>
         <td>The method name to calculate node summary  given that multiple genes or compounds are mapped to it. Potential values can be found in Node Sum drop down list in GUI.</td>
-        <td>sum</td>
+        <td>sum(mean)</td>
         <td><a href="tutorial#nsum"
              onclick="window.open('tutorial#nsum', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Node Sum</a></td>
      </tr>
      <tr>
         <td>--na_color</td>
-        <td>This argument specifies  the color used for NA's or missing values in Gene Data and Compound Data. Potential value can be transparent or grey.</td>
+        <td>  The color used for NA's or missing values in Gene Data and Compound Data. Potential value can be transparent or grey.</td>
         <td>transparent</td>
         <td><a href="tutorial#ncolor"
              onclick="window.open('tutorial#ncolor', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -392,7 +392,7 @@ td {
      </tr>
      <tr>
         <td>--low_gene /--mid_gene / --high_gene </td>
-        <td>These arguments specify the color spectrum to code Gene Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
+        <td> The color spectrum to code Gene Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
         <td>green/gray/red</td>
         <td><a href="tutorial#color"
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
@@ -400,7 +400,7 @@ td {
      </tr>
      <tr>
         <td> --low_cpd / --mid_cpd / --high_cpd</td>
-        <td>These arguments specify the color spectrum to code Compound Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
+        <td> The color spectrum to code Compound Data.Hex color codes can also be given (#00FF00, #D3D3D3).</td>
         <td>blue/gray/yellow</td>
         <td><a href="tutorial#color"
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        

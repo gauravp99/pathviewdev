@@ -15,7 +15,7 @@ use Illuminate\Cacheache;
         <div class="conetent-header">
 
 
-    <p><b>Example Analysis 4:  Integrated Pathway Analysis (takes longer time)</b></p>
+    <p><b><a href="/api_examples#example4">Example Analysis 4:  Integrated Pathway Analysis (takes longer time)</a></b></p>
 
         </div>
         <div class="col-sm-5">

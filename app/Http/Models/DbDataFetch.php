@@ -20,7 +20,7 @@ class DbDataFetch
     public function getAnalysisDetails()
     {
 
-            $analysis_vals =  DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ip_add_count, created_at as date FROM analysis where analysis_origin = \'pathview\'  GROUP BY YEAR(created_at), MONTH(created_at)'));
+            $analysis_vals =  DB::select(DB::raw('SELECT COUNT(1) as count,count(distinct ip_add) as ip_add_count, created_at as date FROM analysis where analysis_origin in (\'pathview\', \'pathview_restapi\')  GROUP BY YEAR(created_at), MONTH(created_at)'));
             //Cache::put('analysis_vals',$analysis_vals, 50);
 
         $web_usage = array();
@@ -59,9 +59,11 @@ class DbDataFetch
     {
         //retrieve usage from BIOC tables
 
-	$anal_sum_dwnlds = DB::select(DB::raw("select count(*) as \"downloads\" from analysis where analysis_origin = '$application' "));
+	//$anal_sum_dwnlds = DB::select(DB::raw("select count(*) as \"downloads\" from analysis where analysis_origin = '$application' "));
+	$anal_sum_dwnlds = DB::select(DB::raw("select count(*) as \"downloads\" from analysis where analysis_origin in ('pathview', 'pathview_restapi') "));
 		
-            $anal_ip_dwnlds =  DB::select(DB::raw("select count(distinct ip_add) as ip from analysis where analysis_origin = '$application' "));
+            //$anal_ip_dwnlds =  DB::select(DB::raw("select count(distinct ip_add) as ip from analysis where analysis_origin = '$application' "));
+            $anal_ip_dwnlds =  DB::select(DB::raw("select count(distinct ip_add) as ip from analysis where analysis_origin in ('pathview', 'pathview_restapi')  "));
 
         if(!is_null($anal_sum_dwnlds)&&!is_null($anal_ip_dwnlds))
         {

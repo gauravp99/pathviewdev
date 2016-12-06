@@ -350,8 +350,23 @@
 
 
     $(function(){
-           $('#emailID').keyup(function ()
-            {
+           //$('#emailID').keyup(function ()
+//	   $('#emailID')
+//		       .keyup(myFunction)
+//		       .keydown(myFunction)
+//		           .keypress(myFunction)
+//			       .blur(myFunction)
+//			           .change(myFunction)
+//				   .click(myfunction)
+	  // var myFunction= function(){
+
+
+
+	   //};
+
+           $('#emailID').on('input click keyup keydown keyup keypress blur change', function(event) 
+           {
+	     //alert(event.type);
 	      var emailids=$('#emailID').val();
               //var emailSplit = emailids.split(/[\s;,]+/); 
               var emailSplit = emailids.split(/[;,]+/); 
@@ -368,6 +383,7 @@
                      break;
                   }
               }
+
             });
 
 	   //$("#emailID").autocomplete({

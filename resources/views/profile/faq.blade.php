@@ -23,7 +23,7 @@
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <h3><% comment.text_string %></h3>
+			    <h4><pre><% comment.text_string %></pre></h4>
                             </div>
                             <div class="panel-footer" style="">
                                 <small>by <% comment.author  %> </small>
@@ -76,8 +76,8 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;">
                         <label for="message" class="col-sm-3 control-label">Your Question</label>
 
                         <div class="col-sm-9">
-                            <textarea class="form-control" rows="4" ng-model="commentData.text" name="message"
-                                      required=""></textarea>
+                            <pre><textarea class="form-control" rows="4" ng-model="commentData.text" name="message"
+                                      required=""></textarea></pre>
                         </div>
                     </div>
 

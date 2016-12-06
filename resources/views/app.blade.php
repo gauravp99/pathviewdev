@@ -13,6 +13,7 @@
     <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
      <script src="/bower_components/angular/angular.js"></script>
+     <script src="/js/bootcomplete.js/dist/jquery.bootcomplete.js"></script>
 	 <title>Pathview</title>
 </head>
 
@@ -39,6 +40,7 @@
         </div>
         <!-- End Logo and toggle navigation bar -->
         <div class="collapse navbar-collapse" style="height:60px" id="pathview">
+
             <ul class="nav navbar-nav navbar-right">
                 <li <?php
                     if (basename(Request::url()) == "tutorial") {
@@ -49,7 +51,7 @@
                         Help <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/tutorial#input">Attributes Help</a></li>
+                        <li><a href="/tutorial#input">User Options</a></li>
                         <li><a href="/tutorial">Custom Analysis</a></li>
                         <li><a href="/api_examples">Example Analysis</a></li>
                         <li><a href="/api_tutorial">API Documentation</a></li>
@@ -95,8 +97,8 @@
                     <a href="/about"  role="button" aria-expanded="true">About
                         </a>
 
-
                 </li>
+
 
                  <li <?php if (basename(Request::url()) == "related") {
                     echo "class=\"active\"";

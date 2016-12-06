@@ -13,7 +13,7 @@ use Illuminate\Cacheache;
         <div class="conetent-header">
 
 
-    <p><b>Example Analysis 2: Multiple Sample Graphviz View</b></p>
+    <p><b><a href="/api_examples#example2">Example Analysis 2: Multiple Sample Graphviz View</a></b></p>
 
         </div>
         <div class="col-sm-5">

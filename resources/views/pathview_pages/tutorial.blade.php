@@ -214,7 +214,7 @@
                                     as to handle metagenomic data.</p>
 
                                     <p>Both the absolute or original expression levels and the relative expression levels (log2 fold changes, t-statistics) can be visualized on pathways. However, the latter are more frequently used.
-                                    If you supply data as original expression levels, but you want to visualize the relative expression levels (or differences) between two states. You need to specify a few extra parameters:
+                                    If you supply data as original expression levels, but you want to visualize the relative expression levels (or differences) between two states. You need to specify a few extra options(NOT needed if you just want to visualize the input data as it is):
                                     <ul class="dataList" style="margin-left:30px;">
 
 
@@ -240,12 +240,19 @@
                                     </ul>
 
 
-                                    You don't have to specify another of these parameters if your just want to visualize the input data as it is.</p>
+                                    </p>
 
                                     <p>For examples of gene data, check: <a
                                             href="data/gse16873.d3.txt" target="_balnk">Example Gene Data
                                         1</a> and <a href="data/gse16873.3.txt" target="_balnk">Example Gene
                                         Data 2</a>.</p>
+                                    <p>
+				      If you intend to do a full pathway analysis plus data visualization (or integration), you need to set 
+                                      Pathway Selection below to Auto. Gene Data and/or Compound Data will also be taken as the input data 
+                                      for pathway analysis. Frequently, you also need to the extra options: Control/reference, Case/sample,  
+                                      and Compare in the dialogue box. However, these options are NOT needed if your data is already relative  
+                                      expression levels or differential scores (log ratios or fold changes). <a href=/api_examples#example4> Example 4</a> covers the full pathway analysis.
+                                                                         </p>
                                 </dd>
                             </div>
                         </div>
@@ -349,7 +356,8 @@
                             <div class="panel-body argument">
                                 <dd> Whether to render the pathway as native KEGG graph (.png) or using Graphviz
                                     layout
-                                    engine (.pdf).
+				    engine (.pdf).
+                                    Note Graphviz view be drop nodes due to missing data in KEGG xml data files.
                                 </dd>
                             </div>
                         </div>
