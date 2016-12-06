@@ -357,7 +357,7 @@
                                 <dd> Whether to render the pathway as native KEGG graph (.png) or using Graphviz
                                     layout
 				    engine (.pdf).
-                                    Note Graphviz view be drop nodes due to missing data in KEGG xml data files.
+                                    Note Graphviz view may drop nodes due to missing data in KEGG xml data files.
                                 </dd>
                             </div>
                         </div>
