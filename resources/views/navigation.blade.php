@@ -30,13 +30,16 @@
             echo "class=\"active\"";
         }?>><a href="/example4"><b>Example 4</b></a></li>
         <li><a href="#" onclick="openWindow()">
-                <b>Instructions</b></a></li>
-        <li <?php if (basename(Request::url()) == "contact") {
+                <b>Help</b></a></li>
+        <li <?php if (basename(Request::url()) == "cli") {
             echo "class=\"active\"";
-        }?>><a href="/faq"><b>Questions?</b></a></li>
+        }?>><a href="/api_tutorial"><b>API Help</b></a></li>
         <li <?php if (basename(Request::url()) == "cli") {
             echo "class=\"active\"";
         }?>><a href="/analysis_api"><b>API Query Generator</b></a></li>
+        <li <?php if (basename(Request::url()) == "contact") {
+            echo "class=\"active\"";
+        }?>><a href="/faq"><b>Questions?</b></a></li>
         <script>
             function openWindow() {
                 window.open('/tutorial?instruction_flag=T', 'newwindow', "scrollbars=1,status =1,width=2000, height=window.innerHeight");
