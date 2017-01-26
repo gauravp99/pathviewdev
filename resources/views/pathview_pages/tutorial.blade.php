@@ -196,8 +196,20 @@
             </div>
         </div>
         <div class="col-sm-12">
+
+            <section id="results">
+
+                <h1 class="arg_content">Results</h1>
+
+                <p class="content1">
+                       Please the find the detailed results <a href="/output_examples">here</a> 
+                    </p>
+            </section>
+
+        </div>
+        <div class="col-sm-12">
             <section id="input">
-                <h1 class="arg_content">Input and Output</h1>
+                <h1 class="arg_content">User Options: Input and Output</h1>
 
                 <div class="page-header col-sm-12">
                     <dl>
@@ -344,7 +356,7 @@
         </div>
         <div class="col-sm-12">
             <section id="Graphics">
-                <h1 class="arg_content">Graphics</h1>
+                <h1 class="arg_content">User Options: Graphics</h1>
 
 
                 <div class="page-header col-sm-12">
@@ -500,7 +512,7 @@
         </div>
         <div class="col-sm-12">
             <section id="Coloration">
-                <h1 class="arg_content">Coloration</h1>
+                <h1 class="arg_content">User Options: Coloration</h1>
 
 
                 <div class="page-header col-sm-12">

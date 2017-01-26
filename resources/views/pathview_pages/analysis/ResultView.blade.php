@@ -82,7 +82,7 @@
             $id = substr($val, 0, 8);
                 //print hyperlink for the images/PDF generated
             if (strpos($val, 'png')) {
-            echo "<li  style='font-size: 24px; list-style-type: none;'>  <a target=\"_blank\" href=\"viewer?analyses=$analyses_id&id=$id&image=$val\" > " . $val . "</a></li>";?>
+            echo "<li  style='font-size: 24px; list-style-type: none;'>  <a target=\"_blank\" href=\"viewer?analyses=$analyses_id&&id=$id&image=$val\" > " . $val . "</a></li>";?>
 
             <?php
 

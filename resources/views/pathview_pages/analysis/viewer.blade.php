@@ -1,11 +1,12 @@
 @extends('app')
 @section('content')
     <h1 class="page-header" style="margin-left: 40%;">Result </h1>
+    <h3  style="margin-left: 75%;"><a href="/output_examples#kegg_view">Graph Annotation </a></h3>
 
     <div class="col-sm-12">
         <div class="col-sm-8">
 
-            <p class="alert alert-info">Note:  Nodes in native KEGG view graphs are hyperlinked.</p>
+       <p class="alert alert-info">Note:  Nodes in native KEGG view graphs are hyperlinked.</p> 
     <?php
             $anal_id = $_GET['analyses'];
             if (Auth::user()) {

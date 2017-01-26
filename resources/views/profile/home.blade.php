@@ -211,7 +211,7 @@
                 $id = get_string_between($analyses1->arguments, "species:", ";");
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ";");
                 echo "</td>";
-                if(strcmp($analyses1->analysis_origin,'pathview')==0)
+                if((strcmp($analyses1->analysis_origin,'pathview')==0) || (strcmp($analyses1->analysis_origin,'pathview_restapi')==0))
                     {
             ?>
                <td><p>  <a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>

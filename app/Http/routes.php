@@ -225,6 +225,10 @@ Route::get('register/verify/{confirmationCode}', [
         Route::get('api_examples', function () {
             return view("pathview_pages.api_examples");
         });
+/*URL route for Output Examples Page. */
+        Route::get('output_examples', function () {
+            return view("pathview_pages.output_examples");
+        });
 /* URL Route for About page*/
         Route::get('about', 'pathview\PathviewAboutController@index');
 

@@ -57,10 +57,12 @@ function usage()
 	echo "--low_cpd        This argument specify the color spectra to code Gene Data.Default value is green.Hex color codes can also be given (#00FF00, #D3D3D3)"
 	echo "--mid_cpd        This argument specify the color spectra to code Gene Data.Default value is gray.Hex color codes can also be given (#00FF00, #D3D3D3)"
 	echo "--high_cpd       This argument specify the color spectra to code Gene Data.Default value is red.Hex color codes can also be given (#00FF00, #D3D3D3)"
+	echo "--username       The registered email to access the API."
+	echo "--password       The password for the registered account to access the API." 
 	echo
 	echo "Below two options can be used to get the help and sample examples. However this options should be given separately." 
 	echo "--help      This will provide the list of all valid arguments along with the description."
-	echo "--examples  This will give a sample invocation of the API with an eg."
+	echo "--example  This will give a sample invocation of the API with an eg."
 }
 
 
@@ -71,7 +73,7 @@ function example_1()
 	echo "Compound file can be downloaded from the link: http://pathview.uncc.edu/data/sim.cpd.data2.txt "
 	echo 
 	echo "The gene and compound files must be present in the location where the API is getting executed."
-	echo "More examples and detailed description can be found in in the link: http://10.23.251.42/api_examples" 
+	echo "More examples and detailed description can be found in in the link: http://pathview.uncc.edu/api_examples" 
 	echo "`basename $0`  --gene_data gse16873.d3.txt --cpd_data sim.cpd.data2.csv --species hsa --pathway_id 00640"
 
 	echo 
@@ -84,7 +86,7 @@ if [ $# -eq 0 ]
 then
    echo "Please provide the argument with the script."
    echo "Usage: `basename $0` options [--gene_data] [--cpd_data] [--gene_reference] [--gene_sample] ... [--other options]";
-   echo "Try pathwayapi --help  for more information."
+   echo "Try pathviewapi --help  for more information."
    exit
 fi
 
@@ -252,6 +254,14 @@ while [ "$1" != "" ]; do
                                 cpd_compare=$1
 				argument_list+="-F cpd_compare=$cpd_compare "
                                 ;;
+	--username )          shift
+                                username=$1
+				argument_list+="-F email=$username "
+                                ;;
+	--password )          shift
+                                password=$1
+				argument_list+="-F password=$password "
+                                ;;
         -h | --help )           usage
                                 exit
                                 ;;
@@ -267,6 +277,15 @@ while [ "$1" != "" ]; do
     shift
 done
 
+if [ ! -z $username ] 
+then 
+  if [ -z "$password" ]
+  then
+     echo "Password can't be empty..Please re-run the API along with password. Exiting !!!!!" 
+     exit 1
+  fi
+fi 
+echo 
 
 function run_api_analysis()
 {
@@ -277,7 +296,14 @@ function run_api_analysis()
      echo 
      exit 1
    fi
-   eval "curl -i -sS -w '\n'  $argument_list  $API_PATH" | sed 's/\\//g'
+   eval "curl -i -sS -w '\n'  $argument_list $API_PATH" | sed 's/\\//g' |grep -Ev "HTTP|Cookie|Server|Cache-Control|Content" & PID=$! #simulate a long process
+   echo "THIS MAY TAKE A WHILE, PLEASE BE PATIENT WHILE API IS RUNNING..."
+   while kill -0 $PID 2> /dev/null
+   do
+      printf  "#"
+         sleep 1
+   done
+   echo
 }
 
 function main()

@@ -406,6 +406,21 @@ td {
              onclick="window.open('tutorial#color', 'newwindow', 'width=500, height=500,status=1,scrollbars=1').focus(); return false;"        
              target="_blank">Low,Mid,High Compound</a></td>
      </tr>
+     <tr>
+       <td colspan="4" style="text-align: center;"><b>API Specific</b></td>
+     </tr>
+        <td> --username </td>
+        <td> The registered email to access the API.</td>
+        <td> guest </td>
+        <td> NA </td>
+     <tr>
+     </tr>
+        <td> --password </td>
+        <td> The password for the registered account to access the API.</td>
+        <td> NULL </td>
+        <td> NA </td>
+     <tr>
+    </tr>
    </table>
    </section>
  </div>

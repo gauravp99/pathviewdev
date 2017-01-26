@@ -16,6 +16,7 @@ use Mail;
 use RecursiveIteratorIterator;
 use RecursiveDirectoryIterator;
 use Response;
+use Auth;
 class UrlController extends Controller
 {
     public function get_client_ip()
@@ -52,16 +53,38 @@ class UrlController extends Controller
    public function postAnalysis()
    {
       $uniqid = uniqid();
+      if (Input::has('email'))
+      {
+
+        #mkdir("all/", 0755, false);
+        $path = "all/".Input::get('email'). "/". $uniqid;
+
+      }
+      else 
+      {
+      
       $path = "all/demo/".$uniqid;
+      }
       if(!file_exists("all/demo"))
       {
          File::makeDirectory("all/demo", $mode = 0775, true, true);
       }
       File::makeDirectory($path, $mode = 0775, true, true);
 
-      $valid_input_keys=array('gene_data', 'cpd_data', 'auto_sel', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample');
+      $valid_input_keys=array('email', 'password', 'gene_data', 'cpd_data', 'auto_sel', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample');
       $request_input_keys=array_keys(Input::all());
       $validate_input_array=array_diff($request_input_keys, $valid_input_keys);
+      //if (Auth::attempt($userdata)) 
+      if (Input::has('email'))
+      {
+         if (!Auth::attempt(['email' => Input::get('email'), 'password' => Input::get('password')]))
+         {
+            return response()->json(['message' => 'Invalid Credentials. Please provide the registered account details with the API.'], 400);
+         }
+      }
+      
+
+
       if (sizeof($validate_input_array) != 0)
       {
 	 $valid_keys_string=implode(",", $valid_input_keys);
@@ -115,7 +138,15 @@ class UrlController extends Controller
        
 
       // Creating zip file for the code.
+      if (Input::has('email'))
+      {
+
+      $directory = public_path() . "/all/" .Input::get('email') . "/" .$uniqid;
+      }
+      else 
+      {
       $directory = public_path() . "/all/demo/" . $uniqid;
+      }
       chdir($directory);
       $rootPath = realpath($directory);
 
@@ -147,7 +178,14 @@ class UrlController extends Controller
 
        // Zip archive will be created only after closing object
        $zip->close();
-       $download_link =asset('all/demo/'.$uniqid.'/file.zip');
+       if (Input::has('email'))
+       {
+          $download_link =asset('all/'.Input::get('email')."/".$uniqid.'/file.zip');
+       }
+       else
+       {
+          $download_link =asset('all/demo/'.$uniqid.'/file.zip');
+       }
        $options = app('request')->header('accept-charset') == 'utf-8' ? JSON_UNESCAPED_UNICODE : null;
        $status_code=200;
        if ($response_warning == '')
@@ -837,9 +875,19 @@ class UrlController extends Controller
       }
       
       $date = new \DateTime;
-      DB::table('analysis')->insert(
+      if (Input::has('email'))
+      {
+         DB::table('analysis')->insert(
+      		array('analysis_id' => $time . "", 'id' => Auth::user()->id . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview_restapi','ip_add' => $this->get_client_ip())
+      	);
+      }
+      else 
+      {
+         DB::table('analysis')->insert(
       		array('analysis_id' => $time . "", 'id' => '0' . "", 'arguments' => $argument . "", 'analysis_type' => $anal_type, 'created_at' => $date, 'analysis_origin' => 'pathview_restapi','ip_add' => $this->get_client_ip())
       	);
+
+      }
       //start If there are error in the code analysis saving into database for reporting and solving by admin
       if(file_exists(public_path()."/".$destFile . "/errorFile.Rout"))
       {
