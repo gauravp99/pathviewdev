@@ -9,6 +9,8 @@
        <p class="alert alert-info">Note:  Nodes in native KEGG view graphs are hyperlinked.</p> 
     <?php
             $anal_id = $_GET['analyses'];
+            $pathway_id = substr($_GET['id'], -5);
+	    $file_path_pathway = 'data/ref.path.title.txt';
             if (Auth::user()) {
                 $user_id = Auth::user()->id;
 
@@ -89,11 +91,36 @@
 	$cpdfilename = "cpddata.".$_GET['id'].".txt";
 	$genefilename = "genedata.".$_GET['id'].".txt";
 		
+//This pulls up the data from a common file and created a hyperlink for the pathway
+if(File::exists($file_path_pathway))
+{
+    $contents = file_get_contents($file_path_pathway);
+    $contentsArray = explode("\n",$contents);
+    array_shift($contentsArray);
+    foreach($contentsArray as $line)
+    {
+        $splitLineArray = explode("\t",$line);
+        if( sizeof($splitLineArray) > 1 )
+        {
+	    if($splitLineArray[0]==$pathway_id)
+	    {
+                $width = intval($splitLineArray[4]);
+                $height = intval($splitLineArray[5]);
+                $midx = intval($splitLineArray[2]);
+                $midy = intval($splitLineArray[3]);
 
+                $x1_kegg = $midx - intval($width/2);
+                $y1_kegg = $midy - intval($height/2) -1;
 
-
-
-
+                $x2_kegg = $midx + intval($width/2);
+                $y2_kegg = $midy + intval($height/2);
+               echo "<area shape=\"rect\" coords=\"".$x1_kegg.",".$y1_kegg.",".$x2_kegg.",".$y2_kegg."\"href=\"http://www.kegg.jp/dbget-bin/www_bget?".$_GET['id']. "\">";
+                echo "\n";
+		break;
+	    }
+	 }
+    }
+}
 
             //parse geneid data
 	if(File::exists($directory."/".$genefilename))

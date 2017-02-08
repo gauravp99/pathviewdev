@@ -1,0 +1,420 @@
+kegg.names	labels	x	y	width	height
+00010	Glycolysis / Gluconeogenesis	162	58	243	25
+00020	Citrate cycle (TCA cycle)	155	58	229	25
+00030	Pentose phosphate pathway	160	58	239	25
+00040	Pentose and glucuronate interconversions	229	58	378	25
+00051	Fructose and mannose metabolism	189	58	298	25
+00052	Galactose metabolism	139	58	197	25
+00053	Ascorbate and aldarate metabolism	203	58	326	25
+00061	Fatty acid biosynthesis	135	58	210	25
+00062	Fatty acid elongation	145	58	209	25
+00071	Fatty acid degradation	148	58	216	25
+00072	Synthesis and degradation of ketone bodies	246	62	257	34
+00073	Cutin, suberine and wax biosynthesis	205	58	330	25
+00100	Steroid biosynthesis	130	58	180	25
+00120	Primary bile acid biosynthesis	171	58	261	25
+00121	Secondary bile acid biosynthesis	186	58	291	25
+00130	Ubiquinone and other terpenoid-quinone biosynthesis	274	58	467	25
+00140	Steroid hormone biosynthesis	167	58	254	25
+00190	Oxidative phosphorylation	162	58	243	25
+00195	Photosynthesis	113	58	145	25
+00196	Photosynthesis - antenna proteins	532	58	298	25
+00220	Arginine biosynthesis	137	58	193	25
+00230	Purine metabolism	125	58	169	25
+00231	Puromycin biosynthesis	148	58	215	25
+00232	Caffeine metabolism	133	58	186	25
+00240	Pyrimidine metabolism	142	58	204	25
+00250	Alanine, aspartate and glutamate metabolism	250	58	419	25
+00253	Tetracycline biosynthesis	161	58	242	25
+00254	Aflatoxin biosynthesis	144	58	207	25
+00260	Glycine, serine and threonine metabolism	226	58	372	25
+00261	Monobactam biosynthesis	155	58	229	25
+00270	Cysteine and methionine metabolism	202	58	323	25
+00280	Valine, leucine and isoleucine degradation	392	48	387	25
+00281	Geraniol degradation	140	58	199	25
+00290	Valine, leucine and isoleucine biosynthesis	232	58	383	25
+00300	Lysine biosynthesis	129	58	177	25
+00310	Lysine degradation	125	58	169	25
+00311	Penicillin and cephalosporin biosynthesis	222	58	364	25
+00330	Arginine and proline metabolism	187	58	293	25
+00331	Clavulanic acid biosynthesis	170	58	260	25
+00332	Carbapenem biosynthesis	151	58	222	25
+00340	Histidine metabolism	130	58	179	25
+00350	Tyrosine metabolism	135	58	190	25
+00360	Phenylalanine metabolism	158	58	236	25
+00361	Chlorocyclohexane and chlorobenzene degradation	269	58	457	25
+00362	Benzoate degradation	137	58	194	25
+00363	Bisphenol degradation	144	58	207	25
+00364	Fluorobenzoate degradation	166	58	252	25
+00365	Furfural degradation	141	58	201	25
+00380	Tryptophan metabolism	143	61	205	25
+00400	Phenylalanine, tyrosine and tryptophan biosynthesis	270	58	459	25
+00401	Novobiocin biosynthesis	150	58	219	25
+00402	Benzoxazinoid biosynthesis	160	58	240	25
+00403	Indole diterpene alkaloid biosynthesis	214	58	348	25
+00404	Staurosporine biosynthesis	162	58	244	25
+00410	beta-Alanine metabolism	143	58	206	25
+00430	Taurine and hypotaurine metabolism	202	58	323	25
+00440	Phosphonate and phosphinate metabolism	215	58	349	25
+00450	Selenocompound metabolism	166	58	252	25
+00460	Cyanoamino acid metabolism	169	53	258	25
+00471	D-Glutamine and D-glutamate metabolism	224	58	368	25
+00472	D-Arginine and D-ornithine metabolism	206	58	331	25
+00473	D-Alanine metabolism	140	58	200	25
+00480	Glutathione metabolism	150	58	219	25
+00500	Starch and sucrose metabolism	178	58	276	25
+00510	N-Glycan biosynthesis	137	58	194	25
+00511	Other glycan degradation	158	58	236	25
+00512	Mucin type O-glycan biosynthesis	190	58	299	25
+00513	Various types of N-glycan biosynthesis	213	58	345	25
+00514	Other types of O-glycan biosynthesis	207	58	333	25
+00515	Mannose type O-glycan biosynthesis	197	58	313	25
+00520	Amino sugar and nucleotide sugar metabolism	244	58	408	25
+00521	Streptomycin biosynthesis	158	58	235	25
+00522	Biosynthesis of 12-, 14- and 16-membered macrolides	263	58	445	25
+00523	Polyketide sugar unit biosynthesis	192	58	304	25
+00524	Neomycin, kanamycin and gentamicin biosynthesis	253	58	425	25
+00525	Acarbose and validamycin biosynthesis	211	58	341	25
+00531	Glycosaminoglycan degradation	184	58	287	25
+00532	Glycosaminoglycan biosynthesis - chondroitin sulfate / dermatan sulfate	355	58	629	25
+00533	Glycosaminoglycan biosynthesis - keratan sulfate	259	58	437	25
+00534	Glycosaminoglycan biosynthesis - heparan sulfate / heparin	298	58	516	25
+00540	Lipopolysaccharide biosynthesis	179	58	278	25
+00550	Peptidoglycan biosynthesis	161	58	242	25
+00561	Glycerolipid metabolism	150	58	219	25
+00562	Inositol phosphate metabolism	176	58	272	25
+00563	Glycosylphosphatidylinositol (GPI)-anchor biosynthesis	278	58	475	25
+00564	Glycerophospholipid metabolism	182	58	283	25
+00565	Ether lipid metabolism	144	58	207	25
+00590	Arachidonic acid metabolism	169	58	257	25
+00591	Linoleic acid metabolism	155	58	229	25
+00592	alpha-Linolenic acid metabolism	166	58	252	25
+00600	Sphingolipid metabolism	147	58	214	25
+00601	Glycosphingolipid biosynthesis - lacto and neolacto series	291	58	501	25
+00603					
+00604	Glycosphingolipid biosynthesis - ganglio series	242	58	403	25
+00620	Pyruvate metabolism	138	58	196	25
+00621	Dioxin degradation	132	58	183	25
+00622	Xylene degradation	132	58	183	25
+00623	Toluene degradation	132	58	183	25
+00624	Polycyclic aromatic hydrocarbon degradation	245	58	410	25
+00625	Chloroalkane and chloroalkene degradation	240	58	400	25
+00626	Naphthalene degradation	156	58	231	25
+00627					
+00630	Glyoxylate and dicarboxylate metabolism	225	58	369	25
+00633	Nitrotoluene degradation	153	58	226	25
+00640	Propanoate metabolism	140	58	200	25
+00642	Ethylbenzene degradation	159	58	238	25
+00643	Styrene degradation	135	58	190	25
+00650	Butanoate metabolism	144	58	207	25
+00660	C5-Branched dibasic acid metabolism	201	58	321	25
+00670	One carbon pool by folate	163	58	245	25
+00680	Methane metabolism	132	58	183	25
+00710	Carbon fixation in photosynthetic organisms	238	58	395	25
+00720	Carbon fixation pathways in prokaryotes	222	58	363	25
+00730	Thiamine metabolism	134	58	188	25
+00740	Riboflavin metabolism	138	58	196	25
+00750	Vitamin B6 metabolism	142	58	203	25
+00760	Nicotinate and nicotinamide metabolism	210	58	340	25
+00770	Pantothenate and CoA biosynthesis	453	56	316	25
+00780	Biotin metabolism	128	58	176	25
+00785	Lipoic acid metabolism	140	58	200	25
+00790	Folate biosynthesis	134	58	187	25
+00791	Atrazine degradation	140	57	200	24
+00830	Retinol metabolism	176	58	271	25
+00860	Porphyrin and chlorophyll metabolism	210	58	339	25
+00900	Terpenoid backbone biosynthesis	181	58	281	25
+00901	Indole alkaloid biosynthesis	166	58	251	25
+00902	Monoterpenoid biosynthesis	160	58	240	25
+00903	Limonene and pinene degradation	190	58	299	25
+00904	Diterpenoid biosynthesis	150	58	220	25
+00905	Brassinosteroid biosynthesis	168	58	256	25
+00906	Carotenoid biosynthesis	149	58	217	25
+00908	Zeatin biosynthesis	131	58	181	25
+00909	Sesquiterpenoid and triterpenoid biosynthesis	242	58	404	25
+00910	Nitrogen metabolism	133	58	186	25
+00920	Sulfur metabolism	125	58	170	25
+00930	Caprolactam degradation	156	53	232	25
+00940	Phenylpropanoid biosynthesis	171	58	262	25
+00941	Flavonoid biosynthesis	143	58	205	25
+00942	Anthocyanin biosynthesis	155	58	229	25
+00943	Isoflavonoid biosynthesis	154	58	227	25
+00944	Flavone and flavonol biosynthesis	196	58	312	25
+00945	Stilbenoid, diarylheptanoid and gingerol biosynthesis	276	58	472	25
+00950	Isoquinoline alkaloid biosynthesis	194	58	307	25
+00960	Tropane, piperidine and pyridine alkaloid biosynthesis	278	58	475	25
+00965	Betalain biosynthesis	139	58	197	25
+00966					
+00970	Aminoacyl-tRNA biosynthesis	168	58	256	25
+00980	Metabolism of xenobiotics by cytochrome P450	243	58	406	25
+00981	Insect hormone biosynthesis	163	58	245	25
+00982	Drug metabolism - cytochrome P450	190	58	299	25
+00983	Drug metabolism - other enzymes	185	58	289	25
+00984	Steroid degradation	134	58	187	25
+01040	Biosynthesis of unsaturated fatty acids	214	58	348	25
+01051	Biosynthesis of ansamycins	157	58	234	25
+01052	Type I polyketide structures	166	58	251	25
+01053	Biosynthesis of siderophore group nonribosomal peptides	283	58	485	25
+01054	Nonribosomal peptide structures	188	58	296	25
+01055	Biosynthesis of vancomycin group antibiotics	242	58	403	25
+01056	Biosynthesis of type II polyketide backbone	229	58	378	25
+01057	Biosynthesis of type II polyketide products	229	58	377	25
+01058	Acridone alkaloid biosynthesis	179	58	277	25
+01100					
+01110					
+01120					
+01130					
+01200	Carbon metabolism	129	58	177	25
+01210	2-Oxocarboxylic acid metabolism	187	58	294	25
+01212	Fatty acid metabolism	140	58	199	25
+01220	Degradation of aromatic compounds	201	58	321	25
+01230	Biosynthesis of amino acids	165	58	249	25
+01501	beta-Lactam resistance	139	58	197	25
+01502	Vancomycin resistance	151	58	222	25
+01503	Cationic antimicrobial peptide (CAMP) resistance	259	58	438	25
+01521	EGFR tyrosine kinase inhibitor resistance	231	58	382	25
+01522	Endocrine resistance	153	58	225	25
+01523	Antifolate resistance	150	58	219	25
+01524	Platinum drug resistance	166	58	252	25
+02010	ABC transporters	123	58	166	25
+02020	Two-component system	141	58	202	25
+02024	Quorum sensing	119	58	157	25
+02025	Biofilm formation - Pseudomonas aeruginosa	240	58	400	25
+02026	Biofilm formation - Escherichia coli	206	58	332	25
+02030	Bacterial chemotaxis	142	58	204	25
+02040	Flagellar assembly	134	58	188	25
+02060	Phosphotransferase system (PTS)	183	58	286	25
+03008	Ribosome biogenesis in eukaryotes	195	58	310	25
+03010	Ribosome	88	58	95	25
+03013	RNA transport	108	58	136	25
+03015	mRNA surveillance pathway	165	58	250	25
+03018	RNA degradation	121	58	161	25
+03020	RNA polymerase	113	59	146	27
+03022	Basal transcription factors	221	58	361	25
+03030	DNA replication	116	58	151	25
+03040	Spliceosome	105	58	129	25
+03050	Proteasome	102	58	124	25
+03060	Protein export	108	58	136	25
+03070	Bacterial secretion system	167	58	254	25
+03320	PPAR signaling pathway	156	41	215	25
+03410	Base excision repair	135	58	189	25
+03420	Nucleotide excision repair	161	58	242	25
+03430	Mismatch repair	116	57	151	25
+03440	Homologous recombination	160	58	239	25
+03450	Non-homologous end-joining	167	58	253	25
+03460	Fanconi anemia pathway	160	58	239	25
+04010	MAPK signaling pathway	154	58	228	25
+04011	MAPK signaling pathway - yeast	185	58	290	25
+04012	ErbB signaling pathway	147	58	214	25
+04013	MAPK signaling pathway - fly	178	58	275	25
+04014					
+04015	Rap1 signaling pathway	154	58	228	25
+04016					
+04020	Calcium signaling pathway	165	58	250	25
+04022	cGMP-PKG signaling pathway	176	58	271	25
+04024	cAMP signaling pathway	157	58	234	25
+04060	Cytokine-cytokine receptor interaction	216	58	352	25
+04062	Chemokine signaling pathway	180	58	280	25
+04064	NF-kappa B signaling pathway	178	58	275	25
+04066					
+04068					
+04070	Phosphatidylinositol signaling system	213	58	346	25
+04071	Sphingolipid signaling pathway	185	58	289	25
+04072	Phospholipase D signaling pathway	205	58	329	25
+04075	Plant hormone signal transduction	190	38	324	25
+04080	Neuroactive ligand-receptor interaction	222	58	364	25
+04110	Cell cycle	98	58	115	25
+04111	Cell cycle - yeast	128	58	175	25
+04112	Cell cycle - Caulobacter	143	58	206	25
+04113	Meiosis - yeast	118	58	156	25
+04114	Oocyte meiosis	114	58	147	25
+04115	p53 signaling pathway	139	58	198	25
+04120	Ubiquitin mediated proteolysis	180	58	280	25
+04122	Sulfur relay system	140	58	200	25
+04130	SNARE interactions in vesicular transport	228	58	375	25
+04139	Mitophagy - yeast	123	58	165	25
+04140	Autophagy	158	58	235	25
+04141	Protein processing in endoplasmic reticulum	250	58	420	25
+04142	Lysosome	95	58	110	25
+04144	Endocytosis	100	58	120	25
+04145	Phagosome	90	58	100	25
+04146	Peroxisome	100	58	120	25
+04150	mTOR signaling pathway	150	58	220	25
+04151	PI3K-Akt signaling pathway	169	58	257	25
+04152	AMPK signaling pathway	160	58	239	25
+04210	Apoptosis	90	58	100	25
+04211					
+04212	Longevity regulating pathway - worm	216	58	351	25
+04213	Longevity regulating pathway - multiple species	258	58	435	25
+04214	Apoptosis - fly	124	58	168	25
+04215	Apoptosis - multiple species	172	58	263	25
+04260	Cardiac muscle contraction	168	58	256	25
+04261	Adrenergic signaling in cardiomyocytes	223	58	366	25
+04270	Vascular smooth muscle contraction	213	58	346	25
+04310	Wnt signaling pathway	147	58	214	25
+04320	Dorso-ventral axis formation	207	58	334	25
+04330	Notch signaling pathway	160	58	239	25
+04340	Hedgehog signaling pathway	174	58	267	25
+04341					
+04350	TGF-beta signaling pathway	167	58	253	25
+04360	Axon guidance	113	58	146	25
+04370	VEGF signaling pathway	151	58	222	25
+04380	Osteoclast differentiation	167	58	253	25
+04390	Hippo signaling pathway	159	58	238	25
+04391	Hippo signaling pathway - fly	182	58	283	25
+04392	Hippo signaling pathway -multiple species	234	58	387	25
+04510	Focal adhesion	119	58	158	25
+04512	ECM-receptor interaction	163	58	246	25
+04514	Cell adhesion molecules (CAMs)	157	58	233	25
+04520	Adherens junction	126	58	172	25
+04530	Tight junction	112	58	143	25
+04540	Gap junction	102	58	124	25
+04550	Signaling pathways regulating pluripotency of stem cells	304	58	528	25
+04610	Complement and coagulation cascades	207	58	333	25
+04611					
+04612	Antigen processing and presentation	205	58	329	25
+04614	Renin-angiotensin system	159	58	237	25
+04620	Toll-like receptor signaling pathway	209	58	337	25
+04621	NOD-like receptor signaling pathway	198	58	316	25
+04622	RIG-I-like receptor signaling pathway	206	58	332	25
+04623	Cytosolic DNA-sensing pathway	186	58	292	25
+04624	Toll and Imd signaling pathway	172	58	263	25
+04626	Plant-pathogen interaction	168	58	256	25
+04630	Jak-STAT signaling pathway	164	58	248	25
+04640	Hematopoietic cell lineage	176	41	253	25
+04650	Natural killer cell mediated cytotoxicity	230	58	379	25
+04657	IL-17 signaling pathway	157	58	234	25
+04658	Th1 and Th2 cell differentiation	186	58	292	25
+04659	Th17 cell differentiation	157	58	234	25
+04660	T cell receptor signaling pathway	193	58	306	25
+04662	B cell receptor signaling pathway	196	58	311	25
+04664	Fc epsilon RI signaling pathway	147	58	214	25
+04666	Fc gamma R-mediated phagocytosis	162	58	243	25
+04668	TNF signaling pathway	143	58	205	25
+04670	Leukocyte transendothelial migration	217	58	354	25
+04672	Intestinal immune network for IgA production	246	58	412	25
+04710	Circadian rhythm	125	58	169	25
+04711					
+04712	Circadian rhythm - plant	150	58	220	25
+04713	Circadian entrainment	145	58	209	25
+04720	Long-term potentiation	149	58	217	25
+04721	Synaptic vesicle cycle	151	58	222	25
+04722	Neurotrophin signaling pathway	186	58	292	25
+04723	Retrograde endocannabinoid signaling	219	58	358	25
+04724	Glutamatergic synapse	151	58	222	25
+04725					
+04726					
+04727	GABAergic synapse	130	58	180	25
+04728	Dopaminergic synapse	146	58	212	25
+04730	Long-term depression	137	58	194	25
+04740	Olfactory transduction	150	58	220	25
+04742	Taste transduction	133	58	186	25
+04744	Phototransduction	133	58	186	25
+04745	Phototransduction - fly	152	58	224	25
+04750	Inflammatory mediator regulation of TRP channels	282	43	459	25
+04810	Regulation of actin cytoskeleton	194	58	307	25
+04910	Insulin signaling pathway	160	58	239	25
+04911					
+04912	GnRH signaling pathway	161	41	219	25
+04913	Ovarian steroidogenesis	159	58	238	25
+04914	Progesterone-mediated oocyte maturation	230	58	379	25
+04915	Estrogen signaling pathway	180	58	279	25
+04916	Melanogenesis	111	58	141	25
+04917	Prolactin signaling pathway	176	58	271	25
+04918	Thyroid hormone synthesis	171	58	261	25
+04919					
+04920	Adipocytokine signaling pathway	185	58	290	25
+04921	Oxytocin signaling pathway	175	58	269	25
+04922	Glucagon signaling pathway	183	58	285	25
+04923					
+04924	Renin secretion	120	58	159	25
+04925	Aldosterone synthesis and secretion	212	58	343	25
+04930	Type II diabetes mellitus	156	58	232	25
+04931					
+04932	Non-alcoholic fatty liver disease (NAFLD)	232	68	363	25
+04933	AGE-RAGE signaling pathway in diabetic complications	275	58	470	25
+04940	Type I diabetes mellitus	149	58	218	25
+04950	Maturity onset diabetes of the young	214	58	347	25
+04960	Aldosterone-regulated sodium reabsorption	237	58	393	25
+04961	Endocrine and other factor-regulated calcium reabsorption	315	58	549	25
+04962	Vasopressin-regulated water reabsorption	237	58	393	25
+04964	Proximal tubule bicarbonate reclamation	237	58	393	25
+04966	Collecting duct acid secretion	187	58	294	25
+04970	Salivary secretion	136	58	192	25
+04971	Gastric acid secretion	151	58	221	25
+04972	Pancreatic secretion	141	58	201	25
+04973	Carbohydrate digestion and absorption	223	58	366	25
+04974	Protein digestion and absorption	195	58	310	25
+04975	Fat digestion and absorption	183	58	285	25
+04976	Bile secretion	114	58	148	25
+04977	Vitamin digestion and absorption	198	58	316	25
+04978	Mineral absorption	136	58	192	25
+05010	Alzheimer's disease	132	58	184	25
+05012					
+05014	Amyotrophic lateral sclerosis (ALS)	204	58	327	25
+05016	Huntington's disease	136	58	192	25
+05020	Prion diseases	111	58	141	25
+05030	Cocaine addiction	131	58	182	25
+05031	Amphetamine addiction	152	58	224	25
+05032	Morphine addiction	137	58	194	25
+05033	Nicotine addiction	131	58	182	25
+05034	Alcoholism	104	58	128	25
+05100	Bacterial invasion of epithelial cells	215	58	350	25
+05110	Vibrio cholerae infection	158	43	235	25
+05111	Biofilm formation - Vibrio cholerae	206	58	332	25
+05120	Epithelial cell signaling in Helicobacter pylori infection	300	58	519	25
+05130	Pathogenic Escherichia coli infection	210	58	339	25
+05131					
+05132	Salmonella infection	143	58	206	25
+05133	Pertussis	91	58	102	25
+05134	Legionellosis	108	58	135	25
+05140	Leishmaniasis	107	58	134	25
+05142	Chagas disease (American trypanosomiasis)	116	58	151	25
+05143	African trypanosomiasis	158	58	236	25
+05144	Malaria	86	58	92	25
+05145	Toxoplasmosis	115	58	150	25
+05146	Amoebiasis	93	58	106	25
+05150	Staphylococcus aureus infection	190	58	300	25
+05152	Tuberculosis	106	58	131	25
+05160	Hepatitis C	97	58	114	25
+05161					
+05162	Measles	86	58	92	25
+05164	Influenza A	101	58	122	25
+05166	HTLV-I infection	120	58	160	25
+05168	Herpes simplex infection	152	58	224	25
+05169	Epstein-Barr virus infection	169	58	257	25
+05200					
+05202	Transcriptional misregulation in cancer	222	58	363	25
+05203	Viral carcinogenesis	143	58	206	25
+05204	Chemical carcinogenesis	159	58	237	25
+05205	Proteoglycans in cancer	161	58	241	25
+05206	MicroRNAs in cancer	136	58	191	25
+05210	Colorectal cancer	140	43	176	25
+05211	Renal cell carcinoma	139	58	197	25
+05212	Pancreatic cancer	132	58	183	25
+05213	Endometrial cancer	131	58	181	25
+05214	Glioma	86	58	92	25
+05215	Prostate cancer	116	58	152	25
+05216	Thyroid cancer	118	58	155	25
+05217	Basal cell carcinoma	141	58	202	25
+05218	Melanoma	93	58	106	25
+05219	Bladder cancer	117	58	153	25
+05220	Chronic myeloid leukemia	159	58	238	25
+05221	Acute myeloid leukemia	151	58	223	25
+05222	Small cell lung cancer	153	58	225	25
+05223	Non-small cell lung cancer	170	58	260	25
+05224	Breast cancer	123	58	165	25
+05230	Central carbon metabolism in cancer	218	58	355	25
+05231	Choline metabolism in cancer	185	58	289	25
+05310	Asthma	82	58	83	25
+05320	Autoimmune thyroid disease	169	58	257	25
+05321	Inflammatory bowel disease (IBD)	200	68	300	25
+05322	Systemic lupus erythematosus	176	58	272	25
+05323	Rheumatoid arthritis	141	58	201	25
+05330	Allograft rejection	135	58	189	25
+05332	Graft-versus-host disease	157	58	233	25
+05340	Primary immunodeficiency	158	58	236	25
+05410	Hypertrophic cardiomyopathy (HCM)	200	58	319	25
+05412	Arrhythmogenic right ventricular cardiomyopathy (ARVC)	295	58	509	25
+05414	Dilated cardiomyopathy	178	58	276	25
+05416					
