@@ -20,36 +20,42 @@
     <h3>{{ comment.text_string }} <small>by {{ comment.author }}</h3>
     <p id="comment1">Comment #{{ comment.id }}</p>
         <nav style="alignment: right"><p id="comment">{{ comment.created_at }}</p></nav>
+
     <div cstyle="display: inline;"><a href="" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a>
     <nav style="alignment: left;display: inline-block;"><a href="" ng-click="showReply(comment.id)" class="text-muted" >Reply</a></nav></div>
     <div class="col-lg-offset-2 col-md-8 reply" hidden="" id="{{comment.id}}" style="display:inline-block;font-size:small;-ms-box-sizing:content-box;
 -moz-box-sizing:content-box;
 -webkit-box-sizing:content-box;
-box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
-        <form ng-submit="submitComment()"> <!-- ng-submit will disable the default form action and use our function -->
+box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;"  ng-controller="replyCtrl">
+        <form ng-submit="submitCommentReply(message)"> <!-- ng-submit will disable the default form action and use our function -->
+	   <input type="text" ng-model="message" autofocus  style="display: none;">
 
             <!-- AUTHOR -->
 
 
             <!-- COMMENT TEXT -->
             <div class="form-group">
-                <input type="text" class="form-control input-sm" name="commentReply" ng-model="commentDataReply.text" placeholder="Comment" required>
+                <input type="text" class="form-control input-sm" name="commentReply" ng-model="commentReplyData.text" placeholder="Comment" required>
             </div>
 
 
 
             <!-- SUBMIT BUTTON -->
             <div class="form-group text-left">
-                <input type="text" class="form-control input-sm" name="replyAuthor" style="width:20%" ng-model="commentDataReply.author" placeholder="Name" required>
+                <input type="text" class="form-control input-sm" name="name" style="width:20%" ng-model="commentReplyData.name" placeholder="Name" required>
 
             </div>
+	    <input type="text" name="commentId" ng-model="commentReplyData.commentId"  data-ng-value="commentReplyData.commentId=comment.id" style="display: none;"/>
             <div class="form-group text-left">
-                <button type="submit" class="btn btn-primary btn-sm">Submit</button><a href="" ng-click="hideReply(comment.id)" class="text-muted" style="margin-left:5px;">cancel</a>
+                <button type="submit" class="btn btn-primary btn-sm" ng-click="hideReply(comment.id)" class="text-muted">Submit</button><a href="" ng-click="hideReply(comment.id)" class="text-muted" style="margin-left:5px;">cancel</a>
             </div>
 
         </form>
     </div>
     </div>
+<div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-controller="replyCtrl" ng-if="comReply.comment_id==comment.id">
+     <h4><pre><small>Admin: </small> <% comReply.text_string %> <small> <% comReply.created_at  %> </small> </pre></h4>
+</div>
 </div>
 
 <hr/>
@@ -67,13 +73,14 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
             <input type="text" class="form-control input-lg" name="comment" ng-model="commentData.text" placeholder="Say what you have to say" required>
 
         </div>
-
+  
 
         <!-- SUBMIT BUTTON -->
         <div class="form-group text-right">
             <button type="submit" class="btn btn-primary btn-lg">Submit</button>
         </div>
     </form>
+    <p> Name {{$commentData.text}}</p>
 </div>
 </div>
     </div>

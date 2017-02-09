@@ -1,5 +1,7 @@
     /**
  * Created by ybhavnasi on 10/12/15.
+ * Modified by Gaurav Pant 02/09/15
+ * Support of ReplyComment in the Admin Panel
  */
 
 var module = angular.module('faqApp',[],function($interpolateProvider) {
@@ -7,9 +9,10 @@ var module = angular.module('faqApp',[],function($interpolateProvider) {
     $interpolateProvider.endSymbol('%>');
 
 });
-module.controller('faqController', function($scope, $http, Comment){
+module.controller('faqController', function($scope, $http, Comment, CommentReply){
 
         $scope.commentData = {};
+        $scope.commentReplyData = {};
 
         $scope.loading = true;
 
@@ -19,6 +22,11 @@ module.controller('faqController', function($scope, $http, Comment){
                 $scope.loading = false;
             });
 
+        CommentReply.get()
+            .success(function(data){
+                $scope.commentReply = data;
+                $scope.loading = false;
+            });
         $scope.submitComment = function() {
             $scope.loading = true;
             Comment.save($scope.commentData)
@@ -76,6 +84,12 @@ module.factory('Comment', function($http){
         }
 
     }
+}),
 
-
-});
+module.factory('CommentReply', function($http){
+        return {
+            get: function () {
+                return $http.get('/api/commentReply');
+            }
+        }
+    });

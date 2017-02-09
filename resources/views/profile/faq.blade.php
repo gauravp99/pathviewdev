@@ -23,22 +23,10 @@
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
-			    <h4><pre><% comment.text_string %></pre></h4>
-                            </div>
-                            <div class="panel-footer" style="">
-                                <small>by <% comment.author  %> </small>
-                                <p style="font-size: 10px;" id="comment1">Comment #<% comment.id  %></p>
-                                <nav style="font-size: 10px;alignment: right"><p
-                                            id="comment"><% comment.created_at  %></p></nav>
-                                <div cstyle="display: inline;">
-                                    <div class="col-lg-offset-2 col-md-8 reply" hidden="" id="<% comment.id %>" style="display:inline-block;font-size:small;-ms-box-sizing:content-box;
--moz-box-sizing:content-box;
--webkit-box-sizing:content-box;
-box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;">
-                                    </div>
-                                </div>
-
-
+			    <h4><pre><small><% comment.author  %>: </small> <% comment.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
+                              <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
+			        <h4><pre><small>Admin: </small> <% comReply.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
+                              </div>
                             </div>
                         </div>
                     </div>
@@ -58,7 +46,7 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;">
 
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="name" name="name" ng-model="commentData.author"
-                                   required="" placeholder="First & Last Name"
+                                   required placeholder="First & Last Name" ng-required="required"
                                    value= @if(Auth::user())  {{Auth::user()->name}} @endif>
                         </div>
                     </div>
@@ -67,8 +55,8 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;">
 
                         <div class="col-sm-9">
 
-                            <input type="email" class="form-control" id="email" name="email"
-                                   placeholder="example@domain.com" required=""
+                            <input type="email" class="form-control" id="email" name="email" ng-required="required"
+                                   placeholder="example@domain.com" required
                                    value= @if(Auth::user())  {{Auth::user()->email}} @endif >
                         </div>
                     </div>

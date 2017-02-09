@@ -55,6 +55,8 @@ Route::get('register/verify/{confirmationCode}', [
             //getting the resources for frequently asked questions
                 Route::resource('comments', 'CommentController',
                     array('only' => array('index', 'store', 'destroy')));
+                Route::resource('commentReply', 'CommentReplyController',
+                    array('only' => array('index', 'store', 'destroy')));
 	   //getting all users from new controller
                 Route::resource('url', 'UrlController@index');
                 Route::post('analysis', 'UrlController@postAnalysis');
