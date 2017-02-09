@@ -720,15 +720,15 @@
                 Results and logs</a>
             <img src="/images/checked.png">
             <?php
-            if(Auth::user())
-            {
-                $user = Auth::user();
-                echo "<h2 class='alert alert-info' style='font-size: 18px;color:black;'>Results were also emailed to $user->email </h2>";
-            }
-            else {
-                        Session::put('anal_id', $_SESSION['analyses_id']);
-                        echo "<h2 style='font-size:18px;color:black;' class='alert alert-info' ><a style='color:blue;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:blue;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
-                    }
+            #if(Auth::user())
+            #{
+            #    $user = Auth::user();
+            #    echo "<h2 class='alert alert-info' style='font-size: 18px;color:black;'>Results were also emailed to $user->email </h2>";
+            #}
+            #else {
+                        #Session::put('anal_id', $_SESSION['analyses_id']);
+                        #echo "<h2 style='font-size:18px;color:black;' class='alert alert-info' ><a style='color:blue;font-size:18px;' href='/auth/register'>Register</a> or <a style='color:blue;font-size:18px;' href='/auth/login'>Login</a> to save the outputs and a lot more.<h2>";
+            #        }
             ?>
         </div>
     </div>

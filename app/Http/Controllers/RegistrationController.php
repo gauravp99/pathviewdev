@@ -46,6 +46,7 @@ class RegistrationController extends Controller {
         }
 	try {
            $confirmation_code = str_random(30);
+	   1/0;
            User::create([
                'name' => Input::get('name'),
                'email' => Input::get('email'),
@@ -71,7 +72,7 @@ class RegistrationController extends Controller {
 	    fwrite($file, $e->getMessage());
 	    fwrite($file, "\n Confirmation Code: $confirmation_code user : $name \n");
 	    fclose($file);
-            return redirect('/')->with('message', 'Error while signing up. Please register your acccount again.');
+            return redirect('/')->with('message', 'Unexpected Error. Please register your acccount again.');
 
 	}
     }
