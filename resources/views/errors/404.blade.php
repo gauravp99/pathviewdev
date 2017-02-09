@@ -6,11 +6,8 @@
         <div class="col-sm-8 ">
             <h2 class="homepage-heading">Contact us with error screenshot</h2>
 
-            <p class="contact">Project Contact: <a
-                        href="mailto:luo_weijun@yahoo.com">luo_weijun@yahoo.com</a></p>
-
-            <p class="contact"> Report Issues : <a
-                        href="mailto:byeshvant@hotmail.com">byeshvant@hotmail.com</a>
+            <p class="contact">Email Contact: <a
+                        href="mailto:pathomics@gmail.com">pathomics@gmail.com</a></p>
             </div>
     </div>
     @endsection
