@@ -53,9 +53,11 @@ box-sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;"  ng-co
         </form>
     </div>
     </div>
-<div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-controller="replyCtrl" ng-if="comReply.comment_id==comment.id">
-     <h4><pre><small>Admin: </small> <% comReply.text_string %> <small> <% comReply.created_at  %> </small> </pre></h4>
-</div>
+    <div ng-controller="replyCtrl">
+      <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
+	<h4><pre><small>Admin: </small> {{ comReply.text_string }} <small> {{ comReply.created_at  }} </small> </pre></h4>
+      </div>
+    </div>
 </div>
 
 <hr/>
