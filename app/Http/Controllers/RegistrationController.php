@@ -46,7 +46,6 @@ class RegistrationController extends Controller {
         }
 	try {
            $confirmation_code = str_random(30);
-	   1/0;
            User::create([
                'name' => Input::get('name'),
                'email' => Input::get('email'),
