@@ -176,11 +176,7 @@ Route::get('register/verify/{confirmationCode}', [
             }));
 
 /* URL route for Analysis Result history Viewing page user page */
-        Route::get('anal_hist', array(
-            'as' => 'anal_hist',
-            'uses' => function () {
-                return view('profile.anal_hist');
-            }));
+        Route::get('anal_hist', 'profile\HomeController@analysis_history');
 /* URL route for POST Analysis Delete from home page */
         Route::post('analysisDelete','pathview\analysis\AnalysisController@delete');
 /* URL route for POST Analysis Delete from home page */

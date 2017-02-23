@@ -46,7 +46,7 @@
             else
             {
                 $user_id = DB::table('users')->where('email',$_GET['email'])->get();
-                if(sizeof($user_id) >0)
+                if(sizeof($user_id[0]) >0)
                 {
                     $analyses = DB::table('analysis')->where(['id' => $user_id[0]->id,'analysis_id'=>$analysis])->get();
                 }
@@ -56,7 +56,7 @@
                     {
             $argument = $analyses[0]->arguments;}
                 else{
-                    return "Not able to find the analysis daetails";
+                    return "Not able to find the analysis details";
                 }
             // If it exist, check if it's a directory
             if($path !== false AND is_dir($path))
