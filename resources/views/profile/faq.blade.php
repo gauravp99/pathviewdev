@@ -6,6 +6,7 @@
     <script src="/bower_components/angular/angular.js"></script>
     <script src="/js/faq.js"></script>
     <script src="/js/commentService.js"></script>
+    <script src="/js/dirPagination.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <div ng-app="faqApp" class="col-sm-8">
         <div ng-controller="faqController">
@@ -16,16 +17,14 @@
 
 
             <p class="text-center" ng-show="loading"></p>
-            <button type="button" class="btn btn-default navbar-btn" id="hideComments">Show previously Asked Questions
-                <span class="glyphicon glyphicon-resize-full"></span></button>
-            <div class="comment" id="hidebar" hidden="">
-                <div class="comment" ng-hide="loading" ng-repeat="comment in comments">
+            <div class="comment" >
+                <div class="comment"  dir-paginate="comment in comments | itemsPerPage:5">
                     <div class="col-md-12">
                         <div class="panel panel-default">
                             <div class="panel-body">
 			    <h4><pre><small><% comment.author  %>: </small> <% comment.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
                               <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
-			        <h4><pre><small>Admin: </small> <% comReply.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
+			        <h4 style="margin: 25px;"><pre><small>Admin: </small> <% comReply.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
                               </div>
                             </div>
                         </div>
@@ -35,6 +34,7 @@
 
 
                 </div>
+               <dir-pagination-controls></dir-pagination-controls>
             </div>
             <div class="col-sm-12" style="margin-top: 60px;font-size: 14px;">
                 <h3>Ask ?</h3>
@@ -46,7 +46,7 @@
 
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="name" name="name" ng-model="commentData.author"
-                                   required placeholder="First & Last Name" ng-required="required"
+                                   placeholder="First & Last Name" required=""
                                    value= @if(Auth::user())  {{Auth::user()->name}} @endif>
                         </div>
                     </div>
@@ -55,8 +55,8 @@
 
                         <div class="col-sm-9">
 
-                            <input type="email" class="form-control" id="email" name="email" ng-required="required"
-                                   placeholder="example@domain.com" required
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   placeholder="example@domain.com" required=""
                                    value= @if(Auth::user())  {{Auth::user()->email}} @endif >
                         </div>
                     </div>
@@ -84,18 +84,6 @@
             </div>
         </div>
         <script>
-            $(document).ready(function () {
-                $('#hideComments').click(function () {
-                    if ($('#hideComments').text() === "Hide Previosly Asked Questions") {
-                        $('#hidebar').hide();
-                        $('#hideComments').text("Show Previously Asked Questions");
-                    } else {
-                        $('#hidebar').show();
-                        $('#hideComments').text("Hide Previosly Asked Questions");
-                    }
-
-                });
-            });
             $(document).on('click', '.browse', function () {
                 var file = $(this).parent().parent().parent().find('.file');
                 file.trigger('click');

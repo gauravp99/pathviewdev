@@ -12,15 +12,26 @@ angular.module('mytodoApp')
         $scope.submitCommentReply = function() {
             $scope.loading = true;
             CommentReply.save($scope.commentReplyData)
-                .success(function(data){
+                .success(function(getData){
                     CommentReply.get()
-                        .success(function(getData){
-                            $scope.commentReplies = getData;
+                        .success(function (getData) {
+                            $scope.commentReply = getData;
                             $scope.loading = false;
                         });
                 })
                 .error(function(data){
-                   console.log(data);
+			console.log('-error function');
+                });
+        };
+        $scope.deleteCommentReply = function(id) {
+            $scope.loading = true;
+            CommentReply.destroy(id)
+                .success(function (getData) {
+                    CommentReply.get()
+                        .success(function (getData) {
+                            $scope.commentReply = getData;
+                            $scope.loading = false;
+                        });
                 });
         };
     }).factory('CommentReply', function($http){
@@ -32,7 +43,8 @@ angular.module('mytodoApp')
                 return $http({
                     method: 'POST',
                     url: '/api/commentReply',
-                    data: commentReplyData
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    data: $.param(commentReplyData)
                 });
             },
             destroy: function (id) {

@@ -21,7 +21,7 @@ class CommentController extends Controller {
 
     public function index()
     {
-        return Response::json(Comment::get());
+        return Response::json(Comment::orderBy('id', 'DESC')->get());
     }
 
     public function store()

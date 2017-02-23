@@ -4,7 +4,7 @@
  * Support of ReplyComment in the Admin Panel
  */
 
-var module = angular.module('faqApp',[],function($interpolateProvider) {
+var module = angular.module('faqApp',['angularUtils.directives.dirPagination'],function($interpolateProvider) {
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 
@@ -74,8 +74,9 @@ module.factory('Comment', function($http){
             return $http({
                 method: 'POST',
                 url: '/api/comments',
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                data: $.param(commentData)
+                //headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                //data: $.param(commentData)
+                data: commentData
             });
         },
 
