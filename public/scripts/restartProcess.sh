@@ -16,3 +16,6 @@ sudo /etc/init.d/mysql restart
 
 echo "restarting apache"
 sudo service apache2 restart
+
+echo "Clearinf cache "
+cd /var/www/Pathway & php artisan cache:clear

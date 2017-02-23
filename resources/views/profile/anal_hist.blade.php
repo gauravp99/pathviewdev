@@ -103,6 +103,34 @@
         }
 
         }
+       echo "</ul>";
+       $autopathwayselection = $_GET['autosel'];
+       if($autopathwayselection == 'T')
+       {
+          //echo "<h2>Pathview Selection Results:</h2>";
+          //echo "<ul >";
+          $header_flag=true;
+          foreach ($contents as $k => $v) {
+          if (strpos($v, 'sig')) {
+          $val = $v;
+          $analyses_id = $_GET['analyses'];
+
+              //print hyperlink for the images/PDF generated
+          if (strpos($val, 'csv')) {
+            if ($header_flag)
+            {
+             echo "<h2>Pathway Selected:</h2>";
+             echo "<ul >";
+              $header_flag=false;
+            }
+            echo "<li  style='font-size: 24px;list-style-type: none;'>  <a target=\"_blank\" href=\"$directory1/" . $val . "  \">$val</a></li>"; 
+
+
+          }
+          }
+          }
+          echo "</ul>";
+       }
 
 }
 else
@@ -171,6 +199,8 @@ console.log("error");
 
 
     }
+
+
 
 
 

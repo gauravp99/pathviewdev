@@ -143,7 +143,6 @@
             $len = strpos($string, $end, $ini) - $ini;
             return substr($string, $ini, $len);
         }
-	error_log('--------------------------------------');
         if (empty($analyses[0]->arguments)) {
             echo "No recent Activity's";
         } else { ?>
@@ -210,11 +209,12 @@
                 $dir = get_string_between($analyses1->arguments, public_path(), ";");
                 $id = get_string_between($analyses1->arguments, "species:", ";");
                 $suffix = get_string_between($analyses1->arguments, "suffix:", ";");
+                $autosel = get_string_between($analyses1->arguments, "autosel:", ";");
                 echo "</td>";
                 if((strcmp($analyses1->analysis_origin,'pathview')==0) || (strcmp($analyses1->analysis_origin,'pathview_restapi')==0))
                     {
             ?>
-               <td><p>  <a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>
+               <td><p>  <a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}&autosel={{$autosel}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>
             <?php
                         }
                 else if(strcmp($analyses1->analysis_origin,'gage')==0)
@@ -269,7 +269,7 @@
                 if(strcmp($shared_analysis_origin,'pathview')==0)
                     {
             ?>
-               <td><p>  <a href=/anal_hist?analyses={{$shared_analyses1->shared_analysis_id}}&id={{$id}}&suffix={{$suffix}}&shared_analysis='T'>Analysis:{{$shared_analyses1->shared_analysis_id}}</a> </p></td>
+               <td><p>  <a href=/anal_hist?analyses={{$shared_analyses1->shared_analysis_id}}&id={{$id}}&suffix={{$suffix}}&autosel={{$autosel}}&shared_analysis='T'>Analysis:{{$shared_analyses1->shared_analysis_id}}</a> </p></td>
             <?php
                         }
                 else if(strcmp($shared_analysis_origin,'gage')==0)
