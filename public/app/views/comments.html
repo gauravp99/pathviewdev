@@ -22,37 +22,40 @@
            <nav style="alignment: right"><p id="comment">{{ comment.created_at }}
            </nav>
        </p>
-       <div cstyle="display: inline;">
-           <a href="" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a>
        <div ng-controller="replyCtrl">
-         <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
-           <h4><pre><small>Admin: </small> {{ comReply.text_string }} <small> {{ comReply.created_at  }} </small> </pre></h4>
-       <div cstyle="display: inline;"><a href="" ng-click="deleteCommentReply(comReply.id)" class="text-muted">DeleteCommentReply</a> </div>
-         </div>
-       </div>
-           <nav style="alignment: left;display: inline-block;"><a href="" ng-click="showReply(comment.id)" class="text-muted" >Reply</a></nav>
-       </div>
-       <div class="col-lg-offset-2 col-md-8 reply" hidden="" id="{{comment.id}}" style="display:inline-block;font-size:small;-ms-box-sizing:content-box;
--moz   -box-sizing:content-box; -web  kit-box-sizing:content-box; box-   sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;"  ng-controller="replyCtrl" >
-           <form ng-submit="submitCommentReply()" > <!-- ng-submit will disable the default form action  -->
-               <!-- AUTHOR -->
-               <!-- COMMENT TEXT -->
-               <div class="form-group">
-           	    <pre>
-           	       <textarea class="form-control" rows=4 name="commentReply" ng-model="commentReplyData.text" placeholder="Comment" required></textarea>
-                    </pre>
-               </div>
+          <div cstyle="display: inline;">
+              <a href="" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a>
 
-               <div class="form-group text-left">
-                   <input type="text" class="form-control input-sm" name="name" style="width:20%" ng-model="commentReplyData.name" placeholder="Name" required>
+             <div >
+               <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
+                 <h4><pre><small>Admin: </small> {{ comReply.text_string }} <small> {{ comReply.created_at  }} </small> </pre></h4>
+                 <div cstyle="display: inline;"><a href="" ng-click="deleteCommentReply(comReply.id)" class="text-muted">DeleteCommentReply</a> </div>
                </div>
-               <input type="text" name="commentId" ng-model="commentReplyData.commentId"  data-ng-value="commentReplyData.commentId=comment.id" style="display: none;"/>
-               <!-- SUBMIT BUTTON -->
-               <div class="form-group text-left">
-                   <button type="submit" class="btn btn-primary btn-sm" >Submit</button>
-           	   <a href="" ng-click="hideReply(comment.id)" class="text-muted" style="margin-left:5px;">Cancel</a>
-               </div>
-           </form>
+             </div>
+             <nav style="alignment: left;display: inline-block;"><a href="" ng-click="showReply(comment.id)" class="text-muted" >Reply</a></nav>
+          </div>
+          <div class="col-lg-offset-2 col-md-8 reply" hidden="" id="{{comment.id}}" style="display:inline-block;font-size:small;-ms-box-sizing:content-box;
+-moz      -box-sizing:content-box; -web  kit-box-sizing:content-box; box-   sizing:content-box;border:thick;border-color: #105cb6;padding: 10px;" >
+              <form ng-submit="submitCommentReply();hideReply(comment.id)" > <!-- ng-submit will disable the default form action  -->
+                  <!-- AUTHOR -->
+                  <!-- COMMENT TEXT -->
+                  <div class="form-group">
+              	    <pre>
+              	       <textarea class="form-control" rows=4 name="commentReply" ng-model="commentReplyData.text" placeholder="Comment" required></textarea>
+                       </pre>
+                  </div>
+
+                  <div class="form-group text-left">
+                      <input type="text" class="form-control input-sm" name="name" style="width:20%" ng-model="commentReplyData.name" placeholder="Name" required>
+                  </div>
+                  <input type="text" name="commentId" ng-model="commentReplyData.commentId"  data-ng-value="commentReplyData.commentId=comment.id" style="display: none;"/>
+                  <!-- SUBMIT BUTTON -->
+                  <div class="form-group text-left">
+                      <button type="submit" class="btn btn-primary btn-sm" >Submit</button>
+              	   <a href="" ng-click="hideReply(comment.id)" class="text-muted" style="margin-left:5px;">Cancel</a>
+                  </div>
+              </form>
+          </div>
        </div>
      </div>
 
