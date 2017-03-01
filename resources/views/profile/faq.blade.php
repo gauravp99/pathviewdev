@@ -39,14 +39,13 @@
             <div class="col-sm-12" style="margin-top: 60px;font-size: 14px;">
                 <h3>Ask ?</h3>
 
-                <form class="form-horizontal" id="form-contact" role="form" ng-submit="submitComment()" method="post"
-                      accept-charset="UTF-8" enctype="multipart/form-data" action="/postMessage">
+                <form class="form-horizontal"  name="userForm" id="form-contact" role="form" ng-submit="submitComment(userForm.$valid)" method="post"  accept-charset="UTF-8" enctype="multipart/form-data" action="/postMessage">
                     <div class="form-group">
                         <label for="name" class="col-sm-3 control-label">Name</label>
 
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="name" name="name" ng-model="commentData.author"
-                                   placeholder="First & Last Name" required=""
+                                   placeholder="First & Last Name" required
                                    value= @if(Auth::user())  {{Auth::user()->name}} @endif>
                         </div>
                     </div>
@@ -56,7 +55,7 @@
                         <div class="col-sm-9">
 
                             <input type="email" class="form-control" id="email" name="email" 
-                                   placeholder="example@domain.com" required=""
+                                   placeholder="example@domain.com" required
                                    value= @if(Auth::user())  {{Auth::user()->email}} @endif >
                         </div>
                     </div>
@@ -65,14 +64,14 @@
 
                         <div class="col-sm-9">
                             <pre><textarea class="form-control" rows="4" ng-model="commentData.text" name="message"
-                                      required=""></textarea></pre>
+                                      required></textarea></pre>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-3">
                             <input id="submit" name="submit" style="width:220px;font-size: 20px;" type="submit"
-                                   value="Send" class="btn btn-primary">
+                                   value="Send" class="btn btn-primary" ng-disabled="userForm.$invalid">
                         </div>
                     </div>
                     <div class="form-group">
@@ -111,10 +110,10 @@
                     },
                     message: {},
                     name: {},
-                    email: {
+                    //email: {
 
-                        email: true
-                    }
+                    //    //email: true
+                    //}
                 },
                 messages: {},
                 submitHandler: function (form) {

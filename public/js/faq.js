@@ -27,7 +27,8 @@ module.controller('faqController', function($scope, $http, Comment, CommentReply
                 $scope.commentReply = data;
                 $scope.loading = false;
             });
-        $scope.submitComment = function() {
+        $scope.submitComment = function(isValid) {
+	  if(isValid) {
             $scope.loading = true;
             Comment.save($scope.commentData)
                 .success(function(data){
@@ -40,6 +41,11 @@ module.controller('faqController', function($scope, $http, Comment, CommentReply
                 .error(function(data){
                     console.log(data);
                 });
+	  }
+	  else
+	  {
+	    alert('Please fill in all the information before submitting a comment.. ');
+	  }
         };
 
         $scope.deleteComment = function(id) {

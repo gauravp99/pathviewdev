@@ -30,7 +30,7 @@ class CommentController extends Controller {
             comment::create(array(
                 'author' => Input::get('author'),
                 'text_string' => Input::get('text'),
-                'user_email' => Auth::email(),
+                'user_email' => Auth::user()->email,
                 'issue_id' => Input::get('issue_id')
             ));
         }
