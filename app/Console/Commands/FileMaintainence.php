@@ -58,6 +58,8 @@ class FileMaintainence extends Command
                     print $path . "/" . $user . " " . "size: " . $size / 1024;
                     $directory_Contents = scandir($path . "/" . $user);
                     $directory_Contents = array_diff($directory_Contents, array('..', '.'));
+		    echo "------->>>> contents-----";
+		    print_r($directory_Contents);
                     $file_time_Array = array();
                     $file_with_timestamp = array();
                     foreach ($directory_Contents as $file) {
@@ -102,10 +104,27 @@ class FileMaintainence extends Command
                         $analysisID = $toDelFile;
                         $toDelFile = $path . "" . $user . "/" . $toDelFile;
 
+			//First update the record in the shared user directory and then 
+			//update the record in the actual owner
+
 
                         //update the record
                         try {
+		            $shared_result= DB::select(DB::raw("select shared_user from shared_analysis where shared_analysis_id='$analysisID'"));
+		            foreach ($shared_result as $delete_shared_analysis)
+		            {
+		               $shared_user_id=$delete_shared_analysis->shared_user;
+		               $shared_analysis_owner= DB::select(DB::raw("select email from users where id=$shared_user_id limit 1"));
+                               $shared_directory = public_path() . '/all/' . $shared_analysis_owner[0]->email . '/' . $analysisID;
+                                DB::table('shared_analysis')
+                                    ->where('shared_analysis_id', '=', $analysisID)
+		            	->where('shared_user', '=', $shared_user_id)
+                                    ->update(array('isDeleted' => "Y"));
+                                //$success = File::deleteDirectory($shared_directory);
+			        exec('rm -r ' . $shared_directory);
+		            }
                             DB::table('analysis')->where('analysis_id', '=', $analysisID)->update(['id' => 0]);
+                            #DB::table('shared_analysis')->where('shared_analysis_id', '=', $analysisID)->update(['isDeleted' => "Y"]);
                         } catch (Exception $e) {
                             echo "\n exception occured in deleting records from table";
                         }

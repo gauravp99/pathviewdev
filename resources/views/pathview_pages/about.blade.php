@@ -118,7 +118,7 @@
                                                 &nbsp
                                             </div>
                                         </td>
-                                        <td class="tdContent">Graphs:</td>
+                                        <td class="tdContent">Analysis:</td>
                                         <td><?php echo $web_dnld_cnt ?></td>
                                         <td>
                                             <div class="bar11">

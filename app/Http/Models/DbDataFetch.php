@@ -87,12 +87,12 @@ class DbDataFetch
         }else{*/
 	    if( strcmp($application,"pathview") == 0)
 	    {
-            $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(number_of_downloads)+24600 as "downloads" from biocStatistics'));
+            $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(number_of_downloads) as "downloads" from biocStatistics'));
             Cache::put('bioc_sum_dwnlds',$bioc_sum_dwnlds, 50);
 	    }
 	    else
 	    {
-             $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(numberof_downloads)+47200 as "downloads" from biocGagestatistic'));
+             $bioc_sum_dwnlds =  DB::select(DB::raw('select sum(numberof_downloads) as "downloads" from biocGagestatistic'));
             Cache::put('bioc_sum_dwnlds',$bioc_sum_dwnlds, 50);
 		
             }		
@@ -104,11 +104,11 @@ class DbDataFetch
         }else{*/
 	    if( strcmp($application,"pathview") == 0)
             {
-            $bioc_ip_dwnlds =   DB::select(DB::raw('select sum(number_of_unique_ip)+11900 as "ips" from biocStatistics'));
+            $bioc_ip_dwnlds =   DB::select(DB::raw('select sum(number_of_unique_ip) as "ips" from biocStatistics'));
             Cache::put('bioc_ip_dwnlds',$bioc_ip_dwnlds, 50);
 	    }
 	    else{
-		$bioc_ip_dwnlds =   DB::select(DB::raw('select sum(numberof_uniqueip)+23200 as "ips" from biocGagestatistic'));
+		$bioc_ip_dwnlds =   DB::select(DB::raw('select sum(numberof_uniqueip) as "ips" from biocGagestatistic'));
             Cache::put('bioc_ip_dwnlds',$bioc_ip_dwnlds, 50);
 
 		}

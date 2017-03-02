@@ -84,6 +84,30 @@ class UrlController extends Controller
       }
       
 
+      //Check the user maximum quota. If it is exceeded don't allow users to do the analysis
+      if (is_null(Auth::user())) 
+      {
+            $email = "demo";
+      
+      } 
+      else 
+      {
+         $email = Auth::user()->email;
+         if (!file_exists(public_path()."/all/$email"))
+             mkdir(public_path()."all/$email");
+         $f = public_path().'/all/'. Auth::user()->email;
+         $io = popen('/usr/bin/du -sk ' . $f, 'r');
+         $size = fgets($io, 4096);
+         $size = substr($size, 0, strpos($size, "\t"));
+         pclose($io);
+         $size = 100000 - intval($size);
+	 if ($size < 0) 
+	 {
+            $response_message="You have reached the maximum space limit available to you. Delete the history analysis going to home page and try again";
+            return response()->json(['message' => $response_message], 400);
+         }
+       }
+    
 
       if (sizeof($validate_input_array) != 0)
       {
