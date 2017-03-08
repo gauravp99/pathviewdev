@@ -141,6 +141,24 @@ class Kernel extends ConsoleKernel
             ->dailyAt('3:36')
             ->sendOutputTo($filePath_recent)
             ->emailOutputTo([$email]);
+	//7. Job to maintain the species and pathway combination updated with species and pathway list updated
+	$schedule->exec(public_path().'/scripts/update.specPath.sh '. public_path())
+		 ->cron('54 16 15 1,7 *')
+		 ->sendOutputTo($filePath_recent)
+		 ->emailOutputTo($email)
+		 ->then(function (){
+                $filePath_recent = storage_path()."/logs/recent.log";
+                $filePath = storage_path()."/logs/scheduledJobs.log";
+                if(!File::exists($filePath_recent)) {
+                    $myfile = fopen($filePath_recent, "w");
+                }
+
+                if(!File::exists($filePath)) {
+                    $myfile = fopen($filePath, "w");
+                }
+
+                File::append($filePath, File::get($filePath_recent));
+            });
 
     }
 

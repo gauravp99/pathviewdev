@@ -58,8 +58,6 @@ class FileMaintainence extends Command
                     print $path . "/" . $user . " " . "size: " . $size / 1024;
                     $directory_Contents = scandir($path . "/" . $user);
                     $directory_Contents = array_diff($directory_Contents, array('..', '.'));
-		    echo "------->>>> contents-----";
-		    print_r($directory_Contents);
                     $file_time_Array = array();
                     $file_with_timestamp = array();
                     foreach ($directory_Contents as $file) {
