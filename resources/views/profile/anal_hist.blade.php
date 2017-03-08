@@ -132,6 +132,7 @@
           echo "</ul>";
        }
 
+            echo "<h2 class='alert alert-info' style='font-size: 18px;color:black;'>Click <a style='color:blue;'  href=\"" . $directory1 . "/file.zip\">here</a> to download zipped output files. </h2>";
 }
 else
     {
