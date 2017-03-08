@@ -10,6 +10,4 @@ public/kList/
 public/genesets/
 public/mmap/
 public/logs/
-public/scripts/biocGageStatsimport.sh
-public/scripts/biocStatsimport.sh
 .idea/
