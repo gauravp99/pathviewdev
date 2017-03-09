@@ -24,7 +24,7 @@
                             <div class="panel-body">
 			    <h4><pre><small><% comment.author  %>: </small> <% comment.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
                               <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
-			        <h4 style="margin: 25px;"><pre><small>Admin: </small> <% comReply.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
+			        <h4 style="margin: 25px;"><pre style="white-space:pre-wrap; word-break: break-word;"><small>Admin: </small> <% comReply.text_string %> <small> <% comment.created_at  %> </small> </pre></h4>
                               </div>
                             </div>
                         </div>
