@@ -12,7 +12,6 @@
 
 #Author: Gaurav Pant
 
-
 pvwdir=$1
 if [ ! -f ../.env ]
 then
@@ -52,7 +51,7 @@ updated_at timestamp DEFAULT 0,
 PRIMARY KEY (species_id,pathway_id)
 );" | $MYSQL
 
-echo "deleteing if by mistake any data present in new table"
+echo "deleting if by mistake any data present in new table"
 
 printf "delete from speciesPathwayMatch_new"|$MYSQL
 
@@ -68,16 +67,14 @@ SELECT distinct species_id,pathway_id,created_at,updated_at
 FROM speciesPathwayMatch_new"|$MYSQL
  
 echo "removing the old table and renaming the existing table to old"
-printf "drop table speciesPathwayMatch_old" | $MYSQL
+printf "DROP TABLE if exists speciesPathwayMatch_old" | $MYSQL
 printf "rename table speciesPathwayMatch to speciesPathwayMatch_old" | $MYSQL;
-
 
 echo "updating the new table to production table"
 printf "rename table speciesPathwayMatch_new to speciesPathwayMatch" | $MYSQL;
 
-
 #update pathway table
-echo "drop table pathway_old"|mysql -uroot -proot PathwayWeb
+echo "DROP TABLE if exists pathway_old"|$MYSQL
 echo "create table pathway_new
 (
 pathway_id varchar(10),
@@ -85,7 +82,7 @@ pathway_desc varchar(100),
 created_at timestamp default 0,
 updated_at timestamp default 0,
 primary key(pathway_id)
-)"|mysql -uroot -proot PathwayWeb
+)"|$MYSQL
 
 
 echo "loading data from rscript into new tables"
@@ -96,7 +93,7 @@ echo "rename table pathway to pathway_old"|$MYSQL
 echo "rename table pathway_new to pathway"|$MYSQL
 
 #species table updation
-echo "drop table species_old"|$MYSQL
+echo "DROP TABLE if exists  species_old"|$MYSQL
 echo "create table species_new
 (
 species_id varchar(10),
@@ -108,16 +105,17 @@ updated_at timestamp default 0,
 primary key(species_id)
 )"|$MYSQL
 
-
 echo "loading species data from rscript into new tables"
 printf "load data infile '$pvwdir/kList/kegg.species.txt' into table species_new fields terminated by '\t' lines terminated by '\n'"  "$pvwdir"|$MYSQL
 #delete
 echo "Deleting the species which are not associated with a pathway..."
-if [ -f "$pvwdir/kList/kegg.species.txt" ]
+if [ -f "$pvwdir/kList/remove.species.txt" ]
 then
+    cp -p "$pvwdir/kList/remove.species.txt" "$pvwdir/kList/remove.species.txt_old"
     sed -i~ -e "s/^/'/;s/$/'/" "$pvwdir/kList/remove.species.txt"
     remove_species=`paste -sd',' "$pvwdir/kList/remove.species.txt"`
     echo "delete from species_new where species_id in ($remove_species)" |$MYSQL
+    mv "$pvwdir/kList/remove.species.txt_old"  "$pvwdir/kList/remove.species.txt"
 fi
 
 echo "rename table species to species_old"|$MYSQL
