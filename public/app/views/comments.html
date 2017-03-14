@@ -17,7 +17,7 @@
    <!-- hide these comments if the loading variable is true -->
    <div class="comment" ng-hide="loading" ng-repeat="comment in comments">
      <div class="col-md-12">
-	     <h3><small><pre style="white-space:pre-wrap; word-break: break-word;">{{ comment.author }}: </small>{{ comment.text_string }} <small> by {{ comment.created_at }}</pre></small></h3>
+	     <h3><small><pre style="white-space:pre-wrap; word-break: keep-all;">{{ comment.author }}: </small>{{ comment.text_string }} <small> by {{ comment.created_at }}</pre></small></h3>
        </p>
        <div ng-controller="replyCtrl">
           <div cstyle="display: inline;">
@@ -26,7 +26,7 @@
              <nav style="alignment: left;display: inline-block;"><a href="" ng-click="showReply(comment.id)" class="text-muted" >AddReply</a></nav>
              <div >
                <div class="comment" ng-hide="loading" ng-repeat="comReply in commentReply" ng-if="comReply.comment_id==comment.id">
-                 <h4 style="margin: 25px;"><pre style="white-space:pre-wrap; word-break: break-word;"><small>Admin: </small> {{ comReply.text_string }} <small> {{ comReply.created_at  }} </small> </pre></h4>
+                 <h4 style="margin: 25px;"><pre style="white-space:pre-wrap; word-break: keep-all;"><small>Admin: </small> {{ comReply.text_string }} <small> {{ comReply.created_at  }} </small> </pre></h4>
                  <div cstyle="display: inline;"  style="margin: 25px;"><a href="" ng-click="deleteCommentReply(comReply.id)" class="text-muted">Delete</a> </div>
                </div>
              </div>
@@ -38,7 +38,7 @@
                   <!-- AUTHOR -->
                   <!-- COMMENT TEXT -->
                   <div class="form-group">
-              	    <pre style="white-space:pre-wrap; word-break: break-word;">
+              	    <pre style="white-space:pre-wrap; word-break: keep-all;">
               	       <textarea class="form-control" rows=4 name="commentReply" ng-model="commentReplyData.text" placeholder="Comment" required></textarea>
                        </pre>
                   </div>
