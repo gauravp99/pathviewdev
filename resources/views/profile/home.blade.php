@@ -265,8 +265,9 @@
                 $dir = get_string_between($arguments_shared[0]->arguments, public_path(), ";");
                 $id = get_string_between($arguments_shared[0]->arguments, "species:", ";");
                 $suffix = get_string_between($arguments_shared[0]->arguments, "suffix:", ";");
+                $autosel = get_string_between($arguments_shared[0]->arguments, "autosel:", ";");
                 echo "</td>";
-                if(strcmp($shared_analysis_origin,'pathview')==0)
+                if((strcmp($shared_analysis_origin,'pathview')==0) || (strcmp($shared_analysis_origin,'pathview_restapi')==0))
                     {
             ?>
                <td><p>  <a href=/anal_hist?analyses={{$shared_analyses1->shared_analysis_id}}&id={{$id}}&suffix={{$suffix}}&autosel={{$autosel}}&shared_analysis='T'>Analysis:{{$shared_analyses1->shared_analysis_id}}</a> </p></td>

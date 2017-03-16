@@ -118,6 +118,11 @@ return Redirect::back()->with('success', 'Error');
 	   {
                $target_directory = public_path() . "/all/" . Auth::user()->email . "/" . $analysis_id;
                $shared_directory = public_path() . "/all/" . $email_id;
+	       ## If for some reason the shared user directory doesn't exist,
+	       # the user directory.
+	       # This is done for the previous users in the database with no user directory.
+               if (!file_exists($shared_directory))
+                    mkdir("all/$email_id");
 	       if (empty($analysis_id) || is_link($shared_directory. "/". $analysis_id))
 	       {
 	         continue;

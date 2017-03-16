@@ -101,6 +101,10 @@ class RegistrationController extends Controller {
         $user->confirmation_code = null;
         $user->save();
 	$data1 = []; 
+	
+	#Create the user directory once the account is verified
+        if (!file_exists("all/$email"))
+           mkdir("all/$email");
         Mail::send('emails.welcome', $data1, function($message) use ($email, $name){
             $message->to($email, $name)->subject('[Pathview] Welcome to Pathview, '.$name);
         });
