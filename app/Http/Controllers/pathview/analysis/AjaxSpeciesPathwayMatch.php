@@ -20,6 +20,11 @@ class AjaxSpeciesPathwayMatch extends Controller {
 	{
         //check for the pathway related to a species stored at table speciesPathwayMatch
         $var = substr(Input::get('species'),0,3);
+	//check for the species which are 2 character long, since a trim to 3 characters
+	//will get a hyphen along with the species id which will fail the database query
+	//For eg. ko- is the species id after trimming , hyphen if any has to be replaced with null
+	//character
+	$var = str_replace("-","",$var);
         $pathway = DB::select(DB::raw("select concat(concat(a.pathway_id,'-'),b.pathway_desc) as \"pathway_id\" from speciesPathwayMatch a,pathway b where a.pathway_id = b.pathway_id and species_id = '$var'  "));
         return (json_encode($pathway));
         die();
