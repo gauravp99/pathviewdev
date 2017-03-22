@@ -189,7 +189,7 @@
                                                 &nbsp
                                             </div>
                                         </td>
-                                        <td class="tdContent">Analysis:</td>
+                                        <td class="tdContent">Analyses:</td>
                                         <td><?php echo $web_dnld_cnt ?></td>
                                         <td>
                                             <div class="bar11">
