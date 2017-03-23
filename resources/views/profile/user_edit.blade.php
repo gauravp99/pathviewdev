@@ -16,12 +16,12 @@
         {!! form::open(array('url' => 'edit_post','method'=>'POST','files'=>true)) !!}
         {!!form::label('Name','Name:') !!}
         @if($user->name=="")
-            {!!form::text('name',$user->email) !!}
+            {!!form::text('name',$user->email, ['class'=>'class-name', 'readonly']) !!}
         @else
-            {!!form::text('name',$user->name) !!}
+            {!!form::text('name',$user->name, ['class'=>'class-name', 'readonly']) !!}
         @endif
         {!!form::label('email','Email:') !!}
-        {!!form::text('email',$user->email) !!}
+        {!!form::text('email',$user->email, ['class'=>'class-name', 'readonly']) !!}
         <br/>
         <br/>
             </div>

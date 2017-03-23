@@ -74,13 +74,21 @@ class UrlController extends Controller
       $valid_input_keys=array('email', 'password', 'gene_data', 'cpd_data', 'auto_sel', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample');
       $request_input_keys=array_keys(Input::all());
       $validate_input_array=array_diff($request_input_keys, $valid_input_keys);
-      //if (Auth::attempt($userdata)) 
       if (Input::has('email'))
       {
-         if (!Auth::attempt(['email' => Input::get('email'), 'password' => Input::get('password')]))
-         {
-            return response()->json(['message' => 'Invalid Credentials. Please provide the registered account details with the API.'], 400);
-         }
+	 $email=Input::get('email');
+	 $user = DB::select(DB::raw("select * from users where email='$email' LIMIT 1 "));
+	 if ($user[0]->activated)
+	 {
+           if (!Auth::attempt(['email' => Input::get('email'), 'password' => Input::get('password')]))
+           {
+              return response()->json(['message' => 'Invalid Credentials. Please provide the registered account details with the API.'], 400);
+           }
+	 }
+	 else
+	 {
+              return response()->json(['message' => 'Your account is not activated. Please activate the account before running the API.'], 400);
+	 }
       }
       
 

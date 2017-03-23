@@ -1,9 +1,12 @@
 <?php namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Auth\Registrar;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use App\ActivationService;
+use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
@@ -45,6 +48,39 @@ class AuthController extends Controller
     public function postCreate()
     {
         return "hello";
+    }
+
+    ##This function is rewritten from the trait AuthenticatesAndRegistersUsers
+    ## It overrides and adds a constraint to check if the user is activated 
+    ## before authenticating the user.
+    public function postLogin(Request $request)
+    {
+        $this->validate($request, [
+            'email' => 'required|email', 'password' => 'required',
+        ]);
+    
+        $credentials = $request->only('email', 'password');
+    
+        if (Auth::validate($credentials)) {
+            $user = Auth::getLastAttempted();
+            if ($user->activated) {
+                Auth::login($user, $request->has('remember'));
+                return redirect()->intended($this->redirectPath());
+            } else {
+                return redirect($this->loginPath())
+                    ->withInput($request->only('email', 'remember'))
+                    ->withErrors([
+                        'active' => 'Please activate your account to login.'
+                    ]);
+            }
+        }
+    
+        return redirect($this->loginPath())
+            ->withInput($request->only('email', 'remember'))
+            ->withErrors([
+                'email' => $this->getFailedLoginMessage(),
+            ]);
+    
     }
 
 }

@@ -39,7 +39,7 @@ class PasswordController extends Controller
                   $data['name'] = $name;
                   $data['email'] = $email;
                   Mail::send('emails.verify', compact('confirmation_code'), function($message) use ($data) {
-                  $message->to($data['email'], $data['name'])->subject("[Pathview] Please verify your email address before resetting your password, ".$data['name']);
+                  $message->to($data['email'], $data['name'])->subject("[Pathview] Please activate your account first before resetting your password, ".$data['name']);
                 });
                return back()->with('status', 'Your account is not activated. Please activate it first. An activation code has been sent to your email.');
             }
