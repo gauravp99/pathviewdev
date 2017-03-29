@@ -195,7 +195,7 @@ use Illuminate\Cacheache;
                                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
                                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"> </span>
-                                            </a><label>Control/Refernce</label>
+                                            </a><label>Control/Reference</label>
                                         </div>
                                         <div class="col-md-6">
                                             <a href="tutorial#control_sample" onclick="window.open('tutorial#gene_data', 'newwindow', 'width=500, height=500, status=1,scrollbars=1').focus(); return false;" title="The column numbers for cases"
@@ -281,7 +281,7 @@ use Illuminate\Cacheache;
                                                target="_blank" class="scrollToTop" style="float:left;margin-right:5px;">
 
                                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
-                                            </a><label>Control/Refernce</label>
+                                            </a><label>Control/Reference</label>
 
                                         </div>
                                         <div class="col-md-6">

@@ -79,7 +79,7 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
                     }
                     break;
                 case "gdisc":
-                    $arg1[0] = "Descrete Gene";
+                    $arg1[0] = "Discrete Gene";
                     if ($arg1[1] == 'T') {
                         $arg1[1] = "True";
                     } else {
@@ -87,7 +87,7 @@ To see the output, please click <a href={{url('/anal_hist'.$content)}}>{{$anal_t
                     }
                     break;
                 case "cdisc":
-                    $arg1[0] = "Descrete Compound";
+                    $arg1[0] = "Discrete Compound";
                     if ($arg1[1] == 'T') {
                         $arg1[1] = "True";
                     } else {

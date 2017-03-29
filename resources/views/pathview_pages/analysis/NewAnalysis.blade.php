@@ -179,7 +179,7 @@ use Illuminate\Cacheche;
                                                            style="float:left;margin-right:5px;">
 
                                                             <span class="glyphicon glyphicon-info-sign"
-                                                                  style="margin-right: 20px;">   </span> </a> <label>Control/Refernce</label>
+                                                                  style="margin-right: 20px;">   </span> </a> <label>Control/Reference</label>
 
                                                     </div>
                                                     <div class="col-md-6">
@@ -306,7 +306,7 @@ use Illuminate\Cacheche;
                                                        style="float:left;margin-right:5px;">
 
                                                     <span class="glyphicon glyphicon-info-sign"
-                                                          style="margin-right: 20px;">   </span></a><label for="">Control/Refernce</label>
+                                                          style="margin-right: 20px;">   </span></a><label for="">Control/Reference</label>
 
                                                 </div>
                                                 <div class="col-md-6">
@@ -638,6 +638,7 @@ use Illuminate\Cacheche;
 
             <?php
                 //get details from database to use in script
+              //Cache::flush();
               $pathway = Cache::remember('Pathway_id', 10, function()
                     {
                         return DB::table('pathway')->get(array('pathway_id'));

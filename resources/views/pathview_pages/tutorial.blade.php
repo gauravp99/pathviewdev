@@ -97,7 +97,7 @@
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#layer">Same Layer</a></li>
                                 <li class="divider"></li>
-                                <li style="width:300px;"><a href="#desc">Descrete</a></li>
+                                <li style="width:300px;"><a href="#desc">Discrete</a></li>
                                 <li class="divider"></li>
                                 <li style="width:300px;"><a href="#split">Split Group</a></li>
                                 <li class="divider"></li>

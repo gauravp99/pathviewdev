@@ -344,7 +344,7 @@
                                style="float:left;margin-right:5px;">
                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                             </a>
-                            {!!form::label('gdesc',' Descrete Gene:') !!}
+                            {!!form::label('gdesc',' Discrete Gene:') !!}
                             <input name="gdisc" value="T" id="gdisc"
                                    @if (isset(Session::get('Sess')['gdisc']))
                                        checked
@@ -363,7 +363,7 @@
                                style="float:left;margin-right:5px;">
                                 <span class="glyphicon glyphicon-info-sign" style="margin-right: 20px;"></span>
                             </a>
-                            {!!form::label('cdesc','Descrete Compound:') !!}
+                            {!!form::label('cdesc','Discrete Compound:') !!}
                             <input name="cdisc" value="T" id="cdisc"
                                    @if (isset(Session::get('Sess')['cdisc']))
                                        checked
