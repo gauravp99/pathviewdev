@@ -40,7 +40,7 @@
                         {!!form::label('species','Species:') !!}
                     </div>
                     <div class="col-sm-7">
-                        <input class="ex8" list="specieslist" name="species" id="species"
+                        <input class="ex8" list="specieslist" name="species" id="species"  placeholder="Type in or double click"
                                value=@if (isset(Session::get('Sess')['species']))  "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif
                         >
                     </div>
@@ -83,7 +83,7 @@
                     </div>
 
                     <div class="col-sm-7">
-                        <input class="ex8" list="geneidlist" name="geneid" id="geneid"
+                        <input class="ex8" list="geneidlist" name="geneid" id="geneid" placeholder="Type in or double click"
                                value=@if (isset(Session::get('Sess')['geneid'])) "{{Session::get('Sess')['geneid']}}" @else "{{$geneid}}" @endif
                                >
                     </div>
@@ -123,7 +123,7 @@
                         {!!form::label('cpdid','Compound ID Type:') !!}
                     </div>
                     <div class="col-sm-7">
-                        <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"
+                        <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"  placeholder="Type in or double click"
                                value=@if (isset(Session::get('Sess')['cpdid']))  "{{Session::get('Sess')['cpdid']}}" @else "{{$cpdid}}" @endif
                                >
                     </div>
