@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{{ csrf_token() }}"/>
-    <meta name="AUTHOR" content="Weijun Luo,Yeshvant Kumar Bhavnasi Venkat Satya">
+    <meta name="AUTHOR" content="Weijun Luo,Gaurav Pant,Yeshvant Kumar Bhavnasi Venkat Satya">
     <link rel="icon" href="/images/plogo.png" sizes="32x32">
     <link href="{{ asset('/css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
@@ -51,10 +51,10 @@
                         Help <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
+                        <li><a href="/output_examples">Overview</a></li>
                         <li><a href="/tutorial#input">User Options</a></li>
                         <li><a href="/tutorial">Custom Analysis</a></li>
                         <li><a href="/api_examples">Example Analysis</a></li>
-                        <li><a href="/output_examples">Results</a></li>
                         <li><a href="/api_tutorial">API Documentation</a></li>
                         <li><a href="/tutorial#refrence">References</a></li>
                         <li><a href="/faq">Question?</a></li>

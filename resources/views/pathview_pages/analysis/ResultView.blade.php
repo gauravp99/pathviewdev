@@ -114,7 +114,7 @@
                $analyses_id = $_GET['analyses'];
 
                    //print hyperlink for the images/PDF generated
-               if (strpos($val, 'csv')) {
+               if (strpos($val, 'tsv')) {
 		 if ($header_flag)
 		 {
                   echo "<h2>Pathway Selected:</h2>";
@@ -192,8 +192,10 @@
 
             }
             if ($flag1) {
-                echo "<h4 class='alert alert-warning'> Species and pathway id combination may not be Valid/present at KEGG";
-                echo " Or make sure your input gene and compound uploaded data is in the requested format</h4>";
+                #echo "<h4 class='alert alert-warning'> Species and pathway id combination may not be Valid/present at KEGG";
+                #echo " Or make sure your input gene and compound uploaded data is in the requested format</h4>";
+                echo "<h4 class='alert alert-warning'>  Wrong species, gene or pathway ID specified,";
+                echo " Or the uploaded gene/compound data is not in the <a href='tutorial#gene_data'>requested format</a></h4>";
                 //echo "<h4 class='alert alert-warning'>Mail Send to the admin and admin will reply to you as early as possible with solution</h4>";
             }
             if ($flag1) {

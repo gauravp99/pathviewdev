@@ -12,7 +12,7 @@
             echo "class=\"active\"";
         }?>>
             @if (Auth::guest()) <a href="/guest-home">
-                @else <a href="{{ URL::route('home') }}"> @endif <b>Overview </b><span class="sr-only">(current)</span></a>
+                @else <a href="{{ URL::route('home') }}"> @endif <b>User Home</b><span class="sr-only">(current)</span></a>
         </li>
         <li <?php if (basename(Request::url()) == "analysis") {
             echo "class=\"active\"";

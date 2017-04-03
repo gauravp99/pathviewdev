@@ -220,8 +220,10 @@
                             <div class="panel-body argument">
                                 <dd><p>Gene Data accepts data matrices in tab- or comma-delimited format (txt or csv). Data
                                     matrix has genes as rows and samples as columns. First column should be gene IDs,
-                                    first row sample IDs. The data may also be a single-column of gene IDs. Here gene ID
-                                    is a generic concept, including multiple types of genes, transcripts and proteins
+                                    first row sample IDs. The data may also be a single-column of gene IDs (<a href="data/entrezGeneList.human.txt" target=_blank>example</a>). Here gene ID
+				    is a generic concept, including multiple types of 
+                                    transcript or protein IDs, for example ENTREZ Gene, Symbol, RefSeq, GenBank Accession Number, 
+                                    UNIPROT, Enzyme Accession Number, etc. Users can specify this information through the Gene ID Type option below.
                                     uniquely mappable to KEGG gene IDs. KEGG ortholog IDs are also treated as gene IDs
                                     as to handle metagenomic data.</p>
 
@@ -274,11 +276,14 @@
                             </div>
                             <div class="panel-body argument">
                                 <dd>Compound Data accepts data matrices in tab- or comma-delimited format (txt or csv).
-                                    The format is the same as Gene Data in format (and you may also need to specify sample columns and experiment design), excpet rows are compounds including
+                                    The format is the same as Gene Data in format (and you may also need to specify sample columns and experiment design), except rows are compounds including
                                     metabolites, drugs, small molecules etc. For example, check: <a
                                             href="data/sim.cpd.data2.txt" target="_balnk">Example Compound
                                         Data 1</a> and <a href="data/sim.cpd.data1.csv" target="_balnk">Example
-                                        Compound Data 2.</a></dd>
+					Compound Data 2.</a>
+                                   </br>
+                                   Like the gene concept, here the compound concept is also generic, including multiple types of metabolites, drugs, small molecules. Users can specify this information through the Compound ID Type option below.
+</dd>
                             </div>
                         </div>
                         <div class="panel panel-default">
