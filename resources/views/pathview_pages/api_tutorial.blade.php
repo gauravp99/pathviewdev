@@ -462,6 +462,8 @@ td {
         <a href="#" class="scrollToTop"><span class="glyphicon glyphicon-menu-up"
                                               style="font-size: 30px; margin-left: 100px;"></span></a></div>
   </div>
+</div>
+</div>
     <style>
         .scrollToTop {
             width: 100px;

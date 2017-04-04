@@ -56,8 +56,8 @@
                                 <div class="item active">
                                     <img class="sixth-slide" src="images/sixthslide.png" alt="Sixth slide">
                                 </div>
-                                <div class="item">
-                                    <img class="first-slide" src="images/firstslide.png" alt="First slide">
+                                <div class="item" style="margin: 0;" >
+                                    <a href="/guest"><img class="first-slide" src="images/firstslide.png" style="margin: 0;"  alt="First slide"></a>
                                 </div>
                                 <div class="item">
                                     <img class="second-slide" src="images/secondslide.png" alt="Second slide">
@@ -317,6 +317,8 @@
     </div>
     <link href="{{ asset('/css/carousel.css') }}" rel="stylesheet">
     <script>
+
+
         var ctx = $("#myChart").get(0).getContext("2d");
 
         var opt2 = {
@@ -395,4 +397,24 @@
         var myBarChart1 = new Chart(ctx1).Bar(data1, opt1);
 
     </script>
+    <body>
+
+    <script type="text/javascript">
+         window.onload= function() {
+        var ua = navigator.userAgent.toLowerCase(); 
+        if (ua.indexOf('safari') != -1) 
+        { 
+           if (ua.indexOf('chrome') > -1) 
+           {
+              pass; // Chrome
+           } 
+           else 
+           {
+              alert("Alert !!!! Some features are not viewed properly in Safari. Pathview is best recommended with Mozilla Firefox and Internet Explorer browser.") // Safari
+           }
+        }
+        }
+
+    </script>
+    </body>
 @stop

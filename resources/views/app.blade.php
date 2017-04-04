@@ -237,7 +237,7 @@
                             <li <?php if (basename(Request::url()) == "prev_anal") {
                                 echo "class=\"active\"";
                             }?>>
-                                <a href="{{ url('/prev_anal/'.Auth::user()->id) }}">Status & History</a>
+                                <a href="{{ URL::route('home') }}">Status & History</a>
                             </li>
                             <li <?php if (basename(Request::url()) == "user") {
                                 echo "class=\"active\"";

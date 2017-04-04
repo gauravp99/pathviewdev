@@ -40,7 +40,7 @@
                         {!!form::label('species','Species:') !!}
                     </div>
                     <div class="col-sm-7">
-                        <input class="ex8" list="specieslist" name="species" id="species"  placeholder="Type in or double click"
+                        <input type="search" class="ex8" list="specieslist" name="species" id="species"  placeholder="Type in or double click"
                                value=@if (isset(Session::get('Sess')['species']))  "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif
                         >
                     </div>
@@ -740,9 +740,26 @@
             {!! form::close() !!}
 
             <script>
+                window.onload= function() {
+                var ua = navigator.userAgent.toLowerCase(); 
+                if (ua.indexOf('safari') != -1)
+                { 
+                   if (ua.indexOf('chrome') > -1)
+                   {
+                      return;
+                   }
+                   else
+                   {
+                      alert("Alert !!! Some features are not viewed properly in Safari. Pathview is best recommended with Mozilla Firefox and Internet Explorer browser.") // Safari
+	           }
+	         }
+              }
 
+            </script>
+            <script>
 
                 $(document).ready(function () {
+
 		//	$(window).unload( function () {
 
 		  var selectpath= '<?php echo $selectpath ?>';

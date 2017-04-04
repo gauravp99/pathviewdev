@@ -9,7 +9,7 @@
 
            <h1 class="arg_content" >Introduction</h1>
                  <p>
-		 Pathview is an <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html">R/Bioconductor package</a> that maps, integrates and renders a wide variety of biological data on relevant pathway graphs. Users just need to supply their gene or compound data and specify the target pathway. Pathview automatically downloads the pathway graph data, parses the data file, maps user data to the pathway, and renders pathway graph with the mapped data. Please check the <a href="/api_examples">example analyses</a> and the input/out section below for examples and more details. You may always go through the <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/pathview/inst/doc/pathview.pdf">package vignette</a> for a tutorial.   </p>
+		 Pathview is an <a href="http://www.bioconductor.org/packages/release/bioc/html/pathview.html">R/Bioconductor package</a> that maps, integrates and renders a wide variety of biological data on relevant pathway graphs. Users just need to supply their gene or compound data and specify the target pathway. Pathview automatically downloads the pathway graph data, parses the data file, maps user data to the pathway, and renders pathway graph with the mapped data. Please check the <a href="/api_examples">example analyses</a> and the input/output section below for examples and more details. You may always go through the <a href="http://www.bioconductor.org/packages/release/bioc/vignettes/pathview/inst/doc/pathview.pdf">package vignette</a> for a tutorial.   </p>
        <p>
                  
                  Pathview Web server extends the core functions of Pathview with:
@@ -26,7 +26,13 @@
                  </br>
                  -open access to all analyses and resources
                  </br>
-                 -analysis history and data sharing via  <a href="/register">free registered user accounts</a>
+                 -analysis history and data sharing via
+		@if (Auth::guest()) 
+                   <a href="/register">
+		@else
+		  <a href="" class="userregister">
+                @endif 
+                free registered user accounts</a>
                  </br>
                  -complete online help and documentation
                  </br>
@@ -56,8 +62,8 @@
                 </p>
             <section id="kegg_view">
 
-		<h1 class="arg_content" style="font-size: 30px; padding-top: 10px; padding-bottom: 10px;">KEGG view (PNG files, as in <a href="/example1">Example 1</a>)</h1>
-                Input <a href="data/hsa04540.gse16873.png" target=_blank>image</a> and Input <a href="data/hsa04540.xml" target=_blank>File</a>.
+		<h1 style="font-size: 24px; "><b>1) KEGG view (PNG files, as in <a href="/example1">Example 1</a>)</b></h1>
+                <a href="data/hsa00565.gse16873.png" target=_blank>Raw pathway graph</a> and Input <a href="data/hsa00565.xml" target=_blank>pathway data</a>
                 </br>
 
                 </br>
@@ -74,9 +80,11 @@
         <div class="col-sm-12">
 
             <section id="graphviz_view">
-                <h1 class="arg_content">Graphviz view (PDF files, as in <a href="/example2">Example 2</a>)</h1>
-                Input <a href="data/hsa00565.gse16873.png" target=_blank>image</a> and Input <a href="data/hsa00565.xml" target=_blank>File</a>.
+                <h1 style="font-size: 24px; "><b>2) Graphviz view (PDF files, as in <a href="/example2">Example 2</a>)</b></h1>
+
+                <a href="data/hsa04540.gse16873.png" target=_blank>Raw pathway graph</a> and <a href="data/hsa04540.xml" target=_blank>pathway data</a>
                 </br>
+
                 <div class="col-sm-12">
                     <img src="data/graphviz_view.png" style="width: 100%;">
                 </div>
@@ -88,7 +96,7 @@
         </div>
         <div class="col-sm-12">
             <section id="example4_view">
-                <h1 class="arg_content">Pathway analysis results (as in  <a href="/example4">Example 4</a>)</h1>
+                <h1 style="font-size: 24px; "><b>3) Pathway analysis results (as in  <a href="/example4">Example 4</a>)</b></h1>
                 <p>
 When automatic pathway selection is chosen, pathway analysis will be done before data visualization on selected pathways (<Example 4>). The pathway analysis statistics will be returned, and all analysis results will be included in the downloadable zipped folder.
                 </p>
@@ -139,4 +147,11 @@ When automatic pathway selection is chosen, pathway analysis will be done before
 
      </div>
 
+<script>
+$(document).ready(function() {
+    $(".userregister").click(function() {
+	    alert("User is already registered");
+    });
+});
+</script>
 @stop
