@@ -63,7 +63,7 @@
             <section id="kegg_view">
 
 		<h1 style="font-size: 24px; "><b>1) KEGG view (PNG files, as in <a href="/example1">Example 1</a>)</b></h1>
-                <a href="data/hsa00565.gse16873.png" target=_blank>Raw pathway graph</a> and Input <a href="data/hsa00565.xml" target=_blank>pathway data</a>
+                <a href="data/hsa00565.gse16873.png" target=_blank>Raw pathway graph</a> and <a href="data/hsa00565.xml" target=_blank>pathway data</a>
                 </br>
 
                 </br>
