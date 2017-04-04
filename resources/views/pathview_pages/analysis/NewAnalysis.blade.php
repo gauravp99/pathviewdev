@@ -848,7 +848,6 @@ use Illuminate\Cacheche;
         </script>
         <script src="{{asset('/js/analysis.js')}}"></script>
 
-        <script src="{{asset('/js/newanalysis.js')}}"></script>
         <script>
 
             window.reset = function (e) {
