@@ -79,7 +79,7 @@ old.code=function(){
         gsymbs[idx1>idx2]=""
         ncg=ncol(pv.out$plot.data.gene)
         pvg=cbind(pv.out$plot.data.gene[,1:3], all.mapped.symb=gsymbs, pv.out$plot.data.gene[,4:ncg])
-        write.table(pvg,file=paste(paste(paste("genedata.",args2$species,sep=""),pid,sep=""),".txt",sep=""),quote = FALSE, sep="\t")
+        write.table(pvg,file=paste0("genedata.",args2$species,pid,".tsv"), sep="\t", col.names=NA, quote = FALSE)
     }
     if(!is.null(cpd.d) & !is.null(pv.out$plot.data.cpd)) {
         cids=pv.out$plot.data.cpd$all.mapped
@@ -88,7 +88,7 @@ old.code=function(){
         cnames[eidx]=cid2name[cnames[eidx]]
         ncc=ncol(pv.out$plot.data.cpd)
         pvc=cbind(pv.out$plot.data.cpd[,1:3], all.mapped.name=cnames, pv.out$plot.data.cpd[,4:ncc])
-        write.table(pvc,file=paste(paste(paste("cpddata.",args2$species,sep=""),pid,sep=""),".txt",sep=""),quote = FALSE, sep="\t")
+        write.table(pvc,file=paste(paste(paste("cpddata.",args2$species,sep=""),pid,sep=""),".tsv",sep=""), sep="\t", col.names=NA, quote = FALSE)
     }
 }
 
@@ -107,7 +107,7 @@ pv.labels=function(pv.out, pv.data.type=c("gene", "cpd"),  pid){
         gsymbs[idx1>idx2]=""
         ncg=ncol(pv.out$plot.data.gene)
         pvg=cbind(pv.out$plot.data.gene[,1:3], all.mapped.symb=gsymbs, pv.out$plot.data.gene[,4:ncg])
-        write.table(pvg,file=paste(paste(paste("genedata.",args2$species,sep=""),pid,sep=""),".txt",sep=""),quote = FALSE, sep="\t")
+        write.table(pvg,file=paste0("genedata.",args2$species,pid,".tsv"), sep="\t", col.names=NA, quote = FALSE)
     }
     if("cpd" %in% pv.data.type & !is.null(pv.out$plot.data.cpd)) {
         cids=pv.out$plot.data.cpd$all.mapped
@@ -116,6 +116,6 @@ pv.labels=function(pv.out, pv.data.type=c("gene", "cpd"),  pid){
         cnames[eidx]=cid2name[cnames[eidx]]
         ncc=ncol(pv.out$plot.data.cpd)
         pvc=cbind(pv.out$plot.data.cpd[,1:3], all.mapped.name=cnames, pv.out$plot.data.cpd[,4:ncc])
-        write.table(pvc,file=paste(paste(paste("cpddata.",args2$species,sep=""),pid,sep=""),".txt",sep=""),quote = FALSE, sep="\t")
+        write.table(pvc,file=paste0("cpddata.",args2$species,pid,".tsv"), sep="\t", col.names=NA, quote = FALSE)
     }
 }

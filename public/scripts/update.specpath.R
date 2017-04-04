@@ -36,7 +36,8 @@ if(dio==1){
     korg.new=rbind(korg.new, ko.line)
     write.table(korg.new[,c(1:2,4,3)], file=paste0(kdir, "/", "kegg.species.txt"), sep="\t", quote=F, row.names=F, col.names=F)
     
-    orgs=as.character(orgs[,2])
+#    orgs=as.character(orgs[,2])
+    orgs=as.character(korg.new[,1])
     system.time({
         paths.all=rm.orgs=NULL
         for(i in 1:length(orgs)){

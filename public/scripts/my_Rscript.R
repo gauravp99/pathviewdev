@@ -63,13 +63,16 @@ if(!is.null(args2$geneextension) && length(args2$geneextension) > 0){
             else if (ngref==1) gene.d=gene.d[,args2$genesamp]- gene.d[,args2$generef]
             else gene.d=gene.d[,args2$genesamp]- rowMeans(gene.d[,args2$generef])
         }
-        gene.d=cbind(gene.d)
+        if(nrow(a)==1) gene.d=rbind(gene.d)
+        else gene.d=cbind(gene.d)
+#        gene.d=cbind(gene.d)
         rownames(gene.d)=make.unique(as.character(a[,1]))
         ncol.gene=ncol(gene.d)
     } else if(ncol(a)==1) {
         a=as.matrix(a)
         gene.d=a[,1]
-        if(is.null(names(gene.d))) gene.d=as.character(gene.d)
+#        if(is.null(names(gene.d))) gene.d=as.character(gene.d)
+        if(is.null(names(gene.d))) gene.d=readLines(args2$filename)
         ncol.gene=1
     } else stop("Empty gene data file!")
 } else gene.d=NULL
@@ -90,13 +93,15 @@ if(!is.null(args2$cpdextension) && length(args2$cpdextension) > 0){
             else if (ncref==1) cpd.d=cpd.d[,args2$cpdsamp]- cpd.d[,args2$cpdref]
             else cpd.d=cpd.d[,args2$cpdsamp]- rowMeans(cpd.d[,args2$cpdref])
         }
-        cpd.d=cbind(cpd.d)
+        if(nrow(a1)==1) cpd.d=rbind(cpd.d)
+        else cpd.d=cbind(cpd.d)
         rownames(cpd.d)=make.unique(as.character(a1[,1]))
         ncol.cpd=ncol(cpd.d)
     } else if(ncol(a1)==1) {
         a1=as.matrix(a1)
         cpd.d=a1[,1]
-        if(is.null(names(cpd.d))) cpd.d=as.character(cpd.d)
+#        if(is.null(names(cpd.d))) cpd.d=as.character(cpd.d)
+        if(is.null(names(cpd.d))) cpd.d=readLines(args2$cfilename)
         ncol.cpd=1
     } else stop("Empty compound data file!")
 } else cpd.d=NULL
@@ -170,7 +175,7 @@ bods[,"id.type"]=gsub("eg", "entrez", bods[,"id.type"])
     gene.idmap=geneannot.map(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out), pkg.name=pkg.name, na.rm=F)
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.csv(gene.idmap, file = "gene.idmap.csv", row.names=F, quote=F)
+    write.table(gene.idmap, file = "gene.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
     gene.d=exprs=pathview::mol.sum(exprs, gene.idmap)
 } else  gene.d=exprs=cbind(gene.d)
 
@@ -188,7 +193,7 @@ gage.res=gage(exprs=exprs, gsets=gsets, ref = NULL, samp = NULL,
     colnames(pms)=c("p.up", "p.dn")
     gage.out=cbind(gage.res$greater[, c(2,5)], pms/2, p.val=pgs.gene, q.val=qgs.gene)
     gage.out=gage.out[order(pgs.gene),]
-    write.csv(gage.out, file = "gage.res.gene.csv", quote = FALSE)
+    write.table(gage.out, file = "gage.res.gene.tsv", sep="\t", col.names=NA, quote = FALSE)
 
 print(1)
 
@@ -199,7 +204,7 @@ if(nsig>0) {
     gage.out.sig=data.frame(gage.out)[sig.i,]
     ord1=order(gage.out.sig[,"stat.mean"], decreasing=T)
     gage.out.sig=gage.out.sig[ord1,]
-    write.csv(gage.out.sig, file = "gage.res.sig.gene.csv", quote = FALSE)
+    write.table(gage.out.sig, file = "gage.res.sig.gene.tsv", sep="\t", col.names=NA, quote = FALSE)
 
     gpath.ids=rownames(gage.out.sig)
     pdf("gage.res.gene.gs.heatmap.pdf")
@@ -208,9 +213,15 @@ if(nsig>0) {
 
 } else {
     print("No gene set selected in 1d-test, select the top 3 instead!")
-    gpath.ids=unique(c(rownames(gage.res$greater)[1:3],rownames(gage.res$less)[1:3]))
-    }
-print(2)
+    grg=gage.res$greater
+    grl=gage.res$less
+#    grg=grg[!is.na(grg[,"set.size"]),]
+    grg=grg[order(grg[,"p.val"], -grg[,"set.size"]),]
+#    grl=grl[!is.na(grl[,"set.size"]),]
+    grl=grl[order(grl[,"p.val"], -grl[,"set.size"]),]
+    gpath.ids=unique(c(rownames(grg)[1:3],rownames(grl)[1:3]))
+}
+    print(2)
 
 } else if(gclass=="character"){
     mol.sel=gene.d
@@ -257,7 +268,7 @@ bods[,"id.type"]=gsub("eg", "entrez", bods[,"id.type"])
     gene.idmap=geneannot.map(in.ids=mol.sel, in.type=toupper(gid.in), out.type=toupper(gid.out), pkg.name=pkg.name, na.rm=F)
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.csv(gene.idmap, file = "gene.idmap.csv", row.names=F, quote=F)
+    write.table(gene.idmap, file = "gene.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
     gene.d=mol.sel=gene.idmap[,2]
     #if(!is.null(mol.bg)) mol.bg=gene.idmap[-c(1:nsel),2]
 } else gene.d=mol.sel
@@ -291,11 +302,11 @@ cnts.sel=sapply(gsets, function(gs){
 print(1)
 
 ### significant.genesets
-if(nrow(stats)>0)  write.csv(stats, file = "discrete.res.gene.csv", quote=F)
+if(nrow(stats)>0)  write.table(stats, file = "discrete.res.gene.tsv", sep="\t", col.names=NA, quote=T)
 
 nsig=sum(sel.idx)
 if(nsig>0) {
-    write.csv(stats[sel.idx,], file = "discrete.sig.gene.csv", quote=F)
+    write.table(data.frame(stats)[sel.idx,], file = "discrete.sig.gene.tsv", sep="\t", col.names=NA, quote=T)
     gpath.ids=rownames(stats)[sel.idx]
 } else {
     print("No gene set selected in 1d-test, view the top 3 instead!")
@@ -336,7 +347,7 @@ if(cclass=="matrix" | cclass=="numeric"){
             names(csets)=cpaths
             cpi=cpaths %in% gpaths
             csets=csets[cpi]
-        }
+        } else if(!exists("gsets")) species="ko"
     } else stop("Can't find KEGG compound set data!")
 
 if(map.data){
@@ -356,7 +367,7 @@ if(map.data){
     }
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.csv(gene.idmap, file = "compound.idmap.csv", row.names=F, quote=F)
+    write.table(gene.idmap, file = "compound.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
     cpd.d=exprs=pathview::mol.sum(exprs, gene.idmap)
 } else cpd.d=exprs=cbind(cpd.d)
 
@@ -371,7 +382,7 @@ gage.res.cpd=gage(exprs=exprs, gsets=csets, ref = NULL, samp = NULL,
     colnames(pms)=c("p.up", "p.dn")
     gage.out.cpd=cbind(gage.res.cpd$greater[, c(2,5)], pms/2, p.val=pgs.cpd, q.val=qgs.cpd)
     gage.out.cpd=gage.out.cpd[order(pgs.cpd),]
-    write.csv(gage.out.cpd, file = "gage.res.cpd.csv", quote = FALSE)
+    write.table(gage.out.cpd, file = "gage.res.cpd.tsv", sep="\t", col.names=NA, quote = FALSE)
 
 print(1)
 
@@ -382,7 +393,7 @@ if(nsig>0) {
     gage.out.cpd.sig=data.frame(gage.out.cpd)[sig.i,]
     ord1=order(gage.out.cpd.sig[,"stat.mean"], decreasing=T)
     gage.out.cpd.sig=gage.out.cpd.sig[ord1,]
-    write.csv(gage.out.cpd.sig, file = "gage.res.sig.cpd.csv", quote = FALSE)
+    write.table(gage.out.cpd.sig, file = "gage.res.sig.cpd.tsv", sep="\t", col.names=NA, quote = FALSE)
 
     cpath.ids=rownames(gage.out.cpd.sig)
     pdf("gage.res.cpd.gs.heatmap.pdf")
@@ -391,7 +402,13 @@ if(nsig>0) {
 
 } else {
     print("No compound set selected in 1d-test, select the top 3 instead!")
-    cpath.ids=unique(c(rownames(gage.res.cpd$greater)[1:3],rownames(gage.res.cpd$less)[1:3]))
+    crg=gage.res.cpd$greater
+    crl=gage.res.cpd$less
+#    crg=crg[!is.na(crg[,"set.size"]),]
+    crg=crg[order(crg[,"p.val"], -crg[,"set.size"]),]
+#    crl=crl[!is.na(crl[,"set.size"]),]
+    crl=crl[order(crl[,"p.val"], -crl[,"set.size"]),]
+    cpath.ids=unique(c(rownames(crg)[1:3],rownames(crl)[1:3]))
     }
 print(2)
 
@@ -427,7 +444,7 @@ print(2)
             names(csets)=cpaths
             cpi=cpaths %in% gpaths
             csets=csets[cpi]
-        }
+        } else if(!exists("gsets")) species="ko"
     } else stop("Can't find KEGG compound set data!")
 
 
@@ -439,7 +456,7 @@ if(map.data){
     gene.idmap=cpdidmap(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out))#?kegg 2 name update
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.csv(gene.idmap, file = "compound.idmap.csv", row.names=F, quote=F)
+    write.table(gene.idmap, file = "compound.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
     cpd.d=mol.sel=gene.idmap[,2]
 } else cpd.d=mol.sel
 
@@ -474,11 +491,11 @@ cnts.sel=sapply(csets, function(gs){
     sel.idx=stats.cpd[,"hits"]>=ncut & stats.cpd[,"q.val"]<=qcut
 
 ### significant.genesets
-if(nrow(stats.cpd)>0)  write.csv(stats.cpd, file = "discrete.res.cpd.csv", quote=F)
+if(nrow(stats.cpd)>0)  write.table(stats.cpd, file = "discrete.res.cpd.tsv", sep="\t", col.names=NA, quote=T)
 
 nsig=sum(sel.idx)
 if(nsig>0) {
-    write.csv(stats.cpd[sel.idx,], file = "discrete.sig.cpd.csv", quote=F)
+    write.table(data.frame(stats.cpd)[sel.idx,], file = "discrete.sig.cpd.tsv", sep="\t", col.names=NA, quote=T)
     cpath.ids=rownames(stats.cpd)[sel.idx]
 } else {
     print("No gene set selected in 1d-test, view the top 3 instead!")
@@ -503,13 +520,13 @@ if(!is.null(gene.d) & !is.null(cpd.d)){
     combo.out=cbind(gmat, pmat, p.global=pvals, q.global=qvals)
     combo.out=combo.out[order(pvals),]
     combo.out[is.nan(combo.out)]=NA
-    write.csv(combo.out, file="combo.res.csv",  quote=F)
+    write.table(combo.out, file="combo.res.tsv", sep="\t", col.names=NA,  quote=T)
 
     sig.c=combo.out[,"q.global"]<qcut & !is.na(combo.out[,"q.global"])
     nsig.c=sum(sig.c, na.rm=T)
     if(nsig.c>0){
         combo.out.sig=data.frame(combo.out)[sig.c,]
-        write.csv(combo.out.sig, file = "combo.res.sig.csv", quote = FALSE)
+        write.table(combo.out.sig, file = "combo.res.sig.tsv", sep="\t", col.names=NA, quote = FALSE)
         path.ids=rownames(combo.out.sig)
     }
 } 
