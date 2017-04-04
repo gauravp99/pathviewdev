@@ -108,7 +108,7 @@ When automatic pathway selection is chosen, pathway analysis will be done before
 	      We also provide a comprehensive help system with the server. 
               The help system has four components: 
                </br>
-               1) a centralized <a href="/output_examples">help pages</a>, including documentation of all user options, input and output description; 
+               1) a centralized <a href="/tutorial#input">help pages</a>, including documentation of all user options, input and output description; 
                </br>
                2) multiple <a href="/example1">example analyses</a> with input data preloaded and options preset, plus dedicated tutorials; and 
                </br>
