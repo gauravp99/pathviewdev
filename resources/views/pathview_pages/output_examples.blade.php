@@ -114,7 +114,7 @@ When automatic pathway selection is chosen, pathway analysis will be done before
                </br>
 	       3) the help button next to each user option in the <a href="/analysis">analysis pages</a>, which directly links to its help page; 
                </br>
-               4) extra user support channels through <email> (emailto url) and the <a href="/faq">question page</a>.
+               4) extra user support channels through <a href="mailto:pathomics@gmail.com">email</a>  and the <a href="/faq">question page</a>.
            </p>
 
           </div>
