@@ -88,8 +88,15 @@
 
             echo "<map name=\"mapdata\">";
             //parse compound map data
-	$cpdfilename = "cpddata.".$_GET['id'].".txt";
-	$genefilename = "genedata.".$_GET['id'].".txt";
+	//The current filename extension was changed from 
+	//txt to tsv so the hyperlinks were not generated 
+	//properly 
+	//ToDO: Fix the code by writing a code that 
+	//is independent of the extension 
+	//This can be done by extracting the extension of the file and
+	//then creating a variable out of that.
+	$cpdfilename = "cpddata.".$_GET['id'].".tsv";
+	$genefilename = "genedata.".$_GET['id'].".tsv";
 		
 //This pulls up the data from a common file and created a hyperlink for the pathway
 if(File::exists($file_path_pathway))
