@@ -57,7 +57,7 @@
                                     <img class="sixth-slide" src="images/sixthslide.png" alt="Sixth slide">
                                 </div>
                                 <div class="item" style="margin: 0;" >
-                                    <a href="/guest"><img class="first-slide" src="images/firstslide.png" style="margin: 0;"  alt="First slide"></a>
+                                    <img class="first-slide" src="images/firstslide.png" alt="First slide">
                                 </div>
                                 <div class="item">
                                     <img class="second-slide" src="images/secondslide.png" alt="Second slide">
