@@ -634,16 +634,17 @@ span.error {
 .stepsdiv {
     float: left;
     clear: both;
-    margin: 5px 0px 5px 33px;
+    margin: 5px 0px 0px 33px;
     background-color: #F4F4F4;
-    border: 1px solid #FFF;
+    border: 2px solid #FFF;
     width: 700px;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0px 0px 3px #AAA;
-"
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px #AAA;
+} 
+label {
+    font-weight: bold;
 }
-
 #steps form p label {
     width: 100px;
     float: left;
@@ -652,7 +653,7 @@ span.error {
     line-height: 26px;
     color: #000;
     text-shadow: 1px 1px 1px #fff;
-    font-weight: bold;
+    font-weight: normal;
 }
 
 #steps form input:not([type=radio]),
@@ -663,8 +664,8 @@ span.error {
     -webkit-border-radius: 3px;
     border-radius: 3px;
     outline: none;
-    padding: 6px;
-
+    padding: 3px;
+    font-size: medium;
     margin-left: 0px;
 
 }
