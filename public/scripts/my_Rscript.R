@@ -192,7 +192,8 @@ gage.res=gage(exprs=exprs, gsets=gsets, ref = NULL, samp = NULL,
 
     colnames(pms)=c("p.up", "p.dn")
     gage.out=cbind(gage.res$greater[, c(2,5)], pms/2, p.val=pgs.gene, q.val=qgs.gene)
-    gage.out=gage.out[order(pgs.gene),]
+#    gage.out=gage.out[order(pgs.gene),]
+    gage.out=gage.out[order(pgs.gene, -gage.out[,"set.size"]),]
     write.table(gage.out, file = "gage.res.gene.tsv", sep="\t", col.names=NA, quote = FALSE)
 
 print(1)
@@ -213,13 +214,14 @@ if(nsig>0) {
 
 } else {
     print("No gene set selected in 1d-test, select the top 3 instead!")
-    grg=gage.res$greater
-    grl=gage.res$less
-#    grg=grg[!is.na(grg[,"set.size"]),]
-    grg=grg[order(grg[,"p.val"], -grg[,"set.size"]),]
-#    grl=grl[!is.na(grl[,"set.size"]),]
-    grl=grl[order(grl[,"p.val"], -grl[,"set.size"]),]
-    gpath.ids=unique(c(rownames(grg)[1:3],rownames(grl)[1:3]))
+#    grg=gage.res$greater
+#    grl=gage.res$less
+#    grg=grg[order(grg[,"p.val"], -grg[,"set.size"]),]
+#    grl=grl[order(grl[,"p.val"], -grl[,"set.size"]),]
+#    gpath.ids=unique(c(rownames(grg)[1:3],rownames(grl)[1:3]))
+gsel=gage.out[,"set.size"]>0
+if(sum(gsel)>0)  gpath.ids=rownames(gage.out)[1:min(sum(gsel),3)]
+# gpath.ids=rownames(gage.out)[1:3]
 }
     print(2)
 
@@ -295,8 +297,9 @@ cnts.sel=sapply(gsets, function(gs){
     q.val=p.adjust(p.val,  method ="BH")
     stats=cbind(t(cnts.sel[1:2,]),nsel, cnts.bg[2,], nbg, p.val, q.val)
     colnames(stats)=c("set.size", "hits","selected", "hits.bg", "background", "p.val", "q.val")
-    stats=stats[order(p.val),]
-    gage.out=cbind(stats[,2]/stats[,4], stats[,c(2,6:7)])
+#    stats=stats[order(p.val),]
+    stats=cbind(hit.ratio=stats[,2]/stats[,4], stats[,-1])
+    stats=stats[order(p.val, -stats[,1]),]
     sel.idx=stats[,"hits"]>=ncut & stats[,"q.val"]<=qcut
 
 print(1)
@@ -310,7 +313,9 @@ if(nsig>0) {
     gpath.ids=rownames(stats)[sel.idx]
 } else {
     print("No gene set selected in 1d-test, view the top 3 instead!")
-    gpath.ids=rownames(stats)[1:3]
+    gsel=stats[,"hit.ratio"]>0
+    if(sum(gsel)>0)  gpath.ids=rownames(stats)[1:min(sum(gsel),3)]
+#    gpath.ids=rownames(stats)[1:3]
     }
 }
 
@@ -381,7 +386,7 @@ gage.res.cpd=gage(exprs=exprs, gsets=csets, ref = NULL, samp = NULL,
 
     colnames(pms)=c("p.up", "p.dn")
     gage.out.cpd=cbind(gage.res.cpd$greater[, c(2,5)], pms/2, p.val=pgs.cpd, q.val=qgs.cpd)
-    gage.out.cpd=gage.out.cpd[order(pgs.cpd),]
+    gage.out.cpd=gage.out.cpd[order(pgs.cpd, -gage.out.cpd[,"set.size"]),]
     write.table(gage.out.cpd, file = "gage.res.cpd.tsv", sep="\t", col.names=NA, quote = FALSE)
 
 print(1)
@@ -402,14 +407,15 @@ if(nsig>0) {
 
 } else {
     print("No compound set selected in 1d-test, select the top 3 instead!")
-    crg=gage.res.cpd$greater
-    crl=gage.res.cpd$less
-#    crg=crg[!is.na(crg[,"set.size"]),]
-    crg=crg[order(crg[,"p.val"], -crg[,"set.size"]),]
-#    crl=crl[!is.na(crl[,"set.size"]),]
-    crl=crl[order(crl[,"p.val"], -crl[,"set.size"]),]
-    cpath.ids=unique(c(rownames(crg)[1:3],rownames(crl)[1:3]))
-    }
+#    crg=gage.res.cpd$greater
+#    crl=gage.res.cpd$less
+#    crg=crg[order(crg[,"p.val"], -crg[,"set.size"]),]
+#    crl=crl[order(crl[,"p.val"], -crl[,"set.size"]),]
+#    cpath.ids=unique(c(rownames(crg)[1:3],rownames(crl)[1:3]))
+    csel=gage.out.cpd[,"set.size"]>0
+    if(sum(csel)>0)  cpath.ids=rownames(gage.out.cpd)[1:min(sum(csel),3)]
+#    cpath.ids=rownames(gage.out.cpd)[1:3]
+}
 print(2)
 
 } else if(cclass=="character"){
@@ -486,8 +492,9 @@ cnts.sel=sapply(csets, function(gs){
     q.val=p.adjust(p.val,  method ="BH")
     stats.cpd=cbind(t(cnts.sel[1:2,]),nsel, cnts.bg[2,], nbg, p.val, q.val)
     colnames(stats.cpd)=c("set.size", "hits","selected", "hits.bg", "background", "p.val", "q.val")
-    stats.cpd=stats.cpd[order(p.val),]
-    gage.out.cpd=cbind(stats.cpd[,2]/stats.cpd[,4], stats.cpd[,c(2,6:7)])
+#    stats.cpd=stats.cpd[order(p.val),]
+    stats.cpd=cbind(hit.ratio=stats.cpd[,2]/stats.cpd[,4], stats.cpd[,-1])
+    stats.cpd=stats.cpd[order(p.val, -stats.cpd[,1]),]
     sel.idx=stats.cpd[,"hits"]>=ncut & stats.cpd[,"q.val"]<=qcut
 
 ### significant.genesets
@@ -499,7 +506,9 @@ if(nsig>0) {
     cpath.ids=rownames(stats.cpd)[sel.idx]
 } else {
     print("No gene set selected in 1d-test, view the top 3 instead!")
-    cpath.ids=rownames(stats.cpd)[1:3]
+    csel=stats.cpd[,"hit.ratio"]>0
+    if(sum(csel)>0)  cpath.ids=rownames(stats.cpd)[1:min(sum(csel),3)]
+#    cpath.ids=rownames(stats.cpd)[1:3]
     }
 }
 
@@ -563,5 +572,9 @@ path.ids=path.ids[1:min(nmax, length(path.ids))]
     path.ids=path.ids[1:min(nmax0, length(path.ids))]
 }
 
-source(paste(pvwdir,"scripts/do.pathview.R",sep=""))
+path.ids=path.ids[!is.na(path.ids)]
+if(length(path.ids)==0) {
+    message("Warning: No pathway selected or specified!")
+} else source(paste(pvwdir,"scripts/do.pathview.R",sep=""))
+
 save.image("workenv.RData")
