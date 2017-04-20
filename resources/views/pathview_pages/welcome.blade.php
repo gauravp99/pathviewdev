@@ -78,6 +78,14 @@
 
 
                     <div class="col-sm-12 ">
+                        <h2 class="homepage-heading">Recommendation:</h2>
+
+                        <p class="content1"><i>
+			      This server works the best with the latest Firefox, IE and Chrome. 
+                              Some interactive feature may not work properly with Safari or old versions of other browsers.
+                           </i></p>
+                    </div>
+                    <div class="col-sm-12 ">
                         <h2 class="homepage-heading">Citations:</h2>
 
                         <p class="content1"><i>
