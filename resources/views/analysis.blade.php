@@ -10,7 +10,7 @@
             <script src="js/jquery.validate.min.js"></script>
             <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
             <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
-           <script src="http://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.js"></script>
+           <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.js"></script>
            <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.css" rel="stylesheet">
 
 
