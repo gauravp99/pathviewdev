@@ -363,6 +363,10 @@ use Illuminate\Cacheache;
         <script type="text/javascript">
             $( document ).ready(function() {
 
+		 $("#species").trigger("chosen:updated");
+		 $("#geneid").trigger("chosen:updated");
+		 $("#cpdid").trigger("chosen:updated");
+
                 var geneRefSelect =$('#generef').val().split(",");
                 var cpdRefSelect = $('#cpdref').val().split(",");
                 var geneSamSelect =$('#genesam').val().split(",");

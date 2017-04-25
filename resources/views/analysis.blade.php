@@ -10,6 +10,8 @@
             <script src="js/jquery.validate.min.js"></script>
             <link href="{{ asset('/css/bootstrap-switch.min.css') }}" rel="stylesheet">
             <script src="{{ asset('/js/bootstrap-switch.min.js') }}"></script>
+           <script src="http://cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.js"></script>
+           <link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.7.0/chosen.css" rel="stylesheet">
 
 
             <script type="text/javascript">
@@ -40,31 +42,43 @@
                         {!!form::label('species','Species:') !!}
                     </div>
                     <div class="col-sm-7">
-                        <input type="search" class="ex8" list="specieslist" name="species" id="species"  placeholder="Type in or double click"
-                               value=@if (isset(Session::get('Sess')['species']))  "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif
-                        >
+                       <select  class="chosen-select" data-placeholder="Species" style="width:350px;" id="species"  name="species"  value=@if (isset(Session::get('Sess')['species'])) "{{Session::get('Sess')['species']}}" @else "{{$species}}" @endif >
+                    <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
+                          <?php
+		             if (isset(Session::get('Sess')['species']))
+		             {
+	                         $default_species_id=explode("-", Session::get('Sess')['species'])[0];
+		             }
+		             else
+		             {
+		               $default_species_id=explode("-", $species)[0];
+		             }
+
+                             $species = Cache::remember('Species', 10, function()
+                             {
+                                 return DB::table('species')->get();
+                             });
+                             if (Cache::has('Species'))
+                             {
+                                 $species = Cache::get('Species');
+                             }
+		             $selected_species="";
+                             foreach ($species as $species1) {
+		                 if (($species1->species_id)==$default_species_id)
+		                 {
+		                     $selected_species="selected";
+		                 }
+		                 else
+		                 {
+		                     $selected_species="";
+		                 }
+                                 echo "<option $selected_species>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
+                          }
+                          ?>
+                    <!--[if (lt IE 10)]></select><![endif]-->
+                      </select>
                     </div>
                 </div>
-                <datalist id="specieslist">
-                    <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
-                    <?php
-
-                      $species = Cache::remember('Species', 10, function()
-                    {
-                        return DB::table('species')->get();
-                    });
-                    if (Cache::has('Species'))
-                    {
-                        $species = Cache::get('Species');
-                    }
-
-                    foreach ($species as $species1) {
-                        //echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "</option>";
-                        echo "<option>" . $species1->species_id . "-" . $species1->species_desc . "-" . $species1->species_common_name . "</option>";
-                    }
-                    ?>
-                    <!--[if (lt IE 10)]></select><![endif]-->
-                </datalist>
             </div>
 
             <div class="stepsdiv" id="geneid-div"
@@ -83,31 +97,45 @@
                     </div>
 
                     <div class="col-sm-7">
-                        <input class="ex8" list="geneidlist" name="geneid" id="geneid" placeholder="Type in or double click"
-                               value=@if (isset(Session::get('Sess')['geneid'])) "{{Session::get('Sess')['geneid']}}" @else "{{$geneid}}" @endif
-                               >
+                         <select  class="chosen-select" data-placeholder="Gene id.." style="width:350px;" id="geneid"  name="geneid"  value=@if (isset(Session::get('Sess')['geneid'])) "{{Session::get('Sess')['geneid']}}" @else "{{$geneid}}" @endif selected="selected">
+                             <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
+
+                             <?php
+                             $gene = Cache::remember('gene', 10, function()
+                             {
+                                 return DB::table('GageSpeceisGeneIdMatch')->where('species_id','hsa')->get();
+                             });
+                             if (Cache::has('gene'))
+                             {
+                                 $gene = Cache::get('gene');
+                             }
+		             $selected_gene="";
+			     if (isset(Session::get('Sess')['geneid']))
+			     {
+			        $default_gene_id=Session::get('Sess')['geneid'];
+			     }
+			     else {
+		                $default_gene_id=$geneid;
+			     }
+
+                             foreach ($gene as $gene1) {
+		                if (($gene1->geneid)==$default_gene_id)
+			        {
+		                    $selected_gene="selected";
+			        }
+			        else
+			        {
+			            $selected_gene="";
+			        }
+                                 echo "<option $selected_gene>". $gene1->geneid . "</option>";
+                             }
+                             ?>
+                             <!--[if (lt IE 10)]></select><![endif]-->
+                         </select>
                     </div>
                 </div>
 
                 <!--Data list for autosuggestion for input element-->
-                <datalist id="geneidlist">
-                    <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
-                    <?php
-                    $gene = Cache::remember('gene', 10, function()
-                    {
-                        return DB::table('GageSpeceisGeneIdMatch')->where('species_id','hsa')->get();
-                    });
-                    if (Cache::has('gene'))
-                    {
-                        $gene = Cache::get('gene');
-                    }
-
-                    foreach ($gene as $gene1) {
-                        echo "<option value='$gene1->geneid'>$gene1->geneid</option>";
-                    }
-                    ?>
-                    <!--[if (lt IE 10)]></select><![endif]-->
-                </datalist>
             </div>
 
 
@@ -123,32 +151,45 @@
                         {!!form::label('cpdid','Compound ID Type:') !!}
                     </div>
                     <div class="col-sm-7">
-                        <input class="ex8" list="cpdidlist" name="cpdid" id="cpdid"  placeholder="Type in or double click"
-                               value=@if (isset(Session::get('Sess')['cpdid']))  "{{Session::get('Sess')['cpdid']}}" @else "{{$cpdid}}" @endif
-                               >
-                    </div>
-                </div>
+                         <select  class="chosen-select" data-placeholder="Species" style="width:350px;" id="cpdid"  name="cpdid"  value=@if (isset(Session::get('Sess')['cpdid'])) "{{Session::get('Sess')['cpdid']}}" @else "{{$cpdid}}" @endif >
 
-                <datalist id="cpdidlist">
                     <!--[if (lt IE 10)]><select disabled style="display:none"><![endif]-->
-                    <?php
-                     $compound = Cache::remember('compound', 10, function()
-                    {
-                        return DB::table('compoundID')->get();
-                    });
-                    if (Cache::has('compound'))
-                    {
-                        $compound = Cache::get('compound');
+                            <?php
+                             $compound = Cache::remember('compound', 10, function()
+                            {
+                                return DB::table('compoundID')->get();
+                            });
+                            if (Cache::has('compound'))
+                            {
+                                $compound = Cache::get('compound');
 
-                    }
+                            }
 
-                    foreach ($compound as $compound1) { echo "<option>$compound1->compound_id</option>"; }
-                      ?>
-                    <!--[if (lt IE 10)]></select><![endif]-->
-                </datalist>
+                            if (isset(Session::get('Sess')['cpdid']))
+                            {
+                                 $cpdid_value=Session::get('Sess')['cpdid'];
+                            }
+                            else {
+		                $cpdid_value=$cpdid;
+                            }
+		            $selected_cpd="";
+		            foreach ($compound as $compound1) { 
+		                     if (($compound1->compound_id) == $cpdid_value) 
+		                     {
+		                        $selected_cpd="selected";
+		                     }
+		                     else
+		                     {
+		                        $selected_cpd="";
+		                     }
+		                    
+		                    echo "<option $selected_cpd>$compound1->compound_id</option>"; }
+                              ?>
+                            <!--[if (lt IE 10)]></select><![endif]-->
+                         </select>
+                     </div>
+                </div>
             </div>
-
-
 
     <div class="stepsdiv" id="UsePathview-div">
         <div class="col-sm-12">
@@ -740,27 +781,13 @@
             {!! form::close() !!}
 
             <script>
-                window.onload= function() {
-                var ua = navigator.userAgent.toLowerCase(); 
-                if (ua.indexOf('safari') != -1)
-                { 
-                   if (ua.indexOf('chrome') > -1)
-                   {
-                      return;
-                   }
-                   else
-                   {
-                      alert("Alert !!! Some features are not viewed properly in Safari. Pathview is best recommended with Mozilla Firefox and Internet Explorer browser.") // Safari
-	           }
-	         }
-              }
 
-            </script>
-            <script>
 
                 $(document).ready(function () {
-
-		//	$(window).unload( function () {
+		 $(".chosen-select").chosen( {no_results_text: "Oops, nothing found!"});
+		 $("#species").trigger("chosen:updated");
+		 $("#geneid").trigger("chosen:updated");
+		 $("#cpdid").trigger("chosen:updated");
 
 		  var selectpath= '<?php echo $selectpath ?>';
                   $("[name='autopathviewselection']").bootstrapSwitch();
@@ -801,7 +828,6 @@
                         $.each($('#pathwayList').val().split("\t"),function(index,value){ pathway_string = pathway_string + $.trim(value) + "\t\r\n"; });
                         $('#pathwayList').val(pathway_string);
                     }
-
 
 
                   //function to load and reload the content of the page chrome reloads the page so need this functionality to be implemented
@@ -927,9 +953,8 @@
                     } else {
                         console.log("nothing in saveAttribute input element");
                     }
+		});
 
-
-                });
 
                 function attrSave() {
 
@@ -974,6 +999,8 @@
         + ";expand:" + expand + ";multistate:" + multistate + ";matchd:" + matchd + ";geneCompare:" + paired + ";geneColumns:" + geneColumns +";cmpdColumns:" + cpdColumns ;
 
                     $('#saveAttributes').val(savedString);
+		    $("#species").trigger("chosen:updated");
+		    $("#geneid").trigger("chosen:updated");
                 }
 
 
@@ -1195,7 +1222,6 @@
 
                     var most_spec = ['aga', 'ath', 'bta', 'cel', 'cfa', 'dme', 'dre', 'eco', 'ecs', 'gga', 'hsa', 'mmu', 'mcc', 'pfa', 'ptr', 'rno', 'sce', 'Pig', 'ssc', 'xla'];
                     var most_flag = false;
-
                     for (var i = 0; i < most_spec.length; i++) {
                         if (value.split("-")[0] == most_spec[i]) {
                             most_flag = true;
@@ -1260,6 +1286,3 @@
 
                 });
             </script>
-
-
-

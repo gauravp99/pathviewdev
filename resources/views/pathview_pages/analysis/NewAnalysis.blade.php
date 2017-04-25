@@ -396,6 +396,9 @@ use Illuminate\Cacheche;
             All this code is for regenerating the fields on the pop up fields columns-->
         <script type="text/javascript">
             $(document).ready(function () {
+		 $("#species").trigger("chosen:updated");
+		 $("#geneid").trigger("chosen:updated");
+		 $("#cpdid").trigger("chosen:updated");
                 var control = $("#cpdassayData");
 		
 		$("#GeneClearFile").on("click",function() {

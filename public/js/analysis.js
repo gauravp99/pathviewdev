@@ -4,9 +4,6 @@
 
 
     $(document).ready(function () {
-
-
-
         document.getElementById('submit-button').removeAttribute("data-toggle");
         document.getElementById('submit-button').removeAttribute("data-target");
         //start check for the species when page loaded hide and show the pathway id list associated with it
@@ -53,13 +50,19 @@
                 }
             }
 
+          //Changes to accmodate chosen jquery used for an alternative to the datalist
+          //which is currently not supported in the safari and using chosen jquery 
+          //creates a datalist like element.
             if (!most_flag) {
-                $('#geneidlist option').attr('disabled', 'disabled');
-                $("#geneidlist option[value='ENTREZ']").removeAttr('disabled');
-                $("#geneidlist option[value='KEGG']").removeAttr('disabled');
+                $('select#geneid').empty();
+		$('select#geneid').append("<option value='ENTREZ'>ENTREZ</option>");
+		$('select#geneid').append("<option value='KEGG'>KEGG</option>");
+		$("#species").trigger("chosen:updated");
+		$("#geneid").trigger("chosen:updated");
+         	$("#cpdid").trigger("chosen:updated");
             }
             else {
-                $('#geneidlist option').removeAttr('disabled');
+                $('select#geneid option').removeAttr('disabled');
                 species = $('#species').val();
                 $.ajax({
                     url: "/ajax/specGeneIdMatch",
@@ -69,17 +72,37 @@
                     cache: false,
                     success: function (data) {
                         if (data.length > 0) {
-
-                            console.log("success from geneidspecies match ajaz call");
-                            $('#geneidlist').empty();
-                            console.log("success empty the geneid list" + data);
+                            $('select#geneid').empty();
                             $.each(data, function () {
-                                $('#geneidlist').append("<option value=" + this['geneid'] + ">" + this['geneid'] + "</option>");
-                                console.log(this['geneid']);
+                                $('select#geneid').append("<option value=" + this['geneid'] + ">" + this['geneid'] + "</option>");
+		                $("#species").trigger("chosen:updated");
+				$("#geneid").trigger("chosen:updated");
+				$("#cpdid").trigger("chosen:updated");
                             });
-
-
                         }
+
+	                if (species.split("-")[0] == 'hsa') {
+			   if (typeof ANALYSIS_TYPE !== 'undefined') {
+                             //This has to be changed to more generic value 
+			     // to accomodate values which are not hardcoded
+			     // Since the default is different for example3 and rest of the other
+			     // web pages.
+			     if (ANALYSIS_TYPE == 'example3')
+			     {
+	                        $('select#geneid option[value="ENSEMBLPROT"]').attr('selected', 'selected');
+	                        $('select#cpdid option[value="CAS Registry Number"]').attr('selected', 'selected');
+			        $('#cpdid').val("CAS Registry Number");
+			     }
+
+			   }
+			   else{
+	                     $('select#geneid option[value="ENTREZ"]').attr('selected', 'selected');
+	                     $('select#cpdid option[value="KEGG"]').attr('selected', 'selected');
+			     $('#cpdid').val("KEGG");
+			   }
+	                  $("#geneid").trigger("chosen:updated");
+	                  $("#cpdid").trigger("chosen:updated");
+	                }
                     },
                     error: function (data) {
                         console.log("error");
@@ -120,6 +143,7 @@
             //start check for the species when species id hide and show the pathway id list associated with it
         });
         //end on each change in the species check for species and pathway list update
+
 
 
         $('#reset').click(function () {

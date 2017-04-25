@@ -189,6 +189,11 @@
             var species_array = [];
             var gene_array = [];
             var cmpd_array = [];
+	    //Below global variable will be used in the analysis.js file to 
+	    //identify whether the requested page if for example 3 . If so 
+	    //then load a different set of default parameters(geneid, cpdid and species)
+	    //when the user switches back to default(say hsa) from some other species.
+	    ANALYSIS_TYPE='example3';
             <?php
               $pathway = Cache::remember('Pathway_id', 10, function()
                     {
