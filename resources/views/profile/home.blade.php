@@ -217,11 +217,12 @@
                   //echo "<tr><td><input type='checkbox' id='analID' alue=$analyses1->analysis_id name=$analyses1->analysis_id ></td>";
                   echo "<td class='bs-checkbox'><input data-index=$i name='btSelectItem' type='checkbox'></td>";
                   echo "<td>$analyses1->analysis_id</td>";
-                  if(empty($analyses1->analysis_name)){
-                      echo "<td>$analyses1->analysis_id</td>";
-                  }else{
-                      echo "<td>$analyses1->analysis_name</td>";
-                  }
+                  //if(empty($analyses1->analysis_name)){
+                      //echo "<td id='$analyses1->analysis_id'>$analyses1->analysis_id</td>";
+                  //}else{
+                      //echo "<td id='$analyses1->analysis_id'>$analyses1->analysis_name</td>";
+                  //}
+                  echo "<td id='$analyses1->analysis_id'>Testing names</td>";
                   echo "<td><h4> $analyses1->analysis_type </h4></td>";
                   echo "<td> ".floor($date_diff / (60 * 60 * 24))." days ago ";
                   $directory = get_string_between($analyses1->arguments, "targedir:", ";");
@@ -233,7 +234,7 @@
                   if((strcmp($analyses1->analysis_origin,'pathview')==0) || (strcmp($analyses1->analysis_origin,'pathview_restapi')==0))
                       {
               ?>
-                 <td><p>  <a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}&autosel={{$autosel}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>
+                 <td><p><a href=/anal_hist?analyses={{$analyses1->analysis_id}}&id={{$id}}&suffix={{$suffix}}&autosel={{$autosel}}>Analysis:{{$analyses1->analysis_id}}</a> </p></td>
               <?php
                           }
                   else if(strcmp($analyses1->analysis_origin,'gage')==0)
@@ -334,15 +335,13 @@
 Please enter the email of the user you would like to share this analysis with:
 <input type="email" name="emailID" id="formShare_email" value=""/>
 </form>
-
 <!--MODAL FORMS END-->
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.1/jquery.form.min.js" integrity="sha384-tIwI8+qJdZBtYYCKwRkjxBGQVZS3gGozr3CtI+5JF/oL1JmPEHzCEnIKbDbLTCer" crossorigin="anonymous"></script>
 <script>
     // used to enable or disable sharing or deleting buttons
    $(function () {
     //for any event that happens on the table this function gets called
     $('#table').on('all.bs.table', function (e, row, $elem) {
-
         //check to disable or disable buttons based on the number of selections
         //start
         var selections =  $('#table').bootstrapTable('getSelections');
@@ -358,9 +357,71 @@ Please enter the email of the user you would like to share this analysis with:
             $('#analysisDelete').addClass("disabled");
 
         };
-       
+
+
+
     }); //end   
+
+    var analysis_id;
+    var column; 
+
+     $('#table').on('dbl-click-cell.bs.table',function(e,field, value, row, $element){
+         console.log("action2")
+         
+         if(field=='name'){
+            console.log("the name column was double clicked");
+            
+            //this makes sure only one row is getting the name changed 
+            if ($('#newNameSubmit').length){
+                 $('#newNameSubmit').parents('form').remove();
+            }
+            
+            if (!$('#name_'+row.id).length){
+                html = `
+                <form method="post" id="name_`+row.id+`"">
+                    <div class="input-group">
+                        <input type="text" id="newName" class="form-control" placeholder="New name...">
+                        <span class="input-group-btn">
+                            <button class="btn btn-secondary glyphicon glyphicon-ok" id="newNameSubmit" type="button">
+                            </button><button class="btn btn-secondary glyphicon glyphicon-remove" id="newNameClose" type="button"></button>
+                        </span>
+                    </div>
+                </form>
+                `;
+                $('#'+row.id).append(html)
+            }
+        }
+
+  $('#newNameClose').click(function(){
+            console.log("hidding....");
+            $(this).parents('form').remove();
+        });
+
+        $('#newNameSubmit').click(function(){
+            console.log("submitting....");
+            data = $('#newName').val();
+            console.log(data);
+            success = false;
+            $.post( "/analysisUpdate" , data, success);
+             console.log(data);
+             console.log(success);
+
+             if (!success){
+                 bootbox.alert("error: updating analysis name failed!");
+             }
+
+        });
+                
+         });
+
+
+
+      
+
+
+
 });//end of document ready function
+
 
 //this form is called when the delete button is pressed
 function modalDelete(){
