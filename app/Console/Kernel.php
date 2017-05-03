@@ -81,7 +81,7 @@ class Kernel extends ConsoleKernel
             });
 
         //3. Job for getting the statistics of the package usage from bioc website for pathview
-        $schedule->exec(public_path().'/scripts/biocStatsimport.sh')
+        $schedule->exec(public_path().'/scripts/biocStatsimport.sh '.public_path())
             ->weeklyOn(0,'3:34')
             ->sendOutputTo($filePath_recent)
             ->emailOutputTo([$email])
@@ -100,7 +100,7 @@ class Kernel extends ConsoleKernel
             });
 
         //4. Job for getting the statistics of the package usage from bioc website for gage
-        $schedule->exec(public_path().'/scripts/biocGageStatsimport.sh')
+        $schedule->exec(public_path().'/scripts/biocGageStatsimport.sh '.public_path())
             ->weeklyOn(0,'3:35')
             ->sendOutputTo($filePath_recent)->emailOutputTo([$email])
             ->then(function (){
