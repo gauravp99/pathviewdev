@@ -1,18 +1,21 @@
 #!/bin/bash
 #This script is for getting the stats from bioc web site and upload to pathway database every day morning 2:30
 #Author: Gaurav P
-#Script usage: Run the script from public folder without any parameter ./scripts/biocStatsimport.sh 
+#Script usage: Run the script from public folder with public path as the parameter ./scripts/biocStatsimport.sh 
 #This script is run from the schedule job of laravel
 
 ##Check for the environment file 
 
-if [ ! -f ../.env ]
+public_path=$1
+date=`date +"%Y-%m-%d-%H:%M:%S"`
+echo "Starting execution of `basename $0` at $date"
+if [ ! -f $public_path/../.env ]
 then
    echo "The environment file doesn't exist.. Exiting !!"
    exit 1
 fi
 
-source ../.env
+source $public_path/../.env
 if [ -z $DB_USERNAME ] || [ -z $DB_PASSWORD ] || [ -z $DB_DATABASE ]
 then
    echo "Database information not found. Exiting ...!!"
