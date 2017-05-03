@@ -784,7 +784,7 @@
 
 
                 $(document).ready(function () {
-		 $(".chosen-select").chosen( {no_results_text: "Oops, nothing found!"});
+		 $(".chosen-select").chosen( {no_results_text: "Oops, nothing found!", search_contains: true });
 		 $("#species").trigger("chosen:updated");
 		 $("#geneid").trigger("chosen:updated");
 		 $("#cpdid").trigger("chosen:updated");
