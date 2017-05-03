@@ -78,14 +78,6 @@
 
 
                     <div class="col-sm-12 ">
-                        <h2 class="homepage-heading">Recommendation:</h2>
-
-                        <p class="content1">
-			      This server works the best with the latest Firefox, IE and Chrome. 
-                              Some interactive feature may not work properly with Safari or old versions of other browsers.
-                           </p>
-                    </div>
-                    <div class="col-sm-12 ">
                         <h2 class="homepage-heading">Citations:</h2>
 
                         <p class="content1"><i>
@@ -405,24 +397,4 @@
         var myBarChart1 = new Chart(ctx1).Bar(data1, opt1);
 
     </script>
-    <body>
-
-    <script type="text/javascript">
-         window.onload= function() {
-        var ua = navigator.userAgent.toLowerCase(); 
-        if (ua.indexOf('safari') != -1) 
-        { 
-           if (ua.indexOf('chrome') > -1) 
-           {
-              pass; // Chrome
-           } 
-           else 
-           {
-              alert("Alert !!!! Some features are not viewed properly in Safari. Pathview is best recommended with Mozilla Firefox and Internet Explorer browser.") // Safari
-           }
-        }
-        }
-
-    </script>
-    </body>
 @stop
