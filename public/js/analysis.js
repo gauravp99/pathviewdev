@@ -55,8 +55,9 @@
           //creates a datalist like element.
             if (!most_flag) {
                 $('select#geneid').empty();
-		$('select#geneid').append("<option value='ENTREZ'>ENTREZ</option>");
+		$('select#geneid').append("<option value='ENTREZ' selected>ENTREZ</option>");
 		$('select#geneid').append("<option value='KEGG'>KEGG</option>");
+	        $('#cpdid').val("KEGG");
 		$("#species").trigger("chosen:updated");
 		$("#geneid").trigger("chosen:updated");
          	$("#cpdid").trigger("chosen:updated");
@@ -75,9 +76,6 @@
                             $('select#geneid').empty();
                             $.each(data, function () {
                                 $('select#geneid').append("<option value=" + this['geneid'] + ">" + this['geneid'] + "</option>");
-		                $("#species").trigger("chosen:updated");
-				$("#geneid").trigger("chosen:updated");
-				$("#cpdid").trigger("chosen:updated");
                             });
                         }
 
@@ -100,9 +98,16 @@
 	                     $('select#cpdid option[value="KEGG"]').attr('selected', 'selected');
 			     $('#cpdid').val("KEGG");
 			   }
-	                  $("#geneid").trigger("chosen:updated");
-	                  $("#cpdid").trigger("chosen:updated");
 	                }
+			else
+			{
+	                     $('select#geneid option[value="ENTREZ"]').attr('selected', 'selected');
+	                     //$('select#cpdid option[value="KEGG"]').attr('selected', 'selected');
+			     $('#cpdid').val("KEGG");
+			}
+		        $("#species").trigger("chosen:updated");
+			$("#geneid").trigger("chosen:updated");
+			$("#cpdid").trigger("chosen:updated");
                     },
                     error: function (data) {
                         console.log("error");
