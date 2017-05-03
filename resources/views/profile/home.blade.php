@@ -188,41 +188,39 @@
             <button type="button" class="btn btn-danger dropdown-toggle disabled" id='analysisDelete' onclick="modalDelete()" ><span class='glyphicon glyphicon-trash'> Delete</span></button>
           </div> 
 
-
           <table class="table table-bordered" id="table"
           data-toggle="table"
-          data-mobile-responsive="true"
           data-click-to-select="true"
           data-search="true"
-          data-toolbar="#toolbar"
-          >
+          data-sort-name="Time"
+          data-sort-order="desc"
+          data-toolbar="#toolbar">
               <thead>
-  	    <tr>
-                  <th data-field="state" data-checkbox="true"></th>
-                  <th data-field="id" data-visible="false">ID</th>
-                  <th data-field="name" data-sortable="true" data-searchable="true">Name</th>
-                  <th data-field="type" data-sortable="true">Type</th>
-                  <th data-field="days" data-sortable="true" data-filter-control="select">Time</th>
-                  <th data-field="result" data-sortable="true">Results</th>
-                  <th data-field="size" data-sortable="true">Size</th>
-              </tr>
+                <tr>
+                    <th class="bs-checkbox"  data-field='state' state-field='checked' style="width: 36px; " tabindex="0"><input name='btSelectAll' type='checkbox'></th>
+                    <th data-field="id" data-visible="false"  data-sortable="true">ID</th>
+                    <th data-field="name" data-sortable="true" data-searchable="true">Name</th>
+                    <th data-field="type"  data-sortable="true">Type</th>
+                    <th data-field="time" data-sortable="true" data-filter-control="select">Time</th>
+                    <th data-field="results" data-sortable="true">Results</th>
+                    <th data-field="size" data-sortable="true">Size</th>
+                </tr>
               </thead>
               <?php
-              $i = 1;
+              $i = 0;
               foreach ($analyses as $analyses1) {
                   $now = time(); // or your date as well
                   $your_date = strtotime(str_split($analyses1->created_at, 10)[0]);
                   $date_diff = $now - $your_date;
 
-                  //echo "<tr><td><input type='checkbox' id='analID' alue=$analyses1->analysis_id name=$analyses1->analysis_id ></td>";
-                  echo "<td class='bs-checkbox'><input data-index=$i name='btSelectItem' type='checkbox'></td>";
+                  echo "<tr> <td data-field='state' state-field='checked'><input data-index=$i name='btSelectItem' type='checkbox'></input></td>";
+                  $i = $i+1;
                   echo "<td>$analyses1->analysis_id</td>";
-                  //if(empty($analyses1->analysis_name)){
-                      //echo "<td id='$analyses1->analysis_id'>$analyses1->analysis_id</td>";
-                  //}else{
-                      //echo "<td id='$analyses1->analysis_id'>$analyses1->analysis_name</td>";
-                  //}
-                  echo "<td id='$analyses1->analysis_id'>Testing names</td>";
+                  if(empty($analyses1->analysis_name)){
+                      echo "<td id='$analyses1->analysis_id'>$analyses1->analysis_id</td>";
+                  }else{
+                      echo "<td id='$analyses1->analysis_id'>$analyses1->analysis_name</td>";
+                  }
                   echo "<td><h4> $analyses1->analysis_type </h4></td>";
                   echo "<td> ".floor($date_diff / (60 * 60 * 24))." days ago ";
                   $directory = get_string_between($analyses1->arguments, "targedir:", ";");
