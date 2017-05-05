@@ -58,13 +58,13 @@
 	    $autopathwayselection = $_GET['autopathwayselection'];
 
                 //print pathway generated text files with hiperlink to the files
-            foreach ($contents as $k => $v) {
+            #foreach ($contents as $k => $v) {
 
-                if (strpos($v, 'log') !== false || strpos($v, "" . $id . ".txt")) {
-                    echo "<li><a target=\"_blank\" href=\"$directory1/" . $v . "  \">$v</a></li>";
-                    array_push($files_to_zip, $directory1 . "/" . $v);
-                }
-            }
+            #    if (strpos($v, 'log') !== false || strpos($v, "" . $id . ".txt")) {
+            #        #echo "<li><a target=\"_blank\" href=\"$directory1/" . $v . "  \">$v</a></li>";
+            #        #array_push($files_to_zip, $directory1 . "/" . $v);
+            #    }
+            #}
 
 
             if(!$flag1)
