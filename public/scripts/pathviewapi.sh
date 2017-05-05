@@ -12,7 +12,7 @@
 
 argument_list=""
 SERVER_NAME="https://pathview.uncc.edu"
-VERSION=1.0.1
+VERSION=1.0.2
 API_PATH="$SERVER_NAME/api/analysis"
 SCRIPT_NAME="$0"
 ARGS="$@"
@@ -356,7 +356,7 @@ function run_api_analysis()
    fi
    ##Add version to the API
    argument_list+="-F version=$VERSION "
-   eval "curl -L -i -sS -w '\n'  $argument_list $API_PATH" | sed 's/\\//g' |grep -Ev "HTTP|Cookie|Server|Cache-Control|Content" & PID=$! #simulate a long process
+   eval "curl -L -i -sS -w '\n'  $argument_list $API_PATH" | sed 's/\\//g' |grep -Ev "HTTP|Cookie|Server|Cache-Control|Content|Strict-Transport-Security" & PID=$! #simulate a long process
    echo "THIS MAY TAKE A WHILE, PLEASE BE PATIENT WHILE API IS RUNNING..."
    while kill -0 $PID 2> /dev/null
    do
