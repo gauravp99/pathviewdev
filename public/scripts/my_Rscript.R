@@ -175,7 +175,7 @@ bods[,"id.type"]=gsub("eg", "entrez", bods[,"id.type"])
     gene.idmap=geneannot.map(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out), pkg.name=pkg.name, na.rm=F)
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.table(gene.idmap, file = "gene.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
+    write.table(gene.idmap, file = "gene.idmap.tsv", sep="\t", col.names=NA, quote=T)
     gene.d=exprs=pathview::mol.sum(exprs, gene.idmap)
 } else  gene.d=exprs=cbind(gene.d)
 
@@ -270,7 +270,7 @@ bods[,"id.type"]=gsub("eg", "entrez", bods[,"id.type"])
     gene.idmap=geneannot.map(in.ids=mol.sel, in.type=toupper(gid.in), out.type=toupper(gid.out), pkg.name=pkg.name, na.rm=F)
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.table(gene.idmap, file = "gene.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
+    write.table(gene.idmap, file = "gene.idmap.tsv", sep="\t", col.names=NA, quote=T)
     gene.d=mol.sel=gene.idmap[,2]
     #if(!is.null(mol.bg)) mol.bg=gene.idmap[-c(1:nsel),2]
 } else gene.d=mol.sel
@@ -372,7 +372,7 @@ if(map.data){
     }
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.table(gene.idmap, file = "compound.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
+    write.table(gene.idmap, file = "compound.idmap.tsv", sep="\t", col.names=NA, quote=T)
     cpd.d=exprs=pathview::mol.sum(exprs, gene.idmap)
 } else cpd.d=exprs=cbind(cpd.d)
 
@@ -462,7 +462,7 @@ if(map.data){
     gene.idmap=cpdidmap(in.ids=mol.ids, in.type=toupper(gid.in), out.type=toupper(gid.out))#?kegg 2 name update
     didx=duplicated(gene.idmap[,1])
     gene.idmap=gene.idmap[!didx,]
-    write.table(gene.idmap, file = "compound.idmap.tsv", sep="\t", col.names=NA, row.names=F, quote=T)
+    write.table(gene.idmap, file = "compound.idmap.tsv", sep="\t", col.names=NA, quote=T)
     cpd.d=mol.sel=gene.idmap[,2]
 } else cpd.d=mol.sel
 
