@@ -1,15 +1,73 @@
-############################### PATHWAY API #############################################
+############################### PATHVIEW API #############################################
 # This API is built to carry the pathview analysis using the command line.
 # The script can be executed in Linux and UNIX like operating system.
 # For more information , try running the sript with --help option to know the available
 # arguments for the API.
-#########################################################################################
+# Author: Gaurav Pant, Weijun Luo
+# For any issues related to the api, Email : pathomics@gmail.com
+# Copyright © 2017 - Pathview Project
+###########################################################################################
 
 #!/bin/bash
 
 argument_list=""
-API_PATH='https://pathview.uncc.edu/api/analysis'
+SERVER_NAME="http://pathview.uncc.edu"
+VERSION=1.0.1
+API_PATH="$SERVER_NAME/api/analysis"
+SCRIPT_NAME="$0"
+ARGS="$@"
+remote_file="${SCRIPT_NAME}_"`date +%Y%m%d%H%M%S`
 
+function check_curl_download()
+{
+   curl "$SERVER_NAME/scripts/$SCRIPT_NAME" -o $remote_file -D headers.txt -s 
+   httpStatus=$(head -1 headers.txt | awk '{print $2}')
+   contentType=$(grep "Content-Type:" headers.txt | tr -d '\r')
+   contentType=${contentType#*: }
+   retval=""
+   if [ "$httpStatus" != "200" ]; then
+       echo "FAILED - HTTP STATUS $httpStatus. Please re-run your script"
+       retval="false"
+   else
+       retval="true"
+   fi
+   rm "headers.txt"
+}
+
+
+function check_upgrade () {
+  
+  remote_version=`grep "^\VERSION" $remote_file | head -1 | awk -F "=" '{print $2}'`
+  local_version=`grep "VERSION" $SCRIPT_NAME | head -1 | awk -F "=" '{print $2}'`
+ 
+  # Check if there is a newer version of this file present
+  # available in the server . If yes then update the local version
+  # of the API to the newest. 
+  # The analysis will be re-run with the newest API.
+
+  [ "$remote_version" != "$local_version" ] && {
+ 
+    # install a new version of this file or package
+    # This is done by just copying the new file 
+    # and removing the old file and we will exit the instance
+    # after spawning a new process with $SCRIPT_NAME $ARGS
+    echo "You are running an old version of the API, updating the API...Please be patient !!!"
+    cp "$remote_file" "$SCRIPT_NAME"
+
+    ##Remove the remote file
+    rm -f "$remote_file"
+ 
+    # note that at this point this file was overwritten in the disk
+    # now run this very own file, in its new version!
+    echo "Running the new version of the API..."
+    $SCRIPT_NAME $ARGS
+ 
+    # now exit this old instance
+    exit 0
+  }
+ 
+  rm -f "$remote_file"
+}
 function usage()
 {
 	echo "Usage: `basename $0` options --gene_data | --cpd_data  [--gene_id] [-- cpd_id] [--pathway_id] ... [--other options]";
@@ -296,7 +354,9 @@ function run_api_analysis()
      echo 
      exit 1
    fi
-   eval "curl -i -sS -w '\n'  $argument_list $API_PATH" | sed 's/\\//g' |grep -Ev "HTTP|Cookie|Server|Cache-Control|Content" & PID=$! #simulate a long process
+   ##Add version to the API
+   argument_list+="-F version=$VERSION "
+   eval "curl -L -i -sS -w '\n'  $argument_list $API_PATH" | sed 's/\\//g' |grep -Ev "HTTP|Cookie|Server|Cache-Control|Content" & PID=$! #simulate a long process
    echo "THIS MAY TAKE A WHILE, PLEASE BE PATIENT WHILE API IS RUNNING..."
    while kill -0 $PID 2> /dev/null
    do
@@ -308,7 +368,15 @@ function run_api_analysis()
 
 function main()
 {
-   run_api_analysis
+   check_curl_download
+   if [ "$retval" == "true" ]
+   then
+        check_upgrade
+        run_api_analysis
+   else
+      echo "Error encountered .. Please re-run the script."
+      exit 1
+   fi
 }
 
 main
