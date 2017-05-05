@@ -11,7 +11,7 @@
 #!/bin/bash
 
 argument_list=""
-SERVER_NAME="http://pathview.uncc.edu"
+SERVER_NAME="https://pathview.uncc.edu"
 VERSION=1.0.1
 API_PATH="$SERVER_NAME/api/analysis"
 SCRIPT_NAME="$0"
