@@ -12,14 +12,16 @@
 
 #Author: Gaurav Pant
 
+date=`date +"%Y-%m-%d-%H:%M:%S"`
+echo "Starting execution of `basename $0` at $date"
 pvwdir=$1
-if [ ! -f ../.env ]
+if [ ! -f $pvwdir/../.env ]
 then
    echo "The environment file doesn't exist.. Exiting !!"
    exit 1
 fi
 
-source ../.env
+source $pvwdir/../.env
 if [ -z $DB_USERNAME ] || [ -z $DB_PASSWORD ] || [ -z $DB_DATABASE ]
 then
    echo "Database information not found. Exiting ...!!"
