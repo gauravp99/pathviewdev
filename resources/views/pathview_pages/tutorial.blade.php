@@ -202,7 +202,7 @@
                 <h1 class="arg_content">Results</h1>
 
                 <p class="content1">
-                       <a href="/output_examples">Detailed result description here</a> 
+                       <a href="/overview">Detailed result description here</a> 
                     </p>
             </section>
 

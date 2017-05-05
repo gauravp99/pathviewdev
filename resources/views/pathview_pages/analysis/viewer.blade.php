@@ -1,7 +1,7 @@
 @extends('app')
 @section('content')
     <h1 class="page-header" style="margin-left: 40%;">Result </h1>
-    <h3  style="margin-left: 75%;"><a href="/output_examples#kegg_view">Graph Annotation </a></h3>
+    <h3  style="margin-left: 75%;"><a href="/overview#kegg_view">Graph Annotation </a></h3>
 
     <div class="col-sm-12">
         <div class="col-sm-8">

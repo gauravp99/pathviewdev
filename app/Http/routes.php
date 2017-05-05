@@ -4,7 +4,7 @@
 |--------------------------------------------------------------------------
 | Pathway Application Routes
 |--------------------------------------------------------------------------
-| @Author: Yeshvant Bhavnasi, Dr Weijun Luo
+| @Author: Yeshvant Bhavnasi, Gaurav Pant, Dr Weijun Luo
 | Pathway web is web interface for the pathway R library project
 | Routes.php Here is where you can register all of the routes for an application.
 | It's a breeze.
@@ -42,6 +42,7 @@ Route::get('register/verify/{confirmationCode}', [
                 Route::post('authenticate', 'admin\AuthenticateController@authenticate');
             //to get all users information in json format to render on the pages
                 Route::get('getAllUsers','admin\AdminController@getAllUsers');
+                Route::get('getServerUrl','admin\AdminController@getServerUrl');
             //get the analysis details in year,months and manually
                 Route::get('yearly','api\GetAnal@getYears');
                 Route::get('monthly','api\GetAnal@getMonths');
@@ -224,7 +225,7 @@ Route::get('register/verify/{confirmationCode}', [
             return view("pathview_pages.api_examples");
         });
 /*URL route for Output Examples Page. */
-        Route::get('output_examples', function () {
+        Route::get('overview', function () {
             return view("pathview_pages.output_examples");
         });
 /* URL Route for About page*/

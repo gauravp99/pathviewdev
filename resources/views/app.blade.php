@@ -51,7 +51,7 @@
                         Help <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="/output_examples">Overview</a></li>
+                        <li><a href="/overview">Overview</a></li>
                         <li><a href="/tutorial#input">User Options</a></li>
                         <li><a href="/tutorial">Custom Analysis</a></li>
                         <li><a href="/api_examples">Example Analysis</a></li>
