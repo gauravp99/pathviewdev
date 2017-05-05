@@ -71,7 +71,7 @@ class UrlController extends Controller
       }
       File::makeDirectory($path, $mode = 0775, true, true);
 
-      $valid_input_keys=array('email', 'password', 'gene_data', 'cpd_data', 'auto_sel', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample');
+      $valid_input_keys=array('email', 'password', 'gene_data', 'cpd_data', 'auto_sel', 'pathway_id', 'suffix', 'gene_id', 'cpd_id', 'species', 'kegg', 'layer', 'split', 'expand', 'multistate', 'matched', 'discrete_gene', 'discrete_cpd', 'keyposition', 'signatureposition', 'offset', 'align', 'node_sum', 'limit_gene', 'bins_gene', 'limit_cpd', 'bins_cpd', 'na_color', 'low_gene', 'mid_gene', 'high_gene', 'low_cpd', 'mid_cpd', 'high_cpd', 'gene_sample', 'gene_reference', 'gene_compare', 'cpd_reference', 'cpd_compare', 'cpd_sample', 'version');
       $request_input_keys=array_keys(Input::all());
       $validate_input_array=array_diff($request_input_keys, $valid_input_keys);
       if (Input::has('email'))
@@ -220,6 +220,10 @@ class UrlController extends Controller
        }
        $options = app('request')->header('accept-charset') == 'utf-8' ? JSON_UNESCAPED_UNICODE : null;
        $status_code=200;
+       if (!Input::has('version'))
+       {
+	 $response_warning=$response_warning." You are running an older version of the API. Please update the API using the command  curl -O https://pathview.uncc.edu/scripts/pathviewapi.sh";
+       }
        if ($response_warning == '')
        {
          return response() -> json(['download link' => ''.$download_link]); 
