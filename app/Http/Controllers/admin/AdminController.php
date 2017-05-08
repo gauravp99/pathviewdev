@@ -10,6 +10,7 @@ use DB;
 use Input;
 use Mail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class AdminController extends Controller {
 
@@ -17,10 +18,10 @@ class AdminController extends Controller {
 	//auth function checking for credentails in user table.
 	public function auth()
 	{
-		if (Auth::attempt(['email' => $_POST['email'], 'password' => $_POST['password']]))
-		{
+		#if (Auth::attempt(['email' => $_POST['email'], 'password' => $_POST['password']]))
+		#{
 			return view("admin.adminprofile");
-		}
+		#}
 	}
 
 	//function called before performing any task in the admin page typically checks if logged user is admin or not.
@@ -131,6 +132,11 @@ class AdminController extends Controller {
 	{
 		return DB::table('admin')->get();
 
+	}
+	public function getServerUrl()
+	{
+		$serverUrl = Config::get("app.serverURL");
+		return response()->json(['serverUrl' => $serverUrl], 200);
 	}
 
 }
