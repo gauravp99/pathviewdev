@@ -33,7 +33,7 @@ td {
 
 @include('navigation')
     <div class='col-md-2-result sidebar col-md-offset-2'>
-    <div class="col-md-12 content" style="text-align: center;">
+    <div class="col-sm-12 content" style="text-align: center;">
 
 
         <h1><b>Pathview API Documentation</b></h1>
@@ -434,15 +434,13 @@ td {
          <p>
          Pathview Web API is RESTful as it adheres to the REST (Representational State Transfer) architecture. In particular, this API (1) is stateless, (2) use base URLs to its resources (3) supports standard HTTP methods (e.g. GET, POST, etc) , and (4) returns its responses in JSON format. Pathview Web API currently supports HTTP queries through POST but not GET. While GET method is often used directly in a web browser for data retrieval (in URL format), POST method allows more complex queries with user input data and options (through command-line like statements). Pathview Web API and GUI have different front ends (command line vs web page) and response formats (JSON vs HTML), but they share the same backend. The key difference between here is that they use different Controllers in the Laravel MVC (Model-View-Controller) framework (details at https://laravel.com).
          </p>
-         
+            <section id="reference">
                 <h1 class="arg_content">Reference</h1>
-                <p class="content1"><i>Luo W, Brouwer C. Pathview: an R/Biocondutor package for
-                        pathway-based data integration and visualization. Bioinformatics, 2013,
-                        29(14):1830-1831, doi:
-                        <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">
-                            <u>10.1093/bioinformatics/btt285</u></a>
-                    </i></p>
-
+                <div style="text-align: left;">
+                @include('reference')
+                </div>
+            </section>
+         
                 <h1 class="arg_content">Contact</h1>
 
                 <p class="contact">Email us: <a href="mailto:pathomics@gmail.com">pathomics@gmail.com</a></p>

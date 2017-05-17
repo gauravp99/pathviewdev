@@ -123,13 +123,8 @@ When automatic pathway selection is chosen, pathway analysis will be done before
             <section id="refrence">
 
                 <h1 class="arg_content">Reference</h1>
+                @include('reference')
 
-                <p class="content1"><i>Luo W, Brouwer C. Pathview: an R/Biocondutor package for
-                        pathway-based data integration and visualization. Bioinformatics, 2013,
-                        29(14):1830-1831, doi:
-                        <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">
-                            <u>10.1093/bioinformatics/btt285</u></a>
-                    </i></p>
             </section>
 
         </div>

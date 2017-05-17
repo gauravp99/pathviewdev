@@ -44,21 +44,8 @@
                     </p>
 
                     <h2 class="homepage-heading">Citations</h2>
+                       @include('reference')
 
-                    <p class="content1"><i>
-                            Luo W, Brouwer C. Pathview: an R/Biocondutor package for pathway-based data integration and
-                            visualization. Bioinformatics, 2013, 29(14):1830-1831, doi:
-                            <a href="http://bioinformatics.oxfordjournals.org/content/29/14/1830.full" target="_blank">10.1093/bioinformatics/btt285</a>
-                        </i></p>
-
-                    <p class="content1">
-                    </p>
-                    <br>
-
-                    <p class="content1">
-                        Please cite our paper if you use the Pathview package or this website. In addition, please cite
-                        this website if you use it. This will help the Pathview project in return.
-                    </p>
 
                         <h2 class="homepage-heading">Sponsors</h2>
 
